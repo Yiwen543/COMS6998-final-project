@@ -1,0 +1,767 @@
+                                                                                                                                                                             ASPEN: LLM-Guided E-Graph Rewriting
+                                                                                                                                                                                 for RTL Datapath Optimization
+                                                                                                                                                    Niansong Zhang† ∗ , Chenhui Deng§ , Johannes Maximilian Kuehn§ , Chia-Tung Ho§ , Cunxi Yu‡ , Zhiru Zhang† , Haoxing Ren§
+
+
+
+
+2025 ACM/IEEE 7th Symposium on Machine Learning for CAD (MLCAD) | 979-8-3315-3762-3/25/$31.00 ©2025 IEEE | DOI: 10.1109/MLCAD65511.2025.11189222
+                                                                                                                                                                                   † Cornell University, ‡ University of Maryland, College Park, § NVIDIA Corporation
+                                                                                                                                                                          {nz264, zhiruz}@cornell.edu, cunxiyu@umd.edu, {cdeng, jkuhn, chiatungh, haoxingr}@nvidia.com
+
+
+
+                                                                                                                                                      Abstract—Datapath RTL optimization is a challenging multi-objective
+                                                                                                                                                   task that balances power, performance, and area (PPA). Traditionally, this
+                                                                                                                                                   process is done manually due to the complexity of balancing conflicting               ASPEN                 Critical
+                                                                                                                                                                                                                                                               Rule Set       lhs=rhs                LLM Agent
+
+                                                                                                                                                   objectives. Recent approaches have explored rule-based rewriting using                § Fully automated
+                                                                                                                                                   equality saturation with e-graphs, which solves the phase ordering                    § Real PPA guidance              Rewrite           Learnable       PPA Feedback
+                                                                                                                                                                                                                                                                                            Cost Model
+                                                                                                                                                   problem but relies on manually designed rewrite rules and proxy PPA                   § Extensible
+                                                                                                                                                   cost models. Meanwhile, large language models (LLMs) have been applied
+                                                                                                                                                                                                                                                        Construct                       Extract                  Synth.
+                                                                                                                                                   to RTL code generation and optimization due to their reasoning and                          Input                                                   Opt.
+                                                                                                                                                   programming capabilities. However, existing LLM-based methods lack                                               E-Graph
+                                                                                                                                                                                                                                              Verilog                                                 Verilog
+                                                                                                                                                   a structured approach to represent and explore Pareto-optimal design
+                                                                                                                                                   points while ensuring equivalence in transformed RTL. We propose
+                                                                                                                                                                                                                                                                          lhs=rhs
+                                                                                                                                                   ASPEN, a system that leverages LLMs to guide e-graph rewriting while
+                                                                                                                                                   incorporating accurate, detailed feedback from EDA tools. Our approach                                            Engineered         Proxy Cost
+                                                                                                                                                   employs an agentic system to propose and select rewrite rules, using real                                         Rule Set           Model
+                                                                                                                                                   PPA feedback for extraction rather than proxy models. This reduces the                                                                  § High engineering cost
+                                                                                                                                                   need for handcrafted rewrite rules and eliminates the need for designing              EXISTING FRAMEWORKS                               § Fixed, inaccurate PPA cost model
+                                                                                                                                                   proxy-based cost models. ASPEN achieves average improvements of
+                                                                                                                                                   16.51% in area and 6.65% in delay over existing e-graph-based RTL                 Fig. 1. Comparing ASPEN with existing RTL rewrite optimization methods.
+                                                                                                                                                   optimization approaches across a diverse set of benchmarks. Our results
+                                                                                                                                                   demonstrate that combining LLM-driven e-graph rewrite with real PPA
+                                                                                                                                                   feedback enables scalable and effective datapath RTL optimization.                customizing new rewrite rules relies on human expertise, making it
+                                                                                                                                                      Index Terms—Register-Transfer-Level implementation, language mod-              labor-intensive and time-consuming. Additionally, existing e-graph-
+                                                                                                                                                   els, optimization
+                                                                                                                                                                                                                                     based RTL optimization methods rely on PPA proxy cost models,
+                                                                                                                                                                                                                                     which may lack accuracy and fidelity.
+                                                                                                                                                                               I. I NTRODUCTION
+                                                                                                                                                                                                                                        Meanwhile, large language models (LLMs) have been applied to
+                                                                                                                                                      RTL designs typically undergo a series of transformations to                   RTL tasks such as code completion, repair, and generation [4]–[8].
+                                                                                                                                                   explore trade-offs between power, performance, and area (PPA)                     Agent-based approaches incorporate LLMs into automated and itera-
+                                                                                                                                                   while preserving functional correctness. However, the order in which              tive workflows, as seen in RTLFixer [9] and AutoChip [10]. However,
+                                                                                                                                                   these transformations are applied significantly impacts the final                 LLMs lack formal guarantees for preserving RTL functionality and
+                                                                                                                                                   PPA outcome, a challenge known as the phase ordering problem.                     do not provide a structured method for representing and exploring
+                                                                                                                                                   Furthermore, RTL optimization involves an enormous design space.                  Pareto-optimal design points. These limitations can be addressed by
+                                                                                                                                                   For example, an N -bit prefix adder circuit has a design space of                 integrating e-graphs, while LLM agents can propose, select rewrite
+                                                                                                                                                          2
+                                                                                                                                                   O(2N ) [1], and a 2048-bit multiplier, when transformed with 25                   rules and extract PPA feedback from EDA tools to guide e-graph
+                                                                                                                                                   rewrite rules, results in 1.59 × 106179 possible expressions [2].                 rewriting and extraction.
+                                                                                                                                                      To address the phase ordering problem and efficiently represent                   We propose a system that unites LLMs with e-graphs while
+                                                                                                                                                   large sets of functionally equivalent designs, e-graphs have been                 alleviating their weaknesses. LLMs automate proposal and selection
+                                                                                                                                                   applied to RTL optimization. Figure 1 illustrates the Verilog op-                 of critical design-specific rewrite rules and integrate PPA feedback
+                                                                                                                                                   timization workflow using e-graphs, as employed in works like                     from EDA tools. E-graphs preserve equivalence and encode func-
+                                                                                                                                                   ROVER [3]. An e-graph is a graph-based data structure constructed                 tionally equivalent design points with varied trade offs. This PPA
+                                                                                                                                                   iteratively by applying rewrite rules. Once saturation is reached or              feedback loop guides rule proposal, selection, and e-graph extraction
+                                                                                                                                                   a specified timeout occurs, the resulting e-graph compactly encodes               to enhance the quality and scalability of RTL optimization. Our key
+                                                                                                                                                   a vast set of equivalent expressions, enabling the extraction of an               contributions are:
+                                                                                                                                                   optimized design based on a cost model. However, this approach
+                                                                                                                                                                                                                                     • LLM-guided e-graph rewriting: We use LLM agents to propose
+                                                                                                                                                   has limitations: the rewrite rule set and cost model must be manually
+                                                                                                                                                                                                                                       new rewrite rules and select critical ones, reducing the manual
+                                                                                                                                                   defined by designers, which is non-scalable. Maintaining an extensive
+                                                                                                                                                                                                                                       effort for rule design and improving scalability.
+                                                                                                                                                   rewrite rule set for all possible RTL designs is also impractical,
+                                                                                                                                                                                                                                     • Accurate PPA feedback integration: Instead of relying on man-
+                                                                                                                                                   as excessive rules can slow down saturation and complicate the
+                                                                                                                                                                                                                                       ually designed proxy cost models, we leverage EDA tools’ PPA
+                                                                                                                                                   extraction of high-quality design points. Furthermore, designing and
+                                                                                                                                                                                                                                       feedback to guide rule selection and e-graph extraction.
+                                                                                                                                                                                                                                     • General and extensible PPA feedback extraction: We introduce
+                                                                                                                                                     ∗ This work was conducted during an internship at NVIDIA.
+                                                                                                                                                                                                                                       a graph-partitioning method to extract PPA metrics from syn-
+                                                                                                                                                                                                                                       thesized netlists using LLMs. Our approach is tool-agnostic and
+                                                                                                                                                   979-8-3315-3762-3/25/$31.00 © 2025 IEEE                                             demonstrated with area and delay feedback from a commercial
+
+
+
+
+                                                                                                                                                        Authorized licensed use limited to: Columbia University Libraries. Downloaded on October 16,2026 at 14:01:34 UTC from IEEE Xplore. Restrictions apply.
+  synthesizer, while being readily extensible to other metrics such as            Algorithm 1: Two-level optimization with LLM-guided rewriting
+  power.                                                                          and PPA feedback
+• Equivalence-preserving design space exploration: We combine                    1 foreach rule select iter do
+  e-graphs with LLM-guided rewrite proposals, each automatically                 2     rules ← LLM Select(past ppa, pool);
+  verified by a theorem prover, to ensure functional correctness while           3     egraph ← Egglog Saturate(program, rules);
+  efficiently exploring the Pareto frontier of RTL designs.                      4     costs ← All One();
+                                                                                 5     foreach ppa feedback iter do
+                         II. R ELATED W ORK                                      6         expr ← EGraph Extract(egraph, costs);
+                                                                                 7         vprogram ← Verilog Translate(expr);
+A. RTL PPA Optimizations
+                                                                                 8         (ppa, netlist) ← Synthesizer(vprogram);
+   RTL PPA optimization has traditionally relied on manual efforts or            9         critical nodes inc, critical nodes dec ← ∅, ∅;
+heuristic-based methods. Experienced designers manually refine RTL              10         foreach part ∈ Partition(netlist) do
+to improve timing, area, and power efficiency by applying techniques            11             (inc, dec) ← LLM Select(vprogram, part, ppa);
+such as pipelining for higher frequency operation, eliminating redun-           12             critical nodes inc ← critical nodes inc ∪ inc;
+dant computations, and selecting efficient arithmetic implementations           13             critical nodes dec ← critical nodes dec ∪ dec;
+(e.g., Booth multipliers vs. Wallace trees). Heuristic-based transfor-          14          foreach c node ∈ critical nodes inc do
+mations have also been widely used in ASIC synthesis tools, which                15              costs[c node] ← costs[c node] + ∆inc ;
+apply optimizations such as constant propagation, strength reduction,           16          foreach c node ∈ critical nodes dec do
+and algebraic simplifications. For example, BOOM [11] employs an                 17              costs[c node] ← costs[c node] − ∆dec ;
+implicant generation paradigm to efficiently handle functions with
+numerous input variables and sparse care terms, improving upon
+earlier bottom-up approaches. Similarly, Childerhose and Liu [12]
+developed a heuristic method based on Karnaugh mapping to elim-                  architectures reflecting bitwidth-dependent trade-offs. Subsequent
+inate redundant and selective prime implicants, simplifying sum-of-              work [24], [25] further extends e-graph-based RTL optimization by
+products Boolean expressions with lower computational complexity                 enabling constraint-aware transformations, expanding the applicabil-
+than traditional techniques like the Quine-McCluskey method.                     ity of equality saturation to a broader range of datapath designs.
+   More recently, machine learning approaches have been explored
+to enhance RTL optimization. MapTune [13] leverages RL to make                   C. LLMs for RTL Design
+design-specific cell selection decisions during technology mapping,                 Large language models (LLMs) have been increasingly applied
+thereby reducing the search space and improving mapping quality.                 to RTL design tasks such as code completion, repair, and genera-
+PrefixRL [1] leverages reinforcement learning (RL) to optimize                   tion [4]–[8], [27]–[38]. Beyond single-shot generation, agent-based
+parallel prefix circuits, including adders and priority encoders. By             approaches integrate LLMs into automated and iterative workflows,
+incorporating synthesis into the training loop, PrefixRL obtains ac-             enabling adaptive refinements and constraint-aware modifications, as
+curate PPA rewards, enabling more effective design space exploration.            demonstrated by RTLFixer [9] and AutoChip [10]. However, LLM-
+B. Equality Saturation and E-Graphs                                              based methods lack formal guarantees for preserving RTL correctness
+                                                                                 and do not inherently provide a structured framework for exploring
+   E-Graphs are graph-based data structures constructed through                  Pareto-optimal design trade-offs. These limitations can be mitigated
+equality saturation, where rewrite rules are iteratively applied until           by incorporating e-graphs, which offer a principled representation of
+reaching a fixed point or timeout [14], [15]. These rewrite rules                equivalences and systematic design space exploration. By extracting
+can represent compiler transformations or arithmetic decompositions,             PPA feedback and tracing from EDA tools, LLM agents can guide e-
+such as integer multiplication breakdown. With the state-of-the-art              graph rewriting and extraction, enabling more effective and structured
+equality saturation tool egg [14] and egglog [15], this technique                RTL optimization.
+has been successfully applied to various domains, including linear
+algebra [16], tensor computation, DSP compilation [17], logic synthe-                                   III. ASPEN F RAMEWORK
+sis [2], [18], [19], Boolean reasoning [20], high-level synthesis [21],            We present ASPEN, a framework that leverages LLM agents to
+[22], formal verification [23], and RTL PPA optimization [3], [24],              propose rewrite rules and select a set of critical rules based on the
+[25].                                                                            input design and exploration history. It guides e-graph extraction by
+   Within an e-graph, functionally equivalent terms are grouped into             adjusting e-node costs using real PPA feedback.
+equivalence classes, known as e-classes. Nodes within an e-class,
+representing values or operators, are called e-nodes. The edges in               A. Overview
+e-graphs are directed, connecting e-nodes to their child e-classes                  Fig. 2 illustrates the end-to-end flow of ASPEN. The input consists
+to capture dependencies between operators and operands. After                    of a Verilog datapath design and a set of initial rewrite rules. ASPEN
+saturation or timeout, a final extraction step selects the e-nodes that          features three key agents: a rewrite rule proposal agent, a rewrite
+minimize a user-defined cost function [14], [26].                                rule selection agent, and a PPA feedback agent. The rewrite rule
+   Applying e-graphs to RTL optimization, ROVER [3] represents                   proposal agent generates new, design-specific rules and verifies their
+RTL designs as data-flow graphs and leverages equality saturation                correctness. This proposal phase occurs once, prior to entering the
+for efficient design space exploration. By defining a set of rewrite             optimization loop, and is based on the initial rule set and the input
+rules based on bitwidth parameters, their approach automates op-                 Verilog datapath design. The rewrite rule selection agent chooses
+timization while achieving performance comparable to experienced                 a critical set of rewrite rules based on the input design and prior
+hardware engineers. Additionally, they analyze the noise floor in                PPA results. The critical set may either be a subset of the rewrite
+logic synthesis to evaluate the accuracy of cost metrics. Their work             rules or include all rules from the rewrite rule pool. Using egglog,
+demonstrates the potential of automated rewriting to generate diverse            we perform equality saturation on the extracted expression of the
+
+
+
+
+    Authorized licensed use limited to: Columbia University Libraries. Downloaded on October 16,2026 at 14:01:34 UTC from IEEE Xplore. Restrictions apply.
+                     Rule Proposal Agent
+                                                                                  E-NODE COST UPDATE LOOP
+                                                          Rewrite                                                                           PPA Feedback Agent
+                     lhs=rhs                              Rule Pool                                  {critical e-nodes}
+                                                          w/ New Rules                                                                               PPA
+                 Initial Rules                                             +/- e-node cost                                                           Feedback
+                                                      egglog
+                                                      saturate                                extract                translate               synthesize
+                                  Input                                                                                            Opt.                     Netlist
+                                                                          E-Graph                        Expr
+                                 Verilog                                                                                          Verilog                    PPA
+                                                   Critical
+                                                                                                                                                     PPA
+                                                               lhs=rhs
+                                                   Rules
+                                                                                      Rewrite                                                        Feedback
+                                                                                      Rule Pool
+
+                                                                                      Exploration
+                                                                                                        REWRITE RULE SELECTION LOOP
+                                                                                      History
+                                 Rule Selection Agent
+
+Fig. 2. ASPEN workflow overview – The system takes as input a Verilog datapath design and an initial set of rewrite rules. A rewrite rule proposal agent
+first generates new, design-specific rules based on the input design and initial rule set, verifying their correctness. A rewrite rule selection agent then identifies
+a relevant subset of rules, which are applied via equality saturation using egglog. The resulting e-graph is extracted to produce an optimized RTL design,
+which is synthesized to obtain PPA metrics. A PPA feedback agent analyzes synthesis results and adjusts e-node weights to guide further extractions. This
+forms a feedback loop that enables iterative refinement of rewrite selections and e-graph extractions.
+
+
+input datapath design. The resulting saturated e-graph is extracted to                                                                TABLE I
+obtain an expression, which is translated into an optimized Verilog                                                      I NITIAL R EWRITE RULES IN ASPEN
+design. This design is then synthesized to generate PPA feedback. The
+                                                                                                        Class                          Rewrite Rules
+PPA feedback agent analyzes the optimized Verilog, the synthesized
+netlist, and synthesis reports to identify relevant e-nodes and adjust                                  Commutativity                  a+b⇔b+a
+                                                                                                                                       a·b⇔b·a
+their costs accordingly—either increasing or decreasing them to guide                                   Associativity                  a + (b + c) ⇔ (a + b) + c
+subsequent extractions.                                                                                                                a · (b · c) ⇔ (a · b) · c
+  Algorithm 1 presents the two-level optimization loop of ASPEN.                                        Identity                       0+a⇒a
+The outer loop explores different subsets of rewrite rules, while the                                                                  0·a⇒0
+                                                                                                                                       1·a⇒a
+inner loop uses PPA feedback to adjust e-node costs and guide the                                       Distributivity                 a · b + a · c ⇒ a · (b + c)
+extraction process from the e-graph.                                                                                                   c · x ⇒ x ≪ log2 c
+                                                                                                        Power-of-Two Multiplication
+                                                                                                                                       if c = 2k
+                                                                                                                                       c · x ⇒ 2 · (⌊c/2⌋ · x) + (c mod 2) · x
+                                                                                                        Odd Constant Multiplication
+B. Rewrite Rule Proposal                                                                                                               if c is odd and c > 1
+                                                                                                                                       c · x ⇒ (c ≫ 1) · 2 · x
+                                                                                                        Even Constant Multiplication
+                                                                                                                                       if c is even and c > 0
+                                                                                                        Shift Simplification           (x ≪ c) ≪ 1 ⇒ x ≪ (c + 1)
+                   Rule Proposal Agent                                                                  Estrin’s Transformation        x2 · a + x2 · b ⇒ x2 · (a + b)
+   Input                                                                              Rewrite
+                                                    Proposed        T
+  Verilog                                lhs=rhs                                      Rule Pool         Addition Balancing             (a + b) + (c + d) ⇒ (a + c) + (b + d)
+                                                    rules
+                                                                                      w/ New Rules      MUXAR Simplification           a · b + c · ¬b ⇒ MUXAR(b, a, c)
+                                                    Z3 proof
+    lhs=rhs
+                                                    programs
+                                                                            lhs=rhs
+ Initial Rules
+                                                                         Initial Rules
+                                                                                                     C. Critical Rule Set Selection
+                      Example rule
+                      Z3 proof                                                                          A key observation in our work is that while rewrite rules are the
+Fig. 3. Rewrite rule proposal agent – starting from the input Verilog design,                        foundation of improvement in e-graph-based RTL PPA optimization,
+the initial rule set, and example proofs, the agent generates candidate rewrite                      using too many or too few can degrade effectiveness. An excessive
+rules together with Z3 proof scripts. A candidate rule is added to the rule                          number of rewrite rules can cause the e-graph to grow excessively,
+pool only after its proof is successfully verified.
+                                                                                                     leading to longer runtimes or failure to reach saturation, ultimately
+                                                                                                     making it difficult to extract a high-quality design. To address this,
+   Fig. 3 illustrates the rewrite rule proposal agent. It takes as input                             we propose selecting a critical set of rewrite rules based on the
+the Verilog design, an initial set of rewrite rules listed in Table I,                               characteristics of the input design and feedback from synthesis
+and example proof programs for existing rules. The initial rewrite                                   results. The critical rule selection agent receives three types of input:
+rules and corresponding Z3 proofs serve as examples for in-context                                   (1) the input Verilog datapath design, which provides design context;
+learning. The input Verilog design allows the LLM to analyze design                                  (2) the rewrite rule pool with newly proposed rewrite rules; and (3)
+patterns and propose design-specific rules. The agent is tasked with                                 the exploration history, including previously selected rule subsets
+proposing new rewrite rule candidates aimed at PPA optimizations,                                    and their best PPA results, which guides the agent based on past
+along with corresponding proof programs. Each proof program is then                                  performance.
+evaluated to check whether the proposed rule preserves functional
+equivalence. If the rule is verified, it is added to the rewrite rule                                D. Incorporating PPA Feedback
+pool. This rewrite rule proposal phase is executed only once at the                                    Each e-node in the e-graph is associated with a cost. During
+beginning of the workflow.                                                                           extraction, a cost model is used to select a sub-graph from the
+
+
+
+
+      Authorized licensed use limited to: Columbia University Libraries. Downloaded on October 16,2026 at 14:01:34 UTC from IEEE Xplore. Restrictions apply.
+       E-CLASS
+                                MUL                ADD                                  MUL                ADD                                MUL               ADD
+        E-NODE                   1                  1                                    4                  1                                  10                3
+          Cost
+
+
+       Notation                                          SHL                                                     SHL
+                            a         11                  1                         a         11                  1                       a         11                SHL
+                                                                                                                                                                       1
+
+
+                                        ADD        MUL                                          ADD        MUL                                        ADD       MUL
+                                         1          1          1                                 1          1          1                               3         10         1
+
+                                  SHL                                                     SHL                                                   SHL
+                                   1           a         5                                 1           a         5                               1          a         5
+
+                  SHL       MUL                                           SHL       MUL                                             SHL   MUL
+                   1         1          1                                  1         1          1                                    1     10         1
+
+                                              Extracted expression:                                   Extracted expression:                           Extracted expression:
+            a           1          2                  a * 11          a         1          2              (a * 5) << 1 + a    a      1          2     ((a << 1) << 1 + a) << 1 + a
+                                              Area: 31.5 μm²                                          Area: 31.3 μm²                                  Area: 32.5 μm²
+
+                        (a) Uniform cost.                                       (b) PPA-aware cost.                               (c) Fixed cost, no PPA feedback.
+Fig. 4. E-Graph extraction example with different e-node costs – The saturated e-graph is produced by applying rewrite rules for power-of-two multiplication,
+odd constant multiplication, and even-cost multiplication to the expression a×11. The extracted subgraph is highlighted in gray. Leaf nodes a, 1 are duplicated
+to enhance visualization. (a) When all operation costs are set to 1. (b) Based on the PPA result of the initial design point, the cost of the root MUL e-node
+is increased, resulting in a partial unfolding. (c) Without PPA feedback, the cost of all MUL e-nodes is uniformly set to a high value, leading to complete
+unfolding into additions and shifts.
+
+
+saturated e-graph with the lowest total cost, typically the sum of                                    tools provide symbol tracing from Verilog to netlist, these traces
+e-node costs. As such, setting appropriate e-node costs is critical.                                  are often incomplete or imprecise. We find that LLMs’ pattern
+   Existing e-graph-based RTL PPA optimization methods often rely                                     matching can reliably map netlist-level PPA metrics back to e-nodes
+on heuristics to assign e-node costs based on synthesis feedback.                                     by exploiting naming conventions preserved through synthesis (e.g.,
+However, this approach has several limitations. First, heuristic cost                                 appended prefixes or suffixes). This enables correlation between e-
+assignments may lack accuracy or fidelity—-they often fail to reflect                                 node groups and netlist subgraphs, even in the presence of structural
+the true relative impact of delay or area in the synthesized design.                                  transformations like adder trees or partial-product networks. Two
+Second, these costs are typically fixed and global, making them                                       major challenges remain in applying LLMs for this tracing task:
+unable to adapt dynamically to PPA feedback or apply fine-grained,                                       1. Context window limitations. Synthesized netlists can easily
+localized adjustments.                                                                                contain hundreds of thousands to millions of instances, far exceeding
+   1) Motivating Example: Fig. 4 illustrates how e-node costs influ-                                  the context window of even the latest LLMs. Even when fitting within
+ence post-synthesis PPA. The target scenario is fixed delay, with the                                 the window, the latency of the prefill stage would be prohibitively
+goal of minimizing area. Area information is obtained by synthesizing                                 high. To address this, we apply K-way graph partitioning to divide
+the design using a commercial synthesis tool with the ASAP7                                           the netlist into subgraphs. Each subgraph can then be processed
+PDK [39]. The optimization target is the expression a×11, and                                         independently by the LLM.
+the saturated e-graph is generated by applying rewrite rules for
+                                                                                                         2. Graph representation mismatch. LLMs are inherently better
+power-of-two multiplication, odd constant multiplication, and even-
+                                                                                                      suited for processing sequential data than graph-structured data. To
+cost multiplication listed in Table I.
+                                                                                                      make the data more amenable to LLM processing, we serialize
+   These rules enable the constant multiplication to be recursively un-
+                                                                                                      each subgraph into a text format that includes instance names along
+folded into additions and shifts. Since multipliers typically consume
+                                                                                                      with input and output signal names. These serialized representations
+more area than adders or shifters, a natural assumption is to assign a
+                                                                                                      capture the structural and naming patterns necessary for effective
+higher cost to multiplication. In Fig. 4c, this is modeled by setting a
+                                                                                                      subgraph-to-e-node-group matching.
+uniformly high cost for all mul e-nodes, which forces full unfolding
+into additions and shifts. However, this actually results in a larger                                    3) History Backtracking: To improve design space exploration,
+area than the baseline case shown in Fig. 4a, where all e-nodes are                                   our system allows the agent to backtrack e-node cost changes that lead
+assigned a uniform cost of one.                                                                       to degraded PPA outcomes. The prompt records recent cost updates
+   By incorporating PPA feedback, we can more effectively balance                                     and corresponding feedback, enabling the agent to reason about past
+trade-offs between multipliers and the combination of adders and                                      decisions and undo unfavorable ones. This helps avoid local minima
+shifters. As shown in Fig. 4b, non-uniform e-node costs—adjusted                                      and better navigate non-monotonic optimization landscapes.
+based on synthesis feedback—lead to an extracted expression that
+mixes multiplication, shift, and addition operations, resulting in a
+smaller area than either uniform-cost baseline.                                                       E. Verification
+   This example highlights that assigning the same fixed cost to
+all e-nodes of a given type does not necessarily lead to real PPA                                        To ensure that optimizations preserve the original functionality,
+improvement. Instead, localized e-node cost adjustment guided by                                      we apply an RTL equivalence checker between the input Verilog and
+PPA feedback can yield more efficient designs.                                                        each optimized Verilog design. This step verifies that the transformed
+   2) Tracing PPA Results to e-nodes: A key challenge in using PPA                                    design remains semantically equivalent to the original. In our imple-
+results to guide optimization lies in mapping individual operations to                                mentation, we use a commercial equivalence checking tool to validate
+components in the synthesized netlist. While commercial synthesis                                     all final design points on the Pareto frontier.
+
+
+
+
+     Authorized licensed use limited to: Columbia University Libraries. Downloaded on October 16,2026 at 14:01:34 UTC from IEEE Xplore. Restrictions apply.
+                                        ADD                                                                             ADD                                                                                 ADD
+
+       ADD                                                               ADD           ADD                                                               ADD               ADD                                                               ADD
+
+       ADD                 ADD                       MUL                 MUL           ADD                 ADD                       MUL                 MUL               ADD                 ADD                       MUL                 MUL
+
+       ADD     ADD         MUL          MUL          Num         Var     Var           ADD     ADD         MUL          MUL          Num         Var     Var               ADD     ADD         MUL          MUL          Num         Var     Var
+
+       ADD     MUL         SHL          SHL          SHL         Var     Var           ADD     MUL         SHL          SHL          SHL         Var     Var               ADD     MUL         SHL          SHL          SHL         Var     Var
+
+       ADD    MUL MUL            Var           Var           Var         Num           ADD    MUL MUL            Var           Var           Var         Num               ADD    MUL MUL            Var           Var           Var         Num
+
+       ADD           MUL MUL MUL                     Var                 SHL           ADD           MUL MUL MUL                     Var                 SHL               ADD           MUL MUL MUL                     Var                 SHL
+
+       ADD   MUL MUL MUL         Var           SHL           SHL         MUL           ADD   MUL MUL MUL         Var           SHL           SHL         MUL               ADD   MUL MUL MUL         Var           SHL           SHL         MUL
+
+       ADD       MUL MUL                Var                SHL           Var           ADD       MUL MUL                Var                SHL           Var               ADD       MUL MUL                Var                SHL           Var
+
+       ADD            MUL MUL                        Var                 Var           ADD            MUL MUL                        Var                 Var               ADD            MUL MUL                        Var                 Var
+
+       ADD                 Var                       ADD                 Var           ADD                 Var                       ADD                 Var               ADD                 Var                       ADD                 Var
+
+       ADD                              ADD                              MUL           ADD                              ADD                              MUL               ADD                              ADD                              MUL
+
+       ADD           ADD                MUL                MUL           Var           ADD           ADD                MUL                MUL           Var               ADD           ADD                MUL                MUL           Var
+
+       ADD     ADD         MUL          MUL          SHL         Var     Var           ADD     ADD         MUL          MUL          SHL         Var     Var               ADD     ADD         MUL          MUL          SHL         Var     Var
+
+       ADD    ADD     MUL         MUL         Num      Var         Var   Num           ADD    ADD     MUL         MUL         Num      Var         Var   Num               ADD    ADD     MUL         MUL         Num      Var         Var   Num
+
+       ADD     ADD         MUL          MUL          Num         MUL     MUL           ADD     ADD         MUL          MUL          Num         MUL     MUL               ADD     ADD         MUL          MUL          Num         MUL     MUL
+
+       MUL     MUL         MUL          MUL          Num         Var     Var           MUL     MUL         MUL          MUL          Num         Var     Var               MUL     MUL         MUL          MUL          Num         Var     Var
+
+       Num           MUL               Num                 MUL           MUL           Num           MUL               Num                 MUL           MUL              Num            MUL               Num                 MUL           MUL
+
+
+
+                           (a) Iteration 1.                                                                (b) Iteration 5.                                                                    (c) Iteration 9.
+Fig. 5. Iterative E-node Cost Update in FIR Design using PPA Feedback – Sequence of saturated e-graphs from a Finite Impulse Response (FIR) filter
+design, illustrating the update of e-node costs over successive iterations based on Power, Performance, and Area (PPA) feedback. The relative cost of each
+e-node is visualized by its size. (a) Iteration 1: All e-nodes are assigned an initial, uniform cost. (b) Iteration 5: Following PPA analysis, the costs associated
+with all MUL (multiplication) e-nodes are increased. (c) Iteration 9: Further PPA feedback results in an increased cost for ADD (addition) e-nodes, particularly
+those positioned closer to the leaf nodes in the e-graph.
+
+                                                                TABLE II
+  E ND - TO - END COMPARISON OF ASPEN WITH ROVER AND THE C OMMERCIAL S YNTHESIZER BASELINE ACROSS AREA AND DELAY METRICS . T HE
+TABLE REPORTS ABSOLUTE AREA ( IN µm2 ) AND DELAY ( IN PS ) FOR EACH BENCHMARK , ALONG WITH PERCENTAGE IMPROVEMENTS OF ASPEN OVER
+  BOTH BASELINES . T HE AREA AND DELAY VALUES FOR ASPEN ARE SELECTED INDEPENDENTLY AS THE BEST ( I . E ., MINIMAL ) VALUES FROM THE
+                                                            PARETO FRONTIER .
+
+                                   Commercial Baseline                                 ROVER                                    ASPEN                                 Improv. over Baseline                        Improv. over ROVER
+  Benchmarks
+                                 area(µm2 )   delay (ps)                       area (µm2 ) delay (ps)                   area (µm2 ) delay (ps)                        area (%) delay (%)                           area (%) delay (%)
+  FIR                            240.31       933.75                           194.10      933.75                       169.52      804.30                            29.46      13.86                             12.66      13.86
+  DCT                            3805.31      1355.33                          3715.26     1326.31                      3666.00     1272.26                           3.66       6.13                              1.33       4.08
+  Polynomial                     685.41       2492.13                          569.99      2486.84                      544.65      2486.79                           20.54      0.21                              4.45       0.00
+  Watermark                      30.66        485.84                           28.23       442.18                       28.23       442.18                            7.94       8.99                              0.00       0.00
+  MCM(3, 7, 21)                  32.99        366.17                           31.43       332.58                       22.83       332.58                            30.80      9.17                              27.37      0.00
+  MCM(7, 19, 31)                 44.64        462.33                           44.64       405.34                       25.11       316.12                            43.76      31.62                             43.76      22.01
+  MCM(5, 93)                     30.53        431.52                           27.47       383.62                       20.32       358.20                            33.43      16.99                             26.01      6.63
+  Average                        -            -                                -           -                            -           -                                 24.23      12.43                             16.51      6.65
+
+
+
+                                              IV. E VALUATION                                                                                                      TABLE III
+                                                                                                                                                 B ENCHMARKS AND THEIR TARGET CLOCK FREQUENCIES .
+A. Experimental Setup
+   We evaluate ASPEN on a suite of RTL datapath design benchmarks                                                                   Benchmarks                 Description                                                     Target Clock Freq.
+
+listed in Table III. All seven designs are open-source. For equality                                                                FIR                        Finite Impulse Response filter                                            1 GHz
+                                                                                                                                    DCT                        8-point Discrete Cosine Transform                                         1 GHz
+saturation, we use egglog version 0.4.0 and employ the fast greedy                                                                  Polynomial                 4-degree polynomial evaluator                                            400 MHz
+and fast bottom-up extractors provided by extraction-gym 1 .                                                                        Watermark                  Bitplane image encryption                                                 2 GHz
+                                                                                                                                    MCM(3, 7, 21)              Multiple constant multiplication 3, 7, 21                                 2 GHz
+We use a commercial RTL design synthesis tool with advanced                                                                         MCM(7, 19, 31)             Multiple constant multiplication 7, 19, 31                                2 GHz
+technology mapping optimization features. In all experiments, the                                                                   MCM(5, 93)                 Multiple constant multiplication 5, 93                                    2 GHz
+area, power, and delay optimization efforts are configured to ”high”
+within the synthesis tool to ensure aggressive optimization. We use                                                           B. End-to-end Evaluation
+OpenAI’s gpt-4.1-202504142 to power the rule selection and
+PPA feedback agents, and o3-20250416 for the rule proposal                                                                       Table II presents an end-to-end comparison of ASPEN against two
+agent. We synthesize each unoptimized design, sweeping clock                                                                  baselines, ROVER and a Commercial Synthesis Tool, across a diverse
+frequencies from 250 MHz to 5 GHz, and select the target frequency                                                            set of benchmarks, reporting absolute area and delay values, as well as
+at which area begins to climb sharply to meet tighter timing; these                                                           percentage improvements. The commercial synthesis baseline refers
+values are listed in Table III.                                                                                               to the base area and delay achieved by a commercial synthesis
+                                                                                                                              tool, serving as a reference to understand the effectiveness of PPA
+  1 https://github.com/egraphs-good/extraction-gym                                                                            optimization during synthesis and technology mapping. ROVER
+  2 https://platform.openai.com/docs/models                                                                                   denotes our reproduction using the rewrite rules in Table I and fixed
+
+
+
+
+     Authorized licensed use limited to: Columbia University Libraries. Downloaded on October 16,2026 at 14:01:34 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                    ASPEN-w/o-PS                    ASPEN-w/o-PF                                     ASPEN-w/o-P                             ASPEN
+                  60                                                                                                                                              30
+
+
+
+
+                                                                                                                                               DELAY IMPROV (%)
+                                                                                                                                       43.8%
+
+
+
+
+AREA IMPROV (%)
+                                                                                                                                                                                                                                                                                                                           22.0%
+                  40                                                                        33.4%                       31.5%   31.5%
+                                                                                       28.6%            28.8%28.9%30.8%                                           20
+                                                                                                                                                                                 14.8%
+                                                                                                                                                                                                       13.5%
+                                                                                                    17.9%
+                  20                        12.7%
+                                                                                                                            16.0%
+                                     9.6%                                     10.0%10.0%                                                                                                                       8.3%
+                                                                                                                                                                                                8.1%
+                                                             0.0% 0.8% 1.4%
+                                                                                                                                                                  10                                                                                   6.6% 6.6%
+                                                                                                                                                                                                                                                                                                      5.2%          5.2%
+                   0                                                                                                                                                                     4.1%                                3.3%
+                             -0.4%
+                                                                                                                                                                                                                      1.1%          0.5%   0.0% 0.0%                       0.0%           0.0% 0.0%          0.0%
+                                                    -10.8%
+                  −20                                                                                                                                             0                                                                                                               -0.1%
+                        -24.4%
+
+                                 FIR                          DCT               MCM(5, 93)          MCM(3, 7, 21) MCM(7, 19, 31)                                                           FIR                         DCT                    MCM(5, 93)                   MCM(3, 7, 21) MCM(7, 19, 31)
+
+Fig. 6. Ablation study — Comparison of area and delay improvements (%) over the commercial baseline across different variants of ASPEN. ASPEN is the
+full-featured system with rule proposal, rule selection, and PPA feedback. ASPEN-w/o-PS removes rule proposal and selection, using initial rules and random
+rule selection. ASPEN-w/o-PF removes rule proposal and PPA feedback, using initial rules and fixed e-node costs. ASPEN-w/o-P removes rule proposal but
+retains agent-based selection and PPA feedback.
+
+
+e-node costs. ASPEN results are the best (minimal) area and delay                                                                                                                                              FIR                                                                                DCT
+                                                                                                                                                                                240                        ROVER                                                    3800           ROVER
+from the Pareto frontier. ASPEN outperforms both baselines: up to                                                                                                               230                        ASPEN                                                                   ASPEN
+                                                                                                                                                                                                                                                                    3780
+43.76% area and 31.62% delay reductions on MCM(7,19,31) and                                                                                                                     220                                                                                 3760
+
+                                                                                                                                                                   Area (um²)                                                                          Area (um²)
+33.43% area and 16.99% delay on MCM(5,93). It delivers a 13.86%                                                                                                                 210                                                                                 3740
+                                                                                                                                                                                200                                                                                 3720
+delay gain on FIR and matches or slightly exceeds ROVER on                                                                                                                      190                                                                                 3700
+Watermark and Polynomial. On average, ASPEN cuts area and delay                                                                                                                 180                                                                                 3680
+by 24.23% and 12.43% versus commercial tools, and by 16.51% and                                                                                                                 170                                                                                 3660
+                                                                                                                                                                                   800 820 840 860 880 900 920 940                                                           1280          1300       1320      1340
+6.65% versus ROVER. By combining targeted rewrites with equality                                                                                                                                          Delay (ps)                                                                           Delay (ps)
+saturation, ASPEN overcomes phase-ordering limits to uncover richer                                                                                                                   (a) FIR Design Space.                                                                (b) DCT Design Space.
+transformations and superior PPA improvements.                                                                                                                                                          MCM 3721                                                                            MCM 71931
+                                                                                                                                                                                                                                      ASPEN                         45.0                                               ROVER
+C. Case Study: Proposed and Selected Rewrite Rules                                                                                                                              32                                                    ROVER                         42.5                                               ASPEN
+                                                                                                                                                                                                                                                                    40.0
+                                                                                                                                                                                30
+                                                                                                                                                                                                                                                                    37.5
+                                                                                                                                                                   Area (um²)                                                                          Area (um²)
+   The rules proposed by the agent that pass equivalence checking
+                                                                                                                                                                                28                                                                                  35.0
+are listed in Appendix A. They fall into two categories: (1) design-                                                                                                                                                                                                32.5
+                                                                                                                                                                                26
+specific rules (e.g., multiply-by-12, -41, -21 for FIR; -93, -5 for                                                                                                                                                                                                 30.0
+                                                                                                                                                                                24                                                                                  27.5
+MCM(5,93)) that limit e-node growth vs. stepwise unfolding; and                                                                                                                                                                                                     25.0
+(2) deeper-level rewrites (e.g., three-level nested multiplier factoring                                                                                                              335 340 345 350 355 360 365                                                          320 340 360 380 400 420 440 460
+                                                                                                                                                                                                          Delay (ps)                                                                          Delay (ps)
+in DCT) that extend existing rules for more aggressive optimizations.
+   Selected critical rules are in Appendix B. A core set of algebraic                                                                                                    (a) MCM(3, 7, 21) Design Space.                                                   (b) MCM(7, 19, 31) Design Space.
+laws applies across all benchmarks, augmented by a few custom
+                                                                                                                                                       Fig. 7. Design points explored by ASPEN for FIR, DCT, and MCMs – grey
+rewrites (e.g., constant-coefficient multipliers for FIR and nested fac-                                                                               points represent design candidates evaluated by ASPEN. ASPEN identifies a
+torizations for DCT). This mix of general and targeted rules highlights                                                                                Pareto frontier, whereas ROVER produces only a single design point.
+the agent’s balance of broad applicability and specialization, driving
+efficient e-graph exploration and high-quality extraction.
+                                                                                                                                                       F. Ablation Study
+D. Case Study: E-Node Cost Learning via PPA Feedback
+                                                                                                                                                          The ablation results in Fig. 6 highlight the contribution of each
+   Figure 5 illustrates how ASPEN iteratively refines e-node costs                                                                                     component in ASPEN. Removing rule proposal (ASPEN-w/o-P)
+within the saturated e-graph of a FIR design using feedback from PPA                                                                                   consistently reduces performance, particularly for MCM(7, 19, 31),
+analysis. Initially, all e-nodes are assigned a uniform cost, resulting                                                                                where full ASPEN achieves a 43.8% area and 22.0% delay improve-
+in a uniform visual size across the graph (Fig. 5a). After several                                                                                     ment, compared to 31.5% and 5.2% without proposal. Excluding PPA
+iterations, the cost model incorporates feedback indicating that MUL                                                                                   feedback (ASPEN-w/o-PF) leads to further degradation, especially
+operations are more expensive, which is visualized as an increase                                                                                      on FIR and DCT, underscoring the importance of dynamic cost
+in the size of all MUL e-nodes (Fig. 5b). As iterations progress,                                                                                      guidance. The weakest variant, ASPEN-w/o-PS, which lacks both
+ASPEN further adjusts the cost model based on PPA feedback, this                                                                                       proposal and learned selection, occasionally performs worse than
+time increasing the cost of ADD nodes—especially those closer to the                                                                                   the commercial baseline (e.g., –24.4% area on FIR). Overall, these
+leaf level of the graph (Fig. 5c). This example highlights ASPEN’s                                                                                     results demonstrate that all three components are critical to ASPEN’s
+ability to dynamically adjust the internal cost model according to                                                                                     effectiveness.
+PPA results.
+                                                                                                                                                                                                                                V. C ONCLUSION
+E. Case Study: Pareto-Optimal Designs                                                                                                                     We introduced ASPEN, an agentic system that combines LLM-
+    Figure 7 shows design space exploration for the FIR, DCT,                                                                                          driven rule generation with e-graph rewriting and real PPA feedback
+MCM(3, 7, 21), and MCM(7, 19, 31) benchmarks. ASPEN evaluates                                                                                          from commercial EDA tools to automate equivalence-preserving
+a wide range of candidate designs (grey dots) and successfully iden-                                                                                   datapath RTL optimization. By eliminating manual rule design and
+tifies a Pareto frontier capturing the area-delay trade-off (green line).                                                                              proxy metrics, ASPEN enables principled, practical exploration of
+In contrast, ROVER yields only a single design point (purple star),                                                                                    the RTL design space.
+which lies on the Pareto frontier for MCM(3, 7, 21) but is otherwise                                                                                   ACKNOWLEDGEMENTS – This work is supported in part by NSF
+dominated by ASPEN’s solutions. This highlights ASPEN’s ability                                                                                        Awards #2019306, #2403135, CCF2403134, CCF2349670, CNS2349461,
+to provide a broader and more efficient set of design choices.                                                                                         and CNS2229562.
+
+
+
+
+                    Authorized licensed use limited to: Columbia University Libraries. Downloaded on October 16,2026 at 14:01:34 UTC from IEEE Xplore. Restrictions apply.
+                               R EFERENCES                                        [21] J. Cheng, S. Coward, L. Chelini, R. Barbalho, and T. Drane, “Seer:
+                                                                                       Super-optimization explorer for high-level synthesis using e-graph
+ [1] R. Roy, J. Raiman, N. Kant, I. Elkin, R. Kirby, M. Siu, S. Oberman,               rewriting,” in Proceedings of the 29th ACM International Conference
+     S. Godil, and B. Catanzaro, “Prefixrl: Optimization of parallel prefix            on Architectural Support for Programming Languages and Operating
+     circuits using deep reinforcement learning,” in 2021 58th ACM/IEEE                Systems, Volume 2, 2024, pp. 1029–1044.
+     Design Automation Conference (DAC). IEEE, 2021, pp. 853–858.                 [22] E. Ustun, I. San, J. Yin, C. Yu, and Z. Zhang, “Impress: Large
+ [2] E. Ustun, C. Yu, and Z. Zhang, “Equality saturation for datapath                  integer multiplication expression rewriting for fpga hls,” in 2022 IEEE
+     synthesis: A pathway to pareto optimality,” in 2023 60th ACM/IEEE                 30th Annual International Symposium on Field-Programmable Custom
+     Design Automation Conference (DAC). IEEE, 2023, pp. 1–2.                          Computing Machines (FCCM), 2022, pp. 1–10.
+ [3] S. Coward, T. Drane, and G. A. Constantinides, “Rover: Rtl optimization      [23] J. Yin, Z. Song, N. B. Agostini, A. Tumeo, and C. Yu, “Hec: Equivalence
+     via verified e-graph rewriting,” IEEE Transactions on Computer-Aided              verification checking for code transformation via equality saturation,”
+     Design of Integrated Circuits and Systems, 2024.                                  USENIX Annual Technical Conference (ATC), 2025.
+ [4] M. Liu, N. Pinckney, B. Khailany, and H. Ren, “Verilogeval: Evaluating       [24] S. Coward, G. A. Constantinides, and T. Drane, “Automating constraint-
+     large language models for verilog code generation,” in 2023 IEEE/ACM              aware datapath optimization using e-graphs,” in 2023 60th ACM/IEEE
+     International Conference on Computer-Aided Design (ICCAD). IEEE,                  Design Automation Conference (DAC). IEEE, 2023, pp. 1–6.
+     2023, pp. 1–8.                                                               [25] S. Coward, T. Drane, and G. A. Constantinides, “Constraint-aware e-
+ [5] Y. Lu, S. Liu, Q. Zhang, and Z. Xie, “Rtllm: An open-source benchmark             graph rewriting for hardware performance optimization,” IEEE Trans-
+     for design rtl generation with large language model,” in 2024 29th Asia           actions on Computer-Aided Design of Integrated Circuits and Systems,
+     and South Pacific Design Automation Conference (ASP-DAC). IEEE,                   2024.
+     2024, pp. 722–727.                                                           [26] Y. Cai, K. Yang, C. Deng, C. Yu, and Z. Zhang, “Smoothe: Differentiable
+ [6] S. Thakur, B. Ahmad, Z. Fan, H. Pearce, B. Tan, R. Karri, B. Dolan-               e-graph extraction,” in Proceedings of the 30th ACM International
+     Gavitt, and S. Garg, “Benchmarking large language models for auto-                Conference on Architectural Support for Programming Languages and
+     mated verilog rtl code generation,” in 2023 Design, Automation & Test             Operating Systems, Volume 1, 2025, pp. 1020–1034.
+     in Europe Conference & Exhibition (DATE). IEEE, 2023, pp. 1–6.               [27] H. Huang, Z. Lin, Z. Wang, X. Chen, K. Ding, and J. Zhao, “Towards
+ [7] S. Thakur, B. Ahmad, H. Pearce, B. Tan, B. Dolan-Gavitt, R. Karri, and            llm-powered verilog rtl assistant: Self-verification and self-correction,”
+     S. Garg, “Verigen: A large language model for verilog code generation,”           arXiv preprint arXiv:2406.00115, 2024.
+     ACM Transactions on Design Automation of Electronic Systems, vol. 29,        [28] M. DeLorenzo, A. B. Chowdhury, V. Gohil, S. Thakur, R. Karri, S. Garg,
+     no. 3, pp. 1–31, 2024.                                                            and J. Rajendran, “Make every move count: Llm-based high-quality rtl
+ [8] S. Liu, W. Fang, Y. Lu, Q. Zhang, H. Zhang, and Z. Xie, “Rtlcoder:                code generation using mcts,” arXiv preprint arXiv:2402.03289, 2024.
+     Outperforming gpt-3.5 in design rtl generation with our open-source          [29] S. Liu, Y. Lu, W. Fang, M. Li, and Z. Xie, “Openllm-rtl: Open dataset
+     dataset and lightweight solution,” in 2024 IEEE LLM Aided Design                  and benchmark for llm-aided design rtl generation,” in Proceedings of the
+     Workshop (LAD). IEEE, 2024, pp. 1–5.                                              43rd IEEE/ACM International Conference on Computer-Aided Design,
+ [9] Y. Tsai, M. Liu, and H. Ren, “Rtlfixer: Automatically fixing rtl syntax           2024, pp. 1–9.
+     errors with large language model,” in Proceedings of the 61st ACM/IEEE       [30] M. Akyash, K. Azar, and H. Kamali, “Rtl++: Graph-enhanced llm for
+     Design Automation Conference, 2024, pp. 1–6.                                      rtl code generation,” arXiv preprint arXiv:2505.13479, 2025.
+[10] S. Thakur, J. Blocklove, H. Pearce, B. Tan, S. Garg, and R. Karri, “Au-      [31] A. Wei, H. Tan, T. Suresh, D. Mendoza, T. S. Teixeira, K. Wang,
+     tochip: Automating hdl generation using llm feedback,” arXiv preprint             C. Trippel, and A. Aiken, “Vericoder: Enhancing llm-based rtl code
+     arXiv:2311.04887, 2023.                                                           generation through functional correctness validation,” arXiv preprint
+[11] J. Hlavicka and P. Fiser, “Boom: A heuristic boolean minimizer,”                  arXiv:2504.15659, 2025.
+     in IEEE/ACM International Conference on Computer-Aided Design.               [32] S. Sandal and I. Akturk, “Zero-shot rtl code generation with at-
+     ICCAD 2001. IEEE/ACM Digest of Technical Papers (Cat. No.                         tention sink augmented large language models,” arXiv preprint
+     01CH37281). IEEE, 2001, pp. 439–442.                                              arXiv:2401.08683, 2024.
+[12] E. L. Childerhose and J. Liu, “A heuristic approach to two-level             [33] Y. Wang, W. Ye, P. Guo, Y. He, Z. Wang, B. Tian, S. He, G. Sun, Z. Shen,
+     boolean minimization derived from karnaugh mapping,” arXiv preprint               S. Chen et al., “Symrtlo: Enhancing rtl code optimization with llms and
+     arXiv:2008.09307, 2020.                                                           neuron-inspired symbolic reasoning,” arXiv preprint arXiv:2504.10369,
+[13] M. Liu, D. Robinson, Y. Li, and C. Yu, “Maptune: Advancing asic                   2025.
+     technology mapping via reinforcement learning guided library tuning,”        [34] H. Sami, P.-E. Gaillardon, V. Tenace et al., “Eda-aware rtl generation
+     arXiv preprint arXiv:2407.18110, 2024.                                            with large language models,” arXiv preprint arXiv:2412.04485, 2024.
+[14] M. Willsey, C. Nandi, Y. R. Wang, O. Flatt, Z. Tatlock, and P. Panchekha,    [35] V. K. Gupta, A. Yadav, M. Fujita, and B. Kumar, “Llm-aided front-end
+     “egg: Fast and extensible equality saturation,” Proceedings of the ACM            design framework for early development of verified rtls,” in 2024 IEEE
+     on Programming Languages, vol. 5, no. POPL, pp. 1–29, 2021.                       33rd Asian Test Symposium (ATS). IEEE, 2024, pp. 1–6.
+                                                                                  [36] Y. Zhao, H. Zhang, H. Huang, Z. Yu, and J. Zhao, “Mage: A
+[15] Y. Zhang, Y. R. Wang, O. Flatt, D. Cao, P. Zucker, E. Rosenthal, Z. Tat-
+                                                                                       multi-agent engine for automated rtl code generation,” arXiv preprint
+     lock, and M. Willsey, “Better together: Unifying datalog and equality
+                                                                                       arXiv:2412.07822, 2024.
+     saturation,” Proceedings of the ACM on Programming Languages, vol. 7,
+                                                                                  [37] Y. Hu, J. Ye, K. Xu, J. Sun, S. Zhang, X. Jiao, D. Pan, J. Zhou,
+     no. PLDI, pp. 468–492, 2023.
+                                                                                       N. Wang, W. Shan et al., “Uvllm: An automated universal rtl verification
+[16] Y. R. Wang, S. Hutchison, J. Leang, B. Howe, and D. Suciu, “Spores:
+                                                                                       framework using llms,” arXiv preprint arXiv:2411.16238, 2024.
+     Sum-product optimization via relational equality saturation for large-
+                                                                                  [38] S. Ranga, R. Mao, D. Bhattacharjee, E. Cambria, and A. Chattopad-
+     scale linear algebra,” arXiv preprint arXiv:2002.07951, 2020.
+                                                                                       hyay, “Rtl agent: An agent-based approach for functionally correct hdl
+[17] A. VanHattum, R. Nigam, V. T. Lee, J. Bornholt, and A. Sampson,
+                                                                                       generation via llms,” in 2024 IEEE 33rd Asian Test Symposium (ATS).
+     “Vectorization for digital signal processors via equality saturation,” in
+                                                                                       IEEE, 2024, pp. 1–6.
+     Proceedings of the 26th ACM International Conference on Architectural
+                                                                                  [39] L. T. Clark, V. Vashishtha, L. Shifren, A. Gujja, S. Sinha, B. Cline,
+     Support for Programming Languages and Operating Systems, 2021, pp.
+                                                                                       C. Ramamurthy, and G. Yeric, “ASAP7: A 7-nm FinFET Predictive
+     874–886.
+                                                                                       Process Design Kit,” Microelectronics Journal, vol. 53, pp. 105–115,
+[18] C. Chen, G. Hu, C. Yu, Y. Ma, and H. Zhang, “E-morphic: Scalable                  Jul. 2016.
+     equality saturation for structural exploration in logic synthesis,” Pro-
+     ceedings of the 62nd ACM/IEEE Design Automation Conference (DAC),
+     2025.
+[19] C. Chen, G. Hu, D. Zuo, C. Yu, Y. Ma, and H. Zhang, “E-syn: E-graph
+     rewriting with technology-aware cost functions for logic synthesis,”
+     in Proceedings of the 61st ACM/IEEE Design Automation Conference
+     (DAC), 2024, pp. 1–6.
+[20] J. Yin, Z. Song, C. Chen, Q. Hu, and C. Yu, “Boole: Exact symbolic
+     reasoning via boolean equality saturation,” Proceedings of the 62nd
+     ACM/IEEE Design Automation Conference (DAC), 2025.
+
+
+
+
+     Authorized licensed use limited to: Columbia University Libraries. Downloaded on October 16,2026 at 14:01:34 UTC from IEEE Xplore. Restrictions apply.
+                                                                   TABLE IV
+                                           R EWRITE RULES PROPOSED BY AGENT THAT PASSED VERIFICATION
+
+                        Design Name          Class                                   Rewrite Rules
+                                             Double add to shift                     x+x⇒x≪1
+                                             Multiply by 12                          12 · x ⇒ (x ≪ 3) + (x ≪ 2)
+                        FIR
+                                             Factor common shift                     (a ≪ c) + (b ≪ c) ⇒ (a + b) ≪ c
+                                             Multiply by 41                          41 · x ⇒ ((x ≪ 5) + (x ≪ 3)) + x
+                                             Multiply by 21                          21 · x ⇒ ((x ≪ 4) + (x ≪ 2)) + x
+                                             Even constant multiply via shift        c · x ⇒ ((c ≫ 1) · x) ≪ 1
+                                                                                     if c ̸= 0 ∧ (c & 1) = 0
+                        DCT
+                                             Factor common shift                     (a ≪ c) + (b ≪ c) ⇒ (a + b) ≪ c
+                                             Merge constant multipliers              (c1 · x) + (c2 · x) ⇒ (c1 + c2 ) · x
+                                             Factor nested multipliers               (a · b) + ((a · c) + e) ⇒ (a · (b + c)) + e
+                                             Factor common constant multiplier       (c · x) + (c · y) ⇒ c · (x + y)
+                                             Merge nested constant multipliers       (c1 · (c2 · x)) ⇒ (c1 · c2 ) · x
+                                             Quartic reassociation                   ((x · x) · x) · x ⇒ (x · x) · (x · x)
+                        Polynomial           Move shift outside multiplication       (x ≪ c) · y ⇒ (x · y) ≪ c
+                                             Distributive law (right)                (a · c) + (b · c) ⇒ (a + b) · c
+                                             Move shift from right operand           a · (b ≪ c) ⇒ (a · b) ≪ c
+                                             Factor common shift from add            (a ≪ n) + (b ≪ n) ⇒ (a + b) ≪ n
+                                             Multiply boolean to MUX                 a · (b ∧ 1) ⇒ MUXAR(b ∧ 1, a, 0)
+                        Watermark
+                                             Convert and-or to MUX                   (a ∧ (¬s)) ∨ (b ∧ s) ⇒ MUXAR(s, b, a)
+                                             Simplify redundant and-or               (a ∧ b) ∨ (a ∧ (¬b)) ⇒ a
+                                             Symmetric MUXAR                         (a · (¬b)) + (c · b) ⇒ MUXAR(b, c, a)
+                                             Constant shift then multiply            (c ≪ k) · x ⇒ (c · x) ≪ k
+                                             Optimized multiply by 21                21 · x ⇒ (x ≪ 4) + ((x ≪ 2) + x)
+                        MCM(3, 7, 21)
+                                             Multiply 7 via 3                        7 · x ⇒ ((3 · x) ≪ 1) + x
+                                             Multiply 21 via 7                       21 · x ⇒ ((7 · x) ≪ 1) + (7 · x)
+                                             Merge shifts                            (x ≪ c) ≪ k ⇒ x ≪ (c + k)
+                                             Alternate 2n − 1 multiply form          c · x ⇒ (x ≪ log2 (c + 1)) − x
+                                                                                     if c ̸= 0 ∧ c ̸= 1 ∧ ((c + 1) & c) = 0
+                        MCM(7, 19, 31)       Multiply by 19                          19 · x ⇒ (x ≪ 4) + ((x ≪ 1) + x)
+                                             Multiply by 7                           7 · x ⇒ (x ≪ 3) − x
+                                             Double add to shift                     a+a⇒a≪1
+                                             Multiply by 31                          31 · x ⇒ (x ≪ 5) − x
+                                             Push shift into constant                (k ≪ 1) · x ⇒ (k · x) ≪ 1
+                        MCM(5, 93)
+                                             Multiply by 93                          93 · x ⇒ ((((x ≪ 6) + (x ≪ 4)) + (x ≪ 3))
+                                                                                     +(x ≪ 2)) + x
+                                             Multiply by 5                           5 · x ⇒ (x ≪ 2) + x
+
+
+
+                         A PPENDIX A                                             datapaths (e.g., FIR, Polynomial) and structured domains like
+               AGENT-G ENERATED R EWRITE RULES                                   multiple constant multiplication (MCM). For instance, in the MCM(7,
+                                                                                 19, 31) design, the agent proposed five distinct rules capturing
+   Table IV presents the set of rewrite rules proposed by our agent
+                                                                                 optimized decompositions of constants into shift and add/subtract
+that successfully passed equivalence verification across different RTL
+                                                                                 forms. Across all benchmarks, the agent demonstrated an ability to
+designs. The rules span a wide range of algebraic and bitwise
+                                                                                 generate reusable, design-specialized rules, several of which general-
+optimizations, including constant multiplication decomposition, re-
+                                                                                 ize common hardware design idioms. The diversity and correctness of
+association, common subexpression factoring, and conditional ex-
+                                                                                 these rewrites demonstrate the system’s capability to automate high-
+pression restructuring. These rules reflect a blend of human-like
+                                                                                 quality rule discovery that would otherwise require manual design
+insight (e.g., factoring shared shifts or constants) and less intuitive
+                                                                                 effort.
+but correct transformations (e.g., alternate forms of multiplying by
+constants such as 2n − 1). Notably, the agent consistently discovered
+canonical shift-add forms for constant multiplication in both general
+
+
+
+
+    Authorized licensed use limited to: Columbia University Libraries. Downloaded on October 16,2026 at 14:01:34 UTC from IEEE Xplore. Restrictions apply.
+                                                                TABLE V
+                             AGENT- SELECTED REWRITE RULES FOR PARETO - OPTIMAL DESIGN POINTS FOR EACH DESIGN
+
+ Rule Class                                 FIR     DCT       Polynomial        Watermark        MCM(3, 7, 21)         MCM(7, 19, 31)          MCM(5, 93)
+ Associativity                               ✓        ✓                              ✓                   ✓                      ✓                    ✓
+ Commutativity                               ✓        ✓                              ✓                   ✓                      ✓                    ✓
+ Constant shift then multiply                                                                            ✓
+ Distributivity                              ✓        ✓             ✓                ✓                   ✓                      ✓                    ✓
+ Even Constant Multiplication                ✓        ✓             ✓                ✓                   ✓                      ✓                    ✓
+ Identity                                    ✓        ✓             ✓                ✓                   ✓                      ✓                    ✓
+ Optimized multiply by 21                                                                                ✓
+ Odd Constant Multiplication                 ✓        ✓             ✓                ✓                   ✓                      ✓                    ✓
+ Power-of-Two Multiplication                 ✓        ✓             ✓                ✓                   ✓                      ✓                    ✓
+ Merge shifts                                                                                            ✓                                           ✓
+ Shift Simplification                        ✓        ✓             ✓                ✓                   ✓                      ✓                    ✓
+ Merge nested constant multipliers                                  ✓
+ Quartic reassociation                                              ✓
+ Distributive law (right)                                           ✓
+ Estrin’s Transformation                                            ✓
+ Move shift outside multiplication                                  ✓
+ Even constant multiply via shift                     ✓
+ Merge constant multipliers                           ✓
+ Factor nested multipliers                            ✓
+ Factor common constant multiplier                    ✓
+ Factor common shift                         ✓        ✓                              ✓
+ Convert and-or to MUXAR                                                             ✓
+ Simplify redundant and-or                                                           ✓
+ MUXAR Simplification                                                                ✓
+ Multiply boolean to MUX                                                             ✓
+ Symmetric MUXAR                                                                     ✓
+ Alternate 2n −1 multiply form                                                                                                  ✓
+ Multiply 21 via 7                                                                                       ✓
+ Multiply 7 via 3                                                                                        ✓
+ Multiply by 19                                                                                                                 ✓
+ Multiply by 7                                                                                                                  ✓
+ Multiply by 31                                                                                                                 ✓
+ Multiply by 12                              ✓
+ Multiply by 21                              ✓
+ Multiply by 41                              ✓
+ Multiply by 5                                                                                                                                       ✓
+ Multiply by 93                                                                                                                                      ✓
+ Push shift into constant                                                                                                                            ✓
+
+
+                          A PPENDIX B                                            pattern—core algebraic laws augmented by a small number of design-
+                AGENT-S ELECTED R EWRITE RULES                                   specific rewrites—demonstrates how our agent balances generality
+                                                                                 and specialization to drive efficient e-graph growth and high-quality
+   In Table V, we report the critical set of rewrite rules that the              extraction.
+agent chose for each design to reach Pareto-optimal frontier. The
+algebraic laws, namely distributivity, even and odd constant multi-
+plication, identity elimination, power-of-two multiplication, and shift
+simplification, are universally beneficial and therefore selected across
+all seven benchmarks. Associativity and commutativity likewise ap-
+pear in every design except the polynomial kernel, reflecting their
+broad utility in rearranging operations without changing semantics.
+Beyond these general rules, each design exhibits a handful of be-
+spoke transformations. For FIR, the agent specializes in constant-
+coefficient multipliers (×12, ×21, ×41), while the MCM instances
+(e.g., MCM(3,7,21) and MCM(7,19,31)) employ targeted rules such
+as “constant shift then multiply,” “optimized multiply by 21,” and
+chain-factoring multipliers (e.g., multiply 21 via 7 and multiply 7 via
+3). The DCT design leverages deeper-level factorizations—quartic
+reassociation and nesting constant multipliers—whereas the wa-
+termark benchmark relies on Boolean-to-MUX conversions (e.g.,
+Convert and–or to MUXAR) to simplify logical expressions. This
+
+
+
+
+    Authorized licensed use limited to: Columbia University Libraries. Downloaded on October 16,2026 at 14:01:34 UTC from IEEE Xplore. Restrictions apply.
+

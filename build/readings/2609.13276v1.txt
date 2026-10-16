@@ -1,0 +1,660 @@
+                                            E-ALS: Approximation-Potential-Aware E-Graph Rewriting for
+                                                           Approximate Logic Synthesis
+                                             Bin Sun1,2 , Jianan Mu1 , Jiaxi Zhang4 , Rengang Zhang1,2 , Zhiteng Chao1 , Jing Ye1,2,3 , Huawei Li1,2,3
+                                                                   1 State Key Lab of Processors, Institute of Computing Technology, CAS, Beijing, China
+                                                                       2 University of Chinese Academy of Sciences, Beijing, China 3 CASTEST Co., Ltd.
+                                                                               4 Department of Computer Science, Peking University, Beijing, China
+
+
+                                        Abstract
+                                        Approximate logic synthesis (ALS) improves circuit power, perfor-
+                                        mance, and area by trading exact correctness for bounded func-
+
+
+
+
+arXiv:2609.13276v1 [cs.ET] 8 Sep 2026
+                                        tional error. However, existing structural ALS methods largely
+                                        overlook structural bias: even functionally equivalent netlists can
+                                        expose markedly different approximation opportunities and lead
+                                        to substantially different outcomes under the same downstream
+                                        ALS flow. Our experiments show that this effect can induce final
+                                        area gaps of up to 42.77%. To unlock this opportunity, we pro-
+                                        pose E-ALS, an e-graph-based framework for approximation-aware
+                                                                                                                                               (a)                                (b)
+                                        structural search. E-ALS combines Function-Reduced Saturation,
+                                        an ALS-coupled surrogate, search-based extraction, and budget-                          Figure 1: (a) Functionally equivalent starting structures yield
+                                        guided refinement to identify approximation-friendly equivalent                         divergent ALS trajectories and final results. (b) A structure
+                                        structures. Experiments on well-established arithmetic and logic                        superior under exact optimization is not necessarily optimal
+                                        benchmarks show that E-ALS achieves additional area reductions of                       for downstream approximation.
+                                        3.2 and 7.0 percentage points under maximum Hamming-Distance                            bounded functional error for improvements in power, performance,
+                                        and Error-Distance constraints, respectively. Code is available in                      and area (PPA), ALS offers an attractive opportunity for hardware
+                                        https://github.com/ZenuSunB/Ecompile.git                                                optimization in error-tolerant computing systems [20, 21].
+                                                                                                                                   Existing ALS techniques can be broadly divided into functional
+                                        CCS Concepts                                                                            and structural methods [20]. Functional methods directly modify
+                                        • Hardware → Combinational synthesis; Circuit optimiza-                                 the Boolean function but often face scalability challenges. Struc-
+                                        tion.                                                                                   tural methods instead operate through local approximate changes
+                                                                                                                                (LACs) on the logic netlist and therefore scale more effectively
+                                        Keywords                                                                                to large designs. Along this direction, increasingly expressive ap-
+                                        Approximate Logic Synthesis, Equivalence Rewriting                                      proximation operators, ranging from const-LAC and SASIMI-style
+                                        ACM Reference Format:
+                                                                                                                                substitutions [24] to resubstitution-based transformations [12, 14]
+                                         Bin Sun, Jianan Mu, Jiaxi Zhang, Rengang Zhang, Zhiteng Chao, Jing                     and approximate subcircuit replacement [19], have substantially
+                                        Ye, Huawei Li . 2026. E-ALS: Approximation-Potential-Aware E-Graph                      improved ALS capability. However, these efforts mainly enlarge the
+                                        Rewriting for Approximate Logic Synthesis . In IEEE/ACM International                   approximation operator itself, rather than systematically selecting
+                                        Conference on Computer-Aided Design (ICCAD ’26), November 08–12, 2026,                  the exact logic on which structural ALS is applied.
+                                        San Jose, CA, USA. ACM, New York, NY, USA, 9 pages. https://doi.org/10.                    This distinction is important because, in structural ALS, approx-
+                                        1145/3831252.3834064                                                                    imation operators are inherently structure-dependent: even func-
+                                                                                                                                tionally equivalent netlists may expose markedly different local ap-
+                                        1    Introduction                                                                       proximation opportunities and error-propagation patterns, leading
+                                        The growing prevalence of error-resilient applications, such as                         to substantially different approximation outcomes. Since structural
+                                        neural inference and large language model (LLM) workloads, has                          ALS is typically guided by heuristic optimization rather than global
+                                        renewed interest in approximate logic synthesis (ALS). By trading                       search, this dependence is further amplified. We refer to this phe-
+                                                                                                                                nomenon as structural bias: under heuristic structural ALS, different
+                                        Corresponding authors:{mujianan,chaozhiteng}@ict.ac.cn,zhangjiaxi@pku.edu.cn.
+                                        This work was supported by the National Natural Science Foundation of China (Grant
+                                                                                                                                but functionally equivalent logic representations can expose sys-
+                                        Nos. 92473203, 92373206, and U25A20486) and the Strategic Priority Research Program     tematically different approximation opportunities to the synthesis
+                                        of Chinese Academy of Sciences (Grant No. XDB0660103).                                  flow. As illustrated in Fig. 1a and Fig. 1b, structural bias manifests
+                                                                                                                                in two ways: functionally equivalent starting structures can lead
+                                                                                                                                to different ALS trajectories and final results, and a representation
+                                        This work is licensed under a Creative Commons Attribution 4.0 International License.   that is superior under exact optimization is not necessarily more
+                                        ICCAD ’26, San Jose, CA, USA                                                            favorable for approximation. In other words, a netlist that appears
+                                        © 2026 Copyright held by the owner/author(s).
+                                        ACM ISBN 979-8-4007-2873-0/2026/11                                                      more compact or better optimized before approximation does not
+                                        https://doi.org/10.1145/3831252.3834064                                                 necessarily yield a better approximate implementation.
+ICCAD ’26, November 08–12, 2026, San Jose, CA, USA                                                                                    Sun et al.
+
+
+   These observations suggest that, rather than performing ALS on         Boolean differences (MECALS [15]), simulation-guided SAT solv-
+a single exact netlist, one should optimize over a space of function-     ing [13], and SMT-based subcircuit replacement (SubXPAT [19]).
+ally equivalent structures to uncover approximation opportunities         Open resources like EvoApproxLib [17] further aid such research.
+hidden by any single topology. E-graphs provide a compelling sub-            To improve final approximate quality, recent efforts pursue two
+strate for this purpose [18, 29], since they can compactly preserve       paradigms. The first enhances local approximate change (LAC) to
+many equivalent structures without explicit enumeration. However,         expose richer opportunities, utilizing substitute-and-simplify trans-
+for structural ALS, preserving a large equivalence space alone is         formations [24], node simplification [31], resubstitution [12, 14],
+not enough: the space must also be usable for downstream search           and subcircuit replacement [19]. The second optimizes the heuristic
+and selection.                                                            flows surrounding these operators, leveraging sensitivity-driven
+   This gives rise to two challenges. First, how can one construct        screening [16], simultaneous LAC application [26, 28], differentiable
+a structural search space that is not only rich in equivalent             search [27], evolutionary optimization [2], and tree search [10, 32].
+implementations, but also consolidated and exploitable for                While these advances substantially refine how approximation is
+downstream search? Since the equivalence space is astronomi-              performed on a given structure, they overlook a critical question:
+cally large, naive rewriting may enlarge the space without aiding         among functionally equivalent exact structures, which one provides
+approximation-oriented extraction. Second, how can one effi-              the optimal substrate for downstream structural ALS?
+ciently evaluate candidates during structure search accord-
+ing to their downstream approximation quality? A structure                2.2    Equivalence-Based Structural Exploration
+that appears superior under exact synthesis metrics does not nec-
+                                                                          The impact of logic structure is well-recognized in exact synthe-
+essarily lead to a better approximate result, so conventional exact-
+                                                                          sis. While earlier studies identified structural bias in technology
+area criteria cannot reliably guide selection. Meanwhile, evaluating
+                                                                          mapping [4], their structural preservation targeted exact metrics
+many equivalent structures with the full exact legality-checking
+                                                                          (e.g., area, delay) rather than approximation quality. Recently, e-
+flow would be prohibitively expensive. This calls for an efficient
+                                                                          graph-based methods have emerged as a powerful tool to compactly
+ALS-coupled surrogate that can rank candidate structures without
+                                                                          preserve and explore equivalent structures for logic synthesis (E-
+repeatedly invoking expensive exact verification.
+                                                                          Syn [6], E-morphic [5]), FPGA remapping (EqMap [9]), and tech-
+   To this end, we propose E-ALS, an e-graph-based framework for
+                                                                          nology mapping [7, 33]. These works prove the efficacy of equality
+approximate logic synthesis. E-ALS is built on two core components.
+                                                                          saturation for exact optimization. Our work uniquely bridges this
+The first is equivalence-enhanced structural search space construction,
+                                                                          capability into the ALS domain. Unlike exact synthesis, our objec-
+which combines equivalence rewriting with Function-Reduced Satu-
+                                                                          tive is not immediate structural compactness, but rather identifying
+ration to construct a richer yet more consolidated equivalence space
+                                                                          equivalent exact topologies that unlock high downstream approxi-
+for downstream approximation. The second is an ALS-coupled sur-
+                                                                          mation potential under a maximum-error constraint.
+rogate, which provides an efficient approximation-potential-aware
+objective for ranking candidate structures during search. Built upon
+these two components, E-ALS performs search-based extraction of           3     Empirical Observations and Implications
+promising topologies and further applies budget-guided structural         OBSERVATION 1: The initial logic structure strongly affects
+refinement under progressively relaxed error bounds.                      ALS outcomes. To evaluate this effect, we generated structurally
+   Our contributions are summarized as follows:                           diverse, functionally equivalent netlists for each benchmark using
+     • We systematically demonstrate that structural ALS perfor-          e-graph rewriting and randomized extraction, and applied the same
+       mance depends strongly on logic representation, and identify       ALS flow [13] to each variant. Each experiment was repeated three
+       this effect as structural bias in heuristic ALS flows.             times, and a uniform "2×compress2rs" post-processing step was
+     • We propose E-ALS, an e-graph-based framework that ex-              applied to reduce bias from inconsistent exact cleanup.
+       plores diverse equivalent logic structures and evaluates their         Fig. 2 shows that different equivalent structures can lead to
+       approximation potential through ALS-coupled evaluation,            substantially different post-ALS results. In the most extreme case,
+       search-based extraction, and budget-guided refinement.             c7552(HD21), the gap between the best and worst mean outcomes
+     • Experiments on arithmetic and logic benchmarks show that           reaches 42.77%; across many benchmark groups, the gap is still
+       E-ALS achieves average normalized final areas of 54.94%            around 10%–30%. More importantly, this structural effect consis-
+       and 74.69% under maximum Hamming Distance and Error                tently exceeds run-to-run randomness: Δmax is larger than 𝜎max in
+       Distance constraints, reducing area by an additional 3.2 and       all benchmark groups, e.g., 42.77% vs. 19.97% for c7552(HD21) and
+       7.0 percentage points over representative baselines.               21.74% vs. 4.15% for mult8(ED9). Therefore, the input structure
+                                                                          is not merely a neutral starting point, but a key factor affecting
+2 Background and Related Work                                             downstream ALS quality.
+                                                                              IMPLICATION. Effective structural ALS should preserve and
+2.1 Structural Approximate Logic Synthesis                                explore rich structural diversity among functionally equivalent
+Structural approximate logic synthesis (ALS) improves scalability         implementations, rather than relying on a single exact topology.
+by introducing bounded functional errors [20]. We focus on the                OBSERVATION 2: Exact pre-ALS compactness does not
+maximum-error constraint, which guarantees explicit worst-case            reliably identify the best starting structure. A natural strategy
+bounds. Prior works enforce this through approximate don’t-cares          is to choose the most compact exact structure before ALS, where
+(SALSA [25]), minimal unsatisfiable subsets (MUSCAT [30]), partial        compactness is measured by exact AIG size. However, Fig. 3 shows
+E-ALS: Approximation-Potential-Aware E-Graph Rewriting for Approximate Logic Synthesis                        ICCAD ’26, November 08–12, 2026, San Jose, CA, USA
+
+
+                                                                                     minimizes the post-ALS area. Using post-ALS AIG size as a tractable
+                                                                                     proxy, the objective is
+                                                                                                      𝑁 ∗ = arg min SizeAIG (A (𝑁 , 𝜖)) ,                    (1)
+                                                                                                            𝑁 ∈ S (𝑁 0 )
+
+                                                                                     where SizeAIG (·) denotes the AIG node count of the resulting netlist.
+                                                                                        This formulation requires both a rich yet manageable represen-
+                                                                                     tation of equivalent structures and an effective measure of their ap-
+                                                                                     proximation potential, since exact pre-ALS compactness does not
+                                                                                     reliably predict downstream quality. E-ALS combines equivalence-
+                                                                                     enhanced structural search space construction (Section 4.2), based
+                                                                                     on equivalence rewriting and Function-Reduced Saturation, with
+Figure 2: Structural effect vs. algorithmic randomness. Com-                         ALS-coupled surrogate evaluation (Section 4.3) to estimate the achiev-
+parison between structural effect (Δmax ) and algorithmic ran-                       able post-ALS AIG size. It further employs search-based extraction
+domness (𝜎max ), indicating that structural choice is a domi-                        (Section 4.4) to obtain promising structures and progressive budget-
+nant factor in ALS quality.                                                          guided refinement (Section 4.5) to revisit structure selection only
+                                                                                     when an enlarged error budget may change candidate rankings.
+                                                                                        As illustrated by Fig. 4 1 ∼ 4 , E-ALS first constructs an enriched
+                                                                                     e-graph that compactly preserves diverse equivalent topologies,
+                                                                                     evaluates candidate structures with the ALS-coupled surrogate
+                                                                                     objective, extracts promising structures for downstream ALS, and
+                                                                                     progressively refines the selection as the error budget increases.
+
+                                                                                     4.2    Equivalence-Enhanced Structural Search
+                                                                                            Space Construction
+                                                                                     Step 1 addresses the first core requirement of E-ALS: constructing
+                                                                                     a structural search space that is rich enough to expose alternative
+                                                                                     implementations, yet consolidated enough to remain exploitable
+Figure 3: Suboptimality of the exact-size-best structure. The                        during extraction. To this end, we build an e-graph over the exact
+structure with the smallest exact AIG size before ALS is often                       input network using an extended AIG representation. By explic-
+not the best after ALS.                                                              itly incorporating OR nodes alongside AND and INV, we shorten
+that this strategy is often misleading: the exact-size-best candidate                Boolean rewrite distances among equivalent structures and enlarge
+frequently ranks only in the middle or even near the bottom after                    the reachable topology space, thereby improving the structural
+ALS. For example, it ranks 35th out of 37 for c3540(HD4), 19th out                   diversity available for downstream ALS.
+of 37 for c7552(HD21), and 24th out of 36 for mult32(ED7131).                           However, naive saturation alone is insufficient to meet this re-
+This mismatch indicates that ALS-friendliness is not determined by                   quirement. Although rewriting can expand the topology pool, it
+exact compactness alone. What matters is whether a structure ex-                     often suffers from semantic fragmentation: functionally equivalent
+poses favorable approximation opportunities and error-propagation                    but syntactically distinct structures remain isolated in disjoint e-
+patterns for the downstream ALS flow. Hence, exact pre-ALS com-                      classes, so the search space becomes larger without becoming cor-
+pactness is insufficient for structure ranking.                                      respondingly more exploitable for downstream extraction.
+   IMPLICATION. Structural search requires an approximation-                            To address this issue, we propose Function-Reduced Satura-
+aware evaluation mechanism that estimates the downstream ap-                         tion (FRS) (Algorithm 1), which alternates node-limited saturation
+proximation potential of candidate structures, rather than relying                   with periodic functional consolidation. Here, node-limited satura-
+solely on exact pre-ALS compactness.                                                 tion controls e-graph growth while preserving structural expansion,
+   These observations suggest two requirements for E-ALS: pre-                       and functional consolidation merges semantically equivalent re-
+serving a rich space of functionally equivalent structures, and evalu-               gions to reduce fragmentation. After each saturation, FunctionRe-
+ating them according to their downstream approximation potential.                    duceCheck identifies functionally equivalent regions, and Apply-
+These motivate the equivalence-enhanced structural search in Sec-                    FunctionReduceUnion merges the corresponding e-classes. In
+tion 4.2 and the ALS-coupled surrogate evaluation in Section 4.3.                    this way, rewriting expands the structural space, while function
+                                                                                     reduction consolidates semantic equivalence, making the result-
+4 Methodology and Design of E-ALS                                                    ing e-graph not merely larger, but denser and more exploitable for
+                                                                                     downstream search.
+4.1 Problem Formulation and Overview                                                    As illustrated in Fig. 5, FunctionReduceCheck is implemented
+Guided by the observations in Section 3, we formulate structural                     by translating the current e-graph into an AIG while preserving the
+ALS as a structure-selection problem over the equivalence space                      mapping from each exported AIG node back to its source e-class.
+of the input netlist. Given an exact netlist 𝑁 0 , an error constraint               ABC [3] "fraig" is then applied to detect functionally equivalent
+𝜖, and an ALS algorithm A, we seek an equivalent structure that                      AIG nodes, producing equivalence pairs such as (4, 5), (3, 8), and
+ICCAD ’26, November 08–12, 2026, San Jose, CA, USA                                                                                                                                                         Sun et al.
+
+
+
+          2 ALS-Coupled Surrogate                                                                                     3 Search-Based Extraction
+                                                                      Task 1:Target( ), Subs(Others)
+                                                                 Task
+                             Front-End Opportunity Screening          Task 2:Target( ), Subs(Others)
+
+
+                                                                                                                                                       SA Thread 1       SA Thread 2         SA Thread 7
+                                                                Queue                                                    Solution Perturbation +
+                               Sorted LAC Candidate List
+                                                                          ...         ...        ...                         Re-Extraction
+                                                                                                                                                                                       ...
+                               Lightweight Back-End Check           CPM-Based                                               Surrogate Evaluation
+                                                                    LAC Pruning             Thread Pool
+          Candidate AIG                       Surrogate Score
+
+
+          1 Equivalence Space Construction
+
+
+
+                                 Function-
+                                  Reduced
+                                 Saturation
+               Input AIG                            E-Graph                       Init-Solution                  Best-Solution                                       Rewritten AIG
+
+           4 Progressive Budget-Guided Structural Refinement                                                            Exact ALS with SAT-Verified LAC Application
+                                                                Figure 4: Framework of E-ALS.
+ Algorithm 1: FRS for Structural Search Space Construction
+                                                                                                             1              5               E-class                                    5
+  Input: G0 : initial e-graph; R: rewrite rule set; 𝜌: max                                                        4             6                                    4
+                                                                                                                                            Union
+          node-expansion-ratio; 𝑅: number of rounds                                                         2               7 10
+  Output: Gsat : saturated e-graph
+                                                                                                             3
+1 G ← G0 , 𝑀 ← 𝜌 | G0 |;
+                                                                                                                  8              9 11 12               3             8                       11 12
+2 for 𝑟 = 1 to 𝑅 do
+                j𝑟 k
+                                                                                                                 Translate E-Graph to AIG
+3      𝑀𝑟 ←        𝑀 ;                                                                                           with E-class preserved
+                 𝑅
+4      G ← NodeLimitedSaturation( G, R, 𝑀𝑟 );                                                                                                          Function Equivalence List
+       Π𝑟 ← FunctionReduceCheck( G);                                                                        1      4            5          Function
+5                                                                                                                                    6     Reduction    4 5 Are equivalent
+6      G ← ApplyFunctionReduceUnion( G, Π𝑟 );                                                               2       7                         AIG
+                                                                                                                            10                          3 8 Are equivalent
+7      if | G | ≥ 𝑀 then break;                                                                                                      12
+                                                                                                            3                                          11 12 Are equivalent
+8   return Gsat ← G;                                                                                                    8        9    11                  ......
+
+
+                                                                                            Figure 5: Function reduction in the e-graph via AIG-based
+(11, 12) in Fig. 5. Through the preserved ID mapping, these equiv-                          equivalence checking.
+alences are projected back to the original e-graph, where Apply-
+FunctionReduceUnion unions the corresponding e-classes. In this                                 Following the CPM-based screening logic in [22], we evaluate
+way, exact functional equivalence discovered in the AIG domain                              each candidate LAC ℓ = (𝑡, 𝑠, 𝜎) over a sampled pattern set X =
+is reinjected into the e-graph as e-class unions, enabling semantic                         {𝑥 (1) , . . . , 𝑥 (𝑀 ) }. Here, 𝑡 is the target node, 𝑠 is the substitute node,
+consolidation during saturation.                                                            and 𝜎 denotes optional inversion. Let 𝛿 ℓ(𝑖 ) = 𝑣𝑡(𝑖 ) ⊕ 𝑣𝑠,𝜎            (𝑖 )
+                                                                                                                                                                          denote
+                                                                                            whether the substitute differs from the original target under pattern
+                                                                                                                 (𝑖 )
+4.3     ALS-Coupled Surrogate Evaluation of                                                 𝑥 (𝑖 ) , where 𝑣𝑠,𝜎       is the simulated value of 𝑠 after applying 𝜎. We
+        Approximation Potential                                                             use the Boolean change-propagation matrix 𝑃 (𝑖, 𝑡, 𝑜) to indicate
+                                                                                            whether flipping target 𝑡 changes output 𝑜 under 𝑥 (𝑖 ) . The induced
+Step 2 addresses the second core requirement of E-ALS: candidate
+                                                                                            output-error mask is therefore 𝛿 ℓ(𝑖 ) ∧ 𝑃 (𝑖, 𝑡, :), which yields the
+structures cannot be ranked by exact pre-ALS compactness alone,
+                                                                                            simulation-based lower bound
+while evaluating every structure with the full exact ALS flow is                                                                                                 
+too expensive. We therefore develop an ALS-coupled surrogate that                                            𝐸bℓLB = max 𝐷 𝑦 (𝑖 ) , 𝑦 (𝑖 ) ⊕ 𝛿 ℓ(𝑖 ) ∧ 𝑃 (𝑖, 𝑡, :) ,          (2)
+preserves the structure-sensitive front end of ALS and replaces                                                   𝑥 (𝑖 ) ∈ X
+the expensive exact back-end legality checking with a lightweight                           where 𝐷 (·, ·) is the chosen error metric (e.g., HD/ED). Any candidate
+simulation-based alternative. In E-ALS, under a given error bound,                          with 𝐸bℓLB > 𝜖 is pruned, where 𝜖 is the maximum-error bound.
+the approximation potential of a candidate structure is approxi-                               The key computational reuse in this screening is target-centric.
+mated by the post-ALS AIG size estimated by this surrogate.                                 For all LACs sharing the same target 𝑡, the expensive propagation
+   The surrogate consists of two parts: front-end opportunity screen-                       context is identical, while different substitutes affect only the lo-
+ing and back-end lightweight structure evaluation.
+                                                                                            cal discrepancy 𝛿 ℓ(𝑖 ) . Equivalently, these candidates share the same
+4.3.1 Front-End Opportunity Screening. We retain the front end of                           CPM slice P𝑡 = 𝑃 (:, 𝑡, :) ∈ {0, 1}𝑀 ×𝑂 . We therefore group all substi-
+conventional maximum-error ALS because it provides a structure-                             tutes of the same target into one evaluation task, construct P𝑡 once,
+sensitive signal on how many promising local approximation op-                              and reuse it across the entire substitute set. In implementation, tar-
+portunities a candidate netlist can expose. Given a candidate exact                         gets are further packed into fixed-size blocks of 16 and scheduled
+netlist, we enumerate SASIMI LACs [24] and use change propa-                                through a load-balanced task queue, so targets with unusually large
+gation matrix (CPM)-based simulation pruning to discard clearly                             substitute sets or heavier local cones do not become bottlenecks.
+infeasible candidates [22].                                                                 This target-centric organization preserves the structural sensitivity
+E-ALS: Approximation-Potential-Aware E-Graph Rewriting for Approximate Logic Synthesis                                        ICCAD ’26, November 08–12, 2026, San Jose, CA, USA
+
+
+         1. Exact Back-End ALS with SAT Verification                                     1. One-shot structure selection                2. Budget-Guided Structural Refinement
+                                                                                           early mis-ranking may persist                    re-ranking with richer error information
+                                                                          ...                                   LAC Generation and                               LAC Generation and
+                                                                                                 Rewrite                                         Rewrite
+                                                                                                               Apply SAT-Verified LAC                           Apply SAT-Verified LAC
+                                         Apply LAC &      Apply LAC &
+          GOLDEN APPROX.
+                                          SAT Solver       SAT Solver
+                                                                           ...
+                       Apply LAC               safe                safe
+         Run SAT Solver                     fail            fail            ...         Figure 7: One-shot structure selection versus budget-guided
+         In Miter AIG                                                                   structural refinement. Here, 𝑀𝑡 denotes the current circuit
+         2. Lightweight Back-End ALS with Simulation Check                              entering budget stage 𝑡, and Ω𝑡 denotes the accumulated coun-
+              PI Sim. Patterns    .
+                                                                                        terexample patterns available at that stage.
+                                                                          ...
+                                         Apply LAC &      Apply LAC &      ...          This stopping rule reduces the optimism of the surrogate by ter-
+                                          Sim. Check       Sim. Check
+              APPROX.                          safe                safe
+                                                                                        minating the lightweight trajectory immediately when the error
+         Incremental                        fail            fail            ...         budget is first reached, rather than continuing to scan additional
+         Local Simulation
+                                                                                        LACs along the budget boundary. We then define the surrogate
+Figure 6: Exact versus lightweight back-end ALS for                                     score of candidate structure 𝑁 as
+candidate-structure evaluation.
+                                                                                                                           𝑆bAIG (𝑁 ) = SizeAIG ( 𝑁ˆ 𝐾 ).                                (8)
+of the ALS front end while making raw-LAC screening efficient
+enough to serve as the first part of our ALS-coupled surrogate.                         A smaller 𝑆bAIG (𝑁 ) indicates a more favorable starting structure for
+                                                                                        downstream ALS.
+4.3.2 Back-End Lightweight Structure Evaluation. The conventional
+back end of maximum-error ALS greedily applies the promising                            4.4       Search-Based Extraction of High-Potential
+LACs that survive front-end pruning and performs exact SAT-based                                  Structures
+legality checking after each application. Repeating this exact pro-
+                                                                                        With the equivalence space from Section 4.2 and the surrogate
+cess for many candidate structures is prohibitively expensive. We
+                                                                                        objective from Section 4.3 in place, the search-based extraction pro-
+therefore retain the same greedy apply-and-check skeleton, but
+                                                                                        cedure ( 3 in Fig. 4) identifies a concrete structure for downstream
+replace exact legality checking with lightweight simulation.
+                                                                                        ALS. Since the objective is defined by surrogate-estimated post-ALS
+    This replacement is efficient because a SASIMI LAC [24] modi-
+                                                                                        AIG size rather than by a simple exact metric, we adopt simulated
+fies only one target driver and its downstream fanout region. As
+                                                                                        annealing [11] as a practical search mechanism over extractable
+illustrated in Fig. 6, instead of rebuilding and verifying the whole
+                                                                                        topologies.
+circuit after each LAC, we locally apply the LAC, incrementally sim-
+                                                                                           The search is initialized from the original AIG 𝑁 orig , avoiding
+ulate only the affected region, and accept or reject the modification
+                                                                                        early commitment to an exact-oriented structural prior. At each
+using a lightweight error check.
+                                                                                        iteration, a batch of neighboring candidates is generated around
+    Concretely, let 𝑁ˆ 𝑗 denote the current lightweight approximate
+                                                                                        the current solution. Each candidate is first obtained through per-
+circuit at step 𝑗, and let ℓ 𝑗 be the next promising LAC selected by
+                                                                                        turbation and re-extraction [5], which partially perturbs the current
+the front end. Applying ℓ 𝑗 produces a temporary locally modified
+           (ℓ )                                                                         structure and incrementally re-extracts the affected region, and is
+circuit 𝑁ˆ 𝑗 . We then perform an incremental simulation-based
+          𝑗                                                                             then further processed by a fast refinement step that applies one ran-
+                         (ℓ )
+error check on 𝑁ˆ 𝑗 𝑗 over X:                                                           domly selected short exact-oriented ABC optimization script (e.g.,
+                                                                                    balance, rewrite, refactor, resub, and related short flows), fol-
+                        (ℓ )              (ℓ )
+               𝐸bsim 𝑁ˆ 𝑗 𝑗 = SimCheck 𝑁ˆ 𝑗 𝑗 , X ,                               (3)   lowed by a fixed post-processing step, to generate additional nearby
+                                                                                        variants. All candidates are scored by the surrogate objective, and
+where SimCheck(·) returns a lightweight estimate of the induced
+                                                                                        the best one in the batch is selected as the proposal for acceptance.
+error. If the modified circuit passes this check, the LAC is accepted
+                                                                                        Simulated annealing then decides whether this proposal replaces
+and
+                                        (ℓ )                                            the current solution, while the best solution found so far is main-
+                            𝑁ˆ 𝑗+1 = 𝑁ˆ 𝑗 𝑗 ;                      (4)                  tained throughout the search. In this way, the extraction procedure
+otherwise, the local patch is rolled back and                                           turns the enriched equivalence space into a searchable domain and
+                                        𝑁ˆ 𝑗+1 = 𝑁ˆ 𝑗 .                           (5)   guides the search toward structures that are more favorable for
+                                                                                        downstream ALS.
+   Repeating this process yields a lightweight approximate trajec-
+tory over accepted intermediate circuits,                                               4.5       Budget-Guided Structural Refinement
+                                 𝑁ˆ 0 → 𝑁ˆ 1 → · · · → 𝑁ˆ 𝐾 ,                     (6)   As discussed in Section 4.3, E-ALS ranks structures using a light-
+                                                                                        weight ALS-coupled surrogate rather than repeated exact legality
+where each 𝑁ˆ 𝑗 denotes the current lightweight approximate circuit
+                                                                                        checking. While this makes large-scale structural search practical,
+after the 𝑗-th accepted LAC application. Rejected LACs are rolled
+                                                                                        it also makes one-shot structure selection brittle: an early surrogate
+back immediately and therefore do not advance the trajectory. We
+                                                                                        mis-ranking may place the downstream ALS flow on a suboptimal
+define                     n                      o                                     trajectory, and the resulting quality gap can persist throughout
+                  𝐾 = min 𝑗 ≥ 1 𝐸bsim ( 𝑁ˆ 𝑗 ) = 𝜖 ,            (7)
+                                                                                        later optimization, as illustrated on the left of Fig. 7.
+that is, 𝐾 is the first accepted step at which the current lightweight                      Our key observation is that structural re-ranking becomes more
+approximate circuit reaches the error budget 𝜖 under simulation.                        reliable when more accumulated counterexample patterns Ω𝑡 are
+ICCAD ’26, November 08–12, 2026, San Jose, CA, USA                                                                                                        Sun et al.
+
+
+available and the stage-wise error budget is closer to the final tar-                     8358P CPUs. For all methods, the sampled pattern count is fixed
+get bound. We therefore perform structural refinement under a                             to 1024, and the ALS procedure examines at most 𝑘 = 100 LACs
+progressive budget schedule                                                               in each round. In E-ALS, rewriting uses four progressive expan-
+                        l𝑡 m                                                              sion stages with node-expansion caps of 2.5×, 5×, 7.5×, and 10×
+                   𝜖𝑡 = 𝜖 ,         𝑡 = 1, 2, . . . ,𝑇 .                                  the initial graph size. Simulated-annealing extraction uses 10 itera-
+                         𝑇
+At stage 𝑡, E-ALS uses the current circuit 𝑀𝑡 , the accumulated coun-                     tions, a batch size of 16, and a perturbation ratio of 10%. To enable
+terexample set Ω𝑡 , and the current bound 𝜖𝑡 to re-rank candidate                         budget-guided structural refinement, E-ALS uses a multi-stage bud-
+structures and re-extract a favorable one, and then performs ALS                          get schedule during optimization, with up to 𝑇 = 6 stages in our
+under the same bound before proceeding to the next stage. In this                         experiments. Since the compared ALS flows are stochastic, each
+way, structure selection is revisited only when the feasible approx-                      stochastic method is repeated 3 times, and the best final-area result
+imation region has expanded enough to potentially change the                              is reported together with its corresponding delay and runtime.
+relative ranking of candidate structures.
+
+5 Experiments                                                                             5.2    Comparison with Structural ALS Baselines
+                                                                                          We compare E-ALS with representative structural ALS baselines,
+5.1 Experimental Setup                                                                    including MECALS [15], SIM-ALS [13], and SIM-ALS+RESUB [12].
+We evaluate E-ALS on the benchmarks in Table 1, including IS-                             Here, SIM-ALS serves as the strong baseline, while SIM-ALS+RESUB
+CAS85 [8], the EPFL arithmetic suite [1], and circuits used in prior                      tests whether simply strengthening the local approximation model
+MECALS evaluation [15]. For each benchmark, we consider three                             is sufficient. For SIM-ALS and SIM-ALS+RESUB, we report results
+exact structural representations: a naive AIG ("strash"), a compact                       from compact, naive, and flattened starts, denoted by C , N , and F ,
+AIG ("2×compress2rs"), and a flattened AIG ("2×if-K6-g-C8").                              respectively. MECALS follows its standard compact-start setup,
+Table 1 summarizes their statistics, together with mapped gate-level                      whereas E-ALS is evaluated from the naive start, since it explic-
+area and delay in the ASAP 7 nm library [23].                                             itly avoids committing to an exact-oriented structural prior before
+   We consider both Hamming-distance (HD) and error-distance                              approximation-aware exploration.
+(ED) constraints. For HD, the MaxHD bounds are set to ⌊0.1𝑂⌋ and                              Table 2 reports the normalized final area, delay, and runtime un-
+⌊0.2𝑂⌋ for each benchmark, where 𝑂 is the number of primary                               der the same error constraints. Overall, E-ALS achieves the lowest
+outputs. For ED, the MaxED bounds are generally set to ⌊20.1𝑂 ⌋                           average normalized final area in both error models, reaching 54.94%
+and ⌊20.2𝑂 ⌋. All methods are evaluated under the same constraint                         in HD and 74.69% in ED. This advantage is also evident in repre-
+settings, and all reported approximate circuits satisfy the same                          sentative cases: on c5315(HD12), E-ALSN achieves a normalized
+target error bound.                                                                       final area of 61.22%, while all SIM and SIM-ALS+RESUB variants
+                                                                                          remain above 72%; on adder32(ED9), it achieves 80.06%, whereas
+Table 1: Experimental benchmarks. Area and delay are mea-                                 all SIM and SIM-ALS+RESUB variants remain above 92%. Beyond
+sured by mapping the Compact AIGs into the ASAP 7nm                                       these aggregate improvements, the results reveal two clear trends.
+library. (S: Size, D: Depth)                                                              First, the initial exact structure is not a neutral starting point, since
+Benchmark                                        AIG                     Gate netlist     the relative advantage among compact, naive, and flattened starts
+   suite  Circuit       PI/PO
+                                   Naive       Compact      Flattened    Area     Delay   frequently reverses across benchmarks and error settings. Second,
+                                    S      D     S     D       S    D   (𝜇𝑚 2 )    (ps)   simply strengthening the local approximation model yields only
+            mac          12/8     145    20 117 21     201         16 105.6 460.70        limited additional gains under practical runtime budgets, whereas
+ Used in    mult8       16/16     470    44 423 50     790         32 361.6 1068.71
+ MECALS     mult16      32/32    2033    41 2000 64 2886           32 1706.4 1357.22      further increasing its expressiveness tends to incur substantial scal-
+            mult32      64/64    8340    53 8226 118 11586         41 7044.2 2506.34      ability costs. Overall, the results show that approximation-aware
+            square8    8/16   235 28 188 26                  285 15 153.3 586.72          structural exploration can uncover substantially better ALS starting
+   EPFL     log2_8     8/8   3231 324 2346 289              5298 139 1635.0 6130.57
+          * adder32
+arithmetic adder64
+                      64/32   250 63 219 64                  362 15 202.2 1452.66         structures than fixed exact starts.
+                      128/64  506 127 443 128                879 26 411.2 2976.26
+            adder128 256/129 1020 255 892 256               1441 46 831.7 6062.91             Overall, these results support our central claim that the key lim-
+            c880        60/26   330      30 300        27    385   14 227.2 556.38        itation of structural ALS lies not only in the local approximation
+            c1908       33/25   421      33 360        26    540   20 283.2 558.72        operator, but also in the structural substrate itself. Accordingly,
+            c2670      233/140 718       22 543        23    713   14 458.9 470.71
+ ISCAS85    c3540       50/22 1047       45 926        35   1159   26 600.6 855.73        E-ALS delivers substantially stronger area reduction than either
+            c5315      178/123 1811      37 1280       32   1758   20 847.0 560.32
+            c7552      207/108 2192      30 1323       58   2093   19 1043.0 1427.98      relying on a fixed exact start or only strengthening the local ap-
+ * Benchmarks with reduced bit-widths (e.g., 8/32/64-bit) are derived from the original   proximation model. In overall runtime, E-ALS remains broadly com-
+   EPFL circuits by removing POs and performing structural strashing.                     parable to prior structural ALS methods. When its total runtime
+   The main evaluation metrics are the final area and delay, nor-                         becomes higher in some cases, the increase stems from two factors.
+malized to the exact gate-level netlist of each benchmark. To obtain                      First, E-ALS incurs the cumulative cost of exploring multiple equiv-
+them, all resulting approximate netlists are post-processed by a                          alent structures across progressive budget stages (up to 6). Second,
+unified flow: "2×compress2rs", followed by technology mapping                             the rewritten netlists often exhibit SAT-verification behavior that
+using ABC "dch+amap".                                                                     differs markedly from that of the original structures; empirically,
+   Our framework is implemented in Rust and C, integrating the                            they tend to slow down exact checking, especially near the error-
+e-graph rewriting engine with ABC-based ALS routines. Experi-                             budget boundary, where verification may repeatedly hit the SAT
+ments are conducted on a server with two Intel Xeon Platinum                              runtime limit. Reducing the amount of structural exploration while
+E-ALS: Approximation-Potential-Aware E-Graph Rewriting for Approximate Logic Synthesis                                      ICCAD ’26, November 08–12, 2026, San Jose, CA, USA
+
+
+Table 2: Comparison of E-ALS with baselines under the same error constraints. Subscripts C , N , and F denote compact, naive,
+and flattened starts. A, D, and R denote Area (%), Delay (%), and Runtime (s). MEC, SIM, and SIM+R denote MECALS, SIM-ALS,
+and SIM-ALS+RESUB. Bold green marks the row-wise best Area achieved by E-ALS; † and ‡ mark the local best Areas within
+SIM and SIM+R. A dash indicates that no result was obtained within 48 hours. Means are computed over solved instances.
+                         MECC                  SIMC               SIMN                 SIMF              SIM+RC               SIM+RN             SIM+RF              E-ALSN
+Circuit            A     D       R       A       D    R      A     D      R      A      D     R     A       D    R      A       D    R      A      D      R      A     D       R
+c880(HD2)        89.01 103.54   1.42         †                                                                              ‡
+                                       84.08 87.63 20.38 87.39 82.16 20.41 85.85 92.26 14.99 84.08 87.63 18.96 83.87 79.58 27.11 85.85 92.26 14.32 76.83 83.44 21.43
+c880(HD5)        85.70 97.28    4.51    65.70 75.55 37.36 63.87 89.58 36.97 60.28† 57.92 38.64 65.70 75.55 27.61 64.30 79.21 46.01 60.28‡ 57.92 36.71 63.45 75.88 26.96
+c1908(HD2)       92.32 102.17   9.49   62.99† 43.79 18.24 67.80 79.38 14.12 77.51 92.65 35.25 63.84‡ 51.00 15.50 67.57 81.25 13.86 77.12 90.77 33.81 65.48 86.95 30.40
+c1908(HD5)       60.85 78.76 138.05     41.92 31.99 42.35 44.29 32.62 42.73 38.70† 34.70 55.51 41.92 31.99 34.89 44.29 32.62 47.21 38.70‡ 34.70 56.46 43.11 33.48 36.72
+c2670(HD14)      77.89 93.55   58.58    38.84 62.84 285.44 37.66† 60.80 318.64 39.61 64.32 425.55 38.84 62.84 319.63 37.55‡ 58.93 414.10 38.74 62.57 408.94 37.41 39.92 83.41
+c2670(HD28)      36.75 59.24   82.99    24.44 18.13 228.06 26.60 23.30 343.23 23.22† 20.49 402.84 24.44 18.13 278.73 26.08 23.30 394.39 23.22‡ 20.49 394.35 29.99 24.43 62.80
+c3540(HD2)       92.43 92.35 136.33     90.14 97.44 13.02 89.10† 94.97 13.44 91.77 86.37 22.46 89.90‡ 94.98 16.89 90.14 92.41 17.77 93.71 88.77 24.51 88.04 101.26 50.83
+c3540(HD4)       90.30 91.53 247.43     86.73 86.71 54.53 85.22 80.82 59.01 84.60† 72.82 71.84 86.95 86.27 80.14 83.22‡ 80.83 73.36 85.22 72.36 93.72 76.77 67.96 148.81
+c5315(HD12)      94.69 96.59 378.47     84.44 86.61 193.62 72.89† 88.08 280.84 72.89† 83.09 294.14 83.64 88.75 256.94 72.10‡ 81.48 581.73 72.46 83.08 364.77 61.22 97.94 276.92
+c5315(HD24)      85.44 97.17 2341.79 54.61† 79.02 307.96 63.64 81.92 281.26 60.96 77.34 373.92 53.68‡ 75.28 381.90 63.45 80.29 696.81 60.29 76.40 451.00 56.04 89.49 263.53
+c7552(HD10)      85.06 103.21 601.25    37.21 95.52 231.47 41.28 91.97 269.09 34.64† 81.78 234.65 37.21 95.52 285.60 40.24 96.60 734.40 34.51‡ 75.46 283.63 32.95 108.62 255.94
+c7552(HD21)      73.34 100.06 2478.68 27.83† 81.95 303.74 30.17 88.02 288.28 29.59 52.66 405.02 28.04 82.14 353.58 30.13 81.09 594.02 27.69‡ 51.58 450.18 27.98 88.29 312.08
+HD Mean          80.32 92.96      -     58.25 70.60   -     59.16 74.47   -     58.30 68.03   -    58.19 70.84   -     58.58 72.30   -     58.15 67.20    -    54.94 74.80     -
+mac(ED1)         89.09 87.36    2.33    94.39 97.77 0.20 89.24† 98.03 0.45      89.70 84.62 0.84   94.39 97.77 0.27 89.24 98.03 0.54 88.79‡ 89.95 1.32 82.88 91.47 11.56
+mac(ED2)         86.97 99.09    1.65         †
+                                       86.67 85.79 0.34 87.42 98.00 0.71                                ‡
+                                                                                88.64 88.29 1.48 86.67 85.79 0.45 87.42 98.00 0.99         87.73 84.52 2.04 77.58 92.81 18.35
+square8(ED1)     98.02 96.97    1.54    96.14 92.32 0.49 93.01† 87.98 0.81      96.66 89.68 1.38   96.14 92.32 0.61 93.42‡ 88.22 0.97      98.43 78.86 3.27 90.08 86.45 26.15
+square8(ED3)     98.02 96.97    2.33    96.14 92.32 0.56 93.01† 84.68 0.62      94.47 85.57 2.16   96.14 92.32 0.63 93.42‡ 84.92 0.84 100.63 74.87 4.48 89.14 85.07 78.06
+log2_8(ED1)                                 †
+                 18.89 20.56 36538.51 6.73 10.60 42.36 7.64 10.15 92.96                                ‡
+                                                                                7.89 10.35 100.89 6.73 10.60 43.06 7.64 10.15 104.38 7.70 9.67 121.76 6.04 8.92 102.40
+log2_8(ED3)       7.66 9.43 23234.12 6.28 9.86 37.53 5.88† 9.08 108.67 6.26 10.24 148.83 6.28 9.86 53.39 6.08‡ 10.33 122.75 6.10 9.02 154.54 5.60 8.13 129.15
+adder32(ED9)     95.97 96.31   93.14    95.17 94.36 13.78 95.17 94.36 10.38 92.88† 92.00 11.54 95.17 94.36 13.74 95.17 94.36 12.66 92.88‡ 92.00 13.36 80.06 84.90 22.66
+adder32(ED84)    89.24 86.81 178.38     86.47 88.51 26.42 86.95 85.63 27.59 84.65† 81.86 45.28 86.47 88.51 21.59 86.95 85.63 24.50 84.65‡ 81.86 44.54 76.11 78.72 38.55
+adder64(ED84)    94.75 93.04 3385.57 94.12† 94.02 57.78 94.40 94.28 64.75 99.38 68.28 58.00 93.89‡ 92.65 74.00 93.89‡ 92.65 79.21 96.61 69.71 59.44 79.18 83.58 74.89
+adder64(ED7131) 92.14 89.82 4858.65 87.32† 88.44 133.89 88.09 90.25 152.43 92.26 64.57 150.25 88.09‡ 90.25 159.42 88.09‡ 90.25 174.94 95.29 55.33 167.87 74.94 75.37 170.28
+adder128(ED7600) 90.52 89.59 91191.26 90.40 89.59 114.60 90.40 89.59 191.52 85.98† 72.67 179.03 90.40 89.59 165.93 90.40 89.59 197.81 87.26‡ 71.72 277.00 74.47 79.44 278.03
+adder128(ED58e6) 80.30 79.48 130176.85 80.17 79.49 356.41 80.49 79.51 453.23 76.11† 63.74 397.62 80.17 79.49 393.73 80.49 79.51 559.63 76.93‡ 63.41 408.36 66.08 70.37 414.04
+mult8(ED3)       96.95 93.25 104.60     95.80 93.25 2.46 95.66† 93.94 1.99      98.01 87.66 2.05   95.80 93.25 2.15 93.72‡ 96.26 3.29      97.65 87.43 7.02 92.83 90.50 87.42
+mult8(ED9)       93.85 93.49 230.31 93.01† 93.49 4.83 93.63 94.22 6.49          95.53 90.52 9.17   93.01 93.49 5.32 91.68‡ 96.38 10.12 95.40 89.57 25.19 89.34 96.23 189.23
+mult16(ED9)      95.69 95.00 18079.44 95.67 94.90 15.33 96.53 98.37 13.91 94.81 98.98 27.88 95.71 94.82 18.27 95.99 98.97 21.82 93.66‡ 90.89 45.66 91.09 122.26 426.93
+                                                                                     †
+
+mult16(ED84)     91.22 79.52 36086.81 90.97 81.68 114.28 91.66 90.03 198.17 89.66† 85.96 227.40 90.32 87.01 144.76 91.69 90.04 183.39 90.03‡ 83.64 356.38 87.79 124.53 1100.57
+mult32(ED84)        -    -        -     94.84 96.50 731.23 94.99 96.97 803.37 94.56† 80.77 1064.74 94.78 93.13 748.97 94.99 96.97 880.07 94.61‡ 78.06 1297.28 92.42 118.93 4013.64
+mult32(ED7131)      -    -        -    90.76† 90.46 574.27 91.06 91.73 2231.89 90.77 72.51 5195.53 90.71 87.09 694.04 90.80 91.30 2040.26 90.67‡ 74.84 5590.25 88.81 120.66 6474.26
+ED Mean          82.45 81.67      -     82.28 81.85   -     81.96 82.60   -     82.12 73.79   -    82.27 81.80   -     81.73 82.86   -     82.50 71.41    -    74.69 84.35     -
+
+Table 3: Ablation on the two core components of E-ALS.                                          Table 3 shows that Full achieves the best final area under both
+Lower Area is better. Δ denotes the area degradation rela-                                   HD and ED constraints. Among the two components, the surrogate
+tive to Full in percentage points.                                                           objective has the stronger impact: replacing it with exact AIG size
+                           HD Benchmarks                   ED Benchmarks                     increases the mean final area from 54.94% to 60.47% under HD and
+ Variant                Area (↓)      Δ      Delay    Area (↓)       Δ       Delay           from 74.69% to 84.66% under ED, even though the same structural
+ Full (E-ALS)            54.94        –      74.80      74.69        –       84.35           search framework is retained. This indicates that the gain of E-
+                                                                                             ALS does not arise merely from structural exploration itself, but
+   w/o FRS               59.25      +4.31    79.59      77.06     +2.37      85.80
+   w/o ApproxObj         60.47      +5.53    84.25      84.66     +9.97      94.56           from ranking candidate structures by downstream approximation
+   w/o Both              60.89      +5.95    86.91      85.03     +10.34     97.14           potential rather than exact compactness, and also confirms that a
+                                                                                             more compact exact starting structure does not necessarily lead
+                                                                                             to a better approximate result. FRS contributes independently as
+preserving most of the area benefit, and better understanding how                            well: disabling it while keeping the same surrogate objective still
+rewritten structures affect exact verification cost, are important                           degrades the mean final area, and removing both components yields
+directions for future work. A detailed runtime breakdown is given                            the worst result. Overall, these results show that E-ALS benefits
+in the runtime analysis subsection.                                                          from both approximation-aware ranking and a less fragmented,
+                                                                                             more extraction-friendly equivalence space.
+5.3     Ablation Study of Core Design Components
+To isolate the contribution of the two core design components
+                                                                                             5.4      Budget-Guided Structural Refinement and
+of E-ALS, we perform a budget-controlled two-factor ablation on                                       Stage-Wise Oracle Analysis
+Function-Reduced Saturation (FRS) and the ALS-coupled surrogate                              We evaluate budget-guided structural refinement both at the end-
+objective. This yields four variants: Full, w/o FRS, w/o ApproxObj,                          to-end level and through stage-wise oracle analysis. As shown
+and w/o Both. Here, w/o ApproxObj keeps the same rewritten e-                                in Fig. 9, increasing the number of budget stages improves final
+graph, simulated-annealing search, and budget-guided refinement                              quality in both error models, with a more pronounced effect under
+flow, but replaces the surrogate objective with the exact AIG size of                        HD. In particular, later budget stages continue to bring clear gains
+the extracted structure, in order to test whether exact compactness                          under HD, while still providing measurable improvement under
+is already sufficient for structure selection within the same frame-                         ED. This indicates that budget-guided refinement is beneficial in
+work. In contrast, w/o FRS keeps the same surrogate objective but                            both settings, although its impact is stronger under HD.
+removes FRS, in order to test whether a good ranking signal alone                               The stage-wise oracle analysis in Fig. 8 further explains this ben-
+is sufficient when the equivalence space remains more fragmented.                            efit. At each budget stage, all candidate structures encountered dur-
+All other settings are kept unchanged.                                                       ing search are ranked by their oracle post-ALS AIG size, allowing us
+ICCAD ’26, November 08–12, 2026, San Jose, CA, USA                                                                                                                                          Sun et al.
+
+
+
+       exact-size-best:96/161     exact-size-best:    exact-size-best:         exact-size-best:         exact-size-best:           exact-size-best:        exact-size-best:       exact-size-best:
+       surrogate-best:34/161      154/161             61/161                   147/159                  122/161                    154/161                 139/145                145/161
+                                  surrogate-best:     surrogate-best:          surrogate-best:          surrogate-best:            surrogate-best:         surrogate-best:        surrogate-best:
+                                  28/161              7/161                    5/159                    2/161                      1/161                   2/145                  2/161
+
+
+
+
+                                   exact-size-best:         exact-size-best:   exact-size-best:         exact-size-best:           exact-size-best:   exact-size-best:        exact-size-best:
+                                   145/161                  158/161            152/161                  159/161                    159/161            147/161                 161/161
+                                   surrogate-best:          surrogate-best:    surrogate-best:          surrogate-best:            surrogate-best:    surrogate-best:         surrogate-best:
+               exact-size-best:
+                                   13/161                   5/161              1/161                    1/161                      1/161              3/161                   1/161
+                       16/161
+               surrogate-best:
+                       30/161
+
+
+
+
+                                                        oracle ranking curve    oracle-best       exact-size-best          surrogate-best
+Figure 8: Oracle-based stage-wise ranking analysis on five representative benchmark-constraint groups (two HD and three ED
+cases). In each subplot, candidate structures encountered at one budget stage are ranked by their oracle post-ALS AIG size. The
+surrogate-best candidate stays consistently much closer to the oracle optimum than the exact-size-best candidate.
+
+
+
+
+Figure 9: Average final-area ratio versus the number of budget
+stages 𝑇 , normalized to 𝑇 = 1. Increasing 𝑇 benefits HD more                                       Figure 10: Thread scalability of parallel raw-LAC screening
+than ED, whose gains saturate quickly.                                                              on mult32(ED7131) with a cap of 100000 raw LACs.
+
+to compare the oracle-best, exact-size-best, and surrogate-best can-
+didates on the same candidate pool. The exact-size-best candidate
+is often far from the oracle optimum, whereas the surrogate-best
+candidate remains much closer throughout the refinement process.
+In particular, on c2670(HD14) and c880(HD2), the surrogate-best
+candidate becomes noticeably closer to the oracle-best structure
+as the budget stage progresses. This indicates that exact structural                                Figure 11: Runtime breakdown of an E-ALS run on
+compactness is poorly aligned with downstream ALS quality on the                                    adder128(ED7600) under parallel evaluation. Each raw-LAC
+actual structures encountered during search, while the surrogate-                                   screening uses 2 workers, while simulated annealing evalu-
+based ranking has the potential to become more informative as                                       ates 16 candidates in parallel, yielding up to 32 concurrent
+optimization proceeds. Therefore, budget-guided refinement is ef-                                   evaluation workers.
+fective not only because it revisits structure selection, but also
+because later refinement stages enable more accurate structure                                      evaluation repeatedly invokes the same screening machinery, the
+ranking under richer error information.                                                             benefit of parallel raw-LAC screening extends beyond its explicit
+                                                                                                    8.9% runtime share. Together with the area gains, these results
+5.5     Runtime Breakdown and Parallel Screening                                                    indicate that the additional runtime of E-ALS is primarily spent on
+        Efficiency                                                                                  approximation-aware structural evaluation, which is central to its
+We analyze the runtime of E-ALS from two perspectives: the scala-                                   stronger area reduction, and that this cost is substantially alleviated
+bility of parallel raw-LAC screening and the end-to-end runtime                                     by effective parallel screening.
+breakdown of the overall flow. As shown in Fig. 10, raw-LAC screen-
+ing scales well with thread count, reaching 14.05× speedup at 16                                    6       Conclusion
+threads and 18.50× at 32 threads. This confirms that the target-                                   This paper presents E-ALS, an e-graph-based framework for ap-
+centric task decomposition and dynamic load balancing effectively                                  proximate logic synthesis that addresses structural bias in structural
+mitigate one of the main computational bottlenecks of E-ALS, al-                                   ALS. By combining equivalence-enhanced structural search, an ALS-
+though the speedup becomes sublinear at higher thread counts.                                      coupled surrogate for approximation-aware ranking, and budget-
+   Fig. 11 shows that the runtime of E-ALS is dominated by repeated                                guided structural refinement, E-ALS identifies better exact struc-
+structure evaluation and ALS execution, rather than by rewriting                                   tures for downstream approximation under maximum-error con-
+alone. In the representative adder128(ED7600) run, the E-graph                                     straints. Experiments on arithmetic and logic benchmarks show that
+side accounts for 56.6% of the total runtime, while the ALS side                                   E-ALS outperforms state-of-the-art baselines, demonstrating that
+accounts for 42.5%. At finer granularity, SA solution evaluation is                                approximation-aware exploration over equivalent structures can
+the largest component (44.3%), followed by LAC apply-and-verify                                    uncover hidden opportunities beyond conventional exact-oriented
+(33.6%) and explicit raw-LAC screening (8.9%). Because SA solution                                 optimization.
+E-ALS: Approximation-Potential-Aware E-Graph Rewriting for Approximate Logic Synthesis                                     ICCAD ’26, November 08–12, 2026, San Jose, CA, USA
+
+
+References                                                                                       Languages 5, OOPSLA (2021), 1–28.
+ [1] Luca Amarú, Pierre-Emmanuel Gaillardon, and Giovanni De Micheli. 2015. The             [19] Morteza Rezaalipour, Marco Biasion, Francesco Costa, Cristian Tirelli, Lorenzo
+     EPFL combinational benchmark suite. Hypotenuse 256, 128 (2015), 214335.                     Ferretti, Rodrigo Otoni, George A Constantinides, and Laura Pozzi. 2025. Ap-
+ [2] Konstantinos Balaskas, Florian Klemme, Georgios Zervakis, Kostas Siozios, Hus-              proximate Logic Synthesis via Iterative SMT-based Subcircuit Rewriting. IEEE
+     sam Amrouch, and Jörg Henkel. 2022. Variability-aware approximate circuit                   Transactions on Computer-Aided Design of Integrated Circuits and Systems (2025).
+     synthesis via genetic optimization. IEEE Transactions on Circuits and Systems I:       [20] Ilaria Scarabottolo, Giovanni Ansaloni, George A Constantinides, Laura Pozzi,
+     Regular Papers 69, 10 (2022), 4141–4153.                                                    and Sherief Reda. 2020. Approximate logic synthesis: A survey. Proc. IEEE 108,
+ [3] Robert Brayton and Alan Mishchenko. 2010. ABC: An academic industrial-                      12 (2020), 2195–2213.
+     strength verification tool. In International Conference on Computer Aided Verifica-    [21] Doochul Shin and Sandeep K Gupta. 2010. Approximate logic synthesis for error
+     tion. Springer, 24–40.                                                                      tolerant applications. In 2010 Design, Automation & Test in Europe Conference &
+ [4] Satrajit Chatterjee, Alan Mishchenko, Robert K Brayton, Xinning Wang, and                   Exhibition (DATE 2010). IEEE, 957–960.
+     Timothy Kam. 2006. Reducing structural bias in technology mapping. IEEE                [22] Sanbao Su, Chang Meng, Fan Yang, Xiaolong Shen, Leibin Ni, Wei Wu, Zhihang
+     Transactions on Computer-Aided Design of Integrated Circuits and Systems 25, 12             Wu, Junfeng Zhao, and Weikang Qian. 2022. VECBEE: A versatile efficiency–
+     (2006), 2894–2903.                                                                          accuracy configurable batch error estimation method for greedy approximate
+ [5] Chen Chen, Guangyu Hu, Cunxi Yu, Yuzhe Ma, and Hongce Zhang. 2025. E-                       logic synthesis. IEEE Transactions on Computer-Aided Design of Integrated Circuits
+     morphic: Scalable equality saturation for structural exploration in logic synthesis.        and Systems 41, 11 (2022), 5085–5099.
+     In 2025 62nd ACM/IEEE Design Automation Conference (DAC). IEEE, 1–7.                   [23] Vinay Vashishtha, Manoj Vangala, and Lawrence T Clark. 2017. ASAP7 predictive
+ [6] Chen Chen, Guangyu Hu, Dongsheng Zuo, Cunxi Yu, Yuzhe Ma, and Hongce                        design kit development and cell design technology co-optimization. In 2017
+     Zhang. 2024. E-syn: E-graph rewriting with technology-aware cost functions for              IEEE/ACM International Conference on Computer-Aided Design (ICCAD). IEEE,
+     logic synthesis. In Proceedings of the 61st ACM/IEEE Design Automation Conference.          992–998.
+     1–6.                                                                                   [24] Swagath Venkataramani, Kaushik Roy, and Anand Raghunathan. 2013. Substitute-
+ [7] Chen Chen, Jiaqi Yin, and Cunxi Yu. 2025. Revisit Choice Network for Synthe-                and-simplify: A unified design paradigm for approximate and quality configurable
+     sis and Technology Mapping. In 2025 IEEE/ACM International Conference On                    circuits. In 2013 Design, Automation & Test in Europe Conference & Exhibition
+     Computer Aided Design (ICCAD). IEEE, 1–9.                                                   (DATE). IEEE, 1367–1372.
+ [8] Mark C Hansen, Hakan Yalcin, and John P Hayes. 2002. Unveiling the ISCAS-85            [25] Swagath Venkataramani, Amit Sabne, Vivek Kozhikkottu, Kaushik Roy, and
+     benchmarks: A case study in reverse engineering. IEEE Design & Test of Computers            Anand Raghunathan. 2012. SALSA: Systematic logic synthesis of approximate
+     16, 3 (2002), 72–80.                                                                        circuits. In Proceedings of the 49th Annual Design Automation Conference. 796–801.
+ [9] Matthew Hofmann, Berk Gokmen, and Zhiru Zhang. 2025. EqMap: FPGA LUT                   [26] Xuan Wang, Sijun Tao, Jingjing Zhu, Yiyu Shi, and Weikang Qian. 2023. AccALS:
+     Remapping using E-Graphs. In 2025 IEEE/ACM International Conference On Com-                 Accelerating approximate logic synthesis by selection of multiple local approxi-
+     puter Aided Design (ICCAD). IEEE, 1–9.                                                      mate changes. In 2023 60th ACM/IEEE Design Automation Conference (DAC). IEEE,
+[10] Xiangfei Hu, Yuyang Ye, Tinghuan Chen, Hao Yan, and Bei Yu. 2025. Timing-                   1–6.
+     driven approximate logic synthesis based on double-chase grey wolf optimizer.          [27] Xuan Wang, Zheyu Yan, Chang Meng, Yiyu Shi, and Weikang Qian. 2023. Dasals:
+     In 2025 Design, Automation & Test in Europe Conference (DATE). IEEE, 1–7.                   Differentiable architecture search-driven approximate logic synthesis. In 2023
+[11] Scott Kirkpatrick, C Daniel Gelatt Jr, and Mario P Vecchi. 1983. Optimization by            IEEE/ACM International Conference on Computer Aided Design (ICCAD). IEEE,
+     simulated annealing. science 220, 4598 (1983), 671–680.                                     1–9.
+[12] Chang Meng, Alan Mishchenko, Weikang Qian, and Giovanni De Micheli. 2024.              [28] Xuan Wang, Xiaomi Zhou, Shanshan Han, Ruicheng Dai, Xiaolong Shen, Menghui
+     Efficient resubstitution-based approximate logic synthesis. IEEE Transactions on            Xu, Leibin Ni, Wei Wu, and Weikang Qian. 2024. Accals 2.0: Accelerating approx-
+     Computer-Aided Design of Integrated Circuits and Systems 44, 6 (2024), 2040–2053.           imate logic synthesis by simultaneous selection of multiple local approximate
+[13] Chang Meng, Weikang Qian, and Giovanni De Micheli. 2026. Simulation-Guided                  changes. IEEE Transactions on Computer-Aided Design of Integrated Circuits and
+     Approximate Logic Synthesis Under the Maximum Error Constraint. IEEE Trans-                 Systems 44, 5 (2024), 1620–1633.
+     actions on Computer-Aided Design of Integrated Circuits and Systems (2026).            [29] Max Willsey, Chandrakana Nandi, Yisu Remy Wang, Oliver Flatt, Zachary Tat-
+[14] Chang Meng, Weikang Qian, and Alan Mishchenko. 2020. ALSRAC: Approxi-                       lock, and Pavel Panchekha. 2021. Egg: Fast and extensible equality saturation.
+     mate logic synthesis by resubstitution with approximate care set. In 2020 57th              Proceedings of the ACM on Programming Languages 5, POPL (2021), 1–29.
+     ACM/IEEE Design Automation Conference (DAC). IEEE, 1–6.                                [30] Linus Witschen, Tobias Wiersema, Matthias Artmann, and Marco Platzner. 2022.
+[15] Chang Meng, Jiajun Sun, Yuqi Mai, and Weikang Qian. 2023. Mecals: A maxi-                   MUSCAT: MUS-based circuit approximation technique. In 2022 Design, Automa-
+     mum error checking technique for approximate logic synthesis. In 2023 Design,               tion & Test in Europe Conference & Exhibition (DATE). IEEE, 172–177.
+     Automation & Test in Europe Conference & Exhibition (DATE). IEEE, 1–6.                 [31] Yi Wu and Weikang Qian. 2019. ALFANS: Multilevel approximate logic synthesis
+[16] Chang Meng, Xuan Wang, Jiajun Sun, Sijun Tao, Wei Wu, Zhihang Wu, Leibin Ni,                framework by approximate node simplification. IEEE Transactions on Computer-
+     Xiaolong Shen, Junfeng Zhao, and Weikang Qian. 2022. SEALS: Sensitivity-driven              Aided Design of Integrated Circuits and Systems 39, 7 (2019), 1470–1483.
+     efficient approximate logic synthesis. In Proceedings of the 59th ACM/IEEE Design      [32] Yuyang Ye, Xiangfei Hu, Yuchen Liu, Peng Xu, Yu Gong, Tinghuan Chen, Hao
+     Automation Conference. 439–444.                                                             Yan, Bei Yu, and Longxing Shi. 2025. Rank-based Multi-objective Approximate
+[17] Vojtech Mrazek, Zdenek Vasicek, and Lukas Sekanina. 2019. Evoapproxlib: Ex-                 Logic Synthesis via Monte Carlo Tree Search. In 2025 62nd ACM/IEEE Design
+     tended library of approximate arithmetic circuits. In Proc. Workshop Open-Source            Automation Conference (DAC). IEEE, 1–7.
+     EDA Technol.(WOSET). 10.                                                               [33] Jiaqi Yin, Zhan Song, Chen Chen, Yaohui Cai, Zhiru Zhang, and Cunxi Yu. 2025.
+[18] Chandrakana Nandi, Max Willsey, Amy Zhu, Yisu Remy Wang, Brett Saiki, Adam                  e-boost: Boosted E-Graph Extraction with Adaptive Heuristics and Exact Solving.
+     Anderson, Adriana Schulz, Dan Grossman, and Zachary Tatlock. 2021. Rewrite                  In 2025 IEEE/ACM International Conference On Computer Aided Design (ICCAD).
+     rule inference using equality saturation. Proceedings of the ACM on Programming             IEEE, 1–9.
+

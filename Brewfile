@@ -1,0 +1,5 @@
+brew "verilator"
+brew "icarus-verilog"
+brew "yosys"
+brew "rust"
+brew "python"

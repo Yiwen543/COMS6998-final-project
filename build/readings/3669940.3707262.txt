@@ -1,0 +1,991 @@
+               SmoothE: Differentiable E-Graph Extraction
+                    Yaohui Cai                                             Kaixin Yang                                      Chenhui Deng
+                yc2632@cornell.edu                                      ky427@cornell.edu                                  cd574@cornell.edu
+                 Cornell University                                     Cornell University                                 Cornell University
+              Ithaca, New York, USA                                   Ithaca, New York, USA                              Ithaca, New York, USA
+
+                                                  Cunxi Yu                                             Zhiru Zhang
+                                         cunxiyu@umd.edu                                            zhiruz@cornell.edu
+                                University of Maryland, College Park                                 Cornell University
+                                   College Park, Maryland, USA                                    Ithaca, New York, USA
+
+Abstract                                                                                    CCS Concepts: • Computing methodologies → Machine
+E-graphs have gained increasing popularity in compiler op-                                  learning; • Software and its engineering → Compilers;
+timization, program synthesis, and theorem proving tasks.                                   General programming languages.
+They enable compact representation of many equivalent ex-
+pressions and facilitate transformations via rewrite rules                                  Keywords: Machine learning for systems; Compilers; Pro-
+without phase ordering limitations. A major benefit of using                                gramming languages; Equivalence graph
+e-graphs is the ability to explore a large space of equiva-
+                                                                                            ACM Reference Format:
+lent expressions, allowing the extraction of an expression
+                                                                                            Yaohui Cai, Kaixin Yang, Chenhui Deng, Cunxi Yu, and Zhiru Zhang.
+that best meets certain optimization objectives (or cost mod-
+                                                                                            2025. SmoothE: Differentiable E-Graph Extraction. In Proceedings of
+els). However, current e-graph extraction methods often face                                the 30th ACM International Conference on Architectural Support for
+unfavorable scalability-quality trade-offs and only support                                 Programming Languages and Operating Systems, Volume 1 (ASPLOS
+simple linear cost functions, limiting their applicability to                               ’25), March 30-April 3, 2025, Rotterdam, Netherlands. ACM, New York,
+more realistic optimization problems.                                                       NY, USA, 15 pages. https://doi.org/10.1145/3669940.3707262
+   In this work, we propose SmoothE, a differentiable e-graph
+extraction algorithm designed to handle complex cost mod-
+els and optimized for GPU acceleration. More specifically, we
+                                                                                            1    Introduction
+approach the e-graph extraction problem from a probabilis-
+tic perspective, where the original discrete optimization is                                Term rewriting [17], widely employed in compiler optimiza-
+relaxed to a continuous differentiable form. This formulation                               tions [8, 34, 44] and theorem proving [15, 18], transforms pro-
+supports any differentiable cost functions and enables effi-                                grams into functionally equivalent but more efficient forms.
+cient searching for solutions using gradient descent. We im-                                Traditional methods apply the rewrites sequentially in a
+plement SmoothE in PyTorch to leverage the advancements                                     predetermined order, significantly affecting performance—a
+of the modern machine learning ecosystem. Additionally, we                                  challenge known as the phase ordering problem [44, 50].
+introduce performance optimization techniques to exploit                                       Equality saturation addresses the phase ordering issue
+sparsity and data parallelism. We evaluate SmoothE on a                                     by using the equivalence graph (e-graph), a data structure
+variety of realistic e-graphs from five different applications                              that compactly represents a set of expressions (i.e., e-nodes)
+using three distinct cost models, including both linear and                                 and their equivalence relations (i.e., e-classes) [6, 33]. The
+non-linear ones. Our experiments demonstrate that SmoothE                                   rewrite rules are applied collectively, encoding all function-
+consistently achieves a favorable trade-off between scalabil-                               ally equivalent solutions on a single e-graph. This enables
+ity and solution quality.                                                                   the selection of the most cost-efficient (or performant) one
+                                                                                            during the e-graph extraction process. With the emergence of
+Permission to make digital or hard copies of all or part of this work for                   state-of-the-art open-source equality saturation tools such as
+personal or classroom use is granted without fee provided that copies
+                                                                                            egg [50] and egglog [56], e-graph has been successfully used
+are not made or distributed for profit or commercial advantage and that
+copies bear this notice and the full citation on the first page. Copyrights
+                                                                                            for tensor graph transformation [53], sparse linear algebra
+for components of this work owned by others than the author(s) must                         optimization [49], code optimization [29, 41], digital signal
+be honored. Abstracting with credit is permitted. To copy otherwise, or                     processor (DSP) compilation [45, 48], circuit datapath syn-
+republish, to post on servers or to redistribute to lists, requires prior specific          thesis [10, 12–14, 47], and floating-point arithmetic [11, 35].
+permission and/or a fee. Request permissions from permissions@acm.org.                         Extracting a high-quality solution from an e-graph is chal-
+ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands
+                                                                                            lenging due to theoretical complexity (proven to be NP-
+© 2025 Copyright held by the owner/author(s). Publication rights licensed
+to ACM.
+                                                                                            hard [42, 55] in general) and practical efficiency, particu-
+ACM ISBN 979-8-4007-0698-1/25/03                                                            larly given the typically large graph size. While a number of
+https://doi.org/10.1145/3669940.3707262                                                     exact and heuristic e-graph extraction methods have been
+
+
+
+                                                                                     1020
+ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands                 Yaohui Cai, Kaixin Yang, Chenhui Deng, Cunxi Yu, and Zhiru Zhang
+
+
+proposed, existing approaches still have significant limita-             vectorized processing and sparsity to improve the effi-
+tions that restrict their applicability to even larger and more          ciency of GPU execution. We also introduce seed batching,
+realistic optimization problems:                                         which runs a batch of optimizations with different random
+   (1) Unfavorable scalability-quality trade-off: Most                   seeds in parallel, improving both solution quality and GPU
+existing work uses integer linear programming (ILP) for-                 utilization.
+mulations for e-graph extraction [10, 12, 14, 41, 47, 49, 53],         • We present a comprehensive comparative study of existing
+which suffer from limited scalability. Conversely, heuristic             e-graph extraction methods, including ILP-based formu-
+algorithms like greedy and iterative methods [35] may yield              lations, iterative heuristic methods, and our approach, on
+sub-optimal results. Additionally, current approaches are                five different real-world datasets using the conventional
+primarily designed for CPU execution and cannot leverage                 linear cost model. Our results demonstrate that SmoothE
+modern parallel computing devices like GPUs.                             achieves a similar level of solution quality to ILP baselines,
+   (2) Inadequate support of realistic cost models: Cur-                 with second-scale execution time on GPUs.
+rent e-graph extraction algorithms rely on linear cost models          • We demonstrate that, unlike existing e-graph extraction
+during optimization, where the overall cost is a weighted                methods, SmoothE can flexibly handle non-linear cost
+sum of individual term costs. This simplified model may                  models, including learning-based ones, while maintain-
+fail to capture the complexities of real-world optimization              ing high solution quality.
+problems. Additionally, these algorithms cannot be easily
+                                                                          The rest of the paper is organized as follows: Section 2
+extended to incorporate data-driven, learned cost models.
+                                                                       provides background on e-graphs and existing extraction
+   To address these challenges, we propose SmoothE, a differ-
+                                                                       methods. Section 3 introduces our SmoothE differentiable
+entiable e-graph extraction framework. More specifically, we
+                                                                       extraction approach. Section 4 details SmoothE implementa-
+employ a probabilistic approach to the extraction problem by
+                                                                       tion and GPU optimization. Section 5 evaluates various ex-
+transforming the binary decisions of e-node selection into
+                                                                       traction methods on a set of real-world and synthetic datasets.
+continuous variables that represent selection probabilities.
+                                                                       We conclude in Section 6.
+This transformation allows us to leverage gradient descent
+for optimization, creating an efficient and highly paralleliz-
+able method. Our approach further enables the optimization             2   Preliminaries
+of e-node selection probabilities in parallel, significantly ac-       E-graph is an extended union-find [43] data structure com-
+celerating the process on devices like GPUs. After continuous          pactly representing many equivalent terms. Originally devel-
+optimization, we perform sampling to convert these opti-               oped for automated theorem provers (ATPs) [15, 32], e-graphs
+mized probabilities into discrete selections, ensuring that all        haven been recently popularized by egg [50], which provides
+constraints are met for a valid e-graph extraction.                    a faster and flexible implementation for equality saturation.
+   SmoothE distinguishes itself from existing extraction meth-            In an e-graph, all functionally equivalent terms are orga-
+ods in several key aspects. First, it provides a differentiable        nized in the same equivalent classes, known as e-classes.
+formulation that enables scalable global optimization on               Nodes within each e-class that represent values or operators
+parallel computing resources, such as GPUs. Second, the                are called e-nodes. Edges in e-graphs are directed, which
+proposed optimization technique can incorporate complex                point from e-nodes to their child e-classes, indicating the
+non-linear cost models, including those based on machine               dependency between operators and operands.
+learning (ML), which allows it to capture intricate depen-                With equality saturation, an input program and a set of
+dencies and interactions that simpler models cannot. Third,            rewrites are given. First, an initial e-graph is created from
+SmoothE can seamlessly integrates with existing ML frame-              the input. To apply rewrites, the patterns on the left-hand
+works like PyTorch, ensuring rapid and practical implementa-           side of the rewrites are matched and the terms on the right-
+tion. We believe this flexibility and scalability make SmoothE         hand side are added. Note that the process is usually additive,
+a powerful tool for e-graph extraction, capable of achieving           meaning the left-hand side is still represented in the e-graph.
+high-quality solutions with fast execution times.                      When the rewriting saturates, the e-graph has encoded every
+   The major contributions of this paper are as follows:               possible equivalent programs based on the given rewrites.
+                                                                       The primary benefit of using e-graphs is the ability to encode
+                                                                       and explore a large space of equivalent terms, allowing the
+• We present SmoothE, the first differentiable approach to             extraction of a term that best meets certain optimization
+  e-graph extraction. SmoothE relaxes the discrete optimiza-           objectives without phase ordering limitations.
+  tion problem of e-node selection into a continuous, prob-               Figure 2 shows a concrete example of e-graphs and the
+  abilistic formulation, enabling parallelizable global opti-          equality saturation process. The initial e-graph in Figure 1a
+  mization that supports any differentiable objectives.                represents a simple term sec2 𝛼 + tan 𝛼. By applying rewrite
+• We implement SmoothE in PyTorch and further introduce                rule sec 𝛼 → 1/cos 𝛼, the e-graph expands the e-class repre-
+  a set of performance optimization techniques to exploit              senting sec 𝛼 to include 1/cos 𝛼, as illustrated in Figure 1b.
+
+
+
+                                                                1021
+SmoothE: Differentiable E-Graph Extraction                                            ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands
+
+
+
+
+  (a) Initial e-graph contains sec2 𝛼 + tan 𝛼     (b) After applying sec 𝛼 → 1/cos 𝛼                (c) After applying sec2 𝛼 → 1 + tan2 𝛼
+
+Figure 1. An e-graph example with two rewrites — 𝛼 is the primary data input to the program; 𝑥 2 and 1/𝑥 denote a square
+and reciprocal function, respectively; e-classes are dashed boxes, each containing e-nodes as solid boxes; edges originate from
+e-nodes to their children e-classes, indicating dependencies; the e-class containing + is the root; modifications by rewrites are
+highlighted in black.
+
+Then sec2 𝛼 → 1 + tan2 𝛼 is applied, which expands the                        To ensure the extracted program is functionally equivalent
+e-class representing sec2 𝛼 as shown in Figure 1c.                         to the input, the following constraints must be satisfied [44]:
+   E-graph extraction aims to to extract an optimized term                 (a) Exactly one e-node is selected from the root e-class.
+from an e-graph after rewrites, based on a user-defined cost               (b) If an e-node is selected, exactly one e-node must be se-
+model. The goal is to produce a functionally equivalent but                lected from each of its child e-classes.
+improved implementation of the original input program. The                 (c) No cycles are included in the extracted e-graph.
+e-graph extraction problem is proven to be NP-hard when
+common sub-expressions are considered [42, 55]. Both exact                 Constraint (b) ensures that if an operator e-node is selected,
+optimization methods based on ILP and heuristic algorithms                 all its the operand e-classes are also present in the extracted
+have been proposed, offering different trade-offs between                  graph. Together with constraint (a), these ensure the ex-
+solution quality and scalability. Next, we will provide a more             tracted program is functionally equivalent to the input pro-
+formal statement of the e-graph extraction problem, before                 gram. In this paper, we call them completeness constraints.
+describing the popular optimization methods.                               A cycle within an e-graph would imply that an operand of an
+   Notations and Problem Formulation. We first intro-                      operator eventually depends on the operator itself, creating
+duce the notations used throughout the rest of the paper.                  a circular dependency. In many cases, this would lead to an
+                                                                           infinite loop during evaluation, rendering the program incor-
+            𝑁 −1 denote the set of all e-nodes in the e-graph.
+• Let {𝑛𝑖 }𝑖=0                                                             rect or non-terminating. Thus the acyclicity constraint is
+• Let {𝑚 𝑗 }𝑀   −1
+             𝑗=0 denote the set of all e-classes, where the root           required in (c). Next, we introduce two most popular e-graph
+  e-class containing the top-level operator is indexed by 0.               extraction methods: ILP and heuristic algorithm.
+• Each e-class 𝑚 𝑗 contains a set of e-nodes: 𝑚 𝑗 = {𝑛𝑘 } and                 ILP or mixed-integer linear programming (MILP) formu-
+  |𝑚 𝑗 | denotes the cardinality of this set.                              lations have been used for a number of e-graph extraction
+• 𝑐ℎ𝑖 denotes the set of child e-classes for e-node of index 𝑖.            tasks [12, 40, 47, 49, 53]. A representative form [26] is intro-
+• 𝑝𝑎 𝑗 denotes the set of parent e-nodes that depend on                    duced by TenSat [53], which formulates the e-graph extrac-
+  e-class of index 𝑗.                                                      tion problem as follows:
+• 𝑒𝑐 (𝑖) returns the index of the e-class that contains e-node
+  of index 𝑖, namely, 𝑛𝑖 ∈ 𝑚𝑒𝑐 (𝑖 ) .                                                   minimize𝑠 ∈ {0,1} 𝑁 𝑓𝑏 (𝑠) = 𝑢𝑇 𝑠                   (1a)
+• Let 𝑠 ∈ {0, 1}𝑁 represent the binary decision variable
+                                                                                         ∑︁
+                                                                                   s.t.      𝑠𝑘 = 1                                         (1b)
+  for e-node selection: 𝑠𝑖 = 1 means that the 𝑖-th e-node is                           𝑛𝑘 ∈𝑚 0
+  selected after extraction, and 𝑠𝑖 = 0 indicates otherwise.                                                   ∑︁
+• 𝑓𝑏 (·) : {0, 1}𝑁 → R denotes a function that translates the                          ∀𝑖, ∀𝑗 ∈ 𝑐ℎ𝑖 , 𝑠𝑖 ≤              𝑠𝑘                   (1c)
+                                                                                                              𝑛𝑘 ∈𝑚 𝑗
+  e-node selection into a real-valued cost. Here the subscrip-
+  tion 𝑏 means the input vector is assumed to be binary.                               ∀𝑖, 𝑠𝑖 ∈ {0, 1}𝑁                                     (1d)
+• We call a cost function linear if and only if it can be written                      ∀𝑖, ∀𝑗 ∈ 𝑐ℎ𝑖 , 𝑡𝑒𝑐 (𝑖 ) − 𝑡 𝑗 − 𝜖 + 𝐴(1 − 𝑠𝑖 ) ≥ 0   (1e)
+  in the following form: 𝑓𝑏 (𝑠) = 𝑢𝑇 𝑠, 𝑢 ∈ R𝑁 , where 𝑢𝑛 is                                              𝑀
+  the cost associated with e-node 𝑛.                                                   ∀𝑗, 𝑡 𝑗 ∈ [0, 1]                                      (1f)
+
+
+
+
+                                                                    1022
+ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands                    Yaohui Cai, Kaixin Yang, Chenhui Deng, Cunxi Yu, and Zhiru Zhang
+
+
+Here 𝑠𝑖 means whether e-node 𝑛𝑖 is selected or not; 𝑡 𝑗 en-               for their simplicity, where the overall cost is a weighted sum
+codes the order of e-classes being selected; 𝜖 < 1/𝑀 is a                 of the per-e-node cost estimates. For some tasks, costs such
+small constant and 𝐴 > 1 +𝜖 is a large constant. Eq. (1b), (1c),          as resource usage can be reasonably approximated using
+and (1d) correspond to completeness constraints. Eq. (1e) and             an additive linear function. However, linear models cannot
+(1f) enforce a topological order on all the chosen e-classes,             capture the higher-order interactions at the sub-graph level
+ensuring no cycles exist within the extracted e-graph.                    among different e-nodes. Therefore, there are many scenar-
+    While the ILP approach is generally flexible and produces             ios where using a non-linear cost model would be beneficial.
+an optimal solution if the solver terminates before timing                For instance, the recent work E-syn [7] uses e-graph to im-
+out, it does not scale well on large e-graphs. Even state-of-             prove technology mapping-aware logic synthesis. Since a
+the-art commercial solvers can easily take hours to solve                 linear cost function cannot capture the clustering effects of
+medium-sized extraction problems.                                         multiple operations during technology mapping, E-syn gen-
+    Heuristic Methods. A popular heuristic method for fast                erates a pool of extraction candidates and uses an ML model
+e-graph extraction involves updating estimated costs on                   based on XGBoost [9] to rank the solutions. Another exam-
+e-classes and selecting e-nodes iteratively using a queue-                ple is ROVER [14], which relies on RTL simulation to obtain
+based worklist [35]. The algorithm begins by initializing the             toggle rates for optimizing power consumption of arithmetic
+cost of all e-classes to infinity. The goal is to minimize the            circuits during the e-graph extraction process. In this case,
+cost for the root e-class. An aggregated cost of selecting an             a non-linear proxy cost model [54, 58] could significantly
+e-node 𝑛𝑖 is defined as the sum of its predefined individual              speed up the optimization.
+cost and the costs of all its child e-classes in 𝑐ℎ𝑖 . Since all
+e-nodes within an e-class are functionally equivalent, the                3   A Differentiable Approach to E-Graph
+cost associated with the e-class is determined by the mini-                   Extraction
+mum aggregated cost of selecting any e-node within it. To
+get the cost of the root e-class, a working queue is initialized          In this section, we describe how we formulate the e-graph ex-
+with all leaf e-nodes (those without child e-classes). When               traction problem in a differentiable manner by transforming
+an e-node 𝑛𝑖 is dequeued, we update its aggregated cost. If               the original discrete optimization into a continuous and prob-
+the new cost is lower than the current cost of its belonging              abilistic process, which we call SmoothE. We break down the
+e-class 𝑒𝑐 (𝑖), we update the cost of the e-class as well as the          original discrete optimization problem into four key compo-
+selected e-node within it accordingly. The parent e-nodes                 nents: 1) variables for e-node selection, 2) objective function,
+𝑝𝑎𝑒𝑐 (𝑖 ) are then added to the queue. This process repeats un-           3) completeness constraints, and 4) acyclicity constraint, and
+til the queue is empty. This algorithm is sometimes referred              transform each component separately. In the following, we
+to as a greedy approach in some existing implementations.                 first discuss how each component is transformed (Section 3.1
+    A major limitation of the heuristic algorithm tends to over-          through Section 3.4). Afterwards, in Section 3.5, we describe
+estimate costs by ignoring the reuse of common subexpres-                 the optimization of the continuous problem and how we
+sions, resulting in suboptimal solutions. Figure 2 illustrates            obtain the discrete solutions.
+an example where a common subexpression impacts the
+performance of the heuristic algorithm, where the tan 𝛼 can               3.1 Continuous Variables for E-Node Selection
+be reused by two parent e-nodes to save the cost. However,                We first relax the variable to be optimized (i.e., 𝑠) to be a
+the heuristic algorithm (Figure 2b) fails to identify this reuse          continuous variable and interpret its value as the probability
+opportunity resulting in sub-optimal solution.                            of e-node being selected in the extracted graph, namely,
+    Other Extraction Methods. Several task-specific e-graph
+extraction methods have been proposed, e.g., NSGA-II [16],                                     𝑝𝑖 ≔ 𝑃 (𝑛𝑖 is chosen),                      (2)
+a genetic algorithm, is introduced in HL-HELM [52]. The
+authors of [26] propose a MAXSAT-based formulation for                    where 𝑝 ∈ [0, 1] 𝑁 is a real-valued probability vector, and is
+e-graph extraction. However, it requires enumerating all                  the variable to be optimized in the relaxed form. To obtain the
+the cycles within the e-graph, whose number grows expo-                   discrete solution variable 𝑠 from 𝑝, we use a sample process,
+nentially with the number of e-nodes. Tensat [53] prunes                  which will be introduced in Section 3.5.
+e-graphs by removing all cycles as a preprocessing step, al-
+lowing the acyclicity constraint to be ignored and signifi-               3.2 Differentiable Objective Function
+cantly reducing the time required by ILP. Babble [5] similarly            The binary cost function 𝑓𝑏 (𝑠) introduced in the previous
+prunes candidate patterns using approximations. However,                  section is non-differentiable, as it takes a binary vector as
+such preprocessing reduces the feasible solution space, po-               input. In SmoothE, we assume that the cost function (or
+tentially compromising the quality of the final solution.                 optimization objective) is relaxed into a differentiable form
+    Limitations of Linear Cost Models. Current e-graph ex-                𝑓 (·) with continuous input [0, 1] 𝑁 . Note that in this case,
+traction methods predominantly assume linear cost models                  the linear cost 𝑓 (𝑝) = 𝑢𝑇 𝑝 is naturally differentiable.
+
+
+
+                                                                   1023
+SmoothE: Differentiable E-Graph Extraction                                                           ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands
+
+
+
+                            2                                                         2                                                     2
+
+
+            5           2              5                              5           2              5                        5             2           5
+
+
+       10           5             0            10                10           5             0        10              10             5           0       10
+
+
+                    10                                                        10                                                    10
+
+
+
+                                      2                                                      2                                                           2
+(a) Solution 1: tan 𝛼 + (1/cos 𝛼) ,                       (b) Solution 2: (heuristic): sec 𝛼 + tan 𝛼,         (c) Solution 3: (optimal): tan 𝛼 + 1 + tan 𝛼,
+    total cost = 2 + 5 + 5 + 10 + 10 = 32                     total cost = 2 + 5 + 10 + 10 = 27                   total cost = 2 + 2 + 0 + 5 + 10 = 19
+
+Figure 2. Three extraction solutions for e-graph in Figure 2 — the colored boxes indicate the selected e-nodes after
+extraction; The circled numbers are the costs associated with each e-node; tan 𝛼 is a common subexpression that can be reused
+by 1 + tan2 𝛼 and tan 𝛼; Figure 2b shows that the heuristic method fails to reuse this term, resulting in a sub-optimal solution.
+
+3.3 Handling Completeness Constraints
+We first handle the completeness constraints (a) and (b) in-
+                                                                                                          minimize𝑐𝑝 ∈ [0,1] 𝑁 𝑓 (𝑝),                        (4a)
+troduced in Section 2. For constraint (a), we use the same
+form as Eq. (1b) in the ILP formulation, which ensures the                                                       s.t. 𝑝 = 𝜙 (𝑐𝑝),                            (4b)
+probabilities of choosing any e-nodes in the root e-class sum                                                        acyclicity constraint,                  (4c)
+up to 1. For constraint (b), we also adopt the same form as Eq.
+(1c), which enforces the probability of choosing an e-node                                   Next we will discuss how to compute function 𝜙 differen-
+𝑛 to be smaller than the sum of the probabilities of e-nodes                              tiably. Computing 𝜙 exactly on a cyclic graph can be done
+in its child e-classes. These constraints only specify the sum                            with the Junction Tree algorithm [36]. However, it has a ex-
+probabilities of e-nodes within each e-class. However, how                                ponential time complexity of 𝑂 (2𝑘 ), where 𝑘 is the size of
+to assign these probabilities remains unknown. Furthermore,                               the largest clique, making it not scalable for large problems.
+the assignment needs to be differentiable.                                                Thus loopy belief propagation (LBP) [28, 31], as an approxi-
+   To tackle this problem, we introduce an intermediate vari-                             mate method, is often used to compute such 𝜙 in graphical
+able 𝑐𝑝 to assign probabilities of e-nodes within each e-class.                           models with cycles. For acyclic graphs, LBP is guaranteed
+𝑐𝑝 represents the conditional probability of choosing e-node                              to converge to the exact value in a linear time complexity.
+𝑛𝑖 given that its belonging e-class 𝑚𝑒𝑐 (𝑖 ) is selected:                                 However, for cyclic graphs, convergence is theoretically as-
+                                                                                          sured only under specific conditions [27]. Despite this, it has
+                                                                                          been observed that LBP typically converges effectively in
+            𝑐𝑝𝑖 ≔ 𝑃 (𝑛𝑖 is chosen | 𝑚𝑒𝑐 (𝑖 ) is chosen)                                   practice [31]. LBP iteratively updates the beliefs of the target
+                             𝑝𝑖                                                           node based on the conditional probabilities of its neighbor-
+                =                                                         (3a)
+                  𝑃 (𝑚𝑒𝑐 (𝑖 ) is chosen)                                                  ing nodes; these beliefs are then used to compute marginal
+                                                                                          probabilities. Thus we adapt BP to the e-graph setting for
+                                   ∑︁                                                     computing 𝜙.
+            𝑐𝑝𝑘 ∈ [0, 1],                      𝑐𝑝𝑘 = 1,                   (3b)               More concretely, by rewriting Eq. (3a), we have:
+                                𝑛𝑘 ∈𝑚𝑒𝑐 (𝑖 )
+                                                                                                          𝑝𝑖 = 𝑐𝑝𝑖 · 𝑃 (𝑚𝑒𝑐 (𝑖 ) is chosen),                  (5)
+
+Eq. (3b) imposes necessary constraints on the conditional                                 which means computing 𝜙 is essentially equivalent to calcu-
+probability 𝑐𝑝: it must be a real number between 0 and 1,                                 lating 𝑃 (𝑚𝑒𝑐 (𝑖 ) is chosen). However, the probability of choos-
+and 𝑐𝑝 of all e-nodes from the same e-class sum up to 1. We                               ing an e-class (i.e., 𝑚𝑒𝑐 (𝑖 ) ) depends on its parent e-nodes and
+use a softmax function to ensure Eq. (3b) in practice.                                    their correlations, which can be very complex. Therefore, we
+   Then we change the variable to be optimized from 𝑝 to                                  make an assumption about the correlations among the par-
+𝑐𝑝 and use a differentiable function 𝜙 : 𝑐𝑝 ↦→ 𝑝 to compute                               ent e-nodes of any e-class. First, we discuss the assumption
+probabilities 𝑝 according to conditional probabilities 𝑐𝑝. Af-                            that all parent e-nodes are independent. Subsequently, we
+ter that, the optimization problem changes to the following:                              will consider alternative assumptions.
+
+
+
+                                                                                 1024
+ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands                               Yaohui Cai, Kaixin Yang, Chenhui Deng, Cunxi Yu, and Zhiru Zhang
+
+
+  With the independence assumption, we have:                                                                2
+                                     Ö
+  𝑃 (𝑚𝑒𝑐 (𝑖 ) is chosen) = 1 −                   𝑃 (𝑛𝑘 is not chosen)                         5         2           5
+                                 𝑛𝑘 ∈𝑝𝑎𝑒𝑐 (𝑖 )
+                                                                   (6a)
+                                     Ö                                                   10         5           0       10
+                          =1−                    (1 − 𝑝𝑘 ),        (6b)
+                                 𝑛𝑘 ∈𝑝𝑎𝑒𝑐 (𝑖 )
+                                                                                                    10
+ which requires knowing the probability of all the parent
+e-nodes. In e-graphs without cycles, we can compute Eq.
+(5) and (6) following a topological order. This means before
+                                                                                     Figure 3. e-graph from Figure 2 with hypothetical prob-
+computing the probability of an e-class, probabilities of all
+                                                                                     abilities — in each e-node, operator is replaced with num-
+the parent e-nodes are computed first.
+                                                                                     bered e-node ID. Diamonds show conditional probabilities
+   However, for e-graphs containing cycles, circular depen-
+                                                                                     (𝑐𝑝) as variables to be optimized. All conditional probabilities
+dencies prevent topological ordering, making the above se-
+                                                                                     and computed unconditional probabilities (𝑝) are summa-
+quential update impossible. To tackle this problem, we pro-
+                                                                                     rized on the right.
+pose a parallel schedule: first, the probabilities of all e-classes
+are initialized to 0, except for the root e-class, which is set to
+1 since it is always selected. Then by applying Eq. (5) and (6)                      probabilities 𝑝 1 and 𝑝 7 in the following way:
+to all e-nodes and e-classes in parallel, we can propagate the                          𝑝 1 = 𝑐𝑝 1 · 𝑃 (𝑚𝑒𝑐 (1) is chosen) = 𝑐𝑝 1 · 𝑝 0 = 𝑐𝑝 1,
+probability from the root e-class to the whole e-graph with-
+                                                                                        𝑝 7 = 𝑐𝑝 7 · 𝑃 (𝑚𝑒𝑐 (7) is chosen) = 𝑐𝑝 7 · max(𝑝 0, 𝑝 3 ) = 1
+out an explicit order. The process repeats until convergence
+of the probability values.                                                           Here 𝑛 0 and 𝑛 3 are fully correlated.
+   When probabilities converge, Eq. (5) and (6) will hold for                           If we use the hypothetical cost in Figure 3, the final cost of
+all e-nodes, indicating that the completeness constraints are                        this e-graph would be: 𝑓 (𝑝) = 𝑢𝑇 𝑝 = 19+13𝑐𝑝 1 −5𝑐𝑝 1𝑐𝑝 4 . It is
+met. While parallel schedule imposes greater computational                           obvious that when 𝑐𝑝 1 = 0, 𝑓 (𝑝) achieves minimum: 𝑓 (𝑝 ∗ ) =
+demands, it is friendly for GPU acceleration by eliminating                          19. This corresponds to the optimal binary solution 3 in
+compute dependencies and leveraging parallel computing                               Figure 2c. By optimizing 𝑓 (𝑝), we can obtain the probability
+units through vectorization (to be discussed in Section 4.2).                        corresponding to the optimal solution.
+   In contrast to independence assumption, an alternative
+option is to assume the parent e-nodes of 𝑚𝑒𝑐 (𝑛) are fully                          3.4 Handling Acyclicity Constraint
+(positively) correlated — if the e-node with the highest prob-                       Enforcing the acyclicity constraint during e-graph extrac-
+ability is not chosen, none of other e-nodes will not chosen                         tion presents a significant challenge due to the combinatorial
+either. Therefore, we only consider the parent e-node with                           nature of the problem, especially within the scope of this
+the highest probability:                                                             research. To address this, we make use of a method called
+                                                                                     NOTEARS [57], which reformulates the combinatorial prob-
+               𝑃 (𝑚𝑒𝑐 (𝑖 ) is chosen) = max 𝑝𝑘 ,                        (7)          lem of extracting a directed acyclic graph into a continuous
+                                           𝑘 ∈𝑝𝑎𝑒𝑐 (𝑖 )                              optimization problem.
+                                                                                        To explain the core idea of NOTEARS, we include the
+    Alternatively, we can also use a hybrid assumption — a                           following theorem and a brief proof:
+case in between of independence and fully positively cor-
+related assumption. Then the probability of e-class 𝑚𝑒𝑐 (𝑖 )                         Theorem 3.1. Let 𝐴𝑡 be the transition matrix for a connected
+is computed as the arithmetic average of the results from                            directed graph 𝐺 with 𝑑 vertices. 𝐺 is acyclic if and only if
+two previous assumptions. No matter which assumption is                                                     ℎ(𝐴𝑡 ) = tr(𝑒 𝐴𝑡 ) − 𝑑 = 0,                  (8)
+adopted, this whole process is differentiable as every step
+                                                                                     where tr(·) is the trace operator, 𝑒 𝐴𝑡 is the matrix exponential
+within it is differentiable.
+                                                                                     operator, 𝑑 the number of nodes in this graph.
+    Figure 3 illustrates a concrete example how to compute
+probabilities 𝜙. In this example, there are only two e-classes                       Proof. For any positive integer 𝑘, 𝐴𝑘𝑡 [𝑖, 𝑗] = 0 is the sum of
+containing more than one e-node: the e-class containing                              products along all 𝑘-hop paths from 𝑖-th node to 𝑗-th node.
+e-nodes 𝑛 1 and 𝑛 2 , and the one containing e-nodes 𝑛 4 and                         Since 𝐴𝑡 is non-negative, tr(𝐴𝑘𝑡 ) = 0 if and only if there are
+𝑛 5 . For each of these e-classes, we only need to solve 𝑐𝑝                          no 𝑘-hop cycles in the graph. Using Taylor expansion for the
+for one of the two e-nodes since their sum always equals 1.                          matrix exponential, we have
+Assuming we pick 𝑐𝑝 1 and 𝑐𝑝 4 as variables to be optimized,                                                               1
+we can use them to compute the unconditional (or marginal)                                   tr(𝑒 𝐴𝑡 ) = tr(𝐼 ) + tr(𝐴𝑡 ) + tr(𝐴𝑡2 ) + · · · ≥ 𝑑, (9)
+                                                                                                                           2!
+
+
+
+                                                                              1025
+SmoothE: Differentiable E-Graph Extraction                                             ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands
+
+
+and the equality is attained if and only if 𝐺 has no cycles of              4   Implementation and Performance
+any number of hops.                                         □                   Optimization
+                                                                            We introduce the algorithmic framework of SmoothE in the
+    In our case, the transition matrix 𝐴𝑡 captures the prob-                previous section. In this section, we discuss how we achieve
+abilities of dependency among e-classes, where 𝐴𝑡 [𝑖, 𝑗] is                 a high-performance implementation on GPUs by exploiting
+the probability of e-class 𝑚𝑖 depends e-class 𝑚 𝑗 . Specifi-                sparsity and data parallelism.
+cally, 𝐴𝑡 [𝑖, 𝑗] is equal to the sum of the conditional probabil-
+ities of all e-nodes 𝑛𝑘 in 𝑚𝑖 that depends on 𝑚 𝑗 : 𝐴𝑡 [𝑖, 𝑗] =
+Í
+   𝑘,𝑛𝑘 ∈𝑚𝑖 ,𝑚 𝑗 ∈𝑐ℎ𝑘 𝑐𝑝𝑘 . To enforce acyclicity, the NOTEARS
+term ℎ(𝐴𝑡 ) is added as a penalty term to the primary ob-                   4.1 Vectorization and Sparsity
+jective, 𝑓 , where a coefficient 𝜆 is used to control its relative          Since our approach is fully differentiable, adopting PyTorch [37]
+scale. Thus we obtain the final form of the continuous opti-                is an attractive option for leveraging the modern machine
+mization as follows:                                                        learning ecosystem and GPU acceleration for gradient com-
+                                                                            putation. To optimize GPU utilization, it is essential to vec-
+            minimize 𝑐𝑝 ∈ [0,1]𝑛 L = 𝑓 (𝑝) + 𝜆 · ℎ(𝐴𝑡 )     (10a)           torize intensive computations and memory operations. Ad-
+                             s.t. 𝑝 = 𝜙 (𝑐𝑝)                (10b)           ditionally, e-graphs exhibit high sparsity, which is evident
+                                                                            from the average edge density in the datasets we evaluated
+Here L is the objective function, 𝜆 is a hyper-parameter to                 (refer to Table 1). Therefore, exploiting sparsity is also crucial
+control the scale of the NOTEARS term. With a sufficiently                  to minimize memory usage and enhance overall efficiency.
+large 𝜆, it is provable that the probability of the solution to                In our implementation, the e-nodes and e-classes are rep-
+Eq. (10) containing cycles is zero.                                         resented by a vector of shape 𝑁 × 1 and 𝑀 × 1, respectively,
+                                                                            where 𝑀 is the number of e-classes and 𝑁 is the number of
+3.5 Optimization and Sampling
+                                                                            e-nodes. Since the size of the e-graph is usually large and
+At a high level, we use gradient descent to optimize the ob-                the edge density is low, we avoid instantiating any dense ten-
+jective function (i.e., Eq. (10a)). Subsequently, a sampling                sors equal or larger than shape of min(𝑀, 𝑁 ) 2 . For example,
+stage is used to extract a discrete solution based on the prob-             the function 𝑒𝑐 (𝑖), which maps e-classes to child e-nodes, is
+abilities assigned to the e-node selection variables.                       represented by a {0, 1}𝑀 ×𝑁 sparse tensor. In this case, trans-
+   In the optimization stage, we search for the solution that               lating from e-classes to child e-nodes can be performed by a
+minimizes the objective function of the relaxed problem                     sparse matrix–vector multiplication (SpMV) operator. The
+in Eq. (10). First, to obtain the conditional probability 𝑐𝑝,               implementation of 𝑐ℎ𝑖 and 𝑝𝑎 𝑗 follows a similar approach.
+we apply softmax function to a free variable 𝜃 of the same
+shape of 𝑐𝑝. Then, unconditional probability 𝑝 is computed
+according to 𝑐𝑝 with function 𝜙 using hybrid assumptions
+by default. Finally, 𝑝 is used to compute the loss function L.              4.2 Seed Batching
+The gradient of the loss function is backward propagated to                 It is challenging to parallelize graph algorithm on GPUs
+update the free parameters 𝜃 , thus updating 𝑐𝑝.                            due to irregular memory access [3] in traditional parallel
+   In the sampling stage, we extract a discrete binary solu-                schemes. Naive data parallelism requires dividing variables
+tion 𝑠 according to the conditional probabilities 𝑐𝑝 assigned               to different devices, which would incur non-trivial commu-
+by the optimizer. Sampling is performed after each itera-                   nication overhead among devices, because all e-nodes and
+tion of optimization. Concretely, we use the following sam-                 e-classes are interconnected.
+pling schedule: To satisfy constraint (a), we start from the                   Therefore, we adopt a different technique called seed batch-
+selection of the root e-class 𝑚 0 . For each selected e-class               ing to fully utilize GPU power. We refer one instantiation
+𝑚 𝑗 , we select e-node 𝑛𝑘∗ ∈ 𝑚 𝑗 with the largest probability               of 𝜃 as one seed, whose initialization point depends on the
+𝑐𝑝𝑘∗ = max𝑘 ∈𝑚 𝑗 𝑐𝑝𝑘 . For each selected e-node, we select all              random seed. With different 𝜃 , the conditional probability 𝑐𝑝
+its child e-classes. Thus constraint (b) is also satisfied. This            starts from different initializations. Since the optimization
+process is repeated until all selected e-nodes have no unse-                and sampling results are affected by the initialization, by
+lected dependent e-classes. Note that the sampling process                  optimizing and sampling more than one seed, we expect to
+only guarantees completeness constraints, (a) and (b). For the              find a seed leads to a solution with better quality.
+acyclicity constraint, we rely on the additional objective in                  At the beginning of optimization, 𝐵 seeds are initialized,
+the optimization process introduced in Section 3.4. SmoothE                 which later are optimized in parallel using a batch fashion.
+will terminate if (1) the cost of sampled solution does not                 The discrete solution 𝑠 with the lowest cost is selected from
+improve for a certain number of iterations (i.e., based on                  discrete solutions sampled from all 𝐵 seeds. During sampling,
+a patience parameter), or (2) after a predefined number of                  we sample discrete solutions from all 𝐵 seeds in parallel and
+iterations (i.e., a timeout).                                               select the one with the lowest cost as the final solution.
+
+
+
+                                                                     1026
+ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands                            Yaohui Cai, Kaixin Yang, Chenhui Deng, Cunxi Yu, and Zhiru Zhang
+
+
+Table 1. Dataset Statistics — #𝐺 denotes the number of different e-graphs in this dataset. 𝑑 (𝑣) represents the average e-node
+degree. max(𝑁 ) and max(𝑀) indicate the maximum number of e-nodes and e-classes, respectively, in any e-graph within this
+dataset. Avg. Density represents the average edge density of all e-graphs in this dataset.
+
+    Dataset            Task Description            #𝐺     𝑑 (𝑣)   max(𝑁 )    max(𝑀)         Avg. Density       Representative Workload(s)
+    diospyros [48]     DSP vectorization           12     2.5     218933     9584           4.8 ×10−3              Linear algebra kernels
+    flexc [51]          CGRA mapping               14     1.8     19830      4892           2.5 ×10−4             Bzip2 [38], FFmpeg [46]
+    impress [47]          FPGA HLS                 3      2.0     102030     90312          4.7 ×10−5           Large integer multiplication
+    rover [12]             Datapath                9      5.5     16960      2852           1.4 ×10−3            DSP and graphics kernels
+    tensat [53]          Tensor graph              5      2.3     57800      34800          2.6 ×10−4            ResNet-50 [25], BERT [19]
+    set                NP-hard problem             4      1.0     996738     104632         1.2 ×10−2              Minimum set covering
+    maxsat             NP-hard problem             6      1.8     3851       3781           4.0 ×10−4              Maximum satisfiability
+
+4.3 Matrix Exponential Optimization                                               80 GB memory and two AMD EPYC 9124 CPUs (2×16 cores)
+The computation of NOTEARS, which enforces the acyclic-                           running at 3.7 GHz, 1.5 TB of RAM. For softwares, we use
+ity constraint, primarily relies on the matrix exponential                        PyTorch 2.0.1 with CUDA 11.7 and torch_sparse [21] 0.6.17.
+operation. Modern implementations of matrix exponential                              Baseline Methods. We compare SmoothE with three
+typically use the Padé approximation [20], which primar-                          baselines: ILP, the default heuristic in egg, and an improved
+ily involves matrix-matrix multiplication and solving linear                      heuristic algorithm from the extraction gym [22], which we
+systems. In practice, it often becomes the bottleneck of the                      call heuristic+.
+entire optimization process. This is due to the fact that linear                     We evaluate three ILP solvers: COIN-OR branch-and-cut
+system solvers are typically memory-bound, posing chal-                           (CBC) [23], solving constraint integer programs (SCIP) [1],
+lenges for efficient GPU optimization. We make efforts from                       and CPLEX [4]. CBC and SCIP are open-source ILP solvers,
+two aspects to reduce the overhead of this operator:                              while CPLEX is a commercial solver from IBM which sup-
+   Strongly Connected Component (SCC) Decomposi-                                  ports multi-threaded. The thread number is set to 32 for
+tion. Any directed graph can be decomposed into sub-graphs                        CPLEX. The ILP formulation used in evaluation is the same
+such that within each sub-graph and every node is reachable                       as Eq. (1). All ILP solvers are invoked using Python APIs, and
+from every other node. These sub-graphs are known as SCCs                         we count the time after the solvers are invoked. For heuristic
+and cycles can only occur within a single SCC. We decom-                          algorithms, we use the original implementations in Rust.
+pose the e-graph into SCCs and sum up NOTEARS terms                                  Hyper-parameter Settings We find that using the hybrid
+in Eq. (8) from each SCC. As long as the sum of NOTEARS                           assumption by default performs well enough across e-graphs
+terms is 0, each SCC will be cycle-free, ensuring that the                        from different datasets. To further improve the results, we
+extracted e-graph is acyclic. This significantly reduces the                      conduct a simple grid search for all hyper-parameters, in-
+complexity of the matrix exponential computation.                                 cluding assumption used, on a randomly selected e-graph
+   Batched Approximation Solving linear systems is bot-                           from the dataset to improve extraction quality.
+tlenecked by irregular memory access, making it challenging
+to accelerate through batching. To address this, we adopt                         5.2 Real-World Datasets
+a batched approximation strategy: given a batch size of 𝐵,                        We conduct a comprehensive comparative study of existing
+instead of averaging the matrix exponentials of all 𝐵 matri-                      e-graph extraction methods and SmoothE on several real-
+ces, we approximate by computing the exponential of the                           world datasets, along with a adversarial dataset that provides
+average of the 𝐵 matrices.                                                        additional insights into when the heuristic is less effective.
+                   𝐵                                                                 Table 1 provides a description of datasets and summarizes
+               1 ∑︁                        1 Í𝐵
+                                                                                  key statistics of e-graphs in each dataset. We select five differ-
+                     tr(𝑒 𝐴𝑡 [𝑖 ] ) ≈ tr(𝑒 𝐵 𝑖=1 𝐴𝑡 [𝑖 ] ),         (11)
+               𝐵 𝑖=1                                                              ent realistic datasets from prior work that utilizes e-graphs
+                                                                                  to perform various optimizations for software compilation or
+where the 𝐴𝑡 [𝑖] is the 𝑖-th seed of 𝐴𝑡 . This approximation
+                                                                                  hardware synthesis. Specifically, rover [12] focuses on datap-
+reduces the overhead of the matrix exponential operation by
+                                                                                  ath synthesis to minimize area of several arithmetic-intensive
+a factor of 𝐵.
+                                                                                  kernels [24, 30]; tensat [53] optimizes the tensor computa-
+                                                                                  tion graphs from deep learning models [19, 39]; flexc [51]
+5     Evaluation
+                                                                                  optimizes the performance of loop kernels on coarse-grained
+5.1 Experimental Setup                                                            reconfigurable arrays (CGRAs); impress [47] optimizes the re-
+Environment Settings. All the experiments are performed                           source usage of large integer multiplications on FPGAs lever-
+on a Linux server equipped two NVIDIA A100 GPUs with                              aging high-level synthesis (HLS); diospyros [48] searches
+
+
+
+                                                                           1027
+SmoothE: Differentiable E-Graph Extraction                                           ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands
+
+
+Table 2. Comparative results using the linear cost model across 5 realistic datasets — Increases in solution quality are
+normalized to the oracle obtained by running CPLEX for 10 hours. The time limit is set as 15 minutes for all ILP methods. In
+each dataset, time is reported in second. worst indicates the statistic of the worst performing e-graph, and avg. reports the
+geometric mean across e-graphs with feasible solutions. The red number in parentheses indicates the number of e-graphs for
+which the solver fails to provide a valid solution. The maximum difference for SmoothE is based on 3 runs. For diospyros, flexc,
+impress, rover, and tensat, we use independent, correlated, correlated, independent, and independent assumption respectively.
+
+                CPLEX ILP            SCIP ILP         CBC ILP          Heuristic (egg)        Heuristic+[22]           SmoothE (ours)
+ Dataset        time (fails)        time (fails)    time (fails)        time (fails)           time (fails)              time (fails)
+                worst / avg.        worst / avg.    worst / avg.        worst / avg.           worst / avg.             worst / avg.
+                     211.8            240.5 (1)       350.4 (1)                 0.3                  0.2                     8.4±0.7
+ diospyros
+                 19.6% / 1.4%       Failed / 7.5%   Failed / 2.5%           0.0% / 0.1%          0.0% / 0.1%           0.1%±0.0% / 0.1%±0.0%
+                     5.2                41.6           585.4 (5)                0.0                  0.1                    19.3±1.7
+ flexc
+                 0.0% / 0.0%         0.0% / 0.0%    Failed / 66.6%          2.8% / 1.2%          2.8% / 1.2%           0.7%±0.0% / 0.2%±0.0%
+                    39.5                69.8           384.5                   0.4                   1.0                     4.6±0.0
+ impress
+                 0.0% / 0.0%         0.0% / 0.0%    220% / 30.8%           280% / 53.0%          0.0% / 0.0%           0.0%±0.0% / 0.0%±0.0%
+                    520.4              671.8            677.6                  0.1                   0.1                    20.6±1.3
+ rover
+                 4.3% / 0.5%       45.6% / 17.2%    58.6% / 19.6%          11.0% / 2.9%          11.0% / 2.9%          4.4%±1.2% / 0.2%±0.1%
+                    678.2            900.0 (1)         900.0 (1)                0.4                  1.3                    24.4±2.5
+ tensat
+                 9.7% / 1.9%       Failed / 260%    Failed / 67.2%         46.4% / 12.1%        46.4% / 11.9%         17.0%±0.0% / 4.6%±0.1%
+
+
+for efficient vectorizations to speed up execution of linear                  The results are shown in Table 2. We first run the CPLEX
+algebra kernels on DSP architectures. Three of these datasets              for 10 hours for each e-graph to obtain a good solution as an
+are available in the e-graph extraction gym [22], an open-                 oracle baseline. We then compare the quality of the extracted
+source repository. We contacted the authors of impress [47]                solutions from different extraction methods with the baseline
+to get their codebase. Using the impress codebase along with               to obtain the normalized cost increase on each data. CPLEX,
+open-sourced diospyros, we constructed the e-graphs.                       a commercial solver with multi-threading support, is able to
+                                                                           obtain good solutions on flexc, impress and rover. The open-
+5.3 Adversarial Datasets                                                   source ILP solvers, SCIP and CBC, on the other hand fail
+To study the limitations of the heuristic methods, we con-                 to obtain reasonable solutions on most datasets. Heuristic
+struct two adversarial datasets with e-graphs rich in common               algorithm, is able to achieve good solutions on flexc and
+sub-expressions. We converted two NP-hard problems, min-                   diospyros. The improved version of it, Heuristic+, can also
+imum set covering and maxsat, to e-graph extraction. The                   find descent solutions on impress. This is due to 1) lack of
+original problems are obtained from Frequent Itemset Mining                potential common subexpressions and/or 2) reuse of common
+Dataset Repository [55] and MaxSAT Evaluations [2], respec-                subexpression does not exist in the optimal terms.
+tively. The conversion process follows the prior works [42,                   SmoothE generates high-quality solutions on all five datasets.
+55]. Compared to e-graphs in realistic datasets, the e-graphs              Compared to ILP solvers on all datasets, SmoothE achieves
+converted from these NP-hard problems contains less graph-                 comparable or better quality, except flexc, with an 8× to 37×
+ical information, thus more suitable for ILP solvers.                      speedup. Compared with the heuristic baselines, SmoothE
+                                                                           consistently provide better extraction quality, while keep-
+5.4 Comparison Using Linear Cost Models                                    ing the extraction time much shorter than ILP. In summary,
+Results on Real-World Datasets. We first test on the most                  SmoothE offers similar solution quality to ILP baselines with
+widely used linear cost models. For all the real-world datasets,           much faster GPU execution, significantly surpassing the ex-
+the cost for each operator is application specific. For example,           traction quality of heuristic and heuristic+.
+the cost for operators in tensat corresponds to their execution               Anytime Results. Similar to ILP, SmoothE keeps refining
+time on GPU, while the cost of operators in impress represent              the solution and is able to sample discrete solution at an any
+their resource usage on FPGAs.                                             given time. In Figure 4, we include an anytime comparison
+   Since we do not control the internal stopping criteria of               between SmoothE and CPLEX on several e-graphs from two
+ILP solvers and they may take hours or even days to produce                different datasets. We ignore other ILP solvers because they
+results (if they complete at all), we set a hard time limit, 15            hardly produce a valid solution on this given time scale for
+minutes, for all ILP solvers.                                              these e-graphs. This experiment clearly shows that SmoothE
+
+
+
+                                                                    1028
+ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands                      Yaohui Cai, Kaixin Yang, Chenhui Deng, Cunxi Yu, and Zhiru Zhang
+
+
+Table 3. TenSat and Rover results breakdown— the solution produced by the ILP solver before the timeout (15 min) is
+optimal; otherwise, it is a best-effort solution. time is reported in second.
+
+                              CPLEX               SCIP               CBC                  Heuristic      Heuristic+ SmoothE (ours)
+ Dataset      E-Graph
+                              cost / time         cost / time        cost / time          cost / time    cost / time cost / time
+              NASNet-A        11.199 / 16.6       14.098 / 900.0     11.271 / 900.0       16.399 / 3.4   16.399 / 0.5     11.857±0.086 / 27.6±4.5
+              NASRNN          1.036 / 900.0       1.590 / 900.0      Fails / 894.3        0.972 / 2.4    0.963 / 1.2      0.956±0.001 / 42.4±0.7
+ tensat       BERT            0.705 / 900.0       14.151 / 900.0     3.516 / 897.7        0.825 / 0.3    0.825 / 0.1      0.825±0.000 / 18.4±8.7
+              VGG             4.851 / 900.0       Fails / 900.0      7.425 / 900.0        4.852 / 0.0    4.851 / 0.0      4.851±0.000 / 27.2±17.8
+              ResNet-50       4.386 / 674.4       4.386 / 900.0      4.457 / 899.6        4.397 / 0.1    4.397 / 0.0      4.387±0.001 / 6.2±0.5
+              fir_5           5936 / 900.0        7549 / 900.0       7296 / 900.0         5936 / 0.0     5936 / 0.1       5936±0 / 22.6±6.1
+              fir_6           6191 / 900.0        8641 / 900.0       8317 / 900.0         5936 / 0.1     5936 / 0.1       5936±0 / 23.6±7.6
+              fir_7           6011 / 900.0        8512 / 900.0       9617 / 900.0         5936 / 0.1     5936 / 0.2       5936±0 / 17.8±3.4
+              fir_8           6011 / 900.0        8509 / 900.0       8994 / 900.0         5936 / 0.1     5936 / 0.2       5936±0 / 29.2±2.8
+ rover        box_3           1701 / 47.9         1701 / 900.0       1761 / 900.0         1701 / 0.0     1701 / 0.0       1701±0 / 7.8±1.1
+              box_4           1635 / 900.0        1827 / 900.0       1913 / 900.0         1762 / 0.1     1762 / 0.1       1707±20 / 35.3±2.1
+              box_5           1819 / 3.9          1819 / 454.6       1819 / 581.4         1819 / 0.0     1819 / 0.0       1819±0 / 2.0±0.3
+              mcm_8           1050 / 60.8         1050 / 96.5        1050 / 57.7          1165 / 0.1     1165 / 0.1       1050±0 / 21.9±1.0
+              mcm_9           1050 / 70.9         1050 / 95.1        1050 / 59.7          1165 / 0.1     1165 / 0.1       1050±0 / 25.3±2.9
+
+Table 4. Comparative results using the synthetic model across 2 datasets — we use both × and % to represent the
+normalized increase. For example, 6.3× is equivalent to 630%. Other notations follow Table 2
+
+               CPLEX ILP           SCIP ILP            CBC ILP         Heuristic (egg)         Heuristic+[22]            SmoothE (ours)
+ Dataset          time               time                time              time                    time                      time
+               worst / avg.       worst / avg.        worst / avg.      worst / avg.            worst / avg.              worst / avg.
+                   33.3               17.1                32.6                  1.0                   0.6                     16.5±0.7
+ set
+                0.0% / 0.0%        0.0% / 0.0%         0.0% / 0.0%          6.3× / 2.6×           6.3× / 2.6×           50.0%±0.0% / 21.9%±0.5%
+                    0.4                0.2                 0.3                  0.0                   0.0                      2.3±0.5
+ maxsat
+                0.0% / 0.0%        0.0% / 0.0%         0.0% / 0.0%          2.0× / 2.0×           2.0× / 2.0×           31.1%±0.4% / 22.9%±0.2%
+
+
+is able to find a comparable solution, if not better than ILP,                 For a fair comparison, we further implement genetic al-
+within a much faster time.                                                  gorithm, a commonly-used meta heuristic. The genetic algo-
+   Results on Adversarial Datasets. On adversarial datasets,                rithm can flexibly support non-linear cost models; however,
+all ILP solvers are able to extract the optimal solution within a           it may get stuck in local minima and fail to effectively ex-
+minute, because these e-graphs converted from the NP-hard                   plore a large search space. We did not include the genetic
+problems contains less graphical information, thus more suit-               algorithm in Table 1 because (1) it does not perform better
+able for ILP solvers. The heuristic methods fail to extract                 than the other heuristic baselines in terms of solution quality,
+solution with reasonable quality, because there are more com-               and (2) our implementation is purely in Python, making the
+mon sub-expressions in these converted datasets. SmoothE                    run time comparison less fair.
+performs much better than the heuristic baselines.                             We primarily compare with genetic algorithm and ILP∗ . Be-
+                                                                            cause heuristic algorithm and ILP cannot handle non-linear
+                                                                            terms. We directly use the oracle solutions obtained in Sec-
+                                                                            tion 5.4 as an approximation by ignoring the non-linear
+5.5 Comparison Using Non-linear Cost Models                                 terms, denoted as ILP∗ .
+Since the code and datasets from recent efforts using non-                     Learning-based Cost Model. ML-based models is capa-
+linear cost models [7, 14, 52] are not open-sourced, for the                ble of modeling more complex interactions of any pair of
+evaluation, we generate an adversarial non-linear cost model,               e-nodes in an e-graph. Furthermore, an ML-based model can
+multi-layer perceptron (MLP), on the same set of e-graphs                   also act as a fast proxy model to avoid some time-consuming
+as in Section 5.4. The non-linear cost is added as a correction             compilation or synthesis. Popular learning-based model are
+term to linear cost model: 𝑓 (𝑥) = 𝑓linear (𝑥) + 𝑓non-linear (𝑥)
+
+
+
+                                                                     1029
+SmoothE: Differentiable E-Graph Extraction                                                                                       ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands
+
+
+                                                                                  CPLEX                               SmoothE (ours)
+
+                    NASNetA                                           NASRNN                                                          BERT                                     VGG
+   20                                                                                            3                                                           8
+
+                                              0   0   0
+
+                                           95 .96 .97 .98
+                                                                                                 2
+   15
+                                                                                                 1                                                           6
+
+
+
+Cost
+   10                                                                                            0
+        0        10           20      30   0.                   200     400       600     800                         0      10        20       30     40         0      10     20     30     40
+                      fir_5                                             fir_6                                                         fir_7                                    fir_8
+   00                                          00                                               00                                                           00
+ 70                                    70                                                   70                                                           70
+   00                                          00                                               00                                                           00
+ 65                                    65                                                   65                                                           65
+   00                                          00                                               00                                                           00
+ 60                                    60                                                   60                                                           60
+        0      20      40      60     80                    0    25       50        75                                0          50           100      150        0           100       200
+                                                                                     Time (sec.)
+
+Figure 4. Anytime results — comparing SmoothE with CPLEX. The cutoff time for both algorithm is set to be 15 min. The
+x-axes are truncated if no further improvement is made.
+
+         Genetic                       Infeasible                         ILP *                    the approximation inaccurate. This experiment showcases
+         SmoothE (ours)                Best                                                        that SmoothE is capable of optimizing more complicated
+                                                                                                   cost models other than linear cost models. In terms of the
+Infeasible
+                                                                                                   run time, when switching from linear models to non-linear
+       3×                                                                                          models, the per-iteration update time of SmoothE remains
+                                                                                                   approximately the same, as the cost model does not alter the
+       2×                                                                                          overall workflow. Although SmoothE requires more itera-
+                                                                                                   tions of optimization for the non-linear model due to its more
+       Best
+              diospyros       flexc   impress                   rover      tensat                  complex dependencies, SmoothE finishes the extraction for
+                                                                                                   any e-graph in Figure 5 within a minute.
+Figure 5. Comparative results using MLP costs across
+5 datasets — increases are normalized to SmoothE results.                                          5.6                     Evaluation of Performance Optimizations
+The maximum difference of genetic algorithm is based on 3
+runs. ILP∗ means using the oracle solution obtained by ILP.                                                                                                                     CPU
+
+
+
+
+                                                                                                 Normalized Speedup
+                                                                                                                      1000 ×                                                    + GPU
+                                                                                                                                                                                + MatExp
+differentiable, making them easy to incorporate into the end-                                                          100 ×                                                    OOM
+to-end optimization flow of SmoothE.
+                                                                                                                          10 ×
+   In our evaluation, we use a simple multi-layer perceptron
+with 4 layers: an input layer of size 𝑁 mapped to 64 neu-                                                                  1×
+rons, followed by two hidden layers of 64 and 8 neurons                                                                           NASNet-A          NASRNN        BERT        VGG      ResNet-50
+each with ReLU non-linearity, and a final output layer of
+the predicted scalar cost. To train the MLP, we generate a                                         Figure 6. Speedup results normalized to the CPU base-
+synthetic dataset for each e-graph: the training data consists                                     line using tensat dataset — +GPU means switching the
+of random discrete valid solutions, and the target values are                                      GPU execution, corresponding to Section 4.1; +MatExp cor-
+set as random negative numbers representing savings for                                            responds to matrix exponential optimization corresponding
+these solutions. Regression is performed to optimize the MLP                                       to Section 4.3. OOM denotes GPU out of memory.
+using this synthetic dataset.
+   Results on non-linear costs are shown in Figure 5. For all                                         Ablation Study. Figure 6 breaks down how each compo-
+datasets, SmoothE consistently extracts the best solutions.                                        nent described in Section 4 contributes to the efficient execu-
+While genetic algorithm is able to extract high-quality so-                                        tion of SmoothE. It shows the extraction time of SmoothE on
+lutions on e-graphs in tensat, it fails to explore the large                                       e-graphs in tensat with different performance optimizations.
+space for other datasets. The solution obtained from the ap-                                       For CPU baseline, we use the same algorithm described in
+proximated linear model consistently performs worse than                                           Section 3 on a CPU backend without any performance opti-
+SmoothE, because the interactions among e-nodes are more                                           mization. Optimized GPU execution and matrix exponential
+complex which cannot be captured by linear model, making                                           optimization each provide approximately a 10× speedup.
+
+
+
+                                                                                          1030
+ ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands                                                 Yaohui Cai, Kaixin Yang, Chenhui Deng, Cunxi Yu, and Zhiru Zhang
+
+
+ The matrix exponential optimization is particularly crucial,                                           5.7 Performance Portability
+ not only for latency but also for memory usage. Without it,                                            In this subsection, we analyze how the performance of SmoothE
+ SmoothE will run out of GPU memory for large e-graphs.                                                 changes on lower-end GPUs. This primarily impacts SmoothE
+                                                                                                        by reducing the number of seeds per batch due to smaller
+                                                                            30
+               2200                                                                                     memory capacities, potentially affecting extraction quality.
+
+
+Average Cost                                                                     Latency (sec)
+                                                                                                        As long as the memory usage per seed remains within the
+                                                                            20
+               2000                                                                                     GPU’s limits—which is true for most e-graphs—SmoothE
+                                                                                                        will still perform effectively.
+                                                                            10
+               1800                                                                                        We compare the performance of SmoothE on an NVIDIA
+                                                                                                        GeForce RTX 2080 Ti and an A100, with results shown in Ta-
+                      1      2    4      8   16    32     64   128   256
+                                      Number of Seeds (B)                                               ble 5. Due to the RTX 2080 Ti’s 11 GB memory—approximately
+                                                                                                        8× smaller than the A100’s 80 GB—batch size is reduced by
+ Figure 7. Averaged cost and latency of SmoothE with                                                    8×. Despite this, SmoothE produces effective solutions for
+ varying number of seeds (𝐵) — this experiment is per-                                                  most e-graphs in our evaluation, except for four cases where
+ formed on an e-graph named box_3 from the rover dataset.                                               the memory required per seed exceeds the GPU’s capacity.
+ The orange line shows the average cost and variance across                                             The run time remains largely unchanged and is sometimes
+ on 3 runs, while the blue line indicates the latency.                                                  even lower, as the compute requirements for optimization
+                                                                                                        are reduced proportionally. Overall, SmoothE performs com-
+    Seed Batching. In Figure 7, we demonstrate the benefits                                             petitively on lower-end GPUs, though memory constraints
+ of seed batching. When increasing the number of seeds used,                                            may limit its ability to handle larger e-graphs.
+ the average cost and variance consistently decrease, meaning
+ better and more consistent solution can be achieved. When
+ the number of seeds is fewer than 64, the latency increase                                             5.8 Effectiveness of Sampling
+ is far less than linear — doubling the number of seeds re-                                             In this experiment, we show that the sampling loss 𝑓𝑏 (𝑠)
+ sults in much less than 2× increase in latency, indicating the                                         in discrete form is close to the optimization loss 𝑓 (𝑝) in re-
+ GPU is underutilized. Eventually, the cost converges to a low                                          laxed form, indicating that the sampling process effectively
+ value with zero variance when using 256 seeds, meaning                                                 extracts discrete solutions that are close to the relaxed solu-
+ that consistent good solutions are extracted.                                                          tions. In Figure 9, we compare the two losses on four e-graphs
+                                                                                                        from tensat and rover. As can be seen from the figure, the
+                                                         Loss Calculation                               optimization loss remains close to the sampling loss through-
+                                                         Gradient Descent
+                                                                                                        out all steps of the optimization process. This consistency
+                                                         Sample
+                                                                                                        highlights the effectiveness of our sampling method.
+               100%                   4.9%                 7.3%       6.4%
+                          21.9%                 21.3%      9.0%
+                80%                                                  24.9%
+                                                                                                        6   Conclusion
+  Time Spent
+                          14.5%                 15.6%
+                60%
+                                      86.5%                                                             In this work, we propose SmoothE, the first differentiable
+                40%                                       83.7%
+                          63.6%                 63.1%                68.7%                              approach to e-graph extraction. Our approach is well suited
+                20%                                                                                     for GPU acceleration and can incorporate more expressive
+                                      8.7%
+                  0                                                                                     and realistic cost models, leading to higher solution quality
+                      diospyros       flexc    impress     rover     tensat
+                                                                                                        on more complex extraction tasks. For future work, we plan
+ Figure 8. Run time profiling of SmoothE — this experi-                                                 to incorporate realistic non-linear cost models. We are also
+ ment shows how each component of SmoothE contributes                                                   interested in leveraging advanced probabilistic graphical
+ to the runtime. Both Loss Calculation and Gradient De-                                                 models to improve the probability computation.
+ scent are parts of optimization. The reported number is the
+ geometric average across all e-graphs within each dataset.                                             7   Acknowledgment
+ All reported times are wall-clock measurements.                                                        This work was supported in part by ACE, one of the seven
+                                                                                                        centers in JUMP 2.0, a Semiconductor Research Corpora-
+    Profiling results are presented in Figure 8 to understand                                           tion (SRC) program sponsored by DARPA and NSF Awards
+ how each component of SmoothE contributes to the run                                                   #2019306, #2212371, and #2403135. We sincerely thank Prof.
+ time. The sampling process accounts for only 4.8% to 21.8%                                             Pavel Panchekha for his valuable feedback on the paper. We
+ of the total run time. In contrast, the optimization process                                           also appreciate the input and discussions from Prof. Chris
+ constitutes the majority of the run time. In optimization pro-                                         De Sa, Yixiao Du, Andrew Butt, Zichao Yue, Hongzheng
+ cess, loss calculation is the most time-consuming component,                                           Chen, Samuel Coward, Dr. Theo Drane, Jiahe Shi, and the
+ except for flexc, where gradient descent is the slowest step.                                          anonymous reviewers.
+
+
+
+                                                                                                 1031
+SmoothE: Differentiable E-Graph Extraction                                                      ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands
+
+
+                  Table 5. Comparative results using different GPU targets – notations follow Table 2 and Table 3.
+
+        Dataset                 diospyros                  flexc                  impress                   rover                   tensat
+                               time (fails)             time (fails)            time (fails)             time (fails)             time (fails)
+        GPU Type               worst / avg.             worst / avg.            worst / avg.             worst / avg.             worst / avg.
+                                   8.4±0.7                 19.3±1.7                 4.6±0.0                20.6±1.3                  24.4±2.5
+        A100
+                             0.1%±0.0% / 0.1%±0.0%    0.7%±0.0% / 0.2%±0.0%   0.0%±0.0% / 0.0%±0.0%   4.4%±1.2% / 0.2%±0.1%    17.0%±0.0% / 4.6%±0.1%
+                                  2.5±0.1 (3)              28.7±5.8                15.2±0.1                 13.4±1.2               18.9±2.7 (1)
+        RTX 2080 Ti
+                              Failed / 0.1%±0.0%      1.7%±1.0% / 0.1%±0.1%   0.0%±0.0% / 0.0%±0.0%   11.0%±0.0% / 1.9%±0.1%    Failed / 6.2%±0.5%
+
+                Tensat/NASNet-A                 Tensat/NASRNN                 ROVER/box_3                   ROVER/box_4
+       20                            1.50                          3000                          3000                                 Optimization Loss f(p)
+                                                                                                                                      Sampling Loss fb(s)
+                                                                   2500                          2500
+Cost
+                                     1.25
+       15
+                                     1.00                          2000                          2000
+
+       10                                                         1500                           1500
+            0           20                  0           20              0         20       40           0       20      40
+                                                         # Optimization Steps
+
+
+                                                     Figure 9. Optimization loss vs. sampling loss
+
+A           Artifact Appendix                                                        be used to run the experiments, but performance degradation
+A.1 Abstract                                                                         similar to Table 5 is expected.
+This artifact includes the SmoothE source code and the nec-                          A.3.3 Software dependencies. We provide a conda yaml
+essary scripts to reproduce the experiments in the paper.                            file for building the necessary Python dependencies needed
+To facilitate artifact evaluation, we have automated the en-                         by SmoothE. We use CPLEX 22.1.1.0, a commercial solver,
+tire environment setup and experimental processes. Run-                              for obtaining our baseline and oracle results.
+ning the experiments requires a machine equipped with
+                                                                                     A.3.4 Datasets. We include following datasets used to
+an NVIDIA A100 GPU with > 80GB memory. Reproducing
+                                                                                     evaluate SmoothE and the baselines: (1) Realistic linear costs
+SmoothE takes approximately one hour, while executing all
+                                                                                     and synthetic MLP costs on diospyros, flexc, impress, rover,
+baselines in the paper requires an additional four days.
+                                                                                     and tensat; (2) Linear costs on synthetic datasets converted
+A.2         Artifact check-list (meta-information)                                   from NP-hard problems, including set and maxsat.
+        • Datasets: All datasets are available within this artifact.    A.4 Installation
+        • Run-time environment: Specified in the conda yaml file.
+        • Hardware: A machine equipped with NVIDIA A100 GPUs.           Install all the required dependencies listed in env.yaml:
+        • Metrics: Cost of the extracted e-graph (lower is better), run    $ conda env create -f env.yaml
+          time (lower is better).                                          (Optional)   Follow the CPLEX installation guide for free
+        • How much time is needed to prepare workflow (ap-              education version.
+          proximately)?: About 30 minutes.
+        • How much time is needed to complete experiments               A.5 Experiment workflow
+          (approximately)?: It takes about an hour to reproduce         A set of Python scripts will generate the tables and figures
+          SmoothE results, and 4 days for the baseslines.               in the paper. The complete instructions can be found in the
+        • Publicly available?: Yes.                                     README.md file included within the artifact repository.
+        • Code and data licenses (if publicly available)?: BSD
+          3-Clause License.                                             A.6 Evaluation and expected results
+        • Archived (provide DOI)?: https://zenodo.org/records/14052997
+                                                                                     We provide scripts for reproducing the results presented in
+A.3 Description                                                                      Table 2, Table 3, Table 4, Figure 5, and Figure 4.
+                                                                                        We execute SmoothE three times and report the max dif-
+A.3.1 How to access. Downloadable from: https://zenodo.
+                                                                                     ference. The outcomes of the ILP and genetic baselines may
+org/records/14052997
+                                                                                     exhibit variability due to their nondeterministic nature.
+A.3.2 Hardware dependencies. A machine equipped with
+an A100 NVIDIA GPU with >80 GB memory is highly recom-
+mended. Machine equipped with a lower-end GPU can also
+
+
+
+                                                                              1032
+ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands                                   Yaohui Cai, Kaixin Yang, Chenhui Deng, Cunxi Yu, and Zhiru Zhang
+
+
+References                                                                                    308(1-3):183–202, 2000.
+ [1] Tobias Achterberg. Scip: solving constraint integer programs. Mathe-                [21] Matthias Fey. pytorch_sparse. https://github.com/rusty1s/pytorch_
+     matical Programming Computation, 1:1–41, 2009.                                           sparse.
+ [2] Josep Argelich, Chu-Min Li, Felip Manya, and Jordi Planes. The first                [22] Oliver Flatt.      Extraction gym.         https://github.com/egraphs-
+     and second max-sat evaluations. Journal on Satisfiability, Boolean                       good/extraction-gym.
+     Modeling and Computation, 4(2-4):251–278, 2008.                                     [23] John Forrest and Robin Lougee-Heimer. Cbc user guide. Emerging
+ [3] Maciej Besta and Torsten Hoefler. Parallel and distributed graph neural                  theory, methods, and applications, pages 257–277, 2005.
+     networks: An in-depth concurrency analysis. IEEE Transactions on                    [24] Oscar Gustafsson. A difference based adder graph heuristic for multiple
+     Pattern Analysis and Machine Intelligence, 46(5):2584–2606, 2024.                        constant multiplication problems. Int’l Symp. on Circuits and Systems
+ [4] Christian Bliek1ú, Pierre Bonami, and Andrea Lodi. Solving mixed-                        (ISCAS), pages 1097–1100, 2007.
+     integer quadratic programming problems with ibm-cplex: a progress                   [25] Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep
+     report. Proceedings of the twenty-sixth RAMP symposium, pages 16–17,                     residual learning for image recognition. IEEE/CVF Conf. on Computer
+     2014.                                                                                    Vision and Pattern Recognition (CVPR), pages 770–778, 2016.
+ [5] David Cao, Rose Kunkel, Chandrakana Nandi, Max Willsey, Zachary                     [26] Mike He, Haichen Dong, Sharad Malik, and Aarti Gupta. Improving
+     Tatlock, and Nadia Polikarpova. Babble: Learning better abstractions                     term extraction with acyclic constraints. EGRAPHS 2023 workshop,
+     with e-graphs and anti-unification. ACM SIGPLAN Symp. on Principles                      2023.
+     of Programming Languages (POPL), 7:396–424, 2023.                                   [27] Alexander T Ihler, John W Fisher III, Alan S Willsky, and
+ [6] Chong-Yun Chao and Earl Glen Whitehead. On chromatic equivalence                         David Maxwell Chickering. Loopy belief propagation: convergence
+     of graphs. Theory and Applications of Graphs, pages 121–131, 1978.                       and effects of message errors. Journal of Machine Learning Research
+ [7] Chen Chen, Guangyu Hu, Dongsheng Zuo, Cunxi Yu, Yuzhe Ma, and                            (JMLR), 6(5), 2005.
+     Hongce Zhang. E-syn: E-graph rewriting with technology-aware cost                   [28] Daphne Koller and Nir Friedman. Probabilistic graphical models: prin-
+     functions for logic synthesis. Design Automation Conf. (DAC), pages                      ciples and techniques. MIT press, 2009.
+     1–6, 2024.                                                                          [29] Avery Laird, Bangtian Liu, NIKOLAJ BJØRNER, and Maryam Mehri
+ [8] Hongzheng Chen, Niansong Zhang, Shaojie Xiang, Zhichen Zeng,                             Dehnavi. Speq: Translation of sparse codes using equivalences. ACM
+     Mengjia Dai, and Zhiru Zhang. Allo: A programming model for com-                         SIGPLAN Conf. on Programming Language Design and Implementation
+     posable accelerator design. ACM SIGPLAN Conf. on Programming                             (PLDI), 2024.
+     Language Design and Implementation (PLDI), 8:593–620, 2024.                         [30] Chunho Lee, Miodrag Potkonjak, and William H Mangione-Smith.
+ [9] Tianqi Chen and Carlos Guestrin. Xgboost: A scalable tree boosting                       Mediabench: A tool for evaluating and synthesizing multimedia and
+     system. Int’l Conf. on Knowledge Discovery and Data Mining (KDD),                        communications systems. Int’l Symp. on Microarchitecture (MICRO),
+     pages 785–794, 2016.                                                                     pages 330–335, 1997.
+[10] Jianyi Cheng, Samuel Coward, Lorenzo Chelini, Rafael Barbalho, and                  [31] Kevin P Murphy, Yair Weiss, and Michael I Jordan. Loopy belief
+     Theo Drane. Seer: Super-optimization explorer for high-level syn-                        propagation for approximate inference: an empirical study. Conf. on
+     thesis using e-graph rewriting. Int’l Conf. on Architectural Support                     Uncertainty in Artificial Intelligence (UAI), pages 467–475, 1999.
+     for Programming Languages and Operating Systems (ASPLOS), pages                     [32] Charles Gregory Nelson. Techniques for Program Verification. PhD
+     1029–1044, 2024.                                                                         thesis, Stanford University, Stanford, CA, USA, 1980. AAI8011683.
+[11] Samuel Coward, George A Constantinides, and Theo Drane. Abstract                    [33] Greg Nelson and Derek C Oppen. Simplification by cooperating deci-
+     interpretation on e-graphs. arXiv preprint arXiv:2203.09191, 2022.                       sion procedures. ACM Trans. on Programming Languages and Systems
+[12] Samuel Coward, George A Constantinides, and Theo Drane. Auto-                            (TOPLAS), 1(2):245–257, 1979.
+     matic datapath optimization using e-graphs. IEEE Symp. on Computer                  [34] Julie L Newcomb, Andrew Adams, Steven Johnson, Rastislav Bodik,
+     Arithmetic (ARITH), pages 43–50, 2022.                                                   and Shoaib Kamil. Verifying and improving halide’s term rewriting sys-
+[13] Samuel Coward, George A Constantinides, and Theo Drane. Automat-                         tem with program synthesis. ACM SIGPLAN Conf. on Object-Oriented
+     ing constraint-aware datapath optimization using e-graphs. Design                        Programming, Systems, Languages, and Applications (OOPSLA), 4:1–28,
+     Automation Conf. (DAC), pages 1–6, 2023.                                                 2020.
+[14] Samuel Coward, Theo Drane, Emiliano Morini, and George A Constan-                   [35] Pavel Panchekha, Alex Sanchez-Stern, James R Wilcox, and Zachary
+     tinides. Combining power and arithmetic optimization via datapath                        Tatlock. Automatically improving accuracy for floating point expres-
+     rewriting. IEEE Symp. on Computer Arithmetic (ARITH), pages 24–31,                       sions. ACM SIGPLAN Conf. on Programming Language Design and
+     2024.                                                                                    Implementation (PLDI), 50(6):1–11, 2015.
+[15] Leonardo De Moura and Nikolaj Bjørner. Z3: An efficient smt solver.                 [36] Mark Paskin. A short course on graphical models. The junction tree
+     Int’l Conf. on Tools and Algorithms for the Construction and Analysis of                 algorithms, 2003.
+     Systems (TACAS), pages 337–340, 2008.                                               [37] Adam Paszke, Sam Gross, Francisco Massa, Adam Lerer, James Brad-
+[16] Kalyanmoy Deb, Amrit Pratap, Sameer Agarwal, and TAMT Meyarivan.                         bury, Gregory Chanan, Trevor Killeen, Zeming Lin, Natalia Gimelshein,
+     A fast and elitist multiobjective genetic algorithm: Nsga-ii. IEEE Trans.                Luca Antiga, et al. Pytorch: An imperative style, high-performance
+     on Evolutionary Computation (TEVC), 6(2):182–197, 2002.                                  deep learning library. Conf. on Neural Information Processing Systems
+[17] Nachum Dershowitz. A taste of rewrite systems. Functional Pro-                           (NeurIPS), 32, 2019.
+     gramming, Concurrency, Simulation and Automated Reasoning: Interna-                 [38] Julian Seward. bzip2 and libbzip2. avaliable at http://www. bzip. org,
+     tional Lecture Series 1991–1992 McMaster University, Hamilton, Ontario,                  1996.
+     Canada, pages 199–228, 2005.                                                        [39] Karen Simonyan and Andrew Zisserman. Very deep convolutional
+[18] David Detlefs, Greg Nelson, and James B Saxe. Simplify: a theorem                        networks for large-scale image recognition. Int’l Conf. on Learning
+     prover for program checking. Journal of the ACM, 52(3):365–473, 2005.                    Representations (ICLR), 2015.
+[19] Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.                   [40] Gus Henry Smith, Andrew Liu, Steven Lyubomirsky, Scott Davidson,
+     Bert: Pre-training of deep bidirectional transformers for language                       Joseph McMahan, Michael Taylor, Luis Ceze, and Zachary Tatlock.
+     understanding. Conf. of the North American Chapter of the Assoc. for                     Pure tensor program rewriting via access patterns (representation
+     Computational Linguistics (NAACL), pages 4171–4186, 2019.                                pearl). ACM SIGPLAN Machine Programming Symposium (MAPS),
+[20] Luca Dieci and Alessandra Papini. Padé approximation for the expo-                       pages 21–31, 2021.
+     nential of a block triangular matrix. Linear Algebra and its Applications,
+
+
+
+
+                                                                                  1033
+SmoothE: Differentiable E-Graph Extraction                                                          ASPLOS ’25, March 30-April 3, 2025, Rotterdam, Netherlands
+
+
+[41] Gus Henry Smith, Zachary D Sisco, Thanawat Techaumnuaiwit, Jing-                   [50] Max Willsey, Chandrakana Nandi, Yisu Remy Wang, Oliver Flatt,
+     tao Xia, Vishal Canumalla, Andrew Cheung, Zachary Tatlock, Chan-                        Zachary Tatlock, and Pavel Panchekha. Egg: Fast and extensible equal-
+     drakana Nandi, and Jonathan Balkind. There and back again: A netlist’s                  ity saturation. ACM SIGPLAN Symp. on Principles of Programming
+     tale with much egraphin’. arXiv preprint arXiv:2404.00786, 2024.                        Languages (POPL), 5:1–29, 2021.
+[42] Michael B. Stepp. Equality Saturation: Engineering Challenges and                  [51] Jackson Woodruff, Thomas Koehler, Alexander Brauckmann, Chris
+     Applications. PhD thesis, University of California San Diego, 2011.                     Cummins, Sam Ainsworth, and Michael FP O’Boyle. Rewriting history:
+[43] Robert Endre Tarjan. Efficiency of a good but not linear set union                      Repurposing domain-specific cgras. arXiv preprint arXiv:2309.09112,
+     algorithm. Journal of the ACM, 22(2):215–225, 1975.                                     2023.
+[44] Ross Tate, Michael Stepp, Zachary Tatlock, and Sorin Lerner. Equality              [52] Chenming Wu, Haisen Zhao, Chandrakana Nandi, Jeffrey I Lipton,
+     saturation: a new approach to optimization. ACM SIGPLAN Symp. on                        Zachary Tatlock, and Adriana Schulz. Carpentry compiler. ACM Trans.
+     Principles of Programming Languages (POPL), pages 264–276, 2009.                        on Graphics (TOG), 38(6):1–14, 2019.
+[45] Samuel Thomas and James Bornholt. Automatic generation of vector-                  [53] Yichen Yang, Phitchaya Phothilimthana, Yisu Wang, Max Willsey,
+     izing compilers for customizable digital signal processors. Int’l Conf.                 Sudip Roy, and Jacques Pienaar. Equality saturation for tensor graph
+     on Architectural Support for Programming Languages and Operating                        superoptimization. Conf. on Machine Learning and Systems (MLSys),
+     Systems (ASPLOS), pages 19–34, 2024.                                                    3:255–268, 2021.
+[46] Suramya Tomar. Converting video formats with ffmpeg. Linux journal,                [54] Yanqing Zhang, Haoxing Ren, and Brucek Khailany. Grannite: Graph
+     2006(146):10, 2006.                                                                     neural network inference for transferable power estimation. Design
+[47] Ecenur Ustun, Ismail San, Jiaqi Yin, Cunxi Yu, and Zhiru Zhang.                         Automation Conf. (DAC), pages 1–6, 2020.
+     Impress: Large integer multiplication expression rewriting for fpga                [55] Yihong Zhang. The e-graph extraction problem is np-complete.
+     hls. IEEE Symp. on Field Programmable Custom Computing Machines                         https://effect.systems/blog/egraph-extraction.html.
+     (FCCM), pages 1–10, 2022.                                                          [56] Yihong Zhang, Yisu Remy Wang, Oliver Flatt, David Cao, Philip Zucker,
+[48] Alexa VanHattum, Rachit Nigam, Vincent T Lee, James Bornholt, and                       Eli Rosenthal, Zachary Tatlock, and Max Willsey. Better together:
+     Adrian Sampson. Vectorization for digital signal processors via equal-                  Unifying datalog and equality saturation. ACM SIGPLAN Conf. on
+     ity saturation. Int’l Conf. on Architectural Support for Programming                    Programming Language Design and Implementation (PLDI), 7:468–492,
+     Languages and Operating Systems (ASPLOS), pages 874–886, 2021.                          2023.
+[49] Yisu Remy Wang, Shana Hutchison, Jonathan Leang, Bill Howe, and                    [57] Xun Zheng, Bryon Aragam, Pradeep K Ravikumar, and Eric P Xing.
+     Dan Suciu. Spores: Sum-product optimization via relational equality                     Dags with no tears: Continuous optimization for structure learning.
+     saturation for large scale linear algebra. Int’l Conf. on Very Large Data               Conf. on Neural Information Processing Systems (NeurIPS), 31, 2018.
+     Bases (VLDB), 13(11), 2020.                                                        [58] Yuan Zhou, Haoxing Ren, Yanqing Zhang, Ben Keller, Brucek Khailany,
+                                                                                             and Zhiru Zhang. Primal: Power inference using machine learning.
+                                                                                             Design Automation Conf. (DAC), pages 1–6, 2019.
+
+
+
+
+                                                                                 1034
+

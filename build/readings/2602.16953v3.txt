@@ -1,0 +1,1017 @@
+                                                                   LLM4Cov: Execution-Aware Agentic Learning
+                                                                     for High-coverage Testbench Generation
+
+
+                                                 Hejia Zhang 1 Zhongming Yu 1 Chia-Tung Ho 2 Haoxing Ren 3 † Brucek Khailany 2 Jishen Zhao 1
+
+
+                                                                  Abstract
+                                                                                                                        Veriﬁcation Execution Loop
+                                               Execution-aware LLM agents offer a promising
+
+
+
+
+arXiv:2602.16953v3 [cs.AI] 29 May 2026
+                                               paradigm for learning from tool feedback, but
+                                               such feedback can be expensive and slow to ob-                              Stimulus           Event-driven
+                                                                                                                                                                Others
+                                               tain, making online reinforcement learning (RL)                            Generation           Simulation                   50-60%
+                                                                                                                                                                           Veriﬁcation
+                                               less practical in certain scenarios. High-coverage                          Feedback-Guided Reﬁnement
+                                               hardware verification exemplifies this challenge
+                                               due to its reliance on industrial simulators and
+                                                                                                                                                              Others majorly contain
+                                               non-differentiable execution signals. We propose                                                               spec & architecture, RTL
+                                                                                                                        Test        Bug            Coverage
+                                               LLM4C OV1 , an offline agent-learning framework                        Benches     Detection        Analysis
+                                                                                                                                                              design and physical design
+
+                                               that models verification as single-step state tran-
+                                               sitions guided by deterministic evaluators. Build-                                                  3
+                                               ing on this formulation, we introduce execution-                Figure 1. Execution-aware verification loop and its dominant cost
+                                               validated data curation, policy-aware agentic data              in modern hardware design. (Hegde, 2025; Foster, 2025; 2017)
+                                               synthesis, and worst-state-prioritized sampling
+                                               to enable scalable learning under execution con-                remains difficult: online learning can be less practical due to
+                                               straints. We further curate a reality-aligned bench-            the massive runtime overhead and high cost of tool invoca-
+                                               mark adapted from an existing verification suite                tions, while the resulting execution traces can be challenging
+                                               through a revised evaluation protocol. Using                    for standard fine-tuning objectives.
+                                               the proposed pipeline, a compact 4B-parameter
+                                               model achieves 69.2% pass rate and 90.4% aver-                  A critical yet underexplored domain for execution-aware
+                                               age coverage in CVDP-ECov under agentic eval-                   agents is hardware verification. Before fabrication, a hard-
+                                               uation, outperforming its teacher by 5.3% and                   ware design must be validated in simulation using a test-
+                                               10.5%, demonstrating competitive performance                    bench—an executable verification program that generates
+                                               against models an order of magnitude larger.                    input stimuli, drives the design, and measures coverage over
+                                                                                                               signals, branches, etc. As shown in Figure 1, testbench-
+                                                                                                               driven simulation and iterative refinement account for the
+                                                                                                               majority of hardware design effort. (Hegde, 2025; Foster,
+                                         1. Introduction                                                       2025; 2017). Unlike software testing, hardware failures can-
+                                         Large language model (LLM) agents have demonstrated                   not be patched post-deployment and must be resolved un-
+                                         strong potential by interacting with tools and learning from          der cycle-accurate execution semantics, making verification
+                                         execution feedback. This execution-aware paradigm is es-              both execution-intensive and engineering-heavy. Following
+                                         sential for agentic learning, as it grounds symbolic gener-           prior work (Pinckney et al., 2025; Nadimi et al., 2025), au-
+                                         ation in real-world correctness through signals that cannot           tomated hardware verification can be broadly decomposed
+                                         be inferred from text alone. However, training such agents            into two components: (i) maximizing coverage through stim-
+                                                                                                               ulus generation, and (ii) detecting bugs with assertions. In
+                                           †
+                                            Work done while in NVIDIA. 1 University of California San          this work, we focus exclusively on the former.
+                                         Diego, USA 2 NVIDIA 3 Agentrys. Correspondence to: Jishen
+                                         Zhao <jzhao@ucsd.edu>.                                                While coverage provides dense, comparable feedback, mak-
+                                                                                                               ing it a natural verifier for iterative agentic refinement, it
+                                         Proceedings of the 43 rd International Conference on Machine
+                                                                                                               is non-trivial to turn this signal into effective supervision.
+                                         Learning, Seoul, South Korea. PMLR 306, 2026. Copyright 2026
+                                         by the author(s).                                                     Each evaluation requires expensive simulation, rendering
+                                             1
+                                               The open-source implementation of LLM4Cov is available at       large-scale online RL impractical and forcing the model to
+                                         https://hejiaz2023.github.io/llm4cov oss/.                            rely primarily on offline trajectories. Furthermore, using
+
+                                                                                                           1
+                                   LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+                         80                                                           B.K. are employed by NVIDIA during this work. Some of
+                                                                                      the benchmarks used in our evaluation (e.g., CVDP (Pinck-
+                         70                                                           ney et al., 2025), VerilogEval (Liu et al., 2023)) were intro-
+
+
+
+
+Coverage pass rate (%)
+                                                                                      duced in prior work co-authored by NVIDIA employees,
+                         60                                                           including some authors of this paper. To the best of our
+                         50                                                           knowledge, no model or baseline evaluated in this paper has
+                                                                                      NVIDIA affiliation.
+                         40
+                                                             General-purpose
+                         30                                  Coding-specialized       2. Background and Related Work
+                                                             Hardware-specific
+                                                             LLM4Cov                  2.1. Execution-Aware Agent Learning
+                         20                                  Pareto Frontier
+                              3   10           30         100         300             Imitation learning and state-distribution alignment. In
+                                       Model size (B parameters)                      imitation learning, DAgger mitigates covariate shift by ag-
+                                                                                      gregating expert labels on states visited by the current pol-
+Figure 2. Coverage pass rates of existing LLMs. Results are                           icy (Ross et al., 2011). Recent work extends this insight to
+measured in agentic setting on our benchmark (Section 4.1).                           language-model agents: Fine-Tuning Web Agents identifies
+                                                                                      off-policy bias as a central failure mode of expert-trajectory
+static datasets induces a state-dependent distribution shift:                         SFT and emphasizes the importance of training on student-
+the intermediate failures encountered by a student model                              induced states (Caccia et al., 2024). On-policy Expert Cor-
+differ substantially from those in teacher-generated datasets.                        rections (OEC) further mitigates this by switching from
+Existing approaches do not directly address this regime of                            student to expert guidance mid-rollout, producing partially
+dense but costly feedback under offline, distribution-shifting                        on-policy supervision (Lauffer et al., 2025).
+agentic learning. Consequently, existing approaches do not
+provide a systematic framework to extract maximal supervi-                            Trajectory filtering and failure-aware supervision. Ex-
+sion from coverage signals while aligning training data with                          ploring Expert Failures shows that discarding unsuccessful
+the evolving student model.                                                           trajectories overrepresents easy cases and that incorporating
+                                                                                      failure segments improves agent tuning (Lan et al., 2025).
+To address these challenges, we introduce LLM4C OV, the                               STeCa identifies suboptimal actions via step-level reward
+first execution-aware agentic learning framework for high-                            comparison and constructs calibrated trajectories through
+coverage testbench generation that systematically converts                            online exploration (Wang et al., 2025a). Agent-R simi-
+coverage feedback into stable offline supervision. At its                             larly relies on iterative self-training with online rollouts and
+core is Coverage-Guided Agentic Rejection Fine-tuning,                                search-based trajectory revision (Yuan et al., 2025). While
+which treats coverage as a dense supervisory signal to fil-                           effective, they require online interactive environments and
+ter and refine synthesized trajectories: testbench drafts are                         trajectory-level optimization.
+generated by the student model, and low-coverage drafts to-
+gether with their most coverage-improving revisions are re-                           Progressive and multi-stage learning. Progressive Distil-
+tained, concentrating supervision on recoveries and extract-                          lation shows that gradually distilling from stronger teach-
+ing maximal information from each simulator run. Because                              ers can induce an implicit curriculum, improving stability
+these trajectories depend on the current student, we further                          and final performance even without explicit curriculum de-
+propose Verification-Conditioned Progressive Learning,                                sign (Panigrahi et al., 2025). In a complementary direction,
+in which synthetic data are generated in a staged manner and                          multi-stage fine-tuning in continual learning settings demon-
+training also proceeds in stages aligned with the evolving                            strates that organizing supervision across stages can miti-
+student distribution; this progressive supervision yields sig-                        gate interference and improve adaptation when models are
+nificantly better final performance compared to naive data                            updated sequentially (Guan et al., 2025). These works high-
+augmentation. As shown in Figure 2, we demonstrate that                               light the value of stage-structured supervision, but generally
+an execution-aware 4B-parameter model trained with our                                assume changing teachers or continual data updates. They
+framework can outperform 30B-class teachers and demon-                                do not address the regime where task and teacher are fixed
+strate performance competitive with 50×–100× larger mod-                              while the student’s state distribution evolves through exe-
+els, proving that specialized agentic learning can achieve                            cution, nor how to construct stage-conditioned supervision
+high-coverage verification results with far greater efficiency                        from expensive offline feedback.
+than general-purpose scaling.                                                         Offline Agentic learning. Prior work on offline LLM agent
+Conflict of Interest Disclosure. This work is supported                               learning has primarily focused on (i) demonstrating feasi-
+by the NVIDIA Academic Grant Program, which provided                                  bility of trajectory-level SFT at scale (Song et al., 2024),
+A100 GPU via the Brev platform. Authors C.H., H.R. and                                (ii) assigning value to intermediate steps or actions in long-
+
+                                                                                  2
+                            LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+
+  a) Overall Training Stages                    b) Coverage-Guided Agentic Rejection Fine-tuning
+  Stage 0 -- Distillation
+                                                     High Cov                                                 Agentic Improvement via
+         MT             SFT           Student                                          Agent Simulation         Rejection Sampling
+        Traj           Update           MS0
+                                                    Medium Cov         Select                                                             Update
+                                                                                      Worst State
+                                                                                                                                                       Training
+                                                                                                                                                         Traj
+  Stage 1---Teacher-Guided Imitation                                               Low Coverage State
+                                                      Low Cov
+      MS0           MT                                                                                        Debug-->Improved testbench
+                                SFT       MS1
+      Traj         Reﬁne
+
+
+                                                c) Veriﬁcation-Conditioned Progressive Learning
+  Stage 2---Self-Reﬁnement
+      MS1           MS1                                            Sample              Environment             Env collected Trajs              Trained Student
+                                SFT      MS2                                                                                          Stage 2
+      Traj         Reﬁne                            Base Student
+                                                                                              Simulator               Stage 1        Teacher Model
+   Curriculum Learning                                                                        Cov tool
+
+   Our three-stage training expands the model             SFT Update                                               Agentic Improvement
+                                                                                Execution-based Veriﬁcation
+   step-by-step like curriculum.                                                                                   With execution tools
+
+
+
+Figure 3. Main components of LLM4C OV. (a) The framework samples trajectories to SFT the student model, and the process is separated
+into stages to align with the evolving student distribution. (b) Coverage-Guided Agentic Rejection Fine-tuning retains low-coverage drafts
+and their most coverage-improving revisions, concentrating supervision on recovery behaviors. (c) Verification-Conditioned Progressive
+Learning generates and trains on staged synthetic trajectories conditioned on the current student, yielding progressively stronger agentic
+performance and more stable final coverage.
+
+
+horizon agent trajectories (Deng et al., 2025; Lin et al.,                       based systems further decompose hardware code generation
+2025), and (iii) scoring entire trajectories for data selec-                     into multi-step workflows with tool interaction (Zhao et al.,
+tion (Zhang et al., 2025).                                                       2025b; Ho et al., 2025). A smaller body of work studied
+                                                                                 LLMs for hardware verification, focusing on generating
+In contrast, our work targets a different and underexplored
+                                                                                 hardware testbenches and verification stimuli that exercise
+regime: single-step, iterative refinement agents with exis-
+                                                                                 design behaviors under simulation. Existing systems adopt
+tent dense, ground-truth scoring (coverage) for each step.
+                                                                                 iterative generation and validation pipelines using tool feed-
+This setting departs from multi-step credit assignment and
+                                                                                 back from simulator execution and rule-based checking (Qiu
+instead raises a distinct optimization problem—how to con-
+                                                                                 et al., 2025; Zhao et al., 2025a). Recent work further applies
+struct and select training data when each transition is directly
+                                                                                 offline preference optimization to testbench generation by
+verifiable and comparable. Our contributions on Coverage-
+                                                                                 constructing coverage-labeled preference pairs and training
+Guided Agentic Rejection Fine-tuning are designed specifi-
+                                                                                 via DPO, with preference strength scaled by coverage gaps
+cally for this regime, serving as an execution-aware agent
+                                                                                 between candidates (Nadimi et al., 2025). While effective
+learning framework enabling effective offline learning.
+                                                                                 for single-shot stimulus generation, these approaches do not
+                                                                                 study interactive repair, state-distribution shift, or agentic
+2.2. LLMs for Hardware Design and Verification                                   learning under tool feedback.
+Background on hardware verification. Hardware veri-                               In contrast, our work models verification as a sequence of
+fication validates design correctness before fabrication by                       evaluator-scored state transitions and explicitly addresses
+executing the design under testbenches, which specify in-                         multi-turn interaction and distribution alignment under lim-
+put stimuli and expected behaviors. These testbenches are                         ited simulator execution budgets.
+evaluated using cycle-accurate simulators that model the
+hardware’s execution semantics. Verification progress is
+measured through coverage metrics, which quantify how                             3. Methodology
+thoroughly the design’s logic and behaviors are exercised.                        Our framework (Figure 3) converts expensive simulator
+Recent work on LLM for hardware. Several recent stud-                             feedback into stable offline supervision for training veri-
+ies applied LLMs to hardware design and verification tasks.                       fication agents. We first formalize the verification setting
+For hardware design, prior efforts primarily target generat-                      and the supervision signals available from simulator exe-
+ing hardware description languages (HDLs) from natural-                           cution. Section 3.1 describes the feedback returned by the
+language specifications, improving model reasoning or train-                      simulator and the coverage metric used to measure progress.
+ing objectives for hardware synthesis through structured                          Section 3.2 models verification as a sequence of single-step
+datasets or RL with verifiable reward (Wei et al., 2025; Zhu                      state transitions and defines the transition data points used
+et al., 2025; Wang et al., 2025b). Complementary agent-                           for training. Sections 3.3 and 3.4 then describe how these
+
+
+                                                                            3
+                   LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+data points are constructed from agentic tarjectories and            edit traces, and introducing partial edits would confound the
+organized across training stages to align supervision with           learning objective with additional structural assumptions.
+the evolving student model.
+                                                                     Transition. A single transition composes LLM inference
+                                                                     with simulator execution:
+3.1. Simulation Feedback and Coverage
+We employ a simulator as an evaluator that executes test-               xt+1 ∼ Mθ (· | st ),
+benches against a fixed hardware design repository (which               ot+1 = Sim(R, xt+1 ),
+consists of the design source files and specifications) and             st+1 = (R, xt+1 , ot+1 ) = (R, xt+1 , Sim(R, xt+1 )).
+returns structured feedback. Given a generated testbench, a
+simulator invocation returns a feedback observation tuple:
+of eedback = (status, coverage, log), where                          Single-step assumption. The LLM inference depends only
+                                                                     on the current state representation:
+• status indicates the execution outcome, including com-
+  pile failure, runtime failure, successful completion, etc.                      Mθ (xt+1 | s0:t ) = Mθ (xt+1 | st ),
+• coverage reports quantitative coverage metrics col-
+  lected during simulation;                                          where any information from prior interaction rounds must
+• log contains diagnostic information such as compiler               be encoded explicitly in (xt , ot ) rather than implicit history.
+  errors, assertion failures, or runtime traces.                     This formulation preserves all information necessary for
+We aggregate simulator-reported coverage metrics into a              our specific task, which is improving verification coverage,
+normalized scalar score via a coverage function:                     since earlier trials are subsumed by the updated code and
+                                                                     observation. Moreover, discarding raw interaction history
+                Cov(·) : of eedback → [0, 1].                        reduces prompt length and redundancy, allowing the model
+Simulator calls can dominate computational cost. In aca-             to focus on the most recent execution signal.
+demic settings, a single execution typically requires seconds,       To provide a diagnostic comparison, we define a vanilla
+while industrial flows may require minutes or hours. To en-          agent as one that conditions each generation on the full
+able fair comparison, we fix simulator call budgets across           interaction history (s0 , a0 , o0 , . . . , st ), rather than the mem-
+all ablation studies.                                                oryless state representation st . Table 1 shows that the memo-
+                                                                     ryless formulation consistently yields equivalent or superior
+3.2. Agentic Verification as Single-Step State Transition            performance across both compact and larger models.
+We formalize execution-aware verification as an iterative            Data point formulation. We define a data point as dt =
+generation process in which a language model repeatedly              (st , xt+1 ), where st = (R, xt , ot ) is the current state and
+produces verification programs and a simulator determinis-           xt+1 is the verification program generated from that state.
+tically evaluates them. Our central assumption is transition         Learning therefore reduces to constructing a dataset of tran-
+being single-step: all information available to the agent is         sitions dt = (st , xt+1 ) that improve verification coverage
+explicitly represented in the current state.                         under simulator feedback.
+State. Let R denote a fixed hardware design repository,              Difference from standard Markov modeling. Markov
+consisting of all design source files and specifications. At         formulations are standard in RL, and that non-Markovian
+step t, the state and its coverage are defined as                    problems can be made Markovian by including full history.
+                                                                     However, our formulation on agent learning can operate
+     st = (R, xt , ot ),   Cov(st ) ≜ Cov(ot ) ∈ [0, 1],
+                                                                     with a single-step, history-minimal state. Recent work and
+where xt is the full testbench file at step t, and ot =              reports (Zhang et al., 2024; Sun et al., 2025; Hong et al.,
+(status, coverage, log) is the simulator feedback ob-                2025) highlight degradation in long-context settings and
+servation defined in Section 3.1. We define the initial state        motivate history compression or decomposition. Our ap-
+as s0 = (R, x0 , o0 ), where x0 = ∅ denotes an empty test-           proach can be viewed as a principled extreme of this trend:
+bench placeholder and o0 = ∅ represents a null simulator             instead of compressing history, we minimize it and rely on
+observation prior to any execution. For the initial state, we        the current execution state.
+define Cov(o0 ) = 0.
+                                                                     3.3. Coverage-Guided Agentic Rejection Fine-Tuning
+Although R is constant across transitions, the full repository
+contents are provided to the model at every step. We focus           Section 3.2 defines verification as a sequence of state transi-
+on full testbench regeneration rather than patch-based edit-         tions evaluated by a simulator. Learning therefore reduces to
+ing, as fine-grained localization and diff generation are un-        constructing supervision pairs dt = (st , xt+1 ) that improve
+reliable without specialized pretraining on repository-level         coverage under execution feedback. We now describe how
+
+                                                                 4
+                    LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+Table 1. Effect of the single-step formulation on agents. Results       execution-based rejection sampling:
+are measured on our verification benchmark (Section 4.1).                                     h                          i
+                                                                              Fstage (dt ) = I Cov(ot+1 ) − Cov(ot ) ≥ τ∆ ,
+                                       Pass@1 (higher is better)
+  Model                                Vanilla     Single-Step          where τ∆ denotes a minimum coverage improvement thresh-
+  Qwen3-Coder-30B-A3B-Instruct         59.5%         63.9%              old. Among retained candidates, we keep the transition with
+  Qwen3-4B-Instruct-2507               28.2%         28.4%              the largest coverage improvement. This rejection mecha-
+                                                                        nism converts simulator feedback into a dense supervisory
+                                                                        signal that prioritizes corrective behaviors over already suc-
+such data points are synthesized from agentic trajectories              cessful cases.
+and filtered using coverage signals.
+                                                                        Resulting supervision. Applying worst-state selection and
+Trajectory synthesis. Under the memoryless transition                   coverage-based rejection yields a dataset of transitions con-
+model, all trajectories originate from the same initial state           centrated on recovery from low-coverage states. These data
+s0 = (R, ∅, ∅). Consequently, differences in agentic be-                points are then used for supervised fine-tuning of the student
+havior arise not from the initial state itself, but from how            model. By grounding supervision in failure modes and fil-
+intermediate states are sampled and how transitions are                 tering transitions by execution improvement, the procedure
+generated from those states.                                            extracts maximal learning signal from each simulator call
+We characterize an agentic trajectory by two models: (i)                while remaining fully offline.
+Mint used to sample intermediate states, and (ii) Mtrans used
+to generate the final transition from those states. Starting            3.4. Verification-Conditioned Progressive Learning
+from the initial state s0 , a trajectory of length N is generated
+                                                                        Section 3.3 describes how coverage-guided rejection fine-
+by iteratively sampling the intermediate-state model for the
+                                                                        tuning converts simulator feedback into supervision pairs
+first N −1 rounds, followed by a final transition generated
+                                                                        dt = (st , xt+1 ). Under such formulation, agentic traces
+by the transition model,
+                                                                        can be categorized into three types depending on model
+This formulation allows the intermediate-state distribution             selection between teacher model MT and student model
+to be controlled independently from the quality of the final            MS (which is shown in Figure 4):
+transition, and naturally subsumes both imitation-style and             • Full-teacher agentic traces. Both intermediate states
+self-sampling trajectories as special cases. For simplicity,               and transitions are generated by the teacher model, i.e.,
+we set N = 2 when synthesizing dataset in our experiments.                (Mint , Mtrans ) = (MT , MT ). These traces provide high-
+Worst-state selection. Uniformly generating transitions                    quality transitions but induce a teacher-biased state dis-
+from all visited states tends to overrepresent already suc-                tribution that may exclude failure modes commonly en-
+cessful contexts and yields limited corrective supervision.                countered by the student.
+Instead, we concentrate synthesis on failure-prone regions.             • Imitation-style agentic traces. Intermediate states are
+                                                                           sampled using the student model, while transitions are
+From the initial state s0 , we sample a set of candidate in-               generated by the teacher model, i.e., (Mint , Mtrans ) =
+termediate states Scand = {s(1) , s(2) , . . .} using Mint . Each         (MS , MT ). This formulation aligns supervision with the
+state has an associated coverage score Cov(s(i) ). We select               student-induced state distribution while preserving expert-
+the lowest-coverage state
+
+                   sworst = arg min Cov(s)
+                             s∈Scand
+
+
+and generate corrective transitions from this state. Focusing
+on the worst-performing state increases the probability that
+sampled transitions contain useful recovery behavior under
+a fixed simulator budget.
+Coverage-guided rejection. For each selected state st ∈
+Sworst , we generate transition candidates using the transition
+model Mtrans :
+
+      xt+1 ∼ Mtrans (· | st ),   ot+1 = Sim(R, xt+1 ).
+                                                                        Figure 4. Student-grounded trajectory synthesis. Intermediate
+Each resulting data point dt = (st , xt+1 ) is filtered through         states are sampled by Mint , while the final transition by Mtrans .
+
+
+                                                                    5
+                     LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+  level corrective transitions.                                            θ(1) → · · · → θ(K) , where each stage uses data synthe-
+• Self-sampling agentic traces. Both intermediate states                   sized from the previous checkpoint.
+  and transitions are generated by the student model, i.e.,
+                                                                           Comparison to vanilla data augmentation. As shown
+  (Mint , Mtrans ) = (MS , MS ). These traces fully reflect the
+                                                                           in Figure 5, a common alternative is to augment the old
+  student’s execution behavior and remove reliance on a
+                                                                           dataset with new synthesized data and train a single model
+  fixed teacher model.
+                                                                           on the union. However, this treats supervision from different
+Training progression. The above taxonomy decouples the                     student distributions as exchangeable. Because later-stage
+distribution of visited states from the quality of corrective              datasets contain more informative recovery behaviors for
+transitions and provides a simple progression for construct-               states encountered by stronger models, mixing all stages
+ing supervision. When the student model is substantially                   uniformly can dilute the training signal associated with the
+weaker than the teacher, imitation-style traces offer stable               current execution regime.
+learning signals by pairing student-induced failure states
+with strong corrective transitions from the teacher. As train-             Progressive supervision. In contrast, staged training pre-
+ing proceeds and the student becomes capable of producing                  serves alignment between supervision and the evolving stu-
+higher-quality repairs, self-sampling traces become increas-               dent model. Early stages emphasize syntactic validity and
+ingly valuable: they reflect the student’s own execution                   basic execution success through teacher-guided corrections.
+behavior and enable learning recovery strategies for failure               Later stages increasingly emphasize recovery from low-
+modes that lie beyond the fixed performance ceiling of a                   coverage states encountered during autonomous execution.
+static teacher. In this way, trajectory synthesis can natu-                This verification-conditioned progression stabilizes training
+rally evolve from teacher-guided correction toward student-                and improves final coverage by ensuring that supervision
+driven refinement while remaining grounded in the same                     remains concentrated on the failure modes most relevant to
+coverage-based filtering mechanism.                                        the current model.
+
+Stage-conditioned data synthesis. The progression above
+can be naturally implemented via separating data synthesis                 4. Experiments
+into stages. Let M (k) denote the student model at stage k.                4.1. Benchmark and Metrics
+Using the procedure in Section 3.3, we construct a dataset
+D(k) by sampling trajectories with M (k) and retaining data                Benchmark. We evaluate our method on 2 benchmarks:
+points containing coverage-improving transitions:                          CVDP-ECov. We selected task cid012 from the CVDP
+         n                                                   o             benchmark (Pinckney et al., 2025), which contains 83 in-
+D(k) = (st , xt+1 ) xt+1 ∼ M (k) (· | st ), Fstage (dt ) = 1               dependent hardware repositories. In the original setting, a
+                                                                           testbench is generated solely from a natural-language design
+Each stage therefore yields supervision aligned with the                   specification and evaluated based on whether its achieved
+state distribution induced by the current student model.                   coverage exceeds a specialist-defined threshold. In our adap-
+Staged supervised fine-tuning (SFT). Given dataset D(k) ,                  tation, only the evaluation protocol differs. Specifically, the
+we update the student by standard supervised fine-tuning:                  full hardware repository is made visible to the LLM rather
+                                                                           than specification only. This protocol better reflects practical
+    θ(k+1) = arg min E(s,x)∼D(k) − log Mθ (x | s) .
+                                                   
+                      θ                                                    verification workflows that rely on both coverage feedback
+                                                                           and hardware code. AutoEval-ECov. Following Correct-
+Training proceeds sequentially across stages, θ(0) →                       Bench (Qiu et al., 2025), we transformed VerilogEval (Liu
+                                                                           et al., 2023) into a testbench coverage optimization bench-
+                                                                           mark by offering golden RTL and problem specification as
+                                                                           input. As a result, we got 156 more tasks to be evaluated on,
+                                                                           with same format as CVDP-ECov.
+                                                                           Evaluation metrics. We report three metrics:
+                                                                           • Pass Rate: percentage of repositories where coverage
+                                                                             exceeds the predefined threshold; The threshold was de-
+                                                                             fined by human experts in CVDP-ECov and was set to
+                                                                             100% in AutoEval-ECov.
+                                                                           • Avg Cov: average coverage across all repositories, as-
+                                                                             signing 0% where simulation fails.
+                                                                           Unless otherwise specified, all results are reported using
+Figure 5. Staged data synthesis v.s. vanilla augmentation. Stage-
+specific supervision align with current student states, while mixing
+                                                                           Pass@1 with n = 5 samples, aligning with CVDP.
+data together may dilute later stage signals.
+
+                                                                       6
+                    LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+Table 2. Evaluation results on CVDP-ECov and AutoEval-ECov benchmarks. Best metrics are bolded and second runners are underscored.
+Following the original CVDP evaluation, we treat coverage pass rate as the primary metric. Because all training stages optimize agentic
+execution—the primary metric and training objective—direct-inference results are reported only as a reference and may slightly degrade
+in later stages. All models evaluated in instruct mode and recommended config (reported in Appendix B). CorrectBench Baseline is
+an exception as it is a mult-agent framework by itself and therefore has no Direct Inference result. As Claude 3.5 Sonnet is no long
+provided by Anthropic, the original authors kindly sent us their evaluation results which we calculated AutoEval-ECov metrics upon. See
+Appendix D for more details on baseline comparisons.
+
+                                                              CVDP-ECov                                  AutoEval-ECov
+                                                    Agentic             Direct Inference           Agentic         Direct Inference
+  Type            Model                       Pass %     Avg Cov       Pass %   Avg Cov        Pass %   Avg Cov   Pass %     Avg Cov
+                  llama-4-maverick (400B)      60.2%       81.7%       23.1%      47.3%         32.9%    48.7%    21.4%       41.9%
+  General         Qwen3-235b-A22b-2507         69.9%       83.2%       29.9%      47.0%         84.0%    92.6%    70.6%       83.4%
+  Purpose         Qwen2.5-72B                  42.9%       64.1%       16.4%      32.2%         63.8%    87.6%    20.9%       73.3%
+                  Qwen3-30B-A3B-2507           50.6%       68.0%       30.1%      52.2%         81.9%    91.6%    72.3%       86.1%
+
+  Coding          Qwen2.5-Coder-32B             59.3%      79.6%       23.4%      52.1%         74.5%    88.0%    52.1%       80.1%
+                  Qwen3-Coder-30B-A3B           63.9%      79.9%       28.4%      48.6%         83.8%    94.0%    75.3%       87.1%
+  Specialized
+                  Qwen2.5-Coder-7B              20.5%      34.4%       11.3%      26.6%         59.9%    77.5%    20.9%       52.2%
+                  VeriCoder-Qwen2.5-14B         28.2%      47.9%       17.1%      37.3%         54.0%    69.2%    28.3%       56.2%
+  Hardware
+  Specific        CodeV-R1-RL-Qwen-7B           29.9%      55.5%       14.5%      32.5%         68.5%    85.6%    42.6%       67.9%
+                  VeriReason-Qwen2.5-7B         15.9%      26.4%        8.9%      16.2%         41.5%    55.0%    13.7%       27.9%
+  CorrectBench    Claude 3.5 Sonnet               N/A        N/A            -              -    61.5%    89.9%           -            -
+  Baseline        Qwen3-235b-A22b-2507          34.9%      60.5%            -              -    55.8%    84.9%           -            -
+                  Qwen3-4B-2507 (Base)          28.4%      48.5%       14.9%      23.3%        48.3%     62.8%    31.0%       50.9%
+                  +Stage0                       60.2%      82.1%       45.5%      74.9%        82.7%     94.7%    78.5%       92.0%
+  LLM4Cov
+                  +Stage1                       67.0%      88.2%       48.2%      77.2%        83.6%     95.5%    79.5%       93.8%
+                  +Stage2                       69.2%      90.4%       50.6%      76.4%        85.0%     96.3%    79.6%       92.6%
+
+
+Evaluation settings. We evaluate model performance un-                 is generated from full-teacher agentic traces. Coverage-
+der two settings. Agentic evaluation (our primary setting)             guided rejection similar with Section 3.3 is also applied,
+allows the model to iteratively generate and refine a test-            while an additional minimal coverage percentage require-
+bench using simulator feedback for N = 3 rounds, with                  ment is added to filter out outlier designs. To mitigate
+the single-step assumption from Section 3.2; Direct Infer-             short-context domination after execution-based filtering, we
+ence evaluation (our reference setting) measures single-pass           rebalance the dataset by retaining one-third of short direct-
+generation without any refinement or feedback.                         inference datapoints and one-half of short agentic datapoints
+                                                                       (len(R) ≤ 1k). Stage 1 training incorporates agentic traces
+4.2. Experimental Setup                                                generated using the imitation-style model configuration un-
+                                                                       der the worst-state–prioritized synthesis procedure in Sec-
+Models. We obtain our final model by fine-tuning Qwen3-                tion 3.3, together with additional direct-inference samples.
+4B-Instruct-2507 on synthetic data generated by a teacher              Stage 2 training further advances agentic robustness by syn-
+model (Qwen3-Coder-30B-A3B-Instruct) and itself.                       thesizing traces using the self-sampling model configuration
+Dataset. To generate synthetic testbench data, we used the             under the same synthesis algorithm. Each stage is trained by
+hardware repo dataset from CodeV-R1 (Zhu et al., 2025),                fine-tuning the model checkpoint from the previous stage,
+which contains 87k independent repos. To prevent bench-                starting from the base model.
+mark contamination, we remove repositories that contain at             Domain-specific syntax constraints. To increase the yield
+least one file similar to any file in the CVDP-ECov bench-             of executable trajectories during Stage-0 warm-up dataset
+mark, thresholding with 50% ROUGE-L similarity (CodeV-                 construction, we augment the teacher’s generation prompt
+R1 already did same deduplication on VerilogEval, which                with a set of manually curated SystemVerilog validity con-
+is transformed into our AutoEval-ECov benchmark). See                  straints that target recurrent syntax-level failure modes (e.g.,
+Appendix B for detailed SFT and EDA settings.                          malformed literals, invalid task delimiters, multi-driver
+Multi-stage progressive learning. We adopt a 3-stage su-               assignments). These constraints bias generation toward
+pervised fine-tuning (SFT) pipeline that progressively aligns          simulator-compilable testbenches and reduce trivial rejec-
+the model with increasingly challenging agentic behaviors.             tion during trajectory collection. The additional prompt is
+Stage 0 training uses a warmup dataset where supervision               applied only at generation time for constructing the Stage-0
+
+
+                                                                   7
+                    LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+dataset and is not retained in the stored training samples,                                            Teacher Model            Student Model
+ensuring that subsequent training stages operate on standard
+                                                                                             70.0          Stage 1                Stage 2
+repository context without specialized prompting. The full
+                                                                                             67.5
+
+                                                                             Pass Rate (%)
+rule set is provided in Appendix A.
+                                                                                             65.0
+Practical intermediate state selection. For clarity, Al-
+gorithm described in Section 3.3 illustrates the worst-                                      62.5
+state–prioritized procedure using a single selected inter-                                   60.0
+mediate state per repository. In practice, to improve data
+                                                                                                          ion           er    led    ion       led
+representativeness and stabilize training, we allow selecting                                       Imitat Full-TeaScehlf-Samp ImitatSelf-Samp
+up to three intermediate states during synthesis. Specifically,
+(1) if any intermediate draft results in simulation failure, one       Figure 6. Agentic trace taxonomy under intermediate-state distri-
+such failing state is optionally selected to generate recovery         bution drift. Full-teacher traces are omitted in Stage 2 since the
+traces targeting compilation or runtime errors; (2) if all sam-        relative gap between imitation-style and full-teacher supervision
+                                                                       arises from state-distribution mismatch, and is not expected to vary
+pled states fail simulation, no coverage-ranked worst state            qualitatively with the teacher–student performance gap.
+exists, therefore only the simulation-failure state is retained;
+and (3) when successful states exist, an additional median-
+coverage state is optionally selected if its coverage score dif-       generated once by the stage’s student model and kept fixed,
+fers from the worst state by more than a predefined threshold.         isolating the effect of the recovery model used to generate
+This strategy preserves the failure-driven emphasis of worst-          transitions.
+state prioritization while preventing over-concentration on a          In Stage 1, the teacher model substantially outperforms the
+single failure mode under limited simulator budgets.                   student. Under this regime, pairing student-induced states
+                                                                       with teacher-generated transitions yields stronger learning
+4.3. Main Results                                                      signals than using teacher-only traces, indicating that align-
+LLM4C OV achieves strong coverage performance de-                      ing supervision with the student-induced state distribution is
+spite its small model size. While direct inference results             more important than maintaining a purely teacher-generated
+are included for completeness, multi-turn agentic execution            trajectory. This observation is consistent with the intuition
+remains substantially more difficult due to compounding                that corrective supervision should be grounded in the failure
+errors and state-distribution shift. As shown in Table 2, un-          modes actually encountered by the student.
+der both direct inference and single-step agent execution,             In Stage 2, the student approaches the teacher’s performance
+our 4B-parameter model consistently outperforms hardware-              level. We therefore compare imitation-style supervision
+design-specific models (Wei et al., 2025; Zhu et al., 2025;            with fully self-sampling transitions under the same worst-
+Wang et al., 2025b) and substantially larger models (Meta              state prioritization strategy. While teacher-guided transi-
+AI, 2024; Team, 2025; Hui et al., 2024). In particular, nick-          tions remain stable, self-sampling transitions become in-
+name achieves 69.2% pass rate plus 90.4% average coverage              creasingly competitive as the student approaches teacher-
+in CVDP-ECov, and 85.0% pass rate plus 96.3% average                   level performance. They allow the model to propose repairs
+coverage in AutoEval-ECov , exceeding the 30B teacher                  that can match or exceed those of a fixed teacher and are
+model significantly and matching or surpassing models at               naturally aligned with the student’s own generation distribu-
+the 50×–100× parameter scale. These results demonstrate                tion, making them easier to learn from during fine-tuning.
+that effective agentic learning for hardware verification can-         Together, these results illustrate a natural progression from
+not be achieved through model scale alone, but instead re-             teacher-guided correction to student-driven refinement as
+quires execution-aware supervision and targeted agentic                the intermediate-state distribution shifts during training.
+data synthesis.
+                                                                       Worst-State-Prioritized Sampling. Figure 7 compares in-
+4.4. Ablation Studies                                                  termediate state selection strategies used in Stage 1 training,
+                                                                       including Best-State, Uniform, Median-State, and Worst-
+All evaluations in this subsection are done on CVDP-ECov.              State selection. All strategies share the same intermediate
+                                                                       drafts and differ only in how transition synthesis budget is
+Student-grounded trajectory synthesis. Figure 6 exam-
+                                                                       allocated.
+ines how different transition-generation strategies behave
+as the intermediate-state distribution evolves during train-           To ensure fair comparison, we fix the total simulator call and
+ing. For each variant, we synthesize a dataset using the               total SFT data point budget across all strategies. Since worst-
+same simulator budget, dataset size, and intermediate-state            state prioritization may select multiple states per reposi-
+selection procedure, and then fine-tune an identical student           tory, we augment other baselines to match the same bud-
+model. During evaluation, first-round intermediate states are          get. Specifically, the Median strategy additionally selects
+
+                                                                   8
+                                 LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+                           Best-State Selection          Worst-State Selection                           70
+                           Uniform Selection             Teacher
+                           Median-State Selection        Student
+                                                                                                         68
+                         Syn Pass (%)                           Pass Rate (%)
+              98                                    67
+                                                                                                         66
+
+
+                                                                                         Pass Rate (%)
+              97                                    66
+              96                                    65                                                   64
+                                                                                                                                             Stage-conditioned
+Performance
+              95                                    64
+              94                                    63                                                   62                                  Data-Aug (Baseline)
+              93                                    62                                                                                       Stage 2 Ref
+              92                                    61                                                   60                                  Stage 1 Ref
+              91                                    60                                                                                       Stage 0 Ref
+              90                                    59                                                   58
+                   Best Uniform Median Worst             Best Uniform Median Worst                            Stage 0 + 1       Stage 0 + 1 + 2       Stage 1 + 2
+Figure 7. Comparison between intermediate state selection strate-                        Figure 8. Stage-Conditioned Progression, evaluated in agentic
+gies in Stage 1. Evaluated under the agentic setting. Syn Pass                           setting. Data-Aug stands for naive data augmentation.
+means percentage of repositories where syntax is correct.
+                                                                                         Table 3. Pass Rate across agentic rounds for teacher, base, and
+the worst state when the coverage gap between median                                     LLM4Cov stages. 30B teacher stands for Qwen3-30B-A3B-2507,
+                                                                                         and 4B Base stands for Qwen3-4B-2507 (Base).
+and worst exceeds a threshold. The Best strategy selects
+lower-ranked high-coverage states when budget remains                                                                                 Pass Rate (%)
+after exhausting the best states. The Uniform strategy sam-
+                                                                                                  Round Number              R=0      R=1          R=2      R=3
+ples additional intermediate states uniformly when residual
+budget is available.                                                                              30B Teacher               29.6%    49.6%        58.8%    63.9%
+                                                                                                  4B Base                   13.7%    21.4%        26.3%    28.4%
+Under this controlled setting, performance differences re-                                        Stage 0                   45.5%    55.2%        58.6%    60.2%
+flect the effect of state prioritization rather than simulator                                    Stage 1                   48.7%    59.3%        63.6%    67.0%
+usage. As shown in Figure 7, prioritizing low-coverage                                            Stage 2                   48.2%    62.7%        67.5%    69.2%
+intermediate states consistently yields stronger verifica-
+tion performance, validating the effectiveness of worst-
+state–prioritized supervision.                                                           quantitative ablation on how much does number of agentic
+                                                                                         rounds affect the final metrics.
+Progressive vs. naive data augmentation. Figure 8 com-
+pares stage-conditioned training with naive data augmen-                                 Our observation from table 3 is that although all methods
+tation under the same agentic evaluation setting. For the                                improve with more rounds, LLM4Cov consistently achieves
+progressive variant, each stage is fine-tuned from the previ-                            higher coverage at every round. Metric gains saturate af-
+ous checkpoint using its corresponding dataset, preserving                               ter 2–3 rounds, indicating most improvements occur early,
+alignment between the student model and the distribution                                 which justifys our setting of round number at N = 3. Such
+of synthesized supervision. For the baseline, we aggregate                               result suggests that the model trained by LLM4Cov fram-
+datasets across stages and train a single model from the                                 work can consistently reach strong coverage with fewer
+same initialization or from a fixed earlier checkpoint.                                  simulator calls across different budgets.
+We observe that stage-conditioned progression consistently
+outperforms naive augmentation across all dataset combina-                               5. Conclusion
+tions. Training on Stage 0+1 and Stage 0+1+2 data sequen-
+                                                                                         We present LLM4C OV, an execution-aware learning frame-
+tially yields higher coverage pass rates than jointly training
+                                                                                         work for high-coverage testbench generation that formulates
+on the same data from a fixed initialization. Notably, even
+                                                                                         verification as deterministic, single-step state transitions
+when using identical Stage 1+2 data, continuing from the
+                                                                                         guided by simulator feedback. By combining execution-
+Stage 0 checkpoint provides stronger performance than train-
+                                                                                         validated data curation, worst-state–prioritized synthesis,
+ing from scratch on the aggregated dataset. These results
+                                                                                         and progressive agentic supervision, LLM4C OV enables
+indicate that maintaining distributional alignment between
+                                                                                         models to learn effective verification behaviors directly un-
+the current model and the synthesized supervision is critical
+                                                                                         der agentic execution, where conventional scaling and in-
+for effective learning, and that mixing data from different ex-
+                                                                                         struction tuning fall short. Our framework systematically
+ecution regimes without staging can dilute recovery-focused
+                                                                                         aligns training supervision with simulator-observed fail-
+signals from later stages.
+                                                                                         ures and coverage bottlenecks, allowing compact models
+Sensitivity to Agentic Rounds. In main evaluation, we                                    to acquire robust recovery and exploration capabilities that
+set agentic refinement at N = 3 rounds; Here we offer an                                 generalize across diverse hardware repositories.
+
+                                                                                     9
+                   LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+Impact Statement                                                      Hegde, K. Why llms are the best thing to happen to chip de-
+                                                                        sign. https://www.chipstack.ai/blog/why-
+This paper presents work whose goal is to advance the field             llms-are-best-thing-for-chips, Jun 2025.
+of Machine Learning. There are many potential societal                  Blog post, ChipStack, Inc.
+consequences of our work, none of which we feel must be
+specifically highlighted here.                                        Ho, C.-T., Ren, H., and Khailany, B. Verilogcoder: Au-
+                                                                        tonomous verilog coding agents with graph-based plan-
+                                                                        ning and abstract syntax tree (ast)-based waveform trac-
+Acknowledgment
+                                                                        ing tool. In Proceedings of the AAAI Conference on
+This research is supported by NVIDIA Academic Grant                    Artificial Intelligence, volume 39, pp. 300–307, 2025.
+Program using A100 GPUs on Brev platform.
+                                                                      Hong, K., Troynikov, A., and Huber, J. Context rot:
+                                                                        How increasing input tokens impacts llm performance.
+References                                                             Technical report, Chroma, July 2025. URL https:
+Caccia, M., Thakkar, M., Boisvert, L., De Chezelles, T.                //trychroma.com/research/context-rot.
+  L. S., Piché, A., Chapados, N., Drouin, A., Gasse, M.,             Hui, B., Yang, J., Cui, Z., Yang, J., Liu, D., Zhang, L., Liu,
+  and Lacoste, A. Fine-tuning web agents: It works, but                T., Zhang, J., Yu, B., Dang, K., et al. Qwen2. 5-coder
+  it’s trickier than you think. In NeurIPS 2024 Workshop                technical report. arXiv preprint arXiv:2409.12186, 2024.
+  on Open-World Agents, 2024.
+                                                                      Lan, L.-C., Bai, A., Cheng, M., Hsieh, C.-J., and Zhou,
+Deng, Y., Fan, S., Wang, N., Zhao, X., and Ng, S. K. Agent-             T. Exploring expert failures improves llm agent tuning.
+  pro: Enhancing llm agents with automated process su-                  arXiv preprint arXiv:2504.13145, 2025.
+  pervision. In Proceedings of the 2025 Conference on
+  Empirical Methods in Natural Language Processing, pp.               Lauffer, N., Deng, X., Kundurthy, S., Kenstler, B., and Da, J.
+  9992–10017, 2025.                                                     Imitation learning for multi-turn lm agents via on-policy
+                                                                        expert corrections. arXiv preprint arXiv:2512.14895,
+Foster, H. D. Trends in functional verification: A                      2025.
+  2016 industry study. In DVCon Proceedings, San                      Lin, Z., Tang, Y., Yao, X., Yin, D., Hu, Z., Sun, Y., and
+  Jose, CA, United States, 2017.         URL https:                     Chang, K.-W. Qlass: Boosting language agent inference
+  //dvcon-proceedings.org/document/                                     via q-guided stepwise search. In International Conference
+  trends-in-functional-verification-                                    on Machine Learning, pp. 37942–37958. PMLR, 2025.
+  a-2016-industry-study/. Presented at DVCon
+  U.S. 2017; industry survey on functional verification               Liu, M., Pinckney, N., Khailany, B., and Ren, H. Verilo-
+  trends based on the 2016 Wilson Research Group study.                 geval: Evaluating large language models for verilog code
+                                                                        generation. In 2023 IEEE/ACM International Conference
+Foster, H. D.      2024 wilson research group ic/asic                   on Computer Aided Design (ICCAD), pp. 1–8. IEEE,
+  functional verification trend report.    White pa-                    2023.
+  per, Siemens Digital Industries Software, 2025.
+  URL       https://resources.sw.siemens.com/                         Meta AI. Introducing llama 4: Advancing multimodal in-
+  en-US/white-paper-2024-wilson-                                       telligence. https://ai.meta.com/blog/llama-
+  research-group-ic-asic-functional-                                   4-multimodal-intelligence/, 2024. Accessed:
+  verification-trend-report/. White paper                              2026-01-28.
+  providing an in-depth analysis of IC/ASIC functional                Nadimi, B., Filom, K., Chen, D., and Zheng, H. Tb
+  verification trends commissioned by Siemens and                       or not tb: Coverage-driven direct preference optimiza-
+  executed by Wilson Research Group.                                    tion for verilog stimulus generation. arXiv preprint
+Glm, T., Zeng, A., Xu, B., Wang, B., Zhang, C., Yin, D.,                arXiv:2511.15767, 2025.
+  Zhang, D., Rojas, D., Feng, G., Zhao, H., et al. Chatglm:           Panigrahi, A., Liu, B., Malladi, S., Risteski, A., and Goel,
+  A family of large language models from glm-130b to                    S. Progressive distillation induces an implicit curriculum.
+  glm-4 all tools. arXiv preprint arXiv:2406.12793, 2024.               In The Thirteenth International Conference on Learning
+                                                                        Representations, 2025.
+Guan, C., Huang, C., Li, H., Li, Y., Cheng, N., Liu, Z., Chen,
+ Y., Xu, J., and Liu, J. Multi-stage llm fine-tuning with a           Pinckney, N., Deng, C., Ho, C.-T., Tsai, Y.-D., Liu, M.,
+  continual learning setting. In Findings of the Association            Zhou, W., Khailany, B., and Ren, H. Comprehen-
+  for Computational Linguistics: NAACL 2025, pp. 5484–                  sive verilog design problems: A next-generation bench-
+  5498, 2025.                                                           mark dataset for evaluating large language models and
+
+                                                                 10
+                   LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+  agents on rtl design and verification. arXiv preprint                Zhang, Y., Xiong, G., Li, H., and Zhao, W. Edge: Efficient
+  arXiv:2506.14074, 2025.                                                data selection for llm agents via guideline effectiveness.
+                                                                         arXiv preprint arXiv:2502.12494, 2025.
+Qiu, R., Zhang, G. L., Drechsler, R., Schlichtmann, U., and
+  Li, B. Correctbench: Automatic testbench generation                  Zhao, Y., Wu, Z., Yuan, B., Yu, Z., Zhang, H., Ni, W.,
+  with functional self-correction using llms for hdl design.             Ho, C.-T., Ren, H., and Zhao, J. Pro-v-r1: Reasoning
+  In 2025 Design, Automation & Test in Europe Conference                 enhanced programming agent for rtl verification. arXiv
+  (DATE), pp. 1–7. IEEE, 2025.                                           preprint arXiv:2506.12200, 2025a.
+Ross, S., Gordon, G., and Bagnell, D. A reduction of imita-            Zhao, Y., Zhang, H., Huang, H., Yu, Z., and Zhao, J. Mage:
+  tion learning and structured prediction to no-regret online            A multi-agent engine for automated rtl code generation.
+  learning. In Proceedings of the fourteenth international               In 2025 62nd ACM/IEEE Design Automation Conference
+  conference on artificial intelligence and statistics, pp.              (DAC), pp. 1–7. IEEE, 2025b.
+  627–635. JMLR Workshop and Conference Proceedings,
+  2011.                                                                Zhu, Y., Huang, D., Lyu, H., Zhang, X., Li, C., Shi, W.,
+                                                                         Wu, Y., Mu, J., Wang, J., Jin, P., et al. Qimeng-codev-r1:
+Song, Y., Xiong, W., Zhao, X., Zhu, D., Wu, W., Wang, K.,                Reasoning-enhanced verilog generation. In The Thirty-
+  Li, C., Peng, W., and Li, S. Agentbank: Towards gener-                 ninth Annual Conference on Neural Information Process-
+  alized llm agents via fine-tuning on 50000+ interaction                ing Systems, 2025.
+  trajectories. In Findings of the Association for Computa-
+  tional Linguistics: EMNLP 2024, pp. 2124–2141, 2024.
+Sun, W., Lu, M., Ling, Z., Liu, K., Yao, X., Yang, Y., and
+  Chen, J. Scaling long-horizon llm agent via context-
+  folding. arXiv preprint arXiv:2510.11967, 2025.
+Team, G., Kamath, A., Ferret, J., Pathak, S., Vieillard,
+  N., Merhej, R., Perrin, S., Matejovicova, T., Ramé,
+  A., et al. Gemma 3 technical report, 2025. URL
+  https://arxiv.org/abs/2503.19786.
+Team, Q. Qwen3 technical report, 2025. URL https:
+  //arxiv.org/abs/2505.09388.
+Wang, H., Wang, J., Leong, C. T., and Li, W. Steca: Step-
+ level trajectory calibration for llm agent learning. In
+ Findings of the Association for Computational Linguis-
+ tics: ACL 2025, pp. 11597–11614, 2025a.
+Wang, Y., Sun, G., Ye, W., Qu, G., and Li, A. Verirea-
+ son: Reinforcement learning with testbench feedback for
+ reasoning-enhanced verilog generation. arXiv preprint
+ arXiv:2505.11849, 2025b.
+Wei, A., Tan, H., Suresh, T., Mendoza, D., Teixeira, T. S.,
+ Wang, K., Trippel, C., and Aiken, A. Vericoder: En-
+ hancing llm-based rtl code generation through functional
+ correctness validation. In NeurIPS 2025 Fourth Workshop
+ on Deep Learning for Code, 2025.
+Yuan, S., Chen, Z., Xi, Z., Ye, J., Du, Z., and Chen, J. Agent-
+  r: Training language model agents to reflect via iterative
+  self-training. arXiv preprint arXiv:2501.11425, 2025.
+Zhang, Y., Sun, R., Chen, Y., Pfister, T., Zhang, R., and
+  Arık, S. Ö. Chain of agents: Large language models
+  collaborating on long-context tasks. Advances in Neu-
+  ral Information Processing Systems, 37:132208–132237,
+  2024.
+
+                                                                  11
+                  LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+A. Domain-Specific Syntax Constraints
+   Specialist Prompt
+
+
+   Additional User Prompt:
+
+   <generation_rules>
+   Follow the expert-written rules below:
+   1. Do not use based literals with expressions
+       - illegal: pixel = 8’d(i+1); legal: pixel = i+1 (sized by LHS)
+   2. When generating SystemVerilog testbenches,
+       use only valid hex digits (0-9, A-F) in literals.
+       (like 16’hEFGH is invalid because G and H are not valid hex digits).
+   3. hex literal should starts with number of bits, followed by ’h’, then hex digits.
+       Each hex digit represents 4 bits, so make sure the total number of bits can hold
+        the hex value.
+       (like 4’h1234 is invalid because 4 bits cannot hold 1234; instead, should be 16’
+       h1234).
+       and declare all procedurally driven signals (clk, rst, inputs) as logic, not
+       wire.
+   4. Always define SystemVerilog tasks wrapped by starting word ’task’,
+       and ending word ’endtask’, not ’end’.
+   5. $monitor is forbidden unless explicitly requested;
+       default to $display inside initial or sequential always blocks.
+   6. When using # delays with arithmetic, always parenthesize the full delay
+       expression:
+       #(N * CLK_PERIOD) not #N * CLK_PERIOD.
+   7. Single driver rule:
+       If a signal is connected to a module output or inout port,
+       it must be treated as read-only in the testbench,
+       and must not appear on the left-hand side of any procedural assignment.
+   8. DO NOT index $random or $urandom directly (like $urandom[0]);
+       assign to a variable or mask/cast the result before bit selection.
+   9. All module ports must be declared in the module header (ANSI style).
+   10. Do not declare variables inside for, if, or after statements in procedural
+       blocks;
+       declare all variables at the top of the block.
+   11. Never use variable indices in [msb:lsb] part-selects;
+       use indexed part-selects (base +: width or base -: width) instead.
+   12. If the RTL has a timescale like ’‘timescale 1ns / 1ps’,
+       repeat it at the beginning of the testbench file.
+
+   </generation_rules>
+
+
+
+
+B. Experiment Detailed Settings
+SFT Settings. We trained the model for 1 epoch on each stage, with a learning rate of 1 × 10−5 and a batch size of 24. Total
+context length is adapted with synthetic data to ensure all data are included, peaking at 40,960. All SFT stages are executed
+on 8×A100 80GB SXM4 GPUs, using 57k data points and approximately 72 GPU hours in total with LlamaFactory.
+Synthetic data generation takes 420k simulator calls in total.
+The following hyperparameters were used during training:
+learning_rate: 1e-05;
+train_batch_size: 1;
+eval_batch_size: 8;
+seed: 42;
+distributed_type: multi-GPU;
+num_devices: 4;
+
+                                                            12
+                  LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+                          Table 4. Model Evaluation Config. Recommended config is used at best effort.
+
+                                 Type          Model                      Temperature    Top P
+                                               llama-4-maverick (400B)             0.7     0.8
+                                 General       Qwen3-235b-A22b-2507                0.7     0.8
+                                 Purpose       Qwen2.5-72B                         0.7     0.8
+                                               Qwen3-30B-A3B-2507                  0.7     0.8
+
+                                 Coding        Qwen2.5-Coder-32B                   0.7     0.8
+                                               Qwen3-Coder-30B-A3B                 0.7     0.8
+                                 Specialized
+                                               Qwen2.5-Coder-7B                    0.7     0.8
+                                               VeriCoder-Qwen2.5-14B               0.5    0.95
+                                 Hardware
+                                 Specific      CodeV-R1-RL-Qwen-7B                 0.6       1
+                                               VeriReason-Qwen2.5-7B               0.5       1
+                                               Qwen3-4B-2507 (Base)                0.7     0.8
+                                               +Stage0                             0.7     0.8
+                                 LLM4Cov
+                                               +Stage1                             0.7     0.8
+                                               +Stage2                             0.7     0.8
+
+
+
+gradient_accumulation_steps: 6;
+total_train_batch_size: 24;
+total_eval_batch_size: 32;
+optimizer: Use OptimizerNames.ADAMW_TORCH with betas=(0.9,0.999) and epsilon=1e-08 and
+    optimizer_args=No additional optimizer arguments;
+lr_scheduler_type: cosine;
+lr_scheduler_warmup_ratio: 0.03;
+num_epochs: 1.0;
+
+
+The following packages were used during training:
+CUDA: 12.4;
+NVIDIA Driver: 580.65.06;
+llamafactory: 0.9.5;
+torch: 2.6.0+cu124;
+transformers: 4.57.1;
+
+
+Specifically, in Stage 0 we sampled 87k direct-inference data points and 87k agentic data points with the teacher model
+(Qwen3-Coder-30B-A3B-Instruct), selected 30k of them (20k direct-inference + 10k agentic), and fine-tuned the base model
+(Qwen3-4B-Instruct-2507) on them;
+In Stage 1 we selected 11k long-context repos among the 87k, and sampled 55k direct-inference data points with the Stage 0
+SFT model as the student model; we then applied worst-priority sampling and imitation learning, and collected 67k agentic
+data points with the teacher model. Finally, we filtered out 8k direct-inference data points and 9k agentic data points, and
+used them to fine-tune the Stage 0 SFT model;
+In Stage 2 we applied a similar method as Stage 1, except using self-sampling to replace imitation learning, and only used
+agentic data to fine-tune the Stage 1 SFT model.
+EDA Settings. All hardware simulations and coverage evaluations are performed using Cadence Xcelium and IMC
+toolchains on a Rocky Linux 8.9 environment. We use xrun (version 22.03-s001) as the SystemVerilog simulator for
+compilation and execution, and Cadence IMC (version 25.09-a001) for post-simulation coverage analysis.
+Evaluation Settings. The temperature and top P used by evaluation generation is listed in Table 4.
+
+C. Execution Validated Dataset
+As described in Section 4.2, Stage 0 constructs a warm-up dataset to mitigate the high rate of syntax and execution failures
+observed in current models. This appendix quantifies the severity of these failures and demonstrates how the proposed
+warm-up dataset alleviates them in a model-agnostic manner.
+
+                                                              13
+                    LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+
+                                            100
+                                                                                                 General-purpose
+                                                                                                 Coding-specialized
+                                            90                                                   Hardware-specific
+
+
+
+
+                     Syntax pass rate (%)
+                                                                                                 LLM4Cov
+                                            80                                                   Scaling upper bound
+
+                                            70
+
+                                            60
+
+                                            50
+
+                                            40
+                                                  3             10            30             100           300      1000
+                                                                  Model size (B parameters)
+Figure 9. Simulator pass rates of existing LLMs on verification stimulus generation, all in instruct mode. Stage 0 model is used here as
+LLM4Cov. All baseline models has Syn Pass metric below 70%, while our execution-validated dataset enables over 85% pass rate.
+               Table 5. Ablation on execution-based dataset curation. All datasets contain the same number of samples.
+
+                                                                                               Syn Pass (%)
+                                                      Type                                 Direct Infer   Agentic
+                                                      Teacher                                   53.3%      85.1%
+                                                      Teacher with augmented spec               71.1%      85.8%
+                                                      Base                                      45.8%      61.0%
+                                                      SFT: Data without filtering               70.6%      79.5%
+                                                      SFT: Data with Execution filtering        83.9%      87.7%
+
+
+C.1. Syntax Pass Rate of Recent Models
+We introduce Syn Pass as an additional metric in the CVDP-ECov benchmark: the percentage of repositories for which
+the generated testbench has correct syntax, compiles successfully and completes simulation. Syn Pass therefore measures
+compilation and execution validity. Following prior work (Pinckney et al., 2025), assertion generation is treated as a separate
+task; remaining failures are thus primarily due to syntax errors or simulator timeouts.
+Even when restricted to stimulus generation without assertions, current LLMs frequently fail to produce simulator-compilable
+verification code, as illustrated in Figure 9.
+
+C.2. Ablation of Proposed Remedies
+We apply two techniques when constructing the warm-up dataset:
+• Expert syntax constraints. As detailed in Appendix A, we introduce a teacher-model-specific rule set into the prompt to
+  prevent common syntax and structural errors.
+• Coverage-based filtering. We apply coverage-guided rejection (Section 3.3) with a minimum improvement threshold of
+  1%, together with an additional minimum absolute coverage requirement of 50% to remove outlier designs.
+Table 5 analyzes dataset construction choices. Repository specialization substantially reduces teacher-model syntax failures,
+which explains why SFT on unfiltered data can achieve a higher pass rate than the teacher itself. Execution-based filtering
+provides the dominant improvement in simulator pass rates under both direct-inference and agentic evaluation.
+Figure 10 further shows that fine-tuning on the curated dataset consistently improves syntax correctness across multiple
+
+                                                                                   14
+                    LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+
+
+                                    100                                                                      +48.6
+                                                                    +30.1                 +64.9
+                                                               +40.9
+                                                                                                      +44.4
+                                     80
+                                                                                     +44.8
+
+
+                     Syn Pass (%)
+                                     60
+
+                                     40
+                                                  Teacher Direct
+                                                  Teacher Agentic
+                                     20           Direct Infer ( )
+                                                  Agentic ( )
+                                      0
+                                               Teacher       Qwen3-4B-2507 gemma-3-4b-it GLM-4-9B-0414
+ Figure 10. Syntax Improvement by Execution-Validated Dataset on models from different families. Fine-tuned on instruct versions.
+
+
+model families(Team et al., 2025; Team, 2025; Glm et al., 2024), indicating that the execution-validated dataset generalizes
+beyond a single architecture.
+
+D. Baseline Comparisons
+Direct head-to-head comparison with prior LLM-based testbench generation methods is difficult due to differences in
+evaluation protocols, toolchains, and model availability. We nonetheless provide a best-effort empirical comparison that
+shows consistent gains for LLM4C OV across two settings.
+
+Comparison with TBnTB (as reported). TBnTB reports results on a custom protocol using Aldec Riviera-Pro with a
+14B model trained on Claude-generated data, whereas LLM4C OV is evaluated on CVDP-ECov with Cadence Xcelium
+using a 4B student distilled from a 30B teacher. Despite the smaller student model, LLM4C OV achieves substantially higher
+average coverage, as summarized in Table 6.
+
+Table 6. Reported results from TBnTB compared to LLM4C OV. The two methods use different toolchains and evaluation protocols;
+numbers are not strictly comparable but illustrate a large gap in favor of LLM4C OV.
+
+                    Method                    Model                     Eval setup                          Avg Cov%
+                    TBnTB                     14B (Claude-gen. data)    custom, Aldec Riviera-Pro         25% (reported)
+                    LLM4C OV                  4B (30B teacher)          CVDP-ECov, Cadence Xcelium           90.4%
+
+
+
+Comparison with CorrectBench (re-evaluated under AutoEval-ECov). We thank the authors of CorrectBench for
+sharing their generated testbenches. To enable a more controlled comparison, we introduce AutoEval-ECov, a coverage-
+oriented evaluation protocol built on Verilog-Eval, and evaluate both methods under this unified setup. Results are shown in
+Table 7 which matches numbers in Table 2.
+
+Table 7. Re-evaluation of CorrectBench’s released testbenches and LLM4C OV under the unified AutoEval-ECov protocol on Verilog-Eval.
+
+                                     Method                                Avg Cov%      Pass Rate (Full Cov Rate)
+                                     CorrectBench (Claude 3.5 Sonnet)        89.9%                61.5%
+                                     LLM4C OV                                96.5%                84.0%
+
+
+
+                                                                           15
+                   LLM4Cov: Execution-Aware Agentic Learning for High-coverage Testbench Generation
+
+Why strict comparison remains limited. Several factors prevent a fully controlled comparison. First, there is a protocol
+mismatch: LLM4C OV is evaluated under CVDP-ECov, where the model has access to the full repository and simulator
+feedback, whereas CorrectBench and TBnTB are designed primarily for spec-only settings. Second, there is a toolchain
+mismatch: TBnTB reports results using Aldec Riviera-Pro under its own custom setup, while our results are obtained with
+Cadence Xcelium. Third, reproducibility and system differences further complicate comparison: TBnTB does not release
+model weights, and CorrectBench is a multi-agent framework built on proprietary models, while the evaluated outputs of
+LLM4C OV are fine-tuned open-source models.
+
+Takeaway. While not strictly controlled, these comparisons provide consistent evidence that LLM4C OV improves
+functional coverage using a smaller open-source model, with a clear advantage over prior LLM-based approaches.
+
+E. Limitations and Future Directions
+Although this work adopts an offline, execution-grounded supervised learning paradigm, it is not fundamentally incompatible
+with reasoning-based or reinforcement learning (RL) approaches. Our focus on offline learning is primarily driven by the
+high cost and limited availability of hardware simulators, where execution is slow and resource-intensive. As shown in
+Table 8, models across all SFT stages retain substantial output diversity, with consistent Pass@1–Pass@5 gains in both
+direct and agentic settings, indicating that fine-tuning does not collapse the policy into deterministic behaviors.
+
+                                       Table 8. Output diversity check for each SFT stage
+
+                                                   Direct Pass Rate      Agentic Pass Rate
+                                   SFT Stage     Pass@1      Pass@5     Pass@1      Pass@5
+                                   Stage 0        45.5%       68.7%       60.2%      77.1%
+                                   Stage 1        48.2%       68.7%       67.0%      84.3%
+                                   Stage 2        50.6%       72.3%       69.2%      81.9%
+
+
+These results suggest that execution-grounded SFT functions as a strong and diverse initialization policy rather than
+a terminal optimization stage. Such diversity-preserving policies are well suited for future RL, where stochasticity is
+essential for effective exploration and long-horizon credit assignment. Therefore, while offline execution-grounded learning
+constitutes a complete and effective paradigm in its own right, it can alternatively be viewed as an RL-compatible foundation
+when online interaction and simulator budgets permit.
+
+
+
+
+                                                              16
+

@@ -1,0 +1,164 @@
+{
+  "fixture": {
+    "id": "cvdp_agentic_fixed_arbiter_0001",
+    "categories": [
+      "cid003",
+      "easy"
+    ],
+    "repository": "https://github.com/NVlabs/cvdp_benchmark",
+    "commit": "8e894cf74414ab1eaea1e2b4e80a02f123df07b6",
+    "file": "example_dataset/cvdp_v1.1.0_example_agentic_code_generation_no_commercial_with_solutions.jsonl",
+    "record_sha256": "ac8132b4e12bc6db3de7dd133f1e8399002df2b596f84705de6b091dcfb20627",
+    "rtl_sha256": "52973e366d751c9908ce1354c791b82bb49727d5c777a4369f916031c9815cc7",
+    "spec_sha256": "2e73705881240182ce8827845fdcc1752ecc60ac0e44560264a262bb37c68d34",
+    "license_code": "Apache-2.0",
+    "license_noncode": "CC-BY-4.0",
+    "note": "cid003 integration fixture, not a cid012 CVDP-ECov evaluation result; no E-graph supplied upstream"
+  },
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "versions": {
+    "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+    "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)"
+  },
+  "measurements": [
+    {
+      "name": "initial",
+      "simulator": "verilator",
+      "simulator_executions": 1,
+      "wall_seconds": 0.2251589170191437,
+      "checks": 4,
+      "functional_errors": 0,
+      "timing_errors": 0,
+      "coverage": {
+        "branch": {
+          "covered": 3,
+          "total": 18,
+          "percent": 16.667
+        },
+        "expr": {
+          "covered": 1,
+          "total": 2,
+          "percent": 50.0
+        },
+        "line": {
+          "covered": 4,
+          "total": 11,
+          "percent": 36.364
+        },
+        "toggle": {
+          "covered": 9,
+          "total": 60,
+          "percent": 15.0
+        }
+      },
+      "input_tokens": null,
+      "output_tokens": null,
+      "token_roi": null,
+      "token_note": "Hand-authored integration experiment; no API usage was measured."
+    },
+    {
+      "name": "refined",
+      "simulator": "verilator",
+      "simulator_executions": 1,
+      "wall_seconds": 0.004086249973624945,
+      "checks": 22,
+      "functional_errors": 1,
+      "timing_errors": 1,
+      "coverage": {
+        "branch": {
+          "covered": 17,
+          "total": 18,
+          "percent": 94.444
+        },
+        "expr": {
+          "covered": 2,
+          "total": 2,
+          "percent": 100.0
+        },
+        "line": {
+          "covered": 11,
+          "total": 11,
+          "percent": 100.0
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 60,
+          "percent": 100.0
+        }
+      },
+      "input_tokens": null,
+      "output_tokens": null,
+      "token_roi": null,
+      "token_note": "Hand-authored integration experiment; no API usage was measured."
+    },
+    {
+      "name": "exhaustive",
+      "simulator": "verilator",
+      "simulator_executions": 1,
+      "wall_seconds": 0.02625675010494888,
+      "checks": 65543,
+      "functional_errors": 63232,
+      "timing_errors": 1,
+      "coverage": {
+        "branch": {
+          "covered": 17,
+          "total": 18,
+          "percent": 94.444
+        },
+        "expr": {
+          "covered": 2,
+          "total": 2,
+          "percent": 100.0
+        },
+        "line": {
+          "covered": 11,
+          "total": 11,
+          "percent": 100.0
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 60,
+          "percent": 100.0
+        }
+      },
+      "input_tokens": null,
+      "output_tokens": null,
+      "token_roi": null,
+      "token_note": "Hand-authored integration experiment; no API usage was measured."
+    }
+  ],
+  "portability_crosscheck": {
+    "simulator": "icarus",
+    "simulator_executions": 1,
+    "wall_seconds": 0.2959298330824822,
+    "checks": 65543,
+    "functional_errors": 63232,
+    "timing_errors": 1
+  },
+  "experiment_simulator_executions": 4,
+  "normalization_pairs": 16,
+  "eclasses": 152,
+  "refinement_policy": "Deterministic Boolean witness enumeration, not an LLM ablation",
+  "remaining_raw_uncovered_points": [
+    {
+      "source": "examples/arbiter/rtl/fixed_priority_arbiter.sv",
+      "line": 30,
+      "column": 57,
+      "type": "branch",
+      "outcome": "cond_else",
+      "hierarchy": "TOP.tb_fixed_priority_arbiter.dut",
+      "span": "30",
+      "hits": 0
+    }
+  ],
+  "coverage_note": "Raw DUT counters only. Line is Verilator block/elsif point coverage, not statement count; branch includes ternary outcomes. TB counters excluded. No waiver applied.",
+  "limitations": [
+    "Two-state Boolean adapter limited to the pinned arbiter hash",
+    "Last override ternary else is unreachable under nonzero override guard",
+    "No token measurements, Pass@1 estimate, or E-graph benefit claim",
+    "Not the CVDP cid012 or LLM4Cov evaluation harness"
+  ]
+}
