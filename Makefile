@@ -1,4 +1,5 @@
 PYTHON := .venv/bin/python
+export PATH := /opt/homebrew/bin:/usr/local/bin:$(PATH)
 export CARGO_HOME := $(CURDIR)/.cache/cargo
 
 .PHONY: setup doctor step1 test prompt
@@ -19,3 +20,7 @@ test:
 
 prompt:
 	$(PYTHON) scripts/build_prompt.py
+
+.PHONY: cvdp
+cvdp:
+	$(PYTHON) scripts/vscode_task.py cvdp

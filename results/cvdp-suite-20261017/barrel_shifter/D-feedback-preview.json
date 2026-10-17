@@ -1,0 +1,406 @@
+{
+  "module": "barrel_shifter",
+  "rtl": "module barrel_shifter (\n    input  [7:0] data_in,\n    input  [2:0] shift_bits,\n    input        left_right,\n    output reg [7:0] data_out\n);\n\n    always @(*) begin\n        if (left_right) begin\n            data_out = data_in < shift_bits;\n        end else begin\n            data_out = data_in > shift_bits;\n        end\n    end\n\nendmodule",
+  "task_context": "The barrel shifter module is designed to shift a given input data by a specified number of bits either to the left or right, based on a control signal. However, during testing, it was observed that the module failed to produce the expected output, leading to incorrect results. Specifically, when tested with data_in=00100100, shift_bits=1, and left_right=1, the expected output was 01001000, but the module produced 00000000. The module and its testbench are available in the current working directory for debugging.\n",
+  "input_integer_bounds": {
+    "data_in": 255,
+    "shift_bits": 7,
+    "left_right": 1
+  },
+  "predicate_atoms": {
+    "left": "left_right == 1"
+  },
+  "fixed_checker_initial_result": {
+    "checks": 2,
+    "functional_errors": 1,
+    "counterexamples": [
+      {
+        "index": 1,
+        "input": {
+          "data_in": 36,
+          "shift_bits": 1,
+          "left_right": 0
+        },
+        "expected": [
+          18
+        ],
+        "actual": [
+          1
+        ]
+      }
+    ],
+    "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+  },
+  "previous_inputs": [
+    {
+      "data_in": 0,
+      "shift_bits": 0,
+      "left_right": 0
+    },
+    {
+      "data_in": 36,
+      "shift_bits": 1,
+      "left_right": 0
+    }
+  ],
+  "raw_dut_coverage": [
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[0]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[0]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[1]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[1]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[2]:0->1",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[2]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[3]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[3]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[4]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[4]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[5]:0->1",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[5]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[6]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[6]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[7]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 2,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "data_in[7]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 3,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "shift_bits[0]:0->1",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 3,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "shift_bits[0]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 3,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "shift_bits[1]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 3,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "shift_bits[1]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 3,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "shift_bits[2]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 3,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "shift_bits[2]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 4,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "left_right:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 4,
+      "column": 18,
+      "type": "toggle",
+      "outcome": "left_right:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[0]:0->1",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[0]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[1]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[1]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[2]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[2]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[3]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[3]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[4]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[4]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[5]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[5]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[6]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[6]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[7]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 5,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "data_out[7]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 8,
+      "column": 5,
+      "type": "line",
+      "outcome": "block",
+      "hits": 5
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 9,
+      "column": 10,
+      "type": "branch",
+      "outcome": "else",
+      "hits": 5
+    },
+    {
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 9,
+      "column": 9,
+      "type": "branch",
+      "outcome": "if",
+      "hits": 0
+    }
+  ],
+  "uncovered_targets": [
+    {
+      "id": "left_path",
+      "source": "examples/cvdp/barrel_shifter/rtl/barrel_shifter.sv",
+      "line": 9,
+      "counter_type": "branch",
+      "counter_outcome": "if",
+      "width": 1,
+      "logic": "two_state",
+      "event": "continuous",
+      "reset_context": "no reset",
+      "predicate": "left"
+    }
+  ]
+}

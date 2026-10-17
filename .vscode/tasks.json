@@ -1,0 +1,188 @@
+{
+  "version": "2.0.0",
+  "options": {
+    "cwd": "${workspaceFolder}",
+    "env": {
+      "PATH": "/opt/homebrew/bin:/usr/local/bin:${env:PATH}"
+    }
+  },
+  "tasks": [
+    {
+      "label": "1. 检查 EDA 环境",
+      "type": "process",
+      "command": "/usr/bin/python3",
+      "args": [
+        "${workspaceFolder}/scripts/vscode_task.py",
+        "doctor"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "2. 运行 EDA 闭环验证",
+      "type": "process",
+      "command": "/usr/bin/python3",
+      "args": [
+        "${workspaceFolder}/scripts/vscode_task.py",
+        "step1"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "3. 预览 Agent 请求（不调用 API）",
+      "type": "process",
+      "command": "/usr/bin/python3",
+      "args": [
+        "${workspaceFolder}/scripts/vscode_task.py",
+        "preview",
+        "--group",
+        "${input:feedbackGroup}"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "4. 单轮 Agent（调用 API）",
+      "type": "process",
+      "command": "/usr/bin/python3",
+      "args": [
+        "${workspaceFolder}/scripts/vscode_task.py",
+        "smoke",
+        "--group",
+        "${input:feedbackGroup}",
+        "--model",
+        "${input:agentModel}"
+      ],
+      "options": {
+        "env": {
+          "OPENAI_API_KEY": "${input:openaiApiKey}"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "5. 运行 Agent 离线测试",
+      "type": "process",
+      "command": "/usr/bin/python3",
+      "args": [
+        "${workspaceFolder}/scripts/vscode_task.py",
+        "test-agent"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "6. 运行完整测试",
+      "type": "process",
+      "command": "/usr/bin/python3",
+      "args": [
+        "${workspaceFolder}/scripts/vscode_task.py",
+        "test-all"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "7. 运行 CVDP 多模块 EDA 对照",
+      "type": "process",
+      "command": "/usr/bin/python3",
+      "args": [
+        "${workspaceFolder}/scripts/vscode_task.py",
+        "cvdp"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "8. 预览 CVDP Agent 请求（不调用 API）",
+      "type": "process",
+      "command": "/usr/bin/python3",
+      "args": [
+        "${workspaceFolder}/scripts/vscode_task.py",
+        "preview",
+        "--module",
+        "${input:cvdpModule}",
+        "--group",
+        "${input:feedbackGroup}"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "9. 单轮 CVDP Agent（调用 API）",
+      "type": "process",
+      "command": "/usr/bin/python3",
+      "args": [
+        "${workspaceFolder}/scripts/vscode_task.py",
+        "smoke",
+        "--module",
+        "${input:cvdpModule}",
+        "--group",
+        "${input:feedbackGroup}",
+        "--model",
+        "${input:agentModel}"
+      ],
+      "problemMatcher": [],
+      "options": {
+        "env": {
+          "OPENAI_API_KEY": "${input:openaiApiKey}"
+        }
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "feedbackGroup",
+      "type": "pickString",
+      "description": "选择反馈组：A 日志；B 原始覆盖；C e-graph；D 普通简化",
+      "options": [
+        "C",
+        "B",
+        "D",
+        "A"
+      ],
+      "default": "C"
+    },
+    {
+      "id": "agentModel",
+      "type": "pickString",
+      "description": "选择 Agent API 模型",
+      "options": [
+        "gpt-6.1-sol",
+        "gpt-6-luna"
+      ],
+      "default": "gpt-6.1-sol"
+    },
+    {
+      "id": "openaiApiKey",
+      "type": "promptString",
+      "description": "OpenAI API key（仅传入本次任务环境）",
+      "password": true
+    },
+    {
+      "id": "cvdpModule",
+      "type": "pickString",
+      "description": "选择 CVDP 模块",
+      "options": [
+        "barrel_shifter",
+        "caesar_cipher",
+        "universal_shift_register"
+      ],
+      "default": "universal_shift_register"
+    }
+  ]
+}

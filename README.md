@@ -1,3 +1,26 @@
+# VS Code EDA and stimulus agent
+
+Open COMS6998-final-project.code-workspace in VS Code.
+Use Terminal → Run Task to check tools, run the EDA feedback experiment,
+preview agent requests, or start a one-call model smoke test.
+The build shortcut runs the EDA experiment. See docs/vscode_cn.md.
+
+## Stimulus-agent implementation
+
+This local checkout adds a bounded LLM stimulus loop on the upstream arbiter.
+Start with [the Chinese agent guide](docs/agent_quickstart_cn.md).
+The upstream commit and copy scope are recorded in SOURCE_SNAPSHOT.json.
+The implementation preserves the upstream DUT and adds reviewed multi-module adapters.
+
+Offline checks (no API key or EDA tools):
+
+```sh
+python3 -m unittest discover -s tests -p test_agent.py -v
+python3 scripts/run_agent.py --dry-run --group C --output results/agent-preview/new-C
+```
+
+The original milestone documentation follows.
+
 # E-Graph Augmented RTL Verification
 
 Reproducible first milestone for the COMS 6998 proposal: an immutable CVDP arbiter,
@@ -143,3 +166,13 @@ A/B/C agent runs, then adds a stateful FIFO and wider frontend support. See
 Original papers remain where supplied and are ignored by Git. NVIDIA example
 code is Apache-2.0 and its specification is CC BY 4.0; attribution and license
 are preserved in `examples/arbiter/`. New project code is MIT licensed.
+
+### CVDP multi-module validation
+
+Three additional pinned, immutable CVDP context RTLs are supported: barrel shifter,
+Caesar cipher, and universal shift register. Run VS Code task **7. 运行 CVDP 多模块 EDA 对照**
+or `make cvdp`. Tasks 8/9 preview or run the bounded Agent on a selected module.
+See [CVDP integration instructions](docs/cvdp_modules_cn.md) and
+[measured EDA report](results/cvdp-suite-20261017/REPORT.md).
+These are real local EDA validations with deterministic C/D witness controls;
+no live LLM benefit or official CVDP-ECov score is claimed.

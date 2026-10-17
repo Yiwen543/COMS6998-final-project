@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 from coverage import load, summary, join
 from predicates import ROOT, DUT, extract, witness
+from eda_build import build_verilator
 
 
 def write_json(path, value):
@@ -18,13 +19,13 @@ def write_json(path, value):
 
 def run(command, log, **kwargs):
     start = time.perf_counter()
-    proc = subprocess.run([str(x) for x in command], cwd=ROOT, text=True,
+    proc = subprocess.run([str(x) for x in command], cwd=kwargs.pop('cwd', ROOT),
                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                           timeout=180, **kwargs)
-    log.write_text(proc.stdout)
+    log.write_bytes(proc.stdout)
     if proc.returncode:
         raise RuntimeError(f'Command failed ({proc.returncode}); see {log}')
-    return time.perf_counter() - start, proc.stdout
+    return time.perf_counter() - start, proc.stdout.decode('utf-8', errors='replace')
 
 
 def result(text):
@@ -39,7 +40,6 @@ def main():
     args = parser.parse_args()
     out = (ROOT / args.output).resolve()
     out.mkdir(parents=True, exist_ok=True)
-    build = ROOT / 'build/verilator'
     targets = extract()
     write_json(out / 'predicates.json', targets)
     env = dict(os.environ, CARGO_HOME=str(ROOT / '.cache/cargo'))
@@ -50,12 +50,7 @@ def main():
                           input=json.dumps(targets), text=True, capture_output=True, check=True, timeout=15)
     graph = json.loads(proc.stdout)
     write_json(out / 'egraph.json', graph)
-    run(['verilator', '--cc', '--exe', '--build', '--timing', '--assert',
-         '--coverage-line', '--coverage-toggle', '--coverage-expr',
-         '--top-module', 'tb_fixed_priority_arbiter', '--Mdir', str(build), '-j', '2',
-         str(DUT.relative_to(ROOT)), 'examples/arbiter/verif/tb_fixed_priority_arbiter.sv',
-         ROOT / 'scripts/sim_main.cpp'], out / 'compile.log')
-    binary = build / 'Vtb_fixed_priority_arbiter'
+    binary, build_seconds = build_verilator(ROOT, out, run)
     measurements = []
     def simulate(name, mode, extra=()):
         coverage = out / f'{name}.dat'
@@ -88,7 +83,7 @@ def main():
     vector_file.write_text(''.join(f'{rst} {req:02x} {over:02x}\n' for rst, req, over in vectors))
     write_json(out / 'feedback.json', feedback)
     print(f'Refining from uncovered predicates with {len(vectors)} additional vectors...', flush=True)
-    refined = simulate('refined', 1, [f'+VECTORS={vector_file}'])
+    refined = simulate('refined', 1, [f'+VECTORS={os.path.relpath(vector_file, ROOT)}'])
     ceiling = simulate('exhaustive', 2)
     # Assert improvement using stable source/outcome identities, never E-class membership.
     def ids(points):
@@ -120,12 +115,14 @@ def main():
         p = subprocess.run([tool, flag], text=True, capture_output=True, check=True)
         versions[tool] = p.stdout.splitlines()[0]
     # Exercise Yosys as a frontend; do not synthesize away source coverage locations.
+    netlist_path = json.dumps(str(out / 'yosys-netlist.json'), ensure_ascii=False)
     run(['yosys', '-Q', '-T', '-p',
-         f'read_verilog -sv {DUT.relative_to(ROOT)}; hierarchy -check -top fixed_priority_arbiter; proc; check; write_json {out}/yosys-netlist.json'],
+         f'read_verilog -sv {DUT.relative_to(ROOT)}; hierarchy -check -top fixed_priority_arbiter; proc; check; write_json {netlist_path}'],
          out / 'yosys.log')
     unreachable = [p for p in ceiling if p['hits'] == 0]
     report = {'fixture': json.loads((ROOT/'examples/arbiter/provenance.json').read_text()),
               'platform': platform.platform(), 'versions': versions,
+              'verilator_build_seconds': build_seconds,
               'measurements': measurements, 'portability_crosscheck': crosscheck,
               'experiment_simulator_executions': 4,
               'normalization_pairs': len(targets), 'eclasses': len(graph['eclasses']),

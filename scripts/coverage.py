@@ -4,7 +4,7 @@ from pathlib import Path
 
 DUT_SOURCE = 'examples/arbiter/rtl/fixed_priority_arbiter.sv'
 
-def load(path):
+def load(path, source=DUT_SOURCE, hierarchy_suffix=".dut"):
     text = Path(path).read_text()
     if not text.startswith('# SystemC::Coverage-3'):
         raise ValueError('Unsupported coverage format')
@@ -14,12 +14,12 @@ def load(path):
         m = re.fullmatch(r"C '(.*)' (\d+)", row)
         if not m: raise ValueError(f'Malformed coverage row: {row!r}')
         fields = dict(part.split('\x02', 1) for part in m[1].split('\x01') if part)
-        source = fields.get('f', '').replace('\\', '/')
-        if not (source == DUT_SOURCE or source.endswith('/' + DUT_SOURCE)):
+        recorded_source = fields.get('f', '').replace('\\', '/')
+        if not (recorded_source == source or recorded_source.endswith('/' + source)):
             continue
-        if not fields.get('h', '').endswith('.dut'):
+        if not fields.get('h', '').endswith(hierarchy_suffix):
             continue
-        points.append({'source': DUT_SOURCE, 'line': int(fields['l']),
+        points.append({'source': source, 'line': int(fields['l']),
                        'column': int(fields.get('n', 0)), 'type': fields['t'],
                        'outcome': fields.get('o', ''), 'hierarchy': fields['h'],
                        'span': fields.get('S'), 'hits': int(m[2])})
@@ -39,7 +39,8 @@ def join(targets, graph, points):
     roots = {t['id']: t for t in graph['targets']}
     feedback = []
     for target in targets:
-        matches = [p for p in points if p['line'] == target['line']
+        matches = [p for p in points if p['source'] == target['source']
+                   and p['line'] == target['line']
                    and p['type'] == target['counter_type']
                    and p['outcome'] == target['counter_outcome']]
         if len(matches) != 1:

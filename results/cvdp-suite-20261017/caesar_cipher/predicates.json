@@ -1,0 +1,59 @@
+[
+  {
+    "id": "upper_path",
+    "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+    "line": 11,
+    "counter_type": "line",
+    "counter_outcome": "elsif",
+    "compact": "(and ge_A ge_Z)",
+    "expanded": "(and ge_A ge_Z)",
+    "width": 1,
+    "logic": "two_state",
+    "event": "continuous",
+    "reset_context": "no reset",
+    "atom_definitions": {
+      "ge_A": "input_char >= 65",
+      "ge_Z": "input_char >= 90",
+      "le_a": "input_char <= 97",
+      "ge_z": "input_char >= 122"
+    }
+  },
+  {
+    "id": "lower_path",
+    "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+    "line": 13,
+    "counter_type": "line",
+    "counter_outcome": "if",
+    "compact": "(and (not (and ge_A ge_Z)) (and le_a ge_z))",
+    "expanded": "(and (not (and ge_A ge_Z)) (and le_a ge_z))",
+    "width": 1,
+    "logic": "two_state",
+    "event": "continuous",
+    "reset_context": "no reset",
+    "atom_definitions": {
+      "ge_A": "input_char >= 65",
+      "ge_Z": "input_char >= 90",
+      "le_a": "input_char <= 97",
+      "ge_z": "input_char >= 122"
+    }
+  },
+  {
+    "id": "passthrough_path",
+    "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+    "line": 13,
+    "counter_type": "line",
+    "counter_outcome": "else",
+    "compact": "(and (not (and ge_A ge_Z)) (not (and le_a ge_z)))",
+    "expanded": "(and (not (and ge_A ge_Z)) (not (and le_a ge_z)))",
+    "width": 1,
+    "logic": "two_state",
+    "event": "continuous",
+    "reset_context": "no reset",
+    "atom_definitions": {
+      "ge_A": "input_char >= 65",
+      "ge_Z": "input_char >= 90",
+      "le_a": "input_char <= 97",
+      "ge_z": "input_char >= 122"
+    }
+  }
+]

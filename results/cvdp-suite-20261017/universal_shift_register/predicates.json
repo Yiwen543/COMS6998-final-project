@@ -1,0 +1,249 @@
+[
+  {
+    "id": "reset_path",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 15,
+    "counter_type": "branch",
+    "counter_outcome": "if",
+    "compact": "reset",
+    "expanded": "reset",
+    "width": 1,
+    "logic": "two_state",
+    "event": "posedge clk; sampled after settling",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "active_path",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 15,
+    "counter_type": "branch",
+    "counter_outcome": "else",
+    "compact": "(not reset)",
+    "expanded": "(not reset)",
+    "width": 1,
+    "logic": "two_state",
+    "event": "posedge clk; sampled after settling",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "hold",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 20,
+    "counter_type": "line",
+    "counter_outcome": "case",
+    "compact": "(and (not reset) (and (not m1) (not m0)))",
+    "expanded": "(and (not reset) (and (not m1) (not m0)))",
+    "width": 1,
+    "logic": "two_state",
+    "event": "posedge clk; sampled after settling",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "shift_mode",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 24,
+    "counter_type": "line",
+    "counter_outcome": "case",
+    "compact": "(and (not reset) (and (not m1) m0))",
+    "expanded": "(and (not reset) (and (not m1) m0))",
+    "width": 1,
+    "logic": "two_state",
+    "event": "posedge clk; sampled after settling",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "shift_right",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 25,
+    "counter_type": "branch",
+    "counter_outcome": "if",
+    "compact": "(and (not reset) (and (and (not m1) m0) (not left)))",
+    "expanded": "(and (not reset) (and (and (not m1) m0) (not left)))",
+    "width": 1,
+    "logic": "two_state",
+    "event": "posedge clk; sampled after settling",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "shift_left",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 25,
+    "counter_type": "branch",
+    "counter_outcome": "else",
+    "compact": "(and (not reset) (and (and (not m1) m0) left))",
+    "expanded": "(and (not reset) (and (and (not m1) m0) left))",
+    "width": 1,
+    "logic": "two_state",
+    "event": "posedge clk; sampled after settling",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "rotate_mode",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 32,
+    "counter_type": "line",
+    "counter_outcome": "case",
+    "compact": "(and (not reset) (and m1 (not m0)))",
+    "expanded": "(and (not reset) (and m1 (not m0)))",
+    "width": 1,
+    "logic": "two_state",
+    "event": "posedge clk; sampled after settling",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "rotate_right",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 33,
+    "counter_type": "branch",
+    "counter_outcome": "if",
+    "compact": "(and (not reset) (and (and m1 (not m0)) (not left)))",
+    "expanded": "(and (not reset) (and (and m1 (not m0)) (not left)))",
+    "width": 1,
+    "logic": "two_state",
+    "event": "posedge clk; sampled after settling",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "rotate_left",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 33,
+    "counter_type": "branch",
+    "counter_outcome": "else",
+    "compact": "(and (not reset) (and (and m1 (not m0)) left))",
+    "expanded": "(and (not reset) (and (and m1 (not m0)) left))",
+    "width": 1,
+    "logic": "two_state",
+    "event": "posedge clk; sampled after settling",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "parallel_load",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 40,
+    "counter_type": "line",
+    "counter_outcome": "case",
+    "compact": "(and (not reset) (and m1 m0))",
+    "expanded": "(and (not reset) (and m1 m0))",
+    "width": 1,
+    "logic": "two_state",
+    "event": "posedge clk; sampled after settling",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "case_default",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 44,
+    "counter_type": "line",
+    "counter_outcome": "case",
+    "compact": "false",
+    "expanded": "false",
+    "width": 1,
+    "logic": "two_state",
+    "event": "posedge clk; sampled after settling",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "serial_right",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 50,
+    "counter_type": "branch",
+    "counter_outcome": "cond_then",
+    "compact": "(not left)",
+    "expanded": "(not left)",
+    "width": 1,
+    "logic": "two_state",
+    "event": "continuous",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  },
+  {
+    "id": "serial_left",
+    "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+    "line": 50,
+    "counter_type": "branch",
+    "counter_outcome": "cond_else",
+    "compact": "left",
+    "expanded": "left",
+    "width": 1,
+    "logic": "two_state",
+    "event": "continuous",
+    "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+    "atom_definitions": {
+      "reset": "rst == 1",
+      "m0": "mode_sel[0]",
+      "m1": "mode_sel[1]",
+      "left": "shift_dir == 1"
+    }
+  }
+]

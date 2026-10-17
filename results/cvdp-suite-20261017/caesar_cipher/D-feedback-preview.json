@@ -1,0 +1,467 @@
+{
+  "module": "caesar_cipher",
+  "rtl": "module caesar_cipher(\n  input  wire [7:0] input_char,\n  input  wire [3:0] key,\n  output reg  [7:0] output_char\n);\n\nfunction [7:0] shift;\n  input [7:0] c;\n  input [3:0] k;\n  begin\n    if (c >= \"A\" && c >= \"Z\")\n      shift = ((c - \"A\" + k) % 26) + \"A\";\n    else if (c <= \"a\" && c >= \"z\")\n      shift = ((c - \"a\" + k) % 26) + \"a\";\n    else\n      shift = c;\n  end\nendfunction\n\nalways @(*) begin\n  output_char = shift(input_char, key);\nend\n\nendmodule",
+  "task_context": "The `caesar_cipher` module is designed to shift each alphabetic character by a specified key using the Caesar cipher encryption technique. The module correctly identifies uppercase and lowercase letters, applying the appropriate shift. However, testing revealed that the module fails to generate the correct cipher output for some inputs, indicating an issue in the shifting logic and compromising the expected encryption functionality.\n\n## Errors Observed During Simulation\n\n- `'hello'` with key 3: expected `khoor`, got `QNUUX`.\n- `'WORLD'` with key 4: expected `ASVPH`, got `WORLD`.\n- `'Caesar'` with key 5: expected `Hfjxfw`, got `CLPDLC`\n\nThe module and its testbench are available for further debugging in the current working directory.\n",
+  "input_integer_bounds": {
+    "input_char": 255,
+    "key": 15
+  },
+  "predicate_atoms": {
+    "ge_A": "input_char >= 65",
+    "ge_Z": "input_char >= 90",
+    "le_a": "input_char <= 97",
+    "ge_z": "input_char >= 122"
+  },
+  "fixed_checker_initial_result": {
+    "checks": 2,
+    "functional_errors": 0,
+    "counterexamples": [],
+    "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+  },
+  "previous_inputs": [
+    {
+      "input_char": 0,
+      "key": 0
+    },
+    {
+      "input_char": 65,
+      "key": 0
+    }
+  ],
+  "raw_dut_coverage": [
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 11,
+      "column": 18,
+      "type": "expr",
+      "outcome": "((c >= 8'h41)==0) => 0",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 11,
+      "column": 18,
+      "type": "expr",
+      "outcome": "((c >= 8'h41)==1 && (c >= 8'h5a)==1) => 1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 11,
+      "column": 18,
+      "type": "expr",
+      "outcome": "((c >= 8'h5a)==0) => 0",
+      "hits": 5
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 11,
+      "column": 5,
+      "type": "line",
+      "outcome": "elsif",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 13,
+      "column": 10,
+      "type": "line",
+      "outcome": "if",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 13,
+      "column": 11,
+      "type": "line",
+      "outcome": "else",
+      "hits": 5
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 13,
+      "column": 23,
+      "type": "expr",
+      "outcome": "((c <= 8'h61)==0) => 0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 13,
+      "column": 23,
+      "type": "expr",
+      "outcome": "((c <= 8'h61)==1 && (c >= 8'h7a)==1) => 1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 13,
+      "column": 23,
+      "type": "expr",
+      "outcome": "((c >= 8'h7a)==0) => 0",
+      "hits": 5
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[0]:0->1",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[0]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[1]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[1]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[2]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[2]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[3]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[3]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[4]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[4]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[5]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[5]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[6]:0->1",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[6]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[7]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 2,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "input_char[7]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 20,
+      "column": 1,
+      "type": "line",
+      "outcome": "block",
+      "hits": 5
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 3,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "key[0]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 3,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "key[0]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 3,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "key[1]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 3,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "key[1]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 3,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "key[2]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 3,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "key[2]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 3,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "key[3]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 3,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "key[3]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[0]:0->1",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[0]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[1]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[1]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[2]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[2]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[3]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[3]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[4]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[4]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[5]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[5]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[6]:0->1",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[6]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[7]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 4,
+      "column": 21,
+      "type": "toggle",
+      "outcome": "output_char[7]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 7,
+      "column": 16,
+      "type": "line",
+      "outcome": "block",
+      "hits": 5
+    }
+  ],
+  "uncovered_targets": [
+    {
+      "id": "upper_path",
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 11,
+      "counter_type": "line",
+      "counter_outcome": "elsif",
+      "width": 1,
+      "logic": "two_state",
+      "event": "continuous",
+      "reset_context": "no reset",
+      "predicate": "(and ge_A ge_Z)"
+    },
+    {
+      "id": "lower_path",
+      "source": "examples/cvdp/caesar_cipher/rtl/caesar_cipher.sv",
+      "line": 13,
+      "counter_type": "line",
+      "counter_outcome": "if",
+      "width": 1,
+      "logic": "two_state",
+      "event": "continuous",
+      "reset_context": "no reset",
+      "predicate": "(and (not (and ge_A ge_Z)) (and ge_z le_a))"
+    }
+  ]
+}

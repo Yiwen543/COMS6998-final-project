@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 root = Path(__file__).resolve().parents[1]
 versions = {}
+versions['runner_python'] = {'path': sys.executable, 'version': sys.version.splitlines()[0]}
 for name, flag in [('python3','--version'),('verilator','--version'),('iverilog','-V'),('vvp','-V'),('yosys','-V'),('cargo','--version'),('rustc','--version'),('c++','--version')]:
     path = shutil.which(name)
     if not path:

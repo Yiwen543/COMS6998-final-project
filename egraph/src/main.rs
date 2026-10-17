@@ -17,6 +17,20 @@ fn main() {
     io::stdin().read_to_string(&mut input).unwrap();
     let targets: Vec<Value> = serde_json::from_str(&input).expect("expected JSON array");
     let rules = vec![
+        rewrite!("and-comm"; "(and ?a ?b)" => "(and ?b ?a)"),
+        rewrite!("and-assoc"; "(and (and ?a ?b) ?c)" => "(and ?a (and ?b ?c))"),
+        rewrite!("and-idem"; "(and ?a ?a)" => "?a"),
+        rewrite!("and-identity"; "(and ?a true)" => "?a"),
+        rewrite!("and-zero"; "(and ?a false)" => "false"),
+        rewrite!("and-absorb"; "(and ?a (or ?a ?b))" => "?a"),
+        rewrite!("and-distribute"; "(and ?a (or ?b ?c))" => "(or (and ?a ?b) (and ?a ?c))"),
+        rewrite!("or-comm"; "(or ?a ?b)" => "(or ?b ?a)"),
+        rewrite!("or-assoc"; "(or (or ?a ?b) ?c)" => "(or ?a (or ?b ?c))"),
+        rewrite!("or-idem"; "(or ?a ?a)" => "?a"),
+        rewrite!("or-identity"; "(or ?a false)" => "?a"),
+        rewrite!("or-zero"; "(or ?a true)" => "true"),
+        rewrite!("or-absorb"; "(or ?a (and ?a ?b))" => "?a"),
+        rewrite!("or-distribute"; "(or ?a (and ?b ?c))" => "(and (or ?a ?b) (or ?a ?c))"),
         rewrite!("de-morgan-or"; "(not (or ?a ?b))" => "(and (not ?a) (not ?b))"),
         rewrite!("de-morgan-and"; "(not (and ?a ?b))" => "(or (not ?a) (not ?b))"),
         rewrite!("double-not"; "(not (not ?a))" => "?a"),

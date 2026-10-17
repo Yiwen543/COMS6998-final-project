@@ -1,0 +1,830 @@
+{
+  "completed_modules": [
+    {
+      "module": "barrel_shifter",
+      "provenance": {
+        "id": "cvdp_agentic_barrel_shifter_0001",
+        "categories": [
+          "cid016",
+          "easy"
+        ],
+        "dataset": "https://huggingface.co/datasets/nvidia/cvdp-benchmark-dataset",
+        "revision": "5b807d945f6a99aa645f7e43a64a2115e281b4bf",
+        "file": "cvdp_v1.1.0_agentic_code_generation_no_commercial.jsonl",
+        "dataset_sha256": "2007f4311ed731a985a4ed9187479ad2cfc2462bc4013eba0d72a9f35642fdcf",
+        "role": "unaltered input context RTL; not a golden solution or official ECov task",
+        "rtl_sha256": {
+          "rtl/barrel_shifter.sv": "99d168cbff958bd780cabf63e43b2230df4fb084ddafb259eeda5f9f526dd66b"
+        }
+      },
+      "mode": "real-EDA-with-deterministic-witness-controls",
+      "live_api_calls": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "token_roi": null,
+      "checker_scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check",
+      "semantic_validation": {
+        "checked_target_input_pairs": 160,
+        "candidate_inputs": 80,
+        "scope": "complete guard-variable projection for these reviewed adapters; not full temporal verification"
+      },
+      "egg_seconds": 0.8016784169012681,
+      "egg_stop_reason": "Some(Saturated)",
+      "verilator_build_seconds": 3.511467917007394,
+      "initial": {
+        "checker": {
+          "checks": 2,
+          "functional_errors": 1,
+          "counterexamples": [
+            {
+              "index": 1,
+              "input": {
+                "data_in": 36,
+                "shift_bits": 1,
+                "left_right": 0
+              },
+              "expected": [
+                18
+              ],
+              "actual": [
+                1
+              ]
+            }
+          ],
+          "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+        },
+        "coverage": {
+          "branch": {
+            "covered": 1,
+            "total": 2,
+            "percent": 50.0
+          },
+          "line": {
+            "covered": 1,
+            "total": 1,
+            "percent": 100.0
+          },
+          "toggle": {
+            "covered": 4,
+            "total": 40,
+            "percent": 10.0
+          }
+        },
+        "icarus_crosscheck": {
+          "identical_outputs": true,
+          "checks": 2,
+          "simulation_seconds": 0.013613332994282246
+        }
+      },
+      "arms": {
+        "C": {
+          "vectors": 3,
+          "added_vectors": 1,
+          "suite_sha256": "00139cbabd965f35d24d1e8c818d856de1f7ce3c3a0a7fa85d471fbe522c1d23",
+          "checker": {
+            "checks": 3,
+            "functional_errors": 1,
+            "counterexamples": [
+              {
+                "index": 1,
+                "input": {
+                  "data_in": 36,
+                  "shift_bits": 1,
+                  "left_right": 0
+                },
+                "expected": [
+                  18
+                ],
+                "actual": [
+                  1
+                ]
+              }
+            ],
+            "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+          },
+          "coverage": {
+            "branch": {
+              "covered": 2,
+              "total": 2,
+              "percent": 100.0
+            },
+            "line": {
+              "covered": 1,
+              "total": 1,
+              "percent": 100.0
+            },
+            "toggle": {
+              "covered": 9,
+              "total": 40,
+              "percent": 22.5
+            }
+          },
+          "icarus_crosscheck": {
+            "identical_outputs": true,
+            "checks": 3,
+            "simulation_seconds": 0.007828084053471684
+          },
+          "feedback_encoding_seconds": 0.0001224589068442583,
+          "uncovered_targets": []
+        },
+        "D": {
+          "vectors": 3,
+          "added_vectors": 1,
+          "suite_sha256": "00139cbabd965f35d24d1e8c818d856de1f7ce3c3a0a7fa85d471fbe522c1d23",
+          "checker": {
+            "checks": 3,
+            "functional_errors": 1,
+            "counterexamples": [
+              {
+                "index": 1,
+                "input": {
+                  "data_in": 36,
+                  "shift_bits": 1,
+                  "left_right": 0
+                },
+                "expected": [
+                  18
+                ],
+                "actual": [
+                  1
+                ]
+              }
+            ],
+            "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+          },
+          "coverage": {
+            "branch": {
+              "covered": 2,
+              "total": 2,
+              "percent": 100.0
+            },
+            "line": {
+              "covered": 1,
+              "total": 1,
+              "percent": 100.0
+            },
+            "toggle": {
+              "covered": 9,
+              "total": 40,
+              "percent": 22.5
+            }
+          },
+          "icarus_crosscheck": {
+            "identical_outputs": true,
+            "checks": 3,
+            "simulation_seconds": 0.006868208991363645
+          },
+          "feedback_encoding_seconds": 8.341600187122822e-05,
+          "uncovered_targets": []
+        }
+      },
+      "C_D_same_stimulus": true,
+      "C_D_same_feedback": true,
+      "feedback_preview_bytes": {
+        "B": 8223,
+        "C": 8223,
+        "D": 8223
+      },
+      "feedback_preview_sha256": {
+        "B": "80ad889d24f7e3e164237183d716dea186433eec54d3cfad9dad35be5c51f8de",
+        "C": "80ad889d24f7e3e164237183d716dea186433eec54d3cfad9dad35be5c51f8de",
+        "D": "80ad889d24f7e3e164237183d716dea186433eec54d3cfad9dad35be5c51f8de"
+      },
+      "expanded": {
+        "checker": {
+          "checks": 4098,
+          "functional_errors": 3562,
+          "counterexamples": [
+            {
+              "index": 1,
+              "input": {
+                "data_in": 36,
+                "shift_bits": 1,
+                "left_right": 0
+              },
+              "expected": [
+                18
+              ],
+              "actual": [
+                1
+              ]
+            },
+            {
+              "index": 5,
+              "input": {
+                "data_in": 0,
+                "shift_bits": 1,
+                "left_right": 1
+              },
+              "expected": [
+                0
+              ],
+              "actual": [
+                1
+              ]
+            },
+            {
+              "index": 7,
+              "input": {
+                "data_in": 0,
+                "shift_bits": 2,
+                "left_right": 1
+              },
+              "expected": [
+                0
+              ],
+              "actual": [
+                1
+              ]
+            },
+            {
+              "index": 9,
+              "input": {
+                "data_in": 0,
+                "shift_bits": 3,
+                "left_right": 1
+              },
+              "expected": [
+                0
+              ],
+              "actual": [
+                1
+              ]
+            },
+            {
+              "index": 11,
+              "input": {
+                "data_in": 0,
+                "shift_bits": 4,
+                "left_right": 1
+              },
+              "expected": [
+                0
+              ],
+              "actual": [
+                1
+              ]
+            },
+            {
+              "index": 13,
+              "input": {
+                "data_in": 0,
+                "shift_bits": 5,
+                "left_right": 1
+              },
+              "expected": [
+                0
+              ],
+              "actual": [
+                1
+              ]
+            },
+            {
+              "index": 15,
+              "input": {
+                "data_in": 0,
+                "shift_bits": 6,
+                "left_right": 1
+              },
+              "expected": [
+                0
+              ],
+              "actual": [
+                1
+              ]
+            },
+            {
+              "index": 17,
+              "input": {
+                "data_in": 0,
+                "shift_bits": 7,
+                "left_right": 1
+              },
+              "expected": [
+                0
+              ],
+              "actual": [
+                1
+              ]
+            }
+          ],
+          "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+        },
+        "coverage": {
+          "branch": {
+            "covered": 2,
+            "total": 2,
+            "percent": 100.0
+          },
+          "line": {
+            "covered": 1,
+            "total": 1,
+            "percent": 100.0
+          },
+          "toggle": {
+            "covered": 25,
+            "total": 40,
+            "percent": 62.5
+          }
+        },
+        "icarus_crosscheck": {
+          "identical_outputs": true,
+          "checks": 4098,
+          "simulation_seconds": 0.022012750036083162
+        }
+      },
+      "wall_seconds": 4.64377325004898,
+      "limitation": "No LLM/token benefit measured. Deterministic witnesses are diagnostic, not an LLM baseline. CVDP context RTL only, not official CVDP-ECov evaluation."
+    },
+    {
+      "module": "caesar_cipher",
+      "provenance": {
+        "id": "cvdp_agentic_caesar_cipher_0001",
+        "categories": [
+          "cid016",
+          "easy"
+        ],
+        "dataset": "https://huggingface.co/datasets/nvidia/cvdp-benchmark-dataset",
+        "revision": "5b807d945f6a99aa645f7e43a64a2115e281b4bf",
+        "file": "cvdp_v1.1.0_agentic_code_generation_no_commercial.jsonl",
+        "dataset_sha256": "2007f4311ed731a985a4ed9187479ad2cfc2462bc4013eba0d72a9f35642fdcf",
+        "role": "unaltered input context RTL; not a golden solution or official ECov task",
+        "rtl_sha256": {
+          "rtl/caesar_cipher.sv": "fd28e977025031a748bc80de554a2987828e585e2c3513434cd4abda7546e0a8"
+        }
+      },
+      "mode": "real-EDA-with-deterministic-witness-controls",
+      "live_api_calls": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "token_roi": null,
+      "checker_scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check",
+      "semantic_validation": {
+        "checked_target_input_pairs": 3072,
+        "candidate_inputs": 1024,
+        "scope": "complete guard-variable projection for these reviewed adapters; not full temporal verification"
+      },
+      "egg_seconds": 0.6092989169992507,
+      "egg_stop_reason": "Some(IterationLimit(20))",
+      "verilator_build_seconds": 3.0172172500751913,
+      "initial": {
+        "checker": {
+          "checks": 2,
+          "functional_errors": 0,
+          "counterexamples": [],
+          "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+        },
+        "coverage": {
+          "expr": {
+            "covered": 3,
+            "total": 6,
+            "percent": 50.0
+          },
+          "line": {
+            "covered": 3,
+            "total": 5,
+            "percent": 60.0
+          },
+          "toggle": {
+            "covered": 4,
+            "total": 40,
+            "percent": 10.0
+          }
+        },
+        "icarus_crosscheck": {
+          "identical_outputs": true,
+          "checks": 2,
+          "simulation_seconds": 0.011048290994949639
+        }
+      },
+      "arms": {
+        "C": {
+          "vectors": 3,
+          "added_vectors": 1,
+          "suite_sha256": "62c186bf6ef0aefa8fa4ef59cb7ff465c1288052e71a1ada1a71bc1ce35cca3e",
+          "checker": {
+            "checks": 3,
+            "functional_errors": 0,
+            "counterexamples": [],
+            "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+          },
+          "coverage": {
+            "expr": {
+              "covered": 4,
+              "total": 6,
+              "percent": 66.667
+            },
+            "line": {
+              "covered": 4,
+              "total": 5,
+              "percent": 80.0
+            },
+            "toggle": {
+              "covered": 12,
+              "total": 40,
+              "percent": 30.0
+            }
+          },
+          "icarus_crosscheck": {
+            "identical_outputs": true,
+            "checks": 3,
+            "simulation_seconds": 0.0072931250324472785
+          },
+          "feedback_encoding_seconds": 9.824999142438173e-05,
+          "uncovered_targets": [
+            "lower_path"
+          ]
+        },
+        "D": {
+          "vectors": 3,
+          "added_vectors": 1,
+          "suite_sha256": "62c186bf6ef0aefa8fa4ef59cb7ff465c1288052e71a1ada1a71bc1ce35cca3e",
+          "checker": {
+            "checks": 3,
+            "functional_errors": 0,
+            "counterexamples": [],
+            "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+          },
+          "coverage": {
+            "expr": {
+              "covered": 4,
+              "total": 6,
+              "percent": 66.667
+            },
+            "line": {
+              "covered": 4,
+              "total": 5,
+              "percent": 80.0
+            },
+            "toggle": {
+              "covered": 12,
+              "total": 40,
+              "percent": 30.0
+            }
+          },
+          "icarus_crosscheck": {
+            "identical_outputs": true,
+            "checks": 3,
+            "simulation_seconds": 0.006999916979111731
+          },
+          "feedback_encoding_seconds": 0.00014575000386685133,
+          "uncovered_targets": [
+            "lower_path"
+          ]
+        }
+      },
+      "C_D_same_stimulus": true,
+      "C_D_same_feedback": false,
+      "feedback_preview_bytes": {
+        "B": 10003,
+        "C": 10003,
+        "D": 10003
+      },
+      "feedback_preview_sha256": {
+        "B": "d3df75bd78c50f4d4d52d63575c8d1842feef7e17ca6415b6998ea2f17a2b804",
+        "C": "d3df75bd78c50f4d4d52d63575c8d1842feef7e17ca6415b6998ea2f17a2b804",
+        "D": "6ab919cea47da58a38cd32152a913a87dd9ee11552900b389f5cba5277bd8ecd"
+      },
+      "expanded": {
+        "checker": {
+          "checks": 4098,
+          "functional_errors": 3015,
+          "counterexamples": [
+            {
+              "index": 1043,
+              "input": {
+                "input_char": 65,
+                "key": 1
+              },
+              "expected": [
+                66
+              ],
+              "actual": [
+                65
+              ]
+            },
+            {
+              "index": 1044,
+              "input": {
+                "input_char": 65,
+                "key": 2
+              },
+              "expected": [
+                67
+              ],
+              "actual": [
+                65
+              ]
+            },
+            {
+              "index": 1045,
+              "input": {
+                "input_char": 65,
+                "key": 3
+              },
+              "expected": [
+                68
+              ],
+              "actual": [
+                65
+              ]
+            },
+            {
+              "index": 1046,
+              "input": {
+                "input_char": 65,
+                "key": 4
+              },
+              "expected": [
+                69
+              ],
+              "actual": [
+                65
+              ]
+            },
+            {
+              "index": 1047,
+              "input": {
+                "input_char": 65,
+                "key": 5
+              },
+              "expected": [
+                70
+              ],
+              "actual": [
+                65
+              ]
+            },
+            {
+              "index": 1048,
+              "input": {
+                "input_char": 65,
+                "key": 6
+              },
+              "expected": [
+                71
+              ],
+              "actual": [
+                65
+              ]
+            },
+            {
+              "index": 1049,
+              "input": {
+                "input_char": 65,
+                "key": 7
+              },
+              "expected": [
+                72
+              ],
+              "actual": [
+                65
+              ]
+            },
+            {
+              "index": 1050,
+              "input": {
+                "input_char": 65,
+                "key": 8
+              },
+              "expected": [
+                73
+              ],
+              "actual": [
+                65
+              ]
+            }
+          ],
+          "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+        },
+        "coverage": {
+          "expr": {
+            "covered": 4,
+            "total": 6,
+            "percent": 66.667
+          },
+          "line": {
+            "covered": 4,
+            "total": 5,
+            "percent": 80.0
+          },
+          "toggle": {
+            "covered": 37,
+            "total": 40,
+            "percent": 92.5
+          }
+        },
+        "icarus_crosscheck": {
+          "identical_outputs": true,
+          "checks": 4098,
+          "simulation_seconds": 0.023197749978862703
+        }
+      },
+      "wall_seconds": 3.9342078749323264,
+      "limitation": "No LLM/token benefit measured. Deterministic witnesses are diagnostic, not an LLM baseline. CVDP context RTL only, not official CVDP-ECov evaluation."
+    },
+    {
+      "module": "universal_shift_register",
+      "provenance": {
+        "id": "cvdp_agentic_universal_shift_reg_0003",
+        "categories": [
+          "cid004",
+          "medium"
+        ],
+        "dataset": "https://huggingface.co/datasets/nvidia/cvdp-benchmark-dataset",
+        "revision": "5b807d945f6a99aa645f7e43a64a2115e281b4bf",
+        "file": "cvdp_v1.1.0_agentic_code_generation_no_commercial.jsonl",
+        "dataset_sha256": "2007f4311ed731a985a4ed9187479ad2cfc2462bc4013eba0d72a9f35642fdcf",
+        "role": "unaltered input context RTL; not a golden solution or official ECov task",
+        "rtl_sha256": {
+          "rtl/universal_shift_register.sv": "50967a927af3458d07ef971c12ec4181e9ab4dfc4055d298181b51b49a28de7d"
+        }
+      },
+      "mode": "real-EDA-with-deterministic-witness-controls",
+      "live_api_calls": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "token_roi": null,
+      "checker_scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check",
+      "semantic_validation": {
+        "checked_target_input_pairs": 1664,
+        "candidate_inputs": 128,
+        "scope": "complete guard-variable projection for these reviewed adapters; not full temporal verification"
+      },
+      "egg_seconds": 0.21002683299593627,
+      "egg_stop_reason": "Some(Saturated)",
+      "verilator_build_seconds": 3.056527959066443,
+      "initial": {
+        "checker": {
+          "checks": 2,
+          "functional_errors": 0,
+          "counterexamples": [],
+          "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+        },
+        "coverage": {
+          "branch": {
+            "covered": 3,
+            "total": 8,
+            "percent": 37.5
+          },
+          "expr": {
+            "covered": 1,
+            "total": 2,
+            "percent": 50.0
+          },
+          "line": {
+            "covered": 2,
+            "total": 6,
+            "percent": 33.333
+          },
+          "toggle": {
+            "covered": 4,
+            "total": 46,
+            "percent": 8.696
+          }
+        },
+        "icarus_crosscheck": {
+          "identical_outputs": true,
+          "checks": 2,
+          "simulation_seconds": 0.011969542014412582
+        }
+      },
+      "arms": {
+        "C": {
+          "vectors": 8,
+          "added_vectors": 6,
+          "suite_sha256": "8147b0252e8dcef83c9eec3e73e78062d0b7841e5e1a08fd330b6ff81c9bd823",
+          "checker": {
+            "checks": 8,
+            "functional_errors": 0,
+            "counterexamples": [],
+            "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+          },
+          "coverage": {
+            "branch": {
+              "covered": 8,
+              "total": 8,
+              "percent": 100.0
+            },
+            "expr": {
+              "covered": 2,
+              "total": 2,
+              "percent": 100.0
+            },
+            "line": {
+              "covered": 5,
+              "total": 6,
+              "percent": 83.333
+            },
+            "toggle": {
+              "covered": 10,
+              "total": 46,
+              "percent": 21.739
+            }
+          },
+          "icarus_crosscheck": {
+            "identical_outputs": true,
+            "checks": 8,
+            "simulation_seconds": 0.007984165917150676
+          },
+          "feedback_encoding_seconds": 0.0003790420014411211,
+          "uncovered_targets": [
+            "case_default"
+          ]
+        },
+        "D": {
+          "vectors": 8,
+          "added_vectors": 6,
+          "suite_sha256": "8147b0252e8dcef83c9eec3e73e78062d0b7841e5e1a08fd330b6ff81c9bd823",
+          "checker": {
+            "checks": 8,
+            "functional_errors": 0,
+            "counterexamples": [],
+            "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+          },
+          "coverage": {
+            "branch": {
+              "covered": 8,
+              "total": 8,
+              "percent": 100.0
+            },
+            "expr": {
+              "covered": 2,
+              "total": 2,
+              "percent": 100.0
+            },
+            "line": {
+              "covered": 5,
+              "total": 6,
+              "percent": 83.333
+            },
+            "toggle": {
+              "covered": 10,
+              "total": 46,
+              "percent": 21.739
+            }
+          },
+          "icarus_crosscheck": {
+            "identical_outputs": true,
+            "checks": 8,
+            "simulation_seconds": 0.0067158330930396914
+          },
+          "feedback_encoding_seconds": 0.0005430830642580986,
+          "uncovered_targets": [
+            "case_default"
+          ]
+        }
+      },
+      "C_D_same_stimulus": true,
+      "C_D_same_feedback": false,
+      "feedback_preview_bytes": {
+        "B": 19939,
+        "C": 19939,
+        "D": 19956
+      },
+      "feedback_preview_sha256": {
+        "B": "1f4c35a1587e8f5e950cf5bb12f482d8d91a23303f1812e3c8b256e29269f49b",
+        "C": "7b48eb821ddd54f8032a9e8dfd034a776afece8b040432d3fb1ce21fe22b09e9",
+        "D": "98ea94198ba70fcff7c31b7af178d0f22b1aa8b27546b822f1272075400489f4"
+      },
+      "expanded": {
+        "checker": {
+          "checks": 12290,
+          "functional_errors": 0,
+          "counterexamples": [],
+          "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+        },
+        "coverage": {
+          "branch": {
+            "covered": 8,
+            "total": 8,
+            "percent": 100.0
+          },
+          "expr": {
+            "covered": 2,
+            "total": 2,
+            "percent": 100.0
+          },
+          "line": {
+            "covered": 5,
+            "total": 6,
+            "percent": 83.333
+          },
+          "toggle": {
+            "covered": 46,
+            "total": 46,
+            "percent": 100.0
+          }
+        },
+        "icarus_crosscheck": {
+          "identical_outputs": true,
+          "checks": 12290,
+          "simulation_seconds": 0.06911841698456556
+        }
+      },
+      "wall_seconds": 3.651053583016619,
+      "limitation": "No LLM/token benefit measured. Deterministic witnesses are diagnostic, not an LLM baseline. CVDP context RTL only, not official CVDP-ECov evaluation."
+    }
+  ],
+  "live_api_calls": 0
+}

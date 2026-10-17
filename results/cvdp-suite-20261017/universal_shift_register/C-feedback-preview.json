@@ -1,0 +1,648 @@
+{
+  "module": "universal_shift_register",
+  "rtl": "module universal_shift_register #(\n    parameter N = 8                     // Width of the register\n)(\n    input wire clk,                     // Clock signal\n    input wire rst,                     // Synchronous reset\n    input wire [1:0] mode_sel,          // Mode select [00 - Hold, 01 - Shift, 10 - Rotate, 11 - Parallel Load]\n    input wire shift_dir,               // 0 = Shift Right, 1 = Shift Left\n    input wire serial_in,               // Serial input for SISO, PISO\n    input wire [N-1:0] parallel_in,     // Parallel input for PIPO, PISO\n    output reg [N-1:0] q,               // Parallel output (for SIPO, PIPO)\n    output wire serial_out              // Serial output for PISO, SISO\n);\n\n    always @(posedge clk or posedge rst) begin\n        if (rst) begin\n            q <= 0; \n        end else begin\n            case (mode_sel)\n\n                2'b00: begin\n                    q <= q;\n                end\n\n                2'b01: begin\n                    if (shift_dir == 0) begin\n                        q <= {serial_in, q[N-1:1]};\n                    end else begin\n                        q <= {q[N-2:0], serial_in};\n                    end\n                end\n\n                2'b10: begin\n                    if (shift_dir == 0) begin\n                        q <= {q[0], q[N-1:1]};\n                    end else begin\n                        q <= {q[N-2:0], q[N-1]};\n                    end\n                end\n\n                2'b11: begin\n                    q <= parallel_in;\n                end\n\n                default: q <= q; \n                \n            endcase\n        end\n    end\n\n    assign serial_out = (shift_dir == 0) ? q[0] : q[N-1]; \n\nendmodule",
+  "task_context": "Modify the `universal_shift_register` module to expand its functionality by incorporating additional shift and bitwise operation capabilities while retaining its original functionality (including hold, shift, rotate, and parallel load operations). The module should now support arithmetic shifts, bitwise logical operations (AND, OR, XOR, XNOR), bit reversal, bitwise inversion, parity checking, zero detection, and overflow indication for shifts and rotations.\n## Added/Modified  Inputs\n\n- **[1:0] bitwise_op**: 2-bit input signal selects the bitwise logical operation.\n- **en**: 1-bit Enable signal controls the register operation explicitly.\n- **[2:0] op_sel**: Expanded from the previous 2-bit mode_sel to a 3-bit selector supporting additional modes:\n     - 000: Hold (retain current value)\n     - 001: Logical Shift (shift bits in/out)\n     - 010: Rotate (rotate bits within the register)\n     - 011: Parallel Load (load from input)\n     - 100: Arithmetic Shift (shift with sign bit handling)\n     - 101: Bitwise Logical Operations (AND, OR, XOR, XNOR)\n     - 110: Bit Reversal (reverse bit order)\n     - 111: Bitwise Inversion (invert all bits)\n\n## Added/Modified Outputs:\n- **Overflow**: 1-bit output that captures and outputs the bit shifted or rotated out during shift and rotate operations.\n- **parity_out**: 1-bit output that computes and outputs the XOR of all bits in the register (parity checking).\n- **zero_flag**: 1-bit output indicates when the register content is zero.\n- **msb_out**: 1-bit direct output of the most significant bit of the register.\n- **lsb_out**: 1-bit direct output of the least significant bit of the register.\n\n## Design Modifications\n\n### Expanded Operation Modes:\n\n1. **Hold (000)**: Retains the current value in the register.\n2. **Logical Shift (001)**: \n   - Right/Left shift controlled by `shift_dir`, using `serial_in` as input.\n   - Overflow captures shifted-out bit.\n3. **Rotate (010)**:\n   - Right/Left rotate controlled by `shift_dir`.\n   - Overflow captures rotated bit.\n4. **Parallel Load (011)**: \n   - Loads the register directly from `parallel_in`.\n5. **Arithmetic Shift (100)**:\n   - Arithmetic shift right retains MSB.\n   - Arithmetic shift left shifts in 0.\n   - Overflow captures shifted-out bit.\n6. **Bitwise Logical Operations (101)**:\n   - Performs AND, OR, XOR, XNOR selected by `bitwise_op` against `parallel_in`.\n7. **Bit Reversal (110)**:\n   - Reverses the bit order of the register content.\n8. **Bitwise Inversion (111)**:\n   - Inverts all bits in the register.\n\n### Behavioral Changes:\n- The module behavior is expanded to include arithmetic shifts and bitwise logical operations while maintaining previous behaviors for existing operations.\n- Overflow bit handling is clearly defined during shifts and rotations.\n- Parity checking and zero detection provide additional status indicators based on the current register content.\n- MSB (msb_out) provides the direct output of the register's most significant bit.\n- LSB (lsb_out) provides the direct output of the register's least significant bit.\n## Example Usage:\n\n1. **Arithmetic Shift Left**:\n   - `op_sel = 100`, `shift_dir = 1` (left), register shifts left logically, shifting in 0 from the right, capturing overflow bit from MSB.\n   \n2. **Bitwise XOR Operation**:\n   - `op_sel = 101`, `bitwise_op = 10` (XOR), performs XOR between current register content and `parallel_in`.\n\n3. **Bit Reversal**:\n   - `op_sel = 110`, reverses the bit order of the current register content.\n",
+  "input_integer_bounds": {
+    "rst": 1,
+    "mode_sel": 3,
+    "shift_dir": 1,
+    "serial_in": 1,
+    "parallel_in": 255
+  },
+  "predicate_atoms": {
+    "reset": "rst == 1",
+    "m0": "mode_sel[0]",
+    "m1": "mode_sel[1]",
+    "left": "shift_dir == 1"
+  },
+  "fixed_checker_initial_result": {
+    "checks": 2,
+    "functional_errors": 0,
+    "counterexamples": [],
+    "scope": "binary inputs; outputs sampled after settling/posedge, no off-edge reset conformance check"
+  },
+  "previous_inputs": [
+    {
+      "rst": 1,
+      "mode_sel": 0,
+      "shift_dir": 0,
+      "serial_in": 0,
+      "parallel_in": 0
+    },
+    {
+      "rst": 0,
+      "mode_sel": 0,
+      "shift_dir": 0,
+      "serial_in": 0,
+      "parallel_in": 0
+    }
+  ],
+  "raw_dut_coverage": [
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[0]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[0]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[1]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[1]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[2]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[2]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[3]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[3]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[4]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[4]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[5]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[5]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[6]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[6]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[7]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 10,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "q[7]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 11,
+      "column": 17,
+      "type": "toggle",
+      "outcome": "serial_out:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 11,
+      "column": 17,
+      "type": "toggle",
+      "outcome": "serial_out:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 14,
+      "column": 5,
+      "type": "line",
+      "outcome": "block",
+      "hits": 3
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 15,
+      "column": 10,
+      "type": "branch",
+      "outcome": "else",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 15,
+      "column": 9,
+      "type": "branch",
+      "outcome": "if",
+      "hits": 2
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 20,
+      "column": 22,
+      "type": "line",
+      "outcome": "case",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 24,
+      "column": 22,
+      "type": "line",
+      "outcome": "case",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 25,
+      "column": 21,
+      "type": "branch",
+      "outcome": "if",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 25,
+      "column": 22,
+      "type": "branch",
+      "outcome": "else",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 32,
+      "column": 22,
+      "type": "line",
+      "outcome": "case",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 33,
+      "column": 21,
+      "type": "branch",
+      "outcome": "if",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 33,
+      "column": 22,
+      "type": "branch",
+      "outcome": "else",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 4,
+      "column": 16,
+      "type": "toggle",
+      "outcome": "clk:0->1",
+      "hits": 2
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 4,
+      "column": 16,
+      "type": "toggle",
+      "outcome": "clk:1->0",
+      "hits": 2
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 40,
+      "column": 22,
+      "type": "line",
+      "outcome": "case",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 44,
+      "column": 17,
+      "type": "line",
+      "outcome": "case",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 5,
+      "column": 16,
+      "type": "toggle",
+      "outcome": "rst:0->1",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 5,
+      "column": 16,
+      "type": "toggle",
+      "outcome": "rst:1->0",
+      "hits": 1
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 50,
+      "column": 36,
+      "type": "expr",
+      "outcome": "((shift_dir == 32'sh0)==0) => 0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 50,
+      "column": 36,
+      "type": "expr",
+      "outcome": "((shift_dir == 32'sh0)==1) => 1",
+      "hits": 14
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 50,
+      "column": 45,
+      "type": "branch",
+      "outcome": "cond_then",
+      "hits": 14
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 50,
+      "column": 46,
+      "type": "branch",
+      "outcome": "cond_else",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 6,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "mode_sel[0]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 6,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "mode_sel[0]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 6,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "mode_sel[1]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 6,
+      "column": 22,
+      "type": "toggle",
+      "outcome": "mode_sel[1]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 7,
+      "column": 16,
+      "type": "toggle",
+      "outcome": "shift_dir:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 7,
+      "column": 16,
+      "type": "toggle",
+      "outcome": "shift_dir:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 8,
+      "column": 16,
+      "type": "toggle",
+      "outcome": "serial_in:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 8,
+      "column": 16,
+      "type": "toggle",
+      "outcome": "serial_in:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[0]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[0]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[1]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[1]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[2]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[2]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[3]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[3]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[4]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[4]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[5]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[5]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[6]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[6]:1->0",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[7]:0->1",
+      "hits": 0
+    },
+    {
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 9,
+      "column": 24,
+      "type": "toggle",
+      "outcome": "parallel_in[7]:1->0",
+      "hits": 0
+    }
+  ],
+  "uncovered_targets": [
+    {
+      "id": "shift_mode",
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 24,
+      "counter_type": "line",
+      "counter_outcome": "case",
+      "width": 1,
+      "logic": "two_state",
+      "event": "posedge clk; sampled after settling",
+      "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+      "predicate": "(and (not reset) (and (not m1) m0))"
+    },
+    {
+      "id": "shift_right",
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 25,
+      "counter_type": "branch",
+      "counter_outcome": "if",
+      "width": 1,
+      "logic": "two_state",
+      "event": "posedge clk; sampled after settling",
+      "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+      "predicate": "(and (and m0 (not left)) (and (not reset) (not m1)))"
+    },
+    {
+      "id": "shift_left",
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 25,
+      "counter_type": "branch",
+      "counter_outcome": "else",
+      "width": 1,
+      "logic": "two_state",
+      "event": "posedge clk; sampled after settling",
+      "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+      "predicate": "(and (not reset) (and (not m1) (and m0 left)))"
+    },
+    {
+      "id": "rotate_mode",
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 32,
+      "counter_type": "line",
+      "counter_outcome": "case",
+      "width": 1,
+      "logic": "two_state",
+      "event": "posedge clk; sampled after settling",
+      "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+      "predicate": "(and (not reset) (and m1 (not m0)))"
+    },
+    {
+      "id": "rotate_right",
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 33,
+      "counter_type": "branch",
+      "counter_outcome": "if",
+      "width": 1,
+      "logic": "two_state",
+      "event": "posedge clk; sampled after settling",
+      "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+      "predicate": "(and (and (not m0) (not left)) (and (not reset) m1))"
+    },
+    {
+      "id": "rotate_left",
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 33,
+      "counter_type": "branch",
+      "counter_outcome": "else",
+      "width": 1,
+      "logic": "two_state",
+      "event": "posedge clk; sampled after settling",
+      "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+      "predicate": "(and (not reset) (and (not m0) (and m1 left)))"
+    },
+    {
+      "id": "parallel_load",
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 40,
+      "counter_type": "line",
+      "counter_outcome": "case",
+      "width": 1,
+      "logic": "two_state",
+      "event": "posedge clk; sampled after settling",
+      "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+      "predicate": "(and (not reset) (and m1 m0))"
+    },
+    {
+      "id": "case_default",
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 44,
+      "counter_type": "line",
+      "counter_outcome": "case",
+      "width": 1,
+      "logic": "two_state",
+      "event": "posedge clk; sampled after settling",
+      "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+      "predicate": "false"
+    },
+    {
+      "id": "serial_left",
+      "source": "examples/cvdp/universal_shift_register/rtl/universal_shift_register.sv",
+      "line": 50,
+      "counter_type": "branch",
+      "counter_outcome": "cond_else",
+      "width": 1,
+      "logic": "two_state",
+      "event": "continuous",
+      "reset_context": "active high asynchronous reset; this driver checks settled posedge outputs",
+      "predicate": "left"
+    }
+  ]
+}
