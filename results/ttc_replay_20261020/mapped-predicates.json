@@ -1,0 +1,177 @@
+[
+  {
+    "compact": "(not (or (not interval_mode) (not match_flag)))",
+    "counter_outcome": "(interval_mode==1 && match_flag==1) => 1",
+    "counter_type": "expr",
+    "dependencies": [
+      "interval_mode",
+      "match_flag"
+    ],
+    "event": "posedge clk; combinational guard only",
+    "expanded": "(and interval_mode match_flag)",
+    "guards": {
+      "address_atoms": "addr_status=(4-bit axi_addr == 4'h4); addr_count=(4-bit axi_addr == 4'h0); addr_reload=(4-bit axi_addr == 4'h2); addr_prescaler=(4-bit axi_addr == 4'h5)",
+      "count_equal_match": "16-bit unsigned count == 16-bit unsigned match_value",
+      "reset": "reset=0 at sampled edge"
+    },
+    "id": "interval_reload",
+    "line": 41,
+    "logic": "two_state",
+    "signedness": "unsigned Boolean",
+    "source": "examples/ttc_timer/rtl/ttc_counter_lite.sv",
+    "width": 1
+  },
+  {
+    "compact": "(not (or (not match_flag) (not interrupt_enable)))",
+    "counter_outcome": "(match_flag==1 && interrupt_enable==1) => 1",
+    "counter_type": "expr",
+    "dependencies": [
+      "match_flag",
+      "interrupt_enable"
+    ],
+    "event": "posedge clk; combinational guard only",
+    "expanded": "(and match_flag interrupt_enable)",
+    "guards": {
+      "address_atoms": "addr_status=(4-bit axi_addr == 4'h4); addr_count=(4-bit axi_addr == 4'h0); addr_reload=(4-bit axi_addr == 4'h2); addr_prescaler=(4-bit axi_addr == 4'h5)",
+      "count_equal_match": "16-bit unsigned count == 16-bit unsigned match_value",
+      "reset": "reset=0 at sampled edge"
+    },
+    "id": "irq_set",
+    "line": 64,
+    "logic": "two_state",
+    "signedness": "unsigned Boolean",
+    "source": "examples/ttc_timer/rtl/ttc_counter_lite.sv",
+    "width": 1
+  },
+  {
+    "compact": "(not (or (not axi_write_en) (not addr_status)))",
+    "counter_outcome": "(axi_write_en==1 && (axi_addr == ADDR_STATUS)==1) => 1",
+    "counter_type": "expr",
+    "dependencies": [
+      "axi_write_en",
+      "addr_status"
+    ],
+    "event": "posedge clk; combinational guard only",
+    "expanded": "(and axi_write_en addr_status)",
+    "guards": {
+      "address_atoms": "addr_status=(4-bit axi_addr == 4'h4); addr_count=(4-bit axi_addr == 4'h0); addr_reload=(4-bit axi_addr == 4'h2); addr_prescaler=(4-bit axi_addr == 4'h5)",
+      "count_equal_match": "16-bit unsigned count == 16-bit unsigned match_value",
+      "reset": "reset=0 at sampled edge"
+    },
+    "id": "irq_clear",
+    "line": 66,
+    "logic": "two_state",
+    "signedness": "unsigned Boolean",
+    "source": "examples/ttc_timer/rtl/ttc_counter_lite.sv",
+    "width": 1
+  },
+  {
+    "compact": "(not (not count_equal_match))",
+    "counter_outcome": "else",
+    "counter_type": "branch",
+    "dependencies": [
+      "count_equal_match"
+    ],
+    "event": "posedge clk; combinational guard only",
+    "expanded": "count_equal_match",
+    "guards": {
+      "address_atoms": "addr_status=(4-bit axi_addr == 4'h4); addr_count=(4-bit axi_addr == 4'h0); addr_reload=(4-bit axi_addr == 4'h2); addr_prescaler=(4-bit axi_addr == 4'h5)",
+      "count_equal_match": "16-bit unsigned count == 16-bit unsigned match_value",
+      "reset": "reset=0 at sampled edge"
+    },
+    "id": "count_equal_hold",
+    "line": 44,
+    "logic": "two_state",
+    "signedness": "unsigned Boolean",
+    "source": "examples/ttc_timer/rtl/ttc_counter_lite.sv",
+    "width": 1
+  },
+  {
+    "compact": "(not (or (not axi_read_en) (not addr_status)))",
+    "counter_outcome": "case",
+    "counter_type": "line",
+    "dependencies": [
+      "axi_read_en",
+      "addr_status"
+    ],
+    "event": "posedge clk; combinational guard only",
+    "expanded": "(and axi_read_en addr_status)",
+    "guards": {
+      "address_atoms": "addr_status=(4-bit axi_addr == 4'h4); addr_count=(4-bit axi_addr == 4'h0); addr_reload=(4-bit axi_addr == 4'h2); addr_prescaler=(4-bit axi_addr == 4'h5)",
+      "count_equal_match": "16-bit unsigned count == 16-bit unsigned match_value",
+      "reset": "reset=0 at sampled edge"
+    },
+    "id": "read_status",
+    "line": 103,
+    "logic": "two_state",
+    "signedness": "unsigned Boolean",
+    "source": "examples/ttc_timer/rtl/ttc_counter_lite.sv",
+    "width": 1
+  },
+  {
+    "compact": "(not (or (not axi_read_en) (not addr_count)))",
+    "counter_outcome": "case",
+    "counter_type": "line",
+    "dependencies": [
+      "axi_read_en",
+      "addr_count"
+    ],
+    "event": "posedge clk; combinational guard only",
+    "expanded": "(and axi_read_en addr_count)",
+    "guards": {
+      "address_atoms": "addr_status=(4-bit axi_addr == 4'h4); addr_count=(4-bit axi_addr == 4'h0); addr_reload=(4-bit axi_addr == 4'h2); addr_prescaler=(4-bit axi_addr == 4'h5)",
+      "count_equal_match": "16-bit unsigned count == 16-bit unsigned match_value",
+      "reset": "reset=0 at sampled edge"
+    },
+    "id": "read_count",
+    "line": 99,
+    "logic": "two_state",
+    "signedness": "unsigned Boolean",
+    "source": "examples/ttc_timer/rtl/ttc_counter_lite.sv",
+    "width": 1
+  },
+  {
+    "compact": "(not (or (not axi_write_en) (not addr_reload)))",
+    "counter_outcome": "case",
+    "counter_type": "line",
+    "dependencies": [
+      "axi_write_en",
+      "addr_reload"
+    ],
+    "event": "posedge clk; combinational guard only",
+    "expanded": "(and axi_write_en addr_reload)",
+    "guards": {
+      "address_atoms": "addr_status=(4-bit axi_addr == 4'h4); addr_count=(4-bit axi_addr == 4'h0); addr_reload=(4-bit axi_addr == 4'h2); addr_prescaler=(4-bit axi_addr == 4'h5)",
+      "count_equal_match": "16-bit unsigned count == 16-bit unsigned match_value",
+      "reset": "reset=0 at sampled edge"
+    },
+    "id": "write_reload",
+    "line": 82,
+    "logic": "two_state",
+    "signedness": "unsigned Boolean",
+    "source": "examples/ttc_timer/rtl/ttc_counter_lite.sv",
+    "width": 1
+  },
+  {
+    "compact": "(not (or (not axi_write_en) (not addr_prescaler)))",
+    "counter_outcome": "case",
+    "counter_type": "line",
+    "dependencies": [
+      "axi_write_en",
+      "addr_prescaler"
+    ],
+    "event": "posedge clk; combinational guard only",
+    "expanded": "(and axi_write_en addr_prescaler)",
+    "guards": {
+      "address_atoms": "addr_status=(4-bit axi_addr == 4'h4); addr_count=(4-bit axi_addr == 4'h0); addr_reload=(4-bit axi_addr == 4'h2); addr_prescaler=(4-bit axi_addr == 4'h5)",
+      "count_equal_match": "16-bit unsigned count == 16-bit unsigned match_value",
+      "reset": "reset=0 at sampled edge"
+    },
+    "id": "write_prescaler",
+    "line": 88,
+    "logic": "two_state",
+    "signedness": "unsigned Boolean",
+    "source": "examples/ttc_timer/rtl/ttc_counter_lite.sv",
+    "width": 1
+  }
+]

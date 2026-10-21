@@ -1,0 +1,1725 @@
+
+-- Running command `read_verilog -sv examples/heldout_queue/rtl/queue.sv examples/heldout_queue/rtl/queue_variant.sv; proc; opt; memory; opt; async2sync; opt; equiv_make queue queue_variant equiv; hierarchy -top equiv; equiv_simple; equiv_induct -seq 4; equiv_status -assert' --
+
+1. Executing Verilog-2005 frontend: examples/heldout_queue/rtl/queue.sv
+Parsing SystemVerilog input from `examples/heldout_queue/rtl/queue.sv' to AST representation.
+Generating RTLIL representation for module `\queue'.
+Warning: Replacing memory \queue_data with list of registers. See examples/heldout_queue/rtl/queue.sv:97, examples/heldout_queue/rtl/queue.sv:73
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: examples/heldout_queue/rtl/queue_variant.sv
+Parsing SystemVerilog input from `examples/heldout_queue/rtl/queue_variant.sv' to AST representation.
+Generating RTLIL representation for module `\queue_variant'.
+Warning: Replacing memory \queue_data with list of registers. See examples/heldout_queue/rtl/queue_variant.sv:97, examples/heldout_queue/rtl/queue_variant.sv:73
+Successfully finished Verilog frontend.
+
+3. Executing PROC pass (convert processes to netlists).
+
+3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 2 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue_variant.sv:162$160 in module queue_variant.
+Marked 2 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue_variant.sv:147$151 in module queue_variant.
+Marked 2 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue_variant.sv:132$144 in module queue_variant.
+Marked 2 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue_variant.sv:117$135 in module queue_variant.
+Marked 6 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue_variant.sv:70$90 in module queue_variant.
+Marked 2 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue_variant.sv:46$82 in module queue_variant.
+Marked 2 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue.sv:162$69 in module queue.
+Marked 2 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue.sv:147$64 in module queue.
+Marked 2 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue.sv:132$61 in module queue.
+Marked 2 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue.sv:117$56 in module queue.
+Marked 6 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue.sv:70$15 in module queue.
+Marked 2 switch rules as full_case in process $proc$examples/heldout_queue/rtl/queue.sv:46$11 in module queue.
+Removed a total of 0 dead cases.
+
+3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 24 assignments to connections.
+
+3.4. Executing PROC_INIT pass (extract init attributes).
+
+3.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \rst_ni in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:162$160'.
+Found async reset \rst_ni in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:147$151'.
+Found async reset \rst_ni in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:132$144'.
+Found async reset \rst_ni in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:117$135'.
+Found async reset \rst_ni in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+Found async reset \rst_ni in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:46$82'.
+Found async reset \rst_ni in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:162$69'.
+Found async reset \rst_ni in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:147$64'.
+Found async reset \rst_ni in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:132$61'.
+Found async reset \rst_ni in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:117$56'.
+Found async reset \rst_ni in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+Found async reset \rst_ni in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:46$11'.
+
+3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~42 debug messages>
+
+3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:162$160'.
+     1/1: $0\full_o[0:0]
+Creating decoders for process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:147$151'.
+     1/1: $0\almost_full_o[0:0]
+Creating decoders for process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:132$144'.
+     1/1: $0\empty_o[0:0]
+Creating decoders for process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:117$135'.
+     1/1: $0\almost_empty_o[0:0]
+Creating decoders for process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+     1/45: $5$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_DATA[31:0]$133
+     2/45: $5$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_ADDR[1:0]$132
+     3/45: $4\queue_data[3][31:0]
+     4/45: $4$fordecl_block$76.i[31:0]$125
+     5/45: $4\queue_data[2][31:0]
+     6/45: $4\queue_data[1][31:0]
+     7/45: $4\queue_data[0][31:0]
+     8/45: $4$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_DATA[31:0]$130
+     9/45: $4$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_ADDR[1:0]$129
+    10/45: $4$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:90$80_DATA[31:0]$128
+    11/45: $4$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:90$80_ADDR[1:0]$127
+    12/45: $4$fordecl_block$78.i[31:0]$126
+    13/45: $3$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_DATA[31:0]$124
+    14/45: $3$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_ADDR[1:0]$123
+    15/45: $3$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:90$80_DATA[31:0]$122
+    16/45: $3$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:90$80_ADDR[1:0]$121
+    17/45: $3$fordecl_block$78.i[31:0]$120
+    18/45: $3$fordecl_block$76.i[31:0]$119
+    19/45: $3\queue_data[3][31:0]
+    20/45: $3\queue_data[2][31:0]
+    21/45: $3\queue_data[1][31:0]
+    22/45: $3\queue_data[0][31:0]
+    23/45: $2$fordecl_block$74.i[31:0]$110
+    24/45: $2\queue_data[3][31:0]
+    25/45: $2\queue_data[2][31:0]
+    26/45: $2\queue_data[1][31:0]
+    27/45: $2\queue_data[0][31:0]
+    28/45: $2$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_DATA[31:0]$116
+    29/45: $2$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_ADDR[1:0]$115
+    30/45: $2$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:90$80_DATA[31:0]$114
+    31/45: $2$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:90$80_ADDR[1:0]$113
+    32/45: $2$fordecl_block$78.i[31:0]$112
+    33/45: $2$fordecl_block$76.i[31:0]$111
+    34/45: $1$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_DATA[31:0]$107
+    35/45: $1$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_ADDR[1:0]$106
+    36/45: $1$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:90$80_DATA[31:0]$105
+    37/45: $1$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:90$80_ADDR[1:0]$104
+    38/45: $1$fordecl_block$78.i[31:0]$103
+    39/45: $1$fordecl_block$76.i[31:0]$102
+    40/45: $1$fordecl_block$74.i[31:0]$101
+    41/45: $1\queue_data[3][31:0]
+    42/45: $1\queue_data[2][31:0]
+    43/45: $1\queue_data[1][31:0]
+    44/45: $1\queue_data[0][31:0]
+    45/45: $1$fordecl_block$72.i[31:0]$100
+Creating decoders for process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:46$82'.
+     1/1: $0\queue_wadr[1:0]
+Creating decoders for process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:162$69'.
+     1/1: $0\full_o[0:0]
+Creating decoders for process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:147$64'.
+     1/1: $0\almost_full_o[0:0]
+Creating decoders for process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:132$61'.
+     1/1: $0\empty_o[0:0]
+Creating decoders for process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:117$56'.
+     1/1: $0\almost_empty_o[0:0]
+Creating decoders for process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+     1/45: $5$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_DATA[31:0]$54
+     2/45: $5$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_ADDR[1:0]$53
+     3/45: $4\queue_data[3][31:0]
+     4/45: $4$fordecl_block$5.i[31:0]$46
+     5/45: $4\queue_data[2][31:0]
+     6/45: $4\queue_data[1][31:0]
+     7/45: $4\queue_data[0][31:0]
+     8/45: $4$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_DATA[31:0]$51
+     9/45: $4$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_ADDR[1:0]$50
+    10/45: $4$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:90$9_DATA[31:0]$49
+    11/45: $4$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:90$9_ADDR[1:0]$48
+    12/45: $4$fordecl_block$7.i[31:0]$47
+    13/45: $3$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_DATA[31:0]$45
+    14/45: $3$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_ADDR[1:0]$44
+    15/45: $3$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:90$9_DATA[31:0]$43
+    16/45: $3$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:90$9_ADDR[1:0]$42
+    17/45: $3\queue_data[3][31:0]
+    18/45: $3\queue_data[2][31:0]
+    19/45: $3\queue_data[1][31:0]
+    20/45: $3\queue_data[0][31:0]
+    21/45: $3$fordecl_block$7.i[31:0]$41
+    22/45: $3$fordecl_block$5.i[31:0]$40
+    23/45: $2$fordecl_block$3.i[31:0]$33
+    24/45: $2\queue_data[3][31:0]
+    25/45: $2\queue_data[2][31:0]
+    26/45: $2\queue_data[1][31:0]
+    27/45: $2\queue_data[0][31:0]
+    28/45: $2$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_DATA[31:0]$39
+    29/45: $2$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_ADDR[1:0]$38
+    30/45: $2$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:90$9_DATA[31:0]$37
+    31/45: $2$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:90$9_ADDR[1:0]$36
+    32/45: $2$fordecl_block$7.i[31:0]$35
+    33/45: $2$fordecl_block$5.i[31:0]$34
+    34/45: $1$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_DATA[31:0]$32
+    35/45: $1$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_ADDR[1:0]$31
+    36/45: $1$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:90$9_DATA[31:0]$30
+    37/45: $1$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:90$9_ADDR[1:0]$29
+    38/45: $1\queue_data[3][31:0]
+    39/45: $1\queue_data[2][31:0]
+    40/45: $1\queue_data[1][31:0]
+    41/45: $1\queue_data[0][31:0]
+    42/45: $1$fordecl_block$7.i[31:0]$28
+    43/45: $1$fordecl_block$5.i[31:0]$27
+    44/45: $1$fordecl_block$3.i[31:0]$26
+    45/45: $1$fordecl_block$1.i[31:0]$25
+Creating decoders for process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:46$11'.
+     1/1: $0\queue_wadr[1:0]
+
+3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\queue_variant.\full_o' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:162$160'.
+  created $adff cell `$procdff$779' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.\almost_full_o' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:147$151'.
+  created $adff cell `$procdff$784' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.\empty_o' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:132$144'.
+  created $adff cell `$procdff$789' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.\almost_empty_o' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:117$135'.
+  created $adff cell `$procdff$794' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.\queue_data[0]' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $adff cell `$procdff$799' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.\queue_data[1]' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $adff cell `$procdff$804' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.\queue_data[2]' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $adff cell `$procdff$809' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.\queue_data[3]' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $adff cell `$procdff$814' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.$fordecl_block$72.i' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $adff cell `$procdff$819' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.$fordecl_block$74.i' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $dff cell `$procdff$826' with positive edge clock.
+Creating register for signal `\queue_variant.$fordecl_block$76.i' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $dff cell `$procdff$833' with positive edge clock.
+Creating register for signal `\queue_variant.$fordecl_block$78.i' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $dff cell `$procdff$840' with positive edge clock.
+Creating register for signal `\queue_variant.$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:90$80_ADDR' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $adff cell `$procdff$845' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:90$80_DATA' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $adff cell `$procdff$850' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_ADDR' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $adff cell `$procdff$855' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue_variant.sv:105$81_DATA' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+  created $adff cell `$procdff$860' with positive edge clock and positive level reset.
+Creating register for signal `\queue_variant.\queue_wadr' using process `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:46$82'.
+  created $adff cell `$procdff$865' with positive edge clock and positive level reset.
+Creating register for signal `\queue.\full_o' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:162$69'.
+  created $adff cell `$procdff$870' with positive edge clock and positive level reset.
+Creating register for signal `\queue.\almost_full_o' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:147$64'.
+  created $adff cell `$procdff$875' with positive edge clock and positive level reset.
+Creating register for signal `\queue.\empty_o' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:132$61'.
+  created $adff cell `$procdff$880' with positive edge clock and positive level reset.
+Creating register for signal `\queue.\almost_empty_o' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:117$56'.
+  created $adff cell `$procdff$885' with positive edge clock and positive level reset.
+Creating register for signal `\queue.$fordecl_block$1.i' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $adff cell `$procdff$890' with positive edge clock and positive level reset.
+Creating register for signal `\queue.$fordecl_block$3.i' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $dff cell `$procdff$897' with positive edge clock.
+Creating register for signal `\queue.$fordecl_block$5.i' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $dff cell `$procdff$904' with positive edge clock.
+Creating register for signal `\queue.$fordecl_block$7.i' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $dff cell `$procdff$911' with positive edge clock.
+Creating register for signal `\queue.\queue_data[0]' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $adff cell `$procdff$916' with positive edge clock and positive level reset.
+Creating register for signal `\queue.\queue_data[1]' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $adff cell `$procdff$921' with positive edge clock and positive level reset.
+Creating register for signal `\queue.\queue_data[2]' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $adff cell `$procdff$926' with positive edge clock and positive level reset.
+Creating register for signal `\queue.\queue_data[3]' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $adff cell `$procdff$931' with positive edge clock and positive level reset.
+Creating register for signal `\queue.$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:90$9_ADDR' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $adff cell `$procdff$936' with positive edge clock and positive level reset.
+Creating register for signal `\queue.$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:90$9_DATA' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $adff cell `$procdff$941' with positive edge clock and positive level reset.
+Creating register for signal `\queue.$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_ADDR' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $adff cell `$procdff$946' with positive edge clock and positive level reset.
+Creating register for signal `\queue.$mem2reg_wr$\queue_data$examples/heldout_queue/rtl/queue.sv:105$10_DATA' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+  created $adff cell `$procdff$951' with positive edge clock and positive level reset.
+Creating register for signal `\queue.\queue_wadr' using process `\queue.$proc$examples/heldout_queue/rtl/queue.sv:46$11'.
+  created $adff cell `$procdff$956' with positive edge clock and positive level reset.
+
+3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 3 empty switches in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:162$160'.
+Removing empty process `queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:162$160'.
+Found and cleaned up 3 empty switches in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:147$151'.
+Removing empty process `queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:147$151'.
+Found and cleaned up 3 empty switches in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:132$144'.
+Removing empty process `queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:132$144'.
+Found and cleaned up 3 empty switches in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:117$135'.
+Removing empty process `queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:117$135'.
+Found and cleaned up 6 empty switches in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+Removing empty process `queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:70$90'.
+Found and cleaned up 3 empty switches in `\queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:46$82'.
+Removing empty process `queue_variant.$proc$examples/heldout_queue/rtl/queue_variant.sv:46$82'.
+Found and cleaned up 3 empty switches in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:162$69'.
+Removing empty process `queue.$proc$examples/heldout_queue/rtl/queue.sv:162$69'.
+Found and cleaned up 3 empty switches in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:147$64'.
+Removing empty process `queue.$proc$examples/heldout_queue/rtl/queue.sv:147$64'.
+Found and cleaned up 3 empty switches in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:132$61'.
+Removing empty process `queue.$proc$examples/heldout_queue/rtl/queue.sv:132$61'.
+Found and cleaned up 3 empty switches in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:117$56'.
+Removing empty process `queue.$proc$examples/heldout_queue/rtl/queue.sv:117$56'.
+Found and cleaned up 6 empty switches in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+Removing empty process `queue.$proc$examples/heldout_queue/rtl/queue.sv:70$15'.
+Found and cleaned up 3 empty switches in `\queue.$proc$examples/heldout_queue/rtl/queue.sv:46$11'.
+Removing empty process `queue.$proc$examples/heldout_queue/rtl/queue.sv:46$11'.
+Cleaned up 42 empty switches.
+
+3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module queue_variant.
+<suppressed ~49 debug messages>
+Optimizing module queue.
+<suppressed ~37 debug messages>
+
+4. Executing OPT pass (performing simple optimizations).
+
+4.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module queue_variant.
+Optimizing module queue.
+
+4.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\queue_variant'.
+Computing hashes of 201 cells of `\queue_variant'.
+Finding duplicate cells in `\queue_variant'.
+Computing hashes of 137 cells of `\queue_variant'.
+Finding duplicate cells in `\queue_variant'.
+<suppressed ~192 debug messages>
+Finding identical cells in module `\queue'.
+Computing hashes of 189 cells of `\queue'.
+Finding duplicate cells in `\queue'.
+Computing hashes of 135 cells of `\queue'.
+Finding duplicate cells in `\queue'.
+<suppressed ~162 debug messages>
+Removed a total of 118 cells.
+
+4.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \queue_variant..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 1/2 on $mux $procmux$358.
+    dead port 2/2 on $mux $procmux$358.
+    dead port 1/2 on $mux $procmux$355.
+    dead port 2/2 on $mux $procmux$355.
+    dead port 1/2 on $mux $procmux$353.
+    dead port 2/2 on $mux $procmux$353.
+    dead port 1/2 on $mux $procmux$348.
+    dead port 2/2 on $mux $procmux$348.
+    dead port 1/2 on $mux $procmux$345.
+    dead port 2/2 on $mux $procmux$345.
+    dead port 1/2 on $mux $procmux$343.
+    dead port 2/2 on $mux $procmux$343.
+    dead port 1/2 on $mux $procmux$338.
+    dead port 2/2 on $mux $procmux$338.
+    dead port 1/2 on $mux $procmux$335.
+    dead port 2/2 on $mux $procmux$335.
+    dead port 1/2 on $mux $procmux$333.
+    dead port 2/2 on $mux $procmux$333.
+    dead port 1/2 on $mux $procmux$329.
+    dead port 2/2 on $mux $procmux$329.
+    dead port 1/2 on $mux $procmux$326.
+    dead port 2/2 on $mux $procmux$326.
+    dead port 1/2 on $mux $procmux$324.
+    dead port 2/2 on $mux $procmux$324.
+    dead port 1/2 on $mux $procmux$320.
+    dead port 2/2 on $mux $procmux$317.
+    dead port 1/2 on $mux $procmux$296.
+    dead port 2/2 on $mux $procmux$293.
+    dead port 1/2 on $mux $procmux$274.
+    dead port 2/2 on $mux $procmux$271.
+    dead port 1/2 on $mux $procmux$254.
+    dead port 2/2 on $mux $procmux$251.
+    dead port 1/2 on $mux $procmux$243.
+    dead port 2/2 on $mux $procmux$240.
+    dead port 1/2 on $mux $procmux$225.
+    dead port 2/2 on $mux $procmux$225.
+    dead port 1/2 on $mux $procmux$222.
+    dead port 2/2 on $mux $procmux$222.
+    dead port 1/2 on $mux $procmux$220.
+    dead port 2/2 on $mux $procmux$220.
+    dead port 1/2 on $mux $procmux$218.
+    dead port 2/2 on $mux $procmux$218.
+    dead port 1/2 on $mux $procmux$213.
+    dead port 2/2 on $mux $procmux$213.
+    dead port 1/2 on $mux $procmux$210.
+    dead port 2/2 on $mux $procmux$210.
+    dead port 1/2 on $mux $procmux$208.
+    dead port 2/2 on $mux $procmux$208.
+    dead port 1/2 on $mux $procmux$206.
+    dead port 2/2 on $mux $procmux$206.
+    dead port 1/2 on $mux $procmux$454.
+    dead port 2/2 on $mux $procmux$454.
+    dead port 1/2 on $mux $procmux$451.
+    dead port 2/2 on $mux $procmux$451.
+    dead port 1/2 on $mux $procmux$448.
+    dead port 2/2 on $mux $procmux$448.
+    dead port 1/2 on $mux $procmux$445.
+    dead port 2/2 on $mux $procmux$445.
+    dead port 1/2 on $mux $procmux$427.
+    dead port 1/2 on $mux $procmux$421.
+    dead port 1/2 on $mux $procmux$415.
+    dead port 1/2 on $mux $procmux$409.
+    dead port 1/2 on $mux $procmux$403.
+    dead port 1/2 on $mux $procmux$397.
+    dead port 1/2 on $mux $procmux$391.
+    dead port 2/2 on $mux $procmux$391.
+    dead port 1/2 on $mux $procmux$388.
+    dead port 2/2 on $mux $procmux$388.
+    dead port 1/2 on $mux $procmux$385.
+    dead port 2/2 on $mux $procmux$385.
+    dead port 1/2 on $mux $procmux$382.
+    dead port 2/2 on $mux $procmux$382.
+    dead port 1/2 on $mux $procmux$379.
+    dead port 2/2 on $mux $procmux$379.
+    dead port 1/2 on $mux $procmux$376.
+    dead port 2/2 on $mux $procmux$376.
+    dead port 1/2 on $mux $procmux$373.
+    dead port 2/2 on $mux $procmux$373.
+    dead port 1/2 on $mux $procmux$370.
+    dead port 2/2 on $mux $procmux$370.
+    dead port 1/2 on $mux $procmux$367.
+    dead port 2/2 on $mux $procmux$364.
+Running muxtree optimizer on module \queue..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 1/2 on $mux $procmux$725.
+    dead port 1/2 on $mux $procmux$719.
+    dead port 1/2 on $mux $procmux$713.
+    dead port 1/2 on $mux $procmux$707.
+    dead port 1/2 on $mux $procmux$701.
+    dead port 1/2 on $mux $procmux$695.
+    dead port 2/2 on $mux $procmux$695.
+    dead port 1/2 on $mux $procmux$692.
+    dead port 2/2 on $mux $procmux$692.
+    dead port 1/2 on $mux $procmux$689.
+    dead port 2/2 on $mux $procmux$689.
+    dead port 1/2 on $mux $procmux$686.
+    dead port 2/2 on $mux $procmux$686.
+    dead port 1/2 on $mux $procmux$683.
+    dead port 2/2 on $mux $procmux$683.
+    dead port 1/2 on $mux $procmux$680.
+    dead port 2/2 on $mux $procmux$680.
+    dead port 1/2 on $mux $procmux$677.
+    dead port 2/2 on $mux $procmux$677.
+    dead port 1/2 on $mux $procmux$674.
+    dead port 2/2 on $mux $procmux$674.
+    dead port 1/2 on $mux $procmux$671.
+    dead port 2/2 on $mux $procmux$668.
+    dead port 1/2 on $mux $procmux$662.
+    dead port 2/2 on $mux $procmux$662.
+    dead port 1/2 on $mux $procmux$659.
+    dead port 2/2 on $mux $procmux$659.
+    dead port 1/2 on $mux $procmux$657.
+    dead port 2/2 on $mux $procmux$657.
+    dead port 1/2 on $mux $procmux$652.
+    dead port 2/2 on $mux $procmux$652.
+    dead port 1/2 on $mux $procmux$649.
+    dead port 2/2 on $mux $procmux$649.
+    dead port 1/2 on $mux $procmux$647.
+    dead port 2/2 on $mux $procmux$647.
+    dead port 1/2 on $mux $procmux$642.
+    dead port 2/2 on $mux $procmux$642.
+    dead port 1/2 on $mux $procmux$639.
+    dead port 2/2 on $mux $procmux$639.
+    dead port 1/2 on $mux $procmux$637.
+    dead port 2/2 on $mux $procmux$637.
+    dead port 1/2 on $mux $procmux$633.
+    dead port 2/2 on $mux $procmux$633.
+    dead port 1/2 on $mux $procmux$630.
+    dead port 2/2 on $mux $procmux$630.
+    dead port 1/2 on $mux $procmux$628.
+    dead port 2/2 on $mux $procmux$628.
+    dead port 1/2 on $mux $procmux$624.
+    dead port 2/2 on $mux $procmux$621.
+    dead port 1/2 on $mux $procmux$600.
+    dead port 2/2 on $mux $procmux$597.
+    dead port 1/2 on $mux $procmux$578.
+    dead port 2/2 on $mux $procmux$575.
+    dead port 1/2 on $mux $procmux$558.
+    dead port 2/2 on $mux $procmux$555.
+    dead port 1/2 on $mux $procmux$547.
+    dead port 2/2 on $mux $procmux$544.
+    dead port 1/2 on $mux $procmux$529.
+    dead port 2/2 on $mux $procmux$529.
+    dead port 1/2 on $mux $procmux$526.
+    dead port 2/2 on $mux $procmux$526.
+    dead port 1/2 on $mux $procmux$524.
+    dead port 2/2 on $mux $procmux$524.
+    dead port 1/2 on $mux $procmux$522.
+    dead port 2/2 on $mux $procmux$522.
+    dead port 1/2 on $mux $procmux$517.
+    dead port 2/2 on $mux $procmux$517.
+    dead port 1/2 on $mux $procmux$514.
+    dead port 2/2 on $mux $procmux$514.
+    dead port 1/2 on $mux $procmux$512.
+    dead port 2/2 on $mux $procmux$512.
+    dead port 1/2 on $mux $procmux$510.
+    dead port 2/2 on $mux $procmux$510.
+    dead port 1/2 on $mux $procmux$758.
+    dead port 2/2 on $mux $procmux$758.
+    dead port 1/2 on $mux $procmux$755.
+    dead port 2/2 on $mux $procmux$755.
+    dead port 1/2 on $mux $procmux$752.
+    dead port 2/2 on $mux $procmux$752.
+    dead port 1/2 on $mux $procmux$749.
+    dead port 2/2 on $mux $procmux$749.
+    dead port 1/2 on $mux $procmux$731.
+Removed 164 multiplexer ports.
+<suppressed ~158 debug messages>
+
+4.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \queue_variant.
+  Optimizing cells in module \queue.
+Performed a total of 0 changes.
+
+4.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\queue_variant'.
+Computing hashes of 87 cells of `\queue_variant'.
+Finding duplicate cells in `\queue_variant'.
+Finding identical cells in module `\queue'.
+Computing hashes of 85 cells of `\queue'.
+Finding duplicate cells in `\queue'.
+Removed a total of 0 cells.
+
+4.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $procdff$833 ($dff) from module queue_variant (D = $3$fordecl_block$76.i[31:0]$119, Q = $fordecl_block$76.i).
+Adding EN signal on $procdff$809 ($adff) from module queue_variant (D = $procmux$436_Y, Q = \queue_data[2]).
+Adding EN signal on $procdff$799 ($adff) from module queue_variant (D = $procmux$442_Y, Q = \queue_data[0]).
+Adding EN signal on $procdff$779 ($adff) from module queue_variant (D = $procmux$174_Y, Q = \full_o).
+Adding EN signal on $procdff$840 ($dff) from module queue_variant (D = $3$fordecl_block$78.i[31:0]$120, Q = $fordecl_block$78.i).
+Adding EN signal on $procdff$826 ($dff) from module queue_variant (D = 4, Q = $fordecl_block$74.i).
+Adding EN signal on $procdff$814 ($adff) from module queue_variant (D = $procmux$433_Y, Q = \queue_data[3]).
+Handling D = Q on $procdff$819 ($adff) from module queue_variant (removing D path).
+Adding EN signal on $procdff$865 ($adff) from module queue_variant (D = $procmux$469_Y, Q = \queue_wadr).
+Adding EN signal on $procdff$784 ($adff) from module queue_variant (D = $procmux$183_Y, Q = \almost_full_o).
+Adding EN signal on $procdff$794 ($adff) from module queue_variant (D = $procmux$201_Y, Q = \almost_empty_o).
+Adding EN signal on $procdff$804 ($adff) from module queue_variant (D = $procmux$439_Y, Q = \queue_data[1]).
+Adding EN signal on $procdff$789 ($adff) from module queue_variant (D = $procmux$192_Y, Q = \empty_o).
+Setting constant 0-bit at position 0 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 1 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 1-bit at position 2 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 3 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 4 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 5 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 6 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 7 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 8 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 9 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 10 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 11 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 12 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 13 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 14 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 15 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 16 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 17 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 18 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 19 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 20 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 21 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 22 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 23 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 24 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 25 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 26 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 27 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 28 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 29 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 30 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 31 on $procdff$819 ($dlatch) from module queue_variant.
+Setting constant 0-bit at position 0 on $procdff$845 ($adff) from module queue_variant.
+Setting constant 0-bit at position 1 on $procdff$845 ($adff) from module queue_variant.
+Setting constant 0-bit at position 0 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 1 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 2 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 3 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 4 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 5 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 6 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 7 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 8 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 9 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 10 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 11 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 12 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 13 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 14 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 15 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 16 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 17 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 18 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 19 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 20 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 21 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 22 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 23 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 24 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 25 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 26 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 27 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 28 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 29 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 30 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 31 on $procdff$860 ($adff) from module queue_variant.
+Setting constant 0-bit at position 0 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 1 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 1-bit at position 2 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 3 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 4 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 5 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 6 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 7 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 8 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 9 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 10 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 11 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 12 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 13 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 14 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 15 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 16 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 17 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 18 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 19 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 20 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 21 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 22 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 23 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 24 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 25 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 26 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 27 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 28 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 29 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 30 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Setting constant 0-bit at position 31 on $auto$ff.cc:337:slice$992 ($dffe) from module queue_variant.
+Adding EN signal on $procdff$916 ($adff) from module queue (D = $procmux$746_Y, Q = \queue_data[0]).
+Adding EN signal on $procdff$911 ($dff) from module queue (D = $3$fordecl_block$7.i[31:0]$41, Q = $fordecl_block$7.i).
+Handling D = Q on $procdff$890 ($adff) from module queue (removing D path).
+Adding EN signal on $procdff$921 ($adff) from module queue (D = $procmux$743_Y, Q = \queue_data[1]).
+Adding EN signal on $procdff$897 ($dff) from module queue (D = 4, Q = $fordecl_block$3.i).
+Adding EN signal on $procdff$870 ($adff) from module queue (D = $procmux$478_Y, Q = \full_o).
+Adding EN signal on $procdff$931 ($adff) from module queue (D = $procmux$737_Y, Q = \queue_data[3]).
+Adding EN signal on $procdff$875 ($adff) from module queue (D = $procmux$487_Y, Q = \almost_full_o).
+Adding EN signal on $procdff$904 ($dff) from module queue (D = $3$fordecl_block$5.i[31:0]$40, Q = $fordecl_block$5.i).
+Adding EN signal on $procdff$926 ($adff) from module queue (D = $procmux$740_Y, Q = \queue_data[2]).
+Adding EN signal on $procdff$880 ($adff) from module queue (D = $procmux$496_Y, Q = \empty_o).
+Adding EN signal on $procdff$956 ($adff) from module queue (D = $procmux$773_Y, Q = \queue_wadr).
+Adding EN signal on $procdff$885 ($adff) from module queue (D = $procmux$505_Y, Q = \almost_empty_o).
+Setting constant 0-bit at position 0 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 1 on $procdff$890 ($dlatch) from module queue.
+Setting constant 1-bit at position 2 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 3 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 4 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 5 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 6 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 7 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 8 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 9 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 10 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 11 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 12 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 13 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 14 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 15 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 16 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 17 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 18 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 19 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 20 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 21 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 22 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 23 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 24 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 25 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 26 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 27 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 28 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 29 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 30 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 31 on $procdff$890 ($dlatch) from module queue.
+Setting constant 0-bit at position 0 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 1 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 2 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 3 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 4 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 5 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 6 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 7 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 8 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 9 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 10 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 11 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 12 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 13 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 14 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 15 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 16 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 17 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 18 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 19 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 20 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 21 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 22 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 23 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 24 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 25 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 26 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 27 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 28 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 29 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 30 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 31 on $procdff$941 ($adff) from module queue.
+Setting constant 0-bit at position 0 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 1 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 1-bit at position 2 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 3 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 4 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 5 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 6 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 7 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 8 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 9 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 10 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 11 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 12 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 13 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 14 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 15 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 16 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 17 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 18 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 19 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 20 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 21 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 22 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 23 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 24 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 25 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 26 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 27 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 28 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 29 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 30 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 31 on $auto$ff.cc:337:slice$1068 ($dffe) from module queue.
+Setting constant 0-bit at position 0 on $procdff$946 ($adff) from module queue.
+Setting constant 0-bit at position 1 on $procdff$946 ($adff) from module queue.
+
+4.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \queue_variant..
+Finding unused cells or wires in module \queue..
+Removed 40 unused cells and 578 unused wires.
+<suppressed ~42 debug messages>
+
+4.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module queue_variant.
+<suppressed ~18 debug messages>
+Optimizing module queue.
+<suppressed ~18 debug messages>
+
+4.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \queue_variant..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \queue..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~96 debug messages>
+
+4.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \queue_variant.
+  Optimizing cells in module \queue.
+Performed a total of 0 changes.
+
+4.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\queue_variant'.
+Computing hashes of 98 cells of `\queue_variant'.
+Finding duplicate cells in `\queue_variant'.
+Computing hashes of 83 cells of `\queue_variant'.
+Finding duplicate cells in `\queue_variant'.
+Computing hashes of 79 cells of `\queue_variant'.
+Finding duplicate cells in `\queue_variant'.
+<suppressed ~57 debug messages>
+Finding identical cells in module `\queue'.
+Computing hashes of 98 cells of `\queue'.
+Finding duplicate cells in `\queue'.
+Computing hashes of 83 cells of `\queue'.
+Finding duplicate cells in `\queue'.
+Computing hashes of 79 cells of `\queue'.
+Finding duplicate cells in `\queue'.
+<suppressed ~57 debug messages>
+Removed a total of 38 cells.
+
+4.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \queue_variant..
+Finding unused cells or wires in module \queue..
+Removed 0 unused cells and 38 unused wires.
+<suppressed ~2 debug messages>
+
+4.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module queue_variant.
+Optimizing module queue.
+
+4.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \queue_variant..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \queue..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~96 debug messages>
+
+4.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \queue_variant.
+  Optimizing cells in module \queue.
+Performed a total of 0 changes.
+
+4.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\queue_variant'.
+Computing hashes of 79 cells of `\queue_variant'.
+Finding duplicate cells in `\queue_variant'.
+Finding identical cells in module `\queue'.
+Computing hashes of 79 cells of `\queue'.
+Finding duplicate cells in `\queue'.
+Removed a total of 0 cells.
+
+4.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \queue_variant..
+Finding unused cells or wires in module \queue..
+
+4.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module queue_variant.
+Optimizing module queue.
+
+4.23. Finished fast OPT passes. (There is nothing left to do.)
+
+5. Executing MEMORY pass.
+
+5.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+5.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+5.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+5.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+5.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+5.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \queue_variant..
+Finding unused cells or wires in module \queue..
+
+5.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+5.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+5.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \queue_variant..
+Finding unused cells or wires in module \queue..
+
+5.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+5.11. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+6. Executing OPT pass (performing simple optimizations).
+
+6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module queue_variant.
+Optimizing module queue.
+
+6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\queue_variant'.
+Computing hashes of 79 cells of `\queue_variant'.
+Finding duplicate cells in `\queue_variant'.
+Finding identical cells in module `\queue'.
+Computing hashes of 79 cells of `\queue'.
+Finding duplicate cells in `\queue'.
+Removed a total of 0 cells.
+
+6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \queue_variant..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \queue..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~96 debug messages>
+
+6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \queue_variant.
+  Optimizing cells in module \queue.
+Performed a total of 0 changes.
+
+6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\queue_variant'.
+Computing hashes of 79 cells of `\queue_variant'.
+Finding duplicate cells in `\queue_variant'.
+Finding identical cells in module `\queue'.
+Computing hashes of 79 cells of `\queue'.
+Finding duplicate cells in `\queue'.
+Removed a total of 0 cells.
+
+6.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \queue_variant..
+Finding unused cells or wires in module \queue..
+
+6.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module queue_variant.
+Optimizing module queue.
+
+6.9. Finished fast OPT passes. (There is nothing left to do.)
+
+7. Executing ASYNC2SYNC pass.
+Replacing queue_variant.$auto$ff.cc:337:slice$1025 ($adffe): ARST=\rst_ni, D=$0\queue_data[1][31:0], Q=\queue_data[1]
+Replacing queue_variant.$auto$ff.cc:337:slice$1018 ($adffe): ARST=\rst_ni, D=$0\almost_empty_o[0:0], Q=\almost_empty_o
+Replacing queue_variant.$auto$ff.cc:337:slice$1011 ($adffe): ARST=\rst_ni, D=$0\almost_full_o[0:0], Q=\almost_full_o
+Replacing queue_variant.$auto$ff.cc:337:slice$1004 ($adffe): ARST=\rst_ni, D=$0\queue_wadr[1:0], Q=\queue_wadr
+Replacing queue_variant.$auto$ff.cc:337:slice$995 ($adffe): ARST=\rst_ni, D=$0\queue_data[3][31:0], Q=\queue_data[3]
+Replacing queue_variant.$auto$ff.cc:337:slice$1034 ($adffe): ARST=\rst_ni, D=$0\empty_o[0:0], Q=\empty_o
+Replacing queue_variant.$auto$ff.cc:337:slice$980 ($adffe): ARST=\rst_ni, D=$0\full_o[0:0], Q=\full_o
+Replacing queue_variant.$auto$ff.cc:337:slice$971 ($adffe): ARST=\rst_ni, D=$0\queue_data[0][31:0], Q=\queue_data[0]
+Replacing queue_variant.$auto$ff.cc:337:slice$962 ($adffe): ARST=\rst_ni, D=$0\queue_data[2][31:0], Q=\queue_data[2]
+Replacing queue.$auto$ff.cc:337:slice$1108 ($adffe): ARST=\rst_ni, D=$0\empty_o[0:0], Q=\empty_o
+Replacing queue.$auto$ff.cc:337:slice$1099 ($adffe): ARST=\rst_ni, D=$0\queue_data[2][31:0], Q=\queue_data[2]
+Replacing queue.$auto$ff.cc:337:slice$1122 ($adffe): ARST=\rst_ni, D=$0\almost_empty_o[0:0], Q=\almost_empty_o
+Replacing queue.$auto$ff.cc:337:slice$1087 ($adffe): ARST=\rst_ni, D=$0\almost_full_o[0:0], Q=\almost_full_o
+Replacing queue.$auto$ff.cc:337:slice$1078 ($adffe): ARST=\rst_ni, D=$0\queue_data[3][31:0], Q=\queue_data[3]
+Replacing queue.$auto$ff.cc:337:slice$1071 ($adffe): ARST=\rst_ni, D=$0\full_o[0:0], Q=\full_o
+Replacing queue.$auto$ff.cc:337:slice$1059 ($adffe): ARST=\rst_ni, D=$0\queue_data[1][31:0], Q=\queue_data[1]
+Replacing queue.$auto$ff.cc:337:slice$1115 ($adffe): ARST=\rst_ni, D=$0\queue_wadr[1:0], Q=\queue_wadr
+Replacing queue.$auto$ff.cc:337:slice$1045 ($adffe): ARST=\rst_ni, D=$0\queue_data[0][31:0], Q=\queue_data[0]
+
+8. Executing OPT pass (performing simple optimizations).
+
+8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module queue_variant.
+Optimizing module queue.
+
+8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\queue_variant'.
+Computing hashes of 88 cells of `\queue_variant'.
+Finding duplicate cells in `\queue_variant'.
+Finding identical cells in module `\queue'.
+Computing hashes of 88 cells of `\queue'.
+Finding duplicate cells in `\queue'.
+Removed a total of 0 cells.
+
+8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \queue_variant..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \queue..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~148 debug messages>
+
+8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \queue_variant.
+  Optimizing cells in module \queue.
+Performed a total of 0 changes.
+
+8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\queue_variant'.
+Computing hashes of 88 cells of `\queue_variant'.
+Finding duplicate cells in `\queue_variant'.
+Finding identical cells in module `\queue'.
+Computing hashes of 88 cells of `\queue'.
+Finding duplicate cells in `\queue'.
+Removed a total of 0 cells.
+
+8.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \queue_variant..
+Finding unused cells or wires in module \queue..
+
+8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module queue_variant.
+Optimizing module queue.
+
+8.9. Finished fast OPT passes. (There is nothing left to do.)
+
+9. Executing EQUIV_MAKE pass (creating equiv checking module).
+Presumably equivalent wires: queue_data[3]_gold (\queue_data[3]_gold), queue_data[3]_gate (\queue_data[3]_gate) -> queue_data[3]
+Presumably equivalent wires: queue_data[2]_gold (\queue_data[2]_gold), queue_data[2]_gate (\queue_data[2]_gate) -> queue_data[2]
+Presumably equivalent wires: queue_data[1]_gold (\queue_data[1]_gold), queue_data[1]_gate (\queue_data[1]_gate) -> queue_data[1]
+Presumably equivalent wires: queue_data[0]_gold (\queue_data[0]_gold), queue_data[0]_gate (\queue_data[0]_gate) -> queue_data[0]
+Presumably equivalent wires: queue_wadr_gold (\queue_wadr_gold), queue_wadr_gate (\queue_wadr_gate) -> queue_wadr
+Presumably equivalent wires: almost_full_o_gold (\almost_full_o_gold), almost_full_o_gate (\almost_full_o_gate) -> almost_full_o
+Presumably equivalent wires: almost_empty_o_gold (\almost_empty_o_gold), almost_empty_o_gate (\almost_empty_o_gate) -> almost_empty_o
+Presumably equivalent wires: full_o_gold (\full_o_gold), full_o_gate (\full_o_gate) -> full_o
+Presumably equivalent wires: empty_o_gold (\empty_o_gold), empty_o_gate (\empty_o_gate) -> empty_o
+Presumably equivalent wires: q_o_gold (\queue_data[0]_gold), q_o_gate (\queue_data[0]_gate) -> q_o
+Presumably equivalent wires: re_i_gold (\re_i_gold), re_i_gate (\re_i_gate) -> re_i
+Presumably equivalent wires: d_i_gold (\d_i_gold), d_i_gate (\d_i_gate) -> d_i
+Presumably equivalent wires: we_i_gold (\we_i_gold), we_i_gate (\we_i_gate) -> we_i
+Presumably equivalent wires: ena_i_gold (\ena_i_gold), ena_i_gate (\ena_i_gate) -> ena_i
+Presumably equivalent wires: clr_i_gold (\clr_i_gold), clr_i_gate (\clr_i_gate) -> clr_i
+Presumably equivalent wires: clk_i_gold (\clk_i_gold), clk_i_gate (\clk_i_gate) -> clk_i
+Presumably equivalent wires: rst_ni_gold (\rst_ni_gold), rst_ni_gate (\rst_ni_gate) -> rst_ni
+Changing input A of cell $procmux$237_CMP0_gate ($eq): \queue_wadr_gate -> \queue_wadr
+Changing input A of cell $procmux$314_CMP0_gate ($logic_not): \queue_wadr_gate -> \queue_wadr
+Changing input B of cell $procmux$308_gate ($pmux): { \queue_data[1]_gate $procmux$313_Y_gate $procmux$306_Y_gate } -> { \queue_data[1] $procmux$313_Y_gate $procmux$306_Y_gate }
+Changing input A of cell $procmux$303_gate ($mux): \queue_data[1]_gate -> \queue_data[1]
+Changing input A of cell $procmux$290_CMP0_gate ($eq): \queue_wadr_gate -> \queue_wadr
+Changing input A of cell $ge$examples/heldout_queue/rtl/queue_variant.sv:155$159_gate ($ge): \queue_wadr_gate -> \queue_wadr
+Changing input A of cell $lt$examples/heldout_queue/rtl/queue_variant.sv:154$157_gate ($lt): \queue_wadr_gate -> \queue_wadr
+Changing input B of cell $procmux$285_gate ($pmux): { \queue_data[2]_gate $procmux$289_Y_gate $procmux$283_Y_gate } -> { \queue_data[2] $procmux$289_Y_gate $procmux$283_Y_gate }
+Changing input B of cell $procmux$283_gate ($mux): \queue_data[2]_gate -> \queue_data[2]
+Changing input A of cell $procmux$280_gate ($mux): \queue_data[2]_gate -> \queue_data[2]
+Changing input A of cell $gt$examples/heldout_queue/rtl/queue_variant.sv:125$142_gate ($gt): \queue_wadr_gate -> \queue_wadr
+Changing input A of cell $le$examples/heldout_queue/rtl/queue_variant.sv:124$141_gate ($le): \queue_wadr_gate -> \queue_wadr
+Changing input A of cell $sub$examples/heldout_queue/rtl/queue_variant.sv:105$134_gate ($sub): \queue_wadr_gate -> \queue_wadr
+Changing input A of cell $procmux$268_CMP0_gate ($eq): \queue_wadr_gate -> \queue_wadr
+Changing input B of cell $procmux$264_gate ($pmux): { \queue_data[3]_gate $procmux$267_Y_gate $procmux$262_Y_gate } -> { \queue_data[3] $procmux$267_Y_gate $procmux$262_Y_gate }
+Changing input A of cell $add$examples/heldout_queue/rtl/queue_variant.sv:56$89_gate ($add): \queue_wadr_gate -> \queue_wadr
+Changing input B of cell $procmux$262_gate ($mux): \queue_data[3]_gate -> \queue_data[3]
+Changing input A of cell $procmux$259_gate ($mux): \queue_data[3]_gate -> \queue_data[3]
+Changing input B of cell $procmux$589_gold ($pmux): { \queue_data[2]_gold $procmux$593_Y_gold $procmux$587_Y_gold } -> { \queue_data[2] $procmux$593_Y_gold $procmux$587_Y_gold }
+Changing input B of cell $procmux$587_gold ($mux): \queue_data[2]_gold -> \queue_data[2]
+Changing input A of cell $procmux$584_gold ($mux): \queue_data[2]_gold -> \queue_data[2]
+Changing input A of cell $procmux$572_CMP0_gold ($eq): \queue_wadr_gold -> \queue_wadr
+Changing input B of cell $procmux$568_gold ($pmux): { \queue_data[3]_gold $procmux$571_Y_gold $procmux$566_Y_gold } -> { \queue_data[3] $procmux$571_Y_gold $procmux$566_Y_gold }
+Changing input B of cell $procmux$566_gold ($mux): \queue_data[3]_gold -> \queue_data[3]
+Changing input A of cell $procmux$563_gold ($mux): \queue_data[3]_gold -> \queue_data[3]
+Changing input A of cell $procmux$541_CMP0_gold ($eq): \queue_wadr_gold -> \queue_wadr
+Changing input A of cell $procmux$618_CMP0_gold ($logic_not): \queue_wadr_gold -> \queue_wadr
+Changing input B of cell $procmux$612_gold ($pmux): { \queue_data[1]_gold $procmux$617_Y_gold $procmux$610_Y_gold } -> { \queue_data[1] $procmux$617_Y_gold $procmux$610_Y_gold }
+Changing input A of cell $procmux$594_CMP0_gold ($eq): \queue_wadr_gold -> \queue_wadr
+Changing input A of cell $ge$examples/heldout_queue/rtl/queue.sv:155$68_gold ($ge): \queue_wadr_gold -> \queue_wadr
+Changing input A of cell $lt$examples/heldout_queue/rtl/queue.sv:154$66_gold ($lt): \queue_wadr_gold -> \queue_wadr
+Changing input A of cell $procmux$607_gold ($mux): \queue_data[1]_gold -> \queue_data[1]
+Changing input A of cell $gt$examples/heldout_queue/rtl/queue.sv:125$59_gold ($gt): \queue_wadr_gold -> \queue_wadr
+Changing input A of cell $le$examples/heldout_queue/rtl/queue.sv:124$58_gold ($le): \queue_wadr_gold -> \queue_wadr
+Changing input A of cell $sub$examples/heldout_queue/rtl/queue.sv:105$55_gold ($sub): \queue_wadr_gold -> \queue_wadr
+Changing input A of cell $add$examples/heldout_queue/rtl/queue.sv:56$14_gold ($add): \queue_wadr_gold -> \queue_wadr
+
+10. Executing HIERARCHY pass (managing design hierarchy).
+
+10.1. Analyzing design hierarchy..
+Top module:  \equiv
+
+10.2. Analyzing design hierarchy..
+Top module:  \equiv
+Removing unused module `\queue_variant'.
+Removing unused module `\queue'.
+Removed 2 unused modules.
+
+11. Executing EQUIV_SIMPLE pass.
+Found 166 unproven $equiv cells (10 groups) in equiv:
+ Grouping SAT models for \q_o:
+  Trying to prove $equiv for \q_o [0]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [1]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [2]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [3]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [4]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [5]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [6]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [7]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [8]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [9]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [10]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [11]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [12]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [13]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [14]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [15]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [16]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [17]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [18]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [19]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [20]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [21]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [22]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [23]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [24]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [25]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [26]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [27]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [28]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [29]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [30]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \q_o [31]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \empty_o:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \full_o:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \almost_empty_o:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \almost_full_o:
+ezsat
+ezsat
+ failed.
+ Grouping SAT models for \queue_wadr:
+  Trying to prove $equiv for \queue_wadr [0]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_wadr [1]:
+ezsat
+ezsat
+ failed.
+ Grouping SAT models for \queue_data[0]:
+  Trying to prove $equiv for \queue_data[0] [0]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [1]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [2]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [3]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [4]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [5]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [6]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [7]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [8]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [9]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [10]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [11]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [12]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [13]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [14]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [15]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [16]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [17]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [18]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [19]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [20]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [21]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [22]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [23]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [24]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [25]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [26]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [27]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [28]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [29]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [30]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[0] [31]:
+ezsat
+ezsat
+ failed.
+ Grouping SAT models for \queue_data[1]:
+  Trying to prove $equiv for \queue_data[1] [0]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [1]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [2]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [3]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [4]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [5]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [6]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [7]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [8]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [9]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [10]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [11]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [12]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [13]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [14]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [15]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [16]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [17]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [18]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [19]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [20]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [21]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [22]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [23]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [24]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [25]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [26]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [27]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [28]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [29]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [30]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[1] [31]:
+ezsat
+ezsat
+ failed.
+ Grouping SAT models for \queue_data[2]:
+  Trying to prove $equiv for \queue_data[2] [0]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [1]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [2]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [3]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [4]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [5]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [6]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [7]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [8]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [9]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [10]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [11]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [12]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [13]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [14]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [15]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [16]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [17]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [18]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [19]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [20]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [21]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [22]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [23]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [24]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [25]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [26]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [27]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [28]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [29]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [30]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[2] [31]:
+ezsat
+ezsat
+ failed.
+ Grouping SAT models for \queue_data[3]:
+  Trying to prove $equiv for \queue_data[3] [0]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [1]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [2]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [3]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [4]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [5]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [6]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [7]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [8]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [9]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [10]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [11]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [12]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [13]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [14]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [15]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [16]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [17]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [18]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [19]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [20]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [21]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [22]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [23]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [24]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [25]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [26]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [27]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [28]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [29]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [30]:
+ezsat
+ezsat
+ failed.
+  Trying to prove $equiv for \queue_data[3] [31]:
+ezsat
+ezsat
+ failed.
+Proved 0 previously unproven $equiv cells.
+
+12. Executing EQUIV_INDUCT pass.
+Found 166 unproven $equiv cells in module equiv:
+  Proving existence of base case for step 1. (40363 clauses over 15170 variables)
+  Proving induction step 1. (87425 clauses over 32483 variables)
+  Proof for induction step holds. Entire workset of 166 cells proven!
+Proved 166 previously unproven $equiv cells.
+
+13. Executing EQUIV_STATUS pass.
+Found 166 $equiv cells in equiv:
+  Of those cells 166 are proven and 0 are unproven.
+  Equivalence successfully proven!

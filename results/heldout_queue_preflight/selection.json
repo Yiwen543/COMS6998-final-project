@@ -1,0 +1,1010 @@
+{
+  "provenance": {
+    "id": "cvdp_agentic_queue_0007",
+    "categories": [
+      "cid012",
+      "easy"
+    ],
+    "dataset": "nvidia/cvdp-benchmark-dataset",
+    "dataset_commit": "5b807d945f6a99aa645f7e43a64a2115e281b4bf",
+    "dataset_file": "cvdp_v1.1.0_agentic_code_generation_commercial.jsonl",
+    "record_line": 55,
+    "record_sha256": "81e591968edec740cd1f1421f548abb3b502d074ba733bcb4aa48673ecc15559",
+    "rtl_field": "harness/src/queue.sv",
+    "spec_field": "context/docs/specs.md",
+    "rtl_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+    "spec_sha256": "cf439779a935805e5717cb51c26dd3dec605c729a83154e57a17dd9c6ad2ed51",
+    "variant_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+    "variant_transform": "Rename module; replace each else if (clr_i)/(ena_i) with else if (!(!clr_i))/else if (!(!ena_i)). Original RTL unchanged."
+  },
+  "variant_equivalence": {
+    "command": "yosys -Q -T -p 'read_verilog -sv examples/heldout_queue/rtl/queue.sv examples/heldout_queue/rtl/queue_variant.sv; proc; opt; memory; opt; async2sync; opt; equiv_make queue queue_variant equiv; hierarchy -top equiv; equiv_simple; equiv_induct -seq 4; equiv_status -assert'",
+    "proven_cells": 166,
+    "async_note": "async2sync is applied to both designs for the sequential SAT proof; both original RTL event sets are separately retained and compared"
+  },
+  "repository": {
+    "head_commit": "8207e03c9433331d86266fb0e0e158cd522361ad",
+    "worktree_clean": false
+  },
+  "implementation_hashes": {
+    "testbench_sha256": "25ed8a0efaf6f81cb51ee41c6f38f05d8fe06a4d126cbac2f04e9c8a9a0c36a9",
+    "typed_frontend_sha256": "680d365a42b4a4d54184691465c61d5f75e1cb614f7b15d4a17362574d46d66a",
+    "preflight_runner_sha256": "0684d7e7d473fdd48fe6db1e4c6636c8fe5a2744829ece4721a0ec47fb090f1e",
+    "egg_engine_source_sha256": "800b1f0f550d0e864ff5c1b7849bfcb07fed74786f56932415b28abfc56c9a93"
+  },
+  "rewrite_validation": {
+    "de-morgan-or": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "de-morgan-and": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "double-not": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "and-true": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "and-true-left": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "not-false": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    }
+  },
+  "bitvector_validation": {
+    "1": "eq/ne complement: unsat XOR",
+    "2": "eq/ne complement: unsat XOR",
+    "4": "eq/ne complement: unsat XOR",
+    "16": "eq/ne complement: unsat XOR",
+    "case_01_vs_10": "unsat conjunction"
+  },
+  "extraction": [
+    {
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+      "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+      "targets": 49,
+      "unsupported": 18,
+      "yosys_version": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)"
+    },
+    {
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+      "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+      "targets": 49,
+      "unsupported": 18,
+      "yosys_version": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)"
+    }
+  ],
+  "preflight_seed": "2 reset cycles, 4 idle cycles; no clear/read/write",
+  "separate_reachability_validation": "Independent run appends write-only then read-only cycles; all 24 selected counters have positive hits; actions excluded from model seed",
+  "verilator_compile": "verilator --binary --timing --coverage-line --coverage-toggle --coverage-expr -Wno-fatal -Wno-TIMESCALEMOD -Wno-WIDTHEXPAND --top-module tb_queue_preflight --Mdir /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/heldout_queue_preflight/verilator-build -j 2 /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/verif/tb_queue_preflight.sv",
+  "verilator_version": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+  "z3_version": "Z3 version 5.1.0 - 64 bit",
+  "iverilog_version": "Icarus Verilog version 12.0 (stable) ()",
+  "python_version": "3.13.9",
+  "coverage_summary": {
+    "queue.sv": {
+      "branch": {
+        "covered": 6,
+        "total": 14,
+        "percent": 42.857
+      },
+      "expr": {
+        "covered": 12,
+        "total": 16,
+        "percent": 75.0
+      },
+      "line": {
+        "covered": 13,
+        "total": 41,
+        "percent": 31.707
+      },
+      "toggle": {
+        "covered": 6,
+        "total": 408,
+        "percent": 1.471
+      }
+    },
+    "queue_variant.sv": {
+      "branch": {
+        "covered": 6,
+        "total": 14,
+        "percent": 42.857
+      },
+      "expr": {
+        "covered": 24,
+        "total": 40,
+        "percent": 60.0
+      },
+      "line": {
+        "covered": 13,
+        "total": 41,
+        "percent": 31.707
+      },
+      "toggle": {
+        "covered": 6,
+        "total": 408,
+        "percent": 1.471
+      }
+    }
+  },
+  "egg": {
+    "engine": "egg 0.11.0",
+    "iterations": 5,
+    "stop_reason": "Some(Saturated)"
+  },
+  "selected_groups": [
+    {
+      "event_context": [
+        "negedge \\rst_ni",
+        "posedge \\clk_i"
+      ],
+      "eclass": 13,
+      "case_value": "2'01",
+      "members": [
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 55,
+          "column": 9,
+          "source_text": "2'b01: queue_wadr <= queue_wadr - 1; // read only",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 55,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "55",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:70$15:82:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 82,
+          "column": 9,
+          "source_text": "2'b01: begin",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:70$15",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 82,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "82-83,85",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:117$56:124:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 124,
+          "column": 9,
+          "source_text": "2'b01: almost_empty_o <= (queue_wadr <= ALMOST_EMPTY_THRESHOLD_CHECK);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:117$56",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 124,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "124",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:132$61:139:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 139,
+          "column": 9,
+          "source_text": "2'b01: empty_o <= (queue_wadr == EMPTY_THRESHOLD);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:132$61",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 139,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "139",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:147$64:154:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 154,
+          "column": 9,
+          "source_text": "2'b01: almost_full_o <= ~(queue_wadr < ALMOST_FULL_THRESHOLD_CHECK);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:147$64",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 154,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "154",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:162$69:169:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 169,
+          "column": 9,
+          "source_text": "2'b01: full_o <= 1'b0;",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:162$69",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 169,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "169",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:46$11:55:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 55,
+          "column": 9,
+          "source_text": "2'b01: queue_wadr <= queue_wadr - 1; // read only",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:46$11",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 55,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "55",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:70$19:82:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 82,
+          "column": 9,
+          "source_text": "2'b01: begin",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:70$19",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 82,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "82-83,85",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:117$64:124:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 124,
+          "column": 9,
+          "source_text": "2'b01: almost_empty_o <= (queue_wadr <= ALMOST_EMPTY_THRESHOLD_CHECK);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:117$64",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 124,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "124",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:132$73:139:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 139,
+          "column": 9,
+          "source_text": "2'b01: empty_o <= (queue_wadr == EMPTY_THRESHOLD);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:132$73",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 139,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "139",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:147$80:154:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 154,
+          "column": 9,
+          "source_text": "2'b01: almost_full_o <= ~(queue_wadr < ALMOST_FULL_THRESHOLD_CHECK);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:147$80",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 154,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "154",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:162$89:169:9:2'01",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 169,
+          "column": 9,
+          "source_text": "2'b01: full_o <= 1'b0;",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:162$89",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'01",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) p_0a14e66811039d1f)",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 169,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "169",
+            "hits": 0
+          }
+        }
+      ],
+      "independent_z3_checks": [
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "right": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:70$15:82:9:2'01",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "right": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:117$56:124:9:2'01",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "right": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:132$61:139:9:2'01",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "right": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:147$64:154:9:2'01",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "right": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:162$69:169:9:2'01",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:46$11:55:9:2'01",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:70$19:82:9:2'01",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:117$64:124:9:2'01",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:132$73:139:9:2'01",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:147$80:154:9:2'01",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:55:9:2'01",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:162$89:169:9:2'01",
+          "z3_xor": "unsat"
+        }
+      ]
+    },
+    {
+      "event_context": [
+        "negedge \\rst_ni",
+        "posedge \\clk_i"
+      ],
+      "eclass": 17,
+      "case_value": "2'10",
+      "members": [
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 56,
+          "column": 9,
+          "source_text": "2'b10: queue_wadr <= queue_wadr + 1; // write only",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 56,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "56",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:70$15:89:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 89,
+          "column": 9,
+          "source_text": "2'b10: begin",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:70$15",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 89,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "89-90",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:117$56:125:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 125,
+          "column": 9,
+          "source_text": "2'b10: almost_empty_o <= ~(queue_wadr > ALMOST_EMPTY_THRESHOLD_CHECK);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:117$56",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 125,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "125",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:132$61:140:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 140,
+          "column": 9,
+          "source_text": "2'b10: empty_o <= 1'b0;",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:132$61",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 140,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "140",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:147$64:155:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 155,
+          "column": 9,
+          "source_text": "2'b10: almost_full_o <= (queue_wadr >= ALMOST_FULL_THRESHOLD_CHECK);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:147$64",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 155,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "155",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:162$69:170:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv",
+          "source_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+          "line": 170,
+          "column": 9,
+          "source_text": "2'b10: full_o <= (queue_wadr == FULL_THRESHOLD);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:162$69",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not p_2d08d8e764104b93) true)) p_9415d91be6766057) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue.sv",
+            "line": 170,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.dut",
+            "span": "170",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:46$11:56:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 56,
+          "column": 9,
+          "source_text": "2'b10: queue_wadr <= queue_wadr + 1; // write only",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:46$11",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 56,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "56",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:70$19:89:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 89,
+          "column": 9,
+          "source_text": "2'b10: begin",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:70$19",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 89,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "89-90",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:117$64:125:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 125,
+          "column": 9,
+          "source_text": "2'b10: almost_empty_o <= ~(queue_wadr > ALMOST_EMPTY_THRESHOLD_CHECK);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:117$64",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 125,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "125",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:132$73:140:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 140,
+          "column": 9,
+          "source_text": "2'b10: empty_o <= 1'b0;",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:132$73",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 140,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "140",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:147$80:155:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 155,
+          "column": 9,
+          "source_text": "2'b10: almost_full_o <= (queue_wadr >= ALMOST_FULL_THRESHOLD_CHECK);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:147$80",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 155,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "155",
+            "hits": 0
+          }
+        },
+        {
+          "id": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:162$89:170:9:2'10",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv",
+          "source_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+          "line": 170,
+          "column": 9,
+          "source_text": "2'b10: full_o <= (queue_wadr == FULL_THRESHOLD);",
+          "source_mapping": "text_literal",
+          "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:162$89",
+          "event_context": [
+            "negedge \\rst_ni",
+            "posedge \\clk_i"
+          ],
+          "case_value": "2'10",
+          "switch_signal": "{ \\we_i \\re_i }",
+          "compact": "(and (and (and (and (not (not p_9fefdac04d5f6ca0)) true) (and (not (not (not p_2d08d8e764104b93))) true)) (not (not p_9415d91be6766057))) (and (not p_0a14e66811039d1f) p_d317657e5bca74df))",
+          "guard_depth": 4,
+          "logic": "two_state_binary",
+          "kind": "explicit_case",
+          "coverage_point": {
+            "source": "examples/heldout_queue/rtl/queue_variant.sv",
+            "line": 170,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_queue_preflight.variant",
+            "span": "170",
+            "hits": 0
+          }
+        }
+      ],
+      "independent_z3_checks": [
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "right": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:70$15:89:9:2'10",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "right": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:117$56:125:9:2'10",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "right": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:132$61:140:9:2'10",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "right": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:147$64:155:9:2'10",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "right": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:162$69:170:9:2'10",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:46$11:56:9:2'10",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:70$19:89:9:2'10",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:117$64:125:9:2'10",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:132$73:140:9:2'10",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:147$80:155:9:2'10",
+          "z3_xor": "unsat"
+        },
+        {
+          "left": "queue:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue.sv:46$11:56:9:2'10",
+          "right": "queue_variant:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_queue/rtl/queue_variant.sv:162$89:170:9:2'10",
+          "z3_xor": "unsat"
+        }
+      ]
+    }
+  ],
+  "read_write_distinction": {
+    "binary_inputs": {
+      "rst_ni": 1,
+      "clr_i": 0,
+      "ena_i": 1,
+      "we_i": 0,
+      "re_i": 1
+    },
+    "read_guard": true,
+    "write_guard": false
+  },
+  "selected_zero_hit_source_counters": 24
+}

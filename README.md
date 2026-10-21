@@ -9,7 +9,8 @@ source-mapped predicates, equivalent predicate forms are normalized by `egg`, an
 a deterministic witness generator supplies targeted stimulus for a second run.
 An exhaustive run provides a reference ceiling. This initial integration
 experiment is hand-authored. Matched model-driven A/B/C pilots now cover the
-arbiter and a stateful CVDP FIFO context module; see [FIFO pilot](docs/fifo_pilot.md).
+arbiter, a stateful CVDP FIFO context module, and the CVDP lite timer;
+see [FIFO pilot](docs/fifo_pilot.md) and [timer pilot](docs/ttc_pilot.md).
 
 ## Quick start
 
@@ -137,10 +138,19 @@ E-nodes; 16 distinct winning predicates each have two equivalent forms. Reset
 event semantics remain metadata, outside Boolean rewriting.
 
 No Pass@1, model superiority, token saving, or general RTL support is claimed.
-The matched A/B/C pilots have been executed; see the [arbiter report](results/pilot_live_20261020/REPORT.md)
-and [FIFO report](results/fifo_live_20261020/REPORT.md). The next research
-milestone needs repeated equivalent predicates and equivalence-checked RTL
-variants to test when E-graph feedback helps. See [the evaluation contract](docs/workflow.md).
+The matched A/B/C pilots have been executed; see the [arbiter report](results/pilot_live_20261020/REPORT.md),
+[FIFO report](results/fifo_live_20261020/REPORT.md), and
+[timer report](results/ttc_live_20261020/REPORT.md). The timer provides a harder,
+stateful coverage challenge but shows no repeatable C-over-B gain; its final
+toggle plateau includes 32 structurally constant output-bit directions. A
+faithful follow-up needs typed predicate extraction, repeated equivalent
+predicates, and equivalence-checked RTL variants. The first restricted Yosys
+pre-`proc` typed-guard frontend and a
+source-verified held-out CVDP queue variant pair are now available in the
+[queue preflight report](docs/heldout_queue_preflight.md); this is a selection
+and proof result, not a new LLM A/B/C result. See [the evaluation
+contract](docs/workflow.md) and the [paper-to-pilot reproduction
+audit](docs/egraph_reproduction_audit.md).
 
 Original papers remain where supplied and are ignored by Git. NVIDIA example
 code is Apache-2.0 and its specification is CC BY 4.0; attribution and license

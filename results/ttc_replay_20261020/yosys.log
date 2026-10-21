@@ -1,0 +1,114 @@
+
+-- Running command `read_verilog -sv examples/ttc_timer/rtl/ttc_counter_lite.sv; hierarchy -check -top ttc_counter_lite; proc; check; write_json /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/ttc_replay_20261020/yosys-netlist.json' --
+
+1. Executing Verilog-2005 frontend: examples/ttc_timer/rtl/ttc_counter_lite.sv
+Parsing SystemVerilog input from `examples/ttc_timer/rtl/ttc_counter_lite.sv' to AST representation.
+Generating RTLIL representation for module `\ttc_counter_lite'.
+Successfully finished Verilog frontend.
+
+2. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1. Analyzing design hierarchy..
+Top module:  \ttc_counter_lite
+
+2.2. Analyzing design hierarchy..
+Top module:  \ttc_counter_lite
+Removed 0 unused modules.
+
+3. Executing PROC pass (convert processes to netlists).
+
+3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 2 switch rules as full_case in process $proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:94$14 in module ttc_counter_lite.
+Marked 1 switch rules as full_case in process $proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:71$13 in module ttc_counter_lite.
+Marked 2 switch rules as full_case in process $proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:61$9 in module ttc_counter_lite.
+Marked 1 switch rules as full_case in process $proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:53$7 in module ttc_counter_lite.
+Marked 3 switch rules as full_case in process $proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:34$1 in module ttc_counter_lite.
+Removed a total of 0 dead cases.
+
+3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 1 redundant assignment.
+Promoted 0 assignments to connections.
+
+3.4. Executing PROC_INIT pass (extract init attributes).
+
+3.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \reset in `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:94$14'.
+Found async reset \reset in `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:71$13'.
+Found async reset \reset in `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:61$9'.
+Found async reset \reset in `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:53$7'.
+Found async reset \reset in `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:34$1'.
+
+3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~10 debug messages>
+
+3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:94$14'.
+     1/1: $0\axi_rdata[31:0]
+Creating decoders for process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:71$13'.
+     1/6: $0\prescaler[3:0]
+     2/6: $0\interrupt_enable[0:0]
+     3/6: $0\interval_mode[0:0]
+     4/6: $0\enable[0:0]
+     5/6: $0\reload_value[15:0]
+     6/6: $0\match_value[15:0]
+Creating decoders for process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:61$9'.
+     1/1: $0\interrupt[0:0]
+Creating decoders for process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:53$7'.
+     1/1: $0\match_flag[0:0]
+Creating decoders for process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:34$1'.
+     1/2: $0\prescaler_count[3:0]
+     2/2: $0\count[15:0]
+
+3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\ttc_counter_lite.\axi_rdata' using process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:94$14'.
+  created $adff cell `$procdff$79' with positive edge clock and positive level reset.
+Creating register for signal `\ttc_counter_lite.\match_value' using process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:71$13'.
+  created $adff cell `$procdff$82' with positive edge clock and positive level reset.
+Creating register for signal `\ttc_counter_lite.\reload_value' using process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:71$13'.
+  created $adff cell `$procdff$85' with positive edge clock and positive level reset.
+Creating register for signal `\ttc_counter_lite.\enable' using process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:71$13'.
+  created $adff cell `$procdff$88' with positive edge clock and positive level reset.
+Creating register for signal `\ttc_counter_lite.\interval_mode' using process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:71$13'.
+  created $adff cell `$procdff$91' with positive edge clock and positive level reset.
+Creating register for signal `\ttc_counter_lite.\interrupt_enable' using process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:71$13'.
+  created $adff cell `$procdff$94' with positive edge clock and positive level reset.
+Creating register for signal `\ttc_counter_lite.\prescaler' using process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:71$13'.
+  created $adff cell `$procdff$97' with positive edge clock and positive level reset.
+Creating register for signal `\ttc_counter_lite.\interrupt' using process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:61$9'.
+  created $adff cell `$procdff$100' with positive edge clock and positive level reset.
+Creating register for signal `\ttc_counter_lite.\match_flag' using process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:53$7'.
+  created $adff cell `$procdff$103' with positive edge clock and positive level reset.
+Creating register for signal `\ttc_counter_lite.\count' using process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:34$1'.
+  created $adff cell `$procdff$106' with positive edge clock and positive level reset.
+Creating register for signal `\ttc_counter_lite.\prescaler_count' using process `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:34$1'.
+  created $adff cell `$procdff$109' with positive edge clock and positive level reset.
+
+3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 2 empty switches in `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:94$14'.
+Removing empty process `ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:94$14'.
+Found and cleaned up 2 empty switches in `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:71$13'.
+Removing empty process `ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:71$13'.
+Found and cleaned up 2 empty switches in `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:61$9'.
+Removing empty process `ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:61$9'.
+Removing empty process `ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:53$7'.
+Found and cleaned up 4 empty switches in `\ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:34$1'.
+Removing empty process `ttc_counter_lite.$proc$examples/ttc_timer/rtl/ttc_counter_lite.sv:34$1'.
+Cleaned up 10 empty switches.
+
+3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module ttc_counter_lite.
+<suppressed ~12 debug messages>
+
+4. Executing CHECK pass (checking for obvious problems).
+Checking module ttc_counter_lite...
+Found and reported 0 problems.
+
+5. Executing JSON backend.
