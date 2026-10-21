@@ -1,0 +1,98 @@
+[
+  {
+    "compact": "(not (or (not push_i) pop_i))",
+    "counter_outcome": "case",
+    "counter_type": "line",
+    "dependencies": [
+      "push_i",
+      "pop_i"
+    ],
+    "event": "always_comb case",
+    "expanded": "(and push_i (not pop_i))",
+    "guards": {
+      "reset": "not in this combinational case; operation contract excludes push/pop during reset"
+    },
+    "id": "push_only",
+    "line": 48,
+    "logic": "two_state",
+    "source": "examples/fifo/rtl/sync_fifo.sv",
+    "width": 1
+  },
+  {
+    "compact": "(not (or push_i (not pop_i)))",
+    "counter_outcome": "case",
+    "counter_type": "line",
+    "dependencies": [
+      "push_i",
+      "pop_i"
+    ],
+    "event": "always_comb case",
+    "expanded": "(and (not push_i) pop_i)",
+    "guards": {
+      "reset": "not in this combinational case; operation contract excludes push/pop during reset"
+    },
+    "id": "pop_only",
+    "line": 50,
+    "logic": "two_state",
+    "source": "examples/fifo/rtl/sync_fifo.sv",
+    "width": 1
+  },
+  {
+    "compact": "(not (or (not push_i) (not pop_i)))",
+    "counter_outcome": "case",
+    "counter_type": "line",
+    "dependencies": [
+      "push_i",
+      "pop_i"
+    ],
+    "event": "always_comb case",
+    "expanded": "(and push_i pop_i)",
+    "guards": {
+      "reset": "not in this combinational case; operation contract excludes push/pop during reset"
+    },
+    "id": "both",
+    "line": 52,
+    "logic": "two_state",
+    "source": "examples/fifo/rtl/sync_fifo.sv",
+    "width": 1
+  },
+  {
+    "compact": "(not (or push_i pop_i))",
+    "counter_outcome": "case",
+    "counter_type": "line",
+    "dependencies": [
+      "push_i",
+      "pop_i"
+    ],
+    "event": "always_comb case",
+    "expanded": "(and (not push_i) (not pop_i))",
+    "guards": {
+      "reset": "not in this combinational case; operation contract excludes push/pop during reset"
+    },
+    "id": "idle",
+    "line": 57,
+    "logic": "two_state",
+    "source": "examples/fifo/rtl/sync_fifo.sv",
+    "width": 1
+  },
+  {
+    "compact": "(not (or (not msb_diff) (not low_bits_equal)))",
+    "counter_outcome": "=> 1",
+    "counter_type": "expr",
+    "dependencies": [
+      "4-bit unsigned wr_ptr_q",
+      "4-bit unsigned rd_ptr_q"
+    ],
+    "event": "continuous combinational output",
+    "expanded": "(and msb_diff low_bits_equal)",
+    "guards": {
+      "low_bits_equal": "wr_ptr_q[2:0] == rd_ptr_q[2:0]",
+      "msb_diff": "wr_ptr_q[3] != rd_ptr_q[3]"
+    },
+    "id": "full_pointer_compare",
+    "line": 70,
+    "logic": "two_state",
+    "source": "examples/fifo/rtl/sync_fifo.sv",
+    "width": 1
+  }
+]

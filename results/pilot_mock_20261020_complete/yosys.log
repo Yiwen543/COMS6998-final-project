@@ -1,0 +1,71 @@
+
+-- Running command `read_verilog -sv examples/arbiter/rtl/fixed_priority_arbiter.sv; hierarchy -check -top fixed_priority_arbiter; proc; check; write_json /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/pilot_mock_20261020_complete/yosys-netlist.json' --
+
+1. Executing Verilog-2005 frontend: examples/arbiter/rtl/fixed_priority_arbiter.sv
+Parsing SystemVerilog input from `examples/arbiter/rtl/fixed_priority_arbiter.sv' to AST representation.
+Generating RTLIL representation for module `\fixed_priority_arbiter'.
+Successfully finished Verilog frontend.
+
+2. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1. Analyzing design hierarchy..
+Top module:  \fixed_priority_arbiter
+
+2.2. Analyzing design hierarchy..
+Top module:  \fixed_priority_arbiter
+Removed 0 unused modules.
+
+3. Executing PROC pass (convert processes to netlists).
+
+3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 10 switch rules as full_case in process $proc$examples/arbiter/rtl/fixed_priority_arbiter.sv:13$1 in module fixed_priority_arbiter.
+Removed a total of 0 dead cases.
+
+3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 3 redundant assignments.
+Promoted 0 assignments to connections.
+
+3.4. Executing PROC_INIT pass (extract init attributes).
+
+3.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \reset in `\fixed_priority_arbiter.$proc$examples/arbiter/rtl/fixed_priority_arbiter.sv:13$1'.
+
+3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~9 debug messages>
+
+3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\fixed_priority_arbiter.$proc$examples/arbiter/rtl/fixed_priority_arbiter.sv:13$1'.
+     1/3: $0\grant_index[2:0]
+     2/3: $0\valid[0:0]
+     3/3: $0\grant[7:0]
+
+3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\fixed_priority_arbiter.\grant' using process `\fixed_priority_arbiter.$proc$examples/arbiter/rtl/fixed_priority_arbiter.sv:13$1'.
+  created $adff cell `$procdff$94' with positive edge clock and positive level reset.
+Creating register for signal `\fixed_priority_arbiter.\valid' using process `\fixed_priority_arbiter.$proc$examples/arbiter/rtl/fixed_priority_arbiter.sv:13$1'.
+  created $adff cell `$procdff$97' with positive edge clock and positive level reset.
+Creating register for signal `\fixed_priority_arbiter.\grant_index' using process `\fixed_priority_arbiter.$proc$examples/arbiter/rtl/fixed_priority_arbiter.sv:13$1'.
+  created $adff cell `$procdff$100' with positive edge clock and positive level reset.
+
+3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 9 empty switches in `\fixed_priority_arbiter.$proc$examples/arbiter/rtl/fixed_priority_arbiter.sv:13$1'.
+Removing empty process `fixed_priority_arbiter.$proc$examples/arbiter/rtl/fixed_priority_arbiter.sv:13$1'.
+Cleaned up 9 empty switches.
+
+3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fixed_priority_arbiter.
+<suppressed ~4 debug messages>
+
+4. Executing CHECK pass (checking for obvious problems).
+Checking module fixed_priority_arbiter...
+Found and reported 0 problems.
+
+5. Executing JSON backend.

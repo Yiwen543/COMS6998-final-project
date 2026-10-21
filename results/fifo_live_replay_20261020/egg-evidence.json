@@ -1,0 +1,294 @@
+{
+  "eclasses": [
+    {
+      "id": 0,
+      "nodes": [
+        {
+          "children": [
+            1
+          ],
+          "op": "not"
+        },
+        {
+          "children": [],
+          "op": "push_i"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "nodes": [
+        {
+          "children": [
+            20
+          ],
+          "op": "not"
+        },
+        {
+          "children": [
+            16,
+            18
+          ],
+          "op": "and"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nodes": [
+        {
+          "children": [
+            1,
+            2
+          ],
+          "op": "or"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "nodes": [
+        {
+          "children": [
+            3
+          ],
+          "op": "not"
+        },
+        {
+          "children": [
+            0,
+            5
+          ],
+          "op": "and"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "nodes": [
+        {
+          "children": [
+            7
+          ],
+          "op": "not"
+        },
+        {
+          "children": [
+            1,
+            2
+          ],
+          "op": "and"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "nodes": [
+        {
+          "children": [
+            10
+          ],
+          "op": "not"
+        },
+        {
+          "children": [
+            0,
+            2
+          ],
+          "op": "and"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "nodes": [
+        {
+          "children": [
+            13
+          ],
+          "op": "not"
+        },
+        {
+          "children": [
+            1,
+            5
+          ],
+          "op": "and"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "nodes": [
+        {
+          "children": [
+            19
+          ],
+          "op": "not"
+        },
+        {
+          "children": [],
+          "op": "low_bits_equal"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nodes": [
+        {
+          "children": [
+            5
+          ],
+          "op": "not"
+        },
+        {
+          "children": [],
+          "op": "pop_i"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "nodes": [
+        {
+          "children": [
+            2
+          ],
+          "op": "not"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "nodes": [
+        {
+          "children": [
+            16
+          ],
+          "op": "not"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "nodes": [
+        {
+          "children": [
+            17,
+            19
+          ],
+          "op": "or"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "nodes": [
+        {
+          "children": [
+            0
+          ],
+          "op": "not"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "nodes": [
+        {
+          "children": [
+            0,
+            5
+          ],
+          "op": "or"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "nodes": [
+        {
+          "children": [
+            1,
+            5
+          ],
+          "op": "or"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "nodes": [
+        {
+          "children": [
+            0,
+            2
+          ],
+          "op": "or"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "nodes": [
+        {
+          "children": [
+            17
+          ],
+          "op": "not"
+        },
+        {
+          "children": [],
+          "op": "msb_diff"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "nodes": [
+        {
+          "children": [
+            18
+          ],
+          "op": "not"
+        }
+      ]
+    }
+  ],
+  "engine": "egg 0.11.0",
+  "iterations": 3,
+  "semantics": "pure two-state one-bit Boolean predicates",
+  "stop_reason": "Some(Saturated)",
+  "targets": [
+    {
+      "eclass": 6,
+      "equivalent": true,
+      "id": "push_only",
+      "representative": "(and push_i (not pop_i))"
+    },
+    {
+      "eclass": 9,
+      "equivalent": true,
+      "id": "pop_only",
+      "representative": "(and (not push_i) pop_i)"
+    },
+    {
+      "eclass": 12,
+      "equivalent": true,
+      "id": "both",
+      "representative": "(and push_i pop_i)"
+    },
+    {
+      "eclass": 15,
+      "equivalent": true,
+      "id": "idle",
+      "representative": "(not (or push_i pop_i))"
+    },
+    {
+      "eclass": 22,
+      "equivalent": true,
+      "id": "full_pointer_compare",
+      "representative": "(and msb_diff low_bits_equal)"
+    }
+  ]
+}
