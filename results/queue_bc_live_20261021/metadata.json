@@ -1,0 +1,241 @@
+{
+  "amortization_policy": "per-version compilation and seed simulation split evenly across six B/C repetitions; egg preprocessing split across six C repetitions; separate directed ceiling excluded",
+  "checker_contract": "valid front data; empty/full with capacity DEPTH-1; asynchronous reset; synchronous clear; enable hold; almost flags only on reset/clear",
+  "configuration": {
+    "arms": [
+      "B",
+      "C"
+    ],
+    "checker_sha256": "f5bc5211344e0bf21a9dc3fb4456640760c1b0b0aa672e4a920a17d619b6523b",
+    "driver_sha256": "a28c3c9b865d07a5b505cb8d45352419702be0106782ec80b0eeec7f1a3ee5eb",
+    "engine_sha256": "800b1f0f550d0e864ff5c1b7849bfcb07fed74786f56932415b28abfc56c9a93",
+    "feedback_sha256": "532b480ab9b60e220a2d411305b0cffe01b24807905d9eda763c73a102967a81",
+    "max_input_tokens_conservative_byte_cap": 140000,
+    "max_new_cycles": 4,
+    "max_output_tokens": 4096,
+    "max_retries": 2,
+    "model": "gpt-6.1-sol",
+    "original_sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+    "reasoning_effort": "low",
+    "repetitions": 3,
+    "rounds": 4,
+    "seed": 6998,
+    "spec_sha256": "cf439779a935805e5717cb51c26dd3dec605c729a83154e57a17dd9c6ad2ed51",
+    "target_line_points": 41,
+    "timeout_seconds": 90,
+    "variant_sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+    "versions": [
+      "original",
+      "variant"
+    ]
+  },
+  "elapsed_wall_seconds": 9.71045337500982,
+  "evidence_mode": "live",
+  "git_commit": "0ca55bd6857dec47d1727c229524e92f8f1cd3e6",
+  "mode": "live",
+  "raw_denominators_preserved": true,
+  "replay_policy": "fresh simulator process per round, repeat six-cycle seed and all accumulated actions",
+  "semantic_mapping": {
+    "original": {
+      "targets": 49,
+      "unsupported": 18
+    },
+    "variant": {
+      "targets": 49,
+      "unsupported": 18
+    }
+  },
+  "shared_setup": {
+    "cargo_build_seconds": 0.12758475006558,
+    "common_initial_executions": 2,
+    "compilations": 2,
+    "egg_preprocessing_seconds": 0.7493656249716878,
+    "reference_ceiling_executions": 2
+  },
+  "solver_or_deterministic_search_in_prompts": false,
+  "token_roi_definition": "newly covered DUT branch points since common seed per 1000 API-reported input-plus-output tokens; cached and reasoning subcounts are included in totals and never added again",
+  "version_setups": {
+    "original": {
+      "compile_command": [
+        "verilator",
+        "--cc",
+        "--exe",
+        "--build",
+        "--timing",
+        "--assert",
+        "--coverage-line",
+        "--coverage-toggle",
+        "--coverage-expr",
+        "-Wno-fatal",
+        "-Wno-TIMESCALEMOD",
+        "-Wno-WIDTHEXPAND",
+        "-DDUT_MODULE=queue",
+        "--top-module",
+        "tb_queue_pilot",
+        "--Mdir",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/queue_bc_live_20261021/original/verilator-build",
+        "-j",
+        "2",
+        "examples/heldout_queue/rtl/queue.sv",
+        "examples/heldout_queue/verif/tb_queue_pilot.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/sim_main_queue.cpp"
+      ],
+      "compile_seconds": 4.463730541989207,
+      "initial_coverage": {
+        "branch": {
+          "covered": 6,
+          "percent": 42.857,
+          "total": 14
+        },
+        "expr": {
+          "covered": 12,
+          "percent": 75.0,
+          "total": 16
+        },
+        "line": {
+          "covered": 13,
+          "percent": 31.707,
+          "total": 41
+        },
+        "toggle": {
+          "covered": 6,
+          "percent": 1.471,
+          "total": 408
+        }
+      },
+      "initial_simulation_seconds": 0.22559254197403789,
+      "reference_ceiling": {
+        "checker": {
+          "checks": 22,
+          "clear_errors": 0,
+          "data_errors": 0,
+          "distinct_defects": [],
+          "enable_errors": 0,
+          "functional_errors": 0,
+          "occupancy_errors": 0,
+          "reset_errors": 0
+        },
+        "coverage": {
+          "branch": {
+            "covered": 14,
+            "percent": 100.0,
+            "total": 14
+          },
+          "expr": {
+            "covered": 16,
+            "percent": 100.0,
+            "total": 16
+          },
+          "line": {
+            "covered": 41,
+            "percent": 100.0,
+            "total": 41
+          },
+          "toggle": {
+            "covered": 344,
+            "percent": 84.314,
+            "total": 408
+          }
+        },
+        "cycles": 22
+      },
+      "reference_ceiling_simulation_seconds": 0.011239332845434546
+    },
+    "variant": {
+      "compile_command": [
+        "verilator",
+        "--cc",
+        "--exe",
+        "--build",
+        "--timing",
+        "--assert",
+        "--coverage-line",
+        "--coverage-toggle",
+        "--coverage-expr",
+        "-Wno-fatal",
+        "-Wno-TIMESCALEMOD",
+        "-Wno-WIDTHEXPAND",
+        "-DDUT_MODULE=queue_variant",
+        "--top-module",
+        "tb_queue_pilot",
+        "--Mdir",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/queue_bc_live_20261021/variant/verilator-build",
+        "-j",
+        "2",
+        "examples/heldout_queue/rtl/queue_variant.sv",
+        "examples/heldout_queue/verif/tb_queue_pilot.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/sim_main_queue.cpp"
+      ],
+      "compile_seconds": 3.338712624972686,
+      "initial_coverage": {
+        "branch": {
+          "covered": 6,
+          "percent": 42.857,
+          "total": 14
+        },
+        "expr": {
+          "covered": 24,
+          "percent": 60.0,
+          "total": 40
+        },
+        "line": {
+          "covered": 13,
+          "percent": 31.707,
+          "total": 41
+        },
+        "toggle": {
+          "covered": 6,
+          "percent": 1.471,
+          "total": 408
+        }
+      },
+      "initial_simulation_seconds": 0.2010303339920938,
+      "reference_ceiling": {
+        "checker": {
+          "checks": 22,
+          "clear_errors": 0,
+          "data_errors": 0,
+          "distinct_defects": [],
+          "enable_errors": 0,
+          "functional_errors": 0,
+          "occupancy_errors": 0,
+          "reset_errors": 0
+        },
+        "coverage": {
+          "branch": {
+            "covered": 14,
+            "percent": 100.0,
+            "total": 14
+          },
+          "expr": {
+            "covered": 40,
+            "percent": 100.0,
+            "total": 40
+          },
+          "line": {
+            "covered": 41,
+            "percent": 100.0,
+            "total": 41
+          },
+          "toggle": {
+            "covered": 344,
+            "percent": 84.314,
+            "total": 408
+          }
+        },
+        "cycles": 22
+      },
+      "reference_ceiling_simulation_seconds": 0.009627999970689416
+    }
+  },
+  "versions": {
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+    "matplotlib": "3.11.2",
+    "openai_sdk": "2.54.0",
+    "python": "3.13.9",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+    "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+    "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)"
+  }
+}
