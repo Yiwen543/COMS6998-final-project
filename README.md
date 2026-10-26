@@ -103,6 +103,11 @@ Start with [the report](results/step1/REPORT.md), [verification plan](examples/a
 `results/step1/initial-prompt.md`. `results/step1/feedback.json` contains uncovered
 source counters, normalized roots, guards, and concrete suggested inputs.
 
+The [26 October milestone report draft](docs/milestone_2026-10-26.md) compares
+the saved A/B/C pilots, explains the current C-versus-B ceiling, and includes a
+primary-source literature matrix. The [Claude Code cross-check protocol](docs/claude_queue_crosscheck.md)
+specifies a blinded first-pass audit and independent replay checks.
+
 ## Standalone testbench
 
 ```sh
@@ -146,9 +151,15 @@ toggle plateau includes 32 structurally constant output-bit directions. A
 faithful follow-up needs typed predicate extraction, repeated equivalent
 predicates, and equivalence-checked RTL variants. The first restricted Yosys
 pre-`proc` typed-guard frontend and a
-source-verified held-out CVDP queue variant pair are now available in the
-[queue preflight report](docs/heldout_queue_preflight.md); this is a selection
-and proof result, not a new LLM A/B/C result. See [the evaluation
+source-verified held-out CVDP queue variant pair are available in the
+[queue preflight report](docs/heldout_queue_preflight.md). A matched live B/C
+pilot on that pair is in the [queue report](results/queue_bc_live_20261021_unsandboxed/REPORT.md).
+The requested GPT-6 Sol rerun and Claude Code Opus 5.5 cross-review are in the
+[Milestone 1 result report](docs/milestone1_result_report.md) and the
+[two-page P1-style PDF](output/pdf/milestone1.pdf). Its 48 live model calls and
+48 independent replayed rounds are separately archived under
+[`results/queue_bc_gpt6sol_20261026/`](results/queue_bc_gpt6sol_20261026/).
+See [the evaluation
 contract](docs/workflow.md) and the [paper-to-pilot reproduction
 audit](docs/egraph_reproduction_audit.md).
 

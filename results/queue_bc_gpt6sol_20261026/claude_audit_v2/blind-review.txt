@@ -1,0 +1,142 @@
+# Methodological Review: Anonymous X/Y RTL-Verification Pilot
+
+## 1. Recomputed target costs
+
+I took the first round with `line_covered = 41` in each cumulative trajectory, then read the cumulative tokens, cycles and executions at that round.
+
+| Version | Arm | Rep | Line trajectory (R1→R4) | First 41/41 | Tokens | Cycles | Sim execs | Matches `target_costs`? |
+|---|---|---|---|---|---|---|---|---|
+| original | X | 1 | 26, 40, 41, 41 | R3 | 63,210 | 42 | 3 | ✓ |
+| original | X | 2 | 26, 40, 40, 41 | R4 | 81,839 | 64 | 4 | ✓ |
+| original | X | 3 | 26, 40, 40, 41 | R4 | 79,623 | 64 | 4 | ✓ |
+| original | Y | 1 | 33, 40, 41, 41 | R3 | 69,989 | 42 | 3 | ✓ |
+| original | Y | 2 | 26, 40, 40, 41 | R4 | 81,296 | 64 | 4 | ✓ |
+| original | Y | 3 | 33, 40, 41, 41 | R3 | 69,930 | 42 | 3 | ✓ |
+| variant | X | 1 | 26, 40, 41, 41 | R3 | 65,380 | 42 | 3 | ✓ |
+| variant | X | 2 | 26, 40, 41, 41 | R3 | 73,380 | 42 | 3 | ✓ |
+| variant | X | 3 | 26, 40, 41, 41 | R3 | 72,055 | 42 | 3 | ✓ |
+| variant | Y | 1 | 26, 41, 41, 41 | R2 | 57,192 | 24 | 2 | ✓ |
+| variant | Y | 2 | 33, 40, 41, 41 | R3 | 72,210 | 42 | 3 | ✓ |
+| variant | Y | 3 | 33, 40, 41, 41 | R3 | 69,729 | 42 | 3 | ✓ |
+
+**No arithmetic discrepancy.** All 12 target-cost rows reproduce exactly from the cumulative rows. All runs reached the target, so there is no right-censoring.
+
+Other checks passed:
+- Coverage is monotone non-decreasing in every trajectory.
+- Model calls equal executions equal round number in every row.
+- Retries and failed model attempts are zero throughout.
+
+## 2. Within-version X vs Y comparison (n = 3 per cell, descriptive only)
+
+### Cost to first 41/41
+
+| Version | Metric | X (values; mean) | Y (values; mean) | Y − X mean |
+|---|---|---|---|---|
+| original | Tokens | 63,210 / 81,839 / 79,623; **74,890.7** | 69,989 / 81,296 / 69,930; **73,738.3** | −1,152.3 |
+| original | Round / execs | 3, 4, 4; 3.67 | 3, 4, 3; 3.33 | −0.33 |
+| original | Cycles | 42, 64, 64; 56.67 | 42, 64, 42; 49.33 | −7.33 |
+| variant | Tokens | 65,380 / 73,380 / 72,055; **70,271.7** | 57,192 / 72,210 / 69,729; **66,377.0** | −3,894.7 |
+| variant | Round / execs | 3, 3, 3; 3.00 | 2, 3, 3; 2.67 | −0.33 |
+| variant | Cycles | 42, 42, 42; 42.00 | 24, 42, 42; 36.00 | −6.00 |
+
+How to read these differences:
+- **Ranges overlap fully.** Original: X 63.2k–81.8k vs Y 69.9k–81.3k. Variant: X 65.4k–73.4k vs Y 57.2k–72.2k.
+- **One run drives the variant difference.** Variant Y rep 1 is the only run reaching the target in R2. Without it, Y's mean is 70,969.5 versus X's 70,271.7, which reverses the sign.
+- **The original difference also rests on one run.** It comes from a single run (one Y run at R3 vs the corresponding X run at R4). The token medians move the opposite way from the means (X 79,623 vs Y 69,989), which shows how unstable n = 3 is.
+
+### Final coverage (round 4)
+
+Every one of the 12 runs ends at:
+- 41/41 line,
+- 14/14 branch,
+- full expression (16/16 original; 40/40 variant),
+- **344/408 toggle**.
+
+X and Y are indistinguishable on endpoint coverage in both versions.
+
+### Intermediate coverage
+
+| Version | Round | X line | Y line | X branch | Y branch | X toggle | Y toggle |
+|---|---|---|---|---|---|---|---|
+| original | R1 | 26, 26, 26 | 33, 26, 33 | 12, 12, 12 | 13, 12, 13 | 306, 258, 258 | 240, 258, 240 |
+| original | R2 | 40, 40, 40 | 40, 40, 40 | 14, 14, 14 | 13, 14, 13 | 343, 295, 311 | 343, 311, 343 |
+| original | R3 | 41, 40, 40 | 41, 40, 41 | 14, 14, 14 | 14, 14, 14 | 344, 336, 344 | 344, 344, 344 |
+| variant | R1 | 26, 26, 26 | 26, 33, 33 | 12, 12, 12 | 12, 13, 13 | 306, 258, 258 | 306, 240, 272 |
+| variant | R2 | 40, 40, 40 | 41, 40, 40 | 14, 14, 14 | 14, 13, 13 | 343, 295, 311 | 344, 343, 342 |
+| variant | R3 | 41, 41, 41 | 41, 41, 41 | 14, 14, 14 | 14, 14, 14 | 344, 320, 328 | 344, 344, 343 |
+
+Patterns:
+- Y tends to have higher toggle coverage at R2–R3.
+- Y sometimes trails on branch coverage at R2 (13 vs 14).
+- At R1, Y's higher line counts come with *lower* toggle and expression counts. The tuple (13, 33, 15/16 or 33/40, 240) recurs against (12, 26, full or 34/40, 258/306).
+
+These are different coverage profiles, not uniform dominance.
+
+### Cost at a fixed budget (cumulative tokens at round 4)
+
+All runs actually executed four rounds, so this is the true total spend.
+
+| Version | X | Y | Y − X |
+|---|---|---|---|
+| original | 72,803 / 81,839 / 79,623; mean 78,088.3 | 79,632 / 81,296 / 79,613; mean 80,180.3 | +2,092.0 |
+| variant | 75,075 / 85,259 / 83,307; mean 81,213.7 | 76,596 / 82,000 / 79,679; mean 79,425.0 | −1,788.7 |
+
+The direction of the total-spend difference is inconsistent across versions.
+
+## 3. Findings and limitations
+
+1. **Cycles and simulator executions carry no independent information.** Per-execution cycle increments are 10, 14, 18, 22 in every run, i.e. 6 seed cycles + 4k replayed actions, giving cumulative 10/24/42/64.
+   - Every run used the maximum four actions every round.
+   - Executions always equal the round number.
+   - Both metrics are deterministic transforms of `first_target_round`. Reporting them alongside rounds triple-counts a single integer outcome taking values 2, 3 or 4.
+
+2. **Ceiling effects.**
+   - Line, branch and expression coverage saturate in all 12 runs.
+   - Toggle coverage plateaus at exactly 344/408 (84.3%) in all 12 runs, with no run exceeding it. The remaining 64 toggle points are plausibly unreachable or constant bits; this needs per-bit inspection.
+   - Endpoint coverage cannot discriminate the arms. Only time-to-target can, and it is a coarse ordinal with three of 12 runs at the R4 cap.
+
+3. **Pre-feedback arm imbalance in round 1.**
+   - Round-1 tokens are systematically higher for Y: about +1,531 in the original (means 39,989 vs 41,520) and about +1,600 in the variant (41,367 vs 42,967), with tight within-arm spread.
+   - Round-1 coverage also differs by arm: Y produces the 33-line profile in 4 of 6 runs, X in 0 of 6.
+   - If round 1 precedes any feedback, the arms already differ in prompt or context. Some downstream differences may then stem from this, not from the intended manipulation.
+   - I draw no inference about which label carries semantic feedback.
+
+4. **Token cost to target conflates stopping round with per-call size.** Y's lower to-target means come entirely from reaching 41/41 earlier. At equal rounds Y's cumulative tokens are typically higher, and total round-4 spend is mixed in direction.
+   - "Line covered at stop" is misleading: runs did not stop at target. It is a post-hoc first-hit metric.
+
+5. **Suspicious duplication across versions and sessions.**
+   - Variant X R1–R2 toggle/line/branch trajectories are identical to original X for every repetition (306→343, 258→295, 258→311).
+   - Exact tuples recur across arms and versions, for example (12, 26, 258) and (13, 33, 240).
+   - This may reflect a low-diversity, near-deterministic stimulus space. It may also be a join or copy error. Either way, it contradicts treating sessions as rich independent samples and should be checked against raw logs.
+
+6. **Uncertainty and power.**
+   - With 3 vs 3 unpaired independent sessions (repetition indices are not meaningful pairs), the smallest achievable two-sided exact permutation p is 0.10, so the design cannot support significance claims.
+   - Observed differences are about one run's shift by one round.
+   - The two versions are one IP, so they are not independent replications.
+
+7. **Cross-version comparison is not supported.**
+   - Expression totals differ (16 vs 40), so the "equivalent" variant is structurally different.
+   - Equal line/branch/toggle totals do not imply a location-for-location correspondence of counters.
+   - Equivalence itself is not demonstrated in the packet.
+
+8. **No checker signal.** `distinct_defect_count = 0` everywhere. Bug-finding cannot be assessed, and a vacuous checker cannot be distinguished from a correct one.
+
+9. **Unverifiable provenance.**
+   - SHA-256 hashes are listed but the CSV bytes are absent, so I cannot confirm the JSON rows match the hashed files.
+   - Feedback isolation, checker validity and rewrite soundness require raw transcripts, coverage databases and replay.
+
+## Verdict
+
+The packet is arithmetically internally consistent: all target costs reproduce exactly.
+
+However, it does not show a credible X/Y difference in either RTL version:
+- Endpoint coverage is identical and ceilinged, including the 344/408 toggle plateau.
+- Cycles and executions are redundant restatements of the stopping round.
+- Token differences to target (−1.2k original, −3.9k variant) hinge on single runs, with fully overlapping ranges and inconsistent total-spend direction.
+- A round-1 arm imbalance in tokens and coverage profile is present before any feedback could act.
+
+Treat this as a feasibility pilot only. Before any effect claim, the following are needed:
+- raw-artifact verification of the cross-version duplicate trajectories and the round-1 imbalance,
+- a toggle-reachability audit,
+- a nonzero defect or mutation signal,
+- substantially more independent sessions or IPs.
