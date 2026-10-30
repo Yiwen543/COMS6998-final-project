@@ -62,6 +62,16 @@ class OpenAIModel:
         self.client = OpenAI(api_key=os.environ["OPENAI_API_KEY"],
                              timeout=config["timeout_seconds"], max_retries=0)
 
+    def count_input_tokens(self, messages):
+        """Provider count for the exact structured Responses input payload."""
+        settings = self.config
+        response = self.client.responses.input_tokens.count(
+            model=settings["model"], input=messages,
+            reasoning={"effort": settings["reasoning_effort"]},
+            text={"format": {"type": "json_schema", "name": self.schema_name,
+                             "strict": True, "schema": self.schema}})
+        return response.input_tokens
+
     def generate(self, messages, context):
         settings = self.config
         started = time.perf_counter()

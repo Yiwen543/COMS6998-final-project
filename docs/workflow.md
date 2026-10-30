@@ -1,5 +1,10 @@
 # Accepted workflow and next milestones
 
+> Historical baseline workflow from the first arbiter integration. Its
+> "Research phases still to implement" section records the plan at that time;
+> see [current project status](PROJECT_STATUS.md) for completed pilots and the
+> remaining evaluation boundary.
+
 ## Sources and interpretation
 
 Read the user's [shared conversation](https://chatgpt.com/share/6ad2379f-fa20-83ea-9100-8175c13b6986)

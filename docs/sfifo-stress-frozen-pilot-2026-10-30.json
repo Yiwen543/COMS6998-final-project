@@ -1,0 +1,74 @@
+{
+  "scope": "pre-model-call frozen mechanism pilot; synthetic FIFO variant, not a second natural benchmark IP",
+  "primary_target": {
+    "metric": "all source-distinct late equivalent-guard Verilator branch/if counters",
+    "source_lines": [
+      91,
+      161,
+      96,
+      179
+    ],
+    "counter_type": "branch",
+    "outcome": "if",
+    "required_covered": 4,
+    "denominator_policy": "retain every original DUT counter; target subset does not replace raw coverage denominator"
+  },
+  "budget": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 8192,
+    "timeout_seconds": 90,
+    "max_retries": 1,
+    "repetitions": 3,
+    "rounds": 6,
+    "max_new_cycles": 8,
+    "arms": [
+      "A",
+      "B",
+      "P",
+      "C"
+    ]
+  },
+  "boundary": "DUT, spec, checker, driver, seed, simulator and raw DUT denominator fixed; LLM emits JSON actions only",
+  "seed_raw_denominator": {
+    "branch": 24,
+    "expr": 16,
+    "line": 22,
+    "toggle": 338
+  },
+  "selection_gate": {
+    "qualifying_groups": 4,
+    "late_guard_groups": 2,
+    "independent_B_development": "results/sfifo_stress_b_development_live_20261030",
+    "claude_preoutcome_review": "results/sfifo_stress_claude_preaudit_20261030/review.txt"
+  },
+  "files_sha256": {
+    "examples/heldout_sfifo/rtl/sfifo.v": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+    "examples/heldout_sfifo_stress/rtl/sfifo.v": "309bf3231693e5f468a00c9b2ef8e9f02f7fc4728c3592a7932d520ba53b9289",
+    "examples/heldout_sfifo_stress/docs/specification.md": "c6fbde32d4d23670b741a47ca14de4f05e43b70f8d7eaa4b662c969a64e5d2a1",
+    "examples/heldout_sfifo_stress/verif/tb_sfifo_stress_fixed.sv": "bd8a326f7aa1c1e11b7db92540f11712955b5865eeb44c4b0d277c4d4a0d2035",
+    "configs/sfifo_stress_seed.json": "871178fd2d9c0ee8e5161288835ae6bd0480a3ccbb383c79fb452156380796eb",
+    "configs/sfifo_stress_abpc_frozen.json": "e132e6b0c406f9c720c86cc71d21cea1b640a5b8bcbd42c5b46a26e2e089d117",
+    "scripts/sfifo_fixture.py": "c8bf77d9829e259f2ab3b025e0aa2410ddc9be5b429b5ab0f7ea3a7743f39589",
+    "scripts/build_sfifo_stress_variant.py": "bc4f458db92c9dd06a30d448b49c6e484212233eae0e6692cc82bb3c73c960de",
+    "scripts/run_sfifo_stress_fixed.py": "0895f5007c3865535e039a7ce27ff643a9606d98ce84ef982e2ac9ef7d04aa48",
+    "scripts/sfifo_stress_feedback.py": "8c702d5486c3ae01f7ef96e5ce8378dba67d4c7d966e33dbcc3669ed381f443f",
+    "scripts/run_sfifo_stress_experiment.py": "af6cfba87523b9495122ad22539b7f913d5aa01c2c0c69eb116c08b29f49a9d5",
+    "scripts/analyze_sfifo_stress_pilot.py": "47e7e268558ed2c325d5bbc39cffe8804d5456d860b573c9b23a8145b5d11c8e",
+    "scripts/preflight_sfifo_token_count.py": "0990eacf31725515081290a9374e947595ece60ef98f77b7aea6abdf16cad34e",
+    "scripts/token_placebo.py": "04edb10d89bbaefcd7eec12004cad1305f815357abc66aa0a3163b60250f55db",
+    "scripts/pilot_model.py": "e3d67ac3c6897fe6969e96513e7964af0244b7eb3055e2be26726d35472c8b33",
+    "scripts/coverage.py": "73c18d53326c6066a5dc8e6424cb30ddc751d92ee723e17f15a4603c05dc3fce",
+    "scripts/run_pilot.py": "044a54428ab92f17231c7ec8c626566923b2a791215a1a98af82e4a4788fb5ad",
+    "scripts/run_midterm_fixed.py": "91560a3186b33de4c247e932f5377f3020dfe0bd5c8b086ab7d0c7d85cdf12c1",
+    "scripts/run_midterm_b_development.py": "e9f16c8d56d2725c0a7acd6afeae55915f37545ff133f8e933ac34be6b4509ac",
+    "scripts/preflight_heldout.py": "0684d7e7d473fdd48fe6db1e4c6636c8fe5a2744829ece4721a0ec47fb090f1e",
+    "scripts/typed_predicates.py": "680d365a42b4a4d54184691465c61d5f75e1cb614f7b15d4a17362574d46d66a",
+    "scripts/preflight_midterm_candidates.py": "f56180dcd95dc77e274196ac87fa5887c0ef29c6eed323f1d767dbc307437155",
+    "scripts/screen_sfifo_stress.py": "9bccb837588f323a953f4426ab0c5eb9f60860a26f360eab84ada27c1550f597",
+    "egraph/src/main.rs": "800b1f0f550d0e864ff5c1b7849bfcb07fed74786f56932415b28abfc56c9a93",
+    "egraph/Cargo.lock": "858202a0990e705f3e15675a23afc46a2a2e3f7b18e6965505aee957defeade7",
+    "results/midterm_candidate_preflight/sfifo-stress/screen.json": "dfd4844ce6250c75b4660b997161075658c955f8d7afd4caea26cc6c2be955b3",
+    "results/sfifo_stress_token_preflight_20261030/count-evidence.json": "93ec1e876e9c594f7d9188a651ae3c5aadfb38e71b5b3df350eb10a3c7adf51f"
+  }
+}

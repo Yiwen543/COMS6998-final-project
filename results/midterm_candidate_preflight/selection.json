@@ -1,0 +1,1476 @@
+{
+  "status": "candidate preflight only; no specification checker or LLM outcome",
+  "dataset_sha256": "a8af33913138329848f846af39ec04576e347cbc7289b0f2ee921aa4f73a252f",
+  "tool_versions": {
+    "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+    "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+    "z3": "Z3 version 5.1.0 - 64 bit"
+  },
+  "implementation_sha256": {
+    "extractor": "680d365a42b4a4d54184691465c61d5f75e1cb614f7b15d4a17362574d46d66a",
+    "egg_source": "800b1f0f550d0e864ff5c1b7849bfcb07fed74786f56932415b28abfc56c9a93",
+    "preflight": "f56180dcd95dc77e274196ac87fa5887c0ef29c6eed323f1d767dbc307437155"
+  },
+  "rewrite_validation": {
+    "de-morgan-or": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "de-morgan-and": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "double-not": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "and-true": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "and-true-left": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "not-false": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    }
+  },
+  "bitvector_validation": {
+    "1": "eq/ne complement: unsat XOR",
+    "2": "eq/ne complement: unsat XOR",
+    "4": "eq/ne complement: unsat XOR",
+    "16": "eq/ne complement: unsat XOR",
+    "case_01_vs_10": "unsat conjunction"
+  },
+  "ips": [
+    {
+      "id": "cvdp_agentic_64b66b_codec_0007",
+      "slug": "heldout_codec64",
+      "categories": [
+        "cid013",
+        "medium"
+      ],
+      "spec_sha256": "c498a235aade83540e146054e2eba5bf541acf528646f323b7f747c4e0c8945c",
+      "source_sha256": {
+        "examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv": "418269c6e753db2c825ab159f70e41be47d03632ac0d271f3b36321808282310",
+        "examples/heldout_codec64/rtl/encoder_control_64b66b.sv": "02bc4c2dc29cb8b6bffd795e202715b392afb78e39b594fa3937b7b6b82b238c",
+        "examples/heldout_codec64/rtl/encoder_data_64b66b.sv": "293bb8488a8bb87491cdaf7b6c3449d5fde8cd7ee3b12fd44fd343e04fbbfd18",
+        "examples/heldout_codec64/rtl/top_64b66b_codec.sv": "8aef3dcb8acb755f8e442aa40c26bcaeedf7746b45323664508c3140bdf42191"
+      },
+      "testbench_sha256": "ce76e3b3008c9d22ea88370dd235eb2d437347d4ddac1ce861c2dd3a85405e9e",
+      "compile_command": [
+        "verilator",
+        "--binary",
+        "--timing",
+        "--coverage-line",
+        "--coverage-toggle",
+        "--coverage-expr",
+        "-Wno-fatal",
+        "-Wno-TIMESCALEMOD",
+        "-Wno-WIDTHEXPAND",
+        "--top-module",
+        "tb_codec_preflight",
+        "--Mdir",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/midterm_candidate_preflight/heldout_codec64",
+        "-j",
+        "2",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_data_64b66b.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/top_64b66b_codec.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/verif/tb_codec_preflight.sv"
+      ],
+      "seed_coverage": {
+        "branch": {
+          "covered": 16,
+          "total": 96,
+          "percent": 16.667
+        },
+        "expr": {
+          "covered": 3,
+          "total": 32,
+          "percent": 9.375
+        },
+        "line": {
+          "covered": 17,
+          "total": 109,
+          "percent": 15.596
+        },
+        "toggle": {
+          "covered": 23,
+          "total": 2074,
+          "percent": 1.109
+        }
+      },
+      "calibration_coverage": {
+        "branch": {
+          "covered": 37,
+          "total": 96,
+          "percent": 38.542
+        },
+        "expr": {
+          "covered": 24,
+          "total": 32,
+          "percent": 75.0
+        },
+        "line": {
+          "covered": 35,
+          "total": 109,
+          "percent": 32.11
+        },
+        "toggle": {
+          "covered": 1048,
+          "total": 2074,
+          "percent": 50.53
+        }
+      },
+      "semantic_extraction": [
+        {
+          "module": "decoder_data_control_64b66b",
+          "targets": 22,
+          "unsupported": 82
+        },
+        {
+          "module": "encoder_control_64b66b",
+          "targets": 60,
+          "unsupported": 34
+        },
+        {
+          "module": "encoder_data_64b66b",
+          "targets": 8,
+          "unsupported": 0
+        }
+      ],
+      "groups": [
+        {
+          "source": "examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv",
+          "eclass_local": 6,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (not p_799c491159156e32) true) p_2d5805bfedbe25d4)",
+          "member_ids": [
+            "decoder_data_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv:41$3:45:18:1'1",
+            "decoder_data_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv:72$5:76:18:1'1",
+            "decoder_data_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv:118$7:122:18:1'1",
+            "decoder_data_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv:131$11:135:18:1'1",
+            "decoder_data_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv:147$15:151:18:1'1"
+          ],
+          "members": [
+            {
+              "line": 45,
+              "column": 18,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 45,
+                "column": 14,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 45,
+                "column": 14,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 3
+              }
+            },
+            {
+              "line": 76,
+              "column": 18,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 76,
+                "column": 14,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 76,
+                "column": 14,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 3
+              }
+            },
+            {
+              "line": 122,
+              "column": 18,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 122,
+                "column": 14,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 122,
+                "column": 14,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 3
+              }
+            },
+            {
+              "line": 135,
+              "column": 18,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 135,
+                "column": 14,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 135,
+                "column": 14,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 3
+              }
+            },
+            {
+              "line": 151,
+              "column": 18,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 151,
+                "column": 14,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 151,
+                "column": 14,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 3
+              }
+            }
+          ],
+          "z3_pair_checks": 4,
+          "qualifies_preflight": true
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv",
+          "eclass_local": 7,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (and (not p_799c491159156e32) true) p_2d5805bfedbe25d4) p_0bdec8ec545f3060)",
+          "member_ids": [
+            "decoder_data_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv:41$3:46:17:1'1",
+            "decoder_data_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv:131$11:136:17:1'1",
+            "decoder_data_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/decoder_data_control_64b66b.sv:147$15:152:17:1'1"
+          ],
+          "members": [
+            {
+              "line": 46,
+              "column": 17,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 46,
+                "column": 13,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 46,
+                "column": 13,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 2
+              }
+            },
+            {
+              "line": 136,
+              "column": 17,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 136,
+                "column": 13,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 136,
+                "column": 13,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 2
+              }
+            },
+            {
+              "line": 152,
+              "column": 17,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 152,
+                "column": 13,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 152,
+                "column": 13,
+                "hierarchy": "tb_codec_preflight.dut.u_decoder_data_control",
+                "hits": 2
+              }
+            }
+          ],
+          "z3_pair_checks": 2,
+          "qualifies_preflight": true
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 5,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (not p_799c491159156e32) true) p_17cd2a527495082f)",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:12:13:8'11111111",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:129:17:8'11111111"
+          ],
+          "members": [
+            {
+              "line": 12,
+              "column": 13,
+              "case_value": "8'11111111",
+              "source_mapping": "text_literal",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 12,
+                "column": 24,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 12,
+                "column": 24,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            },
+            {
+              "line": 129,
+              "column": 17,
+              "case_value": "8'11111111",
+              "source_mapping": "text_literal",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 129,
+                "column": 28,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 129,
+                "column": 28,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": true
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 7,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (and (not p_799c491159156e32) true) p_17cd2a527495082f) p_5d706c9241c656dc)",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:14:21:1'1",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:130:25:1'1"
+          ],
+          "members": [
+            {
+              "line": 14,
+              "column": 21,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 14,
+                "column": 17,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 14,
+                "column": 17,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            },
+            {
+              "line": 130,
+              "column": 25,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 130,
+                "column": 21,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 130,
+                "column": 21,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": true
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 12,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (and (and (not p_799c491159156e32) true) p_17cd2a527495082f) (and (not p_5d706c9241c656dc) true)) p_d37b905619932acf)",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:15:26:1'1",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:131:30:1'1"
+          ],
+          "members": [
+            {
+              "line": 15,
+              "column": 26,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 4,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 15,
+                "column": 22,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 15,
+                "column": 22,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              }
+            },
+            {
+              "line": 131,
+              "column": 30,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 4,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 131,
+                "column": 26,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 131,
+                "column": 26,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": false
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 17,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (and (and (and (not p_799c491159156e32) true) p_17cd2a527495082f) (and (not p_5d706c9241c656dc) true)) (and (not p_d37b905619932acf) true)) p_2afb95c807f76290)",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:16:26:1'1",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:132:30:1'1"
+          ],
+          "members": [
+            {
+              "line": 16,
+              "column": 26,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 5,
+              "seed_coverage": {
+                "status": "unmapped_or_ambiguous",
+                "matching_points": 2
+              },
+              "calibration_coverage": {
+                "status": "unmapped_or_ambiguous",
+                "matching_points": 2
+              }
+            },
+            {
+              "line": 132,
+              "column": 30,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 5,
+              "seed_coverage": {
+                "status": "unmapped_or_ambiguous",
+                "matching_points": 2
+              },
+              "calibration_coverage": {
+                "status": "unmapped_or_ambiguous",
+                "matching_points": 2
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": false
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 24,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (not p_799c491159156e32) true) (and (not p_17cd2a527495082f) p_31e8e9b6ffff9081))",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:25:13:8'00011111",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:135:17:8'00011111"
+          ],
+          "members": [
+            {
+              "line": 25,
+              "column": 13,
+              "case_value": "8'00011111",
+              "source_mapping": "text_literal",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 25,
+                "column": 24,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 25,
+                "column": 24,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            },
+            {
+              "line": 135,
+              "column": 17,
+              "case_value": "8'00011111",
+              "source_mapping": "text_literal",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 135,
+                "column": 28,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 135,
+                "column": 28,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": true
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 26,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (and (not p_799c491159156e32) true) (and (not p_17cd2a527495082f) p_31e8e9b6ffff9081)) p_a4492d634d0dad5f)",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:26:21:1'1",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:136:25:1'1"
+          ],
+          "members": [
+            {
+              "line": 26,
+              "column": 21,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 26,
+                "column": 17,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 26,
+                "column": 17,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            },
+            {
+              "line": 136,
+              "column": 25,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 136,
+                "column": 21,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 136,
+                "column": 21,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": true
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 31,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (and (and (not p_799c491159156e32) true) (and (not p_17cd2a527495082f) p_31e8e9b6ffff9081)) (and (not p_a4492d634d0dad5f) true)) p_d738969997eb4fdc)",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:27:26:1'1",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:137:30:1'1"
+          ],
+          "members": [
+            {
+              "line": 27,
+              "column": 26,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 4,
+              "seed_coverage": {
+                "status": "unmapped_or_ambiguous",
+                "matching_points": 2
+              },
+              "calibration_coverage": {
+                "status": "unmapped_or_ambiguous",
+                "matching_points": 2
+              }
+            },
+            {
+              "line": 137,
+              "column": 30,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 4,
+              "seed_coverage": {
+                "status": "unmapped_or_ambiguous",
+                "matching_points": 2
+              },
+              "calibration_coverage": {
+                "status": "unmapped_or_ambiguous",
+                "matching_points": 2
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": false
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 39,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (not p_799c491159156e32) true) (and (not (or p_17cd2a527495082f p_31e8e9b6ffff9081)) p_46ae502f447f7b6f))",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:30:13:8'00000001",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:140:17:8'00000001"
+          ],
+          "members": [
+            {
+              "line": 30,
+              "column": 13,
+              "case_value": "8'00000001",
+              "source_mapping": "text_literal",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 30,
+                "column": 24,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 30,
+                "column": 24,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            },
+            {
+              "line": 140,
+              "column": 17,
+              "case_value": "8'00000001",
+              "source_mapping": "text_literal",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 140,
+                "column": 28,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 140,
+                "column": 28,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": true
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 41,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (and (not p_799c491159156e32) true) (and (not (or p_17cd2a527495082f p_31e8e9b6ffff9081)) p_46ae502f447f7b6f)) p_914300b4589b74a9)",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:31:21:1'1",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:141:25:1'1"
+          ],
+          "members": [
+            {
+              "line": 31,
+              "column": 21,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 31,
+                "column": 17,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 31,
+                "column": 17,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            },
+            {
+              "line": 141,
+              "column": 25,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 141,
+                "column": 21,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 141,
+                "column": 21,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 1
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": true
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 49,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (not p_799c491159156e32) true) (and (not (or (or p_17cd2a527495082f p_31e8e9b6ffff9081) p_46ae502f447f7b6f)) p_a21ebfea5cd19a08))",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:34:13:8'11111110",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:144:17:8'11111110"
+          ],
+          "members": [
+            {
+              "line": 34,
+              "column": 13,
+              "case_value": "8'11111110",
+              "source_mapping": "text_literal",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 34,
+                "column": 24,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 34,
+                "column": 24,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              }
+            },
+            {
+              "line": 144,
+              "column": 17,
+              "case_value": "8'11111110",
+              "source_mapping": "text_literal",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 144,
+                "column": 28,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 144,
+                "column": 28,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": false
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 51,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (and (not p_799c491159156e32) true) (and (not (or (or p_17cd2a527495082f p_31e8e9b6ffff9081) p_46ae502f447f7b6f)) p_a21ebfea5cd19a08)) p_4417876730a59bbc)",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:35:21:1'1",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:145:25:1'1"
+          ],
+          "members": [
+            {
+              "line": 35,
+              "column": 21,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 35,
+                "column": 17,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 35,
+                "column": 17,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              }
+            },
+            {
+              "line": 145,
+              "column": 25,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 145,
+                "column": 21,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 145,
+                "column": 21,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": false
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 59,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (not p_799c491159156e32) true) (and (not (or (or (or p_17cd2a527495082f p_31e8e9b6ffff9081) p_46ae502f447f7b6f) p_a21ebfea5cd19a08)) p_38c83bea88f9759d))",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:38:13:8'11111100",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:148:17:8'11111100"
+          ],
+          "members": [
+            {
+              "line": 38,
+              "column": 13,
+              "case_value": "8'11111100",
+              "source_mapping": "text_literal",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 38,
+                "column": 24,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 38,
+                "column": 24,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              }
+            },
+            {
+              "line": 148,
+              "column": 17,
+              "case_value": "8'11111100",
+              "source_mapping": "text_literal",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 148,
+                "column": 28,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "case",
+                "line": 148,
+                "column": 28,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": false
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_control_64b66b.sv",
+          "eclass_local": 61,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (and (not p_799c491159156e32) true) (and (not (or (or (or p_17cd2a527495082f p_31e8e9b6ffff9081) p_46ae502f447f7b6f) p_a21ebfea5cd19a08)) p_38c83bea88f9759d)) p_e40d804d031171b9)",
+          "member_ids": [
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:39:21:1'1",
+            "encoder_control_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_control_64b66b.sv:111$2:149:25:1'1"
+          ],
+          "members": [
+            {
+              "line": 39,
+              "column": 21,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 39,
+                "column": 17,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 39,
+                "column": 17,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              }
+            },
+            {
+              "line": 149,
+              "column": 25,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 3,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 149,
+                "column": 21,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 149,
+                "column": 21,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_control",
+                "hits": 0
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": false
+        },
+        {
+          "source": "examples/heldout_codec64/rtl/encoder_data_64b66b.sv",
+          "eclass_local": 5,
+          "event_context": [
+            "posedge \\clk_in",
+            "posedge \\rst_in"
+          ],
+          "reference_guard": "(and (and (not p_799c491159156e32) true) p_abc4e6eb59df226c)",
+          "member_ids": [
+            "encoder_data_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_data_64b66b.sv:12$1:18:17:1'1",
+            "encoder_data_64b66b:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_codec64/rtl/encoder_data_64b66b.sv:30$3:35:17:1'1"
+          ],
+          "members": [
+            {
+              "line": 18,
+              "column": 17,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 18,
+                "column": 13,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_data",
+                "hits": 4
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 18,
+                "column": 13,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_data",
+                "hits": 6
+              }
+            },
+            {
+              "line": 35,
+              "column": 17,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 35,
+                "column": 13,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_data",
+                "hits": 4
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "branch",
+                "outcome": "if",
+                "line": 35,
+                "column": 13,
+                "hierarchy": "tb_codec_preflight.dut.u_encoder_data",
+                "hits": 6
+              }
+            }
+          ],
+          "z3_pair_checks": 1,
+          "qualifies_preflight": false
+        }
+      ],
+      "qualifying_group_count": 8
+    },
+    {
+      "id": "cvdp_agentic_search_algorithm_0001",
+      "slug": "heldout_linear_search",
+      "categories": [
+        "cid012",
+        "medium"
+      ],
+      "spec_sha256": "5e75ea4833f1523ff4fe6dcb0180e3fcfffbf8a70b01c9ae42b6a224bfc057c4",
+      "source_sha256": {
+        "examples/heldout_linear_search/rtl/linear_search_ctrl.sv": "8a560343730034684761de34906e63ac1521a3d0d49f8a046eb1e395751d3a54",
+        "examples/heldout_linear_search/rtl/linear_search_datapath.sv": "8dc2cfc5985a523b1de00290b3d38830944aa0042d24662d65aaf45d9acccadc",
+        "examples/heldout_linear_search/rtl/linear_search_top.sv": "d8ffd54f20dd60f75025b5db3cabfffaa256bac8326f5991cf2809db9f0b1039"
+      },
+      "testbench_sha256": "05d58714314daab07a76392ddba73b042f9f125f85b7b8fc466c1941ac7e17f6",
+      "compile_command": [
+        "verilator",
+        "--binary",
+        "--timing",
+        "--coverage-line",
+        "--coverage-toggle",
+        "--coverage-expr",
+        "-Wno-fatal",
+        "-Wno-TIMESCALEMOD",
+        "-Wno-WIDTHEXPAND",
+        "--top-module",
+        "tb_search_preflight",
+        "--Mdir",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/midterm_candidate_preflight/heldout_linear_search",
+        "-j",
+        "2",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_linear_search/rtl/linear_search_ctrl.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_linear_search/rtl/linear_search_datapath.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_linear_search/rtl/linear_search_top.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_linear_search/verif/tb_search_preflight.sv"
+      ],
+      "seed_coverage": {
+        "branch": {
+          "covered": 8,
+          "total": 26,
+          "percent": 30.769
+        },
+        "expr": {
+          "covered": 5,
+          "total": 18,
+          "percent": 27.778
+        },
+        "line": {
+          "covered": 20,
+          "total": 32,
+          "percent": 62.5
+        },
+        "toggle": {
+          "covered": 12,
+          "total": 334,
+          "percent": 3.593
+        }
+      },
+      "calibration_coverage": {
+        "branch": {
+          "covered": 25,
+          "total": 26,
+          "percent": 96.154
+        },
+        "expr": {
+          "covered": 18,
+          "total": 18,
+          "percent": 100.0
+        },
+        "line": {
+          "covered": 32,
+          "total": 32,
+          "percent": 100.0
+        },
+        "toggle": {
+          "covered": 123,
+          "total": 334,
+          "percent": 36.826
+        }
+      },
+      "semantic_extraction": [
+        {
+          "module": "linear_search_ctrl",
+          "targets": 2,
+          "unsupported": 13
+        },
+        {
+          "module": "linear_search_datapath",
+          "targets": 25,
+          "unsupported": 15
+        }
+      ],
+      "groups": [
+        {
+          "source": "examples/heldout_linear_search/rtl/linear_search_datapath.sv",
+          "eclass_local": 13,
+          "event_context": [
+            "posedge \\clk",
+            "posedge \\srst"
+          ],
+          "reference_guard": "(and (and (not p_6625aa16f22e56a3) true) p_0f09139154ab8292)",
+          "member_ids": [
+            "linear_search_datapath:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_linear_search/rtl/linear_search_datapath.sv:44$10:48:18:1'1",
+            "linear_search_datapath:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_linear_search/rtl/linear_search_datapath.sv:68$19:77:18:1'1",
+            "linear_search_datapath:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_linear_search/rtl/linear_search_datapath.sv:107$49:110:18:1'1"
+          ],
+          "members": [
+            {
+              "line": 48,
+              "column": 18,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 48,
+                "column": 14,
+                "hierarchy": "tb_search_preflight.dut.datapath",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 48,
+                "column": 14,
+                "hierarchy": "tb_search_preflight.dut.datapath",
+                "hits": 3
+              }
+            },
+            {
+              "line": 77,
+              "column": 18,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 77,
+                "column": 14,
+                "hierarchy": "tb_search_preflight.dut.datapath",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 77,
+                "column": 14,
+                "hierarchy": "tb_search_preflight.dut.datapath",
+                "hits": 3
+              }
+            },
+            {
+              "line": 110,
+              "column": 18,
+              "case_value": "1'1",
+              "source_mapping": "yosys_src",
+              "guard_depth": 2,
+              "seed_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 110,
+                "column": 14,
+                "hierarchy": "tb_search_preflight.dut.datapath",
+                "hits": 0
+              },
+              "calibration_coverage": {
+                "status": "mapped",
+                "type": "line",
+                "outcome": "elsif",
+                "line": 110,
+                "column": 14,
+                "hierarchy": "tb_search_preflight.dut.datapath",
+                "hits": 3
+              }
+            }
+          ],
+          "z3_pair_checks": 2,
+          "qualifies_preflight": true
+        }
+      ],
+      "qualifying_group_count": 1
+    }
+  ]
+}

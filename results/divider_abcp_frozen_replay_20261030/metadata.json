@@ -1,0 +1,85 @@
+{
+  "mode": "replay",
+  "commit": "054898f27816362e73bd91eabe2960711f85d42d",
+  "hashes": {
+    "examples/heldout_divider/rtl/radix2_div.sv": "64f9f4f2f8adece3b8630e8e14c1a8774c307def39ffc79655f978ef6ca77e30",
+    "examples/heldout_divider/docs/specification.md": "253cc6777bdc9a3b06cfdbb48fd34d7fa62a5b0660161b4f1d787d80dcae13f2",
+    "examples/heldout_divider/verif/tb_divider_fixed.sv": "3639befb0383630a0ada2edf12de558a8d330e0aec475b40e80bfba3376928bd",
+    "configs/divider_seed.json": "4f252dda74116b6d13603c6d08f1153da14f1ff74a601bb60ae5314dbfcadc33",
+    "results/midterm_candidate_preflight/divider-next/screen.json": "5dcdcefc93275d6dc521d48cf3824e1b96422e776a679ac46e95eca5edb55af2",
+    "configs/divider_abcp_frozen.json": "2855b35b981b07202bfec3d5a230e2d951dedd589bca1d070952368107ca218d",
+    "scripts/run_divider_experiment.py": "ae60d7ac53947860de20d979b60814cd86333788c4a179068ac289a50bbe8250",
+    "scripts/divider_feedback.py": "9b8ad4e707df45d3e37c60eea6e326a354175143e0f9e15d7eea297216a7d606",
+    "scripts/divider_fixture.py": "b0ce8a65e5721d3e507e6969e90398307b56da5187f925b28983b3f55437b26e"
+  },
+  "versions": {
+    "python": "3.13.9",
+    "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+    "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+    "openai_sdk": "2.54.0",
+    "matplotlib": "3.11.2"
+  },
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "actions"
+    ],
+    "properties": {
+      "actions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "rst_n",
+            "start",
+            "dividend",
+            "divisor"
+          ],
+          "properties": {
+            "rst_n": {
+              "type": "integer"
+            },
+            "start": {
+              "type": "integer"
+            },
+            "dividend": {
+              "type": "integer"
+            },
+            "divisor": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "limits": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 8192,
+    "timeout_seconds": 90,
+    "max_retries": 1,
+    "max_input_tokens_conservative_byte_cap": 140000,
+    "repetitions": 3,
+    "rounds": 4,
+    "max_new_cycles": 8,
+    "arms": [
+      "A",
+      "B",
+      "P",
+      "C"
+    ],
+    "primary_target": {
+      "metric": "DUT Verilator branch points",
+      "covered": 24,
+      "total": 24
+    },
+    "placebo": "B plus neutral appendix matched to C extra JSON byte length per round",
+    "purpose": "frozen matched divider pilot; primary C versus B, secondary B versus A, placebo length control"
+  }
+}

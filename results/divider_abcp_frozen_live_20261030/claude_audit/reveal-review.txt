@@ -1,0 +1,63 @@
+**Audit: frozen divider A/B/P/C pilot (W=A, X=B, Z=P, Y=C)**
+
+The run was clean: 48 API calls, no retries, and the same DUT, checker, seed and settings in every arm. But the primary metric can't separate the arms. C and B reached 24/24 branches at the same round in all three reps, and C used about 50% more tokens. The key finding is that the last branch every run had to hit is not in any of C's semantic groups, so C's extra feedback had nothing to say about it.
+
+What I read: all of `calls.jsonl` and `rounds.jsonl`, `metadata.json`, `claude_audit/blind-packet.json`, the frozen sources you listed, and four of the 48 prompts (A-1-1, P-1-1, C-1-1 and C-3-1, all rep1). I did not open the simulator `.dat` files or logs, `rewrite-proof.json`, per-run `semantic.json`, the testbench, `tests/rtl/divider_reference.sv`, the CSVs, `summary.json`, the development run, or the other 44 prompts. I did not compute any hashes.
+
+### 1. Same setup in every arm
+- **Supported – fixed files.** `metadata.json` uses commit 054898f and its nine file hashes match `files_sha256` in the frozen pilot JSON. The runner (`run_divider_experiment.py` L63–71) stops if any frozen file or the primary target has changed.
+- **Supported – settings.** Every `calls.jsonl` row has the same settings: gpt-6.1-sol, low effort, 8192 output tokens, 90 s timeout. The returned model always equals the requested one.
+- **Supported – seed and denominator.** Every arm gets the same 4-cycle seed. Totals stay at 22 line / 24 branch / 51 expr / 152 toggle in all 48 rows, and the runner checks that the set of counters never changes (L166–167).
+- **Unresolved – timing of the freeze.** The frozen JSON names the same commit the run used, so I can't confirm the freeze file was committed before the calls. I also didn't check the hashes of files that `metadata.json` doesn't list (egraph `main.rs`, `typed_predicates.py`).
+
+### 2. Prompt contents per arm
+- **Supported – shared fields.** All four arms get the same fields (`divider_feedback.py` L76–85): spec, full RTL, seed, history, and the checker's trace and first failures.
+- **Supported – A has no coverage.** A-1-1 contains no raw coverage block.
+- **Supported – B/P/C get the same raw coverage.** The raw coverage list is identical in P-1-1 and C-1-1, and the unit test asserts that B equals C minus its extra block (round 1 only). I didn't open a B prompt directly.
+- **Supported – placebo length.** The `prompt_bytes` figures add up exactly. B is 15,445 bytes; C adds a 21-byte key plus the 8,798-byte semantic block, giving 24,266; P adds a 35-byte key plus an 8,798-byte string, giving 24,282. The placebo is just a repeated neutral sentence with no IDs, lines or relations.
+- **Discrepancy – placebo is matched on bytes, not tokens.** In round 1, P used 6,538 input tokens against C's 8,660, about 24% fewer. The gap is also there in round 2 (3,278 vs 4,128) and round 3 (2,951 vs 3,499). So P does not control for token load.
+
+### 3. Semantic guard groups (C only)
+- **Supported – guards.** Atoms carry width and signedness. Each group lists both clock and reset events, and every member's guard equals the group's full guard (C-1-1).
+  - The guards are not simplified: they still contain `(not (not p))` and `true` terms.
+- **Supported – separate counters.** Each member keeps its own line, column, counter type and outcome, and some groups mix line and branch counters (e.g. eclass 39: line 86 is a line counter, line 101 a branch counter). Line 86 is mapped by a heuristic rule.
+- **Supported – unsupported cases.** All 7 cases with no source mapping are shown in the prompt; one (the `58$42` case) appears twice. They include absolute local file paths, which is harmless but untidy.
+- **Unresolved – Z3 checks.** The prompts show only how many pair checks ran (4, 1, 1, 1, 1), not their results. I didn't open `rewrite-proof.json`.
+
+### 4. API calls and costs
+- **Supported – calls.** 48 calls = 4 arms × 3 reps × 4 rounds. Every call was attempt 1, completed and accepted, so there were no failed attempts.
+- **Supported – cycle counts.** The figures 16 → 36 → 64 → 100 match replaying the seed plus all accepted history on every run. P rep1 sent only 4 actions in round 3, giving 60 and then 92. The executions count includes the seed run.
+- **Discrepancy – blind packet wording.** The packet says only the "4-cycle seed [is] replayed on each execution". In fact the whole accepted history is replayed, as the frozen `replay_policy` states. This explains why the blind reviewer had to guess the replay rule.
+- **Supported – target costs.** I spot-checked the token sums (e.g. C rep1: 8,891 + 4,358 + 3,664 = 16,913) and all 12 rows agree with `rounds.jsonl`. The blind review's means are correct.
+- **Discrepancy (minor) – column name.** `branch_covered_at_stop` actually holds the value at the first round the target was reached; every run continued to round 4.
+- **Supported – coverage on checker failures.** Rows that record failures still report coverage against the full, unchanged totals (e.g. `rounds.jsonl` line 14).
+
+### 5. Checker and DUT defect
+- **Supported – independent checker.** The checker (`divider_fixture.check`) sees only actions and public outputs, and computes the expected quotient and remainder with plain integer division and modulo.
+- **Supported – original defect.** The RTL adds 1 to any nonzero remainder (`remainder <= next_rem[7:0] + 1'b1`). The runs show it as actual 3, expected 2 (e.g. 173 / 3 at cycle 14).
+- **Unresolved – control test results.** I saw no test output. The test also uses iverilog, while the experiment uses Verilator, and I didn't read the reference RTL.
+- **Caveat.** The divide-by-zero rule (0xFF / 0xFF / done) is a study assumption that happens to match what the DUT does, so this checker can never flag that case.
+
+### 6. C versus B, and threats to validity
+- **Supported – result.** Both reached 24/24 at round 3 in 3/3 reps, with identical coverage paths (branch 20 → 23 → 24), 64 cycles and 4 executions. C's mean tokens were 16,926 vs B's 11,291 (+50%). Wall time was 15.6 vs 15.9 s, which is within noise.
+- **Supported – P and A.** P also hit round 3 in every rep at 13,432 mean tokens. A hit round 3, 3, 4.
+- **Key finding (supported) – the treatment can't affect the primary metric.**
+  - By round 2, all five semantic groups were fully covered in every arm, A included.
+  - The only branch left was on line 51, the zero/nonzero-remainder `if`/`else` (C-3-1 shows only line 51 `else` uncovered, and an empty group list).
+  - Line 51 isn't in any group in `screen.json`, so C's extra block contributed no group information for the deciding branch.
+- **Further threats:**
+  - Every arm sees the full RTL, so coverage feedback largely repeats what the source already shows.
+  - The target and groups were chosen using a development B run on this same DUT, which predicted B would finish in round 3.
+  - n = 3 independent sessions; one DUT and one model.
+  - The placebo isn't token-matched (see section 2).
+  - Toggle coverage (C lowest) was not pre-registered, so it's exploratory only.
+  - The RTL comments ("Normal, correct shift and compare logic") steer every arm equally.
+  - Reps 2–3 got prompt-cache hits, which affects latency only.
+
+### Leakage
+- **Supported (prompts read) – calibration.** The four prompts I read contain no calibration data. The feedback code takes only the seed-run mapping from `screen.json`; calibration hit counts are never passed through.
+- **Supported (prompts read) – repair text.** No repair text appears. The spec says it was excluded.
+- **Unresolved – benchmark failing vectors.** I couldn't compare the stimuli models generated (e.g. 173/3, 255/0) against CVDP's failing examples, because those weren't available to me. The other 44 prompts and the development run are also unchecked.
+
+### Blind review (stage 1)
+Its numbers are accurate, and its saturation and prompt-size conclusions hold up. Its cycle "discrepancy" is really a wording error in the packet, not a flaw in the data.

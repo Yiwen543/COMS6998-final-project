@@ -1,0 +1,75 @@
+{
+  "mode": "live",
+  "commit": "054898f27816362e73bd91eabe2960711f85d42d",
+  "hashes": {
+    "examples/heldout_sfifo/rtl/sfifo.v": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+    "examples/heldout_sfifo/docs/specification.md": "b331704b907457bf032e95d2adcd0a4b1c7cd7689f830312dc9f378cb52458db",
+    "examples/heldout_sfifo/verif/tb_sfifo_fixed.sv": "e22d2c04628731615159537e162a8f2d81404672b35628d9fb8d2227befdf970",
+    "configs/sfifo_seed.json": "871178fd2d9c0ee8e5161288835ae6bd0480a3ccbb383c79fb452156380796eb",
+    "configs/sfifo_bc_development.json": "82ba6d3cbbfa5104985e2d316f2f6f5bc6d17c877bf30289f741c42a6eca8156",
+    "scripts/run_sfifo_bc_development.py": "158654b60d7f37f31b243e4fe2a9a941556de59414c152774dac215b09c4d205",
+    "scripts/sfifo_feedback.py": "66f253f5432eb48bd0fdb184d8fa6a61d5a3f62bc7862e8991449ecf318d1959",
+    "scripts/sfifo_fixture.py": "880573b2d10dbf9c01e1539b0ab00bcaa38559d23ddfe7a16755c19ba78054c1"
+  },
+  "versions": {
+    "python": "3.13.9",
+    "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+    "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+    "openai_sdk": "2.54.0",
+    "matplotlib": "3.11.2"
+  },
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "actions"
+    ],
+    "properties": {
+      "actions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reset",
+            "wr",
+            "rd",
+            "data"
+          ],
+          "properties": {
+            "reset": {
+              "type": "integer"
+            },
+            "wr": {
+              "type": "integer"
+            },
+            "rd": {
+              "type": "integer"
+            },
+            "data": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "limits": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 8192,
+    "timeout_seconds": 90,
+    "max_retries": 1,
+    "max_input_tokens_conservative_byte_cap": 140000,
+    "rounds": 4,
+    "max_new_cycles": 8,
+    "arms": [
+      "B",
+      "C"
+    ],
+    "purpose": "sfifo B/C development screen only; not held-out effectiveness evidence"
+  }
+}

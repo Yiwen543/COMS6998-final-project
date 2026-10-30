@@ -1,0 +1,78 @@
+{
+  "mode": "live",
+  "commit": "054898f27816362e73bd91eabe2960711f85d42d",
+  "hashes": {
+    "examples/heldout_sfifo_stress/rtl/sfifo.v": "309bf3231693e5f468a00c9b2ef8e9f02f7fc4728c3592a7932d520ba53b9289",
+    "examples/heldout_sfifo_stress/docs/specification.md": "01429d3e2a6924e108fd2ec6743ef487c3bb9edf5e53ec86efab56a51089ccdb",
+    "examples/heldout_sfifo_stress/verif/tb_sfifo_stress_fixed.sv": "bd8a326f7aa1c1e11b7db92540f11712955b5865eeb44c4b0d277c4d4a0d2035",
+    "configs/sfifo_stress_seed.json": "871178fd2d9c0ee8e5161288835ae6bd0480a3ccbb383c79fb452156380796eb",
+    "results/midterm_candidate_preflight/sfifo-stress/screen.json": "311afac39b3e1ea3c1e6c3b76e69ec9dc65e446fdaf20fdcbbd79259ad517059",
+    "configs/sfifo_stress_b_development.json": "db9018acbee37fa084f4783ca5ba420451a95227ac211f88e355f822aa05b99c",
+    "scripts/run_sfifo_stress_experiment.py": "e76b8ffc51485d20ba315eaa8328b431c67d8a1bf98a83109cbf7256588edde3",
+    "scripts/sfifo_stress_feedback.py": "23519657f412fdeff13c8a2359c270814673c810e3571346f6da612f5d2963a1",
+    "scripts/sfifo_fixture.py": "c415d5476fcc72f570c421214aca10204442e5feeb892937a6032f105a3b6a41",
+    "scripts/pilot_model.py": "e3d67ac3c6897fe6969e96513e7964af0244b7eb3055e2be26726d35472c8b33",
+    "scripts/token_placebo.py": "77e5b4ca2c2b119b27fbb2226b44466f21322ca9b4de26cc716d88e4b52abcd1"
+  },
+  "versions": {
+    "python": "3.13.9",
+    "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+    "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+    "openai_sdk": "2.54.0",
+    "matplotlib": "3.11.2"
+  },
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "actions"
+    ],
+    "properties": {
+      "actions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reset",
+            "wr",
+            "rd",
+            "data"
+          ],
+          "properties": {
+            "reset": {
+              "type": "integer"
+            },
+            "wr": {
+              "type": "integer"
+            },
+            "rd": {
+              "type": "integer"
+            },
+            "data": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "limits": {
+    "purpose": "Independent B-only development gate for two late depth-16 FIFO guard groups; never pool with formal A/B/P/C",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 8192,
+    "timeout_seconds": 90,
+    "max_retries": 1,
+    "repetitions": 1,
+    "rounds": 4,
+    "max_new_cycles": 8,
+    "max_input_tokens_conservative_byte_cap": 100000,
+    "arms": [
+      "B"
+    ]
+  }
+}

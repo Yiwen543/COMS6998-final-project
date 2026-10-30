@@ -42,7 +42,7 @@ def main():
     build = ROOT / 'build/verilator'
     targets = extract()
     write_json(out / 'predicates.json', targets)
-    env = dict(os.environ, CARGO_HOME=str(ROOT / '.cache/cargo'))
+    env = dict(os.environ)
     print('Building pinned egg engine and instrumented DUT...', flush=True)
     run(['cargo', 'build', '--locked', '--offline', '--manifest-path', 'egraph/Cargo.toml'],
         out / 'egg-build.log', env=env)

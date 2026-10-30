@@ -1,0 +1,170 @@
+# Independent Methodological Review: Blinded W/X/Y/Z FIFO Coverage Pilot
+
+**Bottom line:** All 12 sessions reached the target within 6 rounds. Every value in `target_costs` matches my recomputation from `rounds`. Arms differ only at round granularity (round 5 vs. round 6). The two late events always appear in counter pairs. Cycles, executions and model calls are fixed functions of the round number, so they add no independent information. The token differences mostly reflect per-arm prompt size. Wall-time spread within an arm is about as large as the gaps between arm means. Nothing here supports a ranking beyond description.
+
+---
+
+## 1. Recomputed first-target costs
+
+**Rule used:** the first round in which `late_source_counters_covered = 4`, which I checked against `target_reached = True`. I also recorded the round at which counters first reach 2, to time the first event.
+
+| Session | 1st event round | Target round | Tokens | Cycles | Sim execs | Model calls | Wall (s) | Matches `target_costs`? |
+|---|---|---|---|---|---|---|---|---|
+| W1 | 3 | 6 | 38,335 | 196 | 7 | 6 | 36.90 | yes |
+| W2 | 3 | 6 | 38,240 | 196 | 7 | 6 | 26.93 | yes |
+| W3 | 3 | 6 | 38,346 | 196 | 7 | 6 | 43.33 | yes |
+| X1 | 3 | 5 | 36,754 | 144 | 6 | 5 | 23.59 | yes |
+| X2 | 3 | 5 | 36,803 | 144 | 6 | 5 | 25.42 | yes |
+| X3 | 3 | 5 | 36,796 | 144 | 6 | 5 | 25.74 | yes |
+| Y1 | 3 | 5 | 43,251 | 144 | 6 | 5 | 39.29 | yes |
+| Y2 | 3 | 5 | 43,364 | 144 | 6 | 5 | 33.55 | yes |
+| Y3 | 3 | 5 | 43,264 | 144 | 6 | 5 | 29.22 | yes |
+| Z1 | 3 | 5 | 43,422 | 144 | 6 | 5 | 34.19 | yes |
+| Z2 | 3 | 5 | 43,303 | 144 | 6 | 5 | 30.34 | yes |
+| Z3 | **4** | **6** | 52,965 | 196 | 7 | 6 | 44.55 | yes |
+
+**Arm summaries (n = 3, descriptive only):**
+
+| Arm | Reached by R6 | Reached by R5 | Target round | Tokens mean / median (range) | Cycles mean | Wall mean (range) |
+|---|---|---|---|---|---|---|
+| W | 3/3 | **0/3** | 6, 6, 6 | 38,307 / 38,335 (38,240–38,346) | 196 | 35.72 (26.93–43.33) |
+| X | 3/3 | 3/3 | 5, 5, 5 | 36,784 / 36,796 (36,754–36,803) | 144 | 24.92 (23.59–25.74) |
+| Y | 3/3 | 3/3 | 5, 5, 5 | 43,293 / 43,264 (43,251–43,364) | 144 | 34.02 (29.22–39.29) |
+| Z | 3/3 | 2/3 | 5, 5, 6 | 46,563 / 43,422 (43,303–52,965) | 161.3 | 36.36 (30.34–44.55) |
+
+**On sessions that did not reach the target:**
+- No session is censored at the 6-round limit.
+- W is right at the edge: all three W sessions succeeded in the final allowed round.
+- With a 5-round budget, W would be 0/3 and Z 2/3, with no cost-to-target defined for those sessions.
+- The data do not show what W would have done with a 7th round, or how often it would fail at other budgets.
+- Any cost comparison that silently conditions on success is therefore fragile, even though no session failed here.
+
+**Fixed-budget view (avoids conditioning on success):**
+
+| Arm | Tokens at R5 (mean) | Tokens at R6 (mean) | Wall at R6 (mean) |
+|---|---|---|---|
+| W | 31,086 | 38,307 | 35.72 |
+| X | 36,784 | 44,317 | 28.55 |
+| Y | 43,293 | 51,382 | 37.39 |
+| Z | 43,644 | 51,957 | 39.74 |
+
+---
+
+## 2. Arithmetic and consistency checks
+
+**Checks passed:**
+- **`target_costs` vs. `rounds`:** all 12 rows match exactly on round, tokens, cycles, executions, calls, failures and wall time. I found no arithmetic discrepancy.
+- **Flags:** `target_reached` is True exactly when the late counters equal 4.
+- **Monotonicity:** all cumulative columns and all coverage columns are non-decreasing. This is consistent with replaying the accepted history.
+
+**Cycles follow a closed form.** Cumulative executed cycles equal 4(r+1)² at every round of all 12 sessions (16, 36, 64, 100, 144, 196). One decomposition fits exactly:
+- a 4-cycle seed run, plus
+- in each round r, a replay of 4 seed cycles plus 8r new cycles.
+
+This decomposition is my inference, not documented. It implies one of two things:
+- every round used the full 8-cycle budget and every round was accepted, or
+- the column logs budgeted cycles rather than actual ones.
+
+Either way, cycles grow quadratically because of replay, and carry no information beyond the round number.
+
+**Other fixed or near-fixed columns:**
+- **Executions and model calls:** executions = r + 1 and calls = r everywhere.
+- **Failed attempts:** 0 in all 72 rows. Either the checker never rejected anything or rejections were not logged; this packet cannot tell which.
+- **Token-count requests:** only Z logs any (3 per round, 18 total); W, X and Y log 0. This is a procedural asymmetry between arms. It is undocumented whether these requests:
+  - are included in `cumulative_api_tokens`, or
+  - contribute to Z's wall time.
+
+**Hashes:** I could not verify the SHA-256 values. I was given a JSON rendering, not the CSV files.
+
+---
+
+## 3. Ceiling and floor effects
+
+| Metric | Behaviour | Consequence |
+|---|---|---|
+| Line coverage | 22/22 from round 1 in all 72 rows | Ceiling; zero discriminating power |
+| Branch | 17/24 in all sessions at R1–R2; only values seen are 17 → 20 → 22; 22/24 at R6 in all 12 | Floor early, identical endpoint; 2 branches never covered by anyone |
+| Expression | 11 → 13 → 14 in lockstep with branch; 14/16 at R6 in all 12 | Same; 2 never covered |
+| Late counters | Only values 0, 2, 4 ever appear | Four counters behave as **two binary events**; "4 counters" overstates resolution |
+| Target success | 12/12 by R6 | Ceiling on success rate; W hits the round-limit edge |
+| First event | Round 3 in 11/12 (Z3: round 4) | Near-floor variation |
+| Event-1 → event-2 gap | W: 3 rounds; X, Y, Z: 2 rounds (including Z3) | The only arm-level timing difference is this one-round gap |
+
+**Branch and expression are not independent evidence:**
+- Branch reaches 20 exactly when the late counters reach 2, and 22 exactly when they reach 4.
+- The first event adds 3 branch counters and 2 expression counters; the second adds 2 and 1.
+- The target counters are most likely a subset of the branch metric. So "branch coverage" and "target reached" largely encode the same thing.
+- Whether the 2 residual branches and 2 residual expressions are reachable is unknown. The synthetic-equivalence construction makes unreachability plausible, but this is unverified.
+
+**Toggle is the only coverage metric that varies continuously:**
+
+| Arm | Toggle at R5 (mean) | Toggle at target (mean) | Toggle at R6 (mean; range) |
+|---|---|---|---|
+| W | 169.3 | 175.3 | 175.3 (167–180) |
+| X | 156.7 | 156.7 | 174.7 (172–177) |
+| Y | 161.3 | 161.3 | 176.0 (174–178) |
+| Z | 161.0 | 162.7 | 170.3 (167–173) |
+
+How to read toggle:
+- At R6, all arms sit at about 50–53% of 338. Between-arm differences (≤ 6 toggles) are smaller than within-arm ranges (up to 13).
+- W has the *highest* toggle count at R5 yet reaches the target *later*. So toggle and target progress are decoupled here.
+- Toggle likely reflects data-bit variety and should not be read as progress toward the guard events.
+
+---
+
+## 4. Metric-by-metric comparison
+
+- **Tokens:** most of the arm difference appears to be a fixed per-arm payload, already visible in round 1:
+  - W: 5,460 (identical in all 3 sessions)
+  - X: about 7,860–7,890
+  - Y: about 9,935–9,943
+  - Z: about 9,880–9,980
+
+  Per-round increments then stay roughly constant: W about 5.9–7.2k, X about 6.9–7.5k, Y and Z about 8.1–8.5k.
+  - X needs one fewer round than W but spends more per round. Its token-to-target advantage over W is about 1.5k tokens (≈ 4%).
+  - Z's mean is pulled up roughly 10k tokens by a single session, Z3.
+  - Tokens therefore mainly measure prompt size times rounds needed.
+- **Cycles, executions, calls:** these are deterministic transforms of the target round (see §2). Do not report them as three separate pieces of evidence.
+- **Wall time:**
+  - X has the tightest and lowest wall times. But W's own range (16.4 s) exceeds most between-arm gaps in means.
+  - Single-round jumps (W3 R4: +11.7 s; Y1 R5: +13.3 s) point to API latency or other noise.
+  - Run order, concurrency, and whether Z's extra requests add latency are all unknown.
+  - Wall time is the least interpretable metric here.
+
+---
+
+## 5. Independence concerns among repetitions
+
+- **W2 and W3** have identical toggle trajectories for rounds 1–3 (82, 120, 165) and identical tokens for rounds 1–2 (5,460, 11,314).
+- **X2 and X3** have identical toggles for rounds 2–5 (109, 150, 155, 157).
+- **Round-1 tokens** are identical across W1–W3 and across Y1–Y2.
+
+Generation appears near-deterministic, so the effective number of independent repetitions is below 3. This fits the packet's own caveat that independent sessions need not produce diverse responses.
+
+---
+
+## 6. What the data support vs. what remains unknown
+
+**Data-supported (descriptive, this variant only):**
+1. Every session in every arm reached both late events within 6 rounds, and the target-cost table is arithmetically correct.
+2. X, Y and Z reached the target at round 5 in 8 of 9 sessions; W reached it at round 6 in 3 of 3. The difference is one round and appears entirely in the second event.
+3. Terminal line, branch and expression coverage are identical across all 12 sessions.
+4. Arms differ systematically in tokens per round, from the very first round.
+5. Only Z issued token-count requests.
+
+**Not supported:**
+- Statistical significance, or arm superiority beyond this one variant.
+- Any claim about which arm received semantic or E-graph-derived feedback; the mapping is blinded and I make no such inference.
+- Generalisation to other designs, depths or budgets.
+- Checker validity or treatment isolation.
+
+**Open methods questions:**
+- **Cycles:** Are cycles actual or budgeted? Was every round's stimulus accepted, and what is the acceptance rule?
+- **Z's extra requests:** Are they counted in tokens and wall time? Do they indicate a different code path, and hence imperfect treatment isolation?
+- **Run conditions:** What model, temperature and caching settings were used? What were the run order and concurrency (relevant to wall-time drift)?
+- **Residual coverage:** Are the 2 residual branches and 2 residual expressions reachable?
+- **Target counting:** Are the target counters included in the branch total? Why do the paired counters always flip together (they are equivalent guards, but is that the only reason)?
+- **Toggle scope:** Does toggle coverage include testbench or replay infrastructure signals?
+- **Failures:** Were failures possible and logged? Zero failures in 72 rows warrants confirmation.
+- **Budget sensitivity:** How would the conclusions change at a 5-round or 7+-round budget, given that W sits on the round limit?
+- **Hashes:** Can the SHA-256 values be verified against the actual CSV files?

@@ -1,0 +1,23 @@
+{
+  "purpose": "Matched A/B/token-placebo/C mechanism pilot on disclosed depth-16 FIFO equivalence stress variant; primary C versus B",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "low",
+  "max_output_tokens": 8192,
+  "timeout_seconds": 90,
+  "max_retries": 1,
+  "repetitions": 3,
+  "rounds": 6,
+  "max_new_cycles": 8,
+  "max_input_tokens_conservative_byte_cap": 100000,
+  "placebo_tolerance_tokens": 2,
+  "arms": ["A", "B", "P", "C"],
+  "primary_target": {
+    "metric": "all source-distinct late equivalent-guard Verilator branch/if counters",
+    "source_lines": [91, 161, 96, 179],
+    "counter_type": "branch",
+    "outcome": "if",
+    "required_covered": 4,
+    "denominator_policy": "retain every original DUT counter; target subset does not replace raw coverage denominator"
+  },
+  "placebo": "P is B plus neutral filler matched before every generation attempt to the same-trajectory C-style prompt with OpenAI Responses input_tokens.count; tolerance <= 2 tokens; count calls and time separate"
+}

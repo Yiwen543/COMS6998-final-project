@@ -4,7 +4,7 @@ from pathlib import Path
 
 DUT_SOURCE = 'examples/arbiter/rtl/fixed_priority_arbiter.sv'
 
-def load(path, dut_source=DUT_SOURCE, dut_instance='dut'):
+def load(path, dut_source=DUT_SOURCE, dut_instance='dut', include_descendants=False):
     text = Path(path).read_text()
     if not text.startswith('# SystemC::Coverage-3'):
         raise ValueError('Unsupported coverage format')
@@ -17,7 +17,12 @@ def load(path, dut_source=DUT_SOURCE, dut_instance='dut'):
         source = fields.get('f', '').replace('\\', '/')
         if not (source == dut_source or source.endswith('/' + dut_source)):
             continue
-        if not fields.get('h', '').endswith('.' + dut_instance):
+        hierarchy = fields.get('h', '')
+        if include_descendants:
+            parts = hierarchy.split('.')
+            if dut_instance not in parts:
+                continue
+        elif not hierarchy.endswith('.' + dut_instance):
             continue
         points.append({'source': dut_source, 'line': int(fields['l']),
                        'column': int(fields.get('n', 0)), 'type': fields['t'],

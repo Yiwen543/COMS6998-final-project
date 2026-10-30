@@ -1,8 +1,23 @@
 # E-Graph Augmented RTL Verification
 
-Reproducible first milestone for the COMS 6998 proposal: an immutable CVDP arbiter,
-a specification-based SystemVerilog checker, real Verilator coverage, and a small
-`egg` predicate-normalization feedback loop.
+COMS 6998 research repository for testing whether equality-graph feedback helps
+an LLM generate higher-coverage RTL stimulus at lower cost than raw coverage
+feedback. The fixed DUT, specification, checker, driver and coverage accounting
+are shared across A (text), B (raw coverage), P (token-matched placebo) and C
+(raw coverage plus `egg` semantic groups).
+
+**Current status (30 October 2026):** the initial CVDP arbiter integration,
+stateful pilots, source-mapped typed predicate extraction, Z3-checked Boolean
+rewrites, and matched live A/B/P/C trials are implemented. The controlled
+divider and FIFO stress-variant trials found no repeatable C-over-B gain.
+The FIFO stress variant is synthetic and does not establish generalization to
+natural IP. Start with [project status and repository map](docs/PROJECT_STATUS.md),
+then the [divider](docs/divider_abcp_result_2026-10-30.md) and
+[FIFO](docs/sfifo_stress_abpc_result_2026-10-30.md) reports.
+
+The starter milestone below uses an immutable CVDP arbiter, a specification-based
+SystemVerilog checker, real Verilator coverage, and a small `egg`
+predicate-normalization feedback loop.
 
 The first run is deliberately small. Actual uncovered DUT counters are joined to
 source-mapped predicates, equivalent predicate forms are normalized by `egg`, and
@@ -22,6 +37,10 @@ make test
 make step1
 ```
 
+After local runs, `make clean-generated` removes rebuildable compiler output
+and plot caches while retaining raw experimental evidence. To preview the
+removal list, run `.venv/bin/python scripts/clean_generated.py`.
+
 A fresh macOS environment needs Homebrew and Xcode Command Line Tools:
 
 ```sh
@@ -31,10 +50,12 @@ make test
 make step1
 ```
 
-`make setup` creates `.venv` and builds the locked Rust dependencies. Python uses
-only its standard library. Cargo caches stay in `.cache/cargo`. Once fetched,
-`make step1` builds Cargo offline. No API key, Docker, commercial EDA license, or
-remote LLM call is needed. On Linux install Python 3.12+, C++20-capable GCC/Clang,
+`make setup` creates `.venv` and builds the locked Rust dependencies. The starter
+uses only Python's standard library; live pilots use the packages in
+`requirements-pilot.txt`. Cargo uses the configured user cache. Once fetched,
+`make step1` builds Cargo offline. The starter needs no API key, Docker,
+commercial EDA license, or remote LLM call. On Linux install Python 3.12+,
+C++20-capable GCC/Clang,
 make, Icarus, Yosys, Rust/Cargo, and Verilator with `--coverage-expr` (tested 5.050).
 Older distro Verilator versions may lack that flag or use different counter maps;
 the adapter deliberately fails when an expected mapping is missing.
@@ -163,6 +184,7 @@ See [the evaluation
 contract](docs/workflow.md) and the [paper-to-pilot reproduction
 audit](docs/egraph_reproduction_audit.md).
 
-Original papers remain where supplied and are ignored by Git. NVIDIA example
-code is Apache-2.0 and its specification is CC BY 4.0; attribution and license
-are preserved in `examples/arbiter/`. New project code is MIT licensed.
+Background papers and the proposal are grouped in `project_background_reading/`.
+NVIDIA example code is Apache-2.0 and its specification is CC BY 4.0;
+attribution and license are preserved in `examples/arbiter/`. New project code
+is MIT licensed.

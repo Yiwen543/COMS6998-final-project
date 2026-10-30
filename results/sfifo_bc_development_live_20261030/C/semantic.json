@@ -1,0 +1,764 @@
+{
+  "source": "examples/heldout_sfifo/rtl/sfifo.v",
+  "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+  "extraction": {
+    "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+    "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+    "semantics": "two-state binary Boolean guards; event context kept separate",
+    "atoms": {
+      "p_344426ebf2cbfd00": {
+        "op": "nonzero",
+        "signal": "\\i_reset",
+        "width": 1,
+        "signed": false
+      },
+      "p_a9ba9229e60446bb": {
+        "op": "case_eq",
+        "signal": "{ \\w_wr \\w_rd }",
+        "width": 2,
+        "value": 1,
+        "signed": false
+      },
+      "p_98de20e60020bf4f": {
+        "op": "case_eq",
+        "signal": "{ \\w_wr \\w_rd }",
+        "width": 2,
+        "value": 2,
+        "signed": false
+      },
+      "p_74e8aab1bd173782": {
+        "op": "nonzero",
+        "signal": "\\w_wr",
+        "width": 1,
+        "signed": false
+      },
+      "p_39916e3219d0acee": {
+        "op": "nonzero",
+        "signal": "\\w_rd",
+        "width": 1,
+        "signed": false
+      }
+    },
+    "targets": [
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:87:6:1'1",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 87,
+        "column": 6,
+        "source_text": "if (i_reset)",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "1'1",
+        "switch_signal": "\\i_reset",
+        "compact": "p_344426ebf2cbfd00",
+        "guard_depth": 1,
+        "logic": "two_state_binary",
+        "kind": "explicit_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:89:2:default",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 89,
+        "column": 2,
+        "source_text": "else case({ w_wr, w_rd })",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "default",
+        "switch_signal": "\\i_reset",
+        "compact": "(and (not p_344426ebf2cbfd00) true)",
+        "guard_depth": 1,
+        "logic": "two_state_binary",
+        "kind": "default_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:90:2:2'01",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 90,
+        "column": 2,
+        "source_text": "2'b01: o_fill <= o_fill - 1;",
+        "source_mapping": "text_literal",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "2'01",
+        "switch_signal": "{ \\w_wr \\w_rd }",
+        "compact": "(and (and (not p_344426ebf2cbfd00) true) p_a9ba9229e60446bb)",
+        "guard_depth": 2,
+        "logic": "two_state_binary",
+        "kind": "explicit_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:91:2:2'10",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 91,
+        "column": 2,
+        "source_text": "2'b10: o_fill <= o_fill + 1;",
+        "source_mapping": "text_literal",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "2'10",
+        "switch_signal": "{ \\w_wr \\w_rd }",
+        "compact": "(and (and (not p_344426ebf2cbfd00) true) (and (not p_a9ba9229e60446bb) p_98de20e60020bf4f))",
+        "guard_depth": 2,
+        "logic": "two_state_binary",
+        "kind": "explicit_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:91:30:default",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 91,
+        "column": 30,
+        "source_text": "2'b10: o_fill <= o_fill + 1;",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "default",
+        "switch_signal": "{ \\w_wr \\w_rd }",
+        "compact": "(and (and (not p_344426ebf2cbfd00) true) (and (not (or p_a9ba9229e60446bb p_98de20e60020bf4f)) true))",
+        "guard_depth": 2,
+        "logic": "two_state_binary",
+        "kind": "default_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$11:118:6:1'1",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 118,
+        "column": 6,
+        "source_text": "if (i_reset)",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$11",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "1'1",
+        "switch_signal": "\\i_reset",
+        "compact": "p_344426ebf2cbfd00",
+        "guard_depth": 1,
+        "logic": "two_state_binary",
+        "kind": "explicit_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$11:120:2:default",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 120,
+        "column": 2,
+        "source_text": "else if (w_wr)",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$11",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "default",
+        "switch_signal": "\\i_reset",
+        "compact": "(and (not p_344426ebf2cbfd00) true)",
+        "guard_depth": 1,
+        "logic": "two_state_binary",
+        "kind": "default_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$11:120:11:1'1",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 120,
+        "column": 11,
+        "source_text": "else if (w_wr)",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$11",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "1'1",
+        "switch_signal": "\\w_wr",
+        "compact": "(and (and (not p_344426ebf2cbfd00) true) p_74e8aab1bd173782)",
+        "guard_depth": 2,
+        "logic": "two_state_binary",
+        "kind": "explicit_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:126$13:127:6:1'1",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 127,
+        "column": 6,
+        "source_text": "if (w_wr)",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:126$13",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "1'1",
+        "switch_signal": "\\w_wr",
+        "compact": "p_74e8aab1bd173782",
+        "guard_depth": 1,
+        "logic": "two_state_binary",
+        "kind": "explicit_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$20:143:6:1'1",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 143,
+        "column": 6,
+        "source_text": "if (i_reset)",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$20",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "1'1",
+        "switch_signal": "\\i_reset",
+        "compact": "p_344426ebf2cbfd00",
+        "guard_depth": 1,
+        "logic": "two_state_binary",
+        "kind": "explicit_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$20:145:2:default",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 145,
+        "column": 2,
+        "source_text": "else if (w_rd)",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$20",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "default",
+        "switch_signal": "\\i_reset",
+        "compact": "(and (not p_344426ebf2cbfd00) true)",
+        "guard_depth": 1,
+        "logic": "two_state_binary",
+        "kind": "default_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$20:145:11:1'1",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 145,
+        "column": 11,
+        "source_text": "else if (w_rd)",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$20",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "1'1",
+        "switch_signal": "\\w_rd",
+        "compact": "(and (and (not p_344426ebf2cbfd00) true) p_39916e3219d0acee)",
+        "guard_depth": 2,
+        "logic": "two_state_binary",
+        "kind": "explicit_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:153:6:1'1",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 153,
+        "column": 6,
+        "source_text": "if (i_reset)",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "1'1",
+        "switch_signal": "\\i_reset",
+        "compact": "p_344426ebf2cbfd00",
+        "guard_depth": 1,
+        "logic": "two_state_binary",
+        "kind": "explicit_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:155:2:default",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 155,
+        "column": 2,
+        "source_text": "else case ({ w_wr, w_rd })",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "default",
+        "switch_signal": "\\i_reset",
+        "compact": "(and (not p_344426ebf2cbfd00) true)",
+        "guard_depth": 1,
+        "logic": "two_state_binary",
+        "kind": "default_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:156:2:2'01",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 156,
+        "column": 2,
+        "source_text": "2'b01: r_empty <= (o_fill <= 1);",
+        "source_mapping": "text_literal",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "2'01",
+        "switch_signal": "{ \\w_wr \\w_rd }",
+        "compact": "(and (and (not p_344426ebf2cbfd00) true) p_a9ba9229e60446bb)",
+        "guard_depth": 2,
+        "logic": "two_state_binary",
+        "kind": "explicit_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:157:2:2'10",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 157,
+        "column": 2,
+        "source_text": "2'b10: r_empty <= 1'b0;",
+        "source_mapping": "text_literal",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "2'10",
+        "switch_signal": "{ \\w_wr \\w_rd }",
+        "compact": "(and (and (not p_344426ebf2cbfd00) true) (and (not p_a9ba9229e60446bb) p_98de20e60020bf4f))",
+        "guard_depth": 2,
+        "logic": "two_state_binary",
+        "kind": "explicit_case"
+      },
+      {
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:157:25:default",
+        "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v",
+        "source_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+        "line": 157,
+        "column": 25,
+        "source_text": "2'b10: r_empty <= 1'b0;",
+        "source_mapping": "yosys_src",
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22",
+        "event_context": [
+          "posedge \\i_clk"
+        ],
+        "case_value": "default",
+        "switch_signal": "{ \\w_wr \\w_rd }",
+        "compact": "(and (and (not p_344426ebf2cbfd00) true) (and (not (or p_a9ba9229e60446bb p_98de20e60020bf4f)) true))",
+        "guard_depth": 2,
+        "logic": "two_state_binary",
+        "kind": "default_case"
+      }
+    ],
+    "unsupported": [
+      {
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$11",
+        "rtlil_case": "case",
+        "source": null,
+        "reason": "case has no source mapping"
+      },
+      {
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:126$13",
+        "rtlil_case": "case",
+        "source": null,
+        "reason": "case has no source mapping"
+      },
+      {
+        "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$20",
+        "rtlil_case": "case",
+        "source": null,
+        "reason": "case has no source mapping"
+      }
+    ],
+    "yosys_command": "read_verilog -sv /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v; hierarchy -check -top sfifo; write_rtlil /var/folders/l5/6bx7lhn56z1f2kkl41_jc3tm0000gn/T/tmpzo1dfu_v/preproc.il",
+    "yosys_version": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+    "yosys_warnings": []
+  },
+  "egg": {
+    "eclasses": [
+      {
+        "id": 0,
+        "nodes": [
+          {
+            "children": [],
+            "op": "p_344426ebf2cbfd00"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "nodes": [
+          {
+            "children": [
+              10
+            ],
+            "op": "not"
+          },
+          {
+            "children": [
+              6,
+              18
+            ],
+            "op": "and"
+          },
+          {
+            "children": [
+              11,
+              2
+            ],
+            "op": "and"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "nodes": [
+          {
+            "children": [
+              0
+            ],
+            "op": "not"
+          },
+          {
+            "children": [
+              3,
+              2
+            ],
+            "op": "and"
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "nodes": [
+          {
+            "children": [],
+            "op": "p_74e8aab1bd173782"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "nodes": [
+          {
+            "children": [
+              4
+            ],
+            "op": "not"
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "nodes": [
+          {
+            "children": [
+              3,
+              16
+            ],
+            "op": "and"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "nodes": [
+          {
+            "children": [
+              3,
+              8
+            ],
+            "op": "and"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "nodes": [
+          {
+            "children": [],
+            "op": "p_a9ba9229e60446bb"
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "nodes": [
+          {
+            "children": [
+              3,
+              14
+            ],
+            "op": "and"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "nodes": [
+          {
+            "children": [],
+            "op": "p_98de20e60020bf4f"
+          }
+        ]
+      },
+      {
+        "id": 18,
+        "nodes": [
+          {
+            "children": [
+              7
+            ],
+            "op": "not"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "nodes": [
+          {
+            "children": [
+              4,
+              7
+            ],
+            "op": "or"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "nodes": [
+          {
+            "children": [],
+            "op": "true"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "nodes": [
+          {
+            "children": [
+              3,
+              11
+            ],
+            "op": "and"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "nodes": [
+          {
+            "children": [
+              3,
+              4
+            ],
+            "op": "and"
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "nodes": [
+          {
+            "children": [],
+            "op": "p_39916e3219d0acee"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "nodes": [
+          {
+            "children": [
+              6,
+              7
+            ],
+            "op": "and"
+          }
+        ]
+      }
+    ],
+    "engine": "egg 0.11.0",
+    "iterations": 2,
+    "semantics": "pure two-state one-bit Boolean predicates",
+    "stop_reason": "Some(Saturated)",
+    "targets": [
+      {
+        "eclass": 0,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:87:6:1'1",
+        "representative": "p_344426ebf2cbfd00"
+      },
+      {
+        "eclass": 3,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:89:2:default",
+        "representative": "(not p_344426ebf2cbfd00)"
+      },
+      {
+        "eclass": 5,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:90:2:2'01",
+        "representative": "(and (not p_344426ebf2cbfd00) p_a9ba9229e60446bb)"
+      },
+      {
+        "eclass": 9,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:91:2:2'10",
+        "representative": "(and (not p_344426ebf2cbfd00) (and (not p_a9ba9229e60446bb) p_98de20e60020bf4f))"
+      },
+      {
+        "eclass": 13,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:91:30:default",
+        "representative": "(and (not p_344426ebf2cbfd00) (not (or p_a9ba9229e60446bb p_98de20e60020bf4f)))"
+      },
+      {
+        "eclass": 0,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$11:118:6:1'1",
+        "representative": "p_344426ebf2cbfd00"
+      },
+      {
+        "eclass": 3,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$11:120:2:default",
+        "representative": "(not p_344426ebf2cbfd00)"
+      },
+      {
+        "eclass": 15,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$11:120:11:1'1",
+        "representative": "(and (not p_344426ebf2cbfd00) p_74e8aab1bd173782)"
+      },
+      {
+        "eclass": 14,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:126$13:127:6:1'1",
+        "representative": "p_74e8aab1bd173782"
+      },
+      {
+        "eclass": 0,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$20:143:6:1'1",
+        "representative": "p_344426ebf2cbfd00"
+      },
+      {
+        "eclass": 3,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$20:145:2:default",
+        "representative": "(not p_344426ebf2cbfd00)"
+      },
+      {
+        "eclass": 17,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$20:145:11:1'1",
+        "representative": "(and (not p_344426ebf2cbfd00) p_39916e3219d0acee)"
+      },
+      {
+        "eclass": 0,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:153:6:1'1",
+        "representative": "p_344426ebf2cbfd00"
+      },
+      {
+        "eclass": 3,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:155:2:default",
+        "representative": "(not p_344426ebf2cbfd00)"
+      },
+      {
+        "eclass": 5,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:156:2:2'01",
+        "representative": "(and (not p_344426ebf2cbfd00) p_a9ba9229e60446bb)"
+      },
+      {
+        "eclass": 9,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:157:2:2'10",
+        "representative": "(and (not p_344426ebf2cbfd00) (and (not p_a9ba9229e60446bb) p_98de20e60020bf4f))"
+      },
+      {
+        "eclass": 13,
+        "equivalent": true,
+        "id": "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:157:25:default",
+        "representative": "(and (not p_344426ebf2cbfd00) (not (or p_a9ba9229e60446bb p_98de20e60020bf4f)))"
+      }
+    ]
+  },
+  "groups": [
+    {
+      "eclass_local": 5,
+      "event_context": [
+        "posedge \\i_clk"
+      ],
+      "reference_guard": "(and (and (not p_344426ebf2cbfd00) true) p_a9ba9229e60446bb)",
+      "member_ids": [
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:90:2:2'01",
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:156:2:2'01"
+      ],
+      "members": [
+        {
+          "line": 90,
+          "column": 2,
+          "case_value": "2'01",
+          "source_mapping": "text_literal",
+          "guard_depth": 2
+        },
+        {
+          "line": 156,
+          "column": 2,
+          "case_value": "2'01",
+          "source_mapping": "text_literal",
+          "guard_depth": 2
+        }
+      ],
+      "z3_pair_checks": 1
+    },
+    {
+      "eclass_local": 9,
+      "event_context": [
+        "posedge \\i_clk"
+      ],
+      "reference_guard": "(and (and (not p_344426ebf2cbfd00) true) (and (not p_a9ba9229e60446bb) p_98de20e60020bf4f))",
+      "member_ids": [
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$6:91:2:2'10",
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$22:157:2:2'10"
+      ],
+      "members": [
+        {
+          "line": 91,
+          "column": 2,
+          "case_value": "2'10",
+          "source_mapping": "text_literal",
+          "guard_depth": 2
+        },
+        {
+          "line": 157,
+          "column": 2,
+          "case_value": "2'10",
+          "source_mapping": "text_literal",
+          "guard_depth": 2
+        }
+      ],
+      "z3_pair_checks": 1
+    }
+  ]
+}

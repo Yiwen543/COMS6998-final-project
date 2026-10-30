@@ -1,0 +1,125 @@
+{
+  "status": "frozen before A/B/placebo/C calls",
+  "commit": "054898f27816362e73bd91eabe2960711f85d42d",
+  "subject": "one CVDP 8-bit radix2 divider task; not two independent IPs",
+  "primary_comparison": "C versus B",
+  "secondary_comparisons": [
+    "B versus A",
+    "P versus B"
+  ],
+  "primary_target": {
+    "metric": "DUT Verilator branch points",
+    "covered": 24,
+    "total": 24
+  },
+  "denominator_policy": "original DUT counters, unchanged on checker failure; zero-hit points retained",
+  "common_seed_cycles": 4,
+  "replay_policy": "each simulation replays seed and accepted history plus new actions",
+  "limits": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 8192,
+    "timeout_seconds": 90,
+    "max_retries": 1,
+    "repetitions": 3,
+    "rounds": 4,
+    "max_new_cycles": 8
+  },
+  "selection_gate": {
+    "qualified_groups": 5,
+    "B_first_round_fully_covered_groups": 4,
+    "B_first_round_branch": "20/24",
+    "B_first_full_branch_round": 3,
+    "group_progress": [
+      {
+        "eclass": 9,
+        "lines": [
+          25,
+          39,
+          61,
+          80,
+          95
+        ],
+        "first_round_hits": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "covered": true
+      },
+      {
+        "eclass": 11,
+        "lines": [
+          26,
+          81
+        ],
+        "first_round_hits": [
+          1,
+          1
+        ],
+        "covered": true
+      },
+      {
+        "eclass": 18,
+        "lines": [
+          31,
+          41
+        ],
+        "first_round_hits": [
+          5,
+          5
+        ],
+        "covered": true
+      },
+      {
+        "eclass": 33,
+        "lines": [
+          62,
+          96
+        ],
+        "first_round_hits": [
+          1,
+          1
+        ],
+        "covered": true
+      },
+      {
+        "eclass": 39,
+        "lines": [
+          86,
+          101
+        ],
+        "first_round_hits": [
+          0,
+          0
+        ],
+        "covered": false
+      }
+    ],
+    "development_run": "results/divider_b_development_mapping_v2_live_20261030"
+  },
+  "files_sha256": {
+    "examples/heldout_divider/rtl/radix2_div.sv": "64f9f4f2f8adece3b8630e8e14c1a8774c307def39ffc79655f978ef6ca77e30",
+    "examples/heldout_divider/docs/specification.md": "253cc6777bdc9a3b06cfdbb48fd34d7fa62a5b0660161b4f1d787d80dcae13f2",
+    "examples/heldout_divider/verif/tb_divider_fixed.sv": "3639befb0383630a0ada2edf12de558a8d330e0aec475b40e80bfba3376928bd",
+    "configs/divider_seed.json": "4f252dda74116b6d13603c6d08f1153da14f1ff74a601bb60ae5314dbfcadc33",
+    "configs/divider_abcp_frozen.json": "2855b35b981b07202bfec3d5a230e2d951dedd589bca1d070952368107ca218d",
+    "scripts/divider_fixture.py": "b0ce8a65e5721d3e507e6969e90398307b56da5187f925b28983b3f55437b26e",
+    "scripts/divider_feedback.py": "9b8ad4e707df45d3e37c60eea6e326a354175143e0f9e15d7eea297216a7d606",
+    "scripts/run_divider_fixed.py": "3cffb2fc0cd838dfe2f82b114420ee9670603ffc370568fceaf36cac0c2cda96",
+    "scripts/run_divider_experiment.py": "ae60d7ac53947860de20d979b60814cd86333788c4a179068ac289a50bbe8250",
+    "scripts/typed_predicates.py": "680d365a42b4a4d54184691465c61d5f75e1cb614f7b15d4a17362574d46d66a",
+    "scripts/preflight_midterm_candidates.py": "f56180dcd95dc77e274196ac87fa5887c0ef29c6eed323f1d767dbc307437155",
+    "scripts/screen_divider_next.py": "84c5d6e3e6d90697c593ee66872616ad593f630eebf89358ecd226dfea9112aa",
+    "egraph/src/main.rs": "800b1f0f550d0e864ff5c1b7849bfcb07fed74786f56932415b28abfc56c9a93",
+    "tests/rtl/divider_reference.sv": "aaf27f97845a2ac2d7c16f03bda73a217e0383f9efd9b4f31e594377af8e641a",
+    "tests/test_divider_fixture.py": "b861d0588b11ae846e82e1337b26152f341fe0d85bcfa69b223363eb704abaa5",
+    "results/midterm_candidate_preflight/divider-next/screen.json": "5dcdcefc93275d6dc521d48cf3824e1b96422e776a679ac46e95eca5edb55af2"
+  },
+  "development_evidence_sha256": {
+    "results/divider_b_development_mapping_v2_live_20261030/summary.json": "843993f816ee05ada4c65d1890f004fbfb9332222dc492affa546a5e95fffff0",
+    "results/divider_b_development_mapping_v2_live_20261030/calls.jsonl": "4c8693d83e4a4d8eff72066adce6a1cf9c9a2a6be818bd4379d083722874c22a"
+  }
+}

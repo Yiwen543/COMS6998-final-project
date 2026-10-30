@@ -1,0 +1,33 @@
+Conduct an independent PRE-OUTCOME methods review for a proposed
+RTL verification feedback experiment. Do not edit files or run shell commands.
+Use only Read/Glob/Grep. GPT has not run A, P, or C on this candidate. Do not
+invent their outcomes or create stimulus vectors. Return a table of supported,
+discrepancy, unresolved findings and a final go/no-go recommendation.
+
+Read:
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/docs/specification.md
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/verif/tb_sfifo_stress_fixed.sv
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/sfifo_fixture.py
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/build_sfifo_stress_variant.py
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/sfifo_stress_feedback.py
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/screen_sfifo_stress.py
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/token_placebo.py
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/midterm_candidate_preflight/sfifo-stress/screen.json
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/midterm_candidate_preflight/sfifo-stress/original-vs-variant-equivalence.log
+- /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/sfifo_stress_b_development_live_20261030/rounds.jsonl
+
+Check: (1) whether the FIFO checker is based on public specification behavior,
+not DUT internals; (2) whether the transformation is synthetic and transparently
+labeled, and what the Yosys equivalence proof actually establishes; (3) whether
+two late guard groups really have distinct zero-hit source counters in the seed
+and positive hits in independent calibration; (4) whether the B development
+trial avoids immediate saturation; (5) whether A/B/P/C information boundaries
+and token placebo plan are fair; (6) whether a proposed primary target requiring
+all four late if-branch source counters plus at least 20/24 raw branch points
+within five 8-cycle rounds is feasible, too easy, or too hard; (7) any leakage,
+selection bias, or other reason the candidate should not enter a small pilot.
+Do not treat the B trial as formal outcome, and do not call a constructed
+variant a natural second benchmark IP. Distinguish what you inspected from
+what you cannot establish with read-only tools.

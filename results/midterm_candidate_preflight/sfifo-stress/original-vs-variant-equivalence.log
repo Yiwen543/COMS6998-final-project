@@ -1,0 +1,1192 @@
+
+-- Running command `read_verilog -sv -D YOSYS /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v; chparam -set BW 8 -set LGFLEN 4 -set OPT_ASYNC_READ 1 -set OPT_WRITE_ON_FULL 0 -set OPT_READ_ON_EMPTY 0 sfifo; rename sfifo gold; read_verilog -sv -D YOSYS /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v; chparam -set BW 8 -set LGFLEN 4 -set OPT_ASYNC_READ 1 -set OPT_WRITE_ON_FULL 0 -set OPT_READ_ON_EMPTY 0 sfifo; rename sfifo gate; proc; memory; equiv_make gold gate equiv; hierarchy -top equiv; equiv_simple; equiv_induct -seq 24; equiv_status -assert' --
+
+1. Executing Verilog-2005 frontend: /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v
+Parsing SystemVerilog input from `/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v' to AST representation.
+Generating RTLIL representation for module `\sfifo'.
+Successfully finished Verilog frontend.
+Parameter \BW = 8
+Parameter \LGFLEN = 4
+Parameter \OPT_ASYNC_READ = 1
+Parameter \OPT_WRITE_ON_FULL = 0
+Parameter \OPT_READ_ON_EMPTY = 0
+
+2. Executing AST frontend in derive mode using pre-parsed AST for module `\sfifo'.
+Parameter \BW = 8
+Parameter \LGFLEN = 4
+Parameter \OPT_ASYNC_READ = 1
+Parameter \OPT_WRITE_ON_FULL = 0
+Parameter \OPT_READ_ON_EMPTY = 0
+Generating RTLIL representation for module `$paramod$1d3122ca83a51bce4ab02fa33022320ee16de720\sfifo'.
+Renaming module \sfifo to \gold.
+
+3. Executing Verilog-2005 frontend: /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v
+Parsing SystemVerilog input from `/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v' to AST representation.
+Generating RTLIL representation for module `\sfifo'.
+Successfully finished Verilog frontend.
+Parameter \BW = 8
+Parameter \LGFLEN = 4
+Parameter \OPT_ASYNC_READ = 1
+Parameter \OPT_WRITE_ON_FULL = 0
+Parameter \OPT_READ_ON_EMPTY = 0
+
+4. Executing AST frontend in derive mode using pre-parsed AST for module `\sfifo'.
+Parameter \BW = 8
+Parameter \LGFLEN = 4
+Parameter \OPT_ASYNC_READ = 1
+Parameter \OPT_WRITE_ON_FULL = 0
+Parameter \OPT_READ_ON_EMPTY = 0
+Generating RTLIL representation for module `$paramod$1d3122ca83a51bce4ab02fa33022320ee16de720\sfifo'.
+Renaming module \sfifo to \gate.
+
+5. Executing PROC pass (convert processes to netlists).
+
+5.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+5.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 3 switch rules as full_case in process $proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:86$112 in module gate.
+Marked 2 switch rules as full_case in process $proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:124$120 in module gate.
+Marked 1 switch rules as full_case in process $proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:140$126 in module gate.
+Marked 2 switch rules as full_case in process $proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:156$133 in module gate.
+Marked 2 switch rules as full_case in process $proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:173$139 in module gate.
+Marked 1 switch rules as full_case in process $proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$37 in module gold.
+Marked 1 switch rules as full_case in process $proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$42 in module gold.
+Marked 1 switch rules as full_case in process $proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:126$44 in module gold.
+Marked 1 switch rules as full_case in process $proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$51 in module gold.
+Marked 1 switch rules as full_case in process $proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$53 in module gold.
+Removed a total of 0 dead cases.
+
+5.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 16 assignments to connections.
+
+5.4. Executing PROC_INIT pass (extract init attributes).
+Found init rule in `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:85$147'.
+  Set init value: \o_fill = 5'00000
+Found init rule in `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:123$148'.
+  Set init value: \wr_addr = 5'00000
+Found init rule in `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:155$149'.
+  Set init value: \rd_addr = 5'00000
+Found init rule in `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:172$150'.
+  Set init value: \r_empty = 1'1
+Found init rule in `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:85$59'.
+  Set init value: \o_fill = 5'00000
+Found init rule in `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:116$60'.
+  Set init value: \wr_addr = 5'00000
+Found init rule in `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:141$61'.
+  Set init value: \rd_addr = 5'00000
+Found init rule in `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:151$62'.
+  Set init value: \r_empty = 1'1
+
+5.5. Executing PROC_ARST pass (detect async resets in processes).
+
+5.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~23 debug messages>
+
+5.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:86$112'.
+     1/1: $0\o_fill[4:0]
+Creating decoders for process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:124$120'.
+     1/1: $0\wr_addr[4:0]
+Creating decoders for process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:140$126'.
+     1/3: $1$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:142$107_EN[7:0]$132
+     2/3: $1$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:142$107_DATA[7:0]$131
+     3/3: $1$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:142$107_ADDR[3:0]$130
+Creating decoders for process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:156$133'.
+     1/1: $0\rd_addr[4:0]
+Creating decoders for process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:173$139'.
+     1/1: $0\r_empty[0:0]
+Creating decoders for process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:205$145'.
+Creating decoders for process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:85$147'.
+Creating decoders for process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:123$148'.
+Creating decoders for process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:155$149'.
+Creating decoders for process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:172$150'.
+Creating decoders for process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$37'.
+     1/1: $0\o_fill[4:0]
+Creating decoders for process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$42'.
+     1/1: $0\wr_addr[4:0]
+Creating decoders for process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:126$44'.
+     1/3: $1$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:128$32_EN[7:0]$50
+     2/3: $1$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:128$32_DATA[7:0]$49
+     3/3: $1$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:128$32_ADDR[3:0]$48
+Creating decoders for process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$51'.
+     1/1: $0\rd_addr[4:0]
+Creating decoders for process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$53'.
+     1/1: $0\r_empty[0:0]
+Creating decoders for process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:181$57'.
+Creating decoders for process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:85$59'.
+Creating decoders for process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:116$60'.
+Creating decoders for process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:141$61'.
+Creating decoders for process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:151$62'.
+
+5.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\gate.\o_data' from process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:205$145'.
+No latch inferred for signal `\gold.\o_data' from process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:181$57'.
+
+5.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\gate.\o_fill' using process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:86$112'.
+  created $dff cell `$procdff$230' with positive edge clock.
+Creating register for signal `\gate.\wr_addr' using process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:124$120'.
+  created $dff cell `$procdff$231' with positive edge clock.
+Creating register for signal `\gate.$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:142$107_ADDR' using process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:140$126'.
+  created $dff cell `$procdff$232' with positive edge clock.
+Creating register for signal `\gate.$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:142$107_DATA' using process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:140$126'.
+  created $dff cell `$procdff$233' with positive edge clock.
+Creating register for signal `\gate.$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:142$107_EN' using process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:140$126'.
+  created $dff cell `$procdff$234' with positive edge clock.
+Creating register for signal `\gate.\rd_addr' using process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:156$133'.
+  created $dff cell `$procdff$235' with positive edge clock.
+Creating register for signal `\gate.\r_empty' using process `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:173$139'.
+  created $dff cell `$procdff$236' with positive edge clock.
+Creating register for signal `\gold.\o_fill' using process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$37'.
+  created $dff cell `$procdff$237' with positive edge clock.
+Creating register for signal `\gold.\wr_addr' using process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$42'.
+  created $dff cell `$procdff$238' with positive edge clock.
+Creating register for signal `\gold.$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:128$32_ADDR' using process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:126$44'.
+  created $dff cell `$procdff$239' with positive edge clock.
+Creating register for signal `\gold.$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:128$32_DATA' using process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:126$44'.
+  created $dff cell `$procdff$240' with positive edge clock.
+Creating register for signal `\gold.$memwr$\mem$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:128$32_EN' using process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:126$44'.
+  created $dff cell `$procdff$241' with positive edge clock.
+Creating register for signal `\gold.\rd_addr' using process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$51'.
+  created $dff cell `$procdff$242' with positive edge clock.
+Creating register for signal `\gold.\r_empty' using process `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$53'.
+  created $dff cell `$procdff$243' with positive edge clock.
+
+5.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+5.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 4 empty switches in `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:86$112'.
+Removing empty process `gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:86$112'.
+Found and cleaned up 3 empty switches in `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:124$120'.
+Removing empty process `gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:124$120'.
+Found and cleaned up 1 empty switch in `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:140$126'.
+Removing empty process `gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:140$126'.
+Found and cleaned up 3 empty switches in `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:156$133'.
+Removing empty process `gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:156$133'.
+Found and cleaned up 3 empty switches in `\gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:173$139'.
+Removing empty process `gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:173$139'.
+Removing empty process `gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:205$145'.
+Removing empty process `gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:85$147'.
+Removing empty process `gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:123$148'.
+Removing empty process `gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:155$149'.
+Removing empty process `gate.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:172$150'.
+Found and cleaned up 2 empty switches in `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$37'.
+Removing empty process `gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:86$37'.
+Found and cleaned up 2 empty switches in `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$42'.
+Removing empty process `gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:117$42'.
+Found and cleaned up 1 empty switch in `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:126$44'.
+Removing empty process `gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:126$44'.
+Found and cleaned up 2 empty switches in `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$51'.
+Removing empty process `gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:142$51'.
+Found and cleaned up 2 empty switches in `\gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$53'.
+Removing empty process `gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:152$53'.
+Removing empty process `gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:181$57'.
+Removing empty process `gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:85$59'.
+Removing empty process `gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:116$60'.
+Removing empty process `gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:141$61'.
+Removing empty process `gold.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:151$62'.
+Cleaned up 23 empty switches.
+
+5.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module gate.
+<suppressed ~7 debug messages>
+Optimizing module gold.
+<suppressed ~4 debug messages>
+
+6. Executing MEMORY pass.
+
+6.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+6.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+6.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+  Analyzing gate.mem write port 0.
+  Analyzing gold.mem write port 0.
+
+6.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+6.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+Checking read port `\mem'[0] in module `\gate':
+    no output FF found.
+Checking read port address `\mem'[0] in module `\gate':
+    address FF has fully-defined init value, not supported.
+Checking read port `\mem'[0] in module `\gold':
+    no output FF found.
+Checking read port address `\mem'[0] in module `\gold':
+    address FF has fully-defined init value, not supported.
+
+6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \gate..
+Finding unused cells or wires in module \gold..
+Removed 8 unused cells and 73 unused wires.
+<suppressed ~10 debug messages>
+
+6.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+6.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+6.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \gate..
+Finding unused cells or wires in module \gold..
+
+6.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+6.11. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+Mapping memory \mem in module \gate:
+  created 16 $dff cells and 0 static cells of width 8.
+  read interface: 0 $dff and 15 $mux cells.
+  write interface: 128 write mux blocks.
+Mapping memory \mem in module \gold:
+  created 16 $dff cells and 0 static cells of width 8.
+  read interface: 0 $dff and 15 $mux cells.
+  write interface: 128 write mux blocks.
+
+7. Executing EQUIV_MAKE pass (creating equiv checking module).
+Presumably equivalent wires: mem[15]_gold (\mem[15]_gold), mem[15]_gate (\mem[15]_gate) -> mem[15]
+Presumably equivalent wires: mem[14]_gold (\mem[14]_gold), mem[14]_gate (\mem[14]_gate) -> mem[14]
+Presumably equivalent wires: mem[13]_gold (\mem[13]_gold), mem[13]_gate (\mem[13]_gate) -> mem[13]
+Presumably equivalent wires: mem[12]_gold (\mem[12]_gold), mem[12]_gate (\mem[12]_gate) -> mem[12]
+Presumably equivalent wires: mem[11]_gold (\mem[11]_gold), mem[11]_gate (\mem[11]_gate) -> mem[11]
+Presumably equivalent wires: mem[10]_gold (\mem[10]_gold), mem[10]_gate (\mem[10]_gate) -> mem[10]
+Presumably equivalent wires: mem[9]_gold (\mem[9]_gold), mem[9]_gate (\mem[9]_gate) -> mem[9]
+Presumably equivalent wires: mem[8]_gold (\mem[8]_gold), mem[8]_gate (\mem[8]_gate) -> mem[8]
+Presumably equivalent wires: mem[7]_gold (\mem[7]_gold), mem[7]_gate (\mem[7]_gate) -> mem[7]
+Presumably equivalent wires: mem[6]_gold (\mem[6]_gold), mem[6]_gate (\mem[6]_gate) -> mem[6]
+Presumably equivalent wires: mem[5]_gold (\mem[5]_gold), mem[5]_gate (\mem[5]_gate) -> mem[5]
+Presumably equivalent wires: mem[4]_gold (\mem[4]_gold), mem[4]_gate (\mem[4]_gate) -> mem[4]
+Presumably equivalent wires: mem[3]_gold (\mem[3]_gold), mem[3]_gate (\mem[3]_gate) -> mem[3]
+Presumably equivalent wires: mem[2]_gold (\mem[2]_gold), mem[2]_gate (\mem[2]_gate) -> mem[2]
+Presumably equivalent wires: mem[1]_gold (\mem[1]_gold), mem[1]_gate (\mem[1]_gate) -> mem[1]
+Presumably equivalent wires: mem[0]_gold (\mem[0]_gold), mem[0]_gate (\mem[0]_gate) -> mem[0]
+Presumably equivalent wires: r_full_gold (\o_fill_gold [4]), r_full_gate (\o_fill_gate [4]) -> r_full
+Presumably equivalent wires: wr_addr_gold (\wr_addr_gold), wr_addr_gate (\wr_addr_gate) -> wr_addr
+Presumably equivalent wires: rd_addr_gold (\rd_addr_gold), rd_addr_gate (\rd_addr_gate) -> rd_addr
+Presumably equivalent wires: w_wr_gold (\w_wr_gold), w_wr_gate (\w_wr_gate) -> w_wr
+Presumably equivalent wires: w_rd_gold (\w_rd_gold), w_rd_gate (\w_rd_gate) -> w_rd
+Presumably equivalent wires: i_clk_gold (\i_clk_gold), i_clk_gate (\i_clk_gate) -> i_clk
+Presumably equivalent wires: i_reset_gold (\i_reset_gold), i_reset_gate (\i_reset_gate) -> i_reset
+Presumably equivalent wires: i_wr_gold (\i_wr_gold), i_wr_gate (\i_wr_gate) -> i_wr
+Presumably equivalent wires: i_data_gold (\i_data_gold), i_data_gate (\i_data_gate) -> i_data
+Presumably equivalent wires: o_full_gold (\o_fill_gold [4]), o_full_gate (\o_fill_gate [4]) -> o_full
+Presumably equivalent wires: o_fill_gold (\o_fill_gold), o_fill_gate (\o_fill_gate) -> o_fill
+Presumably equivalent wires: i_rd_gold (\i_rd_gold), i_rd_gate (\i_rd_gate) -> i_rd
+Presumably equivalent wires: o_data_gold (\o_data_gold), o_data_gate (\o_data_gate) -> o_data
+Presumably equivalent wires: o_empty_gold (\r_empty_gold), o_empty_gate (\r_empty_gate) -> o_empty
+Presumably equivalent wires: r_empty_gold (\r_empty_gold), r_empty_gate (\r_empty_gate) -> r_empty
+Changing input A of cell $memory\mem$wrmux[15][0][6]$897_gate ($mux): \mem[15]_gate [6] -> \mem[15] [6]
+Changing input A of cell $memory\mem$wrmux[15][0][5]$893_gate ($mux): \mem[15]_gate [5] -> \mem[15] [5]
+Changing input A of cell $memory\mem$wrmux[15][0][4]$889_gate ($mux): \mem[15]_gate [4] -> \mem[15] [4]
+Changing input A of cell $memory\mem$wrmux[15][0][3]$885_gate ($mux): \mem[15]_gate [3] -> \mem[15] [3]
+Changing input A of cell $memory\mem$wrmux[15][0][2]$881_gate ($mux): \mem[15]_gate [2] -> \mem[15] [2]
+Changing input A of cell $memory\mem$wrmux[15][0][1]$877_gate ($mux): \mem[15]_gate [1] -> \mem[15] [1]
+Changing input A of cell $memory\mem$wrmux[15][0][0]$873_gate ($mux): \mem[15]_gate [0] -> \mem[15] [0]
+Changing input A of cell $memory\mem$wrmux[14][0][7]$867_gate ($mux): \mem[14]_gate [7] -> \mem[14] [7]
+Changing input A of cell $memory\mem$wrmux[14][0][6]$863_gate ($mux): \mem[14]_gate [6] -> \mem[14] [6]
+Changing input A of cell $memory\mem$wrmux[14][0][5]$859_gate ($mux): \mem[14]_gate [5] -> \mem[14] [5]
+Changing input A of cell $memory\mem$wrmux[14][0][4]$855_gate ($mux): \mem[14]_gate [4] -> \mem[14] [4]
+Changing input A of cell $memory\mem$wrmux[14][0][3]$851_gate ($mux): \mem[14]_gate [3] -> \mem[14] [3]
+Changing input A of cell $memory\mem$wrmux[14][0][2]$847_gate ($mux): \mem[14]_gate [2] -> \mem[14] [2]
+Changing input A of cell $memory\mem$wrmux[14][0][1]$843_gate ($mux): \mem[14]_gate [1] -> \mem[14] [1]
+Changing input A of cell $memory\mem$wrmux[14][0][0]$839_gate ($mux): \mem[14]_gate [0] -> \mem[14] [0]
+Changing input A of cell $memory\mem$wrmux[13][0][7]$833_gate ($mux): \mem[13]_gate [7] -> \mem[13] [7]
+Changing input A of cell $memory\mem$wrmux[13][0][6]$829_gate ($mux): \mem[13]_gate [6] -> \mem[13] [6]
+Changing input A of cell $memory\mem$wrmux[13][0][5]$825_gate ($mux): \mem[13]_gate [5] -> \mem[13] [5]
+Changing input A of cell $memory\mem$wrmux[13][0][4]$821_gate ($mux): \mem[13]_gate [4] -> \mem[13] [4]
+Changing input A of cell $memory\mem$wrmux[13][0][3]$817_gate ($mux): \mem[13]_gate [3] -> \mem[13] [3]
+Changing input A of cell $memory\mem$wrmux[13][0][2]$813_gate ($mux): \mem[13]_gate [2] -> \mem[13] [2]
+Changing input A of cell $memory\mem$wrmux[13][0][1]$809_gate ($mux): \mem[13]_gate [1] -> \mem[13] [1]
+Changing input A of cell $memory\mem$wrmux[13][0][0]$805_gate ($mux): \mem[13]_gate [0] -> \mem[13] [0]
+Changing input A of cell $memory\mem$wrmux[12][0][7]$799_gate ($mux): \mem[12]_gate [7] -> \mem[12] [7]
+Changing input A of cell $memory\mem$wrmux[12][0][6]$795_gate ($mux): \mem[12]_gate [6] -> \mem[12] [6]
+Changing input A of cell $memory\mem$wrmux[12][0][5]$791_gate ($mux): \mem[12]_gate [5] -> \mem[12] [5]
+Changing input A of cell $memory\mem$wrmux[12][0][4]$787_gate ($mux): \mem[12]_gate [4] -> \mem[12] [4]
+Changing input A of cell $memory\mem$wrmux[12][0][3]$783_gate ($mux): \mem[12]_gate [3] -> \mem[12] [3]
+Changing input A of cell $memory\mem$wrmux[12][0][2]$779_gate ($mux): \mem[12]_gate [2] -> \mem[12] [2]
+Changing input A of cell $memory\mem$wrmux[12][0][1]$775_gate ($mux): \mem[12]_gate [1] -> \mem[12] [1]
+Changing input A of cell $memory\mem$wrmux[12][0][0]$771_gate ($mux): \mem[12]_gate [0] -> \mem[12] [0]
+Changing input A of cell $memory\mem$wrmux[11][0][7]$763_gate ($mux): \mem[11]_gate [7] -> \mem[11] [7]
+Changing input A of cell $memory\mem$wrmux[11][0][6]$759_gate ($mux): \mem[11]_gate [6] -> \mem[11] [6]
+Changing input A of cell $memory\mem$wrmux[11][0][5]$755_gate ($mux): \mem[11]_gate [5] -> \mem[11] [5]
+Changing input A of cell $memory\mem$wrmux[11][0][4]$751_gate ($mux): \mem[11]_gate [4] -> \mem[11] [4]
+Changing input A of cell $memory\mem$wrmux[11][0][3]$747_gate ($mux): \mem[11]_gate [3] -> \mem[11] [3]
+Changing input A of cell $memory\mem$wrmux[11][0][2]$743_gate ($mux): \mem[11]_gate [2] -> \mem[11] [2]
+Changing input A of cell $memory\mem$wrmux[11][0][1]$739_gate ($mux): \mem[11]_gate [1] -> \mem[11] [1]
+Changing input A of cell $memory\mem$wrmux[11][0][0]$735_gate ($mux): \mem[11]_gate [0] -> \mem[11] [0]
+Changing input A of cell $memory\mem$wrmux[10][0][7]$729_gate ($mux): \mem[10]_gate [7] -> \mem[10] [7]
+Changing input A of cell $memory\mem$wrmux[10][0][6]$725_gate ($mux): \mem[10]_gate [6] -> \mem[10] [6]
+Changing input A of cell $memory\mem$wrmux[10][0][5]$721_gate ($mux): \mem[10]_gate [5] -> \mem[10] [5]
+Changing input A of cell $memory\mem$wrmux[10][0][4]$717_gate ($mux): \mem[10]_gate [4] -> \mem[10] [4]
+Changing input A of cell $memory\mem$wrmux[10][0][3]$713_gate ($mux): \mem[10]_gate [3] -> \mem[10] [3]
+Changing input A of cell $memory\mem$wrmux[10][0][2]$709_gate ($mux): \mem[10]_gate [2] -> \mem[10] [2]
+Changing input A of cell $memory\mem$wrmux[10][0][1]$705_gate ($mux): \mem[10]_gate [1] -> \mem[10] [1]
+Changing input A of cell $memory\mem$wrmux[10][0][0]$701_gate ($mux): \mem[10]_gate [0] -> \mem[10] [0]
+Changing input A of cell $memory\mem$wrmux[9][0][7]$695_gate ($mux): \mem[9]_gate [7] -> \mem[9] [7]
+Changing input A of cell $memory\mem$wrmux[9][0][6]$691_gate ($mux): \mem[9]_gate [6] -> \mem[9] [6]
+Changing input A of cell $memory\mem$wrmux[9][0][5]$687_gate ($mux): \mem[9]_gate [5] -> \mem[9] [5]
+Changing input A of cell $memory\mem$wrmux[9][0][4]$683_gate ($mux): \mem[9]_gate [4] -> \mem[9] [4]
+Changing input A of cell $memory\mem$wrmux[9][0][3]$679_gate ($mux): \mem[9]_gate [3] -> \mem[9] [3]
+Changing input A of cell $memory\mem$wrmux[9][0][2]$675_gate ($mux): \mem[9]_gate [2] -> \mem[9] [2]
+Changing input A of cell $memory\mem$wrmux[9][0][1]$671_gate ($mux): \mem[9]_gate [1] -> \mem[9] [1]
+Changing input A of cell $memory\mem$wrmux[9][0][0]$667_gate ($mux): \mem[9]_gate [0] -> \mem[9] [0]
+Changing input A of cell $memory\mem$wrmux[8][0][7]$661_gate ($mux): \mem[8]_gate [7] -> \mem[8] [7]
+Changing input A of cell $memory\mem$wrmux[8][0][6]$657_gate ($mux): \mem[8]_gate [6] -> \mem[8] [6]
+Changing input A of cell $memory\mem$wrmux[8][0][5]$653_gate ($mux): \mem[8]_gate [5] -> \mem[8] [5]
+Changing input A of cell $memory\mem$wrmux[8][0][4]$649_gate ($mux): \mem[8]_gate [4] -> \mem[8] [4]
+Changing input A of cell $memory\mem$wrmux[8][0][3]$645_gate ($mux): \mem[8]_gate [3] -> \mem[8] [3]
+Changing input A of cell $memory\mem$wrmux[8][0][2]$641_gate ($mux): \mem[8]_gate [2] -> \mem[8] [2]
+Changing input A of cell $memory\mem$wrmux[8][0][1]$637_gate ($mux): \mem[8]_gate [1] -> \mem[8] [1]
+Changing input A of cell $memory\mem$wrmux[8][0][0]$633_gate ($mux): \mem[8]_gate [0] -> \mem[8] [0]
+Changing input A of cell $memory\mem$wrmux[7][0][7]$623_gate ($mux): \mem[7]_gate [7] -> \mem[7] [7]
+Changing input A of cell $memory\mem$wrmux[7][0][6]$619_gate ($mux): \mem[7]_gate [6] -> \mem[7] [6]
+Changing input A of cell $memory\mem$wrmux[7][0][5]$615_gate ($mux): \mem[7]_gate [5] -> \mem[7] [5]
+Changing input A of cell $memory\mem$wrmux[7][0][4]$611_gate ($mux): \mem[7]_gate [4] -> \mem[7] [4]
+Changing input A of cell $memory\mem$wrmux[7][0][3]$607_gate ($mux): \mem[7]_gate [3] -> \mem[7] [3]
+Changing input A of cell $memory\mem$wrmux[7][0][2]$603_gate ($mux): \mem[7]_gate [2] -> \mem[7] [2]
+Changing input A of cell $memory\mem$wrmux[7][0][1]$599_gate ($mux): \mem[7]_gate [1] -> \mem[7] [1]
+Changing input A of cell $memory\mem$wrmux[7][0][0]$595_gate ($mux): \mem[7]_gate [0] -> \mem[7] [0]
+Changing input A of cell $memory\mem$wrmux[6][0][7]$589_gate ($mux): \mem[6]_gate [7] -> \mem[6] [7]
+Changing input A of cell $memory\mem$wrmux[6][0][6]$585_gate ($mux): \mem[6]_gate [6] -> \mem[6] [6]
+Changing input A of cell $memory\mem$wrmux[6][0][5]$581_gate ($mux): \mem[6]_gate [5] -> \mem[6] [5]
+Changing input A of cell $memory\mem$wrmux[6][0][4]$577_gate ($mux): \mem[6]_gate [4] -> \mem[6] [4]
+Changing input A of cell $memory\mem$wrmux[6][0][3]$573_gate ($mux): \mem[6]_gate [3] -> \mem[6] [3]
+Changing input A of cell $memory\mem$wrmux[6][0][2]$569_gate ($mux): \mem[6]_gate [2] -> \mem[6] [2]
+Changing input A of cell $memory\mem$wrmux[6][0][1]$565_gate ($mux): \mem[6]_gate [1] -> \mem[6] [1]
+Changing input A of cell $memory\mem$wrmux[6][0][0]$561_gate ($mux): \mem[6]_gate [0] -> \mem[6] [0]
+Changing input A of cell $memory\mem$wrmux[5][0][7]$555_gate ($mux): \mem[5]_gate [7] -> \mem[5] [7]
+Changing input A of cell $memory\mem$wrmux[5][0][6]$551_gate ($mux): \mem[5]_gate [6] -> \mem[5] [6]
+Changing input A of cell $memory\mem$wrmux[5][0][5]$547_gate ($mux): \mem[5]_gate [5] -> \mem[5] [5]
+Changing input A of cell $memory\mem$wrmux[5][0][4]$543_gate ($mux): \mem[5]_gate [4] -> \mem[5] [4]
+Changing input A of cell $memory\mem$wrmux[5][0][3]$539_gate ($mux): \mem[5]_gate [3] -> \mem[5] [3]
+Changing input A of cell $memory\mem$wrmux[5][0][2]$535_gate ($mux): \mem[5]_gate [2] -> \mem[5] [2]
+Changing input A of cell $memory\mem$wrmux[5][0][1]$531_gate ($mux): \mem[5]_gate [1] -> \mem[5] [1]
+Changing input A of cell $memory\mem$wrmux[5][0][0]$527_gate ($mux): \mem[5]_gate [0] -> \mem[5] [0]
+Changing input A of cell $memory\mem$wrmux[4][0][7]$521_gate ($mux): \mem[4]_gate [7] -> \mem[4] [7]
+Changing input A of cell $memory\mem$wrmux[4][0][6]$517_gate ($mux): \mem[4]_gate [6] -> \mem[4] [6]
+Changing input A of cell $memory\mem$wrmux[4][0][5]$513_gate ($mux): \mem[4]_gate [5] -> \mem[4] [5]
+Changing input A of cell $memory\mem$wrmux[4][0][4]$509_gate ($mux): \mem[4]_gate [4] -> \mem[4] [4]
+Changing input A of cell $memory\mem$wrmux[4][0][3]$505_gate ($mux): \mem[4]_gate [3] -> \mem[4] [3]
+Changing input A of cell $memory\mem$wrmux[4][0][2]$501_gate ($mux): \mem[4]_gate [2] -> \mem[4] [2]
+Changing input A of cell $memory\mem$wrmux[4][0][1]$497_gate ($mux): \mem[4]_gate [1] -> \mem[4] [1]
+Changing input A of cell $memory\mem$wrmux[4][0][0]$493_gate ($mux): \mem[4]_gate [0] -> \mem[4] [0]
+Changing input A of cell $memory\mem$wrmux[3][0][7]$483_gate ($mux): \mem[3]_gate [7] -> \mem[3] [7]
+Changing input A of cell $memory\mem$wrmux[3][0][6]$479_gate ($mux): \mem[3]_gate [6] -> \mem[3] [6]
+Changing input A of cell $memory\mem$wrmux[3][0][5]$475_gate ($mux): \mem[3]_gate [5] -> \mem[3] [5]
+Changing input A of cell $memory\mem$wrmux[3][0][4]$471_gate ($mux): \mem[3]_gate [4] -> \mem[3] [4]
+Changing input A of cell $memory\mem$wrmux[3][0][3]$467_gate ($mux): \mem[3]_gate [3] -> \mem[3] [3]
+Changing input A of cell $memory\mem$wrmux[3][0][2]$463_gate ($mux): \mem[3]_gate [2] -> \mem[3] [2]
+Changing input A of cell $memory\mem$wrmux[3][0][1]$459_gate ($mux): \mem[3]_gate [1] -> \mem[3] [1]
+Changing input A of cell $memory\mem$wrmux[3][0][0]$455_gate ($mux): \mem[3]_gate [0] -> \mem[3] [0]
+Changing input A of cell $memory\mem$wrmux[2][0][7]$447_gate ($mux): \mem[2]_gate [7] -> \mem[2] [7]
+Changing input A of cell $memory\mem$wrmux[2][0][6]$443_gate ($mux): \mem[2]_gate [6] -> \mem[2] [6]
+Changing input A of cell $memory\mem$wrmux[2][0][5]$439_gate ($mux): \mem[2]_gate [5] -> \mem[2] [5]
+Changing input A of cell $memory\mem$wrmux[2][0][4]$435_gate ($mux): \mem[2]_gate [4] -> \mem[2] [4]
+Changing input A of cell $memory\mem$wrmux[2][0][3]$431_gate ($mux): \mem[2]_gate [3] -> \mem[2] [3]
+Changing input A of cell $memory\mem$wrmux[2][0][2]$427_gate ($mux): \mem[2]_gate [2] -> \mem[2] [2]
+Changing input A of cell $memory\mem$wrmux[2][0][1]$423_gate ($mux): \mem[2]_gate [1] -> \mem[2] [1]
+Changing input A of cell $memory\mem$wrmux[2][0][0]$419_gate ($mux): \mem[2]_gate [0] -> \mem[2] [0]
+Changing input A of cell $memory\mem$wrmux[1][0][7]$409_gate ($mux): \mem[1]_gate [7] -> \mem[1] [7]
+Changing input A of cell $memory\mem$wrmux[1][0][6]$405_gate ($mux): \mem[1]_gate [6] -> \mem[1] [6]
+Changing input A of cell $memory\mem$wrmux[1][0][5]$401_gate ($mux): \mem[1]_gate [5] -> \mem[1] [5]
+Changing input A of cell $memory\mem$wrmux[1][0][4]$397_gate ($mux): \mem[1]_gate [4] -> \mem[1] [4]
+Changing input A of cell $memory\mem$wrmux[1][0][3]$393_gate ($mux): \mem[1]_gate [3] -> \mem[1] [3]
+Changing input A of cell $memory\mem$wrmux[1][0][2]$389_gate ($mux): \mem[1]_gate [2] -> \mem[1] [2]
+Changing input A of cell $memory\mem$wrmux[1][0][1]$385_gate ($mux): \mem[1]_gate [1] -> \mem[1] [1]
+Changing input A of cell $memory\mem$wrmux[1][0][0]$381_gate ($mux): \mem[1]_gate [0] -> \mem[1] [0]
+Changing input A of cell $memory\mem$wrmux[0][0][7]$371_gate ($mux): \mem[0]_gate [7] -> \mem[0] [7]
+Changing input A of cell $memory\mem$wrmux[0][0][6]$367_gate ($mux): \mem[0]_gate [6] -> \mem[0] [6]
+Changing input A of cell $memory\mem$wrmux[0][0][5]$363_gate ($mux): \mem[0]_gate [5] -> \mem[0] [5]
+Changing input A of cell $memory\mem$wrmux[0][0][4]$359_gate ($mux): \mem[0]_gate [4] -> \mem[0] [4]
+Changing input A of cell $memory\mem$wrmux[0][0][3]$355_gate ($mux): \mem[0]_gate [3] -> \mem[0] [3]
+Changing input A of cell $memory\mem$wrmux[0][0][2]$351_gate ($mux): \mem[0]_gate [2] -> \mem[0] [2]
+Changing input A of cell $memory\mem$wrmux[0][0][1]$347_gate ($mux): \mem[0]_gate [1] -> \mem[0] [1]
+Changing input A of cell $memory\mem$wrmux[0][0][0]$343_gate ($mux): \mem[0]_gate [0] -> \mem[0] [0]
+Changing input B of cell $memory\mem$rdmux[0][3][7]$324_gate ($mux): \mem[15]_gate -> \mem[15]
+Changing input A of cell $memory\mem$rdmux[0][3][7]$324_gate ($mux): \mem[14]_gate -> \mem[14]
+Changing input S of cell $memory\mem$rdmux[0][3][7]$324_gate ($mux): \rd_addr_gate [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][6]$321_gate ($mux): \mem[13]_gate -> \mem[13]
+Changing input A of cell $memory\mem$rdmux[0][3][6]$321_gate ($mux): \mem[12]_gate -> \mem[12]
+Changing input S of cell $memory\mem$rdmux[0][3][6]$321_gate ($mux): \rd_addr_gate [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][5]$318_gate ($mux): \mem[11]_gate -> \mem[11]
+Changing input A of cell $memory\mem$rdmux[0][3][5]$318_gate ($mux): \mem[10]_gate -> \mem[10]
+Changing input S of cell $memory\mem$rdmux[0][3][5]$318_gate ($mux): \rd_addr_gate [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][4]$315_gate ($mux): \mem[9]_gate -> \mem[9]
+Changing input A of cell $memory\mem$rdmux[0][3][4]$315_gate ($mux): \mem[8]_gate -> \mem[8]
+Changing input S of cell $memory\mem$rdmux[0][3][4]$315_gate ($mux): \rd_addr_gate [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][3]$312_gate ($mux): \mem[7]_gate -> \mem[7]
+Changing input A of cell $memory\mem$rdmux[0][3][3]$312_gate ($mux): \mem[6]_gate -> \mem[6]
+Changing input S of cell $memory\mem$rdmux[0][3][3]$312_gate ($mux): \rd_addr_gate [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][2]$309_gate ($mux): \mem[5]_gate -> \mem[5]
+Changing input A of cell $memory\mem$rdmux[0][3][2]$309_gate ($mux): \mem[4]_gate -> \mem[4]
+Changing input S of cell $memory\mem$rdmux[0][3][2]$309_gate ($mux): \rd_addr_gate [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][1]$306_gate ($mux): \mem[3]_gate -> \mem[3]
+Changing input A of cell $memory\mem$rdmux[0][3][1]$306_gate ($mux): \mem[2]_gate -> \mem[2]
+Changing input S of cell $memory\mem$rdmux[0][3][1]$306_gate ($mux): \rd_addr_gate [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][0]$303_gate ($mux): \mem[1]_gate -> \mem[1]
+Changing input A of cell $memory\mem$rdmux[0][3][0]$303_gate ($mux): \mem[0]_gate -> \mem[0]
+Changing input S of cell $memory\mem$rdmux[0][3][0]$303_gate ($mux): \rd_addr_gate [0] -> \rd_addr [0]
+Changing input S of cell $memory\mem$rdmux[0][2][3]$300_gate ($mux): \rd_addr_gate [1] -> \rd_addr [1]
+Changing input S of cell $memory\mem$rdmux[0][2][2]$297_gate ($mux): \rd_addr_gate [1] -> \rd_addr [1]
+Changing input S of cell $memory\mem$rdmux[0][2][1]$294_gate ($mux): \rd_addr_gate [1] -> \rd_addr [1]
+Changing input S of cell $memory\mem$rdmux[0][2][0]$291_gate ($mux): \rd_addr_gate [1] -> \rd_addr [1]
+Changing input S of cell $memory\mem$rdmux[0][1][1]$288_gate ($mux): \rd_addr_gate [2] -> \rd_addr [2]
+Changing input S of cell $memory\mem$rdmux[0][1][0]$285_gate ($mux): \rd_addr_gate [2] -> \rd_addr [2]
+Changing input S of cell $memory\mem$rdmux[0][0][0]$282_gate ($mux): \rd_addr_gate [3] -> \rd_addr [3]
+Changing input A of cell $procmux$193_gate ($pmux): \r_empty_gate -> \r_empty
+Changing input A of cell $procmux$194_CMP0_gate ($eq): { \w_wr_gate \w_rd_gate } -> { \w_wr \w_rd }
+Changing input A of cell $procmux$186_CMP0_gate ($eq): { \w_wr_gate \w_rd_gate } -> { \w_wr \w_rd }
+Changing input A of cell $procmux$181_gate ($pmux): \rd_addr_gate -> \rd_addr
+Changing input A of cell $procmux$182_CMP0_gate ($eq): { \w_wr_gate \w_rd_gate } -> { \w_wr \w_rd }
+Changing input S of cell $procmux$179_gate ($mux): \w_wr_gate -> \w_wr
+Changing input B of cell $procmux$179_gate ($mux): \wr_addr_gate [3:0] -> \wr_addr [3:0]
+Changing input S of cell $procmux$176_gate ($mux): \w_wr_gate -> \w_wr
+Changing input S of cell $procmux$173_gate ($mux): \w_wr_gate -> \w_wr
+Changing input A of cell $procmux$168_CMP0_gate ($eq): { \w_wr_gate \w_rd_gate } -> { \w_wr \w_rd }
+Changing input A of cell $procmux$163_gate ($pmux): \wr_addr_gate -> \wr_addr
+Changing input A of cell $procmux$164_CMP0_gate ($eq): { \w_wr_gate \w_rd_gate } -> { \w_wr \w_rd }
+Changing input A of cell $procmux$159_CMP0_gate ($eq): { \w_wr_gate \w_rd_gate } -> { \w_wr \w_rd }
+Changing input A of cell $procmux$154_gate ($pmux): \o_fill_gate -> \o_fill
+Changing input A of cell $procmux$155_CMP0_gate ($eq): { \w_wr_gate \w_rd_gate } -> { \w_wr \w_rd }
+Changing input A of cell $logic_not$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:72$108_gate ($logic_not): \o_fill_gate [4] -> \o_fill [4]
+Changing input A of cell $logic_not$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:73$110_gate ($logic_not): \r_empty_gate -> \r_empty
+Changing input A of cell $eq$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:91$113_gate ($eq): \rd_addr_gate [3:0] -> \rd_addr [3:0]
+Changing input A of cell $add$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:92$114_gate ($add): \o_fill_gate -> \o_fill
+Changing input A of cell $sub$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:93$115_gate ($sub): \o_fill_gate -> \o_fill
+Changing input A of cell $eq$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:96$116_gate ($eq): \o_fill_gate -> \o_fill
+Changing input A of cell $add$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:97$117_gate ($add): \o_fill_gate -> \o_fill
+Changing input A of cell $procmux$195_CMP0_gate ($eq): { \w_wr_gate \w_rd_gate } -> { \w_wr \w_rd }
+Changing input A of cell $ne$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:129$121_gate ($ne): \o_fill_gate -> \o_fill
+Changing input A of cell $sub$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:130$123_gate ($sub): \wr_addr_gate -> \wr_addr
+Changing input A of cell $add$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:131$124_gate ($add): \wr_addr_gate -> \wr_addr
+Changing input A of cell $add$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:133$125_gate ($add): \wr_addr_gate -> \wr_addr
+Changing input A of cell $ne$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:161$134_gate ($ne): \rd_addr_gate [3:0] -> \rd_addr [3:0]
+Changing input A of cell $sub$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:162$136_gate ($sub): \rd_addr_gate -> \rd_addr
+Changing input A of cell $add$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:163$137_gate ($add): \rd_addr_gate -> \rd_addr
+Changing input A of cell $add$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:165$138_gate ($add): \rd_addr_gate -> \rd_addr
+Changing input A of cell $le$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:177$140_gate ($le): \o_fill_gate -> \o_fill
+Changing input A of cell $eq$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:179$141_gate ($eq): \o_fill_gate -> \o_fill
+Changing input A of cell $eq$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:179$142_gate ($logic_not): \o_fill_gate -> \o_fill
+Changing input A of cell $memory\mem$wrmux[15][0][7]$901_gate ($mux): \mem[15]_gate [7] -> \mem[15] [7]
+Changing input A of cell $memory\mem$wrmux[15][0][6]$1550_gold ($mux): \mem[15]_gold [6] -> \mem[15] [6]
+Changing input A of cell $memory\mem$wrmux[15][0][5]$1546_gold ($mux): \mem[15]_gold [5] -> \mem[15] [5]
+Changing input A of cell $memory\mem$wrmux[15][0][4]$1542_gold ($mux): \mem[15]_gold [4] -> \mem[15] [4]
+Changing input A of cell $memory\mem$wrmux[15][0][3]$1538_gold ($mux): \mem[15]_gold [3] -> \mem[15] [3]
+Changing input A of cell $memory\mem$wrmux[15][0][2]$1534_gold ($mux): \mem[15]_gold [2] -> \mem[15] [2]
+Changing input A of cell $memory\mem$wrmux[15][0][1]$1530_gold ($mux): \mem[15]_gold [1] -> \mem[15] [1]
+Changing input A of cell $memory\mem$wrmux[15][0][0]$1526_gold ($mux): \mem[15]_gold [0] -> \mem[15] [0]
+Changing input A of cell $memory\mem$wrmux[14][0][7]$1520_gold ($mux): \mem[14]_gold [7] -> \mem[14] [7]
+Changing input A of cell $memory\mem$wrmux[14][0][6]$1516_gold ($mux): \mem[14]_gold [6] -> \mem[14] [6]
+Changing input A of cell $memory\mem$wrmux[14][0][5]$1512_gold ($mux): \mem[14]_gold [5] -> \mem[14] [5]
+Changing input A of cell $memory\mem$wrmux[14][0][4]$1508_gold ($mux): \mem[14]_gold [4] -> \mem[14] [4]
+Changing input A of cell $memory\mem$wrmux[14][0][3]$1504_gold ($mux): \mem[14]_gold [3] -> \mem[14] [3]
+Changing input A of cell $memory\mem$wrmux[14][0][2]$1500_gold ($mux): \mem[14]_gold [2] -> \mem[14] [2]
+Changing input A of cell $memory\mem$wrmux[14][0][1]$1496_gold ($mux): \mem[14]_gold [1] -> \mem[14] [1]
+Changing input A of cell $memory\mem$wrmux[14][0][0]$1492_gold ($mux): \mem[14]_gold [0] -> \mem[14] [0]
+Changing input A of cell $memory\mem$wrmux[13][0][7]$1486_gold ($mux): \mem[13]_gold [7] -> \mem[13] [7]
+Changing input A of cell $memory\mem$wrmux[13][0][6]$1482_gold ($mux): \mem[13]_gold [6] -> \mem[13] [6]
+Changing input A of cell $memory\mem$wrmux[13][0][5]$1478_gold ($mux): \mem[13]_gold [5] -> \mem[13] [5]
+Changing input A of cell $memory\mem$wrmux[13][0][4]$1474_gold ($mux): \mem[13]_gold [4] -> \mem[13] [4]
+Changing input A of cell $memory\mem$wrmux[13][0][3]$1470_gold ($mux): \mem[13]_gold [3] -> \mem[13] [3]
+Changing input A of cell $memory\mem$wrmux[13][0][2]$1466_gold ($mux): \mem[13]_gold [2] -> \mem[13] [2]
+Changing input A of cell $memory\mem$wrmux[13][0][1]$1462_gold ($mux): \mem[13]_gold [1] -> \mem[13] [1]
+Changing input A of cell $memory\mem$wrmux[13][0][0]$1458_gold ($mux): \mem[13]_gold [0] -> \mem[13] [0]
+Changing input A of cell $memory\mem$wrmux[12][0][7]$1452_gold ($mux): \mem[12]_gold [7] -> \mem[12] [7]
+Changing input A of cell $memory\mem$wrmux[12][0][6]$1448_gold ($mux): \mem[12]_gold [6] -> \mem[12] [6]
+Changing input A of cell $memory\mem$wrmux[12][0][5]$1444_gold ($mux): \mem[12]_gold [5] -> \mem[12] [5]
+Changing input A of cell $memory\mem$wrmux[12][0][4]$1440_gold ($mux): \mem[12]_gold [4] -> \mem[12] [4]
+Changing input A of cell $memory\mem$wrmux[12][0][3]$1436_gold ($mux): \mem[12]_gold [3] -> \mem[12] [3]
+Changing input A of cell $memory\mem$wrmux[12][0][2]$1432_gold ($mux): \mem[12]_gold [2] -> \mem[12] [2]
+Changing input A of cell $memory\mem$wrmux[12][0][1]$1428_gold ($mux): \mem[12]_gold [1] -> \mem[12] [1]
+Changing input A of cell $memory\mem$wrmux[12][0][0]$1424_gold ($mux): \mem[12]_gold [0] -> \mem[12] [0]
+Changing input A of cell $memory\mem$wrmux[11][0][7]$1416_gold ($mux): \mem[11]_gold [7] -> \mem[11] [7]
+Changing input A of cell $memory\mem$wrmux[11][0][6]$1412_gold ($mux): \mem[11]_gold [6] -> \mem[11] [6]
+Changing input A of cell $memory\mem$wrmux[11][0][5]$1408_gold ($mux): \mem[11]_gold [5] -> \mem[11] [5]
+Changing input A of cell $memory\mem$wrmux[11][0][4]$1404_gold ($mux): \mem[11]_gold [4] -> \mem[11] [4]
+Changing input A of cell $memory\mem$wrmux[11][0][3]$1400_gold ($mux): \mem[11]_gold [3] -> \mem[11] [3]
+Changing input A of cell $memory\mem$wrmux[11][0][2]$1396_gold ($mux): \mem[11]_gold [2] -> \mem[11] [2]
+Changing input A of cell $memory\mem$wrmux[11][0][1]$1392_gold ($mux): \mem[11]_gold [1] -> \mem[11] [1]
+Changing input A of cell $memory\mem$wrmux[11][0][0]$1388_gold ($mux): \mem[11]_gold [0] -> \mem[11] [0]
+Changing input A of cell $memory\mem$wrmux[10][0][7]$1382_gold ($mux): \mem[10]_gold [7] -> \mem[10] [7]
+Changing input A of cell $memory\mem$wrmux[10][0][6]$1378_gold ($mux): \mem[10]_gold [6] -> \mem[10] [6]
+Changing input A of cell $memory\mem$wrmux[10][0][5]$1374_gold ($mux): \mem[10]_gold [5] -> \mem[10] [5]
+Changing input A of cell $memory\mem$wrmux[10][0][4]$1370_gold ($mux): \mem[10]_gold [4] -> \mem[10] [4]
+Changing input A of cell $memory\mem$wrmux[10][0][3]$1366_gold ($mux): \mem[10]_gold [3] -> \mem[10] [3]
+Changing input A of cell $memory\mem$wrmux[10][0][2]$1362_gold ($mux): \mem[10]_gold [2] -> \mem[10] [2]
+Changing input A of cell $memory\mem$wrmux[10][0][1]$1358_gold ($mux): \mem[10]_gold [1] -> \mem[10] [1]
+Changing input A of cell $memory\mem$wrmux[10][0][0]$1354_gold ($mux): \mem[10]_gold [0] -> \mem[10] [0]
+Changing input A of cell $memory\mem$wrmux[9][0][7]$1348_gold ($mux): \mem[9]_gold [7] -> \mem[9] [7]
+Changing input A of cell $memory\mem$wrmux[9][0][6]$1344_gold ($mux): \mem[9]_gold [6] -> \mem[9] [6]
+Changing input A of cell $memory\mem$wrmux[9][0][5]$1340_gold ($mux): \mem[9]_gold [5] -> \mem[9] [5]
+Changing input A of cell $memory\mem$wrmux[9][0][4]$1336_gold ($mux): \mem[9]_gold [4] -> \mem[9] [4]
+Changing input A of cell $memory\mem$wrmux[9][0][3]$1332_gold ($mux): \mem[9]_gold [3] -> \mem[9] [3]
+Changing input A of cell $memory\mem$wrmux[9][0][2]$1328_gold ($mux): \mem[9]_gold [2] -> \mem[9] [2]
+Changing input A of cell $memory\mem$wrmux[9][0][1]$1324_gold ($mux): \mem[9]_gold [1] -> \mem[9] [1]
+Changing input A of cell $memory\mem$wrmux[9][0][0]$1320_gold ($mux): \mem[9]_gold [0] -> \mem[9] [0]
+Changing input A of cell $memory\mem$wrmux[8][0][7]$1314_gold ($mux): \mem[8]_gold [7] -> \mem[8] [7]
+Changing input A of cell $memory\mem$wrmux[8][0][6]$1310_gold ($mux): \mem[8]_gold [6] -> \mem[8] [6]
+Changing input A of cell $memory\mem$wrmux[8][0][5]$1306_gold ($mux): \mem[8]_gold [5] -> \mem[8] [5]
+Changing input A of cell $memory\mem$wrmux[8][0][4]$1302_gold ($mux): \mem[8]_gold [4] -> \mem[8] [4]
+Changing input A of cell $memory\mem$wrmux[8][0][3]$1298_gold ($mux): \mem[8]_gold [3] -> \mem[8] [3]
+Changing input A of cell $memory\mem$wrmux[8][0][2]$1294_gold ($mux): \mem[8]_gold [2] -> \mem[8] [2]
+Changing input A of cell $memory\mem$wrmux[8][0][1]$1290_gold ($mux): \mem[8]_gold [1] -> \mem[8] [1]
+Changing input A of cell $memory\mem$wrmux[8][0][0]$1286_gold ($mux): \mem[8]_gold [0] -> \mem[8] [0]
+Changing input A of cell $memory\mem$wrmux[7][0][7]$1276_gold ($mux): \mem[7]_gold [7] -> \mem[7] [7]
+Changing input A of cell $memory\mem$wrmux[7][0][6]$1272_gold ($mux): \mem[7]_gold [6] -> \mem[7] [6]
+Changing input A of cell $memory\mem$wrmux[7][0][5]$1268_gold ($mux): \mem[7]_gold [5] -> \mem[7] [5]
+Changing input A of cell $memory\mem$wrmux[7][0][4]$1264_gold ($mux): \mem[7]_gold [4] -> \mem[7] [4]
+Changing input A of cell $memory\mem$wrmux[7][0][3]$1260_gold ($mux): \mem[7]_gold [3] -> \mem[7] [3]
+Changing input A of cell $memory\mem$wrmux[7][0][2]$1256_gold ($mux): \mem[7]_gold [2] -> \mem[7] [2]
+Changing input A of cell $memory\mem$wrmux[7][0][1]$1252_gold ($mux): \mem[7]_gold [1] -> \mem[7] [1]
+Changing input A of cell $memory\mem$wrmux[7][0][0]$1248_gold ($mux): \mem[7]_gold [0] -> \mem[7] [0]
+Changing input A of cell $memory\mem$wrmux[6][0][7]$1242_gold ($mux): \mem[6]_gold [7] -> \mem[6] [7]
+Changing input A of cell $memory\mem$wrmux[6][0][6]$1238_gold ($mux): \mem[6]_gold [6] -> \mem[6] [6]
+Changing input A of cell $memory\mem$wrmux[6][0][5]$1234_gold ($mux): \mem[6]_gold [5] -> \mem[6] [5]
+Changing input A of cell $memory\mem$wrmux[6][0][4]$1230_gold ($mux): \mem[6]_gold [4] -> \mem[6] [4]
+Changing input A of cell $memory\mem$wrmux[6][0][3]$1226_gold ($mux): \mem[6]_gold [3] -> \mem[6] [3]
+Changing input A of cell $memory\mem$wrmux[6][0][2]$1222_gold ($mux): \mem[6]_gold [2] -> \mem[6] [2]
+Changing input A of cell $memory\mem$wrmux[6][0][1]$1218_gold ($mux): \mem[6]_gold [1] -> \mem[6] [1]
+Changing input A of cell $memory\mem$wrmux[6][0][0]$1214_gold ($mux): \mem[6]_gold [0] -> \mem[6] [0]
+Changing input A of cell $memory\mem$wrmux[5][0][7]$1208_gold ($mux): \mem[5]_gold [7] -> \mem[5] [7]
+Changing input A of cell $memory\mem$wrmux[5][0][6]$1204_gold ($mux): \mem[5]_gold [6] -> \mem[5] [6]
+Changing input A of cell $memory\mem$wrmux[5][0][5]$1200_gold ($mux): \mem[5]_gold [5] -> \mem[5] [5]
+Changing input A of cell $memory\mem$wrmux[5][0][4]$1196_gold ($mux): \mem[5]_gold [4] -> \mem[5] [4]
+Changing input A of cell $memory\mem$wrmux[5][0][3]$1192_gold ($mux): \mem[5]_gold [3] -> \mem[5] [3]
+Changing input A of cell $memory\mem$wrmux[5][0][2]$1188_gold ($mux): \mem[5]_gold [2] -> \mem[5] [2]
+Changing input A of cell $memory\mem$wrmux[5][0][1]$1184_gold ($mux): \mem[5]_gold [1] -> \mem[5] [1]
+Changing input A of cell $memory\mem$wrmux[5][0][0]$1180_gold ($mux): \mem[5]_gold [0] -> \mem[5] [0]
+Changing input A of cell $memory\mem$wrmux[4][0][7]$1174_gold ($mux): \mem[4]_gold [7] -> \mem[4] [7]
+Changing input A of cell $memory\mem$wrmux[4][0][6]$1170_gold ($mux): \mem[4]_gold [6] -> \mem[4] [6]
+Changing input A of cell $memory\mem$wrmux[4][0][5]$1166_gold ($mux): \mem[4]_gold [5] -> \mem[4] [5]
+Changing input A of cell $memory\mem$wrmux[4][0][4]$1162_gold ($mux): \mem[4]_gold [4] -> \mem[4] [4]
+Changing input A of cell $memory\mem$wrmux[4][0][3]$1158_gold ($mux): \mem[4]_gold [3] -> \mem[4] [3]
+Changing input A of cell $memory\mem$wrmux[4][0][2]$1154_gold ($mux): \mem[4]_gold [2] -> \mem[4] [2]
+Changing input A of cell $memory\mem$wrmux[4][0][1]$1150_gold ($mux): \mem[4]_gold [1] -> \mem[4] [1]
+Changing input A of cell $memory\mem$wrmux[4][0][0]$1146_gold ($mux): \mem[4]_gold [0] -> \mem[4] [0]
+Changing input A of cell $memory\mem$wrmux[3][0][7]$1136_gold ($mux): \mem[3]_gold [7] -> \mem[3] [7]
+Changing input A of cell $memory\mem$wrmux[3][0][6]$1132_gold ($mux): \mem[3]_gold [6] -> \mem[3] [6]
+Changing input A of cell $memory\mem$wrmux[3][0][5]$1128_gold ($mux): \mem[3]_gold [5] -> \mem[3] [5]
+Changing input A of cell $memory\mem$wrmux[3][0][4]$1124_gold ($mux): \mem[3]_gold [4] -> \mem[3] [4]
+Changing input A of cell $memory\mem$wrmux[3][0][3]$1120_gold ($mux): \mem[3]_gold [3] -> \mem[3] [3]
+Changing input A of cell $memory\mem$wrmux[3][0][2]$1116_gold ($mux): \mem[3]_gold [2] -> \mem[3] [2]
+Changing input A of cell $memory\mem$wrmux[3][0][1]$1112_gold ($mux): \mem[3]_gold [1] -> \mem[3] [1]
+Changing input A of cell $memory\mem$wrmux[3][0][0]$1108_gold ($mux): \mem[3]_gold [0] -> \mem[3] [0]
+Changing input A of cell $memory\mem$wrmux[2][0][7]$1100_gold ($mux): \mem[2]_gold [7] -> \mem[2] [7]
+Changing input A of cell $memory\mem$wrmux[2][0][6]$1096_gold ($mux): \mem[2]_gold [6] -> \mem[2] [6]
+Changing input A of cell $memory\mem$wrmux[2][0][5]$1092_gold ($mux): \mem[2]_gold [5] -> \mem[2] [5]
+Changing input A of cell $memory\mem$wrmux[2][0][4]$1088_gold ($mux): \mem[2]_gold [4] -> \mem[2] [4]
+Changing input A of cell $memory\mem$wrmux[2][0][3]$1084_gold ($mux): \mem[2]_gold [3] -> \mem[2] [3]
+Changing input A of cell $memory\mem$wrmux[2][0][2]$1080_gold ($mux): \mem[2]_gold [2] -> \mem[2] [2]
+Changing input A of cell $memory\mem$wrmux[2][0][1]$1076_gold ($mux): \mem[2]_gold [1] -> \mem[2] [1]
+Changing input A of cell $memory\mem$wrmux[2][0][0]$1072_gold ($mux): \mem[2]_gold [0] -> \mem[2] [0]
+Changing input A of cell $memory\mem$wrmux[1][0][7]$1062_gold ($mux): \mem[1]_gold [7] -> \mem[1] [7]
+Changing input A of cell $memory\mem$wrmux[1][0][6]$1058_gold ($mux): \mem[1]_gold [6] -> \mem[1] [6]
+Changing input A of cell $memory\mem$wrmux[1][0][5]$1054_gold ($mux): \mem[1]_gold [5] -> \mem[1] [5]
+Changing input A of cell $memory\mem$wrmux[1][0][4]$1050_gold ($mux): \mem[1]_gold [4] -> \mem[1] [4]
+Changing input A of cell $memory\mem$wrmux[1][0][3]$1046_gold ($mux): \mem[1]_gold [3] -> \mem[1] [3]
+Changing input A of cell $memory\mem$wrmux[1][0][2]$1042_gold ($mux): \mem[1]_gold [2] -> \mem[1] [2]
+Changing input A of cell $memory\mem$wrmux[1][0][1]$1038_gold ($mux): \mem[1]_gold [1] -> \mem[1] [1]
+Changing input A of cell $memory\mem$wrmux[1][0][0]$1034_gold ($mux): \mem[1]_gold [0] -> \mem[1] [0]
+Changing input A of cell $memory\mem$wrmux[0][0][7]$1024_gold ($mux): \mem[0]_gold [7] -> \mem[0] [7]
+Changing input A of cell $memory\mem$wrmux[0][0][6]$1020_gold ($mux): \mem[0]_gold [6] -> \mem[0] [6]
+Changing input A of cell $memory\mem$wrmux[0][0][5]$1016_gold ($mux): \mem[0]_gold [5] -> \mem[0] [5]
+Changing input A of cell $memory\mem$wrmux[0][0][4]$1012_gold ($mux): \mem[0]_gold [4] -> \mem[0] [4]
+Changing input A of cell $memory\mem$wrmux[0][0][3]$1008_gold ($mux): \mem[0]_gold [3] -> \mem[0] [3]
+Changing input A of cell $memory\mem$wrmux[0][0][2]$1004_gold ($mux): \mem[0]_gold [2] -> \mem[0] [2]
+Changing input A of cell $memory\mem$wrmux[0][0][1]$1000_gold ($mux): \mem[0]_gold [1] -> \mem[0] [1]
+Changing input A of cell $memory\mem$wrmux[0][0][0]$996_gold ($mux): \mem[0]_gold [0] -> \mem[0] [0]
+Changing input B of cell $memory\mem$rdmux[0][3][7]$977_gold ($mux): \mem[15]_gold -> \mem[15]
+Changing input A of cell $memory\mem$rdmux[0][3][7]$977_gold ($mux): \mem[14]_gold -> \mem[14]
+Changing input S of cell $memory\mem$rdmux[0][3][7]$977_gold ($mux): \rd_addr_gold [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][6]$974_gold ($mux): \mem[13]_gold -> \mem[13]
+Changing input A of cell $memory\mem$rdmux[0][3][6]$974_gold ($mux): \mem[12]_gold -> \mem[12]
+Changing input S of cell $memory\mem$rdmux[0][3][6]$974_gold ($mux): \rd_addr_gold [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][5]$971_gold ($mux): \mem[11]_gold -> \mem[11]
+Changing input A of cell $memory\mem$rdmux[0][3][5]$971_gold ($mux): \mem[10]_gold -> \mem[10]
+Changing input S of cell $memory\mem$rdmux[0][3][5]$971_gold ($mux): \rd_addr_gold [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][4]$968_gold ($mux): \mem[9]_gold -> \mem[9]
+Changing input A of cell $memory\mem$rdmux[0][3][4]$968_gold ($mux): \mem[8]_gold -> \mem[8]
+Changing input S of cell $memory\mem$rdmux[0][3][4]$968_gold ($mux): \rd_addr_gold [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][3]$965_gold ($mux): \mem[7]_gold -> \mem[7]
+Changing input A of cell $memory\mem$rdmux[0][3][3]$965_gold ($mux): \mem[6]_gold -> \mem[6]
+Changing input S of cell $memory\mem$rdmux[0][3][3]$965_gold ($mux): \rd_addr_gold [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][2]$962_gold ($mux): \mem[5]_gold -> \mem[5]
+Changing input A of cell $memory\mem$rdmux[0][3][2]$962_gold ($mux): \mem[4]_gold -> \mem[4]
+Changing input S of cell $memory\mem$rdmux[0][3][2]$962_gold ($mux): \rd_addr_gold [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][1]$959_gold ($mux): \mem[3]_gold -> \mem[3]
+Changing input A of cell $memory\mem$rdmux[0][3][1]$959_gold ($mux): \mem[2]_gold -> \mem[2]
+Changing input S of cell $memory\mem$rdmux[0][3][1]$959_gold ($mux): \rd_addr_gold [0] -> \rd_addr [0]
+Changing input B of cell $memory\mem$rdmux[0][3][0]$956_gold ($mux): \mem[1]_gold -> \mem[1]
+Changing input A of cell $memory\mem$rdmux[0][3][0]$956_gold ($mux): \mem[0]_gold -> \mem[0]
+Changing input S of cell $memory\mem$rdmux[0][3][0]$956_gold ($mux): \rd_addr_gold [0] -> \rd_addr [0]
+Changing input S of cell $memory\mem$rdmux[0][2][3]$953_gold ($mux): \rd_addr_gold [1] -> \rd_addr [1]
+Changing input S of cell $memory\mem$rdmux[0][2][2]$950_gold ($mux): \rd_addr_gold [1] -> \rd_addr [1]
+Changing input S of cell $memory\mem$rdmux[0][2][1]$947_gold ($mux): \rd_addr_gold [1] -> \rd_addr [1]
+Changing input S of cell $memory\mem$rdmux[0][2][0]$944_gold ($mux): \rd_addr_gold [1] -> \rd_addr [1]
+Changing input S of cell $memory\mem$rdmux[0][1][1]$941_gold ($mux): \rd_addr_gold [2] -> \rd_addr [2]
+Changing input S of cell $memory\mem$rdmux[0][1][0]$938_gold ($mux): \rd_addr_gold [2] -> \rd_addr [2]
+Changing input S of cell $memory\mem$rdmux[0][0][0]$935_gold ($mux): \rd_addr_gold [3] -> \rd_addr [3]
+Changing input A of cell $procmux$226_CMP0_gold ($eq): { \w_wr_gold \w_rd_gold } -> { \w_wr \w_rd }
+Changing input A of cell $procmux$224_gold ($pmux): \r_empty_gold -> \r_empty
+Changing input A of cell $procmux$225_CMP0_gold ($eq): { \w_wr_gold \w_rd_gold } -> { \w_wr \w_rd }
+Changing input S of cell $procmux$219_gold ($mux): \w_rd_gold -> \w_rd
+Changing input A of cell $procmux$219_gold ($mux): \rd_addr_gold -> \rd_addr
+Changing input S of cell $procmux$217_gold ($mux): \w_wr_gold -> \w_wr
+Changing input B of cell $procmux$217_gold ($mux): \wr_addr_gold [3:0] -> \wr_addr [3:0]
+Changing input S of cell $procmux$214_gold ($mux): \w_wr_gold -> \w_wr
+Changing input S of cell $procmux$211_gold ($mux): \w_wr_gold -> \w_wr
+Changing input S of cell $procmux$205_gold ($mux): \w_wr_gold -> \w_wr
+Changing input A of cell $procmux$205_gold ($mux): \wr_addr_gold -> \wr_addr
+Changing input A of cell $procmux$201_CMP0_gold ($eq): { \w_wr_gold \w_rd_gold } -> { \w_wr \w_rd }
+Changing input A of cell $procmux$199_gold ($pmux): \o_fill_gold -> \o_fill
+Changing input A of cell $procmux$200_CMP0_gold ($eq): { \w_wr_gold \w_rd_gold } -> { \w_wr \w_rd }
+Changing input A of cell $logic_not$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:72$33_gold ($logic_not): \o_fill_gold [4] -> \o_fill [4]
+Changing input A of cell $logic_not$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:73$35_gold ($logic_not): \r_empty_gold -> \r_empty
+Changing input A of cell $sub$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:90$38_gold ($sub): \o_fill_gold -> \o_fill
+Changing input A of cell $add$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:91$39_gold ($add): \o_fill_gold -> \o_fill
+Changing input A of cell $add$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:121$43_gold ($add): \wr_addr_gold -> \wr_addr
+Changing input A of cell $add$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:146$52_gold ($add): \rd_addr_gold -> \rd_addr
+Changing input A of cell $le$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v:156$54_gold ($le): \o_fill_gold -> \o_fill
+Changing input A of cell $memory\mem$wrmux[15][0][7]$1554_gold ($mux): \mem[15]_gold [7] -> \mem[15] [7]
+
+8. Executing HIERARCHY pass (managing design hierarchy).
+
+8.1. Analyzing design hierarchy..
+Top module:  \equiv
+
+8.2. Analyzing design hierarchy..
+Top module:  \equiv
+Removing unused module `\gate'.
+Removing unused module `\gold'.
+Removed 2 unused modules.
+
+9. Executing EQUIV_SIMPLE pass.
+Found 157 unproven $equiv cells (26 groups) in equiv:
+  Trying to prove $equiv for \o_full:
+ezsat
+ezsat
+ success!
+ Grouping SAT models for \o_fill:
+  Trying to prove $equiv for \o_fill [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \o_fill [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \o_fill [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \o_fill [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \o_fill [4]:
+ezsat
+ success!
+ Grouping SAT models for \o_data:
+  Trying to prove $equiv for \o_data [0]:
+ezsat
+ success!
+  Trying to prove $equiv for \o_data [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \o_data [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \o_data [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \o_data [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \o_data [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \o_data [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \o_data [7]:
+ezsat
+ success!
+  Trying to prove $equiv for \o_empty:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \r_empty:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \r_full:
+ezsat
+ezsat
+ success!
+ Grouping SAT models for \wr_addr:
+  Trying to prove $equiv for \wr_addr [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \wr_addr [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \wr_addr [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \wr_addr [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \wr_addr [4]:
+ezsat
+ success!
+ Grouping SAT models for \rd_addr:
+  Trying to prove $equiv for \rd_addr [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \rd_addr [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \rd_addr [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \rd_addr [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \rd_addr [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \w_wr:
+ezsat
+ success!
+  Trying to prove $equiv for \w_rd:
+ezsat
+ success!
+ Grouping SAT models for \mem[0]:
+  Trying to prove $equiv for \mem[0] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[0] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[0] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[0] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[0] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[0] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[0] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[0] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[1]:
+  Trying to prove $equiv for \mem[1] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[1] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[1] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[1] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[1] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[1] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[1] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[1] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[2]:
+  Trying to prove $equiv for \mem[2] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[2] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[2] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[2] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[2] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[2] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[2] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[2] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[3]:
+  Trying to prove $equiv for \mem[3] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[3] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[3] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[3] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[3] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[3] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[3] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[3] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[4]:
+  Trying to prove $equiv for \mem[4] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[4] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[4] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[4] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[4] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[4] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[4] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[4] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[5]:
+  Trying to prove $equiv for \mem[5] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[5] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[5] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[5] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[5] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[5] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[5] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[5] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[6]:
+  Trying to prove $equiv for \mem[6] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[6] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[6] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[6] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[6] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[6] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[6] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[6] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[7]:
+  Trying to prove $equiv for \mem[7] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[7] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[7] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[7] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[7] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[7] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[7] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[7] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[8]:
+  Trying to prove $equiv for \mem[8] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[8] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[8] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[8] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[8] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[8] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[8] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[8] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[9]:
+  Trying to prove $equiv for \mem[9] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[9] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[9] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[9] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[9] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[9] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[9] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[9] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[10]:
+  Trying to prove $equiv for \mem[10] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[10] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[10] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[10] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[10] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[10] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[10] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[10] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[11]:
+  Trying to prove $equiv for \mem[11] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[11] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[11] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[11] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[11] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[11] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[11] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[11] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[12]:
+  Trying to prove $equiv for \mem[12] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[12] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[12] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[12] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[12] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[12] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[12] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[12] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[13]:
+  Trying to prove $equiv for \mem[13] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[13] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[13] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[13] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[13] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[13] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[13] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[13] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[14]:
+  Trying to prove $equiv for \mem[14] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[14] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[14] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[14] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[14] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[14] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[14] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[14] [7]:
+ezsat
+ success!
+ Grouping SAT models for \mem[15]:
+  Trying to prove $equiv for \mem[15] [0]:
+ezsat
+ezsat
+ success!
+  Trying to prove $equiv for \mem[15] [1]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[15] [2]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[15] [3]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[15] [4]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[15] [5]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[15] [6]:
+ezsat
+ success!
+  Trying to prove $equiv for \mem[15] [7]:
+ezsat
+ success!
+Proved 157 previously unproven $equiv cells.
+
+10. Executing EQUIV_INDUCT pass.
+No selected unproven $equiv cells found in equiv.
+Proved 0 previously unproven $equiv cells.
+
+11. Executing EQUIV_STATUS pass.
+Found 157 $equiv cells in equiv:
+  Of those cells 157 are proven and 0 are unproven.
+  Equivalence successfully proven!

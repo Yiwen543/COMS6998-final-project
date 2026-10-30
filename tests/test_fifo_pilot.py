@@ -90,6 +90,7 @@ class FifoPilotTests(unittest.TestCase):
     def test_mock_replay_and_cycle_accounting(self):
         base = json.loads((ROOT / "configs/fifo_pilot.json").read_text())
         base.update(repetitions=1, rounds=1)
+        (ROOT / "build").mkdir(exist_ok=True)
         with tempfile.TemporaryDirectory(dir=ROOT / "build", prefix="fifo-pilot-test-") as td:
             folder = Path(td)
             config = folder / "config.json"

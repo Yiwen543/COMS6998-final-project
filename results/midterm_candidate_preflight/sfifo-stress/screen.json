@@ -1,0 +1,392 @@
+{
+  "subject": "disclosed equivalence stress variant of independent ZipCPU FIFO",
+  "original_sha256": "76a653781f1ecca1c1da92c4e5105ecd5d0f832b13cbfd31300ec88d9947e0c1",
+  "variant_sha256": "309bf3231693e5f468a00c9b2ef8e9f02f7fc4728c3592a7932d520ba53b9289",
+  "recipe_sha256": "bc4f458db92c9dd06a30d448b49c6e484212233eae0e6692cc82bb3c73c960de",
+  "driver_sha256": "bd8a326f7aa1c1e11b7db92540f11712955b5865eeb44c4b0d277c4d4a0d2035",
+  "checker_sha256": "c8bf77d9829e259f2ab3b025e0aa2410ddc9be5b429b5ab0f7ea3a7743f39589",
+  "spec_sha256": "c6fbde32d4d23670b741a47ca14de4f05e43b70f8d7eaa4b662c969a64e5d2a1",
+  "seed_sha256": "871178fd2d9c0ee8e5161288835ae6bd0480a3ccbb383c79fb452156380796eb",
+  "equivalence": {
+    "status": "proved",
+    "command": [
+      "yosys",
+      "-Q",
+      "-T",
+      "-p",
+      "read_verilog -sv -D YOSYS /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo/rtl/sfifo.v; chparam -set BW 8 -set LGFLEN 4 -set OPT_ASYNC_READ 1 -set OPT_WRITE_ON_FULL 0 -set OPT_READ_ON_EMPTY 0 sfifo; rename sfifo gold; read_verilog -sv -D YOSYS /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v; chparam -set BW 8 -set LGFLEN 4 -set OPT_ASYNC_READ 1 -set OPT_WRITE_ON_FULL 0 -set OPT_READ_ON_EMPTY 0 sfifo; rename sfifo gate; proc; memory; equiv_make gold gate equiv; hierarchy -top equiv; equiv_simple; equiv_induct -seq 24; equiv_status -assert"
+    ],
+    "log_sha256": "90731d4f1e7612730b5479dccb3e6ca3770f9dec17f552810ea85da25c42e16d",
+    "scope": "Yosys equiv_make and equiv_simple proved all 157 paired cells at fixed 8-bit depth-16 parameters; equiv_induct had zero unproven cells. Two-state state correspondence, not a complete specification or four-state proof."
+  },
+  "rewrite_proof_sha256": "af9fad89ef61d55ecf8f096c42b3671eec6b5a09221c8335bd88b9e5123a44cd",
+  "seed": {
+    "branch": {
+      "covered": 11,
+      "total": 24,
+      "percent": 45.833
+    },
+    "expr": {
+      "covered": 7,
+      "total": 16,
+      "percent": 43.75
+    },
+    "line": {
+      "covered": 14,
+      "total": 22,
+      "percent": 63.636
+    },
+    "toggle": {
+      "covered": 6,
+      "total": 338,
+      "percent": 1.775
+    }
+  },
+  "calibration": {
+    "branch": {
+      "covered": 22,
+      "total": 24,
+      "percent": 91.667
+    },
+    "expr": {
+      "covered": 14,
+      "total": 16,
+      "percent": 87.5
+    },
+    "line": {
+      "covered": 20,
+      "total": 22,
+      "percent": 90.909
+    },
+    "toggle": {
+      "covered": 119,
+      "total": 338,
+      "percent": 35.207
+    }
+  },
+  "calibration_action_count": 36,
+  "calibration_actions_withheld": true,
+  "supported_targets": 31,
+  "unsupported": [
+    {
+      "process": "$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:140$20",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "case has no source mapping"
+    }
+  ],
+  "groups": [
+    {
+      "eclass_local": 5,
+      "event_context": [
+        "posedge \\i_clk"
+      ],
+      "reference_guard": "(and (and (not p_344426ebf2cbfd00) true) p_a9ba9229e60446bb)",
+      "member_ids": [
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:86$6:90:2:2'01",
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:156$27:160:2:2'01",
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:173$33:177:2:2'01"
+      ],
+      "members": [
+        {
+          "line": 90,
+          "column": 2,
+          "case_value": "2'01",
+          "source_mapping": "text_literal",
+          "guard_depth": 2,
+          "seed_coverage": {
+            "status": "mapped",
+            "type": "line",
+            "outcome": "case",
+            "line": 90,
+            "column": 7,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 0
+          },
+          "calibration_coverage": {
+            "status": "mapped",
+            "type": "line",
+            "outcome": "case",
+            "line": 90,
+            "column": 7,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 16
+          }
+        },
+        {
+          "line": 160,
+          "column": 2,
+          "case_value": "2'01",
+          "source_mapping": "text_literal",
+          "guard_depth": 2,
+          "seed_coverage": {
+            "status": "mapped",
+            "type": "line",
+            "outcome": "case",
+            "line": 160,
+            "column": 7,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 0
+          },
+          "calibration_coverage": {
+            "status": "mapped",
+            "type": "line",
+            "outcome": "case",
+            "line": 160,
+            "column": 7,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 16
+          }
+        },
+        {
+          "line": 177,
+          "column": 2,
+          "case_value": "2'01",
+          "source_mapping": "text_literal",
+          "guard_depth": 2,
+          "seed_coverage": {
+            "status": "mapped",
+            "type": "line",
+            "outcome": "case",
+            "line": 177,
+            "column": 7,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 0
+          },
+          "calibration_coverage": {
+            "status": "mapped",
+            "type": "line",
+            "outcome": "case",
+            "line": 177,
+            "column": 7,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 16
+          }
+        }
+      ],
+      "z3_pair_checks": 2,
+      "qualifies_preflight": true,
+      "late_guard": false
+    },
+    {
+      "eclass_local": 7,
+      "event_context": [
+        "posedge \\i_clk"
+      ],
+      "reference_guard": "(and (and (and (not p_344426ebf2cbfd00) true) p_a9ba9229e60446bb) p_58e5e64e57ea6cbe)",
+      "member_ids": [
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:86$6:91:7:1'1",
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:156$27:161:7:1'1"
+      ],
+      "members": [
+        {
+          "line": 91,
+          "column": 7,
+          "case_value": "1'1",
+          "source_mapping": "yosys_src",
+          "guard_depth": 3,
+          "seed_coverage": {
+            "status": "mapped",
+            "type": "branch",
+            "outcome": "if",
+            "line": 91,
+            "column": 3,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 0
+          },
+          "calibration_coverage": {
+            "status": "mapped",
+            "type": "branch",
+            "outcome": "if",
+            "line": 91,
+            "column": 3,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 1
+          }
+        },
+        {
+          "line": 161,
+          "column": 7,
+          "case_value": "1'1",
+          "source_mapping": "yosys_src",
+          "guard_depth": 3,
+          "seed_coverage": {
+            "status": "mapped",
+            "type": "branch",
+            "outcome": "if",
+            "line": 161,
+            "column": 3,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 0
+          },
+          "calibration_coverage": {
+            "status": "mapped",
+            "type": "branch",
+            "outcome": "if",
+            "line": 161,
+            "column": 3,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 1
+          }
+        }
+      ],
+      "z3_pair_checks": 1,
+      "qualifies_preflight": true,
+      "late_guard": true
+    },
+    {
+      "eclass_local": 14,
+      "event_context": [
+        "posedge \\i_clk"
+      ],
+      "reference_guard": "(and (and (not p_344426ebf2cbfd00) true) (and (not p_a9ba9229e60446bb) p_98de20e60020bf4f))",
+      "member_ids": [
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:86$6:95:2:2'10",
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:173$33:178:2:2'10"
+      ],
+      "members": [
+        {
+          "line": 95,
+          "column": 2,
+          "case_value": "2'10",
+          "source_mapping": "text_literal",
+          "guard_depth": 2,
+          "seed_coverage": {
+            "status": "mapped",
+            "type": "line",
+            "outcome": "case",
+            "line": 95,
+            "column": 7,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 0
+          },
+          "calibration_coverage": {
+            "status": "mapped",
+            "type": "line",
+            "outcome": "case",
+            "line": 95,
+            "column": 7,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 16
+          }
+        },
+        {
+          "line": 178,
+          "column": 2,
+          "case_value": "2'10",
+          "source_mapping": "text_literal",
+          "guard_depth": 2,
+          "seed_coverage": {
+            "status": "mapped",
+            "type": "line",
+            "outcome": "case",
+            "line": 178,
+            "column": 7,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 0
+          },
+          "calibration_coverage": {
+            "status": "mapped",
+            "type": "line",
+            "outcome": "case",
+            "line": 178,
+            "column": 7,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 16
+          }
+        }
+      ],
+      "z3_pair_checks": 1,
+      "qualifies_preflight": true,
+      "late_guard": false
+    },
+    {
+      "eclass_local": 16,
+      "event_context": [
+        "posedge \\i_clk"
+      ],
+      "reference_guard": "(and (and (and (not p_344426ebf2cbfd00) true) (and (not p_a9ba9229e60446bb) p_98de20e60020bf4f)) p_b4bdb5e5d1dc5e4e)",
+      "member_ids": [
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:86$6:96:7:1'1",
+        "sfifo:$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v:173$33:179:7:1'1"
+      ],
+      "members": [
+        {
+          "line": 96,
+          "column": 7,
+          "case_value": "1'1",
+          "source_mapping": "yosys_src",
+          "guard_depth": 3,
+          "seed_coverage": {
+            "status": "mapped",
+            "type": "branch",
+            "outcome": "if",
+            "line": 96,
+            "column": 3,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 0
+          },
+          "calibration_coverage": {
+            "status": "mapped",
+            "type": "branch",
+            "outcome": "if",
+            "line": 96,
+            "column": 3,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 1
+          }
+        },
+        {
+          "line": 179,
+          "column": 7,
+          "case_value": "1'1",
+          "source_mapping": "yosys_src",
+          "guard_depth": 3,
+          "seed_coverage": {
+            "status": "mapped",
+            "type": "branch",
+            "outcome": "if",
+            "line": 179,
+            "column": 3,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 0
+          },
+          "calibration_coverage": {
+            "status": "mapped",
+            "type": "branch",
+            "outcome": "if",
+            "line": 179,
+            "column": 3,
+            "hierarchy": "tb_sfifo_stress_fixed.dut",
+            "hits": 1
+          }
+        }
+      ],
+      "z3_pair_checks": 1,
+      "qualifies_preflight": true,
+      "late_guard": true
+    }
+  ],
+  "qualifying_groups": 4,
+  "late_guard_groups": 2,
+  "compile_seconds": 2.8830844592303038,
+  "compile_command": [
+    "verilator",
+    "--binary",
+    "--timing",
+    "--coverage-line",
+    "--coverage-toggle",
+    "--coverage-expr",
+    "-Wno-fatal",
+    "-Wno-TIMESCALEMOD",
+    "-Wno-WIDTHEXPAND",
+    "--top-module",
+    "tb_sfifo_stress_fixed",
+    "--Mdir",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/midterm_candidate_preflight/sfifo-stress/verilator-build",
+    "-j",
+    "2",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/rtl/sfifo.v",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_sfifo_stress/verif/tb_sfifo_stress_fixed.sv"
+  ]
+}
