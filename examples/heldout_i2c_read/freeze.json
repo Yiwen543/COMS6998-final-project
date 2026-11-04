@@ -1,0 +1,43 @@
+{
+  "schema": "i2c_read_offline_v1",
+  "offline_checker_qualified": true,
+  "formal_B_eligible": false,
+  "research_target_qualified": false,
+  "full_ip_correctness_claim": false,
+  "defect_classification_qualified": false,
+  "scope": "Bounded single-controller ACKing-target READB/write-address behavior. Public-wire data/ACK/count and fixture FIFO ordering only.",
+  "qualified_event_families": [
+    "multi_byte_read",
+    "rcont_chain",
+    "read_then_restart"
+  ],
+  "limits": [
+    "No general formal proof, analog/timing/liveness/arbitration/NACK recovery validation.",
+    "Stretch only observed while READB current; excluded from qualified events.",
+    "Extra STOP mutant is rejected but verdict invalid rather than fail; defect attribution remains unresolved.",
+    "RX delivered before pop is a fixture requirement, not an independently proved upstream timing guarantee.",
+    "Single setup clock rise before START/STOP can mask one spurious edge.",
+    "FBYTE0 DUT trace is pending; full256-byte completion tested only in author control.",
+    "Checker repair is development-outcome-informed; no claim of a permanently blind author."
+  ],
+  "git_commit": "c71a3e580646d08fb6496c742b7b42b711179b36",
+  "hashes": {
+    "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_pkg.sv": "5dee776e2d3aa96c8f9b53509103f12b3050818f948b04a2145d0fea26bc3035",
+    "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv": "0da13b6d8185c7bd6c3949f6c28e073292c1682fd1cc10f83457f6285fd16b1a",
+    "examples/heldout_i2c_read/verif/tb_i2c_read_fixed.sv": "19366fe3b2823f5530321dd5cd2bc55129453228c576a0e6ce14e98168534471",
+    "examples/heldout_i2c_read/checker.py": "8598ae81139f5df7493ab912558ef23f40e0b12a590fb602c8626805ba4ba70b",
+    "examples/heldout_i2c_read/selftest.py": "ca44a689fa6682dc6de7eb1c88ec6c430ad5cf0b0a04a43c701789110303168d",
+    "examples/heldout_i2c_read/properties.json": "8e9207bc9f8a3b771b047c3252be86d5bc1536165daff24d31df724729cf2146",
+    "examples/heldout_i2c_read/contract.md": "de0be377366f12e7867cedbac9670110a5db9f91f251280652c8485c24048cc9",
+    "examples/heldout_i2c_read/authorship.json": "f7b70215aa661c6d08d903ce3d78d52fda893a242225ae172cebed72707b04d7",
+    "examples/heldout_i2c_read/stimulus.schema.json": "a568ea9926f98dc1462298d7f6f41a04920718bb25a90d9db8a95fdfdbc338c3",
+    "scripts/i2c_read_fixture.py": "a8511715901879464762c963966be02130d1d5d10ad2cfa7b22f6652bd801ec4",
+    "scripts/i2c_read_gate.py": "91a16a0f010c111042cb3d97850353e3bf81d2d346cb9d01e5a48eadd36c30f2",
+    "scripts/run_i2c_read_fixed.py": "913757bdd3c1ab3e10031e1de4a0d6939066c0c8abbe2594cacb8be60ee71f9c",
+    "scripts/run_i2c_read_checked.py": "f0b07e514a2067de129e5eca3682d800bc287c38be56f5a4630cdea11fff223f",
+    "configs/i2c_read_screen.json": "3546d5db3d22fba0120656c05f097369402528bae58779483de568e9e9b7b4c9",
+    "results/i2c_read_candidate_20261104/spec-packet/packet.json": "b065ecaeeea25bbfb79c30002c9e91ba15f4865a55d0c22ea61260cfd8585185",
+    "results/i2c_read_candidate_20261104/claude-v2/controls-qualified/evaluation.json": "85f3a41ad94ecced707a50f21d9e24bd621d682ccdf3cc131c203039647e5065",
+    "results/i2c_read_candidate_20261104/claude-v2/review.json": "2df93a0d96d03e0954faccda87108d112931fdea7248f92cd3f1ea87a4d034bc"
+  }
+}

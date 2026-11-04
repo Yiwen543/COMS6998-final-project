@@ -1,0 +1,65 @@
+[
+  {
+    "id": "P1",
+    "requirement": "Each completed wire byte (8 MSB-first bits sampled on physical SCL rises inside START..STOP) equals the next enqueued, unflushed FMT byte; wire START presence before the byte equals its START flag.",
+    "source": "theory_of_operation.md:57-58,70-72",
+    "assumption": "write-mode only; READB/RCONT zero",
+    "support_status": "checked"
+  },
+  {
+    "id": "P2",
+    "requirement": "A STOP follows a STOP-flagged byte before any further START or committed data bit; no STOP without STOP flag outside halt handling.",
+    "source": "theory_of_operation.md:73-74",
+    "assumption": "STOP setup rise is not a data bit (pending-bit decoder)",
+    "support_status": "checked"
+  },
+  {
+    "id": "P3",
+    "requirement": "FMT head (byte/flags/depth) matches model while valid; pop (ready&valid) only after that entry's byte appeared on the wire.",
+    "source": "interface sampling; theory_of_operation.md:57",
+    "assumption": "rready is pop after processing",
+    "support_status": "checked"
+  },
+  {
+    "id": "P4",
+    "requirement": "Physical bus equals scl_pin&!stretch and sda_pin&!target_low.",
+    "source": "theory_of_operation.md:14-15; interface",
+    "assumption": "open-drain environment, no rival controller",
+    "support_status": "checked"
+  },
+  {
+    "id": "P5",
+    "requirement": "Controller does not drive SCL/SDA low during reset.",
+    "source": "interface rst_n",
+    "assumption": "async reset",
+    "support_status": "checked"
+  },
+  {
+    "id": "P6",
+    "requirement": "Unexpected NACK (not NAKOK): after ninth SCL fall, no SCL release, data bit, START or byte until software clear (or timeout/disable STOP).",
+    "source": "theory_of_operation.md:82-83,90-97,107-108; registers.md:833-836",
+    "assumption": "halt anchored after ACK falling edge",
+    "support_status": "checked"
+  },
+  {
+    "id": "P7",
+    "requirement": "A STOP during NACK halt requires prior public timeout status (nak_timeout/unhandled_timeout) or host disable; timeout enable alone or a later timeout pulse does not justify it. After timeout STOP the bus stays released until software clears. Event windows are clean by origin cycle; missing NACK status leaves recovery unresolved.",
+    "source": "theory_of_operation.md:101-110; registers.md:838-840",
+    "assumption": "no exact timeout cycle count checked",
+    "support_status": "checked (no latency bound)"
+  },
+  {
+    "id": "P8",
+    "requirement": "Events stretch_recovery, nak_restart, nak_timeout_recovery credited only with clean failure-free windows, witnessed status (nak/sticky, timeout), complete correct byte and STOP.",
+    "source": "task contract",
+    "assumption": "incomplete windows remain unresolved",
+    "support_status": "checked"
+  },
+  {
+    "id": "P9",
+    "requirement": "NACK on NAKOK byte is an expected event, not a defect.",
+    "source": "theory_of_operation.md:76-79",
+    "assumption": "environment intentionally NACKs",
+    "support_status": "checked"
+  }
+]

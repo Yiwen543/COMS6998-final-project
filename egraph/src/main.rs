@@ -1,6 +1,6 @@
 use egg::{define_language, rewrite, AstSize, Extractor, Id, Language, RecExpr, Runner, Symbol};
 use serde_json::{json, Value};
-use std::{io::{self, Read}, time::Duration};
+use std::{io::{self, Read}, time::{Duration, Instant}};
 
 define_language! {
     enum Bool {
@@ -32,7 +32,10 @@ fn main() {
             runner = runner.with_expr(&expr);
         }
     }
+    let saturation_start = Instant::now();
     runner = runner.run(&rules);
+    let saturation_seconds = saturation_start.elapsed().as_secs_f64();
+    let extraction_start = Instant::now();
     let extractor = Extractor::new(&runner.egraph, AstSize);
     let mut normalized = Vec::new();
     for (i, t) in targets.iter().enumerate() {
@@ -50,9 +53,12 @@ fn main() {
         })).collect();
         json!({"id":usize::from(c.id),"nodes":nodes})
     }).collect();
+    let extraction_and_serialization_seconds = extraction_start.elapsed().as_secs_f64();
     println!("{}", serde_json::to_string_pretty(&json!({
         "engine":"egg 0.11.0", "semantics":"pure two-state one-bit Boolean predicates",
         "iterations":runner.iterations.len(), "stop_reason":format!("{:?}",runner.stop_reason),
-        "targets":normalized, "eclasses":classes
+        "targets":normalized, "eclasses":classes,
+        "timing_seconds":{"saturation":saturation_seconds,
+                          "extract_and_build_json":extraction_and_serialization_seconds}
     })).unwrap());
 }

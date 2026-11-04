@@ -1,0 +1,56 @@
+{
+  "simulator": "verilator",
+  "steps": 145,
+  "simulation_seconds": 0.009825249668210745,
+  "checker": {
+    "checks": 145,
+    "accepted_commands": 3,
+    "completed_direction_segments": 2,
+    "aborted_direction_segments": 0,
+    "pending_direction_segments": 1,
+    "incomplete_serial_burst": true,
+    "failures": [
+      {
+        "cycle": 119,
+        "category": "serial_edge_count",
+        "expected": 64,
+        "actual": 65
+      }
+    ],
+    "distinct_defects": [
+      "serial_edge_count"
+    ],
+    "assumption_violations": [
+      {
+        "cycle": 49,
+        "category": "overlapping_configuration_not_supported"
+      }
+    ],
+    "scope": "Public command/data-control handshake, byte/last counts, selected serial edge counts, reset, pause and stall safety. No serial payload, analog timing, bounded liveness or full formal proof.",
+    "verdict": "input_or_scope_invalid"
+  },
+  "coverage": {
+    "branch": {
+      "covered": 136,
+      "total": 160,
+      "percent": 85.0
+    },
+    "expr": {
+      "covered": 187,
+      "total": 246,
+      "percent": 76.016
+    },
+    "line": {
+      "covered": 44,
+      "total": 57,
+      "percent": 77.193
+    },
+    "toggle": {
+      "covered": 420,
+      "total": 836,
+      "percent": 50.239
+    }
+  },
+  "raw_coverage": "results/spi_host_event_checker_20261104/calibration/offer-probe-11/batch.dat",
+  "coverage_policy": "All original top-file DUT counters, including initialization/reset. No TB or prim_flop counters. Fresh simulator per cumulative replay."
+}

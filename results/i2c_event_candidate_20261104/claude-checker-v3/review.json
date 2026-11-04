@@ -1,0 +1,66 @@
+{
+  "ready_for_offline_gate": true,
+  "scope_of_readiness": "Scoped offline validity only. Pinned OpenTitan i2c_controller_fsm, FifoDepth=64, single-controller write mode. READB/RCONT are zero, there is no arbitration, no read path and no timing or latency claims. This review is not evidence of B/C effectiveness and does not authorize any B/C run. The supplied limitations already state that no late-specific group exists.",
+  "readiness_conditions": [
+    "Credit events only when the whole trace is clean: verdict 'pass', no failures, no assumption_violations and no unresolved items. The gate's clean() predicate already enforces this for every positive case. Keep it that way.",
+    "Bind evaluation.checker_sha256 (98018ae2\u2026) to the sha256 of checker/candidate/checker.py. The gate must fail on mismatch. Today the gate records the checker hash but never compares it with the hash the evaluation was run against (see F6).",
+    "Treat environment_valid as coming from the runner's ENV_ERROR log scan, not from the checker's looser flush rule (see F4)."
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "resolved",
+      "area": "prior R2: premature timeout STOP",
+      "detail": "Static audit: S['toen'] is removed from both the halt STOP acceptance and the halt SCL-release exemption. h['to'] is set only from observed pre nak_timeout or unhandled_timeout while the halt is active. Within a row, status is evaluated before the edges in that row are decoded, so status must be observed in the same row or an earlier one. A pulse that arrives after clear cannot justify a STOP retroactively, because the 'STOP during NACK halt' failure has already been recorded at STOP time. Reported evidence matches this: premature_timeout_stop fails at cycles 158 (SCL release) and 163 (STOP), with no events. One residue remains: the requirement is ordering only, with no latency bound against HOST_NACK_HANDLER_TIMEOUT. P7 documents this."
+    },
+    {
+      "id": "F2",
+      "severity": "resolved",
+      "area": "event cleanliness window",
+      "detail": "clean(c0) rejects any failure or assumption violation at a cycle >= the window origin. Previously the check was len(F) at creation. The halt origin is set inside finalize, which runs after the byte-mismatch failure in the same call. With the old check, a mismatch on the NACKed byte itself could still earn credit. clean() closes this gap. Reported controls bad_first_nak_byte_nak_restart and bad_first_nak_byte_nak_timeout (failure at cycle 122) produce no events, which is consistent with this reading. Failures before the origin are not covered per event; the whole-trace gate covers them."
+    },
+    {
+      "id": "F3",
+      "severity": "resolved",
+      "area": "missing status witness",
+      "detail": "A completed recovery without nak or unhandled_nak now appends an unresolved item, so the verdict is pending, not pass. The reported missing_nak_status case is pending with no events, and the gate requires it to be non-clean. One residue remains. unhandled_nak is a driver latch set from pre nak, so it is a derived witness rather than an independent one. This is acceptable because it still comes from DUT public output."
+    },
+    {
+      "id": "F4",
+      "severity": "low",
+      "area": "flush assumption mismatch (prior R3, unchanged)",
+      "detail": "The checker flags a flush only when there is no halt, txn is open and idle==0. The driver flags ENV_ERROR when !(sticky_nak || sticky_timeout || idle). The runner now scans the log for ENV_ERROR and the gate requires environment_valid for calibration runs, so the prior concern that ENV_ERROR was not ingested is resolved for DUT traces. The two rules still differ, and independent fixture traces are not run through the driver."
+    },
+    {
+      "id": "F5",
+      "severity": "low",
+      "area": "independent references",
+      "detail": "Static spot-check of the unpacked references against the checker:\n- 0x50 is encoded MSB-first as 0,1,0,1,0,0,0,0 on SCL rises.\n- The START is SDA falling while SCL is high.\n- The ACK is produced by target_low with sda_pin=1, so bus composition holds.\n- The NACK case releases SDA on the ninth rise. The halt holds SCL low for more than 20 cycles. The pop comes after the wire byte.\n- In the timeout case, nak_timeout=1 precedes the SDA-low / SCL-rise / SDA-rise STOP.\n- Flush, push and clear then repeated START, byte 0x52 ACKed, STOP.\n- The stretch case holds scl_pin=1 and scl=0 with stretch=1 only while SCL was low.\nThese look consistent with expected pass/event outcomes. Exhaustive cycle-by-cycle execution was not performed. Mutation coverage is still narrow: there are no controls for wrong START flag, early pop, stretch without extension, or flagless STOP on DUT traces."
+    },
+    {
+      "id": "F6",
+      "severity": "medium",
+      "area": "evidence binding",
+      "detail": "The gate reads controls-final/evaluation.json and hashes checker.py, but does not assert that they correspond. The selftest results and case verdicts are reported evidence; I did not reproduce them. Without the sha binding in readiness condition 2, a stale evaluation could qualify a different checker."
+    },
+    {
+      "id": "F7",
+      "severity": "low",
+      "area": "semantics carried over",
+      "detail": "Prior R5\u2013R7 still apply:\n- stretch_recovery means 'tolerated an observed extension'. It does not attribute the extension to a specific byte and makes no THIGH timing claim.\n- With an unflushed FIFO, the cons cursor skips the NACKed entry. This is unspecified by the excerpts.\n- P9 NAKOK is logged only.\n- The P3\u2013P5 assumptions come from the interface contract, not cited authority."
+    }
+  ],
+  "event_support": {
+    "stretch_recovery": "supported, scoped per F7",
+    "nak_restart": "supported: status witness required, clean by origin",
+    "nak_timeout_recovery": "supported for ordering (prior timeout status before STOP, bus released until clear); no latency bound"
+  },
+  "limitations": [
+    "Static read-only review of the supplied packet. Nothing was executed. Selftests, case verdicts and simulator agreement are reported evidence, not reproduced.",
+    "The lossless packed controls were reasoned about statically and not unpacked by execution. The packing roundtrip claim is taken from the preflight.",
+    "No DUT or calibration traces were provided. DUT event positives are trusted from the evaluation.",
+    "Isolation from RTL and prior checkers cannot be verified from the packet. The author saw the prior review.",
+    "No formal or completeness claim. No timing, latency, read, RCONT, arbitration or bus-monitor verification.",
+    "Readiness does not authorize B/C. Per the stated limitations, there is no late-specific group and no B/C should start."
+  ]
+}

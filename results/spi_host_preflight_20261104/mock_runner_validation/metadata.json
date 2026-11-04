@@ -1,0 +1,72 @@
+{
+  "mode": "mock",
+  "config": {
+    "purpose": "Outcome-blind SPI controller development gate; no C outcome is a selection input",
+    "static_acceptance": {
+      "min_source_groups": 3,
+      "min_rewrite_groups": 2,
+      "basis": "docs/next_ip_screen_2026-11-03.md: Next go/no-go procedure, item 1, written before SPI adapter results",
+      "source_group_requirements": "At least two exact-mapped original source counters, zero in common seed, positive in valid independent calibration; complete typed activation and event context"
+    },
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "repetitions": 1,
+    "rounds": 2,
+    "max_new_cycles": 8,
+    "max_output_tokens": 16384,
+    "timeout_seconds": 120,
+    "max_retries": 1,
+    "max_input_tokens": 32000,
+    "fixed_drain_cycles": 0,
+    "replay_policy": "Fresh simulator replays common seed followed by all accepted model cycles; all replay cycles counted",
+    "acceptance": {
+      "min_repetitions_with_two_groups_unhit_after_round_one": 2,
+      "min_repetitions_with_later_group_progress": 2,
+      "require_all_rounds_accounted": true,
+      "require_valid_protocol_inputs": true
+    },
+    "status": "Development proposal only; static gate must pass before any API call. No formal A/B/C/placebo configuration frozen."
+  },
+  "static_gate_passed": false,
+  "commit": "c71a3e580646d08fb6496c742b7b42b711179b36",
+  "hashes": {
+    "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv": "12ec73502dc8115cf1e6051f10cba6fc73259f066581722d9d895d1e634676b2",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv": "a9a44c9cc067c6b0904cfff2f3056b9312a475518be32e36efe0c8a951e1af8d",
+    "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv": "68854581eaa23a57f00c4b49ee0ce972147ffca9f2800da2859d1fe38cc5b476",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv": "5324b93183a0475c5e955b76a7b1e9c1c9739e810a70d213491c5657837ee47c",
+    "examples/heldout_spi_host/verif/tb_spi_host_fixed.sv": "7ccadf075e280f030091039b39b7a52e07d191b75c6ba34dfbb6e9429b276e5a",
+    "examples/heldout_spi_host/contract.md": "748021048520a729ddb8d3971b84277748a0edfd0d04f9bde722c1a5ceeb4bed",
+    "scripts/spi_host_fixture.py": "f6243ade73678cb3195a8fda559010678a5cedabe04e06bbf2d35751e70aaa3c",
+    "scripts/run_spi_host_b_development.py": "3c65029ee06fa2c56634edf8d78d9fb12346d46492bc9724e67aafafbbfabb84",
+    "configs/spi_host_b_development.json": "966c8e8e5fd5d611741915993ec475c2a5d81c252c084fa146cc1e2bf73e01ba",
+    "results/spi_host_preflight_20261104/screen.json": "89a4f7c08089baaad3a3b718c6cdbaa95a6a3599d2d6cd8f4154a7030a97d050"
+  },
+  "api_model_calls": 0,
+  "count_requests": 0,
+  "compilations": 1,
+  "scope": "B development only; mock never provides acceptance evidence",
+  "compile_seconds": 7.9201189167797565,
+  "compile_command": [
+    "verilator",
+    "--binary",
+    "--timing",
+    "--coverage-line",
+    "--coverage-toggle",
+    "--coverage-expr",
+    "-Wno-fatal",
+    "-Wno-TIMESCALEMOD",
+    "--top-module",
+    "tb_spi_host_fixed",
+    "--Mdir",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/spi_host_b_mock_locked_20261104/shared/verilator-build",
+    "-j",
+    "2",
+    "-DSYNTHESIS",
+    "-I/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim/rtl",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_spi_host/verif/tb_spi_host_fixed.sv"
+  ]
+}

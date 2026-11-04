@@ -1,0 +1,128 @@
+[
+  {
+    "id": "P01_byte_count",
+    "requirement": "Each accepted write/bidir segment yields exactly LEN+1 wr pulses and each read/bidir segment exactly LEN+1 rd pulses (pre values at rising edges), attributed in acceptance order; no wr/rd pulse without an accepted command expecting it.",
+    "source": "registers.md COMMAND.LEN 292-302, COMMAND.DIRECTION 304-307; theory_of_operation 125-140; interface output_aliases wr/rd and sampling rule",
+    "assumption": "wr/rd each represent one byte; extra pulses beyond the per-segment budget are attributed to the next queued segment of matching direction",
+    "support_status": "implemented"
+  },
+  {
+    "id": "P02_last_flags",
+    "requirement": "At each wr (rd) pulse, last_write (last_read) is 1 iff it is the final byte of its segment.",
+    "source": "interface output_aliases last_write/last_read; registers.md COMMAND.LEN 292-302",
+    "assumption": "last flag is only constrained when the corresponding handshake pulse is asserted",
+    "support_status": "implemented"
+  },
+  {
+    "id": "P03_async_reset_separation",
+    "requirement": "During rst_n=0 rows, pre and post csb are all-inactive (3) and no wr/rd pulse occurs; tracked operations are discarded.",
+    "source": "interface input_aliases rst_n (asynchronous); registers.md CONTROL.SW_RST 120-123 (reset state); theory_of_operation 641-644",
+    "assumption": "the reset state has all selects deasserted and no handshakes; inferred from 'reset state' wording",
+    "support_status": "implemented (scoped inference)"
+  },
+  {
+    "id": "P04_sw_reset_separation",
+    "requirement": "When software reset is held for consecutive cycles without stall indication, from the second cycle pre.csb is all-inactive and no wr/rd occurs; any wr/rd after any reset before a newly accepted command is a stale byte.",
+    "source": "registers.md CONTROL.SW_RST 120-123; theory_of_operation 641-644; interface sw_reset synchronous",
+    "assumption": "Reset-over-stall precedence is NOT assumed: a software reset coincident with tx_stall/rx_stall suspends checking and yields unresolved",
+    "support_status": "implemented; stall coincidence unresolved"
+  },
+  {
+    "id": "P05_stall_safety",
+    "requirement": "While tx_stall or rx_stall is asserted (pre): no wr/rd handshake, no SCK edge, and csb unchanged across the edge.",
+    "source": "theory_of_operation 579-585, 1208-1223",
+    "assumption": "stall flags are the public-pin indication of the FSM stall condition",
+    "support_status": "implemented"
+  },
+  {
+    "id": "P06_stall_recovery_event",
+    "requirement": "backpressure_then_recovery counted only when an open in-flight segment (selected) stalls with the matching source/sink not ready, the stall clears without reset, and the segment then completes per P01/P02 with select release or later handshake, sufficient SCK edges and no failures.",
+    "source": "theory_of_operation 579-585, 1210-1213",
+    "assumption": "Recovery latency is not bounded; unfinished recovery at trace end is pending",
+    "support_status": "implemented (event witness only, no liveness bound)"
+  },
+  {
+    "id": "P07_select_exclusive_target",
+    "requirement": "At most one csb line active; an active line must correspond to the CSID of an open accepted command (or the command accepted at that edge).",
+    "source": "registers.md CSID 249-254; theory_of_operation 199-202, 371-376",
+    "assumption": "NumCS=2 encoding csb=2 selects index 0, csb=1 selects index 1",
+    "support_status": "implemented"
+  },
+  {
+    "id": "P08_csaat_hold",
+    "requirement": "After a completed CSAAT=1 segment, its select must not be released while no later command has been accepted (and no reset).",
+    "source": "registers.md COMMAND.CSAAT 313-318; theory_of_operation 236-239",
+    "assumption": "completion measured by final byte handshake",
+    "support_status": "implemented"
+  },
+  {
+    "id": "P09_switch_fresh_idle",
+    "requirement": "When a command with changed CSID or CONFIGOPTS fields is accepted after a CSAAT segment, the old select is released and an all-inactive gap occurs before the new select; selecting the new CSID; the new segment may not complete without that gap.",
+    "source": "theory_of_operation 204-208, 241-249, 321-332",
+    "assumption": "Changed command may be offered/accepted while the previous CSAAT segment is still active (queued offer allowed)",
+    "support_status": "implemented"
+  },
+  {
+    "id": "P10_switch_timing",
+    "requirement": "Within a witnessed switch: trail (last SCK edge to old release) >= (old CSNTRAIL+1)*(old CLKDIV+1); gap >= (new CSNIDLE+1)*(new CLKDIV+1), or max(old,new) idle when configuration changed; lead (new select to first SCK edge) >= (new CSNLEAD+1)*(new CLKDIV+1); core-cycle units, one-cycle tolerance, boundary values unresolved.",
+    "source": "theory_of_operation 206-208, 232, 251-279, 321-332; registers.md CONFIGOPTS.CSNLEAD/CSNTRAIL/CSNIDLE/CLKDIV 224-245",
+    "assumption": "half-SCK = CLKDIV+1 core cycles; additive old+new idle reading reported but not enforced",
+    "support_status": "implemented (lower bounds only)"
+  },
+  {
+    "id": "P11_no_spurious_idle_sck",
+    "requirement": "With all selects inactive, any SCK edge must move toward the CPOL of the most recently accepted command.",
+    "source": "theory_of_operation 241, 323-324; registers.md CONFIGOPTS.CPOL 198-202",
+    "assumption": "unchecked after reset until a command is accepted",
+    "support_status": "implemented"
+  },
+  {
+    "id": "P12_abort_restart_event",
+    "requirement": "abort_then_restart counted separately for sw_reset and async_reset only when a progressed incomplete segment is interrupted, no stale byte occurs, and the next accepted command completes per P01/P02 with release and sufficient SCK edges.",
+    "source": "registers.md CONTROL.SW_RST 120-123; theory_of_operation 239, 641-644",
+    "assumption": "none beyond P03/P04",
+    "support_status": "implemented (event witness)"
+  },
+  {
+    "id": "P13_input_assumptions",
+    "requirement": "Pending valid and command fields hold until acceptance or reset; no valid during rst_n=0; speed!=3; bidirectional only at std; trace begins with two reset cycles; fields within listed widths. Violations are assumption_violations, not DUT failures.",
+    "source": "interface transport_assumptions; registers.md COMMAND.SPEED 309-311, DIRECTION 304-307",
+    "assumption": "acceptance = valid and pre.ready on a non-reset row",
+    "support_status": "implemented"
+  },
+  {
+    "id": "P14_liveness",
+    "requirement": "Accepted operations eventually complete.",
+    "source": "theory_of_operation 366-368 (register STATUS view, not this boundary)",
+    "assumption": "no bound is specified at this boundary",
+    "support_status": "unresolved: unfinished operations reported pending, never failed"
+  },
+  {
+    "id": "P15_serial_cycle_exactness",
+    "requirement": "Exact SCK edges per byte/lane, CPHA/FULLCYC sample/shift alignment, sd_en and speed/full_cycle outputs.",
+    "source": "registers.md CONFIGOPTS.CPHA/FULLCYC 204-222",
+    "assumption": "n/a",
+    "support_status": "not supported: cited text does not fix cycle-exact pin behavior; only a conservative edge-count lower bound is used as completion evidence"
+  },
+  {
+    "id": "P16_general_csn_timing",
+    "requirement": "CSNLEAD/CSNTRAIL/CSNIDLE for every select episode outside switches.",
+    "source": "theory_of_operation 251-279",
+    "assumption": "n/a",
+    "support_status": "not implemented: episode-to-config attribution ambiguous with queued commands; scoped to switches"
+  },
+  {
+    "id": "P17_enable_semantics",
+    "requirement": "Behavior of enable (en_i).",
+    "source": "registers.md CONTROL.SPIEN 116-118 (register level only)",
+    "assumption": "n/a",
+    "support_status": "not supported at this boundary"
+  },
+  {
+    "id": "P18_len_width_disclosure",
+    "requirement": "LEN treated as 20 bits.",
+    "source": "registers.md COMMAND 284-302 and interface (20 bits) vs theory_of_operation 132 (8 bits)",
+    "assumption": "documentation mismatch disclosed",
+    "support_status": "disclosed"
+  }
+]

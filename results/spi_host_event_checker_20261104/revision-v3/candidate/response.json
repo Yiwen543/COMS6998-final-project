@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 105750,
+  "stop_reason": "end_turn",
+  "session_id": "c74a1dc7-3ee1-4622-8730-30b26b111a54",
+  "total_cost_usd": 0.44114600000000004,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 39058,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 12292,
+    "output_tokens_details": {
+      "thinking_tokens": 6968
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 39058
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 12292,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 39058,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 39058,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 12292,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 39058,
+      "webSearchRequests": 0,
+      "costUSD": 0.44114600000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 6968,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"patches\":[{\"file\":\"checker.py\",\"before\":\"    return s['edges'] >= s['total'] * (8 // LANES.get(s['speed'], 1))\",\"after\":\"    return s['edges'] >= s['total'] * (16 // LANES.get(s['speed'], 1))\"},{\"file\":\"checker.py\",\"before\":\"        B = sw['B']\\n        if sw['rise'] is None or sw['fall'] is None:\",\"after\":\"        B = sw['B']\\n        O = sw['off']\\n        if sw['rise'] is None or sw['fall'] is None:\"},{\"file\":\"checker.py\",\"before\":\"        hn = B['clkdiv'] + 1\",\"after\":\"        hn = O['clkdiv'] + 1\"},{\"file\":\"checker.py\",\"before\":\"        idle_new = (B['idle'] + 1) * hn\\n        cfg = any(A[k] != B[k] for k in CFG)\\n        req = {'trail': (A['trail'] + 1) * ho, 'gap': max(idle_old, idle_new) if cfg else idle_new, 'lead': (B['lead'] + 1) * hn}\",\"after\":\"        idle_new = (O['idle'] + 1) * hn\\n        cfg = any(A[k] != O[k] for k in CFG)\\n        req = {'trail': (A['trail'] + 1) * ho, 'gap': max(idle_old, idle_new) if cfg else idle_new, 'lead': (O['lead'] + 1) * hn}\"},{\"file\":\"checker.py\",\"before\":\"            elif m < b - 1:\",\"after\":\"            elif m < b:\"},{\"file\":\"checker.py\",\"before\":\"            elif m == b - 1:\\n                un(c, 'switch_timing_boundary', '%s=%d is one cycle under nominal %d; sampling-boundary ambiguity' % (name, m, b))\\n                bad = True\\n        if len(F) > sw['nf']:\",\"after\":\"        if cfg and sw['gap'] is not None and req['gap'] <= sw['gap'] < idle_old + idle_new:\\n            un(c, 'switch_idle_additive', 'gap=%d meets max(old,new)=%d but not old+new=%d; additive before/after idle reading (theory_of_operation 326-329) unresolved' % (sw['gap'], req['gap'], idle_old + idle_new), True)\\n            bad = True\\n        if len(F) > sw['nf']:\"},{\"file\":\"checker.py\",\"before\":\"        hs = set()\\n\",\"after\":\"        prev = segs[-1] if segs else None\\n        if a['valid'] and prev is not None and prev['keep_cs'] and (prev['csid'] != a['csid'] or any(prev[k] != a[k] for k in CFG)) and not any(sw['state'] == 'open' and sw['B'] is None for sw in switches):\\n            cnt['switches_offered'] += 1\\n            if prev['dummy'] or not (a['write'] or a['read']):\\n                un(c, 'switch_scope', 'switch involving a dummy segment; completion not externally countable; not checked')\\n            else:\\n                switches.append({'A': prev, 'B': None, 'off': dict((k, a[k]) for k in CMD), 'state': 'open', 'rise': None, 'fall': None, 'lead': None, 'trail': None, 'gap': None, 'nf': len(F), 'accept': None, 'offer': c})\\n        if accept:\\n            cnt['accepted'] += 1\\n            nb = a['length'] + 1\\n            s = {'id': st['nid'], 'cycle': c, 'dummy': not (a['write'] or a['read']), 'total': nb,\\n                 'wr_rem': nb if a['write'] else 0, 'rd_rem': nb if a['read'] else 0,\\n                 'edges': 0, 'progress': False, 'done': None, 'closed': None}\\n            for k in CMD:\\n                s[k] = a[k]\\n            st['nid'] += 1\\n            for sw in switches:\\n                if sw['state'] == 'open' and sw['B'] is None:\\n                    sw['B'] = s\\n                    sw['accept'] = c\\n            if s['dummy']:\\n                un(c, 'dummy_segment', 'dummy segment %d accepted; completion not tracked' % s['id'])\\n            segs.append(s)\\n            st['cpol'] = a['cpol']\\n            if st['window']:\\n                st['window'] = False\\n                if st['abort'] is not None and st['restart'] is None:\\n                    st['restart'] = s\\n\\n        hs = set()\\n\"},{\"file\":\"checker.py\",\"before\":\"            cnt[kind] += 1\\n            s = None\",\"after\":\"            cnt[kind] += 1\\n            if not a['tx_ready' if kind == 'wr' else 'rx_ready']:\\n                fail(c, 'handshake_without_ready', '%s pulse while external %s not ready' % (kind, 'source' if kind == 'wr' else 'sink'))\\n            s = None\"},{\"file\":\"checker.py\",\"before\":\"        if segs and not accept:\\n            h = segs[-1]\\n            if h['keep_cs'] and h['done'] is not None and c > h['done'] and _bit(p['csb'], h['csid']) == 0 and _bit(q['csb'], h['csid']) == 1:\\n                fail(c, 'csaat_hold', 'csb[%d] released after CSAAT segment %d with no later accepted command (registers.md COMMAND.CSAAT 313-318)' % (h['csid'], h['id']))\\n\\n        if accept:\\n            cnt['accepted'] += 1\\n            nb = a['length'] + 1\\n            s = {'id': st['nid'], 'cycle': c, 'dummy': not (a['write'] or a['read']), 'total': nb,\\n                 'wr_rem': nb if a['write'] else 0, 'rd_rem': nb if a['read'] else 0,\\n                 'edges': 0, 'progress': False, 'done': None, 'closed': None}\\n            for k in CMD:\\n                s[k] = a[k]\\n            st['nid'] += 1\\n            if segs:\\n                A = segs[-1]\\n                if A['keep_cs'] and (A['csid'] != s['csid'] or any(A[k] != s[k] for k in CFG)):\\n                    cnt['switches_offered'] += 1\\n                    if A['dummy'] or s['dummy']:\\n                        un(c, 'switch_scope', 'switch involving a dummy segment; completion not externally countable; not checked')\\n                    else:\\n                        switches.append({'A': A, 'B': s, 'state': 'open', 'rise': None, 'fall': None, 'lead': None, 'trail': None, 'gap': None, 'nf': len(F), 'accept': c})\\n            if s['dummy']:\\n                un(c, 'dummy_segment', 'dummy segment %d accepted; completion not tracked' % s['id'])\\n            segs.append(s)\\n            st['cpol'] = a['cpol']\\n            if st['window']:\\n                st['window'] = False\\n                if st['abort'] is not None and st['restart'] is None:\\n                    st['restart'] = s\\n\",\"after\":\"        if prev is not None and not a['valid']:\\n            h = prev\\n            if h['keep_cs'] and h['done'] is not None and c > h['done'] and _bit(p['csb'], h['csid']) == 0 and _bit(q['csb'], h['csid']) == 1:\\n                fail(c, 'csaat_hold', 'csb[%d] released after CSAAT segment %d with no later offered command (registers.md COMMAND.CSAAT 313-318)' % (h['csid'], h['id']))\\n\\n        o = cur()\\n        if o is not None and o['progress'] and o['done'] is None and _bit(p['csb'], o['csid']) == 0 and _bit(q['csb'], o['csid']) == 1:\\n            fail(c, 'missing_byte_at_release', 'csb[%d] released with %d tx / %d rx bytes outstanding in segment %d (registers.md COMMAND.LEN 292-302)' % (o['csid'], o['wr_rem'], o['rd_rem'], o['id']))\\n\"},{\"file\":\"checker.py\",\"before\":\"                    if sel != B['csid']:\",\"after\":\"                    if sel != sw['off']['csid']:\"},{\"file\":\"checker.py\",\"before\":\"            if sw['state'] == 'open' and sw['B']['closed'] is not None:\",\"after\":\"            if sw['state'] == 'open' and sw['B'] is not None and sw['B']['closed'] is not None:\"},{\"file\":\"checker.py\",\"before\":\"with a one-cycle sampling tolerance; exact-boundary values are reported unresolved.',\\n    'For a configuration change the enforced idle bound is max(old,new); the additive old+new reading of theory_of_operation 321-332 is reported only as evidence.',\",\"after\":\"with no tolerance.',\\n    'For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.',\\n    'A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).',\\n    'last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.',\"},{\"file\":\"selftest.py\",\"before\":\"    for _ in range(n):\\n        _step(t, tog=True)\",\"after\":\"    for _ in range(2 * n):\\n        _step(t, tog=True)\"},{\"file\":\"selftest.py\",\"before\":\"    _step(t, pre={'wr': 1, 'last_write': 1})\\n    _toggle(t, 8)\\n    _step(t, csb=3)\\n    _step(t)\\n    return t['rows']\\n\\n\\ndef _abort(\",\"after\":\"    _step(t, pre={'wr': 1, 'last_write': 1})\\n    _toggle(t, 4 if fault == 'short' else 8)\\n    _step(t, csb=3)\\n    _step(t)\\n    return t['rows']\\n\\n\\ndef _same_edge(fault=None):\\n    t = _new()\\n    _reset(t)\\n    act = {'valid': 1, 'write': 1}\\n    if fault == 'notready':\\n        act['tx_ready'] = 0\\n    _step(t, act, {'ready': 1, 'wr': 1, 'last_write': 1}, csb=2)\\n    if fault == 'extra':\\n        _step(t, pre={'wr': 1, 'last_write': 1})\\n    _toggle(t, 8)\\n    _step(t, csb=3)\\n    _step(t)\\n    return t['rows']\\n\\n\\ndef _early_switch(fault=None):\\n    t = _new()\\n    _reset(t)\\n    _step(t, {'valid': 1, 'write': 1, 'keep_cs': 1, 'idle': 3}, {'ready': 1})\\n    _step(t, csb=2)\\n    _step(t, pre={'wr': 1, 'last_write': 1})\\n    _toggle(t, 8)\\n    off = {'valid': 1, 'write': 1, 'csid': 1, 'idle': 3}\\n    _step(t, off, csb=3)\\n    if fault != 'short':\\n        _step(t, off)\\n        _step(t, off)\\n    _step(t, off, {'ready': 1})\\n    _step(t, csb=1)\\n    _step(t, pre={'wr': 1, 'last_write': 1})\\n    _toggle(t, 8)\\n    _step(t, csb=3)\\n    _step(t)\\n    return t['rows']\\n\\n\\ndef _missing():\\n    t = _new()\\n    _reset(t)\\n    _step(t, {'valid': 1, 'write': 1, 'length': 1}, {'ready': 1})\\n    _step(t, csb=2)\\n    _step(t, pre={'wr': 1, 'last_write': 0})\\n    _toggle(t, 8)\\n    _step(t, csb=3)\\n    _step(t)\\n    return t['rows']\\n\\n\\ndef _abort(\"},{\"file\":\"selftest.py\",\"before\":\"    return res\\n\",\"after\":\"    t('same_edge_accept_wr_positive', lambda: _same_edge(), lambda r: r['verdict'] == 'scoped_pass' and clean(r))\\n    t('fault_same_edge_extra_wr', lambda: _same_edge('extra'), lambda r: 'byte_accounting' in cats(r))\\n    t('fault_wr_without_tx_ready', lambda: _same_edge('notready'), lambda r: 'handshake_without_ready' in cats(r))\\n    t('early_release_switch_positive', lambda: _early_switch(), lambda r: clean(r) and ('constrained_transaction_switch', 'csid_change') in fams(r))\\n    t('fault_early_release_short_gap', lambda: _early_switch('short'), lambda r: 'switch_timing' in cats(r) and 'constrained_transaction_switch' not in famset(r))\\n    t('fault_missing_byte_at_release', _missing, lambda r: 'missing_byte_at_release' in cats(r))\\n    t('short_burst_no_recovery_event', lambda: _bp('short'), lambda r: 'backpressure_then_recovery' not in famset(r) and any(u['category'] == 'backpressure_not_witnessed' for u in r['unresolved']))\\n    return res\\n\"},{\"file\":\"properties.json\",\"before\":\"  {\\n    \\\"id\\\": \\\"P14_liveness\\\",\",\"after\":\"  {\\n    \\\"id\\\": \\\"P19_missing_byte_and_ready\\\",\\n    \\\"requirement\\\": \\\"Select of an in-progress segment must not release with bytes outstanding; wr requires tx_ready and rd requires rx_ready in the same row; accept and first handshake may share an edge.\\\",\\n    \\\"source\\\": \\\"registers.md COMMAND.LEN 292-302; interface tx_ready/rx_ready aliases and sampling rule\\\",\\n    \\\"assumption\\\": \\\"ready inputs apply to the edge on which the handshake is sampled\\\",\\n    \\\"support_status\\\": \\\"implemented; last-flag level outside handshakes and active/ready outputs not checked\\\"\\n  },\\n  {\\n    \\\"id\\\": \\\"P14_liveness\\\",\"},{\"file\":\"contract.md\",\"before\":\"- No idle SCK edge away from the accepted CPOL level.\",\"after\":\"- No idle SCK edge away from the accepted CPOL level.\\n- Accept and first wr/rd on the same edge are legal (command enqueued first). Switch tracking starts at the pending changed offer; old select may release before acceptance. Timing bounds have no tolerance; config-change gap below old+new idle is blocking unresolved.\\n- Release of a selected segment with bytes outstanding fails; wr/rd while tx_ready/rx_ready=0 fails. Completion requires (LEN+1)*16/lanes SCK edges.\"}],\"rationale\":\"Accept is processed before handshakes so same-edge accept+wr is legal. Switches are tracked from the pending changed offer, so release before acceptance is handled, and csaat_hold now allows release whenever an offer is pending. The one-cycle tolerance is removed. For config changes, a gap below old+new idle is blocking unresolved. The edge bound is corrected to 2 edges per bit. New checks fail on missing bytes at deselection and on handshakes while not ready. Added positive/negative controls for same-edge accept, early-release switching, missing bytes and too-short bursts; existing controls are kept, with toggle counts doubled to match the corrected edge bound.\"}",
+  "ttft_ms": 69746,
+  "type": "result",
+  "duration_ms": 105812,
+  "uuid": "e71fb0e6-d366-455b-9454-a13f4199c9fa",
+  "ttft_stream_ms": 2217,
+  "time_to_request_ms": 48,
+  "first_content_frame_ms": 2217,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 12292,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 39058,
+      "webSearchRequests": 0,
+      "costUSD": 0.44114600000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 6968,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 35890,
+  "stop_reason": "end_turn",
+  "session_id": "047a9d32-a35a-4f03-9d35-3a77109e7ca5",
+  "total_cost_usd": 0.33251600000000003,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 53636,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 3216,
+    "output_tokens_details": {
+      "thinking_tokens": 1331
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 53636
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 3216,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 53636,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 53636,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 3216,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 53636,
+      "webSearchRequests": 0,
+      "costUSD": 0.33251600000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1331,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\n  \"ready_for_offline_gate\": true,\n  \"scope_of_decision\": \"Bounded READB/address-write read profile only: single controller, ACKing external target, FifoDepth64. Configuration B stays disabled because the source-relevance gate already failed. No artifacts were modified. This is not a formal proof.\",\n  \"findings\": [\n    {\n      \"id\": \"F1_event_false_positives\",\n      \"severity\": \"info\",\n      \"status\": \"acceptable\",\n      \"detail\": \"An event is credited only when all of these hold: the trace has no failures and no assumption violations; the transaction ended in STOP or restart; the transaction window was clean; and every involved entry is complete, popped, not aborted, ACK-correct, and has RX equal to n. Partial traces and reset-terminated windows earn no credit. The evaluator first requires a clean baseline with a kind=complete event, then requires a corrupted-RX mutant to fail and lose that event. All 8 such controls (4 families \u00d7 fixture and DUT) are credited.\"\n    },\n    {\n      \"id\": \"F2_stretch_credit_weak\",\n      \"severity\": \"low\",\n      \"status\": \"limitation\",\n      \"detail\": \"read_stretch_recovery is credited when the current command is READB and any sample shows scl=0 while scl_pin=1. The checker does not require that the stretch overlaps a read data bit rather than the ACK low phase or the address-to-read handoff. There is no negative control for a stretch outside the read window. Treat the event as 'stretch observed while READB current', not as proof of recovery semantics.\"\n    },\n    {\n      \"id\": \"F3_independent_control_diversity\",\n      \"severity\": \"medium\",\n      \"status\": \"limitation\",\n      \"detail\": \"The event controls use a single mutation class: XOR of the first RX byte. The rx_duplicate, rx_missing, wrong_boundary_ack and premature_pop negatives exist only on the hand-built fixture traces, not on the DUT traces. No independent control covers:\\n- wrong write data;\\n- a START emitted during READB;\\n- a missing or extra STOP;\\n- a wrong READB count;\\n- a stretch-family false credit.\\nThese property checks rely on the author's selftests, which share the author's own wire model.\"\n    },\n    {\n      \"id\": \"F4_spec_justification\",\n      \"severity\": \"info\",\n      \"status\": \"acceptable\",\n      \"detail\": \"Properties P1\u2013P6 trace to the cited doc lines:\\n- the READB count rule (0 means 256);\\n- R-1 bytes ACKed;\\n- the final byte NACKed unless RCONT;\\n- START ignored for READB;\\n- STOP placement.\\nTwo items are honestly labeled as fixture or interface contracts rather than upstream guarantees: P7 (RX delivered before pop) and the same-row push/flush ordering. P9 maps events to pending/unsupported, which is conservative. P10 timing is out of scope.\"\n    },\n    {\n      \"id\": \"F5_one_bit_discard\",\n      \"severity\": \"low\",\n      \"status\": \"limitation\",\n      \"detail\": \"A single pending SCL rise at START or STOP is discarded silently, to absorb the STOP/restart setup rise. A spurious lone extra clock pulse before START or STOP would therefore go undetected.\"\n    },\n    {\n      \"id\": \"F6_event_outputs_post_only\",\n      \"severity\": \"low\",\n      \"status\": \"limitation\",\n      \"detail\": \"ERR_KEYS are sampled only from post. A one-row event pulse visible only in pre would not mark the trace unsupported. In practice the previous row's post approximates pre, so the risk is small.\"\n    },\n    {\n      \"id\": \"F7_isolation\",\n      \"severity\": \"medium\",\n      \"status\": \"process_note\",\n      \"detail\": \"The author's spec packet excludes DUT code, calibration vectors and outcomes. However, this repair (same-row push/flush ordering) is a reaction to behaviour that appears in the DUT and fixture traces, where a pushed head is visible in the same row's pre. It is therefore plausibly outcome-informed iteration. The repair matches the stated sampling contract and does not weaken any property, but the checker is no longer strictly blind to evaluation outcomes.\"\n    },\n    {\n      \"id\": \"F8_driver_env_errors_invisible\",\n      \"severity\": \"low\",\n      \"status\": \"limitation\",\n      \"detail\": \"The driver reports unsafe_flush and stretch_started_high only as ENV_ERROR display lines, which never reach the trace rows. The checker flags flush only when its own decoder believes a transaction is active, so the gate must separately reject runs that contain ENV_ERROR lines.\"\n    },\n    {\n      \"id\": \"F9_fbyte0\",\n      \"severity\": \"info\",\n      \"status\": \"acceptable\",\n      \"detail\": \"The FBYTE=0 (256-byte read) case is demonstrated only by an author selftest. The DUT zero-count trace is correctly reported as pending, so no event or pass credit is claimed for it.\"\n    }\n  ],\n  \"limitations\": [\n    \"Read-only review of the supplied packet only; nothing was re-executed and the hashes were not recomputed.\",\n    \"No formal proof; no liveness, exact-cycle, analog timing, arbitration, multi-controller or NACK-recovery assurance.\",\n    \"Independent negative controls are narrow (mostly RX corruption); the remaining properties rest on author selftests.\",\n    \"Interpreting ready (pop) as 'after processing', and RX delivery before pop, are fixture contracts rather than upstream guarantees.\",\n    \"Readiness applies only to the offline gate for the bounded read profile; B remains disabled.\"\n  ]\n}\n```",
+  "ttft_ms": 17851,
+  "type": "result",
+  "duration_ms": 35990,
+  "uuid": "db0d8566-2d52-4176-859a-8589b7f2f9d9",
+  "ttft_stream_ms": 2589,
+  "time_to_request_ms": 98,
+  "first_content_frame_ms": 2589,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 3216,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 53636,
+      "webSearchRequests": 0,
+      "costUSD": 0.33251600000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1331,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "purpose": "Exploratory minimal semantic appendix ablation; fresh sessions, same five FIFO source counters; not an independent natural-IP replication",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "low",
+  "max_output_tokens": 8192,
+  "timeout_seconds": 90,
+  "max_retries": 1,
+  "repetitions": 3,
+  "rounds": 6,
+  "max_new_cycles": 8,
+  "max_input_tokens": 32000,
+  "max_input_bytes": 100000,
+  "max_count_requests_per_attempt": 13,
+  "placebo_tolerance_tokens": 2,
+  "arms": ["B_compact", "C_full", "C_min", "P_min"],
+  "schedule": "round-major, repetition-major, rotate arms by (round + repetition - 2) modulo 4",
+  "primary_target": {
+    "counter_type": "branch",
+    "outcome": "if",
+    "source_lines": [91, 161, 96, 129, 179],
+    "required_covered": 5
+  },
+  "feedback_policy": "B is unchanged lossless compact raw feedback. Full C retains the existing appendix. Minimal C retains only proved equivalent source groups, event context, two-state scope and separate measured counters. P replaces minimal C with own-trajectory provider-token-matched neutral filler.",
+  "failure_policy": "After bounded retries, stop that session and retain all costs and last measured coverage as not reached or previously reached. Count/measurement failures stop the session; checker violations remain valid measured DUT outcomes.",
+  "measurement_policy": "Compile once as shared overhead; each simulation replays seed plus all accepted actions with fresh counters. Report active session wall time and shared setup separately; never charge other sessions' waiting time. Keep every raw DUT counter."
+}

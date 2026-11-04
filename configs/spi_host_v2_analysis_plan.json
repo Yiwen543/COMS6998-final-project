@@ -1,0 +1,17 @@
+{
+  "purpose": "Pre-live B-only development analysis for the repaired SPI semantic frontend",
+  "primary_B_acceptance": "Use the unchanged acceptance thresholds and budgets in spi_host_b_development.json over the qualified groups from the explicitly selected v2 screen.",
+  "new_semantic_backend": "Slang SSA and typed QF_BV; independently checked against Yosys cells; automatic Z3-proven ground rules normalized by egg. Not attributed to the old six-rule engine alone.",
+  "secondary_required_reporting": [
+    "Report both nontrivial source groups separately from AST-identical groups at every round.",
+    "Report first-hit round for every original source counter, not inferred group hits.",
+    "Keep invalid-protocol, missing-action, failed-request and not-reached repetitions.",
+    "Report whether nontrivial groups have a ceiling after round 1 even when the broad B gate passes."
+  ],
+  "formal_trial_readiness": {
+    "require_primary_B_gate": true,
+    "min_repetitions_with_at_least_one_nontrivial_group_unhit_after_round_one": 2,
+    "reason": "A source target already reached in the first batch by every B repetition cannot distinguish target-hit rounds in a later matched pilot. This additional readiness check is written before live responses and does not change the reported original B gate."
+  },
+  "prohibited": ["C-outcome-based selection", "calibration or solver witness in model prompts", "editing RTL/checker/driver after inspecting live results", "claiming proof of full IP correctness"]
+}

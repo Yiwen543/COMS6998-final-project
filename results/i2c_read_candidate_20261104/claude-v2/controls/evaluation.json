@@ -1,0 +1,4039 @@
+{
+  "checker_sha256": "8598ae81139f5df7493ab912558ef23f40e0b12a590fb602c8626805ba4ba70b",
+  "author_selftests": [
+    {
+      "name": "clean_multi_byte_read_pass",
+      "pass": true
+    },
+    {
+      "name": "rx_corruption_fails",
+      "pass": true
+    },
+    {
+      "name": "rx_duplicate_fails",
+      "pass": true
+    },
+    {
+      "name": "rx_missing_fails",
+      "pass": true
+    },
+    {
+      "name": "intermediate_nack_fails",
+      "pass": true
+    },
+    {
+      "name": "final_ack_without_rcont_fails",
+      "pass": true
+    },
+    {
+      "name": "rcont_chain_pass",
+      "pass": true
+    },
+    {
+      "name": "rcont_boundary_nack_fails",
+      "pass": true
+    },
+    {
+      "name": "fbyte0_reads_256_pass",
+      "pass": true
+    },
+    {
+      "name": "fbyte0_truncated_fails",
+      "pass": true
+    },
+    {
+      "name": "premature_pop_fails",
+      "pass": true
+    },
+    {
+      "name": "reset_separates_transactions_pass",
+      "pass": true
+    },
+    {
+      "name": "stale_rx_after_reset_fails",
+      "pass": true
+    },
+    {
+      "name": "incomplete_is_pending_no_event",
+      "pass": true
+    },
+    {
+      "name": "read_then_restart_pass",
+      "pass": true
+    },
+    {
+      "name": "read_stretch_recovery_pass",
+      "pass": true
+    },
+    {
+      "name": "stretch_with_bad_rx_no_credit",
+      "pass": true
+    },
+    {
+      "name": "same_row_push_head_valid_pass",
+      "pass": true
+    },
+    {
+      "name": "same_row_push_wrong_head_fails",
+      "pass": true
+    },
+    {
+      "name": "flush_then_push_head_pending",
+      "pass": true
+    },
+    {
+      "name": "same_row_flush_stale_head_fails",
+      "pass": true
+    }
+  ],
+  "cases": {
+    "ordinary_read": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 263,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 2,
+        "rx": 1,
+        "resets": 2,
+        "failures": 0,
+        "events": 0
+      }
+    },
+    "multi_read": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "multi_byte_read",
+          "kind": "complete",
+          "start_cycle": 15,
+          "end_cycle": 350,
+          "evidence": {
+            "entries": [
+              0,
+              1
+            ],
+            "read_bytes": [
+              [
+                166,
+                60
+              ]
+            ]
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 368,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 2,
+        "resets": 2,
+        "failures": 0,
+        "events": 1
+      }
+    },
+    "rcont_chain": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "rcont_chain",
+          "kind": "complete",
+          "start_cycle": 16,
+          "end_cycle": 353,
+          "evidence": {
+            "entries": [
+              0,
+              1,
+              2
+            ],
+            "read_bytes": [
+              [
+                166
+              ],
+              [
+                60
+              ]
+            ]
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 371,
+        "pushes": 3,
+        "pops": 3,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 2,
+        "resets": 2,
+        "failures": 0,
+        "events": 1
+      }
+    },
+    "read_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "read_then_restart",
+          "kind": "complete",
+          "start_cycle": 16,
+          "end_cycle": 369,
+          "evidence": {
+            "entries": [
+              0,
+              1,
+              2
+            ],
+            "read_bytes": [
+              [
+                166
+              ]
+            ]
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 387,
+        "pushes": 3,
+        "pops": 3,
+        "starts": 2,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 1,
+        "resets": 2,
+        "failures": 0,
+        "events": 1
+      }
+    },
+    "read_stretch": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "read_stretch_recovery",
+          "kind": "complete",
+          "start_cycle": 15,
+          "end_cycle": 257,
+          "evidence": {
+            "entries": [
+              0,
+              1
+            ],
+            "read_bytes": [
+              [
+                166
+              ]
+            ]
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 275,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 2,
+        "rx": 1,
+        "resets": 2,
+        "failures": 0,
+        "events": 1
+      }
+    },
+    "zero_partial": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 233,
+          "kind": "incomplete",
+          "detail": "transaction open at end of trace"
+        },
+        {
+          "cycle": 233,
+          "kind": "incomplete",
+          "detail": "1 queued entries not popped"
+        }
+      ],
+      "verdict": "pending",
+      "counts": {
+        "rows": 234,
+        "pushes": 2,
+        "pops": 1,
+        "starts": 1,
+        "stops": 0,
+        "wire_bytes": 2,
+        "rx": 1,
+        "resets": 2,
+        "failures": 0,
+        "events": 0
+      }
+    },
+    "rx_corrupt": {
+      "failures": [
+        {
+          "cycle": 217,
+          "category": "rx_data",
+          "detail": "RX 0xa7 but wire byte 0xa6 (entry 1)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 263,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 2,
+        "rx": 1,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    },
+    "rx_duplicate": {
+      "failures": [
+        {
+          "cycle": 218,
+          "category": "extra_rx",
+          "detail": "RX 0xa6 with no decoded unreported read byte"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 263,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 2,
+        "rx": 2,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    },
+    "rx_missing": {
+      "failures": [
+        {
+          "cycle": 253,
+          "category": "missing_rx",
+          "detail": "READB entry 1 popped with 0 of 1 RX"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 262,
+          "kind": "incomplete",
+          "detail": "1 decoded read bytes awaiting RX"
+        }
+      ],
+      "verdict": "fail",
+      "counts": {
+        "rows": 263,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 2,
+        "rx": 0,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    },
+    "wrong_boundary_ack": {
+      "failures": [
+        {
+          "cycle": 225,
+          "category": "read_ack",
+          "detail": "entry 1 byte 0 ninth bit ACK expected NACK"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 371,
+        "pushes": 3,
+        "pops": 3,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 2,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    },
+    "premature_pop": {
+      "failures": [
+        {
+          "cycle": 10,
+          "category": "premature_pop",
+          "detail": "write entry 0 popped before ninth bit"
+        },
+        {
+          "cycle": 11,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 11,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 11,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 11,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 12,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 12,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 12,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 12,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 13,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 13,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 13,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 13,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 14,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 14,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 14,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 14,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 15,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 15,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 15,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 15,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 16,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 16,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 16,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 16,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 17,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 17,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 17,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 17,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 18,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 18,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 18,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 18,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 19,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 19,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 19,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 19,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 20,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 20,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 20,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 20,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 21,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 21,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 21,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 21,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 22,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 22,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 22,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 22,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 23,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 23,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 23,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 23,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 24,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 24,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 24,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 24,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 25,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 25,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 25,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 25,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 26,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 26,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 26,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 26,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 27,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 27,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 27,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 27,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 28,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 28,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 28,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 28,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 29,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 29,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 29,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 29,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 30,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 30,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 30,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 30,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 31,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 31,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 31,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 31,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 32,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 32,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 32,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 32,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 33,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 33,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 33,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 33,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 34,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 34,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 34,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 34,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 35,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 35,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 35,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 35,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 36,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 36,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 36,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 36,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 37,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 37,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 37,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 37,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 38,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 38,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 38,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 38,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 39,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 39,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 39,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 39,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 40,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 40,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 40,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 40,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 41,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 41,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 41,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 41,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 42,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 42,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 42,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 42,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 43,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 43,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 43,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 43,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 44,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 44,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 44,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 44,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 45,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 45,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 45,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 45,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 46,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 46,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 46,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 46,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 47,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 47,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 47,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 47,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 48,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 48,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 48,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 48,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 49,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 49,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 49,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 49,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 50,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 50,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 50,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 50,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 51,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 51,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 51,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 51,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 52,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 52,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 52,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 52,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 53,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 53,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 53,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 53,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 54,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 54,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 54,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 54,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 55,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 55,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 55,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 55,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 56,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 56,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 56,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 56,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 57,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 57,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 57,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 57,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 58,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 58,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 58,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 58,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 59,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 59,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 59,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 59,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 60,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 60,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 60,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 60,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 61,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 61,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 61,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 61,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 62,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 62,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 62,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 62,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 63,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 63,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 63,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 63,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 64,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 64,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 64,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 64,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 65,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 65,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 65,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 65,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 66,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 66,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 66,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 66,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 67,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 67,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 67,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 67,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 68,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 68,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 68,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 68,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 69,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 69,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 69,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 69,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 70,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 70,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 70,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 70,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 71,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 71,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 71,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 71,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 72,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 72,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 72,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 72,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 73,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 73,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 73,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 73,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 74,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 74,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 74,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 74,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 75,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 75,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 75,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 75,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 76,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 76,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 76,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 76,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 77,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 77,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 77,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 77,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 78,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 78,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 78,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 78,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 79,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 79,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 79,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 79,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 80,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 80,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 80,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 80,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 81,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 81,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 81,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 81,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 82,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 82,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 82,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 82,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 83,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 83,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 83,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 83,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 84,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 84,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 84,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 84,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 85,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 85,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 85,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 85,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 86,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 86,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 86,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 86,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 87,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 87,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 87,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 87,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 88,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 88,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 88,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 88,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 89,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 89,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 89,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 89,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 90,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 90,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 90,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 90,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 91,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 91,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 91,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 91,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 92,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 92,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 92,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 92,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 93,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 93,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 93,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 93,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 94,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 94,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 94,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 94,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 95,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 95,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 95,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 95,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 96,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 96,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 96,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 96,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 97,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 97,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 97,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 97,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 98,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 98,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 98,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 98,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 99,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 99,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 99,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 99,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 100,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 100,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 100,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 100,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 101,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 101,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 101,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 101,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 102,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 102,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 102,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 102,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 103,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 103,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 103,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 103,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 104,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 104,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 104,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 104,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 105,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 105,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 105,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 105,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 106,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 106,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 106,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 106,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 107,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 107,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 107,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 107,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 108,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 108,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 108,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 108,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 109,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 109,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 109,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 109,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 110,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 110,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 110,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 110,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 111,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 111,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 111,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 111,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 112,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 112,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 112,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 112,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 113,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 113,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 113,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 113,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 114,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 114,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 114,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 114,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 115,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 115,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 115,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 115,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 116,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 116,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 116,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 116,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 117,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 117,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 117,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 117,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 118,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 118,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 118,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 118,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 119,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 119,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 119,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 119,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 120,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 120,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 120,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 120,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 121,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 121,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 121,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 121,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 122,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 122,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 122,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 122,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 123,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 123,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 123,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 123,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 124,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 124,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 124,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 124,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 125,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 125,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 125,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 125,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 126,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 126,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 126,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 126,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 127,
+          "category": "fifo_head",
+          "detail": "fmt_byte=81 expected 1 for entry 1"
+        },
+        {
+          "cycle": 127,
+          "category": "fifo_head",
+          "detail": "fmt_start=1 expected 0 for entry 1"
+        },
+        {
+          "cycle": 127,
+          "category": "fifo_head",
+          "detail": "fmt_stop=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 127,
+          "category": "fifo_head",
+          "detail": "fmt_read=0 expected 1 for entry 1"
+        },
+        {
+          "cycle": 127,
+          "category": "premature_pop",
+          "detail": "READB entry 1 popped after 0 of 1 bytes"
+        },
+        {
+          "cycle": 128,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 129,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 130,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 131,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 132,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 133,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 134,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 135,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 136,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 137,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 138,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 139,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 140,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 141,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 142,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 143,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 144,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 145,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 146,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 147,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 148,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 149,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 150,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 151,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 152,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 153,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 154,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 155,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 156,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 157,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 158,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 159,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 160,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 161,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 162,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 163,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 164,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 165,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 166,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 167,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 168,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 169,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 170,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 171,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 172,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 173,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 174,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 175,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 176,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 177,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 178,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 179,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 180,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 181,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 182,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 183,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 184,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 185,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 186,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 187,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 188,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 189,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 190,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 191,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 192,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 193,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 194,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 195,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 196,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 197,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 198,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 199,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 200,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 201,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 202,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 203,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 204,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 205,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 206,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 207,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 208,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 209,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 210,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 211,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 212,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 213,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 214,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 215,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 216,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 217,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 218,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 219,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 220,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 221,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 222,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 223,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 224,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 225,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 226,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 227,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 228,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 229,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 230,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 231,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 232,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 233,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 234,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 235,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 236,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 237,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 238,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 239,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 240,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 241,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 242,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 243,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 244,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 245,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 246,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 247,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 248,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 249,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 250,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 251,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 252,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        },
+        {
+          "cycle": 253,
+          "category": "fifo_head",
+          "detail": "valid with empty queued-command model"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 263,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 2,
+        "rx": 1,
+        "resets": 2,
+        "failures": 596,
+        "events": 0
+      }
+    },
+    "truncated_read": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 164,
+          "kind": "incomplete",
+          "detail": "transaction open at end of trace"
+        },
+        {
+          "cycle": 164,
+          "kind": "incomplete",
+          "detail": "1 queued entries not popped"
+        }
+      ],
+      "verdict": "pending",
+      "counts": {
+        "rows": 165,
+        "pushes": 2,
+        "pops": 1,
+        "starts": 1,
+        "stops": 0,
+        "wire_bytes": 1,
+        "rx": 0,
+        "resets": 2,
+        "failures": 0,
+        "events": 0
+      }
+    },
+    "dut_multi_read": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "multi_byte_read",
+          "kind": "complete",
+          "start_cycle": 15,
+          "end_cycle": 358,
+          "evidence": {
+            "entries": [
+              0,
+              1
+            ],
+            "read_bytes": [
+              [
+                166,
+                166
+              ]
+            ]
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 392,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 2,
+        "resets": 2,
+        "failures": 0,
+        "events": 1
+      }
+    },
+    "dut_multi_read_varied": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "multi_byte_read",
+          "kind": "complete",
+          "start_cycle": 15,
+          "end_cycle": 358,
+          "evidence": {
+            "entries": [
+              0,
+              1
+            ],
+            "read_bytes": [
+              [
+                166,
+                60
+              ]
+            ]
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 392,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 2,
+        "resets": 2,
+        "failures": 0,
+        "events": 1
+      }
+    },
+    "dut_ordinary_read": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 392,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 2,
+        "rx": 1,
+        "resets": 2,
+        "failures": 0,
+        "events": 0
+      }
+    },
+    "dut_ordinary_write": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 392,
+        "pushes": 1,
+        "pops": 1,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 1,
+        "rx": 0,
+        "resets": 2,
+        "failures": 0,
+        "events": 0
+      }
+    },
+    "dut_rcont_chain": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "rcont_chain",
+          "kind": "complete",
+          "start_cycle": 15,
+          "end_cycle": 360,
+          "evidence": {
+            "entries": [
+              0,
+              1,
+              2
+            ],
+            "read_bytes": [
+              [
+                166
+              ],
+              [
+                166
+              ]
+            ]
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 392,
+        "pushes": 3,
+        "pops": 3,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 2,
+        "resets": 2,
+        "failures": 0,
+        "events": 1
+      }
+    },
+    "dut_read_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "read_then_restart",
+          "kind": "complete",
+          "start_cycle": 15,
+          "end_cycle": 376,
+          "evidence": {
+            "entries": [
+              0,
+              1,
+              2
+            ],
+            "read_bytes": [
+              [
+                166
+              ]
+            ]
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 392,
+        "pushes": 3,
+        "pops": 3,
+        "starts": 2,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 1,
+        "resets": 2,
+        "failures": 0,
+        "events": 1
+      }
+    },
+    "dut_read_stretch": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "read_stretch_recovery",
+          "kind": "complete",
+          "start_cycle": 15,
+          "end_cycle": 268,
+          "evidence": {
+            "entries": [
+              0,
+              1
+            ],
+            "read_bytes": [
+              [
+                166
+              ]
+            ]
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 392,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 2,
+        "rx": 1,
+        "resets": 2,
+        "failures": 0,
+        "events": 1
+      }
+    },
+    "dut_seed": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 8,
+        "pushes": 0,
+        "pops": 0,
+        "starts": 0,
+        "stops": 0,
+        "wire_bytes": 0,
+        "rx": 0,
+        "resets": 2,
+        "failures": 0,
+        "events": 0
+      }
+    },
+    "dut_zero_count_partial": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 391,
+          "kind": "incomplete",
+          "detail": "transaction open at end of trace"
+        },
+        {
+          "cycle": 391,
+          "kind": "incomplete",
+          "detail": "1 queued entries not popped"
+        }
+      ],
+      "verdict": "pending",
+      "counts": {
+        "rows": 392,
+        "pushes": 2,
+        "pops": 1,
+        "starts": 1,
+        "stops": 0,
+        "wire_bytes": 3,
+        "rx": 2,
+        "resets": 2,
+        "failures": 0,
+        "events": 0
+      }
+    },
+    "corrupt_first_rx_multi_read": {
+      "failures": [
+        {
+          "cycle": 217,
+          "category": "rx_data",
+          "detail": "RX 0xa7 but wire byte 0xa6 (entry 1)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 368,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 2,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    },
+    "corrupt_first_rx_dut_multi_read": {
+      "failures": [
+        {
+          "cycle": 227,
+          "category": "rx_data",
+          "detail": "RX 0xa7 but wire byte 0xa6 (entry 1)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 392,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 2,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    },
+    "corrupt_first_rx_rcont_chain": {
+      "failures": [
+        {
+          "cycle": 218,
+          "category": "rx_data",
+          "detail": "RX 0xa7 but wire byte 0xa6 (entry 1)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 371,
+        "pushes": 3,
+        "pops": 3,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 2,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    },
+    "corrupt_first_rx_dut_rcont_chain": {
+      "failures": [
+        {
+          "cycle": 227,
+          "category": "rx_data",
+          "detail": "RX 0xa7 but wire byte 0xa6 (entry 1)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 392,
+        "pushes": 3,
+        "pops": 3,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 2,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    },
+    "corrupt_first_rx_read_restart": {
+      "failures": [
+        {
+          "cycle": 218,
+          "category": "rx_data",
+          "detail": "RX 0xa7 but wire byte 0xa6 (entry 1)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 387,
+        "pushes": 3,
+        "pops": 3,
+        "starts": 2,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 1,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    },
+    "corrupt_first_rx_dut_read_restart": {
+      "failures": [
+        {
+          "cycle": 227,
+          "category": "rx_data",
+          "detail": "RX 0xa7 but wire byte 0xa6 (entry 1)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 392,
+        "pushes": 3,
+        "pops": 3,
+        "starts": 2,
+        "stops": 1,
+        "wire_bytes": 3,
+        "rx": 1,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    },
+    "corrupt_first_rx_read_stretch": {
+      "failures": [
+        {
+          "cycle": 229,
+          "category": "rx_data",
+          "detail": "RX 0xa7 but wire byte 0xa6 (entry 1)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 275,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 2,
+        "rx": 1,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    },
+    "corrupt_first_rx_dut_read_stretch": {
+      "failures": [
+        {
+          "cycle": 245,
+          "category": "rx_data",
+          "detail": "RX 0xa7 but wire byte 0xa6 (entry 1)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 392,
+        "pushes": 2,
+        "pops": 2,
+        "starts": 1,
+        "stops": 1,
+        "wire_bytes": 2,
+        "rx": 1,
+        "resets": 2,
+        "failures": 1,
+        "events": 0
+      }
+    }
+  },
+  "event_controls": [
+    {
+      "name": "corrupt_first_rx_multi_read",
+      "baseline": "multi_read",
+      "family": "multi_byte_read",
+      "baseline_clean": true,
+      "baseline_event": false,
+      "failure_detected": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "corrupt_first_rx_dut_multi_read",
+      "baseline": "dut_multi_read",
+      "family": "multi_byte_read",
+      "baseline_clean": true,
+      "baseline_event": false,
+      "failure_detected": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "corrupt_first_rx_rcont_chain",
+      "baseline": "rcont_chain",
+      "family": "rcont_chain",
+      "baseline_clean": true,
+      "baseline_event": false,
+      "failure_detected": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "corrupt_first_rx_dut_rcont_chain",
+      "baseline": "dut_rcont_chain",
+      "family": "rcont_chain",
+      "baseline_clean": true,
+      "baseline_event": false,
+      "failure_detected": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "corrupt_first_rx_read_restart",
+      "baseline": "read_restart",
+      "family": "read_then_restart",
+      "baseline_clean": true,
+      "baseline_event": false,
+      "failure_detected": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "corrupt_first_rx_dut_read_restart",
+      "baseline": "dut_read_restart",
+      "family": "read_then_restart",
+      "baseline_clean": true,
+      "baseline_event": false,
+      "failure_detected": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "corrupt_first_rx_read_stretch",
+      "baseline": "read_stretch",
+      "family": "read_stretch_recovery",
+      "baseline_clean": true,
+      "baseline_event": false,
+      "failure_detected": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "corrupt_first_rx_dut_read_stretch",
+      "baseline": "dut_read_stretch",
+      "family": "read_stretch_recovery",
+      "baseline_clean": true,
+      "baseline_event": false,
+      "failure_detected": true,
+      "success_rejected": true,
+      "credited_detection": true
+    }
+  ],
+  "negative_controls": {
+    "rx_corrupt": {
+      "failure_detected": true,
+      "baseline": "ordinary_read",
+      "baseline_clean": true,
+      "credited_detection": true
+    },
+    "rx_duplicate": {
+      "failure_detected": true,
+      "baseline": "ordinary_read",
+      "baseline_clean": true,
+      "credited_detection": true
+    },
+    "rx_missing": {
+      "failure_detected": true,
+      "baseline": "ordinary_read",
+      "baseline_clean": true,
+      "credited_detection": true
+    },
+    "wrong_boundary_ack": {
+      "failure_detected": true,
+      "baseline": "rcont_chain",
+      "baseline_clean": true,
+      "credited_detection": true
+    },
+    "premature_pop": {
+      "failure_detected": true,
+      "baseline": "ordinary_read",
+      "baseline_clean": true,
+      "credited_detection": true
+    }
+  },
+  "trace_inputs": {
+    "multi_read.trace.json": "8e45f3dabf3be3b1aa10666a1c1158e25b554c37a0524cc79edc66e9b18c15f9",
+    "multi_read_varied.trace.json": "b84cba80e29ab0b1c857774f71998e8d2bd29dae37c62afe875e3ec619cec4c5",
+    "ordinary_read.trace.json": "9e8b959cd1e278d82367b875b5fe110800fd2c83bfcf298de55171f651eb19a8",
+    "ordinary_write.trace.json": "5ac151f1a17469d87e76af8c581cd363c7ce7820da4ccd3a5cfcc4811c71a322",
+    "rcont_chain.trace.json": "af07dfc8469d1bac56e4a5d9e7f01ffba6a4fba62985376952b4740284a597ce",
+    "read_restart.trace.json": "9707f5a0b8d3c48cf20baae2866d15dedfbd593e9e35a8fd0ab1c75804389bfb",
+    "read_stretch.trace.json": "8dd79b1c567ebd4b00e8222a18b7acdfcf1375b15e89a17c2291c8b04a7c73a4",
+    "seed.trace.json": "44a02978d559bcff062c547fc54032dbc4e4d28804f78a24de7ab96c13dcc4e8",
+    "zero_count_partial.trace.json": "3f49ede0340a287f6ffc2aa598c2b537ed8bdecd014095ddabc0c4de1489450e"
+  },
+  "pending_controls": {
+    "zero_partial": true,
+    "truncated_read": true,
+    "dut_zero_count_partial": true
+  }
+}

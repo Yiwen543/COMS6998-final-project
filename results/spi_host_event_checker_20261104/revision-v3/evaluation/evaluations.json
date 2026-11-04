@@ -1,0 +1,1399 @@
+{
+  "selftests": [
+    {
+      "name": "single_write_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_last_flag",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "last_flag"
+      ]
+    },
+    {
+      "name": "fault_extra_wr",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "byte_accounting"
+      ]
+    },
+    {
+      "name": "fault_both_selects",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "select_exclusive"
+      ]
+    },
+    {
+      "name": "fault_wr_during_stall",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "stall_safety"
+      ]
+    },
+    {
+      "name": "fault_csaat_released",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "csaat_hold"
+      ]
+    },
+    {
+      "name": "assumption_hold_violation",
+      "pass": true,
+      "verdict": "input_or_scope_invalid",
+      "failure_categories": []
+    },
+    {
+      "name": "missing_initial_reset",
+      "pass": true,
+      "verdict": "input_or_scope_invalid",
+      "failure_categories": []
+    },
+    {
+      "name": "empty_trace_unresolved",
+      "pass": true,
+      "verdict": "unresolved",
+      "failure_categories": []
+    },
+    {
+      "name": "pending_not_failed",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "backpressure_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_sck_during_stall",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "stall_safety"
+      ]
+    },
+    {
+      "name": "abort_sw_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "abort_async_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_stale_byte",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "stale_byte"
+      ]
+    },
+    {
+      "name": "switch_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_switch_short_gap",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "switch_timing"
+      ]
+    },
+    {
+      "name": "fault_switch_no_idle",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "switch_fresh_idle"
+      ]
+    },
+    {
+      "name": "same_edge_accept_wr_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_same_edge_extra_wr",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "byte_accounting"
+      ]
+    },
+    {
+      "name": "fault_wr_without_tx_ready",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "handshake_without_ready"
+      ]
+    },
+    {
+      "name": "early_release_switch_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_early_release_short_gap",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "switch_timing"
+      ]
+    },
+    {
+      "name": "fault_missing_byte_at_release",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "missing_byte_at_release"
+      ]
+    },
+    {
+      "name": "short_burst_no_recovery_event",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    }
+  ],
+  "cases": {
+    "calibration/tx_recovery": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "backpressure_then_recovery",
+          "kind": "tx",
+          "start_cycle": 24,
+          "end_cycle": 91,
+          "evidence": {
+            "segment": 0,
+            "stall_rows": 18,
+            "release_cycle": 42,
+            "bytes": 4,
+            "edges": 64,
+            "last_handshake_cycle": 90
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 152,
+        "accepted": 1,
+        "wr": 4,
+        "rd": 4,
+        "sck_edges": 64,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 18,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 1,
+        "unresolved": 0,
+        "event_kinds": {
+          "backpressure_then_recovery:tx": 1
+        }
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "calibration/rx_recovery": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "backpressure_then_recovery",
+          "kind": "rx",
+          "start_cycle": 24,
+          "end_cycle": 91,
+          "evidence": {
+            "segment": 0,
+            "stall_rows": 18,
+            "release_cycle": 42,
+            "bytes": 4,
+            "edges": 64,
+            "last_handshake_cycle": 90
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 152,
+        "accepted": 1,
+        "wr": 4,
+        "rd": 4,
+        "sck_edges": 64,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 18,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 1,
+        "unresolved": 0,
+        "event_kinds": {
+          "backpressure_then_recovery:rx": 1
+        }
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "calibration/tx_rx_recovery": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "backpressure_then_recovery",
+          "kind": "tx",
+          "start_cycle": 24,
+          "end_cycle": 113,
+          "evidence": {
+            "segment": 0,
+            "stall_rows": 18,
+            "release_cycle": 42,
+            "bytes": 4,
+            "edges": 64,
+            "last_handshake_cycle": 112
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 190,
+        "accepted": 1,
+        "wr": 4,
+        "rd": 4,
+        "sck_edges": 64,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 40,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 1,
+        "unresolved": 0,
+        "event_kinds": {
+          "backpressure_then_recovery:tx": 1
+        }
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "calibration/software_abort_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "abort_then_restart",
+          "kind": "sw_reset",
+          "start_cycle": 18,
+          "end_cycle": 57,
+          "evidence": {
+            "interrupted_segment": 0,
+            "restart_segment": 1,
+            "restart_accept": 24,
+            "bytes": 2,
+            "edges": 32
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 125,
+        "accepted": 2,
+        "wr": 3,
+        "rd": 2,
+        "sck_edges": 41,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 2,
+        "stall_rows": 0,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 1,
+        "unresolved": 0,
+        "event_kinds": {
+          "abort_then_restart:sw_reset": 1
+        }
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "calibration/asynchronous_abort_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "abort_then_restart",
+          "kind": "async_reset",
+          "start_cycle": 18,
+          "end_cycle": 57,
+          "evidence": {
+            "interrupted_segment": 0,
+            "restart_segment": 1,
+            "restart_accept": 24,
+            "bytes": 2,
+            "edges": 32
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 125,
+        "accepted": 2,
+        "wr": 3,
+        "rd": 2,
+        "sck_edges": 41,
+        "async_reset_rows": 4,
+        "sw_reset_rows": 0,
+        "stall_rows": 0,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 1,
+        "unresolved": 0,
+        "event_kinds": {
+          "abort_then_restart:async_reset": 1
+        }
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "calibration/csid_switch": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "constrained_transaction_switch",
+          "kind": "csid_change",
+          "start_cycle": 24,
+          "end_cycle": 84,
+          "evidence": {
+            "old_segment": 0,
+            "new_segment": 1,
+            "new_accept_cycle": 51,
+            "old_release_cycle": 50,
+            "new_select_cycle": 51,
+            "trail": 10,
+            "gap": 1,
+            "lead": 1,
+            "required": {
+              "trail": 1,
+              "gap": 1,
+              "lead": 1
+            },
+            "additive_idle_reading": 2,
+            "new_edges": 32
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 202,
+        "accepted": 2,
+        "wr": 2,
+        "rd": 2,
+        "sck_edges": 64,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 0,
+        "switches_offered": 1,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 1,
+        "unresolved": 0,
+        "event_kinds": {
+          "constrained_transaction_switch:csid_change": 1
+        }
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "calibration/configuration_switch": {
+      "failures": [
+        {
+          "cycle": 119,
+          "category": "switch_fresh_idle",
+          "detail": "segment 1 completed without release of old select and an all-high gap after CSAAT segment 0 (theory_of_operation 204-208, 246-249)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "rows": 200,
+        "accepted": 2,
+        "wr": 2,
+        "rd": 2,
+        "sck_edges": 65,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 0,
+        "switches_offered": 1,
+        "failures": 1,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 0,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "independent_reference/one_byte_write": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 20,
+        "accepted": 1,
+        "wr": 1,
+        "rd": 0,
+        "sck_edges": 16,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 0,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 0,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "negative/clock_moves_during_stall": {
+      "failures": [
+        {
+          "cycle": 24,
+          "category": "stall_safety",
+          "detail": "SCK edge during stall"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "backpressure_then_recovery",
+          "kind": "tx",
+          "start_cycle": 24,
+          "end_cycle": 91,
+          "evidence": {
+            "segment": 0,
+            "stall_rows": 18,
+            "release_cycle": 42,
+            "bytes": 4,
+            "edges": 65,
+            "last_handshake_cycle": 90
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "rows": 152,
+        "accepted": 1,
+        "wr": 4,
+        "rd": 4,
+        "sck_edges": 65,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 18,
+        "switches_offered": 0,
+        "failures": 1,
+        "assumption_violations": 0,
+        "events": 1,
+        "unresolved": 0,
+        "event_kinds": {
+          "backpressure_then_recovery:tx": 1
+        }
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "negative/missing_last_write": {
+      "failures": [
+        {
+          "cycle": 74,
+          "category": "last_flag",
+          "detail": "last_write=0 on wr byte 4 of 4 (segment 0)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 91,
+          "category": "backpressure_not_witnessed",
+          "detail": "stall on segment 0 did not yield a clean witnessed recovery",
+          "blocking": false
+        }
+      ],
+      "verdict": "dut_violation",
+      "counts": {
+        "rows": 152,
+        "accepted": 1,
+        "wr": 4,
+        "rd": 4,
+        "sck_edges": 64,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 18,
+        "switches_offered": 0,
+        "failures": 1,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 1,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "negative/dropped_receive_byte": {
+      "failures": [
+        {
+          "cycle": 90,
+          "category": "last_flag",
+          "detail": "last_read=1 on rd byte 3 of 4 (segment 0)"
+        },
+        {
+          "cycle": 91,
+          "category": "missing_byte_at_release",
+          "detail": "csb[0] released with 0 tx / 1 rx bytes outstanding in segment 0 (registers.md COMMAND.LEN 292-302)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 151,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (0 tx, 1 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        },
+        {
+          "cycle": 151,
+          "category": "pending_backpressure",
+          "detail": "stall recovery not completed by end of trace",
+          "blocking": false
+        }
+      ],
+      "verdict": "dut_violation",
+      "counts": {
+        "rows": 152,
+        "accepted": 1,
+        "wr": 4,
+        "rd": 3,
+        "sck_edges": 64,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 18,
+        "switches_offered": 0,
+        "failures": 2,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 2,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "negative/asynchronous_reset_wrong_select": {
+      "failures": [
+        {
+          "cycle": 18,
+          "category": "reset_separation",
+          "detail": "pre.csb=2 during asynchronous reset (expected all inactive)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "abort_then_restart",
+          "kind": "async_reset",
+          "start_cycle": 18,
+          "end_cycle": 57,
+          "evidence": {
+            "interrupted_segment": 0,
+            "restart_segment": 1,
+            "restart_accept": 24,
+            "bytes": 2,
+            "edges": 32
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "rows": 125,
+        "accepted": 2,
+        "wr": 3,
+        "rd": 2,
+        "sck_edges": 41,
+        "async_reset_rows": 4,
+        "sw_reset_rows": 0,
+        "stall_rows": 0,
+        "switches_offered": 0,
+        "failures": 1,
+        "assumption_violations": 0,
+        "events": 1,
+        "unresolved": 0,
+        "event_kinds": {
+          "abort_then_restart:async_reset": 1
+        }
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "negative/software_reset_not_idle": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "abort_then_restart",
+          "kind": "sw_reset",
+          "start_cycle": 18,
+          "end_cycle": 57,
+          "evidence": {
+            "interrupted_segment": 0,
+            "restart_segment": 1,
+            "restart_accept": 24,
+            "bytes": 2,
+            "edges": 32
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 125,
+        "accepted": 2,
+        "wr": 3,
+        "rd": 2,
+        "sck_edges": 41,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 2,
+        "stall_rows": 0,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 1,
+        "unresolved": 0,
+        "event_kinds": {
+          "abort_then_restart:sw_reset": 1
+        }
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "negative/multiple_selects_during_switch": {
+      "failures": [
+        {
+          "cycle": 51,
+          "category": "select_exclusive",
+          "detail": "post.csb=0: both chip selects active"
+        },
+        {
+          "cycle": 51,
+          "category": "switch_target",
+          "detail": "new selection None does not match accepted CSID 1"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "rows": 202,
+        "accepted": 2,
+        "wr": 2,
+        "rd": 2,
+        "sck_edges": 64,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 0,
+        "switches_offered": 1,
+        "failures": 2,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 0,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "negative/last_read_without_transfer": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "abort_then_restart",
+          "kind": "async_reset",
+          "start_cycle": 18,
+          "end_cycle": 57,
+          "evidence": {
+            "interrupted_segment": 0,
+            "restart_segment": 1,
+            "restart_accept": 24,
+            "bytes": 2,
+            "edges": 32
+          }
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 125,
+        "accepted": 2,
+        "wr": 3,
+        "rd": 2,
+        "sck_edges": 41,
+        "async_reset_rows": 4,
+        "sw_reset_rows": 0,
+        "stall_rows": 0,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 1,
+        "unresolved": 0,
+        "event_kinds": {
+          "abort_then_restart:async_reset": 1
+        }
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "truncated/tx_recovery": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 24,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (3 tx, 4 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        },
+        {
+          "cycle": 24,
+          "category": "pending_backpressure",
+          "detail": "stall recovery not completed by end of trace",
+          "blocking": false
+        }
+      ],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 25,
+        "accepted": 1,
+        "wr": 1,
+        "rd": 0,
+        "sck_edges": 15,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 1,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 2,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "truncated/rx_recovery": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 24,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (3 tx, 4 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        },
+        {
+          "cycle": 24,
+          "category": "pending_backpressure",
+          "detail": "stall recovery not completed by end of trace",
+          "blocking": false
+        }
+      ],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 25,
+        "accepted": 1,
+        "wr": 1,
+        "rd": 0,
+        "sck_edges": 15,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 1,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 2,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "truncated/tx_rx_recovery": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 24,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (3 tx, 4 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        },
+        {
+          "cycle": 24,
+          "category": "pending_backpressure",
+          "detail": "stall recovery not completed by end of trace",
+          "blocking": false
+        }
+      ],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 25,
+        "accepted": 1,
+        "wr": 1,
+        "rd": 0,
+        "sck_edges": 15,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 1,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 2,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "truncated/software_abort_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 18,
+          "category": "pending_restart",
+          "detail": "restart after sw_reset not completed by end of trace",
+          "blocking": false
+        }
+      ],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 19,
+        "accepted": 1,
+        "wr": 1,
+        "rd": 0,
+        "sck_edges": 9,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 1,
+        "stall_rows": 0,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 1,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "truncated/asynchronous_abort_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 18,
+          "category": "pending_restart",
+          "detail": "restart after async_reset not completed by end of trace",
+          "blocking": false
+        }
+      ],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 19,
+        "accepted": 1,
+        "wr": 1,
+        "rd": 0,
+        "sck_edges": 9,
+        "async_reset_rows": 3,
+        "sw_reset_rows": 0,
+        "stall_rows": 0,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 1,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "truncated/csid_switch": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 12,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (1 tx, 0 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        }
+      ],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 13,
+        "accepted": 1,
+        "wr": 1,
+        "rd": 0,
+        "sck_edges": 4,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 0,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 1,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "truncated/configuration_switch": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 12,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (1 tx, 0 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        }
+      ],
+      "verdict": "scoped_pass",
+      "counts": {
+        "rows": 13,
+        "accepted": 1,
+        "wr": 1,
+        "rd": 0,
+        "sck_edges": 4,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 0,
+        "switches_offered": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "events": 0,
+        "unresolved": 1,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    },
+    "invalid_driver/dropped_pending_valid": {
+      "failures": [
+        {
+          "cycle": 50,
+          "category": "csaat_hold",
+          "detail": "csb[0] released after CSAAT segment 0 with no later offered command (registers.md COMMAND.CSAAT 313-318)"
+        }
+      ],
+      "assumption_violations": [
+        {
+          "cycle": 50,
+          "category": "hold",
+          "detail": "pending command dropped or changed before acceptance"
+        }
+      ],
+      "events": [],
+      "unresolved": [],
+      "verdict": "input_or_scope_invalid",
+      "counts": {
+        "rows": 202,
+        "accepted": 2,
+        "wr": 2,
+        "rd": 2,
+        "sck_edges": 64,
+        "async_reset_rows": 2,
+        "sw_reset_rows": 0,
+        "stall_rows": 0,
+        "switches_offered": 1,
+        "failures": 1,
+        "assumption_violations": 1,
+        "events": 0,
+        "unresolved": 0,
+        "event_kinds": {}
+      },
+      "scope_limitations": [
+        "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+        "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+        "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+        "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+        "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+        "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+        "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+        "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+        "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+        "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+        "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+        "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+        "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+        "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary."
+      ]
+    }
+  },
+  "errors": []
+}

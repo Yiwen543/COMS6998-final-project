@@ -1,0 +1,96 @@
+{
+  "ready_for_offline_gate": false,
+  "verdict": "NOT READY. Do not freeze the checker and do not run B. The checker fails its own spec-legal independent baseline, and none of its controls can be credited.",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocking",
+      "area": "scoreboard / false positives",
+      "confirmed": true,
+      "detail": "The `expected` deque is cleared and popped but never appended. Neither the push path nor the ready&valid pop path adds to it. As a result, `on_byte_done` reports 'wire byte with no popped command' for every completed byte. The in-code comment says bytes are 'scored against the push order', but that is not implemented. In independent_write, the legal byte 0x50 fails at cycle 108. The wrong_wire_byte control fails with the same message, so it is rejected for the wrong reason. Byte-value and START-flag comparisons (P1) are never exercised."
+    },
+    {
+      "id": "F2",
+      "severity": "blocking",
+      "area": "bus model / false positives",
+      "confirmed": true,
+      "detail": "The checker tests `scl_o==0 implies scl==0` (and the same for SDA) in the same phase. The driver deliberately adds a launch register (`scl_pin<=scl_o`), so the physical bus legitimately lags scl_o by one edge. That is why every dut_* trace shows paired 'wired-AND violated' failures at each SCL/SDA transition. The check also omits the external contributors (stretch, target_low) from the expected bus value. It is not justified by the interface spec. The independent reference hides this only because it models zero lag."
+    },
+    {
+      "id": "F3",
+      "severity": "blocking",
+      "area": "protocol decoder / false positives",
+      "confirmed": true,
+      "detail": "After the ninth (ACK) bit, the controller raises SCL for STOP setup. The decoder counts that rising edge as a data bit, so `bits` has length 1. When SDA then rises while SCL is high, this is flagged as 'STOP mid-byte'. Likewise, a repeated START that follows an SCL rise is flagged as 'START mid-byte' (dut_nak_restart, cycle 164). The decoder needs a pending-bit concept: an SCL rise is not committed as a data bit until SCL falls without an intervening START or STOP. Legal traces such as independent_write (cycle 124) are falsely failed."
+    },
+    {
+      "id": "F4",
+      "severity": "high",
+      "area": "event credit",
+      "confirmed": true,
+      "detail": "`clean_window` is written but never read. Recovery events (nak_restart, nak_timeout_recovery) and stretch_recovery are granted without requiring a fault-free window. dut_stretch emits stretch_recovery success while the same window contains failures. Even when the overall verdict is fail, emitting success events in faulted windows creates a false-credit risk for any event-based gate."
+    },
+    {
+      "id": "F5",
+      "severity": "high",
+      "area": "stretch event",
+      "confirmed": true,
+      "detail": "stretch_pending is started by any stretch action during a transaction. Success is then granted on any later byte plus STOP. Nothing checks that SCL was actually held low beyond the controller's own release, that the controller waited for SCL to rise before counting THIGH, or that the target released SCL before the event was credited. `stretch_active` and `seen_low_after_stretch` are never updated. The 'stretch asserted while SCL high' assumption check therefore keys off a constant False flag and uses pre-phase SCL only."
+    },
+    {
+      "id": "F6",
+      "severity": "high",
+      "area": "NACK halt semantics",
+      "confirmed": true,
+      "detail": "halted_nack is set on the ninth SCL rising edge. The spec (theory_of_operation.md:108) says the halt follows the (N)ACK bit's hold time after the SCL falling edge. However, the 'SCL released during NACK halt' check only fires on high-to-high continuity. It would flag the legal remainder of the ACK high pulse whenever SCL stays high for more than one phase after the rise. P3 should be anchored on the ninth falling edge plus hold time."
+    },
+    {
+      "id": "F7",
+      "severity": "medium",
+      "area": "timeout check",
+      "confirmed": true,
+      "detail": "The condition `halt_info.get('stopped') != True` compares an integer cycle number with True. Cycle 1 equals True, so that STOP would skip the check. The release-after-timeout-STOP check also tests combinational outputs with no allowance for the launch latency (same defect as F2). timeout_seen depends on pre nak_timeout only while halt_info exists, and F1 means halt_info is never set. P4 is therefore unexercised."
+    },
+    {
+      "id": "F8",
+      "severity": "blocking",
+      "area": "independent controls",
+      "confirmed": true,
+      "detail": "independent_baseline_pass is false. The clean_byte_no_failures selftest fails. Both negative controls are rejected only because of the F1\u2013F3 artifacts, and the packet itself records `credited_detection: false`. The 'truncated' case reaches 'pending' only because no byte completed. dut_seed passes with empty counts, which means nothing was exercised. None of these controls provide evidence of discrimination."
+    },
+    {
+      "id": "F9",
+      "severity": "medium",
+      "area": "spec justification",
+      "detail": "P2 cites 'interface rst_n' rather than an authority excerpt. The wired-AND rule and the pop timing (P6) come from the harness interface, not from the OpenTitan docs. That is acceptable only if labeled as an environment contract. Timing parameters (THIGH/TLOW/T_R/T_F, etc.) are never checked, so no timing claim may be made. registers.md:465 requires timing values > 2; T_R/T_F = 1 should be noted as possibly outside the recommended range. That note is not an issue for the TIMING0 fields."
+    },
+    {
+      "id": "F10",
+      "severity": "medium",
+      "area": "driver audit",
+      "detail": "The driver is broadly consistent with the stated environment: passive target, no expected DUT outputs, sticky latches set after the edge from pre events, and ENV_ERROR on unsafe flush. Issues to resolve before freezing:\n(a) `v_stretch` is used in `scl_bus` but declared as an integer, and stretch is never gated to SCL low. Assumption enforcement is left to the checker, which is broken (F5).\n(b) In target_tick, previous_sda is computed from sda_pin and the new target_low, so an SDA change caused by the ACK update is hidden from edge detection. This is intended, but it should be documented.\n(c) The target releases ACK when bus_bits==9 on the falling edge, but it also resets at START/STOP; that is fine.\n(d) The trace emits 29 fields with no header, so the column mapping must be pinned.\n(e) An unsafe flush only prints ENV_ERROR rather than marking the run invalid."
+    },
+    {
+      "id": "F11",
+      "severity": "low",
+      "area": "isolation",
+      "detail": "No implementation-derived constants appear in the checker. Independence looks plausible from the packet alone, but it cannot be verified. The checker_sha256 should be re-pinned after any fix."
+    }
+  ],
+  "audit_of_listed_findings": {
+    "expected_deque_never_appended": "confirmed (F1)",
+    "combinational_vs_launched_bus": "confirmed (F2)",
+    "stop_after_ack_setup_rise": "confirmed (F3)",
+    "clean_window_unused": "confirmed (F4)",
+    "no_real_stretch_extension_requirement": "confirmed (F5)",
+    "nak_halt_on_rising_edge": "confirmed (F6)",
+    "controls_uncreditable": "confirmed (F8)"
+  },
+  "limitations": [
+    "Static read-only review of the supplied packet only. Nothing was executed, and the checker, driver and RTL were not run.",
+    "No formal proof or completeness claim is made. Conclusions are limited to the write-mode, single-controller, FifoDepth=64 scope.",
+    "The independent reference trace was inspected for consistency, not exhaustively verified cycle by cycle.",
+    "Prior B/C results were absent, so no comparison was made.",
+    "Driver correctness was judged against the stated environment contract, not against the full OpenTitan IP behavior."
+  ]
+}

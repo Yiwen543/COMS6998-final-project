@@ -1,0 +1,27 @@
+{
+  "purpose": "Outcome-blind SPI controller development gate; no C outcome is a selection input",
+  "static_acceptance": {
+    "min_source_groups": 3,
+    "min_rewrite_groups": 2,
+    "basis": "docs/next_ip_screen_2026-11-03.md: Next go/no-go procedure, item 1, written before SPI adapter results",
+    "source_group_requirements": "At least two exact-mapped original source counters, zero in common seed, positive in valid independent calibration; complete typed activation and event context"
+  },
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "low",
+  "repetitions": 3,
+  "rounds": 6,
+  "max_new_cycles": 64,
+  "max_output_tokens": 16384,
+  "timeout_seconds": 120,
+  "max_retries": 1,
+  "max_input_tokens": 32000,
+  "fixed_drain_cycles": 0,
+  "replay_policy": "Fresh simulator replays common seed followed by all accepted model cycles; all replay cycles counted",
+  "acceptance": {
+    "min_repetitions_with_two_groups_unhit_after_round_one": 2,
+    "min_repetitions_with_later_group_progress": 2,
+    "require_all_rounds_accounted": true,
+    "require_valid_protocol_inputs": true
+  },
+  "status": "Development proposal only; static gate must pass before any API call. No formal A/B/C/placebo configuration frozen."
+}

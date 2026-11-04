@@ -1,0 +1,963 @@
+{
+  "checker_role": "claude-opus-5-5",
+  "stimulus_role": "GPT integration",
+  "checker_sha256": "fa4d2c251fc6ef12f2da5e051206b5bc5151d6446b2450d9676934a973d63ebe",
+  "author_response_sha256": "0db7518e7045ae08d786f8e386cef491cebd579854cc8133ff73eeadc31474ab",
+  "evaluation_script_sha256": "7eeb0617581c384465ad156035c2da5c4a602ac20557c2a1953493f9086a8a5f",
+  "selftests": [
+    {
+      "name": "single_write_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_last_flag",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "last_flag"
+      ]
+    },
+    {
+      "name": "fault_extra_wr",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "byte_accounting"
+      ]
+    },
+    {
+      "name": "fault_both_selects",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "select_exclusive"
+      ]
+    },
+    {
+      "name": "fault_wr_during_stall",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "stall_safety"
+      ]
+    },
+    {
+      "name": "fault_csaat_released",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "csaat_hold"
+      ]
+    },
+    {
+      "name": "assumption_hold_violation",
+      "pass": true,
+      "verdict": "input_or_scope_invalid",
+      "failure_categories": []
+    },
+    {
+      "name": "missing_initial_reset",
+      "pass": true,
+      "verdict": "input_or_scope_invalid",
+      "failure_categories": []
+    },
+    {
+      "name": "empty_trace_unresolved",
+      "pass": true,
+      "verdict": "unresolved",
+      "failure_categories": []
+    },
+    {
+      "name": "pending_not_failed",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "backpressure_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_sck_during_stall",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "stall_safety"
+      ]
+    },
+    {
+      "name": "abort_sw_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "abort_async_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_stale_byte",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "stale_byte"
+      ]
+    },
+    {
+      "name": "switch_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_switch_short_gap",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "switch_timing"
+      ]
+    },
+    {
+      "name": "fault_switch_no_idle",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "switch_fresh_idle"
+      ]
+    },
+    {
+      "name": "same_edge_accept_wr_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_same_edge_extra_wr",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "byte_accounting"
+      ]
+    },
+    {
+      "name": "fault_wr_without_tx_ready",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "handshake_without_ready"
+      ]
+    },
+    {
+      "name": "early_release_switch_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_early_release_short_gap",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "switch_timing"
+      ]
+    },
+    {
+      "name": "fault_missing_byte_at_release",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "missing_byte_at_release"
+      ]
+    },
+    {
+      "name": "short_burst_no_recovery_event",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_idle_sck_against_cpol",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "spurious_sck"
+      ]
+    },
+    {
+      "name": "fault_csb_change_during_stall_window",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "missing_byte_at_release",
+        "spurious_sck",
+        "stall_safety"
+      ]
+    },
+    {
+      "name": "same_edge_accept_rd_positive",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_rd_without_rx_ready",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "handshake_without_ready"
+      ]
+    },
+    {
+      "name": "fault_early_release_wrong_target",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "select_target",
+        "switch_target"
+      ]
+    },
+    {
+      "name": "incomplete_pending_not_failed",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    },
+    {
+      "name": "fault_sw_reset_second_cycle_select_window",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "reset_separation"
+      ]
+    },
+    {
+      "name": "fault_async_reset_select_window",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "reset_separation"
+      ]
+    },
+    {
+      "name": "fault_sw_stale_byte",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "stale_byte"
+      ]
+    },
+    {
+      "name": "fault_switch_short_trail",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "switch_timing"
+      ]
+    },
+    {
+      "name": "fault_switch_short_lead",
+      "pass": true,
+      "verdict": "dut_violation",
+      "failure_categories": [
+        "switch_timing"
+      ]
+    },
+    {
+      "name": "switch_additive_idle_unresolved",
+      "pass": true,
+      "verdict": "unresolved",
+      "failure_categories": []
+    },
+    {
+      "name": "scope_last_read_without_transfer",
+      "pass": true,
+      "verdict": "scoped_pass",
+      "failure_categories": []
+    }
+  ],
+  "errors": [],
+  "controls": [
+    {
+      "name": "clock_moves_during_stall",
+      "status": "applied",
+      "source_case": "tx_recovery",
+      "cycle": 24,
+      "side": "post",
+      "signal": "sck",
+      "before": 1,
+      "after": 0
+    },
+    {
+      "name": "missing_last_write",
+      "status": "applied",
+      "source_case": "tx_recovery",
+      "cycle": 74,
+      "side": "pre",
+      "signal": "last_write",
+      "before": 1,
+      "after": 0
+    },
+    {
+      "name": "dropped_receive_byte",
+      "status": "applied",
+      "source_case": "rx_recovery",
+      "cycle": 42,
+      "side": "pre",
+      "signal": "rd",
+      "before": 1,
+      "after": 0
+    },
+    {
+      "name": "asynchronous_reset_wrong_select",
+      "status": "applied",
+      "source_case": "asynchronous_abort_restart",
+      "cycle": 18,
+      "side": "pre",
+      "signal": "csb",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "name": "software_reset_not_idle",
+      "status": "applied",
+      "source_case": "software_abort_restart",
+      "cycle": 18,
+      "side": "post",
+      "signal": "active",
+      "before": 0,
+      "after": 1
+    },
+    {
+      "name": "multiple_selects_during_switch",
+      "status": "applied",
+      "source_case": "csid_switch",
+      "cycle": 51,
+      "side": "post",
+      "signal": "csb",
+      "before": 1,
+      "after": 0
+    },
+    {
+      "name": "last_read_without_transfer",
+      "status": "applied",
+      "source_case": "asynchronous_abort_restart",
+      "cycle": 20,
+      "side": "pre",
+      "signal": "last_read",
+      "before": 0,
+      "after": 1
+    },
+    {
+      "name": "held_software_reset_wrong_select",
+      "status": "applied",
+      "source_case": "software_abort_restart",
+      "cycle": 19,
+      "side": "pre",
+      "signal": "csb",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "name": "select_changes_during_stall",
+      "status": "applied",
+      "source_case": "tx_recovery",
+      "cycle": 24,
+      "side": "post",
+      "signal": "csb",
+      "before": 2,
+      "after": 3
+    },
+    {
+      "name": "read_without_sink_ready",
+      "status": "applied",
+      "source_case": "rx_recovery",
+      "cycle": 24,
+      "side": "pre",
+      "signal": "rd",
+      "before": 0,
+      "after": 1
+    },
+    {
+      "name": "async_reset_stale_write",
+      "status": "applied",
+      "source_case": "asynchronous_abort_restart",
+      "cycle": 20,
+      "side": "pre",
+      "signal": "wr",
+      "before": 0,
+      "after": 1
+    },
+    {
+      "name": "spurious_idle_clock",
+      "status": "applied",
+      "source_case": "tx_recovery",
+      "cycle": 101,
+      "side": "post",
+      "signal": "sck",
+      "before": 0,
+      "after": 1
+    }
+  ],
+  "cases": {
+    "calibration/tx_recovery": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [
+        {
+          "family": "backpressure_then_recovery",
+          "kind": "tx",
+          "start_cycle": 24,
+          "end_cycle": 91,
+          "evidence": {
+            "segment": 0,
+            "stall_rows": 18,
+            "release_cycle": 42,
+            "bytes": 4,
+            "edges": 64,
+            "last_handshake_cycle": 90
+          }
+        }
+      ],
+      "unresolved": []
+    },
+    "calibration/rx_recovery": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [
+        {
+          "family": "backpressure_then_recovery",
+          "kind": "rx",
+          "start_cycle": 24,
+          "end_cycle": 91,
+          "evidence": {
+            "segment": 0,
+            "stall_rows": 18,
+            "release_cycle": 42,
+            "bytes": 4,
+            "edges": 64,
+            "last_handshake_cycle": 90
+          }
+        }
+      ],
+      "unresolved": []
+    },
+    "calibration/tx_rx_recovery": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [
+        {
+          "family": "backpressure_then_recovery",
+          "kind": "tx",
+          "start_cycle": 24,
+          "end_cycle": 113,
+          "evidence": {
+            "segment": 0,
+            "stall_rows": 18,
+            "release_cycle": 42,
+            "bytes": 4,
+            "edges": 64,
+            "last_handshake_cycle": 112
+          }
+        }
+      ],
+      "unresolved": []
+    },
+    "calibration/software_abort_restart": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [
+        {
+          "family": "abort_then_restart",
+          "kind": "sw_reset",
+          "start_cycle": 18,
+          "end_cycle": 57,
+          "evidence": {
+            "interrupted_segment": 0,
+            "restart_segment": 1,
+            "restart_accept": 24,
+            "bytes": 2,
+            "edges": 32
+          }
+        }
+      ],
+      "unresolved": []
+    },
+    "calibration/asynchronous_abort_restart": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [
+        {
+          "family": "abort_then_restart",
+          "kind": "async_reset",
+          "start_cycle": 18,
+          "end_cycle": 57,
+          "evidence": {
+            "interrupted_segment": 0,
+            "restart_segment": 1,
+            "restart_accept": 24,
+            "bytes": 2,
+            "edges": 32
+          }
+        }
+      ],
+      "unresolved": []
+    },
+    "calibration/csid_switch": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [
+        {
+          "family": "constrained_transaction_switch",
+          "kind": "csid_change",
+          "start_cycle": 24,
+          "end_cycle": 84,
+          "evidence": {
+            "old_segment": 0,
+            "new_segment": 1,
+            "new_accept_cycle": 51,
+            "old_release_cycle": 50,
+            "new_select_cycle": 51,
+            "trail": 10,
+            "gap": 1,
+            "lead": 1,
+            "required": {
+              "trail": 1,
+              "gap": 1,
+              "lead": 1
+            },
+            "additive_idle_reading": 2,
+            "new_edges": 32
+          }
+        }
+      ],
+      "unresolved": []
+    },
+    "calibration/configuration_switch": {
+      "verdict": "dut_violation",
+      "infrastructure_error": null,
+      "failure_count": 1,
+      "categories": [
+        "switch_fresh_idle"
+      ],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": []
+    },
+    "independent_reference/one_byte_write": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": []
+    },
+    "negative/clock_moves_during_stall": {
+      "verdict": "dut_violation",
+      "infrastructure_error": null,
+      "failure_count": 1,
+      "categories": [
+        "stall_safety"
+      ],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 91,
+          "category": "backpressure_not_witnessed",
+          "detail": "stall on segment 0 did not yield a clean witnessed recovery",
+          "blocking": false
+        }
+      ]
+    },
+    "negative/missing_last_write": {
+      "verdict": "dut_violation",
+      "infrastructure_error": null,
+      "failure_count": 1,
+      "categories": [
+        "last_flag"
+      ],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 91,
+          "category": "backpressure_not_witnessed",
+          "detail": "stall on segment 0 did not yield a clean witnessed recovery",
+          "blocking": false
+        }
+      ]
+    },
+    "negative/dropped_receive_byte": {
+      "verdict": "dut_violation",
+      "infrastructure_error": null,
+      "failure_count": 2,
+      "categories": [
+        "last_flag",
+        "missing_byte_at_release"
+      ],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 151,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (0 tx, 1 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        },
+        {
+          "cycle": 151,
+          "category": "pending_backpressure",
+          "detail": "stall recovery not completed by end of trace",
+          "blocking": false
+        }
+      ]
+    },
+    "negative/asynchronous_reset_wrong_select": {
+      "verdict": "dut_violation",
+      "infrastructure_error": null,
+      "failure_count": 1,
+      "categories": [
+        "reset_separation"
+      ],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 57,
+          "category": "restart_not_clean",
+          "detail": "restart after async_reset observed with failures; not counted",
+          "blocking": false
+        }
+      ]
+    },
+    "negative/software_reset_not_idle": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [
+        {
+          "family": "abort_then_restart",
+          "kind": "sw_reset",
+          "start_cycle": 18,
+          "end_cycle": 57,
+          "evidence": {
+            "interrupted_segment": 0,
+            "restart_segment": 1,
+            "restart_accept": 24,
+            "bytes": 2,
+            "edges": 32
+          }
+        }
+      ],
+      "unresolved": []
+    },
+    "negative/multiple_selects_during_switch": {
+      "verdict": "dut_violation",
+      "infrastructure_error": null,
+      "failure_count": 2,
+      "categories": [
+        "select_exclusive",
+        "switch_target"
+      ],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": []
+    },
+    "negative/last_read_without_transfer": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [
+        {
+          "family": "abort_then_restart",
+          "kind": "async_reset",
+          "start_cycle": 18,
+          "end_cycle": 57,
+          "evidence": {
+            "interrupted_segment": 0,
+            "restart_segment": 1,
+            "restart_accept": 24,
+            "bytes": 2,
+            "edges": 32
+          }
+        }
+      ],
+      "unresolved": []
+    },
+    "negative/held_software_reset_wrong_select": {
+      "verdict": "dut_violation",
+      "infrastructure_error": null,
+      "failure_count": 1,
+      "categories": [
+        "reset_separation"
+      ],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 57,
+          "category": "restart_not_clean",
+          "detail": "restart after sw_reset observed with failures; not counted",
+          "blocking": false
+        }
+      ]
+    },
+    "negative/select_changes_during_stall": {
+      "verdict": "dut_violation",
+      "infrastructure_error": null,
+      "failure_count": 2,
+      "categories": [
+        "missing_byte_at_release",
+        "stall_safety"
+      ],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 91,
+          "category": "backpressure_not_witnessed",
+          "detail": "stall on segment 0 did not yield a clean witnessed recovery",
+          "blocking": false
+        }
+      ]
+    },
+    "negative/read_without_sink_ready": {
+      "verdict": "dut_violation",
+      "infrastructure_error": null,
+      "failure_count": 4,
+      "categories": [
+        "byte_accounting",
+        "handshake_without_ready",
+        "last_flag",
+        "stall_safety"
+      ],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 91,
+          "category": "backpressure_not_witnessed",
+          "detail": "stall on segment 0 did not yield a clean witnessed recovery",
+          "blocking": false
+        }
+      ]
+    },
+    "negative/async_reset_stale_write": {
+      "verdict": "dut_violation",
+      "infrastructure_error": null,
+      "failure_count": 1,
+      "categories": [
+        "stale_byte"
+      ],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 57,
+          "category": "restart_not_clean",
+          "detail": "restart after async_reset observed with failures; not counted",
+          "blocking": false
+        }
+      ]
+    },
+    "negative/spurious_idle_clock": {
+      "verdict": "dut_violation",
+      "infrastructure_error": null,
+      "failure_count": 1,
+      "categories": [
+        "spurious_sck"
+      ],
+      "assumption_count": 0,
+      "events": [
+        {
+          "family": "backpressure_then_recovery",
+          "kind": "tx",
+          "start_cycle": 24,
+          "end_cycle": 91,
+          "evidence": {
+            "segment": 0,
+            "stall_rows": 18,
+            "release_cycle": 42,
+            "bytes": 4,
+            "edges": 64,
+            "last_handshake_cycle": 90
+          }
+        }
+      ],
+      "unresolved": []
+    },
+    "truncated/tx_recovery": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 24,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (3 tx, 4 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        },
+        {
+          "cycle": 24,
+          "category": "pending_backpressure",
+          "detail": "stall recovery not completed by end of trace",
+          "blocking": false
+        }
+      ]
+    },
+    "truncated/rx_recovery": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 24,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (3 tx, 4 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        },
+        {
+          "cycle": 24,
+          "category": "pending_backpressure",
+          "detail": "stall recovery not completed by end of trace",
+          "blocking": false
+        }
+      ]
+    },
+    "truncated/tx_rx_recovery": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 24,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (3 tx, 4 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        },
+        {
+          "cycle": 24,
+          "category": "pending_backpressure",
+          "detail": "stall recovery not completed by end of trace",
+          "blocking": false
+        }
+      ]
+    },
+    "truncated/software_abort_restart": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 18,
+          "category": "pending_restart",
+          "detail": "restart after sw_reset not completed by end of trace",
+          "blocking": false
+        }
+      ]
+    },
+    "truncated/asynchronous_abort_restart": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 18,
+          "category": "pending_restart",
+          "detail": "restart after async_reset not completed by end of trace",
+          "blocking": false
+        }
+      ]
+    },
+    "truncated/csid_switch": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 12,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (1 tx, 0 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        }
+      ]
+    },
+    "truncated/configuration_switch": {
+      "verdict": "scoped_pass",
+      "infrastructure_error": null,
+      "failure_count": 0,
+      "categories": [],
+      "assumption_count": 0,
+      "events": [],
+      "unresolved": [
+        {
+          "cycle": 12,
+          "category": "pending_segment",
+          "detail": "segment 0 accepted at cycle 8 not completed by end of trace (1 tx, 0 rx bytes outstanding); liveness inconclusive",
+          "blocking": false
+        }
+      ]
+    },
+    "invalid_driver/dropped_pending_valid": {
+      "verdict": "input_or_scope_invalid",
+      "infrastructure_error": null,
+      "failure_count": 1,
+      "categories": [
+        "csaat_hold"
+      ],
+      "assumption_count": 1,
+      "events": [],
+      "unresolved": []
+    }
+  },
+  "decision": "Requires explicit review of scope, positive controls, negatives and incomplete-event handling; not auto-frozen",
+  "new_model_calls": 0,
+  "new_simulations": 0
+}

@@ -1,0 +1,141 @@
+{
+  "original_source_sha256": "5324b93183a0475c5e955b76a7b1e9c1c9739e810a70d213491c5657837ee47c",
+  "controls": [
+    {
+      "name": "lost_last_write",
+      "scope": "single-fault negative control, never experimental RTL",
+      "change": {
+        "before": "assign last_write_o      = (byte_cntr_early == 'h0) & wr_en_o & sr_wr_ready_i;",
+        "after": "assign last_write_o = 1'b0;"
+      },
+      "source_sha256": "3e93ad299ee8f68fffb639606daa04e423f4104864502f21fb19bf8c1b241062",
+      "calibration_case": "mode_0_0_0_01",
+      "expected_category": "segment_last_flag",
+      "detected": true,
+      "repeated_failures": 1,
+      "distinct_defects": [
+        "segment_last_flag"
+      ],
+      "executed_cycles": 184,
+      "compile_seconds": 8.39908166602254,
+      "simulation_seconds": 0.26391320768743753,
+      "compile_command": [
+        "verilator",
+        "--binary",
+        "--timing",
+        "--coverage-line",
+        "--coverage-toggle",
+        "--coverage-expr",
+        "-Wno-fatal",
+        "-Wno-TIMESCALEMOD",
+        "--top-module",
+        "tb_spi_host_fixed",
+        "--Mdir",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_host_preflight_20261104/negative_controls/lost_last_write/verilator-build",
+        "-j",
+        "2",
+        "-DSYNTHESIS",
+        "-I/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim/rtl",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_host_preflight_20261104/negative_controls/lost_last_write/spi_host_fsm_mutant.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_spi_host/verif/tb_spi_host_fixed.sv"
+      ],
+      "raw_coverage_written": true
+    },
+    {
+      "name": "inverted_serial_clock",
+      "scope": "single-fault negative control, never experimental RTL",
+      "change": {
+        "before": "assign sck_o = sck_q;",
+        "after": "assign sck_o = ~sck_q;"
+      },
+      "source_sha256": "f60de33ce6488bc675c2f13bc441344890487666cecbe10d7dcf377035a04144",
+      "calibration_case": "mode_0_0_0_01",
+      "expected_category": "asynchronous_reset",
+      "detected": true,
+      "repeated_failures": 4,
+      "distinct_defects": [
+        "asynchronous_reset",
+        "serial_idle_polarity"
+      ],
+      "executed_cycles": 184,
+      "compile_seconds": 7.428150124847889,
+      "simulation_seconds": 0.16458845790475607,
+      "compile_command": [
+        "verilator",
+        "--binary",
+        "--timing",
+        "--coverage-line",
+        "--coverage-toggle",
+        "--coverage-expr",
+        "-Wno-fatal",
+        "-Wno-TIMESCALEMOD",
+        "--top-module",
+        "tb_spi_host_fixed",
+        "--Mdir",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_host_preflight_20261104/negative_controls/inverted_serial_clock/verilator-build",
+        "-j",
+        "2",
+        "-DSYNTHESIS",
+        "-I/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim/rtl",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_host_preflight_20261104/negative_controls/inverted_serial_clock/spi_host_fsm_mutant.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_spi_host/verif/tb_spi_host_fixed.sv"
+      ],
+      "raw_coverage_written": true
+    },
+    {
+      "name": "unmasked_write_stall",
+      "scope": "single-fault negative control, never experimental RTL",
+      "change": {
+        "before": "assign wr_en_o     = wr_en_internal & ~stall;",
+        "after": "assign wr_en_o = wr_en_internal;"
+      },
+      "source_sha256": "e7a366e97faeadbebc16d2cd59e353a82d730a462d41b9d88317cdd33403a50c",
+      "calibration_case": "stall_pause",
+      "expected_category": "stall_controls_not_suppressed",
+      "detected": true,
+      "repeated_failures": 30,
+      "distinct_defects": [
+        "segment_last_flag",
+        "stall_controls_not_suppressed",
+        "transfer_without_ready",
+        "unexpected_byte_transfer"
+      ],
+      "executed_cycles": 204,
+      "compile_seconds": 7.306733333040029,
+      "simulation_seconds": 0.1503823329694569,
+      "compile_command": [
+        "verilator",
+        "--binary",
+        "--timing",
+        "--coverage-line",
+        "--coverage-toggle",
+        "--coverage-expr",
+        "-Wno-fatal",
+        "-Wno-TIMESCALEMOD",
+        "--top-module",
+        "tb_spi_host_fixed",
+        "--Mdir",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_host_preflight_20261104/negative_controls/unmasked_write_stall/verilator-build",
+        "-j",
+        "2",
+        "-DSYNTHESIS",
+        "-I/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim/rtl",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_host_preflight_20261104/negative_controls/unmasked_write_stall/spi_host_fsm_mutant.sv",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_spi_host/verif/tb_spi_host_fixed.sv"
+      ],
+      "raw_coverage_written": true
+    }
+  ],
+  "all_detected": true,
+  "final_checker_sha256": "f6243ade73678cb3195a8fda559010678a5cedabe04e06bbf2d35751e70aaa3c",
+  "rechecked_from_saved_traces": true
+}

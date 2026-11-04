@@ -1,0 +1,144 @@
+{
+  "simulator": "verilator",
+  "steps": 202,
+  "simulation_seconds": 0.2126018749549985,
+  "coverage": {
+    "branch": {
+      "covered": 125,
+      "total": 160,
+      "percent": 78.125
+    },
+    "expr": {
+      "covered": 179,
+      "total": 246,
+      "percent": 72.764
+    },
+    "line": {
+      "covered": 42,
+      "total": 57,
+      "percent": 73.684
+    },
+    "toggle": {
+      "covered": 395,
+      "total": 836,
+      "percent": 47.249
+    }
+  },
+  "raw_coverage": "results/spi_host_event_checker_20261104/frozen-driver-smoke/batch.dat",
+  "coverage_policy": "All original top-file DUT counters, including initialization/reset. No TB or prim_flop counters. Fresh simulator per cumulative replay.",
+  "checker": {
+    "failures": [],
+    "assumption_violations": [],
+    "events": [
+      {
+        "family": "constrained_transaction_switch",
+        "kind": "csid_change",
+        "start_cycle": 24,
+        "end_cycle": 84,
+        "evidence": {
+          "old_segment": 0,
+          "new_segment": 1,
+          "new_accept_cycle": 51,
+          "old_release_cycle": 50,
+          "new_select_cycle": 51,
+          "trail": 10,
+          "gap": 1,
+          "lead": 1,
+          "required": {
+            "trail": 1,
+            "gap": 1,
+            "lead": 1
+          },
+          "additive_idle_reading": 2,
+          "new_edges": 32
+        }
+      }
+    ],
+    "unresolved": [],
+    "verdict": "scoped_pass",
+    "counts": {
+      "rows": 202,
+      "accepted": 2,
+      "wr": 2,
+      "rd": 2,
+      "sck_edges": 64,
+      "async_reset_rows": 2,
+      "sw_reset_rows": 0,
+      "stall_rows": 0,
+      "switches_offered": 1,
+      "failures": 0,
+      "assumption_violations": 0,
+      "events": 1,
+      "unresolved": 0,
+      "event_kinds": {
+        "constrained_transaction_switch:csid_change": 1
+      }
+    },
+    "scope_limitations": [
+      "Only the spi_host_fsm command/clock/select boundary with NumCS=2 is checked; no register bus, FIFO, STATUS or payload/SD data checks.",
+      "Byte accounting uses wr/rd pulses sampled in pre (before the rising edge) and last_write/last_read flags; serial bit content is not checked.",
+      "Exact SCK edges per byte, CPHA/FULLCYC sampling phase and the sample/shift/sd_en/speed/full_cycle outputs are not checked; the cited text does not fix them cycle-exactly at this boundary.",
+      "Dummy segments (write=read=0) have no externally countable handshakes; their completion is not tracked and switches involving them are not evaluated.",
+      "CSNLEAD/CSNTRAIL/CSNIDLE are enforced only inside a witnessed constrained switch, as lower bounds in core cycles (half-SCK = CLKDIV+1 core cycles) with no tolerance.",
+      "For a configuration change max(old,new) idle is enforced; a gap below old+new (theory_of_operation 326-329) is blocking unresolved for that switch.",
+      "A switch is tracked from the first pending offer of a changed CSID/config after a CSAAT segment; old select may release before acceptance. Accept and first wr/rd may share an edge (command processed first).",
+      "last flags are constrained only on handshake edges; their level elsewhere is unspecified and not checked.",
+      "A software reset coincident with a stall indication suspends the scoreboard (reset-over-stall precedence is not established at this boundary) and makes the verdict unresolved.",
+      "Asynchronous reset is checked for all-inactive selects and no handshakes in pre and post of reset rows; software reset is checked from its second consecutive held cycle.",
+      "An operation counts as complete only with all bytes accounted, a later select release or later-segment handshake, and at least (LEN+1)*8/lanes SCK edges while it was the oldest open segment; unfinished operations at trace end are pending, never liveness failures.",
+      "Documentation mismatch: theory_of_operation segment table lists LEN as 8 bits ([0:255]); registers.md and the public interface give 20 bits; 20 bits is used.",
+      "enable (en_i) semantics are not given in the packet; it is not used to gate acceptance or progress.",
+      "ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary.",
+      "The active output and last flags without a handshake are out of scope; controls mutating only them are scope-confirming, not detection evidence.",
+      "A single-cycle software reset pulse is not checked for select/handshake separation (only from the second held cycle).",
+      "MODELLING ASSUMPTION (uncited): completion needs (LEN+1)*16/lanes SCK edges (8 bits, 2 edges/bit, 1/2/4 lanes) attributed to the oldest open segment.",
+      "Events are emitted only if no failure or assumption violation lies in the inclusive [start_cycle,end_cycle] window.",
+      "Switch trail uses the last SCK edge while the old CSID bit was low; lead uses the first SCK edge while the new CSID bit is low; edges of a queued segment under the old select are pin-indistinguishable."
+    ]
+  },
+  "legacy_checker_diagnostic": {
+    "checks": 202,
+    "accepted_commands": 2,
+    "completed_direction_segments": 2,
+    "aborted_direction_segments": 0,
+    "pending_direction_segments": 0,
+    "incomplete_serial_burst": false,
+    "failures": [],
+    "distinct_defects": [],
+    "assumption_violations": [],
+    "scope": "Public command/data-control handshake, byte/last counts, selected serial edge counts, reset, pause and stall safety. No serial payload, analog timing, bounded liveness or full formal proof.",
+    "verdict": "scoped_pass"
+  },
+  "compile_seconds": 7.796818125061691,
+  "compile_command": [
+    "verilator",
+    "--binary",
+    "--timing",
+    "--coverage-line",
+    "--coverage-toggle",
+    "--coverage-expr",
+    "-Wno-fatal",
+    "-Wno-TIMESCALEMOD",
+    "--top-module",
+    "tb_spi_host_fixed",
+    "--Mdir",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_host_event_checker_20261104/frozen-driver-smoke/verilator-build",
+    "-j",
+    "2",
+    "-DSYNTHESIS",
+    "-I/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim/rtl",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/heldout_spi_host/verif/tb_spi_host_fixed.sv"
+  ],
+  "compilations": 1,
+  "simulator_executions": 1,
+  "executed_cycles": 202,
+  "model_calls": 0,
+  "checker_role": "claude-opus-5-5",
+  "stimulus_role": "GPT/Codex calibration role; experimental GPT-6.1-Sol stimulus not run in this stage",
+  "freeze_sha256": "a582373d831238907eb897d5fbf3aac9cd1385d00cc6445e160b62f3102d815c",
+  "event_policy": "Keep event-window status AND overall trace verdict; a local event in a failing trace is not clean-trace qualification."
+}

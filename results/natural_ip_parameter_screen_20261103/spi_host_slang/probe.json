@@ -1,0 +1,52 @@
+{
+  "status": "elaboration_passed_adapter_incomplete",
+  "yosys": "Yosys 0.70+309 (git sha1 bd3168b1a, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
+  "release": {
+    "url": "https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2026-11-03/oss-cad-suite-darwin-arm64-20261103.tgz",
+    "sha256": "187e4648f4fd27b0f9f7102f9195e7038989db0c31443c05021eb577e107f310",
+    "bytes": 525303860
+  },
+  "sources_sha256": {
+    "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv": "12ec73502dc8115cf1e6051f10cba6fc73259f066581722d9d895d1e634676b2",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv": "a9a44c9cc067c6b0904cfff2f3056b9312a475518be32e36efe0c8a951e1af8d",
+    "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv": "68854581eaa23a57f00c4b49ee0ce972147ffca9f2800da2859d1fe38cc5b476",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv": "5324b93183a0475c5e955b76a7b1e9c1c9739e810a70d213491c5657837ee47c",
+    "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert.sv": "d717d5dbcba3b5aa8a731ef9f8af18b036b49edef282f0a43a51f5ad2dd9bb40",
+    "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert_dummy_macros.svh": "cac4a930105da662547de873f0b80246074fb22df9a398663e1c8ac3e7998218",
+    "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert_sec_cm.svh": "25db89fe5f250c1bcbd808d0b4808206b9e85ac337b26e4ebb23f2ad569e1a13",
+    "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_flop_macros.sv": "2e8e6c2ee484899ae5d0020eaf0c9732c31537c60c30cb2a0a0acd2e92baee03"
+  },
+  "parameters": {
+    "NumCS": 2
+  },
+  "verified_port_widths": {
+    "csb_o": 2,
+    "command_i": 56
+  },
+  "defines": [
+    "SYNTHESIS"
+  ],
+  "assertion_scope": "Upstream embedded assertion macros excluded for elaboration; this is not formal proof or a specification checker.",
+  "verilator_lint_returncode": 0,
+  "verilator_command": [
+    "verilator",
+    "--lint-only",
+    "--timing",
+    "-Wno-fatal",
+    "--top-module",
+    "spi_host_fsm",
+    "-GNumCS=2",
+    "-DSYNTHESIS",
+    "-Ithird_party/opentitan_candidate/hw/ip/prim/rtl",
+    "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+    "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv"
+  ],
+  "process_sync_records": 0,
+  "flop_cells": 26,
+  "source_mapping": "Original source attributes retained, but case spans may anchor statements rather than predicate locations.",
+  "blocker": "Existing parser expects native pre-proc switch/case conventions and sync events. Slang has already emitted flop cells, so a reviewed adapter must reconstruct event/reset context and validate branch mappings. No groups are promoted.",
+  "qualified_for_model_trial": false,
+  "model_calls": 0
+}

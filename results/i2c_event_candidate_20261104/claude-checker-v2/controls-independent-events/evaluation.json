@@ -1,0 +1,547 @@
+{
+  "author_selftests": [
+    {
+      "name": "clean_write_0x50_pass",
+      "pass": true
+    },
+    {
+      "name": "wrong_byte_0x51_fails_mismatch",
+      "pass": true
+    },
+    {
+      "name": "reset_drive_fault",
+      "pass": true
+    },
+    {
+      "name": "bus_composition_fault",
+      "pass": true
+    },
+    {
+      "name": "truncated_pending_no_events",
+      "pass": true
+    },
+    {
+      "name": "missing_stop_fails",
+      "pass": true
+    },
+    {
+      "name": "nak_restart_event",
+      "pass": true
+    },
+    {
+      "name": "nak_restart_needs_status",
+      "pass": true
+    },
+    {
+      "name": "scl_release_during_halt_fails",
+      "pass": true
+    }
+  ],
+  "independent_baseline_pass": true,
+  "cases": {
+    "independent_write": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1
+      }
+    },
+    "wrong_wire_byte": {
+      "failures": [
+        {
+          "cycle": 108,
+          "category": "scoreboard",
+          "detail": "BYTE MISMATCH wire 0x51 expected 0x50"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1
+      }
+    },
+    "wrong_reset_output": {
+      "failures": [
+        {
+          "cycle": 0,
+          "category": "reset",
+          "detail": "controller drives bus low during reset"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1
+      }
+    },
+    "truncated": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        "partial wire byte pending",
+        "transaction open (no STOP)",
+        "1 FMT entries pending"
+      ],
+      "verdict": "pending",
+      "counts": {
+        "start": 1
+      }
+    },
+    "dut_nak_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "nak_restart",
+          "kind": "success",
+          "start_cycle": 122,
+          "end_cycle": 289,
+          "evidence": "unexpected NACK, SCL held, clear, repeated START, clean byte, STOP"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "unexpected_nack": 1,
+        "stop": 1,
+        "event_nak_restart": 1
+      }
+    },
+    "dut_nak_timeout": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "nak_timeout_recovery",
+          "kind": "success",
+          "start_cycle": 122,
+          "end_cycle": 324,
+          "evidence": "unexpected NACK, halt, timeout STOP+release, clear, START, clean byte, STOP"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "unexpected_nack": 1,
+        "stop": 2,
+        "event_nak_timeout_recovery": 1
+      }
+    },
+    "dut_no_extension": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1
+      }
+    },
+    "dut_seed": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {}
+    },
+    "dut_stretch": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "stretch_recovery",
+          "kind": "success",
+          "start_cycle": 26,
+          "end_cycle": 157,
+          "evidence": "SCL extended by target while scl_pin=1, released, clean byte, STOP"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1,
+        "event_stretch_recovery": 1
+      }
+    },
+    "dut_write": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1
+      }
+    },
+    "reference_stretch_recovery": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "stretch_recovery",
+          "kind": "success",
+          "start_cycle": 61,
+          "end_cycle": 151,
+          "evidence": "SCL extended by target while scl_pin=1, released, clean byte, STOP"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1,
+        "event_stretch_recovery": 1
+      }
+    },
+    "reference_nak_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "nak_restart",
+          "kind": "success",
+          "start_cycle": 116,
+          "end_cycle": 289,
+          "evidence": "unexpected NACK, SCL held, clear, repeated START, clean byte, STOP"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "unexpected_nack": 1,
+        "stop": 1,
+        "event_nak_restart": 1
+      }
+    },
+    "reference_nak_timeout_recovery": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "nak_timeout_recovery",
+          "kind": "success",
+          "start_cycle": 116,
+          "end_cycle": 313,
+          "evidence": "unexpected NACK, halt, timeout STOP+release, clear, START, clean byte, STOP"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "unexpected_nack": 1,
+        "stop": 2,
+        "event_nak_timeout_recovery": 1
+      }
+    },
+    "premature_timeout_stop": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "nak_timeout_recovery",
+          "kind": "success",
+          "start_cycle": 116,
+          "end_cycle": 313,
+          "evidence": "unexpected NACK, halt, timeout STOP+release, clear, START, clean byte, STOP"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "unexpected_nack": 1,
+        "stop": 2,
+        "event_nak_timeout_recovery": 1
+      }
+    },
+    "missing_nak_status": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "unexpected_nack": 1,
+        "stop": 1
+      }
+    },
+    "bad_byte_during_stretch": {
+      "failures": [
+        {
+          "cycle": 139,
+          "category": "scoreboard",
+          "detail": "BYTE MISMATCH wire 0x50 expected 0x51"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1
+      }
+    },
+    "truncated_stretch": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        "partial wire byte pending",
+        "transaction open (no STOP)",
+        "stretch recovery incomplete from cycle 26",
+        "1 FMT entries pending"
+      ],
+      "verdict": "pending",
+      "counts": {
+        "start": 1
+      }
+    },
+    "bad_byte_during_nak_restart": {
+      "failures": [
+        {
+          "cycle": 271,
+          "category": "scoreboard",
+          "detail": "BYTE MISMATCH wire 0x52 expected 0x53"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "unexpected_nack": 1,
+        "stop": 1
+      }
+    },
+    "truncated_nak_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        "partial wire byte pending",
+        "transaction open (no STOP)",
+        "NACK recovery incomplete from cycle 122",
+        "1 FMT entries pending"
+      ],
+      "verdict": "pending",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 1,
+        "unexpected_nack": 1
+      }
+    },
+    "bad_byte_during_nak_timeout": {
+      "failures": [
+        {
+          "cycle": 306,
+          "category": "scoreboard",
+          "detail": "BYTE MISMATCH wire 0x52 expected 0x53"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "unexpected_nack": 1,
+        "stop": 2
+      }
+    },
+    "truncated_nak_timeout": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        "partial wire byte pending",
+        "transaction open (no STOP)",
+        "NACK recovery incomplete from cycle 122",
+        "1 FMT entries pending"
+      ],
+      "verdict": "pending",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 1,
+        "unexpected_nack": 1,
+        "stop": 1
+      }
+    },
+    "bad_first_nak_byte_nak_restart": {
+      "failures": [
+        {
+          "cycle": 122,
+          "category": "scoreboard",
+          "detail": "BYTE MISMATCH wire 0x50 expected 0x51"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "nak_restart",
+          "kind": "success",
+          "start_cycle": 122,
+          "end_cycle": 289,
+          "evidence": "unexpected NACK, SCL held, clear, repeated START, clean byte, STOP"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "unexpected_nack": 1,
+        "stop": 1,
+        "event_nak_restart": 1
+      }
+    },
+    "bad_first_nak_byte_nak_timeout": {
+      "failures": [
+        {
+          "cycle": 122,
+          "category": "scoreboard",
+          "detail": "BYTE MISMATCH wire 0x50 expected 0x51"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "nak_timeout_recovery",
+          "kind": "success",
+          "start_cycle": 122,
+          "end_cycle": 324,
+          "evidence": "unexpected NACK, halt, timeout STOP+release, clear, START, clean byte, STOP"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "unexpected_nack": 1,
+        "stop": 2,
+        "event_nak_timeout_recovery": 1
+      }
+    }
+  },
+  "negative_controls": [
+    {
+      "name": "wrong_wire_byte",
+      "rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "wrong_reset_output",
+      "rejected": true,
+      "credited_detection": true
+    }
+  ],
+  "truncated_no_success": true,
+  "event_controls": [
+    {
+      "name": "bad_byte_during_stretch",
+      "baseline": "dut_stretch",
+      "family": "stretch_recovery",
+      "baseline_clean": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "truncated_stretch",
+      "baseline": "dut_stretch",
+      "family": "stretch_recovery",
+      "truncated": true,
+      "baseline_clean": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "bad_byte_during_nak_restart",
+      "baseline": "dut_nak_restart",
+      "family": "nak_restart",
+      "baseline_clean": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "truncated_nak_restart",
+      "baseline": "dut_nak_restart",
+      "family": "nak_restart",
+      "truncated": true,
+      "baseline_clean": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "bad_byte_during_nak_timeout",
+      "baseline": "dut_nak_timeout",
+      "family": "nak_timeout_recovery",
+      "baseline_clean": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "truncated_nak_timeout",
+      "baseline": "dut_nak_timeout",
+      "family": "nak_timeout_recovery",
+      "truncated": true,
+      "baseline_clean": true,
+      "success_rejected": true,
+      "credited_detection": true
+    },
+    {
+      "name": "bad_first_nak_byte_nak_restart",
+      "baseline": "dut_nak_restart",
+      "family": "nak_restart",
+      "baseline_clean": true,
+      "success_rejected": false,
+      "credited_detection": false
+    },
+    {
+      "name": "bad_first_nak_byte_nak_timeout",
+      "baseline": "dut_nak_timeout",
+      "family": "nak_timeout_recovery",
+      "baseline_clean": true,
+      "success_rejected": false,
+      "credited_detection": false
+    }
+  ],
+  "checker_sha256": "756263434f4ba4c2e56379e42f588548ff7bec8db75df6016a453c58ac6ee28e"
+}

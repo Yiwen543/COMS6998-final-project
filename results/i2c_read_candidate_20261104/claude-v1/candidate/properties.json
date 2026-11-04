@@ -1,0 +1,72 @@
+[
+  {
+    "id": "P1_write_data",
+    "requirement": "A non-READB entry transmits FBYTE on the wire; decoded 8-bit wire byte must equal FBYTE, and START precedes it iff START flag set.",
+    "source": "theory_of_operation.md L58,L70-72; registers.md FDATA.FBYTE/START",
+    "assumption": "ACKing external target; single controller",
+    "support_status": "supported"
+  },
+  {
+    "id": "P2_readb_count",
+    "requirement": "READB reads exactly R wire bytes, R=FBYTE, FBYTE 0 means 256; FBYTE is a count not a wire byte.",
+    "source": "theory_of_operation.md L61-64; registers.md L310-311,L326-327",
+    "assumption": "READB follows a read-address write",
+    "support_status": "supported"
+  },
+  {
+    "id": "P3_read_ack",
+    "requirement": "First R-1 read bytes ACKed; final byte NACKed unless RCONT, in which case ACKed (RCONT boundary).",
+    "source": "theory_of_operation.md L66-69; registers.md L301-302,L312-313",
+    "assumption": "ninth bit sampled at SCL rise",
+    "support_status": "supported"
+  },
+  {
+    "id": "P4_rx_order",
+    "requirement": "Exactly one RX per read wire byte, in wire order, data equal to decoded 8-bit byte; RX may precede the ninth bit; no extra/duplicate RX.",
+    "source": "theory_of_operation.md L62-63",
+    "assumption": "RX sink accepts every pre rx_valid",
+    "support_status": "supported"
+  },
+  {
+    "id": "P5_start_ignored_read",
+    "requirement": "No START is issued for a READB entry (START flag ignored with READB); repeated START only before a START-flagged write.",
+    "source": "theory_of_operation.md L70-72",
+    "assumption": "none",
+    "support_status": "supported"
+  },
+  {
+    "id": "P6_stop",
+    "requirement": "STOP issued after an entry with STOP flag and only then; no wire data or START between that entry and STOP.",
+    "source": "theory_of_operation.md L73-75; registers.md L315-316",
+    "assumption": "READB+RCONT+STOP not queued",
+    "support_status": "supported"
+  },
+  {
+    "id": "P7_fifo_order_pop",
+    "requirement": "FMT head mirrors queued entries in order; an entry pops only after processing (write: ninth bit; READB: all R bytes decoded and RX delivered).",
+    "source": "theory_of_operation.md L57-58",
+    "assumption": "ready is pop after processing, not acceptance",
+    "support_status": "supported"
+  },
+  {
+    "id": "P8_reset",
+    "requirement": "Reset clears queue and expectations; pre-reset bytes/RX never satisfy post-reset expectations; transactions do not span reset.",
+    "source": "interface legal_inputs (reset clears queue and target); registers.md reset defaults",
+    "assumption": "rst_n async low applied as action",
+    "support_status": "supported"
+  },
+  {
+    "id": "P9_halt_events",
+    "requirement": "Unexpected NACK, timeout, arbitration or other controller events are outside this profile and yield pending/unsupported, never pass.",
+    "source": "theory_of_operation.md L76-83",
+    "assumption": "ACKing target, no arbitration",
+    "support_status": "unsupported_marked_pending"
+  },
+  {
+    "id": "P10_timing",
+    "requirement": "Exact-cycle timing, analog timing, liveness deadlines and timeouts are not checked.",
+    "source": "registers.md TIMING0-3",
+    "assumption": "n/a",
+    "support_status": "out_of_scope"
+  }
+]

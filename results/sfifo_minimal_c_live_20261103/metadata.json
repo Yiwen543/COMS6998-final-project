@@ -1,0 +1,482 @@
+{
+  "mode": "live",
+  "limits": {
+    "purpose": "Exploratory minimal semantic appendix ablation; fresh sessions, same five FIFO source counters; not an independent natural-IP replication",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 8192,
+    "timeout_seconds": 90,
+    "max_retries": 1,
+    "repetitions": 3,
+    "rounds": 6,
+    "max_new_cycles": 8,
+    "max_input_tokens": 32000,
+    "max_input_bytes": 100000,
+    "max_count_requests_per_attempt": 13,
+    "placebo_tolerance_tokens": 2,
+    "arms": [
+      "B_compact",
+      "C_full",
+      "C_min",
+      "P_min"
+    ],
+    "schedule": "round-major, repetition-major, rotate arms by (round + repetition - 2) modulo 4",
+    "primary_target": {
+      "counter_type": "branch",
+      "outcome": "if",
+      "source_lines": [
+        91,
+        161,
+        96,
+        129,
+        179
+      ],
+      "required_covered": 5
+    },
+    "feedback_policy": "B is unchanged lossless compact raw feedback. Full C retains the existing appendix. Minimal C retains only proved equivalent source groups, event context, two-state scope and separate measured counters. P replaces minimal C with own-trajectory provider-token-matched neutral filler.",
+    "failure_policy": "After bounded retries, stop that session and retain all costs and last measured coverage as not reached or previously reached. Count/measurement failures stop the session; checker violations remain valid measured DUT outcomes.",
+    "measurement_policy": "Compile once as shared overhead; each simulation replays seed plus all accepted actions with fresh counters. Report active session wall time and shared setup separately; never charge other sessions' waiting time. Keep every raw DUT counter."
+  },
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "actions"
+    ],
+    "properties": {
+      "actions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reset",
+            "wr",
+            "rd",
+            "data"
+          ],
+          "properties": {
+            "reset": {
+              "type": "integer"
+            },
+            "wr": {
+              "type": "integer"
+            },
+            "rd": {
+              "type": "integer"
+            },
+            "data": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "schema_name": "sfifo_prompt_ablation_actions",
+  "versions": {
+    "python": "3.13.9",
+    "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+    "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+    "openai_sdk": "2.54.0",
+    "matplotlib": "3.11.2"
+  },
+  "commit": "c71a3e580646d08fb6496c742b7b42b711179b36",
+  "files_sha256": {
+    "configs/sfifo_minimal_c_exploratory.json": "af6b34b8f4139137a47c42cc1731da9dff4807a7717bbf51d4ad791ab2da1607",
+    "configs/sfifo_prompt_ablation_exploratory.json": "bb3baae8458a2b4d02d8479f8e19439dc9129fe5c60d97f3bb8b370a6fa9cad6",
+    "configs/sfifo_stress_seed.json": "871178fd2d9c0ee8e5161288835ae6bd0480a3ccbb383c79fb452156380796eb",
+    "examples/heldout_sfifo_stress/docs/specification.md": "c6fbde32d4d23670b741a47ca14de4f05e43b70f8d7eaa4b662c969a64e5d2a1",
+    "examples/heldout_sfifo_stress/rtl/sfifo.v": "309bf3231693e5f468a00c9b2ef8e9f02f7fc4728c3592a7932d520ba53b9289",
+    "examples/heldout_sfifo_stress/verif/tb_sfifo_stress_fixed.sv": "bd8a326f7aa1c1e11b7db92540f11712955b5865eeb44c4b0d277c4d4a0d2035",
+    "results/midterm_candidate_preflight/sfifo-stress/calibration.dat": "2a35653ebf20604ba8b58738170878dab6ec29be39445d58205a3a0978b64c9f",
+    "results/midterm_candidate_preflight/sfifo-stress/seed.dat": "093aa645247839bd4fdff45024cd41b4b19534815a22f84f1d6199a94a2c2952",
+    "results/sfifo_prompt_ablation_preflight/selection.json": "fa1e8599868643e176dda7b85eeb1dbf6f76d6d708569a16981fb43501d33fc3",
+    "results/sfifo_prompt_ablation_preflight/semantic.json": "164abcc6eb575a483ad1ecc25b3b443080a86fc03a3900421c722fe4d219f6f6",
+    "scripts/analyze_minimal_c_ablation.py": "878fd0b9eb06019a39456334042e3e0a8b9daa90aadb63bbc9020b6631f32382",
+    "scripts/minimal_c_feedback.py": "b4c1b690ad5d01611166cf776d8f4b534a8c5b02f6f31e2487f7ba201e3d8c31",
+    "scripts/pilot_model.py": "e3d67ac3c6897fe6969e96513e7964af0244b7eb3055e2be26726d35472c8b33",
+    "scripts/preflight_sfifo_prompt_ablation.py": "d7b9109b26a5c1c73c1f05109cd71e7f5ca36eacc139d190ff40ac528fe50d38",
+    "scripts/run_minimal_c_ablation.py": "174ddff67b2f432f3395f66a4b1437c21088f3563cad03d47ca905e0231a1b80",
+    "scripts/run_sfifo_prompt_ablation.py": "969a739d77994171bfdee0e8ccecc7778b701a7222c6a3a271d87490806be79d",
+    "scripts/sfifo_fixture.py": "c8bf77d9829e259f2ab3b025e0aa2410ddc9be5b429b5ab0f7ea3a7743f39589",
+    "scripts/sfifo_prompt_ablation_feedback.py": "c1493b0761697894d2918abb8ea6d873bc7beabe8f67605d17e53f292421d7fe",
+    "scripts/token_placebo.py": "04edb10d89bbaefcd7eec12004cad1305f815357abc66aa0a3163b60250f55db"
+  },
+  "schedule": [
+    [
+      "B_compact",
+      1,
+      1
+    ],
+    [
+      "C_full",
+      1,
+      1
+    ],
+    [
+      "C_min",
+      1,
+      1
+    ],
+    [
+      "P_min",
+      1,
+      1
+    ],
+    [
+      "C_full",
+      2,
+      1
+    ],
+    [
+      "C_min",
+      2,
+      1
+    ],
+    [
+      "P_min",
+      2,
+      1
+    ],
+    [
+      "B_compact",
+      2,
+      1
+    ],
+    [
+      "C_min",
+      3,
+      1
+    ],
+    [
+      "P_min",
+      3,
+      1
+    ],
+    [
+      "B_compact",
+      3,
+      1
+    ],
+    [
+      "C_full",
+      3,
+      1
+    ],
+    [
+      "C_full",
+      1,
+      2
+    ],
+    [
+      "C_min",
+      1,
+      2
+    ],
+    [
+      "P_min",
+      1,
+      2
+    ],
+    [
+      "B_compact",
+      1,
+      2
+    ],
+    [
+      "C_min",
+      2,
+      2
+    ],
+    [
+      "P_min",
+      2,
+      2
+    ],
+    [
+      "B_compact",
+      2,
+      2
+    ],
+    [
+      "C_full",
+      2,
+      2
+    ],
+    [
+      "P_min",
+      3,
+      2
+    ],
+    [
+      "B_compact",
+      3,
+      2
+    ],
+    [
+      "C_full",
+      3,
+      2
+    ],
+    [
+      "C_min",
+      3,
+      2
+    ],
+    [
+      "C_min",
+      1,
+      3
+    ],
+    [
+      "P_min",
+      1,
+      3
+    ],
+    [
+      "B_compact",
+      1,
+      3
+    ],
+    [
+      "C_full",
+      1,
+      3
+    ],
+    [
+      "P_min",
+      2,
+      3
+    ],
+    [
+      "B_compact",
+      2,
+      3
+    ],
+    [
+      "C_full",
+      2,
+      3
+    ],
+    [
+      "C_min",
+      2,
+      3
+    ],
+    [
+      "B_compact",
+      3,
+      3
+    ],
+    [
+      "C_full",
+      3,
+      3
+    ],
+    [
+      "C_min",
+      3,
+      3
+    ],
+    [
+      "P_min",
+      3,
+      3
+    ],
+    [
+      "P_min",
+      1,
+      4
+    ],
+    [
+      "B_compact",
+      1,
+      4
+    ],
+    [
+      "C_full",
+      1,
+      4
+    ],
+    [
+      "C_min",
+      1,
+      4
+    ],
+    [
+      "B_compact",
+      2,
+      4
+    ],
+    [
+      "C_full",
+      2,
+      4
+    ],
+    [
+      "C_min",
+      2,
+      4
+    ],
+    [
+      "P_min",
+      2,
+      4
+    ],
+    [
+      "C_full",
+      3,
+      4
+    ],
+    [
+      "C_min",
+      3,
+      4
+    ],
+    [
+      "P_min",
+      3,
+      4
+    ],
+    [
+      "B_compact",
+      3,
+      4
+    ],
+    [
+      "B_compact",
+      1,
+      5
+    ],
+    [
+      "C_full",
+      1,
+      5
+    ],
+    [
+      "C_min",
+      1,
+      5
+    ],
+    [
+      "P_min",
+      1,
+      5
+    ],
+    [
+      "C_full",
+      2,
+      5
+    ],
+    [
+      "C_min",
+      2,
+      5
+    ],
+    [
+      "P_min",
+      2,
+      5
+    ],
+    [
+      "B_compact",
+      2,
+      5
+    ],
+    [
+      "C_min",
+      3,
+      5
+    ],
+    [
+      "P_min",
+      3,
+      5
+    ],
+    [
+      "B_compact",
+      3,
+      5
+    ],
+    [
+      "C_full",
+      3,
+      5
+    ],
+    [
+      "C_full",
+      1,
+      6
+    ],
+    [
+      "C_min",
+      1,
+      6
+    ],
+    [
+      "P_min",
+      1,
+      6
+    ],
+    [
+      "B_compact",
+      1,
+      6
+    ],
+    [
+      "C_min",
+      2,
+      6
+    ],
+    [
+      "P_min",
+      2,
+      6
+    ],
+    [
+      "B_compact",
+      2,
+      6
+    ],
+    [
+      "C_full",
+      2,
+      6
+    ],
+    [
+      "P_min",
+      3,
+      6
+    ],
+    [
+      "B_compact",
+      3,
+      6
+    ],
+    [
+      "C_full",
+      3,
+      6
+    ],
+    [
+      "C_min",
+      3,
+      6
+    ]
+  ],
+  "semantic_preprocessing": {
+    "cached": true,
+    "original_timings": {
+      "rewrite_z3": 0.03990462515503168,
+      "frontend_yosys_extract": 0.034898665733635426,
+      "priority_z3": 0.016435000114142895,
+      "egg_saturation_and_astsize": 0.20846483437344432,
+      "pair_z3": 0.06520833307877183
+    },
+    "policy": "shared preflight, not repeatedly charged to arms"
+  }
+}

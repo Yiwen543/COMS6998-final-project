@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 82983,
+  "stop_reason": "end_turn",
+  "session_id": "0f488a5f-904b-499d-b166-3c229c580a4d",
+  "total_cost_usd": 0.36841599999999997,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 35388,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 9573,
+    "output_tokens_details": {
+      "thinking_tokens": 4835
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 35388
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 9573,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 35388,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 35388,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 9573,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 35388,
+      "webSearchRequests": 0,
+      "costUSD": 0.36841599999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 4835,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"patches\":[{\"file\":\"checker.py\",\"before\":\"    'ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary.'\\n]\",\"after\":\"    'ready/active are never used as evidence of completion; register-bus STATUS semantics are not assumed to match this boundary.',\\n    'The active output and last flags without a handshake are out of scope; controls mutating only them are scope-confirming, not detection evidence.',\\n    'A single-cycle software reset pulse is not checked for select/handshake separation (only from the second held cycle).',\\n    'MODELLING ASSUMPTION (uncited): completion needs (LEN+1)*16/lanes SCK edges (8 bits, 2 edges/bit, 1/2/4 lanes) attributed to the oldest open segment.',\\n    'Events are emitted only if no failure or assumption violation lies in the inclusive [start_cycle,end_cycle] window.',\\n    'Switch trail uses the last SCK edge while the old CSID bit was low; lead uses the first SCK edge while the new CSID bit is low; edges of a queued segment under the old select are pin-indistinguishable.'\\n]\"},{\"file\":\"checker.py\",\"before\":\"    def result():\\n\",\"after\":\"    def wclean(s, e):\\n        return not any(isinstance(x.get('cycle'), int) and s <= x['cycle'] <= e for x in F + AV)\\n\\n    def result():\\n\"},{\"file\":\"checker.py\",\"before\":\"'prev_sw': False, 'last_edge': None}\",\"after\":\"'prev_sw': False, 'last_edge': None, 'le': {0: None, 1: None}}\"},{\"file\":\"checker.py\",\"before\":\"        if len(F) > sw['nf']:\\n            bad = True\",\"after\":\"        ws = sw['offer'] if A['done'] is None else min(A['done'], sw['offer'])\\n        if len(F) > sw['nf'] or not wclean(ws, c):\\n            bad = True\"},{\"file\":\"checker.py\",\"before\":\"'start_cycle': A['done'], 'end_cycle': c,\",\"after\":\"'start_cycle': ws, 'end_cycle': c,\"},{\"file\":\"checker.py\",\"before\":\"            if p['csb'] != 3 or q['csb'] != 3:\\n                st['last_edge'] = c\",\"after\":\"            if p['csb'] != 3 or q['csb'] != 3:\\n                st['last_edge'] = c\\n            for b in (0, 1):\\n                if _bit(p['csb'], b) == 0 or _bit(q['csb'], b) == 0:\\n                    st['le'][b] = c\"},{\"file\":\"checker.py\",\"before\":\"sw['trail'] = None if st['last_edge'] is None else c - st['last_edge']\",\"after\":\"sw['trail'] = None if st['le'][ab] is None else c - st['le'][ab]\"},{\"file\":\"checker.py\",\"before\":\"                if edge and p['csb'] != 3:\\n                    sw['lead'] = c - sw['fall']\",\"after\":\"                if edge and _bit(p['csb'], sw['off']['csid']) == 0:\\n                    sw['lead'] = c - sw['fall']\"},{\"file\":\"checker.py\",\"before\":\"len(F) == stl['nf'] and enough(s):\",\"after\":\"len(F) == stl['nf'] and wclean(stl['start'], c) and enough(s):\"},{\"file\":\"checker.py\",\"before\":\"            if ab['stale'] or len(F) > ab['nf']:\",\"after\":\"            if ab['stale'] or len(F) > ab['nf'] or not wclean(ab['cycle'], c):\"},{\"file\":\"selftest.py\",\"before\":\"    _step(t, csb=3)\\n    _step(t)\\n    return t['rows']\\n\\n\\ndef _hold\",\"after\":\"    _step(t, csb=3)\\n    if fault == 'idlesck':\\n        _step(t, tog=True)\\n    _step(t)\\n    return t['rows']\\n\\n\\ndef _hold\"},{\"file\":\"selftest.py\",\"before\":\"        _step(t, {'tx_ready': 0}, {'tx_stall': 1}, tog=(fault == 'sck' and k == 1))\",\"after\":\"        _step(t, {'tx_ready': 0}, {'tx_stall': 1}, tog=(fault == 'sck' and k == 1), csb=(3 if fault == 'csb' and k == 1 else None))\"},{\"file\":\"selftest.py\",\"before\":\"    act = {'valid': 1, 'write': 1}\\n    if fault == 'notready':\\n        act['tx_ready'] = 0\\n    _step(t, act, {'ready': 1, 'wr': 1, 'last_write': 1}, csb=2)\",\"after\":\"    act = {'valid': 1, 'write': 1}\\n    pre = {'ready': 1, 'wr': 1, 'last_write': 1}\\n    if fault == 'notready':\\n        act['tx_ready'] = 0\\n    if fault in ('read', 'rdnotready'):\\n        act = {'valid': 1, 'read': 1, 'rx_ready': 0 if fault == 'rdnotready' else 1}\\n        pre = {'ready': 1, 'rd': 1, 'last_read': 1}\\n    _step(t, act, pre, csb=2)\"},{\"file\":\"selftest.py\",\"before\":\"    _step(t, off, {'ready': 1})\\n    _step(t, csb=1)\",\"after\":\"    _step(t, off, {'ready': 1})\\n    _step(t, csb=2 if fault == 'wrong' else 1)\"},{\"file\":\"selftest.py\",\"before\":\"def _missing():\\n    t = _new()\\n    _reset(t)\\n    _step(t, {'valid': 1, 'write': 1, 'length': 1}, {'ready': 1})\\n    _step(t, csb=2)\\n    _step(t, pre={'wr': 1, 'last_write': 0})\\n    _toggle(t, 8)\\n\",\"after\":\"def _missing(pending=False):\\n    t = _new()\\n    _reset(t)\\n    _step(t, {'valid': 1, 'write': 1, 'length': 1}, {'ready': 1})\\n    _step(t, csb=2)\\n    _step(t, pre={'wr': 1, 'last_write': 0})\\n    _toggle(t, 8)\\n    if pending:\\n        return t['rows']\\n\"},{\"file\":\"selftest.py\",\"before\":\"def _abort(kind, stale=False):\",\"after\":\"def _abort(kind, stale=False, mut=False):\"},{\"file\":\"selftest.py\",\"before\":\"        _step(t, {'sw_reset': 1}, csb=3)\\n        _step(t, {'sw_reset': 1})\\n    else:\\n        _reset(t)\",\"after\":\"        _step(t, {'sw_reset': 1}, csb=3)\\n        _step(t, {'sw_reset': 1}, pcsb=(2 if mut else None), csb=3)\\n    else:\\n        _step(t, {'rst_n': 0}, pcsb=(2 if mut else 3), csb=3)\\n        _step(t, {'rst_n': 0}, pcsb=3, csb=3)\"},{\"file\":\"selftest.py\",\"before\":\"    _step(t, {'valid': 1, 'write': 1, 'keep_cs': 1, 'idle': 3}, {'ready': 1})\\n    _step(t, csb=2)\\n    _step(t, pre={'wr': 1, 'last_write': 1})\\n    _toggle(t, 8)\\n    _step(t, {'valid': 1, 'write': 1, 'csid': 1, 'idle': 3}, {'ready': 1})\",\"after\":\"    o1 = {'valid': 1, 'write': 1, 'keep_cs': 1, 'idle': 3, 'trail': 3 if fault == 'trail' else 0}\\n    o2 = {'valid': 1, 'write': 1, 'csid': 1, 'idle': 2 if fault == 'additive' else 3, 'lead': 3 if fault == 'lead' else 0}\\n    _step(t, o1, {'ready': 1})\\n    _step(t, csb=2)\\n    _step(t, pre={'wr': 1, 'last_write': 1})\\n    _toggle(t, 8)\\n    _step(t, o2, {'ready': 1})\"},{\"file\":\"selftest.py\",\"before\":\"    return res\\n\",\"after\":\"    nsw = lambda r: 'constrained_transaction_switch' not in famset(r)\\n    t('fault_idle_sck_against_cpol', lambda: _single('idlesck'), lambda r: 'spurious_sck' in cats(r))\\n    t('fault_csb_change_during_stall_window', lambda: _bp('csb'), lambda r: 'stall_safety' in cats(r) and 'backpressure_then_recovery' not in famset(r))\\n    t('same_edge_accept_rd_positive', lambda: _same_edge('read'), lambda r: r['verdict'] == 'scoped_pass' and clean(r))\\n    t('fault_rd_without_rx_ready', lambda: _same_edge('rdnotready'), lambda r: 'handshake_without_ready' in cats(r))\\n    t('fault_early_release_wrong_target', lambda: _early_switch('wrong'), lambda r: ('switch_target' in cats(r) or 'select_target' in cats(r)) and nsw(r))\\n    t('incomplete_pending_not_failed', lambda: _missing(True), lambda r: clean(r) and any(u['category'] == 'pending_segment' for u in r['unresolved']) and not r['events'])\\n    t('fault_sw_reset_second_cycle_select_window', lambda: _abort('sw', mut=True), lambda r: 'reset_separation' in cats(r) and 'abort_then_restart' not in famset(r))\\n    t('fault_async_reset_select_window', lambda: _abort('async', mut=True), lambda r: 'reset_separation' in cats(r) and 'abort_then_restart' not in famset(r))\\n    t('fault_sw_stale_byte', lambda: _abort('sw', True), lambda r: 'stale_byte' in cats(r) and 'abort_then_restart' not in famset(r))\\n    t('fault_switch_short_trail', lambda: _switch('trail'), lambda r: 'switch_timing' in cats(r) and nsw(r))\\n    t('fault_switch_short_lead', lambda: _switch('lead'), lambda r: 'switch_timing' in cats(r) and nsw(r))\\n    t('switch_additive_idle_unresolved', lambda: _switch('additive'), lambda r: clean(r) and r['verdict'] == 'unresolved' and nsw(r))\\n    t('scope_last_read_without_transfer', lambda: (lambda rows: [rows[k]['pre'].update({'last_read': 1}) if k == 6 else None for k in range(len(rows))] and rows)(_single()), lambda r: r['verdict'] == 'scoped_pass')\\n    return res\\n\"},{\"file\":\"properties.json\",\"before\":\"core-cycle units, one-cycle tolerance, boundary values unresolved.\\\",\",\"after\":\"core-cycle units, no tolerance; trail/lead edges attributed by CSID bit.\\\",\"},{\"file\":\"properties.json\",\"before\":\"additive old+new idle reading reported but not enforced\\\",\",\"after\":\"a configuration-change gap in [max(old,new), old+new) is BLOCKING unresolved (additive before/after reading of theory_of_operation 326-329 not proven); events never emitted in that case\\\",\"},{\"file\":\"properties.json\",\"before\":\"only a conservative edge-count lower bound is used as completion evidence\\\"\",\"after\":\"explicit uncited MODELLING ASSUMPTION: (LEN+1)*16/lanes SCK edges required as completion evidence for events\\\"\"},{\"file\":\"properties.json\",\"before\":\"  {\\n    \\\"id\\\": \\\"P14_liveness\\\",\",\"after\":\"  {\\n    \\\"id\\\": \\\"P20_event_window\\\",\\n    \\\"requirement\\\": \\\"An event is emitted only if no failure or assumption violation occurs in its inclusive [start_cycle,end_cycle] window, including reset and stall rows.\\\",\\n    \\\"source\\\": \\\"author task qualification rule\\\",\\n    \\\"assumption\\\": \\\"active output, last flags without handshake and single-cycle sw_reset pulses are out of scope\\\",\\n    \\\"support_status\\\": \\\"implemented\\\"\\n  },\\n  {\\n    \\\"id\\\": \\\"P14_liveness\\\",\",\"after_note\":\"\"},{\"file\":\"contract.md\",\"before\":\"in units of CLKDIV+1 core cycles with one-cycle tolerance.\",\"after\":\"in units of CLKDIV+1 core cycles with no tolerance; trail/lead edges attributed by CSID bit; a config-change gap in [max, old+new) is blocking unresolved.\"},{\"file\":\"contract.md\",\"before\":\"- A scoped_pass is not a proof of full correctness.\\n\",\"after\":\"- A scoped_pass is not a proof of full correctness.\\n- Events require a violation-free inclusive [start,end] window.\\n- active output, last flags without handshake and single-cycle sw_reset pulses are out of scope; edges-per-byte (16/lanes) is an uncited modelling assumption.\\n\"}],\"rationale\":\"Gate all events on a violation-free inclusive window. This covers reset rows and stall rows. Trail and lead are now attributed per CSID bit. P10 and P15 are reconciled with the code: no tolerance, the additive idle case is blocking unresolved, and edges-per-byte is declared as a modelling assumption. New controls cover: accept+rd on the same edge, release-before-accept with a wrong target, incomplete pending versus missing byte at release, event-window faults for stall, async reset and second-cycle sw reset, sw stale byte, rd without rx_ready, idle SCK against CPOL, short trail/lead, and the additive-idle unresolved case. The last-without-transfer control is relabelled as scope-confirming.\"}",
+  "ttft_ms": 50030,
+  "type": "result",
+  "duration_ms": 83215,
+  "uuid": "04aba41e-3655-4345-9a98-b85e8cef30e5",
+  "ttft_stream_ms": 2362,
+  "time_to_request_ms": 231,
+  "first_content_frame_ms": 2363,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 9573,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 35388,
+      "webSearchRequests": 0,
+      "costUSD": 0.36841599999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 4835,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "review": "results/i2c_event_candidate_20261104/claude-checker-v3/review.json",
+  "F6_evaluation_hash_binding": "fixed in summarize_i2c_screen.py; mismatch aborts; full artifact hashes checked",
+  "F4_environment_errors": "run_i2c_fixed.py independently scans ENV_ERROR; gate consumes environment_valid; checker alone never qualifies run",
+  "F5_no_extension_control": "Exists as driver-v2/no_extension: externally requested stretch only during controller-owned low, no actual extension, clean and no event; reviewer overlooked this recorded case",
+  "open_limitations": [
+    "No exact timeout latency or THIGH/analog timing proof",
+    "No read/RCONT/arbitration/bus-monitor verification",
+    "Mutation coverage remains incomplete; no correctness proof",
+    "No event-specific late equivalent source groups"
+  ],
+  "author_feedback_isolation": "v1: public spec/interface only. v2: prior Claude code and review findings; findings include brief cycle labels from failed integration traces, but no DUT RTL, complete calibration sequence, guard targets or model outcomes. v3: public spec/interface, prior code and independently constructed control-generator source. This is role separation, not perfect blinding of all repair feedback.",
+  "review_packet_failure": "One oversized final review rejected with Prompt is too long; terminal result reports 0 tokens and $0; failed metadata and raw stream retained. Compact retry round-trips selected controls exactly."
+}

@@ -6,14 +6,44 @@ feedback. The fixed DUT, specification, checker, driver and coverage accounting
 are shared across A (text), B (raw coverage), P (token-matched placebo) and C
 (raw coverage plus `egg` semantic groups).
 
-**Current status (30 October 2026):** the initial CVDP arbiter integration,
+**Current status (4 November 2026):** the initial CVDP arbiter integration,
 stateful pilots, source-mapped typed predicate extraction, Z3-checked Boolean
 rewrites, and matched live A/B/P/C trials are implemented. The controlled
 divider and FIFO stress-variant trials found no repeatable C-over-B gain.
 The FIFO stress variant is synthetic and does not establish generalization to
-natural IP. Start with [project status and repository map](docs/PROJECT_STATUS.md),
-then the [divider](docs/divider_abcp_result_2026-10-30.md) and
-[FIFO](docs/sfifo_stress_abpc_result_2026-10-30.md) reports.
+natural IP. The latest exploratory FIFO prompt ablation also tied at target
+round 5 in all four arms: lossless B packing saved 7.0% of target-cost tokens,
+while the full C appendix cost 21.4% more than B-compact. A fresh relation-only
+minimal-C live ablation also tied at round 5 in all twelve sessions: it reduced
+C's target token cost by 15.3%, but still cost 2.95% more than B-compact.
+Final toggle counts differ; see the [minimal-C result](docs/minimal_c_result_2026-11-03.md)
+and [IP diagnosis](docs/ip_selection_diagnosis_2026-11-03.md).
+The [SPI_HOST semantic repair and B trial](docs/spi_semantic_repair_2026-11-04.md)
+extends the original preflight with typed combinational SSA, independent
+Yosys-cell checks and Z3-certified ground rules saturated by egg. Two
+nontrivial seed-uncovered groups now qualify, with 186 exact source mappings.
+However, all three live B repetitions hit all nine qualified groups in round 1;
+the development gate rejects a formal A/B/C/P run. All 94 tests pass. This
+repairs an extraction gap without establishing a C-over-B benefit.
+The [role-separated event follow-up](docs/spi_role_separated_events_2026-11-04.md)
+now freezes a Claude-authored offline checker against GPT-authored calibration
+and independent controls (10/12 detected, two explicitly outside scope).
+It witnesses backpressure recovery, reset/restart and CSID switching, and
+retains a dual-simulator configuration-switch discrepancy. The [I2C follow-up](docs/i2c_role_separated_preflight_2026-11-04.md) certifies
+nine nontrivial pairs and freezes a Claude-authored offline write checker with
+a GPT/Codex bus driver. Three multistep events are reachable, but none adds a
+late-specific equivalent source group over ordinary writing. The offline gate
+therefore withholds B; no new B/C performance trial has started.
+The [READB extension](docs/i2c_read_preflight_2026-11-04.md) adds the fixed read
+driver, separately Claude-authored checker and dual-simulator controls. Three
+read event families complete, but all 25 reached equivalent source groups are
+already reached by ordinary read/write; B remains disabled. AXI DMA and flash
+controller follow-up probes are retained as unqualified candidates, with explicit
+expression/mapping and dependency blockers. Checker limitations and the rejected
+first version are preserved.
+Start with [project status and repository map](docs/PROJECT_STATUS.md), the
+[November review and next experiment](docs/project_review_2026-11-03.md), and the
+[prompt-ablation result](docs/sfifo_prompt_ablation_result_2026-11-03.md).
 
 The starter milestone below uses an immutable CVDP arbiter, a specification-based
 SystemVerilog checker, real Verilator coverage, and a small `egg`
@@ -39,7 +69,8 @@ make step1
 
 After local runs, `make clean-generated` removes rebuildable compiler output
 and plot caches while retaining raw experimental evidence. To preview the
-removal list, run `.venv/bin/python scripts/clean_generated.py`.
+removal list, run `.venv/bin/python scripts/clean_generated.py`. The cleaner
+preserves the pinned `build/tools` runtime and private credential staging area.
 
 A fresh macOS environment needs Homebrew and Xcode Command Line Tools:
 

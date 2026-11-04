@@ -1,0 +1,44 @@
+[
+  {
+    "id": "P1",
+    "requirement": "Each wire byte between START/STOP equals pushed FBYTE MSB-first with START flag matching",
+    "source": "theory_of_operation.md:57-71",
+    "assumption": "write mode, single controller, passive target",
+    "support_status": "checked"
+  },
+  {
+    "id": "P2",
+    "requirement": "No controller bus drive during reset",
+    "source": "interface rst_n",
+    "assumption": "scl_o/sda_o observable",
+    "support_status": "checked"
+  },
+  {
+    "id": "P3",
+    "requirement": "Unexpected NACK halts with SCL held low until software clears",
+    "source": "theory_of_operation.md:82-108; registers.md:833-836",
+    "assumption": "no NAKOK",
+    "support_status": "partially checked"
+  },
+  {
+    "id": "P4",
+    "requirement": "NACK timeout produces STOP and releases bus",
+    "source": "registers.md:838-840",
+    "assumption": "timeout enabled",
+    "support_status": "partially checked"
+  },
+  {
+    "id": "P5",
+    "requirement": "Recovery events require clean new byte and STOP",
+    "source": "theory_of_operation.md:92-105",
+    "assumption": "software clears events and issues START",
+    "support_status": "event-classified"
+  },
+  {
+    "id": "P6",
+    "requirement": "FMT head observed while valid matches model; pop on ready&valid",
+    "source": "interface sampling",
+    "assumption": "caller respects FIFO limits",
+    "support_status": "checked"
+  }
+]

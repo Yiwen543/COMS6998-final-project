@@ -1,0 +1,153 @@
+
+-- Running command `read_slang --single-unit --no-proc --top spi_host_fsm -G NumCS=2 -D SYNTHESIS -I third_party/opentitan_candidate/hw/ip/prim/rtl third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv; write_rtlil -readable results/natural_ip_parameter_screen_20261103/spi_host_slang/readable.il; proc; write_json results/natural_ip_parameter_screen_20261103/spi_host_slang/netlist.json' --
+
+1. Executing SLANG frontend.
+Top level design units:
+    spi_host_fsm
+
+
+Build succeeded: 0 errors, 0 warnings
+<suppressed ~109 debug messages>
+
+2. Executing RTLIL backend.
+Output filename: results/natural_ip_parameter_screen_20261103/spi_host_slang/readable.il
+
+3. Executing PROC pass (convert processes to netlists).
+
+3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$362'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$355'.
+Removing empty process `spi_host_fsm.$348'.
+Removing empty process `spi_host_fsm.$341'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$331'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$322'.
+Removing empty process `spi_host_fsm.$311'.
+Removing empty process `spi_host_fsm.$288'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$278'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$259'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$241'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$195'.
+Removing empty process `spi_host_fsm.$164'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$128'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$120'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$116'.
+Removing empty process `spi_host_fsm.$48'.
+Removing empty process `spi_host_fsm.$33'.
+Cleaned up 11 empty switches.
+
+3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 3 switch rules as full_case in process $355 in module spi_host_fsm.
+Marked 8 switch rules as full_case in process $278 in module spi_host_fsm.
+Marked 1 switch rules as full_case in process $259 in module spi_host_fsm.
+Marked 2 switch rules as full_case in process $241 in module spi_host_fsm.
+Removed 1 dead cases from process $128 in module spi_host_fsm.
+Marked 16 switch rules as full_case in process $128 in module spi_host_fsm.
+Marked 5 switch rules as full_case in process $120 in module spi_host_fsm.
+Marked 3 switch rules as full_case in process $116 in module spi_host_fsm.
+Marked 2 switch rules as full_case in process $362 in module spi_host_fsm.
+Removed a total of 1 dead cases.
+
+3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 29 redundant assignments.
+Promoted 0 assignments to connections.
+
+3.4. Executing PROC_INIT pass (extract init attributes).
+
+3.5. Executing PROC_ARST pass (detect async resets in processes).
+
+3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~51 debug messages>
+
+3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\spi_host_fsm.$355'.
+     1/2: $cmd_wr_en_last_bit$359
+     2/2: $cmd_wr_en_last_bit$360
+Creating decoders for process `\spi_host_fsm.$278'.
+     1/5: $wait_cntr_d$283
+     2/5: $wait_cntr_d$284
+     3/5: $wait_cntr_d$280
+     4/5: $wait_cntr_d$285
+     5/5: $wait_cntr_d$286
+Creating decoders for process `\spi_host_fsm.$259'.
+     1/1: $last_byte$262
+Creating decoders for process `\spi_host_fsm.$241'.
+     1/4: $start_bit$246
+     2/4: $shift_size$245
+     3/4: $start_bit$248
+     4/4: $shift_size$247
+Creating decoders for process `\spi_host_fsm.$195'.
+     1/1: $segment_rd_en_cpha1$200
+Creating decoders for process `\spi_host_fsm.$331'.
+     1/1: $u_sck_flop.q_o$334
+Creating decoders for process `\spi_host_fsm.$128'.
+     1/19: $state_d$156
+     2/19: $command_ready_int$154
+     3/19: $state_d$153
+     4/19: $state_d$151
+     5/19: $state_d$146
+     6/19: $command_ready_int$147
+     7/19: $state_d$148
+     8/19: $command_ready_int$149
+     9/19: $state_d$137
+    10/19: $command_ready_int$138
+    11/19: $state_d$139
+    12/19: $command_ready_int$140
+    13/19: $state_d$130
+    14/19: $state_d$157
+    15/19: $command_ready_int$158
+    16/19: $command_ready_int$160
+    17/19: $state_d$159
+    18/19: $state_d$161
+    19/19: $command_ready_int$162
+Creating decoders for process `\spi_host_fsm.$120'.
+     1/5: $command_ready_idle_csb_active$126
+     2/5: $next_state_after_idle_csb_active$125
+     3/5: $next_state_after_idle_csb_active$122
+     4/5: $command_ready_idle_csb_active$124
+     5/5: $next_state_after_idle_csb_active$123
+Creating decoders for process `\spi_host_fsm.$116'.
+     1/2: $next_state_after_idle$118
+     2/2: $next_state_after_idle$117
+Creating decoders for process `\spi_host_fsm.$322'.
+     1/1: $csb_single_d$323
+Creating decoders for process `\spi_host_fsm.$362'.
+     1/2: $sd_en_o$365
+     2/2: $sd_en_o$366
+
+3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 3 empty switches in `\spi_host_fsm.$355'.
+Removing empty process `spi_host_fsm.$355'.
+Found and cleaned up 9 empty switches in `\spi_host_fsm.$278'.
+Removing empty process `spi_host_fsm.$278'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$259'.
+Removing empty process `spi_host_fsm.$259'.
+Found and cleaned up 3 empty switches in `\spi_host_fsm.$241'.
+Removing empty process `spi_host_fsm.$241'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$195'.
+Removing empty process `spi_host_fsm.$195'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$331'.
+Removing empty process `spi_host_fsm.$331'.
+Found and cleaned up 21 empty switches in `\spi_host_fsm.$128'.
+Removing empty process `spi_host_fsm.$128'.
+Found and cleaned up 5 empty switches in `\spi_host_fsm.$120'.
+Removing empty process `spi_host_fsm.$120'.
+Found and cleaned up 3 empty switches in `\spi_host_fsm.$116'.
+Removing empty process `spi_host_fsm.$116'.
+Found and cleaned up 1 empty switch in `\spi_host_fsm.$322'.
+Removing empty process `spi_host_fsm.$322'.
+Found and cleaned up 3 empty switches in `\spi_host_fsm.$362'.
+Removing empty process `spi_host_fsm.$362'.
+Cleaned up 51 empty switches.
+
+3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_host_fsm.
+<suppressed ~61 debug messages>
+
+4. Executing JSON backend.

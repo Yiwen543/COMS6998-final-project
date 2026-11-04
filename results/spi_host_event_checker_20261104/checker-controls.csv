@@ -1,0 +1,13 @@
+name,baseline_clean,result,negative_categories,negative_verdict
+clock_moves_during_stall,True,detected,['stall_safety'],dut_violation
+missing_last_write,True,detected,['last_flag'],dut_violation
+dropped_receive_byte,True,detected,"['last_flag', 'missing_byte_at_release']",dut_violation
+asynchronous_reset_wrong_select,True,detected,['reset_separation'],dut_violation
+software_reset_not_idle,True,not_detected,[],scoped_pass
+multiple_selects_during_switch,True,detected,"['select_exclusive', 'switch_target']",dut_violation
+last_read_without_transfer,True,not_detected,[],scoped_pass
+held_software_reset_wrong_select,True,detected,['reset_separation'],dut_violation
+select_changes_during_stall,True,detected,"['missing_byte_at_release', 'stall_safety']",dut_violation
+read_without_sink_ready,True,detected,"['byte_accounting', 'handshake_without_ready', 'last_flag', 'stall_safety']",dut_violation
+async_reset_stale_write,True,detected,['stale_byte'],dut_violation
+spurious_idle_clock,True,detected,['spurious_sck'],dut_violation

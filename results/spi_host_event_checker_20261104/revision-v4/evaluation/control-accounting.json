@@ -1,0 +1,158 @@
+{
+  "controls": [
+    {
+      "name": "clock_moves_during_stall",
+      "baseline_clean": true,
+      "result": "detected",
+      "negative_categories": [
+        "stall_safety"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "missing_last_write",
+      "baseline_clean": true,
+      "result": "detected",
+      "negative_categories": [
+        "last_flag"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "dropped_receive_byte",
+      "baseline_clean": true,
+      "result": "detected",
+      "negative_categories": [
+        "last_flag",
+        "missing_byte_at_release"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "asynchronous_reset_wrong_select",
+      "baseline_clean": true,
+      "result": "detected",
+      "negative_categories": [
+        "reset_separation"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "software_reset_not_idle",
+      "baseline_clean": true,
+      "result": "not_detected",
+      "negative_categories": [],
+      "negative_verdict": "scoped_pass"
+    },
+    {
+      "name": "multiple_selects_during_switch",
+      "baseline_clean": true,
+      "result": "detected",
+      "negative_categories": [
+        "select_exclusive",
+        "switch_target"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "last_read_without_transfer",
+      "baseline_clean": true,
+      "result": "not_detected",
+      "negative_categories": [],
+      "negative_verdict": "scoped_pass"
+    },
+    {
+      "name": "held_software_reset_wrong_select",
+      "baseline_clean": true,
+      "result": "detected",
+      "negative_categories": [
+        "reset_separation"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "select_changes_during_stall",
+      "baseline_clean": true,
+      "result": "detected",
+      "negative_categories": [
+        "missing_byte_at_release",
+        "stall_safety"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "read_without_sink_ready",
+      "baseline_clean": true,
+      "result": "detected",
+      "negative_categories": [
+        "byte_accounting",
+        "handshake_without_ready",
+        "last_flag",
+        "stall_safety"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "async_reset_stale_write",
+      "baseline_clean": true,
+      "result": "detected",
+      "negative_categories": [
+        "stale_byte"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "spurious_idle_clock",
+      "baseline_clean": true,
+      "result": "detected",
+      "negative_categories": [
+        "spurious_sck"
+      ],
+      "negative_verdict": "dut_violation"
+    }
+  ],
+  "detected_with_clean_baseline": 10,
+  "applied_controls": 12,
+  "confounded_controls": 0,
+  "independent_legal_reference_passed": true,
+  "author_selftests_passed": true,
+  "author_selftest_count": 38,
+  "truncated_prefixes": {
+    "truncated/tx_recovery": {
+      "false_completed_events": 0,
+      "failures": 0,
+      "verdict": "scoped_pass"
+    },
+    "truncated/rx_recovery": {
+      "false_completed_events": 0,
+      "failures": 0,
+      "verdict": "scoped_pass"
+    },
+    "truncated/tx_rx_recovery": {
+      "false_completed_events": 0,
+      "failures": 0,
+      "verdict": "scoped_pass"
+    },
+    "truncated/software_abort_restart": {
+      "false_completed_events": 0,
+      "failures": 0,
+      "verdict": "scoped_pass"
+    },
+    "truncated/asynchronous_abort_restart": {
+      "false_completed_events": 0,
+      "failures": 0,
+      "verdict": "scoped_pass"
+    },
+    "truncated/csid_switch": {
+      "false_completed_events": 0,
+      "failures": 0,
+      "verdict": "scoped_pass"
+    },
+    "truncated/configuration_switch": {
+      "false_completed_events": 0,
+      "failures": 0,
+      "verdict": "scoped_pass"
+    }
+  },
+  "interpretation": "Undetected controls stay in the denominator and require scope review. This is finite fault-detection evidence, not a checker proof."
+}

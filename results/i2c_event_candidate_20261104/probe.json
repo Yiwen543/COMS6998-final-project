@@ -1,0 +1,105 @@
+{
+  "candidate": "OpenTitan I2C controller FSM; distinct IP from SPI_HOST, same upstream repository",
+  "revision": "0ea5236fe749e70ba18f56ba19c4be982ef46da7",
+  "sources_sha256": {
+    "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_pkg.sv": "5dee776e2d3aa96c8f9b53509103f12b3050818f948b04a2145d0fea26bc3035",
+    "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv": "0da13b6d8185c7bd6c3949f6c28e073292c1682fd1cc10f83457f6285fd16b1a",
+    "third_party/opentitan_candidate/hw/ip/i2c/doc/theory_of_operation.md": "2fcd965f90e3b57153e27d64ea7d10cc8cd0a972b8375aafd912208641d0e97b",
+    "third_party/opentitan_candidate/hw/ip/i2c/doc/registers.md": "f1dce73724d2222f56c143a495f1e9f1843b70012823ad07c48af12e20a850bf"
+  },
+  "parameters": {
+    "FifoDepth": 64
+  },
+  "runs": [
+    {
+      "stage": "slang",
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/slang",
+        "--single-unit",
+        "--top",
+        "i2c_controller_fsm",
+        "-D",
+        "SYNTHESIS",
+        "-I",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl",
+        "--ast-json",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/i2c_event_candidate_20261104/ast.json",
+        "--ast-json-source-info",
+        "--ast-json-detailed-types",
+        "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv"
+      ],
+      "returncode": 0,
+      "seconds": 0.04781854199245572
+    },
+    {
+      "stage": "verilator",
+      "command": [
+        "verilator",
+        "--lint-only",
+        "--timing",
+        "-Wno-fatal",
+        "--top-module",
+        "i2c_controller_fsm",
+        "-DSYNTHESIS",
+        "-Ithird_party/opentitan_candidate/hw/ip/prim/rtl",
+        "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv"
+      ],
+      "returncode": 0,
+      "seconds": 0.10689287493005395
+    },
+    {
+      "stage": "iverilog",
+      "command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "i2c_controller_fsm",
+        "-DSYNTHESIS",
+        "-I",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl",
+        "-tnull",
+        "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv"
+      ],
+      "returncode": 0,
+      "seconds": 0.20662004221230745
+    },
+    {
+      "stage": "yosys",
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/yosys",
+        "-Q",
+        "-T",
+        "-s",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/i2c_event_candidate_20261104/probe.ys"
+      ],
+      "returncode": 0,
+      "seconds": 0.10533120902255177
+    }
+  ],
+  "lexical_targets": 268,
+  "typed_atoms": 75,
+  "unsupported_extraction_entries": 0,
+  "spec_event_candidates": [
+    "clock stretch then resume",
+    "unexpected NACK, software handling and repeated START",
+    "NACK-handler timeout, automatic STOP and release"
+  ],
+  "required_assumptions": [
+    "open-drain wired-AND bus model",
+    "legal positive timing parameters",
+    "stable FMT entry until ready",
+    "responsive target except deliberate bounded stretch/NACK"
+  ],
+  "no_model_calls": true,
+  "qualified": false,
+  "unresolved": [
+    "Independent specification checker and fixed driver absent",
+    "No reachability or original-counter source mapping",
+    "No certified nontrivial groups",
+    "No B development run"
+  ],
+  "interpretation": "Frontend feasibility and public temporal-behavior shortlist only; module size is not the selection criterion."
+}

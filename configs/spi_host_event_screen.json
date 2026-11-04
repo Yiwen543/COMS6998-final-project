@@ -1,0 +1,36 @@
+{
+  "status": "prospective offline qualification; not a frozen A/B/C experiment",
+  "scope": "Same pinned spi_host_fsm NumCS=2; new independently authored checker version",
+  "roles": {
+    "checker_author": "claude-opus-5-5; public specifications and interface only; no DUT implementation, stimulus or model outcomes",
+    "stimulus_and_driver": "GPT/Codex integration role; unchanged cycle driver and separately recorded calibration inputs; no authorship or silent edits of Claude checker",
+    "experimental_stimulus": "gpt-6.1-sol after qualification; JSON actions only; no checker code or private calibration",
+    "measurement": "fixed simulator, original counters, hash and schema checks; neither model can change measurements"
+  },
+  "events": ["backpressure_then_recovery", "abort_then_restart", "constrained_transaction_switch"],
+  "development_budget": {"repetitions": 3, "rounds": 6, "max_new_cycles": 64, "seed_cycles": 8},
+  "offline_acceptance": {
+    "min_distinct_reachable_event_families": 3,
+    "max_calibration_cycles_excluding_seed": 384,
+    "checker_author_must_differ_from_stimulus_author": true,
+    "require_positive_and_negative_controls": true,
+    "require_verilator_icarus_trace_agreement": true,
+    "require_no_unresolved_property_blocking_selected_scope": true,
+    "min_source_distinct_groups": 3,
+    "min_nontrivial_source_groups": 2,
+    "each_group_min_seed_zero_source_counters": 2,
+    "do_not_equate_temporal_events_using_combinational_proofs": true
+  },
+  "development_acceptance": {
+    "min_repetitions_with_two_groups_unhit_after_round_one": 2,
+    "min_repetitions_with_later_group_progress": 2
+  },
+  "rules": [
+    "Do not change legacy results or checker files; new versioned evidence only.",
+    "Checker revisions must come from its author role and retain prior source, feedback and rationale.",
+    "Functional event witnesses supplement raw coverage; never change or reinterpret original DUT counters.",
+    "Do not select new targets using C outcomes or reduce the old 6x64 budget to induce a B failure.",
+    "No solver/calibration witnesses or hidden checker controls in experimental prompts.",
+    "Failure of a prerequisite is a recorded rejection, not permission to start A/B/C/placebo."
+  ]
+}

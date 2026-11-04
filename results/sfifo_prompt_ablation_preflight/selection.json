@@ -1,0 +1,178 @@
+{
+  "status": "exploratory_ablation_preflight_not_confirmatory",
+  "source_sha256": "309bf3231693e5f468a00c9b2ef8e9f02f7fc4728c3592a7932d520ba53b9289",
+  "config": {
+    "purpose": "Exploratory prompt-load ablation on pinned depth-16 FIFO stress variant; do not pool with frozen 2026-10-30 A/B/P/C pilot",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 8192,
+    "timeout_seconds": 90,
+    "max_retries": 1,
+    "repetitions": 3,
+    "rounds": 6,
+    "max_new_cycles": 8,
+    "max_input_tokens_conservative_byte_cap": 100000,
+    "placebo_tolerance_tokens": 2,
+    "arms": [
+      "B_full",
+      "B_compact",
+      "P_compact",
+      "C_compact"
+    ],
+    "primary_target": {
+      "counter_type": "branch",
+      "outcome": "if",
+      "source_lines": [
+        91,
+        161,
+        96,
+        129,
+        179
+      ],
+      "required_covered": 5,
+      "denominator_policy": "retain every original DUT source counter; target subset never replaces denominator"
+    },
+    "feedback_policy": "B_full retains the original raw list. B_compact losslessly packs the exact same raw points. C_compact is B_compact plus source-mapped nontrivial egg/Z3 groups. P_compact is B_compact plus provider-token-matched neutral filler."
+  },
+  "target_groups": [
+    {
+      "eclass": 7,
+      "event_context": [
+        "posedge \\i_clk"
+      ],
+      "distinct_input_expressions": 2,
+      "z3_pair_checks": 1,
+      "members": [
+        {
+          "line": 91,
+          "source": "examples/heldout_sfifo_stress/rtl/sfifo.v",
+          "column": 3,
+          "type": "branch",
+          "outcome": "if",
+          "seed_hits": 0,
+          "calibration_hits": 1,
+          "complete_guard": "(and (and (and (not p_344426ebf2cbfd00) true) p_a9ba9229e60446bb) p_58e5e64e57ea6cbe)"
+        },
+        {
+          "line": 161,
+          "source": "examples/heldout_sfifo_stress/rtl/sfifo.v",
+          "column": 3,
+          "type": "branch",
+          "outcome": "if",
+          "seed_hits": 0,
+          "calibration_hits": 1,
+          "complete_guard": "(and (and (and (not p_344426ebf2cbfd00) true) p_a9ba9229e60446bb) (not (not p_58e5e64e57ea6cbe)))"
+        }
+      ]
+    },
+    {
+      "eclass": 14,
+      "event_context": [
+        "posedge \\i_clk"
+      ],
+      "distinct_input_expressions": 2,
+      "z3_pair_checks": 2,
+      "members": [
+        {
+          "line": 96,
+          "source": "examples/heldout_sfifo_stress/rtl/sfifo.v",
+          "column": 3,
+          "type": "branch",
+          "outcome": "if",
+          "seed_hits": 0,
+          "calibration_hits": 1,
+          "complete_guard": "(and (and (and (not p_344426ebf2cbfd00) true) p_98de20e60020bf4f) p_b4bdb5e5d1dc5e4e)"
+        },
+        {
+          "line": 129,
+          "source": "examples/heldout_sfifo_stress/rtl/sfifo.v",
+          "column": 3,
+          "type": "branch",
+          "outcome": "if",
+          "seed_hits": 0,
+          "calibration_hits": 1,
+          "complete_guard": "(and (and (and (not p_344426ebf2cbfd00) true) p_98de20e60020bf4f) (not (not p_b4bdb5e5d1dc5e4e)))"
+        },
+        {
+          "line": 179,
+          "source": "examples/heldout_sfifo_stress/rtl/sfifo.v",
+          "column": 3,
+          "type": "branch",
+          "outcome": "if",
+          "seed_hits": 0,
+          "calibration_hits": 1,
+          "complete_guard": "(and (and (and (not p_344426ebf2cbfd00) true) p_98de20e60020bf4f) p_b4bdb5e5d1dc5e4e)"
+        }
+      ]
+    }
+  ],
+  "seed_coverage": {
+    "branch": {
+      "covered": 11,
+      "total": 24,
+      "percent": 45.833
+    },
+    "expr": {
+      "covered": 7,
+      "total": 16,
+      "percent": 43.75
+    },
+    "line": {
+      "covered": 14,
+      "total": 22,
+      "percent": 63.636
+    },
+    "toggle": {
+      "covered": 6,
+      "total": 338,
+      "percent": 1.775
+    }
+  },
+  "calibration_coverage": {
+    "branch": {
+      "covered": 22,
+      "total": 24,
+      "percent": 91.667
+    },
+    "expr": {
+      "covered": 14,
+      "total": 16,
+      "percent": 87.5
+    },
+    "line": {
+      "covered": 20,
+      "total": 22,
+      "percent": 90.909
+    },
+    "toggle": {
+      "covered": 119,
+      "total": 338,
+      "percent": 35.207
+    }
+  },
+  "raw_seed_uncovered_points": 30,
+  "raw_feedback_bytes": 6165,
+  "losslessly_packed_feedback_bytes": 2348,
+  "prompt_bytes": {
+    "B_full": 21247,
+    "B_compact": 17430,
+    "C_compact": 21930
+  },
+  "source_counter_denominator": 400,
+  "unsupported_extraction": 2,
+  "unresolved_aliases": 1,
+  "files_sha256": {
+    "examples/heldout_sfifo_stress/rtl/sfifo.v": "309bf3231693e5f468a00c9b2ef8e9f02f7fc4728c3592a7932d520ba53b9289",
+    "examples/heldout_sfifo_stress/verif/tb_sfifo_stress_fixed.sv": "bd8a326f7aa1c1e11b7db92540f11712955b5865eeb44c4b0d277c4d4a0d2035",
+    "scripts/sfifo_fixture.py": "c8bf77d9829e259f2ab3b025e0aa2410ddc9be5b429b5ab0f7ea3a7743f39589",
+    "examples/heldout_sfifo_stress/docs/specification.md": "c6fbde32d4d23670b741a47ca14de4f05e43b70f8d7eaa4b662c969a64e5d2a1",
+    "configs/sfifo_stress_seed.json": "871178fd2d9c0ee8e5161288835ae6bd0480a3ccbb383c79fb452156380796eb",
+    "configs/sfifo_prompt_ablation_exploratory.json": "bb3baae8458a2b4d02d8479f8e19439dc9129fe5c60d97f3bb8b370a6fa9cad6",
+    "results/sfifo_prompt_ablation_preflight/semantic.json": "164abcc6eb575a483ad1ecc25b3b443080a86fc03a3900421c722fe4d219f6f6",
+    "scripts/preflight_sfifo_prompt_ablation.py": "d7b9109b26a5c1c73c1f05109cd71e7f5ca36eacc139d190ff40ac528fe50d38",
+    "scripts/sfifo_prompt_ablation_feedback.py": "c1493b0761697894d2918abb8ea6d873bc7beabe8f67605d17e53f292421d7fe",
+    "scripts/run_sfifo_prompt_ablation.py": "969a739d77994171bfdee0e8ccecc7778b701a7222c6a3a271d87490806be79d",
+    "results/midterm_candidate_preflight/sfifo-stress/seed.dat": "093aa645247839bd4fdff45024cd41b4b19534815a22f84f1d6199a94a2c2952",
+    "results/midterm_candidate_preflight/sfifo-stress/calibration.dat": "2a35653ebf20604ba8b58738170878dab6ec29be39445d58205a3a0978b64c9f"
+  }
+}

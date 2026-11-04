@@ -1,0 +1,99 @@
+{
+  "mode": "live",
+  "purpose": "Exploratory prompt-load ablation on pinned depth-16 FIFO stress variant; do not pool with frozen 2026-10-30 A/B/P/C pilot",
+  "commit": "c71a3e580646d08fb6496c742b7b42b711179b36",
+  "versions": {
+    "python": "3.13.9",
+    "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+    "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+    "openai_sdk": "2.54.0",
+    "matplotlib": "3.11.2"
+  },
+  "selection_sha256": "fa1e8599868643e176dda7b85eeb1dbf6f76d6d708569a16981fb43501d33fc3",
+  "files_sha256": {
+    "examples/heldout_sfifo_stress/rtl/sfifo.v": "309bf3231693e5f468a00c9b2ef8e9f02f7fc4728c3592a7932d520ba53b9289",
+    "examples/heldout_sfifo_stress/verif/tb_sfifo_stress_fixed.sv": "bd8a326f7aa1c1e11b7db92540f11712955b5865eeb44c4b0d277c4d4a0d2035",
+    "scripts/sfifo_fixture.py": "c8bf77d9829e259f2ab3b025e0aa2410ddc9be5b429b5ab0f7ea3a7743f39589",
+    "examples/heldout_sfifo_stress/docs/specification.md": "c6fbde32d4d23670b741a47ca14de4f05e43b70f8d7eaa4b662c969a64e5d2a1",
+    "configs/sfifo_stress_seed.json": "871178fd2d9c0ee8e5161288835ae6bd0480a3ccbb383c79fb452156380796eb",
+    "configs/sfifo_prompt_ablation_exploratory.json": "bb3baae8458a2b4d02d8479f8e19439dc9129fe5c60d97f3bb8b370a6fa9cad6",
+    "results/sfifo_prompt_ablation_preflight/semantic.json": "164abcc6eb575a483ad1ecc25b3b443080a86fc03a3900421c722fe4d219f6f6",
+    "scripts/preflight_sfifo_prompt_ablation.py": "d7b9109b26a5c1c73c1f05109cd71e7f5ca36eacc139d190ff40ac528fe50d38",
+    "scripts/sfifo_prompt_ablation_feedback.py": "c1493b0761697894d2918abb8ea6d873bc7beabe8f67605d17e53f292421d7fe",
+    "scripts/run_sfifo_prompt_ablation.py": "969a739d77994171bfdee0e8ccecc7778b701a7222c6a3a271d87490806be79d",
+    "results/midterm_candidate_preflight/sfifo-stress/seed.dat": "093aa645247839bd4fdff45024cd41b4b19534815a22f84f1d6199a94a2c2952",
+    "results/midterm_candidate_preflight/sfifo-stress/calibration.dat": "2a35653ebf20604ba8b58738170878dab6ec29be39445d58205a3a0978b64c9f"
+  },
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "actions"
+    ],
+    "properties": {
+      "actions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reset",
+            "wr",
+            "rd",
+            "data"
+          ],
+          "properties": {
+            "reset": {
+              "type": "integer"
+            },
+            "wr": {
+              "type": "integer"
+            },
+            "rd": {
+              "type": "integer"
+            },
+            "data": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "limits": {
+    "purpose": "Exploratory prompt-load ablation on pinned depth-16 FIFO stress variant; do not pool with frozen 2026-10-30 A/B/P/C pilot",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 8192,
+    "timeout_seconds": 90,
+    "max_retries": 1,
+    "repetitions": 3,
+    "rounds": 6,
+    "max_new_cycles": 8,
+    "max_input_tokens_conservative_byte_cap": 100000,
+    "placebo_tolerance_tokens": 2,
+    "arms": [
+      "B_full",
+      "B_compact",
+      "P_compact",
+      "C_compact"
+    ],
+    "primary_target": {
+      "counter_type": "branch",
+      "outcome": "if",
+      "source_lines": [
+        91,
+        161,
+        96,
+        129,
+        179
+      ],
+      "required_covered": 5,
+      "denominator_policy": "retain every original DUT source counter; target subset never replaces denominator"
+    },
+    "feedback_policy": "B_full retains the original raw list. B_compact losslessly packs the exact same raw points. C_compact is B_compact plus source-mapped nontrivial egg/Z3 groups. P_compact is B_compact plus provider-token-matched neutral filler."
+  }
+}

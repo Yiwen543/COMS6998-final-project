@@ -1,0 +1,70 @@
+{
+  "ready_for_offline_gate": false,
+  "verdict_on_baseline_failures": "checker_error",
+  "findings": [
+    {
+      "id": "F1_same_row_push_ordering",
+      "severity": "blocking",
+      "classification": "checker_error",
+      "detail": "check_rows checks pre.valid and the FIFO head before it appends the current row's push to its queue model, because the push branch runs at the end of the loop body. The interface sampling contract says the action is applied while the core clock is low and pre is settled before the rising edge. So a push in row N is already visible in pre of row N. The driver behaves this way: it writes fifo[qtail] and increments qcount before the TRACE $write, and fmt_fifo_rvalid_i is combinational on qcount. The control trace agrees: cycle 8 has push=1 with pre valid=1 and fmt_byte=81, and cycle 9 pushes the READB with pre depth=2. The checker therefore sees valid while its queue is empty. This explains the single 'fifo_head: valid with empty queued-command model' failure at cycle 8 in every nonempty case, both the generator traces and the dut_* traces. dut_seed has no pushes and passes, which is consistent."
+    },
+    {
+      "id": "F2_flush_same_ordering",
+      "severity": "blocking",
+      "classification": "checker_error",
+      "detail": "Flush has the same issue: it is applied to the queue model after the pre check. The driver clears the queue before pre is sampled, so a flush row would also be judged against a stale model."
+    },
+    {
+      "id": "F3_pop_timing_consistent",
+      "severity": "info",
+      "classification": "no_error",
+      "detail": "Pop handling matches the contract. The driver retires the head at the next row via pop_pending, computed from pre valid&ready. The checker pops on pre valid&ready of the same row. No mismatch was found here."
+    },
+    {
+      "id": "F4_selftests_mask_bug",
+      "severity": "blocking",
+      "classification": "selftest_gap",
+      "detail": "In selftest G.push, the push row is emitted with pre valid=0 and no fmt_* head fields. Valid is only asserted in later pop rows. The selftests therefore never exercise same-row push visibility, which is why all 17 pass while every contract-conformant trace fails. The 17 passes are not evidence of contract conformance."
+    },
+    {
+      "id": "F5_controls_not_creditable",
+      "severity": "blocking",
+      "classification": "evaluation_integrity",
+      "detail": "Every baseline is 'fail' with a fifo_head failure. Negative-control detections (rx_corrupt, rx_duplicate, rx_missing, wrong_boundary_ack, premature_pop) cannot be credited, because the baseline is not clean and the controls do not discriminate. All event_controls correctly report credited_detection=false. Pending controls (zero_partial, truncated_read, dut_zero_count_partial) return 'fail' instead of 'pending', so pending semantics are unverified. The premature_pop control's 597 failures are mostly downstream of the stale queue model. Zero events were emitted in any case, so no event false positive was observed, but there is also no positive event evidence."
+    },
+    {
+      "id": "F6_event_logic_review",
+      "severity": "minor",
+      "classification": "residual_risk",
+      "detail": "Event crediting is gated on: no failures and no assumption violations anywhere in the trace, a clean transaction window, and every involved entry completed, popped and fully RX-delivered. This is conservative. read_stretch_recovery sets 'stretched' when scl==0 and scl_pin==1. Under the driver equation scl = scl_pin & !stretch, that combination only occurs with external stretch, so no false positive was identified. However, this cannot be validated on real traces until F1 is fixed."
+    },
+    {
+      "id": "F7_driver_known_limitation",
+      "severity": "minor",
+      "classification": "driver_issue_out_of_calibration",
+      "detail": "The target sets read direction using v_target_ack at the ninth falling edge, not the ACK actually seen on the bus. This is harmless while target_ack=1 throughout, as in calibration. It does not cause the observed failures. It must be fixed before any target_ack=0 traces are used."
+    },
+    {
+      "id": "F8_spec_justification",
+      "severity": "info",
+      "classification": "ok_with_caveat",
+      "detail": "P1\u2013P6 trace to the cited lines in theory_of_operation.md and registers.md. P7 has a weaker basis: 'pop only after processing', with READB RX delivered before pop, is an interpretation that the excerpts do not state explicitly. P8 relies on the interface packet rather than the IP documentation. P9 and P10 are correctly marked unsupported/out of scope."
+    },
+    {
+      "id": "F9_isolation",
+      "severity": "info",
+      "classification": "ok",
+      "detail": "The checker uses only public observations and actions, with no DUT internals. target_data is not used as an expectation. The source-relevance gate failed independently and B remains disabled; this audit does not change that."
+    }
+  ],
+  "required_before_gate": [
+    "Apply flush and push to the queue model before checking pre valid and head fields (checker author change; not patched here).",
+    "Add selftests where the push row asserts pre valid and head fields in the same row.",
+    "Re-run all baselines. Credit negative controls only against clean passing baselines, and confirm pending controls yield 'pending'."
+  ],
+  "limitations": [
+    "Read-only static audit from the supplied packet. No execution and no access to the DUT RTL.",
+    "The diagnosis is inferred from the driver source, the control generator and the cycle-8 trace deltas, not from a re-run.",
+    "No claim of formal proof or full IP correctness. Timing, arbitration, NACK recovery and timeouts are not assessed."
+  ]
+}

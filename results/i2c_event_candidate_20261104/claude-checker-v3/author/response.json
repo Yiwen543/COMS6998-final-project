@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 33828,
+  "stop_reason": "end_turn",
+  "session_id": "e8f4641a-e241-4f30-8aa2-db961989bc24",
+  "total_cost_usd": 0.177836,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 21448,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 3529,
+    "output_tokens_details": {
+      "thinking_tokens": 1849
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 21448
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 3529,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 21448,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 21448,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 3529,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 21448,
+      "webSearchRequests": 0,
+      "costUSD": 0.177836,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1849,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\"patches\":[\n{\"file\":\"checker.py\",\"before\":\"    def ev(fam, kind, s, d):\",\"after\":\"    def clean(c0):\\n        return not any(f['cycle'] >= c0 for f in F) and not any(x.get('cycle', 0) >= c0 for x in A)\\n\\n    def ev(fam, kind, s, d):\"},\n{\"file\":\"checker.py\",\"before\":\"            if S['en'] == 0 or h.get('to') or S['toen']:\\n                h['stop'] = S['c']\",\"after\":\"            if S['en'] == 0 or h.get('to'):\\n                h['stop'] = S['c']\"},\n{\"file\":\"checker.py\",\"before\":\"            if len(F) == h['f'] and h.get('seen'):\\n                if h.get('stop'):\\n                    if h.get('to'):\\n                        ev('nak_timeout_recovery', 'success', h['c'], 'unexpected NACK, halt, timeout STOP+release, clear, START, clean byte, STOP')\\n                else:\\n                    ev('nak_restart', 'success', h['c'], 'unexpected NACK, SCL held, clear, repeated START, clean byte, STOP')\",\"after\":\"            if clean(h['c']) and h.get('seen'):\\n                if h.get('stop'):\\n                    if h.get('to'):\\n                        ev('nak_timeout_recovery', 'success', h['c'], 'unexpected NACK, halt, timeout STOP+release, clear, START, clean byte, STOP')\\n                else:\\n                    ev('nak_restart', 'success', h['c'], 'unexpected NACK, SCL held, clear, repeated START, clean byte, STOP')\\n            elif not h.get('seen'):\\n                U.append('NACK recovery from cycle %d lacks public nak/unhandled_nak status witness' % h['c'])\"},\n{\"file\":\"checker.py\",\"before\":\"            if len(F) == st['f']:\",\"after\":\"            if clean(st['c']):\"},\n{\"file\":\"checker.py\",\"before\":\"not h.get('clr') and not (h.get('to') or S['toen'] or S['en'] == 0):\",\"after\":\"not h.get('clr') and not (h.get('to') or S['en'] == 0):\"},\n{\"file\":\"selftest.py\",\"before\":\"    def nack(status):\\n        return (R + [(1, 1, P(0x50, 1, 0), 0, {})] + fr(0x50, 1, stop=False) +\",\"after\":\"    def nack(status, b0=0x50):\\n        return (R + [(1, 1, P(0x50, 1, 0), 0, {})] + fr(b0, 1, stop=False) +\"},\n{\"file\":\"selftest.py\",\"before\":\"    t('nak_restart_needs_status', not any(e['family'] == 'nak_restart' for e in r['events']))\",\"after\":\"    t('nak_restart_needs_status', not any(e['family'] == 'nak_restart' for e in r['events']))\\n    t('missing_nak_status_not_pass', r['verdict'] != 'pass')\\n    r = check_rows(build(nack(True, 0x51)))\\n    t('first_nack_byte_mismatch_no_event', r['verdict'] == 'fail' and not r['events'])\\n    TE = {'nak_timeout_enable': 1}\\n    pt = (R + [(1, 1, P(0x50, 1, 0), 0, {})] + fr(0x50, 1, stop=False) +\\n          [(0, 1, dict(TE), 0, {'nak': 1}), (0, 0, dict(TE), 0, {}), (1, 0, dict(TE), 0, {}), (1, 1, dict(TE), 0, {})])\\n    r = check_rows(build(pt))\\n    t('premature_timeout_stop_fails', r['verdict'] == 'fail' and any(f['category'] == 'halt' for f in r['failures']) and not r['events'])\"},\n{\"file\":\"properties.json\",\"before\":\"\\\"requirement\\\": \\\"With NACK timeout, STOP is generated and the bus stays released until software clears.\\\",\",\"after\":\"\\\"requirement\\\": \\\"A STOP during NACK halt requires prior public timeout status (nak_timeout/unhandled_timeout) or host disable; timeout enable alone or a later timeout pulse does not justify it. After timeout STOP the bus stays released until software clears. Event windows are clean by origin cycle; missing NACK status leaves recovery unresolved.\\\",\"}\n],\n\"rationale\":\"Event cleanliness now uses origin-cycle failure/assumption windows, so a mismatch at the halt origin blocks credit; applied to stretch too. Timeout-enable no longer excuses STOP/SCL release during halt; only prior observed timeout status or disable does, so later pulses cannot justify retroactively. A completed NACK recovery lacking status witness is reported unresolved (pending), not pass. Added selftests for first-NACK byte mismatch, premature timeout STOP, and missing-status non-pass; existing tests kept.\"}\n```",
+  "ttft_ms": 22037,
+  "type": "result",
+  "duration_ms": 33946,
+  "uuid": "6ac64765-eb98-4fd8-8909-edf0effcd46e",
+  "ttft_stream_ms": 1911,
+  "time_to_request_ms": 115,
+  "first_content_frame_ms": 1911,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 3529,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 21448,
+      "webSearchRequests": 0,
+      "costUSD": 0.177836,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1849,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

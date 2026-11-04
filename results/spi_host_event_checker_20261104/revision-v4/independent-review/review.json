@@ -1,0 +1,80 @@
+{
+  "findings": [
+    {
+      "status": "resolved",
+      "category": "event_window_false_positive_fix",
+      "evidence": "negative/clock_moves_during_stall and negative/asynchronous_reset_wrong_select now emit no events. Instead they report backpressure_not_witnessed and restart_not_clean as non-blocking unresolved items. Backpressure emission requires both len(F)==nf and wclean(start,c). Abort emission requires the absence of stale bytes, len(F)<=nf and wclean(abort_cycle,c). The asynchronous-reset separation failure is raised before do_reset snapshots nf, and wclean now covers that reset row. negative/held_software_reset_wrong_select and negative/async_reset_stale_write likewise emit no events.",
+      "impact": "The prior false-positive event qualification is fixed for all tested window placements."
+    },
+    {
+      "status": "info",
+      "category": "event_window_policy",
+      "evidence": "negative/spurious_idle_clock (failure at cycle 101) still emits a backpressure_then_recovery event for window [24,91], while the trace verdict is dut_violation. This matches the P20 inclusive-window rule.",
+      "impact": "The behaviour is acceptable as documented. Downstream qualification must still record the trace-level verdict alongside each event, and must not report the event as coming from a clean trace."
+    },
+    {
+      "status": "resolved",
+      "category": "property_code_consistency",
+      "evidence": "P10 now states core-cycle lower bounds with no tolerance. A configuration-change gap in [max, old+new) is blocking unresolved, which matches finalize(). Trail/lead attribution by CSID bit (st['le'][ab], first edge with the new CSID bit low) matches the SCOPE text. The 16/lanes edge requirement is declared as an uncited MODELLING ASSUMPTION in SCOPE and P15. The single-cycle sw_reset exemption and the active/last-flag exclusions are declared in SCOPE and P20.",
+      "impact": "The property text now matches executable scope. The remaining assumptions are explicit rather than hidden."
+    },
+    {
+      "status": "pass",
+      "category": "positive_controls",
+      "evidence": "All 38 author self-tests pass. The independent one_byte_write reference returns scoped_pass, including the same-edge accept+wr case. Calibration tx/rx/tx_rx recovery, software and asynchronous abort_restart, and csid_switch return scoped_pass with the expected events. All 7 truncated prefixes yield 0 false completed events and report pending items only. invalid_driver/dropped_pending_valid is classified input_or_scope_invalid, so input-assumption precedence over the DUT failure works.",
+      "impact": "Positive and incomplete-trace handling is adequate for the scoped families."
+    },
+    {
+      "status": "pass",
+      "category": "negative_control_accounting",
+      "evidence": "10 of 12 applied controls are detected, each against a baseline_clean=true source case, with 0 confounded. The detected categories match the injected faults: stall_safety, last_flag, missing_byte_at_release, reset_separation, select_exclusive/switch_target, stale_byte, spurious_sck and handshake_without_ready. Self-tests cover short trail, short lead, short gap, no idle, the additive-idle unresolved case and sw stale bytes.",
+      "impact": "Detection credit is limited to clean baselines and is finite fault-detection evidence, not a proof."
+    },
+    {
+      "status": "out_of_scope_retained",
+      "category": "undetected_controls",
+      "evidence": "software_reset_not_idle mutates post.active, which is declared out of scope; its trace still emits an abort event because active is unchecked. last_read_without_transfer mutates a last flag without a handshake, which is also declared out of scope.",
+      "impact": "Both controls stay not_detected in the denominator (10/12). They are not counted as successes, and no widening of scope is demanded."
+    },
+    {
+      "status": "open",
+      "category": "scoped_spec_implementation_discrepancy",
+      "evidence": "In the full public trace, segment 0 (csid0, CSAAT, 2 tx bytes, wr at cycles 8 and 24) completes and csb stays 2. At cycle 49 a same-CSID offer with changed config is accepted (clkdiv 1, idle/lead/trail 2, cpol 1; pre.ready=1). SCK goes 0->1 toward the new CPOL while csb=2. The read segment then runs (rd at cycles 81 and 113, last_read on the final pulse) and csb releases only at cycle 119, with no all-high gap. This contradicts theory_of_operation 241, 246-249 and 323-324. The pinned RTL shows next_state_after_idle_csb_active comparing only command_csid_i != csid_q and omitting config_changed, which the Idle path does check. The driver assigns config fields by named struct member. Verilator and iverilog produce matching row hashes. The checker reports switch_fresh_idle.",
+      "impact": "This is credible evidence of a single spec/implementation discrepancy at the spi_host_fsm boundary: reconfiguration and a CPOL change while CS remains asserted after CSAAT. It is not an upstream-confirmed full-IP defect, because an outer block (core or command queue) might prevent this input sequence."
+    },
+    {
+      "status": "open",
+      "category": "reproducer_provenance_gap",
+      "evidence": "The dual-simulator records report 50 cycles each (100 executed) and rows_sha256 covers 50 rows, ending at cycle 49. The supplied full_public_switch_trace has 200 rows (0-199). The cross-simulator agreement claim therefore covers only the trigger edge, not the subsequent no-gap/release behaviour. legacy_checker_scope_verdict is input_or_scope_invalid, which comes from the old prior-deselection restriction.",
+      "impact": "The trigger is cross-validated. Rows 50-199 need a hashed, dual-simulator rerun before they are cited as reproduced evidence."
+    },
+    {
+      "status": "unresolved",
+      "category": "remaining_scope_limits",
+      "evidence": "Open items: sw_reset coincident with stall (blocking unresolved); enable semantics unused; dummy segments untracked; liveness never failed; general CSN timing outside switches unchecked; serial bit and phase exactness unchecked; the 16/lanes edge assumption is uncited; constrained_transaction_switch is qualified only for kind csid_change (no config_change event exists).",
+      "impact": "These limits are acceptable for scoped offline event qualification. Event claims must exclude the stall+reset combination and the config_change switch kind."
+    },
+    {
+      "status": "info",
+      "category": "formal_readiness",
+      "evidence": "The packet contains no source-target bindings, formal properties, full-IP interface assumptions or B/C outcomes.",
+      "impact": "The checker is adequate for offline qualification of scoped events (backpressure tx/rx, abort sw/async, csid switch). It is not ready for formal A/B/C."
+    },
+    {
+      "status": "info",
+      "category": "documentation_mismatch",
+      "evidence": "LEN is listed as 8 bits in theory_of_operation 132, versus 20 bits in registers.md and the public interface. The mismatch is disclosed.",
+      "impact": "No action is needed beyond retaining the disclosure."
+    }
+  ],
+  "ready_to_freeze": true,
+  "required_followup": [
+    "Freeze only the scoped offline event checker (checker sha fa4d2c25...). Report the 10/12 detection count with the two out-of-scope controls retained as not detected.",
+    "Report each emitted event together with its trace-level verdict; events from dut_violation traces must not be described as clean-trace evidence.",
+    "Do not qualify the constrained_transaction_switch config_change kind, any stall+sw_reset event, or dummy-segment switches.",
+    "Rerun the configuration-switch reproducer over all 200 rows on both simulators and publish matching hashes covering rows 50-199.",
+    "Before claiming an upstream defect, review full-IP interface assumptions (spi_host_core and command queue gating of CSAAT plus config-change commands) and/or prove a formal property: no CPOL or config change while any CSB is asserted.",
+    "Supply source-target bindings and formal property mappings before any A/B/C readiness claim.",
+    "Keep the 16/lanes edge assumption, sw_reset-over-stall precedence and enable semantics marked unresolved until RTL or spec citation is available."
+  ]
+}

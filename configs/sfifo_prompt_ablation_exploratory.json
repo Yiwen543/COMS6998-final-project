@@ -1,0 +1,22 @@
+{
+  "purpose": "Exploratory prompt-load ablation on pinned depth-16 FIFO stress variant; do not pool with frozen 2026-10-30 A/B/P/C pilot",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "low",
+  "max_output_tokens": 8192,
+  "timeout_seconds": 90,
+  "max_retries": 1,
+  "repetitions": 3,
+  "rounds": 6,
+  "max_new_cycles": 8,
+  "max_input_tokens_conservative_byte_cap": 100000,
+  "placebo_tolerance_tokens": 2,
+  "arms": ["B_full", "B_compact", "P_compact", "C_compact"],
+  "primary_target": {
+    "counter_type": "branch",
+    "outcome": "if",
+    "source_lines": [91, 161, 96, 129, 179],
+    "required_covered": 5,
+    "denominator_policy": "retain every original DUT source counter; target subset never replaces denominator"
+  },
+  "feedback_policy": "B_full retains the original raw list. B_compact losslessly packs the exact same raw points. C_compact is B_compact plus source-mapped nontrivial egg/Z3 groups. P_compact is B_compact plus provider-token-matched neutral filler."
+}

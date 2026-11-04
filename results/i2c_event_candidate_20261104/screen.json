@@ -1,0 +1,3265 @@
+{
+  "status": "not_qualified_for_B",
+  "checker_controls_pass": true,
+  "checker_gates": {
+    "positive_controls_clean": true,
+    "selftests_pass": true,
+    "byte_and_reset_controls_detected": true,
+    "event_fault_and_truncation_controls": true,
+    "no_extension_no_event": true,
+    "premature_timeout_stop_rejected": true,
+    "missing_nak_status_not_passed": true,
+    "review_accepted_scoped_offline": true,
+    "event_stretch_recovery": true,
+    "event_nak_restart": true,
+    "event_nak_timeout_recovery": true,
+    "environment_valid": true,
+    "simulator_agreement": true,
+    "calibration_within_budget": true
+  },
+  "event_witnesses": {
+    "stretch_recovery": [
+      {
+        "family": "stretch_recovery",
+        "kind": "success",
+        "start_cycle": 26,
+        "end_cycle": 157,
+        "evidence": "SCL extended by target while scl_pin=1, released, clean byte, STOP"
+      }
+    ],
+    "nak_restart": [
+      {
+        "family": "nak_restart",
+        "kind": "success",
+        "start_cycle": 122,
+        "end_cycle": 289,
+        "evidence": "unexpected NACK, SCL held, clear, repeated START, clean byte, STOP"
+      }
+    ],
+    "nak_timeout_recovery": [
+      {
+        "family": "nak_timeout_recovery",
+        "kind": "success",
+        "start_cycle": 122,
+        "end_cycle": 324,
+        "evidence": "unexpected NACK, halt, timeout STOP+release, clear, START, clean byte, STOP"
+      }
+    ]
+  },
+  "source_equivalence_groups": [
+    {
+      "eclass": 7,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t3",
+        "t165"
+      ],
+      "source_lines": [
+        127,
+        673
+      ],
+      "nontrivial": true,
+      "members": [
+        {
+          "target_id": "t3",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 127,
+            "column": 21,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "127"
+          },
+          "hits": {
+            "nak_timeout": 24,
+            "nak_restart": 24,
+            "stretch": 12,
+            "seed": 0,
+            "no_extension": 12,
+            "write": 12
+          }
+        },
+        {
+          "target_id": "t165",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 673,
+            "column": 18,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "673-676"
+          },
+          "hits": {
+            "nak_timeout": 24,
+            "nak_restart": 24,
+            "stretch": 12,
+            "seed": 0,
+            "no_extension": 12,
+            "write": 12
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t3",
+        "t165"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 12,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t4",
+        "t168"
+      ],
+      "source_lines": [
+        128,
+        681
+      ],
+      "nontrivial": true,
+      "members": [
+        {
+          "target_id": "t4",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 128,
+            "column": 21,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "128"
+          },
+          "hits": {
+            "nak_timeout": 24,
+            "nak_restart": 24,
+            "stretch": 12,
+            "seed": 0,
+            "no_extension": 12,
+            "write": 12
+          }
+        },
+        {
+          "target_id": "t168",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 681,
+            "column": 9,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "681-684"
+          },
+          "hits": {
+            "nak_timeout": 24,
+            "nak_restart": 24,
+            "stretch": 12,
+            "seed": 0,
+            "no_extension": 12,
+            "write": 12
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t4",
+        "t168"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 58,
+      "event_context": [
+        "PosEdge:clk_i",
+        "NegEdge:rst_ni"
+      ],
+      "member_ids": [
+        "t14",
+        "t16",
+        "t20",
+        "t26",
+        "t32",
+        "t38",
+        "t48",
+        "t54",
+        "t56",
+        "t64",
+        "t72",
+        "t266"
+      ],
+      "source_lines": [
+        148,
+        161,
+        188,
+        204,
+        223,
+        236,
+        254,
+        267,
+        286,
+        298,
+        310,
+        963
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t14",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 148,
+            "column": 5,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "148-149"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        },
+        {
+          "target_id": "t16",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 161,
+            "column": 5,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "161-162"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        },
+        {
+          "target_id": "t20",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 188,
+            "column": 5,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "188-189"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        },
+        {
+          "target_id": "t26",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 204,
+            "column": 5,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "204-206"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        },
+        {
+          "target_id": "t32",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 223,
+            "column": 5,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "223-224"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        },
+        {
+          "target_id": "t38",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 236,
+            "column": 5,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "236-237"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        },
+        {
+          "target_id": "t48",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 254,
+            "column": 5,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "254-255"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        },
+        {
+          "target_id": "t54",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 267,
+            "column": 5,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "267-269"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        },
+        {
+          "target_id": "t56",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 286,
+            "column": 5,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "286-287"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        },
+        {
+          "target_id": "t64",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 298,
+            "column": 5,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "298-299"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        },
+        {
+          "target_id": "t72",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 310,
+            "column": 5,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "310-311"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        },
+        {
+          "target_id": "t266",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 963,
+            "column": 5,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "963-964"
+          },
+          "hits": {
+            "nak_timeout": 3,
+            "nak_restart": 3,
+            "stretch": 3,
+            "seed": 3,
+            "no_extension": 3,
+            "write": 3
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 59,
+      "event_context": [
+        "PosEdge:clk_i",
+        "NegEdge:rst_ni"
+      ],
+      "member_ids": [
+        "t15",
+        "t17",
+        "t21",
+        "t27",
+        "t33",
+        "t39",
+        "t49",
+        "t55",
+        "t57",
+        "t65",
+        "t73",
+        "t267"
+      ],
+      "source_lines": [
+        148,
+        161,
+        188,
+        204,
+        223,
+        236,
+        254,
+        267,
+        286,
+        298,
+        310,
+        963
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t15",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 148,
+            "column": 6,
+            "type": "branch",
+            "outcome": "else",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "150-151"
+          },
+          "hits": {
+            "nak_timeout": 390,
+            "nak_restart": 390,
+            "stretch": 390,
+            "seed": 6,
+            "no_extension": 198,
+            "write": 198
+          }
+        },
+        {
+          "target_id": "t21",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 188,
+            "column": 6,
+            "type": "branch",
+            "outcome": "else",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "190"
+          },
+          "hits": {
+            "nak_timeout": 390,
+            "nak_restart": 390,
+            "stretch": 390,
+            "seed": 6,
+            "no_extension": 198,
+            "write": 198
+          }
+        },
+        {
+          "target_id": "t55",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 267,
+            "column": 6,
+            "type": "branch",
+            "outcome": "else",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "270-272"
+          },
+          "hits": {
+            "nak_timeout": 390,
+            "nak_restart": 390,
+            "stretch": 390,
+            "seed": 6,
+            "no_extension": 198,
+            "write": 198
+          }
+        },
+        {
+          "target_id": "t73",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 310,
+            "column": 6,
+            "type": "branch",
+            "outcome": "else",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "312-313"
+          },
+          "hits": {
+            "nak_timeout": 390,
+            "nak_restart": 390,
+            "stretch": 390,
+            "seed": 6,
+            "no_extension": 198,
+            "write": 198
+          }
+        },
+        {
+          "target_id": "t267",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 963,
+            "column": 6,
+            "type": "branch",
+            "outcome": "else",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "965-966"
+          },
+          "hits": {
+            "nak_timeout": 390,
+            "nak_restart": 390,
+            "stretch": 390,
+            "seed": 6,
+            "no_extension": 198,
+            "write": 198
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 140,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t74",
+        "t145"
+      ],
+      "source_lines": [
+        367,
+        619
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t74",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 367,
+            "column": 12,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "367-368"
+          },
+          "hits": {
+            "nak_timeout": 1442,
+            "nak_restart": 1562,
+            "stretch": 2870,
+            "seed": 98,
+            "no_extension": 770,
+            "write": 770
+          }
+        },
+        {
+          "target_id": "t145",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 619,
+            "column": 12,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "619"
+          },
+          "hits": {
+            "nak_timeout": 1442,
+            "nak_restart": 1562,
+            "stretch": 2870,
+            "seed": 98,
+            "no_extension": 770,
+            "write": 770
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 146,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t77",
+        "t158"
+      ],
+      "source_lines": [
+        383,
+        659
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t77",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 383,
+            "column": 18,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "383-387,389"
+          },
+          "hits": {
+            "nak_timeout": 120,
+            "nak_restart": 120,
+            "stretch": 60,
+            "seed": 0,
+            "no_extension": 60,
+            "write": 60
+          }
+        },
+        {
+          "target_id": "t158",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 659,
+            "column": 18,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "659"
+          },
+          "hits": {
+            "nak_timeout": 120,
+            "nak_restart": 120,
+            "stretch": 60,
+            "seed": 0,
+            "no_extension": 60,
+            "write": 60
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t77",
+        "t158"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 150,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t78",
+        "t163"
+      ],
+      "source_lines": [
+        390,
+        670
+      ],
+      "nontrivial": true,
+      "members": [
+        {
+          "target_id": "t78",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 390,
+            "column": 9,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "390,394"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t163",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 670,
+            "column": 18,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "670,672"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 160,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t82",
+        "t167"
+      ],
+      "source_lines": [
+        401,
+        680
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t82",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 401,
+            "column": 17,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "401-405"
+          },
+          "hits": {
+            "nak_timeout": 120,
+            "nak_restart": 120,
+            "stretch": 60,
+            "seed": 0,
+            "no_extension": 60,
+            "write": 60
+          }
+        },
+        {
+          "target_id": "t167",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 680,
+            "column": 17,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "680"
+          },
+          "hits": {
+            "nak_timeout": 120,
+            "nak_restart": 120,
+            "stretch": 60,
+            "seed": 0,
+            "no_extension": 60,
+            "write": 60
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t82",
+        "t167"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 168,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t85",
+        "t170"
+      ],
+      "source_lines": [
+        409,
+        688
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t85",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 409,
+            "column": 18,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "409-413"
+          },
+          "hits": {
+            "nak_timeout": 48,
+            "nak_restart": 48,
+            "stretch": 24,
+            "seed": 0,
+            "no_extension": 24,
+            "write": 24
+          }
+        },
+        {
+          "target_id": "t170",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 688,
+            "column": 18,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "688"
+          },
+          "hits": {
+            "nak_timeout": 48,
+            "nak_restart": 48,
+            "stretch": 24,
+            "seed": 0,
+            "no_extension": 24,
+            "write": 24
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t85",
+        "t170"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 172,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t86",
+        "t173"
+      ],
+      "source_lines": [
+        415,
+        696
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t86",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 415,
+            "column": 16,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "415-416,422-423"
+          },
+          "hits": {
+            "nak_timeout": 768,
+            "nak_restart": 816,
+            "stretch": 384,
+            "seed": 0,
+            "no_extension": 384,
+            "write": 384
+          }
+        },
+        {
+          "target_id": "t173",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 696,
+            "column": 16,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "696"
+          },
+          "hits": {
+            "nak_timeout": 768,
+            "nak_restart": 816,
+            "stretch": 384,
+            "seed": 0,
+            "no_extension": 384,
+            "write": 384
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t86",
+        "t173"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 179,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t89",
+        "t178"
+      ],
+      "source_lines": [
+        426,
+        709
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t89",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 426,
+            "column": 18,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "426-431"
+          },
+          "hits": {
+            "nak_timeout": 960,
+            "nak_restart": 960,
+            "stretch": 684,
+            "seed": 0,
+            "no_extension": 480,
+            "write": 480
+          }
+        },
+        {
+          "target_id": "t178",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 709,
+            "column": 18,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "709"
+          },
+          "hits": {
+            "nak_timeout": 960,
+            "nak_restart": 960,
+            "stretch": 684,
+            "seed": 0,
+            "no_extension": 480,
+            "write": 480
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t89",
+        "t178"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 185,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t92",
+        "t181"
+      ],
+      "source_lines": [
+        433,
+        714
+      ],
+      "nontrivial": true,
+      "members": [
+        {
+          "target_id": "t92",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 433,
+            "column": 9,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "433,435"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t181",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 714,
+            "column": 18,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "714,716"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 191,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t94",
+        "t185"
+      ],
+      "source_lines": [
+        439,
+        726
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t94",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 439,
+            "column": 15,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "439-443"
+          },
+          "hits": {
+            "nak_timeout": 576,
+            "nak_restart": 576,
+            "stretch": 288,
+            "seed": 0,
+            "no_extension": 288,
+            "write": 288
+          }
+        },
+        {
+          "target_id": "t185",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 726,
+            "column": 15,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "726"
+          },
+          "hits": {
+            "nak_timeout": 576,
+            "nak_restart": 576,
+            "stretch": 288,
+            "seed": 0,
+            "no_extension": 288,
+            "write": 288
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t94",
+        "t185"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 195,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t95",
+        "t190"
+      ],
+      "source_lines": [
+        446,
+        741
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t95",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 446,
+            "column": 19,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "446-449"
+          },
+          "hits": {
+            "nak_timeout": 96,
+            "nak_restart": 96,
+            "stretch": 48,
+            "seed": 0,
+            "no_extension": 48,
+            "write": 48
+          }
+        },
+        {
+          "target_id": "t190",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 741,
+            "column": 19,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "741"
+          },
+          "hits": {
+            "nak_timeout": 96,
+            "nak_restart": 96,
+            "stretch": 48,
+            "seed": 0,
+            "no_extension": 48,
+            "write": 48
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t95",
+        "t190"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 199,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t96",
+        "t193"
+      ],
+      "source_lines": [
+        452,
+        749
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t96",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 452,
+            "column": 21,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "452-455,457"
+          },
+          "hits": {
+            "nak_timeout": 120,
+            "nak_restart": 120,
+            "stretch": 60,
+            "seed": 0,
+            "no_extension": 60,
+            "write": 60
+          }
+        },
+        {
+          "target_id": "t193",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 749,
+            "column": 21,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "749"
+          },
+          "hits": {
+            "nak_timeout": 120,
+            "nak_restart": 120,
+            "stretch": 60,
+            "seed": 0,
+            "no_extension": 60,
+            "write": 60
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t96",
+        "t193"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 212,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t101",
+        "t196"
+      ],
+      "source_lines": [
+        459,
+        754
+      ],
+      "nontrivial": true,
+      "members": [
+        {
+          "target_id": "t101",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 459,
+            "column": 9,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "459,461"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t196",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 754,
+            "column": 18,
+            "type": "line",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "754,756"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 217,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t103",
+        "t200"
+      ],
+      "source_lines": [
+        465,
+        766
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t103",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 465,
+            "column": 18,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "465-468"
+          },
+          "hits": {
+            "nak_timeout": 72,
+            "nak_restart": 72,
+            "stretch": 36,
+            "seed": 0,
+            "no_extension": 36,
+            "write": 36
+          }
+        },
+        {
+          "target_id": "t200",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 766,
+            "column": 18,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "766"
+          },
+          "hits": {
+            "nak_timeout": 72,
+            "nak_restart": 72,
+            "stretch": 36,
+            "seed": 0,
+            "no_extension": 36,
+            "write": 36
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t103",
+        "t200"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 221,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t104",
+        "t205"
+      ],
+      "source_lines": [
+        471,
+        780
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t104",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 471,
+            "column": 20,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "471-474"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t205",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 780,
+            "column": 20,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "780"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 225,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t105",
+        "t208"
+      ],
+      "source_lines": [
+        477,
+        788
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t105",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 477,
+            "column": 22,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "477-480"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t208",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 788,
+            "column": 22,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "788"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 228,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t108",
+        "t211"
+      ],
+      "source_lines": [
+        482,
+        793
+      ],
+      "nontrivial": true,
+      "members": [
+        {
+          "target_id": "t108",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 482,
+            "column": 9,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "482,484"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t211",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 793,
+            "column": 18,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "793,795"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 233,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t110",
+        "t215"
+      ],
+      "source_lines": [
+        488,
+        804
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t110",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 488,
+            "column": 19,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "488-490"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t215",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 804,
+            "column": 19,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "804"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 236,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t111",
+        "t218"
+      ],
+      "source_lines": [
+        491,
+        808
+      ],
+      "nontrivial": true,
+      "members": [
+        {
+          "target_id": "t111",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 491,
+            "column": 9,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "491-493"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t218",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 808,
+            "column": 11,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "808-811"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 242,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t113",
+        "t220"
+      ],
+      "source_lines": [
+        497,
+        820
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t113",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 497,
+            "column": 23,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "497-500"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t220",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 820,
+            "column": 23,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "820"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 254,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t118",
+        "t223"
+      ],
+      "source_lines": [
+        509,
+        828
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t118",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 509,
+            "column": 25,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "509-510,514-516"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t223",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 828,
+            "column": 25,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "828"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 261,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t125",
+        "t226"
+      ],
+      "source_lines": [
+        518,
+        833
+      ],
+      "nontrivial": true,
+      "members": [
+        {
+          "target_id": "t125",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 518,
+            "column": 9,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "518,520"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t226",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 833,
+            "column": 18,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "833,835"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 266,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t127",
+        "t230"
+      ],
+      "source_lines": [
+        524,
+        843
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t127",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 524,
+            "column": 22,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "524-525,529-530"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t230",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 843,
+            "column": 22,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "843"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 274,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t132",
+        "t237"
+      ],
+      "source_lines": [
+        533,
+        864
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t132",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 533,
+            "column": 17,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "533-537"
+          },
+          "hits": {
+            "nak_timeout": 120,
+            "nak_restart": 60,
+            "stretch": 60,
+            "seed": 0,
+            "no_extension": 60,
+            "write": 60
+          }
+        },
+        {
+          "target_id": "t237",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 864,
+            "column": 17,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "864"
+          },
+          "hits": {
+            "nak_timeout": 120,
+            "nak_restart": 60,
+            "stretch": 60,
+            "seed": 0,
+            "no_extension": 60,
+            "write": 60
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t132",
+        "t237"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 278,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t133",
+        "t240"
+      ],
+      "source_lines": [
+        540,
+        872
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t133",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 540,
+            "column": 17,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "540-545"
+          },
+          "hits": {
+            "nak_timeout": 120,
+            "nak_restart": 60,
+            "stretch": 60,
+            "seed": 0,
+            "no_extension": 60,
+            "write": 60
+          }
+        },
+        {
+          "target_id": "t240",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 872,
+            "column": 17,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "872"
+          },
+          "hits": {
+            "nak_timeout": 120,
+            "nak_restart": 60,
+            "stretch": 60,
+            "seed": 0,
+            "no_extension": 60,
+            "write": 60
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t133",
+        "t240"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 280,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t134",
+        "t243"
+      ],
+      "source_lines": [
+        546,
+        877
+      ],
+      "nontrivial": true,
+      "members": [
+        {
+          "target_id": "t134",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 546,
+            "column": 9,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "546,548"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t243",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 877,
+            "column": 18,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "877,879"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 286,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t136",
+        "t247"
+      ],
+      "source_lines": [
+        552,
+        885
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t136",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 552,
+            "column": 16,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "552-556"
+          },
+          "hits": {
+            "nak_timeout": 96,
+            "nak_restart": 48,
+            "stretch": 48,
+            "seed": 0,
+            "no_extension": 48,
+            "write": 48
+          }
+        },
+        {
+          "target_id": "t247",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 885,
+            "column": 16,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "885"
+          },
+          "hits": {
+            "nak_timeout": 96,
+            "nak_restart": 48,
+            "stretch": 48,
+            "seed": 0,
+            "no_extension": 48,
+            "write": 48
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t136",
+        "t247"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 289,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t137",
+        "t248"
+      ],
+      "source_lines": [
+        557,
+        886
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t137",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 557,
+            "column": 9,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "557,559"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        },
+        {
+          "target_id": "t248",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 886,
+            "column": 9,
+            "type": "line",
+            "outcome": "elsif",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "886,888-889"
+          },
+          "hits": {
+            "nak_timeout": 0,
+            "nak_restart": 0,
+            "stretch": 0,
+            "seed": 0,
+            "no_extension": 0,
+            "write": 0
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 291,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t138",
+        "t249"
+      ],
+      "source_lines": [
+        557,
+        886
+      ],
+      "nontrivial": false,
+      "members": [],
+      "reachable_seed_zero_members": [],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": false,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 292,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t139",
+        "t250"
+      ],
+      "source_lines": [
+        560,
+        890
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t139",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 560,
+            "column": 18,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "560-561"
+          },
+          "hits": {
+            "nak_timeout": 24,
+            "nak_restart": 12,
+            "stretch": 12,
+            "seed": 0,
+            "no_extension": 12,
+            "write": 12
+          }
+        },
+        {
+          "target_id": "t250",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 890,
+            "column": 18,
+            "type": "branch",
+            "outcome": "if",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "890-891"
+          },
+          "hits": {
+            "nak_timeout": 24,
+            "nak_restart": 12,
+            "stretch": 12,
+            "seed": 0,
+            "no_extension": 12,
+            "write": 12
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t139",
+        "t250"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 293,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t140",
+        "t251"
+      ],
+      "source_lines": [
+        560,
+        890
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t140",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 560,
+            "column": 19,
+            "type": "branch",
+            "outcome": "else",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": null
+          },
+          "hits": {
+            "nak_timeout": 72,
+            "nak_restart": 36,
+            "stretch": 36,
+            "seed": 0,
+            "no_extension": 36,
+            "write": 36
+          }
+        },
+        {
+          "target_id": "t251",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 890,
+            "column": 19,
+            "type": "branch",
+            "outcome": "else",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": null
+          },
+          "hits": {
+            "nak_timeout": 72,
+            "nak_restart": 36,
+            "stretch": 36,
+            "seed": 0,
+            "no_extension": 36,
+            "write": 36
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t140",
+        "t251"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 297,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t141",
+        "t254"
+      ],
+      "source_lines": [
+        565,
+        905
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t141",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 565,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "565-566,572"
+          },
+          "hits": {
+            "nak_timeout": 24,
+            "nak_restart": 24,
+            "stretch": 12,
+            "seed": 0,
+            "no_extension": 12,
+            "write": 12
+          }
+        },
+        {
+          "target_id": "t254",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 905,
+            "column": 14,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "905"
+          },
+          "hits": {
+            "nak_timeout": 24,
+            "nak_restart": 24,
+            "stretch": 12,
+            "seed": 0,
+            "no_extension": 12,
+            "write": 12
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t141",
+        "t254"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    },
+    {
+      "eclass": 301,
+      "event_context": [
+        "combinational"
+      ],
+      "member_ids": [
+        "t142",
+        "t259"
+      ],
+      "source_lines": [
+        575,
+        923
+      ],
+      "nontrivial": false,
+      "members": [
+        {
+          "target_id": "t142",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 575,
+            "column": 18,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "575-576,579"
+          },
+          "hits": {
+            "nak_timeout": 24,
+            "nak_restart": 24,
+            "stretch": 12,
+            "seed": 0,
+            "no_extension": 12,
+            "write": 12
+          }
+        },
+        {
+          "target_id": "t259",
+          "counter": {
+            "source": "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv",
+            "line": 923,
+            "column": 18,
+            "type": "line",
+            "outcome": "case",
+            "hierarchy": "tb_i2c_fixed.dut",
+            "span": "923"
+          },
+          "hits": {
+            "nak_timeout": 24,
+            "nak_restart": 24,
+            "stretch": 12,
+            "seed": 0,
+            "no_extension": 12,
+            "write": 12
+          }
+        }
+      ],
+      "reachable_seed_zero_members": [
+        "t142",
+        "t259"
+      ],
+      "absent_in_ordinary_write_members": [],
+      "reachable_group": true,
+      "late_specific_group": false
+    }
+  ],
+  "reachable_groups": 18,
+  "late_specific_groups": 0,
+  "late_nontrivial_groups": 0,
+  "late_definition": "At least two separate mapped counters zero in shared seed AND ordinary one-byte write, positive in multistep calibration. Operational relevance check before any B/C; not an unreachability proof.",
+  "decision_basis": "Requested distinct multistep targets are not provided by repeated ordinary START predicates. Do not launch B just because there are nine proved pairs or larger source code. No budget adjustment.",
+  "source_event_binding_complete": false,
+  "event_to_equivalence_group_bindings": [],
+  "budget": {
+    "repetitions": 3,
+    "rounds": 6,
+    "max_new_cycles": 64,
+    "seed_cycles": 8
+  },
+  "coverage": {
+    "nak_timeout": {
+      "branch": {
+        "covered": 77,
+        "total": 116,
+        "percent": 66.379
+      },
+      "expr": {
+        "covered": 119,
+        "total": 209,
+        "percent": 56.938
+      },
+      "line": {
+        "covered": 79,
+        "total": 132,
+        "percent": 59.848
+      },
+      "toggle": {
+        "covered": 203,
+        "total": 820,
+        "percent": 24.756
+      }
+    },
+    "nak_restart": {
+      "branch": {
+        "covered": 75,
+        "total": 116,
+        "percent": 64.655
+      },
+      "expr": {
+        "covered": 120,
+        "total": 209,
+        "percent": 57.416
+      },
+      "line": {
+        "covered": 80,
+        "total": 132,
+        "percent": 60.606
+      },
+      "toggle": {
+        "covered": 185,
+        "total": 820,
+        "percent": 22.561
+      }
+    },
+    "stretch": {
+      "branch": {
+        "covered": 68,
+        "total": 116,
+        "percent": 58.621
+      },
+      "expr": {
+        "covered": 111,
+        "total": 209,
+        "percent": 53.11
+      },
+      "line": {
+        "covered": 79,
+        "total": 132,
+        "percent": 59.848
+      },
+      "toggle": {
+        "covered": 181,
+        "total": 820,
+        "percent": 22.073
+      }
+    },
+    "seed": {
+      "branch": {
+        "covered": 20,
+        "total": 116,
+        "percent": 17.241
+      },
+      "expr": {
+        "covered": 45,
+        "total": 209,
+        "percent": 21.531
+      },
+      "line": {
+        "covered": 31,
+        "total": 132,
+        "percent": 23.485
+      },
+      "toggle": {
+        "covered": 76,
+        "total": 820,
+        "percent": 9.268
+      }
+    },
+    "no_extension": {
+      "branch": {
+        "covered": 68,
+        "total": 116,
+        "percent": 58.621
+      },
+      "expr": {
+        "covered": 110,
+        "total": 209,
+        "percent": 52.632
+      },
+      "line": {
+        "covered": 77,
+        "total": 132,
+        "percent": 58.333
+      },
+      "toggle": {
+        "covered": 175,
+        "total": 820,
+        "percent": 21.341
+      }
+    },
+    "write": {
+      "branch": {
+        "covered": 68,
+        "total": 116,
+        "percent": 58.621
+      },
+      "expr": {
+        "covered": 110,
+        "total": 209,
+        "percent": 52.632
+      },
+      "line": {
+        "covered": 77,
+        "total": 132,
+        "percent": 58.333
+      },
+      "toggle": {
+        "covered": 175,
+        "total": 820,
+        "percent": 21.341
+      }
+    }
+  },
+  "unmapped_targets": 50,
+  "raw_denominator": 1277,
+  "compile_attempts": [
+    {
+      "folder": "driver-v1",
+      "seconds": 9.527352374978364
+    },
+    {
+      "folder": "driver-icarus-v1",
+      "seconds": 0.0332055832259357
+    },
+    {
+      "folder": "driver-v2",
+      "seconds": 8.963521500118077
+    },
+    {
+      "folder": "driver-icarus-v2",
+      "seconds": 0.02230249997228384
+    },
+    {
+      "folder": "checked-smoke",
+      "seconds": 9.21689849998802
+    }
+  ],
+  "simulations": [
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-v1/nak_restart.json",
+      "steps": 392,
+      "seconds": 0.010977874975651503
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-v1/nak_timeout.json",
+      "steps": 392,
+      "seconds": 0.012666292022913694
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-v1/seed.json",
+      "steps": 8,
+      "seconds": 0.2703268751502037
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-v1/stretch.json",
+      "steps": 392,
+      "seconds": 0.01453037466853857
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-v1/write.json",
+      "steps": 200,
+      "seconds": 0.012461124919354916
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-icarus-v1/nak_restart.json",
+      "steps": 392,
+      "seconds": 0.01581629179418087
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-icarus-v1/nak_timeout.json",
+      "steps": 392,
+      "seconds": 0.01665591634809971
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-icarus-v1/seed.json",
+      "steps": 8,
+      "seconds": 0.008990250062197447
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-icarus-v1/stretch.json",
+      "steps": 392,
+      "seconds": 0.02176275011152029
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-icarus-v1/write.json",
+      "steps": 200,
+      "seconds": 0.011892708949744701
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-v2/nak_restart.json",
+      "steps": 392,
+      "seconds": 0.012663834262639284
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-v2/nak_timeout.json",
+      "steps": 392,
+      "seconds": 0.01201612502336502
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-v2/no_extension.json",
+      "steps": 200,
+      "seconds": 0.012862249743193388
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-v2/seed.json",
+      "steps": 8,
+      "seconds": 0.19516308279708028
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-v2/stretch.json",
+      "steps": 392,
+      "seconds": 0.015231290832161903
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-v2/write.json",
+      "steps": 200,
+      "seconds": 0.011595374904572964
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-icarus-v2/nak_restart.json",
+      "steps": 392,
+      "seconds": 0.015421417076140642
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-icarus-v2/nak_timeout.json",
+      "steps": 392,
+      "seconds": 0.016370000317692757
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-icarus-v2/no_extension.json",
+      "steps": 200,
+      "seconds": 0.018539583776146173
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-icarus-v2/seed.json",
+      "steps": 8,
+      "seconds": 0.008377833291888237
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-icarus-v2/stretch.json",
+      "steps": 392,
+      "seconds": 0.019265542272478342
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/driver-icarus-v2/write.json",
+      "steps": 200,
+      "seconds": 0.01056295819580555
+    },
+    {
+      "file": "results/i2c_event_candidate_20261104/checked-smoke/batch.json",
+      "steps": 200,
+      "seconds": 0.33143699960783124
+    }
+  ],
+  "total_executed_cycles": 6136,
+  "claude_calls": [
+    {
+      "path": "results/i2c_event_candidate_20261104/claude-checker-v1/author/metadata.json",
+      "role": "I2C specification checker author",
+      "requested_model": "claude-opus-5-5",
+      "status": "complete",
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 10974,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 5841,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 10974
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 4,
+            "output_tokens": 5841,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 10974,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 10974,
+              "ephemeral_1h_input_tokens": 0
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 4,
+          "outputTokens": 5841,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 10974,
+          "webSearchRequests": 0,
+          "costUSD": 0.171706,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 0,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "total_cost_usd": 0.171706,
+      "wall_seconds": 47.592672707978636
+    },
+    {
+      "path": "results/i2c_event_candidate_20261104/claude-checker-v1/review/metadata.json",
+      "role": "I2C independent checker reviewer",
+      "requested_model": "claude-opus-5-5",
+      "status": "complete",
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 116367,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 2918,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 116367
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 4,
+            "output_tokens": 2918,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 116367,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 116367,
+              "ephemeral_1h_input_tokens": 0
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 4,
+          "outputTokens": 2918,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 116367,
+          "webSearchRequests": 0,
+          "costUSD": 0.640211,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 0,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "total_cost_usd": 0.640211,
+      "wall_seconds": 32.42321729194373
+    },
+    {
+      "path": "results/i2c_event_candidate_20261104/claude-checker-v2/author/metadata.json",
+      "role": "I2C specification checker author",
+      "requested_model": "claude-opus-5-5",
+      "status": "complete",
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 17184,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 22897,
+        "output_tokens_details": {
+          "thinking_tokens": 14810
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 17184
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 4,
+            "output_tokens": 22897,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 17184,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 17184,
+              "ephemeral_1h_input_tokens": 0
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 4,
+          "outputTokens": 22897,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 17184,
+          "webSearchRequests": 0,
+          "costUSD": 0.543876,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 14810,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "total_cost_usd": 0.543876,
+      "wall_seconds": 202.73468695906922
+    },
+    {
+      "path": "results/i2c_event_candidate_20261104/claude-checker-v2/review/metadata.json",
+      "role": "I2C independent checker reviewer",
+      "requested_model": "claude-opus-5-5",
+      "status": "complete",
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 123638,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 5169,
+        "output_tokens_details": {
+          "thinking_tokens": 2477
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 123638
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 4,
+            "output_tokens": 5169,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 123638,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 123638,
+              "ephemeral_1h_input_tokens": 0
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 4,
+          "outputTokens": 5169,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 123638,
+          "webSearchRequests": 0,
+          "costUSD": 0.7215860000000001,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 2477,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "total_cost_usd": 0.7215860000000001,
+      "wall_seconds": 57.63381937518716
+    },
+    {
+      "path": "results/i2c_event_candidate_20261104/claude-checker-v3/author/metadata.json",
+      "role": "I2C specification checker author",
+      "requested_model": "claude-opus-5-5",
+      "status": "complete",
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 21448,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 3529,
+        "output_tokens_details": {
+          "thinking_tokens": 1849
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 21448
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 4,
+            "output_tokens": 3529,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 21448,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 21448,
+              "ephemeral_1h_input_tokens": 0
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 4,
+          "outputTokens": 3529,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 21448,
+          "webSearchRequests": 0,
+          "costUSD": 0.177836,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 1849,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "total_cost_usd": 0.177836,
+      "wall_seconds": 34.8975544590503
+    },
+    {
+      "path": "results/i2c_event_candidate_20261104/claude-checker-v3/review/metadata.json",
+      "role": "I2C independent checker reviewer",
+      "requested_model": "claude-opus-5-5",
+      "status": "failed",
+      "usage": {
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 0,
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "",
+        "iterations": [],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": null,
+      "total_cost_usd": 0,
+      "wall_seconds": 1.2892494169063866
+    },
+    {
+      "path": "results/i2c_event_candidate_20261104/claude-checker-v3/review-compact/metadata.json",
+      "role": "I2C independent final read-only reviewer",
+      "requested_model": "claude-opus-5-5",
+      "status": "complete",
+      "usage": {
+        "input_tokens": 4,
+        "cache_creation_input_tokens": 71061,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 3442,
+        "output_tokens_details": {
+          "thinking_tokens": 957
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 71061
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 4,
+            "output_tokens": 3442,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 71061,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 71061,
+              "ephemeral_1h_input_tokens": 0
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 4,
+          "outputTokens": 3442,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 71061,
+          "webSearchRequests": 0,
+          "costUSD": 0.424161,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 957,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "total_cost_usd": 0.424161,
+      "wall_seconds": 35.982143834233284
+    }
+  ],
+  "known_claude_cost_usd": 2.679376,
+  "openai_calls": 0,
+  "B_runs": 0,
+  "C_runs": 0,
+  "A_runs": 0,
+  "placebo_runs": 0,
+  "versions": {
+    "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+    "icarus": "Icarus Verilog version 12.0 (stable) ()",
+    "z3": "Z3 version 5.1.0 - 64 bit",
+    "claude": "2.1.310 (Claude Code)",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+    "yosys": "Yosys 0.70+309 (git sha1 bd3168b1a, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)"
+  },
+  "commit": "c71a3e580646d08fb6496c742b7b42b711179b36",
+  "hashes": {
+    "third_party/opentitan_candidate/hw/ip/i2c/rtl/i2c_controller_fsm.sv": "0da13b6d8185c7bd6c3949f6c28e073292c1682fd1cc10f83457f6285fd16b1a",
+    "examples/heldout_i2c_controller/verif/tb_i2c_fixed.sv": "b50054858e80f3e50d467777c85d4371402875f7733bfec646fa5926b7cdae9b",
+    "scripts/i2c_fixture.py": "074c3c13b137d0909a518a6e2bb00851a090dc87404a48587b8db9cd87e3ee73",
+    "scripts/run_i2c_fixed.py": "ca9bf2596ba17b979e13b19bfaf78fefd05cb8a66d904209245510ca0af98924",
+    "scripts/evaluate_i2c_checker.py": "bf2e8444c7cbad10e581b7d773eade4d5bd3f0eda08f6eeb5359e9b5b0df1bd5",
+    "scripts/independent_i2c_controls.py": "c7e8f3bd57a8a6ad2ed522d19245dc9255cbfd1c154904c880ffacfe6e2ba176",
+    "scripts/i2c_netlist_proof.py": "5331013ec74e4e67b769cefe595e494ea650a8aeaa5b8445907bd44e42669510",
+    "scripts/certify_i2c_guards.py": "e5d3888df637c3712e6d9c78e0dbb14c3c8031be3a04f46d0950fd3e46c9cb39",
+    "configs/i2c_event_screen.json": "2b2b436f21c69e4c243a0334238af0f1c4b6b1a4e22d86a2c5207b5b9f3ab006",
+    "scripts/summarize_i2c_screen.py": "baef81e0e72257b62aa81155b63f77d5e65b07a371bba526975b4ec8b752ca0c",
+    "results/i2c_event_candidate_20261104/claude-checker-v3/candidate/checker.py": "98018ae2accc94df3582a208fbb1317d10f6d8232bf6332646fdb341079eaea7",
+    "results/i2c_event_candidate_20261104/claude-checker-v3/candidate/properties.json": "d5823e2c36bc228e47bdddf1c8e6e65b99987fcc893fa255f3d15f3665a82eab",
+    "results/i2c_event_candidate_20261104/claude-checker-v3/candidate/contract.md": "f7f67a87597935967a24b9586ecdfed563d5bea4be438d6dbd3a5c0e7a53ba12",
+    "results/i2c_event_candidate_20261104/claude-checker-v3/candidate/authorship.json": "a46013239e27de4b07a29eca74198363dd7aef6618d8f11ceae9fe4322cc961d",
+    "results/i2c_event_candidate_20261104/claude-checker-v3/review.json": "a11d7938f60fb440dfeb6b2f30594bbee24bee7d733caa3d9a3d289054f6dc90"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "controls": [
+    {
+      "name": "clock_moves_during_stall",
+      "baseline_clean": false,
+      "result": "confounded_by_baseline_failure",
+      "negative_categories": [
+        "last_flag",
+        "stale_byte",
+        "stall_safety"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "missing_last_write",
+      "baseline_clean": false,
+      "result": "confounded_by_baseline_failure",
+      "negative_categories": [
+        "stale_byte"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "dropped_receive_byte",
+      "baseline_clean": false,
+      "result": "confounded_by_baseline_failure",
+      "negative_categories": [
+        "last_flag",
+        "stale_byte"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "asynchronous_reset_wrong_select",
+      "baseline_clean": false,
+      "result": "confounded_by_baseline_failure",
+      "negative_categories": [
+        "last_flag",
+        "reset_separation",
+        "stale_byte"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "software_reset_not_idle",
+      "baseline_clean": false,
+      "result": "confounded_by_baseline_failure",
+      "negative_categories": [
+        "last_flag",
+        "stale_byte"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "multiple_selects_during_switch",
+      "baseline_clean": false,
+      "result": "confounded_by_baseline_failure",
+      "negative_categories": [
+        "last_flag",
+        "select_exclusive",
+        "stale_byte",
+        "switch_fresh_idle"
+      ],
+      "negative_verdict": "dut_violation"
+    },
+    {
+      "name": "last_read_without_transfer",
+      "baseline_clean": false,
+      "result": "confounded_by_baseline_failure",
+      "negative_categories": [
+        "last_flag",
+        "stale_byte"
+      ],
+      "negative_verdict": "dut_violation"
+    }
+  ],
+  "detected_with_clean_baseline": 0,
+  "applied_controls": 7,
+  "confounded_controls": 7,
+  "independent_legal_reference_passed": false,
+  "author_selftests_passed": true,
+  "author_selftest_count": 18,
+  "truncated_prefixes": {
+    "truncated/tx_recovery": {
+      "false_completed_events": 0,
+      "failures": 1,
+      "verdict": "dut_violation"
+    },
+    "truncated/rx_recovery": {
+      "false_completed_events": 0,
+      "failures": 1,
+      "verdict": "dut_violation"
+    },
+    "truncated/tx_rx_recovery": {
+      "false_completed_events": 0,
+      "failures": 1,
+      "verdict": "dut_violation"
+    },
+    "truncated/software_abort_restart": {
+      "false_completed_events": 0,
+      "failures": 1,
+      "verdict": "dut_violation"
+    },
+    "truncated/asynchronous_abort_restart": {
+      "false_completed_events": 0,
+      "failures": 1,
+      "verdict": "dut_violation"
+    },
+    "truncated/csid_switch": {
+      "false_completed_events": 0,
+      "failures": 1,
+      "verdict": "dut_violation"
+    },
+    "truncated/configuration_switch": {
+      "false_completed_events": 0,
+      "failures": 1,
+      "verdict": "dut_violation"
+    }
+  },
+  "interpretation": "Undetected controls stay in the denominator and require scope review. This is finite fault-detection evidence, not a checker proof."
+}

@@ -5,6 +5,14 @@
 > see [current project status](PROJECT_STATUS.md) for completed pilots and the
 > remaining evaluation boundary.
 
+The current model experiments use a fixed specification-based checker and JSON
+cycle driver: the LLM changes stimulus only. Raw DUT counters and execution
+logs feed B; C adds source-mapped egg groups. Solver witnesses and the starter's
+deterministic search are disabled in these model trials. Model orchestration,
+stateful FIFO trials and A/B/P/C comparisons listed below have since been
+implemented; the [3 November review](project_review_2026-11-03.md) separates
+those completed components from the remaining natural-IP and formal evaluation.
+
 ## Sources and interpretation
 
 Read the user's [shared conversation](https://chatgpt.com/share/6ad2379f-fa20-83ea-9100-8175c13b6986)

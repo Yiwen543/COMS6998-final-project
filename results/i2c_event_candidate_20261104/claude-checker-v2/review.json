@@ -1,0 +1,76 @@
+{
+  "ready_for_offline_gate": true,
+  "readiness_conditions": [
+    "Credit an event only when the whole trace has verdict == 'pass': no failures, no assumption_violations and no unresolved items. Events are appended on a failure-free window check (len(F) == window start). That check ignores assumption_violations and anything recorded after the window, so per-event credit alone is not sufficient.",
+    "Environment validity must come from a source the gate actually reads. Driver ENV_ERROR lines are dropped by trace_codec.parse, which keeps only TRACE lines. Either have the harness scan the log for ENV_ERROR and set environment_valid=false, or rely only on the checker's own assumption checks (see F3).",
+    "Re-pin checker_sha256 (756263\u2026e28e), the driver and trace_codec to exactly the reviewed text before any offline run.",
+    "This review alone does not authorize any B run, as the limited_question states."
+  ],
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "resolved",
+      "area": "prior blockers",
+      "detail": "Prior findings are addressed in the checker text. F1: the scoreboard uses the fifo plus a cons cursor, filled on push. F2: the bus is checked against the launch registers scl_pin/sda_pin together with stretch and target_low, matching driver lines scl_bus/sda_bus. F3: a pending-bit decoder commits a bit only on an SCL fall, so the STOP-setup rise and repeated-START rise are not counted as data. F4: windows are gated on len(F). F5: stretch is credited only when scl_pin=1 && scl=0, i.e. real extension. F6: the halt is anchored at the ninth fall (ph ack\u2192halted). F7: the stop cycle is stored and checked with get(), so cycle 1 no longer aliases True. The independent reference (byte 0x50 with START+STOP, popped at cycle 128 after the wire byte and STOP) is consistent with P1\u2013P5 under the stated row semantics."
+    },
+    {
+      "id": "R2",
+      "severity": "medium",
+      "area": "event false positives: nak_timeout_recovery",
+      "detail": "While a halt is active and not cleared, a STOP is accepted whenever S['toen'] or en==0. The halt-SCL-release check is also skipped whenever toen==1. As a result, a STOP issued immediately after the NACK, before any timeout expiry, is not a failure. The event then still credits as long as nak_timeout/unhandled_timeout is observed at any time before the final STOP. The event therefore proves 'NACK \u2192 some STOP \u2192 status \u2192 clean restart', not 'STOP caused by the timeout'. Data bits and bytes during the halt are still caught by on_fall and finalize. Either document this as 'no ordering or latency between timeout status and STOP', or require h['to'] to be set before accepting the STOP. No control covers a premature STOP."
+    },
+    {
+      "id": "R3",
+      "severity": "medium",
+      "area": "environment validity",
+      "detail": "The checker's flush assumption (h is None && txn && idle==0) is not the same as the driver's unsafe_flush condition (!(sticky_nak || sticky_timeout || idle)). Example: a flush after NACK but before the sticky latch is set passes the checker yet triggers ENV_ERROR in the driver. Both conditions are weaker than 'halted/idle'. Since ENV_ERROR is not ingested (see readiness condition 2), validity currently rests on the checker's looser rule. The stretch-high assumption is consistent between the two: both use the previous post SCL value and a rising edge of stretch."
+    },
+    {
+      "id": "R4",
+      "severity": "medium",
+      "area": "independent controls",
+      "detail": "The only spec-derived independent positive trace is a single clean write. The positive baselines for stretch_recovery, nak_restart and nak_timeout_recovery are DUT traces, which is partly circular. The event mutation controls are limited to byte flips and truncation. There are no controls for: wrong START flag, a STOP without the flag or a missing STOP on a DUT trace, an early FMT pop, a premature timeout STOP (R2), a stretch with no real extension (scl_pin never 1 while stretched), a NACK without a status witness on a DUT trace, or an SCL toggle during a halt with timeout enabled. calibration_traces is empty and the case outputs cannot be reproduced from the packet, so the reported pass/fail results are taken on trust."
+    },
+    {
+      "id": "R5",
+      "severity": "low",
+      "area": "stretch_recovery semantics",
+      "detail": "The event requires one cycle where stretch is active, scl_pin=1 and scl=0, then release, then the next ACKed byte, then STOP with no failures. It does not check that the controller waited for SCL to go high before timing THIGH, and it does not check timing at all. It also does not confirm that the extension happened during the scoreboarded byte rather than in an earlier byte of the same transaction. The claim is acceptable only as 'controller tolerated an observed extension and completed correctly'."
+    },
+    {
+      "id": "R6",
+      "severity": "low",
+      "area": "nak_restart semantics",
+      "detail": "h['seen'] accepts either the transient nak output or the driver-side sticky latch. The sticky latch is set from pre nak, so it is a derived witness rather than an independent one. Clearing is accepted at any clear_events action after the NACK, including before the FSM reaches the halted phase. If the FIFO is not flushed, cons=1 skips the NACKed entry. The DUT behaviour in that case is not specified by the excerpts, and the spec assumes software flushes."
+    },
+    {
+      "id": "R7",
+      "severity": "low",
+      "area": "spec justification",
+      "detail": "Requirement sources: P1, P2 and P6\u2013P7 cite authority lines. P9 has an authority citation (76-79) but its claim is not checked, because NAKOK NACKs are logged without failing. P3\u2013P5 are environment or interface contract, labeled as such. P8 is task contract. The registers.md:465 '>2' rule applies to the TIMING0 fields THIGH=4 and TLOW=6. t_r=1, t_f=1 and thd_dat=2 are not governed by that sentence, and no timing compliance is claimed. The scope exclusions (read, RCONT, arbitration, bus monitor, latency, SDA stability) are stated."
+    },
+    {
+      "id": "R8",
+      "severity": "low",
+      "area": "driver",
+      "detail": "The driver is consistent with the environment: a passive open-drain target and pull, no expected DUT outputs, sticky latches set after the edge from pre events, and a pop applied on the next row, which matches the checker popping after the head check. v_stretch is an integer used as a boolean; the codec restricts it to 0/1. Hiding the ACK-induced SDA change from the target's own edge detector is intentional. The TRACE column order is pinned only by OBS in the codec, with no header in the log."
+    },
+    {
+      "id": "R9",
+      "severity": "info",
+      "area": "isolation",
+      "detail": "No implementation-derived constants or guards are visible in the checker. Isolation from RTL and prior checkers cannot be verified from the packet. The prior review was visible to the author; that is acceptable for fixes but means the checker is not blind to prior findings."
+    }
+  ],
+  "event_support": {
+    "stretch_recovery": "supported, scoped per R5",
+    "nak_restart": "supported, scoped per R6",
+    "nak_timeout_recovery": "weakly supported: causality between timeout and STOP is not checked (R2)"
+  },
+  "limitations": [
+    "Static read-only review of the supplied packet. Nothing was executed, and the case results and selftests were not reproduced.",
+    "No formal proof or completeness claim. Conclusions are limited to single-controller write mode with FifoDepth=64.",
+    "The independent reference was spot-checked for consistency, not verified exhaustively cycle by cycle.",
+    "No calibration or DUT traces were provided, so event positives could not be independently confirmed."
+  ]
+}

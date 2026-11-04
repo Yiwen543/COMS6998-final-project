@@ -1,0 +1,1102 @@
+{
+  "author_selftests": [
+    {
+      "name": "clean_byte_no_failures",
+      "pass": false
+    },
+    {
+      "name": "bit_flip_detected",
+      "pass": true
+    },
+    {
+      "name": "unexpected_nack_unresolved_not_success",
+      "pass": true
+    },
+    {
+      "name": "reset_drive_detected",
+      "pass": true
+    }
+  ],
+  "independent_baseline_pass": false,
+  "cases": {
+    "independent_write": {
+      "failures": [
+        {
+          "cycle": 108,
+          "category": "scoreboard",
+          "detail": "wire byte 0x50 with no popped command"
+        },
+        {
+          "cycle": 124,
+          "category": "protocol",
+          "detail": "STOP mid-byte"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1
+      }
+    },
+    "wrong_wire_byte": {
+      "failures": [
+        {
+          "cycle": 108,
+          "category": "scoreboard",
+          "detail": "wire byte 0x51 with no popped command"
+        },
+        {
+          "cycle": 124,
+          "category": "protocol",
+          "detail": "STOP mid-byte"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1
+      }
+    },
+    "wrong_reset_output": {
+      "failures": [
+        {
+          "cycle": 0,
+          "category": "reset",
+          "detail": "controller drives bus during reset"
+        },
+        {
+          "cycle": 108,
+          "category": "scoreboard",
+          "detail": "wire byte 0x50 with no popped command"
+        },
+        {
+          "cycle": 124,
+          "category": "protocol",
+          "detail": "STOP mid-byte"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1
+      }
+    },
+    "truncated": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        "1 FIFO entries pending"
+      ],
+      "verdict": "pending",
+      "counts": {
+        "start": 1
+      }
+    },
+    "dut_nak_restart": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 15,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 19,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 20,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 30,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 31,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 42,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 43,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 45,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 46,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 54,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 55,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 66,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 67,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 69,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 70,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 78,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 79,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 90,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 91,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 102,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 103,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 114,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 115,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 122,
+          "category": "scoreboard",
+          "detail": "wire byte 0x50 with no popped command"
+        },
+        {
+          "cycle": 126,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 127,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 163,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 164,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 164,
+          "category": "protocol",
+          "detail": "START mid-byte"
+        },
+        {
+          "cycle": 168,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 169,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 179,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 180,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 191,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 192,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 194,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 195,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 203,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 204,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 215,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 216,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 218,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 219,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 227,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 228,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 239,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 240,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 251,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 252,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 254,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 255,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 263,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 264,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 271,
+          "category": "scoreboard",
+          "detail": "wire byte 0x52 with no popped command"
+        },
+        {
+          "cycle": 275,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 276,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 278,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 279,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 289,
+          "category": "protocol",
+          "detail": "STOP mid-byte"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "stop": 1
+      }
+    },
+    "dut_nak_timeout": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 15,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 19,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 20,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 30,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 31,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 42,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 43,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 45,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 46,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 54,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 55,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 66,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 67,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 69,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 70,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 78,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 79,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 90,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 91,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 102,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 103,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 114,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 115,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 122,
+          "category": "scoreboard",
+          "detail": "wire byte 0x50 with no popped command"
+        },
+        {
+          "cycle": 126,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 127,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 145,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 146,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 156,
+          "category": "protocol",
+          "detail": "STOP mid-byte"
+        },
+        {
+          "cycle": 198,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 199,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 203,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 204,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 214,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 215,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 226,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 227,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 229,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 230,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 238,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 239,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 250,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 251,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 253,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 254,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 262,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 263,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 274,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 275,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 286,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 287,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 289,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 290,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 298,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 299,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 306,
+          "category": "scoreboard",
+          "detail": "wire byte 0x52 with no popped command"
+        },
+        {
+          "cycle": 310,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 311,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 313,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 314,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 324,
+          "category": "protocol",
+          "detail": "STOP mid-byte"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 2,
+        "wire_bytes": 2,
+        "stop": 2
+      }
+    },
+    "dut_seed": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {}
+    },
+    "dut_stretch": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 15,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 19,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 20,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 47,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 48,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 59,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 60,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 62,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 63,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 71,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 72,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 83,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 84,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 86,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 87,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 95,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 96,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 107,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 108,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 119,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 120,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 131,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 132,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 139,
+          "category": "scoreboard",
+          "detail": "wire byte 0x50 with no popped command"
+        },
+        {
+          "cycle": 143,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 144,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 146,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 147,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 157,
+          "category": "protocol",
+          "detail": "STOP mid-byte"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "stretch_recovery",
+          "kind": "success",
+          "start_cycle": 22,
+          "end_cycle": 157,
+          "evidence": "clock extended then byte+STOP"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1,
+        "event_stretch_recovery": 1
+      }
+    },
+    "dut_write": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 15,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 19,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 20,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 30,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 31,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 42,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 43,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 45,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 46,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 54,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 55,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 66,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 67,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 69,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 70,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 78,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 79,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 90,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 91,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 102,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 103,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 114,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 115,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 122,
+          "category": "scoreboard",
+          "detail": "wire byte 0x50 with no popped command"
+        },
+        {
+          "cycle": 126,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 127,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 129,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 130,
+          "category": "bus",
+          "detail": "wired-AND violated"
+        },
+        {
+          "cycle": 140,
+          "category": "protocol",
+          "detail": "STOP mid-byte"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "start": 1,
+        "wire_bytes": 1,
+        "stop": 1
+      }
+    }
+  },
+  "negative_controls": [
+    {
+      "name": "wrong_wire_byte",
+      "rejected": true,
+      "credited_detection": false
+    },
+    {
+      "name": "wrong_reset_output",
+      "rejected": true,
+      "credited_detection": false
+    }
+  ],
+  "truncated_no_success": true,
+  "checker_sha256": "b56adb530dfed070f22602887f52ed3655ee2e2bb4de875b7626901a85e5e7cc"
+}

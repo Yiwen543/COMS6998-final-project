@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 32104,
+  "stop_reason": "end_turn",
+  "session_id": "d54ac996-8c3e-450b-a85c-6646d2e4d073",
+  "total_cost_usd": 0.39004099999999997,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 66397,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 2902,
+    "output_tokens_details": {
+      "thinking_tokens": 882
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 66397
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 2902,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 66397,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 66397,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 2902,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 66397,
+      "webSearchRequests": 0,
+      "costUSD": 0.39004099999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 882,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\n  \"ready_for_offline_gate\": false,\n  \"verdict_on_baseline_failures\": \"checker_error\",\n  \"findings\": [\n    {\n      \"id\": \"F1_same_row_push_ordering\",\n      \"severity\": \"blocking\",\n      \"classification\": \"checker_error\",\n      \"detail\": \"check_rows checks pre.valid and the FIFO head before it appends the current row's push to its queue model, because the push branch runs at the end of the loop body. The interface sampling contract says the action is applied while the core clock is low and pre is settled before the rising edge. So a push in row N is already visible in pre of row N. The driver behaves this way: it writes fifo[qtail] and increments qcount before the TRACE $write, and fmt_fifo_rvalid_i is combinational on qcount. The control trace agrees: cycle 8 has push=1 with pre valid=1 and fmt_byte=81, and cycle 9 pushes the READB with pre depth=2. The checker therefore sees valid while its queue is empty. This explains the single 'fifo_head: valid with empty queued-command model' failure at cycle 8 in every nonempty case, both the generator traces and the dut_* traces. dut_seed has no pushes and passes, which is consistent.\"\n    },\n    {\n      \"id\": \"F2_flush_same_ordering\",\n      \"severity\": \"blocking\",\n      \"classification\": \"checker_error\",\n      \"detail\": \"Flush has the same issue: it is applied to the queue model after the pre check. The driver clears the queue before pre is sampled, so a flush row would also be judged against a stale model.\"\n    },\n    {\n      \"id\": \"F3_pop_timing_consistent\",\n      \"severity\": \"info\",\n      \"classification\": \"no_error\",\n      \"detail\": \"Pop handling matches the contract. The driver retires the head at the next row via pop_pending, computed from pre valid&ready. The checker pops on pre valid&ready of the same row. No mismatch was found here.\"\n    },\n    {\n      \"id\": \"F4_selftests_mask_bug\",\n      \"severity\": \"blocking\",\n      \"classification\": \"selftest_gap\",\n      \"detail\": \"In selftest G.push, the push row is emitted with pre valid=0 and no fmt_* head fields. Valid is only asserted in later pop rows. The selftests therefore never exercise same-row push visibility, which is why all 17 pass while every contract-conformant trace fails. The 17 passes are not evidence of contract conformance.\"\n    },\n    {\n      \"id\": \"F5_controls_not_creditable\",\n      \"severity\": \"blocking\",\n      \"classification\": \"evaluation_integrity\",\n      \"detail\": \"Every baseline is 'fail' with a fifo_head failure. Negative-control detections (rx_corrupt, rx_duplicate, rx_missing, wrong_boundary_ack, premature_pop) cannot be credited, because the baseline is not clean and the controls do not discriminate. All event_controls correctly report credited_detection=false. Pending controls (zero_partial, truncated_read, dut_zero_count_partial) return 'fail' instead of 'pending', so pending semantics are unverified. The premature_pop control's 597 failures are mostly downstream of the stale queue model. Zero events were emitted in any case, so no event false positive was observed, but there is also no positive event evidence.\"\n    },\n    {\n      \"id\": \"F6_event_logic_review\",\n      \"severity\": \"minor\",\n      \"classification\": \"residual_risk\",\n      \"detail\": \"Event crediting is gated on: no failures and no assumption violations anywhere in the trace, a clean transaction window, and every involved entry completed, popped and fully RX-delivered. This is conservative. read_stretch_recovery sets 'stretched' when scl==0 and scl_pin==1. Under the driver equation scl = scl_pin & !stretch, that combination only occurs with external stretch, so no false positive was identified. However, this cannot be validated on real traces until F1 is fixed.\"\n    },\n    {\n      \"id\": \"F7_driver_known_limitation\",\n      \"severity\": \"minor\",\n      \"classification\": \"driver_issue_out_of_calibration\",\n      \"detail\": \"The target sets read direction using v_target_ack at the ninth falling edge, not the ACK actually seen on the bus. This is harmless while target_ack=1 throughout, as in calibration. It does not cause the observed failures. It must be fixed before any target_ack=0 traces are used.\"\n    },\n    {\n      \"id\": \"F8_spec_justification\",\n      \"severity\": \"info\",\n      \"classification\": \"ok_with_caveat\",\n      \"detail\": \"P1\u2013P6 trace to the cited lines in theory_of_operation.md and registers.md. P7 has a weaker basis: 'pop only after processing', with READB RX delivered before pop, is an interpretation that the excerpts do not state explicitly. P8 relies on the interface packet rather than the IP documentation. P9 and P10 are correctly marked unsupported/out of scope.\"\n    },\n    {\n      \"id\": \"F9_isolation\",\n      \"severity\": \"info\",\n      \"classification\": \"ok\",\n      \"detail\": \"The checker uses only public observations and actions, with no DUT internals. target_data is not used as an expectation. The source-relevance gate failed independently and B remains disabled; this audit does not change that.\"\n    }\n  ],\n  \"required_before_gate\": [\n    \"Apply flush and push to the queue model before checking pre valid and head fields (checker author change; not patched here).\",\n    \"Add selftests where the push row asserts pre valid and head fields in the same row.\",\n    \"Re-run all baselines. Credit negative controls only against clean passing baselines, and confirm pending controls yield 'pending'.\"\n  ],\n  \"limitations\": [\n    \"Read-only static audit from the supplied packet. No execution and no access to the DUT RTL.\",\n    \"The diagnosis is inferred from the driver source, the control generator and the cycle-8 trace deltas, not from a re-run.\",\n    \"No claim of formal proof or full IP correctness. Timing, arbitration, NACK recovery and timeouts are not assessed.\"\n  ]\n}\n```",
+  "ttft_ms": 13348,
+  "type": "result",
+  "duration_ms": 32232,
+  "uuid": "85f67dfd-994d-4abe-8e5b-e74cbd0d0508",
+  "ttft_stream_ms": 3679,
+  "time_to_request_ms": 123,
+  "first_content_frame_ms": 3680,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 2902,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 66397,
+      "webSearchRequests": 0,
+      "costUSD": 0.39004099999999997,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 882,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

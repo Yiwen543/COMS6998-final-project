@@ -1,0 +1,67 @@
+{
+  "status": "frozen_for_scoped_offline_event_validation_only",
+  "version": "claude-v4-2026-11-04",
+  "roles": {
+    "checker": "Claude Opus 5.5; three saved author versions, exact patches only",
+    "stimulus": "GPT/Codex calibration role; experimental GPT-6.1-Sol stimulus not run in this stage",
+    "review": "Fresh tool-free Claude sessions, separate from author; deterministic controls required"
+  },
+  "approved_event_kinds": {
+    "backpressure_then_recovery": [
+      "tx",
+      "rx"
+    ],
+    "abort_then_restart": [
+      "sw_reset",
+      "async_reset"
+    ],
+    "constrained_transaction_switch": [
+      "csid_change_with_unchanged_configuration"
+    ]
+  },
+  "excluded_or_unresolved": [
+    "config-change switch qualification",
+    "software reset coincident with stall",
+    "dummy-segment switches",
+    "enable semantics",
+    "exact sample/payload timing",
+    "16/lanes serial-edge modelling assumption beyond checked traces"
+  ],
+  "formal_abcp_ready": false,
+  "source_target_bindings": "unresolved; combinational groups are not temporal event proofs",
+  "raw_denominator": {
+    "line": 57,
+    "branch": 160,
+    "expr": 246,
+    "toggle": 836
+  },
+  "control_results": {
+    "detected": 10,
+    "applied": 12,
+    "out_of_scope_retained": [
+      "software_reset_not_idle",
+      "last_read_without_transfer"
+    ]
+  },
+  "author_candidate_metadata": "results/spi_host_event_checker_20261104/revision-v4/candidate/metadata.json",
+  "author_candidate_metadata_sha256": "e62544aceebaae91ec4d5f6db908dde5ed79970449c7188c00ba90441dc5472d",
+  "independent_review": "results/spi_host_event_checker_20261104/revision-v4/independent-review/review.json",
+  "independent_review_sha256": "3252fbe35c7fe2a8d2497b95558b7b9e0c935073cc2ca0b8159b85af3d3834e8",
+  "hashes": {
+    "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv": "12ec73502dc8115cf1e6051f10cba6fc73259f066581722d9d895d1e634676b2",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv": "a9a44c9cc067c6b0904cfff2f3056b9312a475518be32e36efe0c8a951e1af8d",
+    "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv": "68854581eaa23a57f00c4b49ee0ce972147ffca9f2800da2859d1fe38cc5b476",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv": "5324b93183a0475c5e955b76a7b1e9c1c9739e810a70d213491c5657837ee47c",
+    "examples/heldout_spi_host/verif/tb_spi_host_fixed.sv": "7ccadf075e280f030091039b39b7a52e07d191b75c6ba34dfbb6e9429b276e5a",
+    "examples/heldout_spi_host_events/checker.py": "fa4d2c251fc6ef12f2da5e051206b5bc5151d6446b2450d9676934a973d63ebe",
+    "examples/heldout_spi_host_events/contract.md": "911e7dcb0c5cb1bb9708e60a13bfc0de6a00c1312f06400552ea3fd745283afd",
+    "examples/heldout_spi_host_events/properties.json": "1cc8cc49d8ce0769d18e7dd512a6ece3085f7ec6b9f5bedbfc389d7be849b55d",
+    "scripts/run_spi_event_fixed.py": "b2409dd1a7aadf2dad789f1da4d2e08c7872df400da0e6d99ac1fa7ad17ba9d9",
+    "scripts/evaluate_spi_checker_candidate.py": "7eeb0617581c384465ad156035c2da5c4a602ac20557c2a1953493f9086a8a5f",
+    "scripts/run_spi_checker_author.py": "037a65cece13458ff2349fcd3a2ad166d7fe9a7454e924ce65b63d2bd77d37c5",
+    "scripts/spi_host_fixture.py": "f6243ade73678cb3195a8fda559010678a5cedabe04e06bbf2d35751e70aaa3c",
+    "scripts/run_spi_host_fixed.py": "1eeacfb5f36d4c73d2db6433d4d1c043f6013fa40662b790cc8e98777b21ec78",
+    "scripts/coverage.py": "73c18d53326c6066a5dc8e6424cb30ddc751d92ee723e17f15a4603c05dc3fce",
+    "configs/spi_host_event_screen.json": "2e6033d62cf65e7454f9541a1ec8cf2ee5a1fb068f2d25e88d5ca2c695b8932c"
+  }
+}

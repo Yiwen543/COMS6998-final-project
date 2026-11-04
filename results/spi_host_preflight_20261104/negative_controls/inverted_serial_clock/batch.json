@@ -1,0 +1,65 @@
+{
+  "steps": 184,
+  "simulation_seconds": 0.16458845790475607,
+  "checker": {
+    "checks": 184,
+    "accepted_commands": 1,
+    "completed_direction_segments": 1,
+    "aborted_direction_segments": 0,
+    "pending_direction_segments": 0,
+    "incomplete_serial_burst": false,
+    "failures": [
+      {
+        "cycle": 0,
+        "category": "asynchronous_reset"
+      },
+      {
+        "cycle": 1,
+        "category": "asynchronous_reset"
+      },
+      {
+        "cycle": 9,
+        "category": "serial_idle_polarity",
+        "expected": 0,
+        "actual": 1
+      },
+      {
+        "cycle": 115,
+        "category": "serial_idle_polarity",
+        "expected": 0,
+        "actual": 1
+      }
+    ],
+    "distinct_defects": [
+      "asynchronous_reset",
+      "serial_idle_polarity"
+    ],
+    "assumption_violations": [],
+    "scope": "Public command/data-control handshake, byte/last counts, selected serial edge counts, reset, pause and stall safety. No serial payload, analog timing, bounded liveness or full formal proof.",
+    "verdict": "dut_violation"
+  },
+  "coverage": {
+    "branch": {
+      "covered": 138,
+      "total": 160,
+      "percent": 86.25
+    },
+    "expr": {
+      "covered": 183,
+      "total": 248,
+      "percent": 73.79
+    },
+    "line": {
+      "covered": 43,
+      "total": 57,
+      "percent": 75.439
+    },
+    "toggle": {
+      "covered": 291,
+      "total": 836,
+      "percent": 34.809
+    }
+  },
+  "raw_coverage": "results/spi_host_preflight_20261104/negative_controls/inverted_serial_clock/batch.dat",
+  "coverage_policy": "All original top-file DUT counters, including initialization/reset. No TB or prim_flop counters. Fresh simulator per cumulative replay."
+}

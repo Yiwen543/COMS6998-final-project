@@ -1,5 +1,6 @@
 """Queue contract, checker controls, feedback isolation, and replay accounting."""
 import csv
+import hashlib
 import json
 import subprocess
 import sys
@@ -12,7 +13,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from queue_feedback import CHECKER, INITIAL, VERSIONS, render_messages, validate_actions  # noqa: E402
 from queue_reference import actions as reference_actions  # noqa: E402
-from run_queue_bc_pilot import parse_result  # noqa: E402
+from run_queue_bc_pilot import parse_result, frozen  # noqa: E402
 from typed_predicates import extract  # noqa: E402
 
 
@@ -113,6 +114,10 @@ class QueuePilotTests(unittest.TestCase):
 
     def test_mock_replay_and_cycle_accounting(self):
         config = json.loads((ROOT / "configs/queue_bc_pilot.json").read_text())
+        # This smoke test exercises today's engine. Its temporary mock-only
+        # boundary is distinct from the immutable historical live configuration.
+        # The engine gained timing telemetry after that experiment was frozen.
+        config['engine_sha256'] = hashlib.sha256((ROOT/'egraph/src/main.rs').read_bytes()).hexdigest()
         config.update(repetitions=1, rounds=1)
         (ROOT / "build").mkdir(exist_ok=True)
         with tempfile.TemporaryDirectory(dir=ROOT / "build", prefix="queue-pilot-") as directory:
@@ -139,6 +144,12 @@ class QueuePilotTests(unittest.TestCase):
                 for field in ("version", "arm", "line_covered", "branch_covered",
                               "toggle_covered", "expr_covered", "functional_failures"):
                     self.assertEqual(first[field], second[field])
+
+    def test_live_freeze_still_rejects_engine_drift(self):
+        config = json.loads((ROOT/'configs/queue_bc_pilot.json').read_text())
+        config['engine_sha256'] = '0'*64
+        with self.assertRaisesRegex(RuntimeError, 'Frozen file changed'):
+            frozen(config)
 
 
 if __name__ == "__main__":

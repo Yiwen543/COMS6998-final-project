@@ -1,0 +1,67 @@
+{
+  "ready_for_offline_gate": true,
+  "scope_of_decision": "Bounded READB/address-write read profile only: single controller, ACKing external target, FifoDepth64. Configuration B stays disabled because the source-relevance gate already failed. No artifacts were modified. This is not a formal proof.",
+  "findings": [
+    {
+      "id": "F1_event_false_positives",
+      "severity": "info",
+      "status": "acceptable",
+      "detail": "An event is credited only when all of these hold: the trace has no failures and no assumption violations; the transaction ended in STOP or restart; the transaction window was clean; and every involved entry is complete, popped, not aborted, ACK-correct, and has RX equal to n. Partial traces and reset-terminated windows earn no credit. The evaluator first requires a clean baseline with a kind=complete event, then requires a corrupted-RX mutant to fail and lose that event. All 8 such controls (4 families \u00d7 fixture and DUT) are credited."
+    },
+    {
+      "id": "F2_stretch_credit_weak",
+      "severity": "low",
+      "status": "limitation",
+      "detail": "read_stretch_recovery is credited when the current command is READB and any sample shows scl=0 while scl_pin=1. The checker does not require that the stretch overlaps a read data bit rather than the ACK low phase or the address-to-read handoff. There is no negative control for a stretch outside the read window. Treat the event as 'stretch observed while READB current', not as proof of recovery semantics."
+    },
+    {
+      "id": "F3_independent_control_diversity",
+      "severity": "medium",
+      "status": "limitation",
+      "detail": "The event controls use a single mutation class: XOR of the first RX byte. The rx_duplicate, rx_missing, wrong_boundary_ack and premature_pop negatives exist only on the hand-built fixture traces, not on the DUT traces. No independent control covers:\n- wrong write data;\n- a START emitted during READB;\n- a missing or extra STOP;\n- a wrong READB count;\n- a stretch-family false credit.\nThese property checks rely on the author's selftests, which share the author's own wire model."
+    },
+    {
+      "id": "F4_spec_justification",
+      "severity": "info",
+      "status": "acceptable",
+      "detail": "Properties P1\u2013P6 trace to the cited doc lines:\n- the READB count rule (0 means 256);\n- R-1 bytes ACKed;\n- the final byte NACKed unless RCONT;\n- START ignored for READB;\n- STOP placement.\nTwo items are honestly labeled as fixture or interface contracts rather than upstream guarantees: P7 (RX delivered before pop) and the same-row push/flush ordering. P9 maps events to pending/unsupported, which is conservative. P10 timing is out of scope."
+    },
+    {
+      "id": "F5_one_bit_discard",
+      "severity": "low",
+      "status": "limitation",
+      "detail": "A single pending SCL rise at START or STOP is discarded silently, to absorb the STOP/restart setup rise. A spurious lone extra clock pulse before START or STOP would therefore go undetected."
+    },
+    {
+      "id": "F6_event_outputs_post_only",
+      "severity": "low",
+      "status": "limitation",
+      "detail": "ERR_KEYS are sampled only from post. A one-row event pulse visible only in pre would not mark the trace unsupported. In practice the previous row's post approximates pre, so the risk is small."
+    },
+    {
+      "id": "F7_isolation",
+      "severity": "medium",
+      "status": "process_note",
+      "detail": "The author's spec packet excludes DUT code, calibration vectors and outcomes. However, this repair (same-row push/flush ordering) is a reaction to behaviour that appears in the DUT and fixture traces, where a pushed head is visible in the same row's pre. It is therefore plausibly outcome-informed iteration. The repair matches the stated sampling contract and does not weaken any property, but the checker is no longer strictly blind to evaluation outcomes."
+    },
+    {
+      "id": "F8_driver_env_errors_invisible",
+      "severity": "low",
+      "status": "limitation",
+      "detail": "The driver reports unsafe_flush and stretch_started_high only as ENV_ERROR display lines, which never reach the trace rows. The checker flags flush only when its own decoder believes a transaction is active, so the gate must separately reject runs that contain ENV_ERROR lines."
+    },
+    {
+      "id": "F9_fbyte0",
+      "severity": "info",
+      "status": "acceptable",
+      "detail": "The FBYTE=0 (256-byte read) case is demonstrated only by an author selftest. The DUT zero-count trace is correctly reported as pending, so no event or pass credit is claimed for it."
+    }
+  ],
+  "limitations": [
+    "Read-only review of the supplied packet only; nothing was re-executed and the hashes were not recomputed.",
+    "No formal proof; no liveness, exact-cycle, analog timing, arbitration, multi-controller or NACK-recovery assurance.",
+    "Independent negative controls are narrow (mostly RX corruption); the remaining properties rest on author selftests.",
+    "Interpreting ready (pop) as 'after processing', and RX delivery before pop, are fixture contracts rather than upstream guarantees.",
+    "Readiness applies only to the offline gate for the bounded read profile; B remains disabled."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "status": "prospective offline qualification; not a frozen A/B/C experiment",
+  "scope": "Pinned OpenTitan i2c_controller_fsm FifoDepth=64; write-mode single-controller wire environment; read and multi-controller remain in raw denominator but out of checker scope",
+  "roles": {
+    "checker_author": "claude-opus-5-5; public specifications and interface only; no DUT implementation, stimulus or model outcomes",
+    "stimulus_and_driver": "GPT/Codex fixed JSON bus environment and private calibration; no checker authorship",
+    "experimental_stimulus": "gpt-6.1-sol after qualification; JSON actions only; no checker code or private calibration",
+    "measurement": "fixed simulator, original counters, hash and schema checks; neither model can change measurements"
+  },
+  "events": [
+    "stretch_recovery",
+    "nak_restart",
+    "nak_timeout_recovery"
+  ],
+  "development_budget": {
+    "repetitions": 3,
+    "rounds": 6,
+    "max_new_cycles": 64,
+    "seed_cycles": 8
+  },
+  "offline_acceptance": {
+    "min_distinct_reachable_event_families": 3,
+    "max_calibration_cycles_excluding_seed": 384,
+    "checker_author_must_differ_from_stimulus_author": true,
+    "require_positive_and_negative_controls": true,
+    "require_verilator_icarus_trace_agreement": true,
+    "require_no_unresolved_property_blocking_selected_scope": true,
+    "min_source_distinct_groups": 3,
+    "min_nontrivial_source_groups": 2,
+    "each_group_min_seed_zero_source_counters": 2,
+    "do_not_equate_temporal_events_using_combinational_proofs": true
+  },
+  "development_acceptance": {
+    "min_repetitions_with_two_groups_unhit_after_round_one": 2,
+    "min_repetitions_with_later_group_progress": 2
+  },
+  "rules": [
+    "Do not change legacy results or checker files; new versioned evidence only.",
+    "Checker revisions must come from its author role and retain prior source, feedback and rationale.",
+    "Functional event witnesses supplement raw coverage; never change or reinterpret original DUT counters.",
+    "Do not select new targets using C outcomes or reduce the old 6x64 budget to induce a B failure.",
+    "No solver/calibration witnesses or hidden checker controls in experimental prompts.",
+    "Failure of a prerequisite is a recorded rejection, not permission to start A/B/C/placebo."
+  ],
+  "timing_cycles": {
+    "thigh": 4,
+    "tlow": 6,
+    "t_r": 1,
+    "t_f": 1,
+    "thd_sta": 4,
+    "tsu_sta": 4,
+    "tsu_sto": 4,
+    "thd_dat": 2
+  },
+  "timing_rationale": "Prospective before any live trial: THIGH>=4 for documented synchronization, TLOW>2 and TLOW>THD_DAT; reduced dimensionless synchronous fixture, not analog mode certification.",
+  "model_limits": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "input_tokens": 32000,
+    "output_tokens": 16384,
+    "timeout_seconds": 120,
+    "max_retries": 1
+  }
+}

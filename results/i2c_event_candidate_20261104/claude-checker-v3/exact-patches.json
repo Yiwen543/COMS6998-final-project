@@ -1,0 +1,45 @@
+{
+  "patches": [
+    {
+      "file": "checker.py",
+      "before": "    def ev(fam, kind, s, d):",
+      "after": "    def clean(c0):\n        return not any(f['cycle'] >= c0 for f in F) and not any(x.get('cycle', 0) >= c0 for x in A)\n\n    def ev(fam, kind, s, d):"
+    },
+    {
+      "file": "checker.py",
+      "before": "            if S['en'] == 0 or h.get('to') or S['toen']:\n                h['stop'] = S['c']",
+      "after": "            if S['en'] == 0 or h.get('to'):\n                h['stop'] = S['c']"
+    },
+    {
+      "file": "checker.py",
+      "before": "            if len(F) == h['f'] and h.get('seen'):\n                if h.get('stop'):\n                    if h.get('to'):\n                        ev('nak_timeout_recovery', 'success', h['c'], 'unexpected NACK, halt, timeout STOP+release, clear, START, clean byte, STOP')\n                else:\n                    ev('nak_restart', 'success', h['c'], 'unexpected NACK, SCL held, clear, repeated START, clean byte, STOP')",
+      "after": "            if clean(h['c']) and h.get('seen'):\n                if h.get('stop'):\n                    if h.get('to'):\n                        ev('nak_timeout_recovery', 'success', h['c'], 'unexpected NACK, halt, timeout STOP+release, clear, START, clean byte, STOP')\n                else:\n                    ev('nak_restart', 'success', h['c'], 'unexpected NACK, SCL held, clear, repeated START, clean byte, STOP')\n            elif not h.get('seen'):\n                U.append('NACK recovery from cycle %d lacks public nak/unhandled_nak status witness' % h['c'])"
+    },
+    {
+      "file": "checker.py",
+      "before": "            if len(F) == st['f']:",
+      "after": "            if clean(st['c']):"
+    },
+    {
+      "file": "checker.py",
+      "before": "not h.get('clr') and not (h.get('to') or S['toen'] or S['en'] == 0):",
+      "after": "not h.get('clr') and not (h.get('to') or S['en'] == 0):"
+    },
+    {
+      "file": "selftest.py",
+      "before": "    def nack(status):\n        return (R + [(1, 1, P(0x50, 1, 0), 0, {})] + fr(0x50, 1, stop=False) +",
+      "after": "    def nack(status, b0=0x50):\n        return (R + [(1, 1, P(0x50, 1, 0), 0, {})] + fr(b0, 1, stop=False) +"
+    },
+    {
+      "file": "selftest.py",
+      "before": "    t('nak_restart_needs_status', not any(e['family'] == 'nak_restart' for e in r['events']))",
+      "after": "    t('nak_restart_needs_status', not any(e['family'] == 'nak_restart' for e in r['events']))\n    t('missing_nak_status_not_pass', r['verdict'] != 'pass')\n    r = check_rows(build(nack(True, 0x51)))\n    t('first_nack_byte_mismatch_no_event', r['verdict'] == 'fail' and not r['events'])\n    TE = {'nak_timeout_enable': 1}\n    pt = (R + [(1, 1, P(0x50, 1, 0), 0, {})] + fr(0x50, 1, stop=False) +\n          [(0, 1, dict(TE), 0, {'nak': 1}), (0, 0, dict(TE), 0, {}), (1, 0, dict(TE), 0, {}), (1, 1, dict(TE), 0, {})])\n    r = check_rows(build(pt))\n    t('premature_timeout_stop_fails', r['verdict'] == 'fail' and any(f['category'] == 'halt' for f in r['failures']) and not r['events'])"
+    },
+    {
+      "file": "properties.json",
+      "before": "\"requirement\": \"With NACK timeout, STOP is generated and the bus stays released until software clears.\",",
+      "after": "\"requirement\": \"A STOP during NACK halt requires prior public timeout status (nak_timeout/unhandled_timeout) or host disable; timeout enable alone or a later timeout pulse does not justify it. After timeout STOP the bus stays released until software clears. Event windows are clean by origin cycle; missing NACK status leaves recovery unresolved.\","
+    }
+  ],
+  "rationale": "Event cleanliness now uses origin-cycle failure/assumption windows, so a mismatch at the halt origin blocks credit; applied to stretch too. Timeout-enable no longer excuses STOP/SCL release during halt; only prior observed timeout status or disable does, so later pulses cannot justify retroactively. A completed NACK recovery lacking status witness is reported unresolved (pending), not pass. Added selftests for first-NACK byte mismatch, premature timeout STOP, and missing-status non-pass; existing tests kept."
+}
