@@ -1,0 +1,52 @@
+{
+  "accepted_scope": "A trace-level reference for frame_task with MIN=4, MAX=8, input frames of 1..12 bytes, and traces starting with reset. Within that scope it checks: transferred data and status payloads against an accepted-input scoreboard with partial-prefix support; valid&&!ready stability; reset clearing and epoch discard; X/Z handled as unresolved; FAIL taking priority over unknowns; and finite completion when require_drained=True. Same-edge cut-through is accepted. Assumption violations are classified as INVALID_INPUT. A drain tail under 32 cycles yields only an unknown. A PASS is evidence for that trace only.",
+  "decision": "accept_with_scope",
+  "findings": [
+    {
+      "evidence": "sample(): the data check runs only when _exp_beat returns 'ok', and the status check only when _exp_status is not None. data_spurious, data_premature and status_premature_or_spurious are raised only in the transfer branches. The spec says valid fields are checked at every subsequent sample.",
+      "issue": "A presented beat with m_valid=1 that has no accepted input byte to justify it, or a presented h_valid=1 for an incomplete or missing frame, is not flagged when it is only presented. It fails only if it is transferred. If the sink never readies before reset, such a beat is never reported.",
+      "severity": "limitation"
+    },
+    {
+      "evidence": "Contract blocking scope finding 1; ordering of the transfer blocks in check_rows.",
+      "issue": "Same-edge cut-through causality is permitted. The input transfer is applied before the data/status transfers at the same edge. A stricter reading of the spec would change verdicts.",
+      "severity": "limitation"
+    },
+    {
+      "evidence": "_assume(); control source_changes_while_blocked; selftest assumption_valid_in_reset.",
+      "issue": "Source-assumption violations return INVALID_INPUT. These are s_valid during reset and a blocked source changing its offer. The spec defines INVALID_INPUT only for malformed rows. This is a reasonable classification but it is an extension of the spec.",
+      "severity": "limitation"
+    },
+    {
+      "evidence": "TAIL_MIN=32; drain_tail_short goes to unknown; contract finding 7.",
+      "issue": "The drain tail is checked against 32 cycles and a short tail is reported only as unknown. The 128-cycle final threshold is not enforced.",
+      "severity": "limitation"
+    },
+    {
+      "evidence": "S['ld']/S['lh']/S['li'] become latched True; checks are gated on 'not S[...]'.",
+      "issue": "After a definite data_last or premature failure, or after any X on a transfer, the affected channel's scoreboard is abandoned. Later errors in that channel are not reported. Verdict precedence is still preserved: FAIL stays FAIL and unknowns become UNRESOLVED.",
+      "severity": "limitation"
+    },
+    {
+      "evidence": "Contract findings 3, 5 and 8; MAX_IN check; no_initial_reset unknown.",
+      "issue": "Input frames longer than 12 bytes, traces that do not start with reset, and output changes between post(n) and pre(n+1) without a stability obligation are all out of scope or unknown.",
+      "severity": "limitation"
+    },
+    {
+      "evidence": "_exp_beat, _exp_status, rst==1 branch, lose_all, verdict computation; controls extra_status, legal_status_before_data/after_data, legal_reset_cancels_responses, definite_failure_plus_unknown.",
+      "issue": "No blocker found in the four required areas. (1) Accepted-prefix: data expectations come only from accepted bytes, a transfer beyond the known prefix fails, padding and m_last apply only after s_last, and truncation last is definite at the 8th byte. (2) Independent channels: data and status cursors are separate. (3) Reset epochs: the scoreboard and stability obligations are cleared, post valids must be 0, and rst=X loses state until a known reset. (4) Unknown precedence: failures are never removed and FAIL outranks UNRESOLVED.",
+      "severity": "info"
+    },
+    {
+      "evidence": "simulation_summary; limits.",
+      "issue": "The evidence is finite and does not establish full functional truth. It consists of selftests, controls and baseline simulation PASS on 18 traces. The simulation status is 'evaluated_not_independently_reviewed'.",
+      "severity": "info"
+    }
+  ],
+  "required_changes": [
+    "Non-blocking: decide whether presented-but-untransferred unjustified valids (data or status) must fail at the sample. If so, add sample-time checks for 'noframe', for 'premature', and for e is None when h_valid=1.",
+    "Non-blocking: have the project owner resolve the same-edge causality and the INVALID_INPUT classification of assumption violations, and record the decisions.",
+    "Non-blocking: if final evaluation should enforce it, add a parameter or explicit handling for the 128-cycle final tail.",
+    "Keep the wording that simulation agreement and the selftests are finite evidence, not proof of checker soundness."
+  ]
+}

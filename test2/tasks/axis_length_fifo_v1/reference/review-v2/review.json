@@ -1,0 +1,42 @@
+{
+  "accepted_scope": "This review accepts check_rows only as an independent finite-trace reference for frame_task (MIN=4, MAX=8, input frames of 1..12 bytes, registered with no bypass), under the v2 sampling contract. Its scope covers:\n- accepted-prefix data and status justification;\n- independent data and status cursors;\n- reset-epoch cancellation that preserves earlier failures;\n- conservative handling of X/Z;\n- finite drained completion with min_tail=128 for final evaluation and 32 for development.\n\nA PASS is evidence for that trace only. After the first definite channel failure or X on a channel, results are diagnostic only. This acceptance does not cover liveness, s_ready behaviour, frames longer than 12 bytes, or the mapping to candidate slots P0..P5.",
+  "decision": "accept_with_scope",
+  "findings": [
+    {
+      "evidence": "In check_rows, S['ld']=True / S['lh']=True on those paths. The contract states this as residual limitation 1. The verdict stays FAIL or UNRESOLVED, so soundness of the verdict is preserved, but diagnostic completeness after the first failure is reduced.",
+      "issue": "After a definite data_last, spurious or premature transfer failure, or an X on a transfer, the checker sets ld/lh and stops checking that channel. Later errors on that channel are not reported.",
+      "severity": "limitation"
+    },
+    {
+      "evidence": "The input-acceptance branch calls lose_all() for t==-1 and for s_last==-1.",
+      "issue": "An X on accepted s_last, on the input transfer, or on rst abandons all three channels together (lose_all). This is conservative: it yields UNRESOLVED rather than a false PASS, but it reduces coverage.",
+      "severity": "limitation"
+    },
+    {
+      "evidence": "obm/obh are built from post with x['m_ready'] / x['h_ready'] of the same row. The contract states this as residual limitation 4.",
+      "issue": "The post(i)-to-pre(i+1) stability obligation is gated on row i's ready value, not on 'no edge in between'. An output change between post(n) and pre(n+1) while ready was 1 at row n is caught only by the per-sample justification checks, not as a stability violation.",
+      "severity": "limitation"
+    },
+    {
+      "evidence": "MAX_IN emits out_of_scope; the checker emits no_initial_reset; reset rows skip pre checks. Contract limitations 3 and 5 cover these.",
+      "issue": "Several cases are unknown or out of scope rather than checked: input frames longer than 12 bytes, traces that do not start with reset, and pre samples while rst=1. s_ready is used only to determine input transfers.",
+      "severity": "limitation"
+    },
+    {
+      "evidence": "Accepted-prefix semantics: _exp_beat only justifies bytes already accepted. Padding is expected only once the frame is done, and m_last on byte 8 handles truncation. Edge model: pre is judged against the prior-edge scoreboard and post includes the current acceptance, with no bypass. Channels: data and status cursors are independent. Reset: it clears the epoch while earlier failures persist. Verdict precedence: INVALID > FAIL > UNRESOLVED > PASS. The controls show expected behaviour, including pre_not_justified_by_current_input FAIL and spurious_stalled_*_then_reset FAIL.",
+      "issue": "On the core checks, code reading found no blocker.",
+      "severity": "info"
+    },
+    {
+      "evidence": "The simulation_summary status is evaluated_not_independently_reviewed. No DUT source or mutant outcomes were supplied.",
+      "issue": "The evidence is finite. Selftests, 182 control cases and PASS baselines on iverilog/verilator observations do not establish full checker soundness or completeness.",
+      "severity": "info"
+    }
+  ],
+  "recommended_non_blocking": [
+    "Add a stability check between post(n) and pre(n+1) that applies regardless of ready, since no edge separates those two samples.",
+    "Optionally re-synchronise a channel's scoreboard after a definite failure, to improve diagnostics.",
+    "Add controls for: s_data X accepted, then the transfer of that byte; X on h_valid during transfer; truncation followed by a back-to-back frame with status consumed before data."
+  ],
+  "required_changes": []
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "R0",
+    "text": "Malformed rows, bad parameters, s_valid during reset, or a blocked source changing its offer give INVALID_INPUT. This is an input classification, not a DUT pass."
+  },
+  {
+    "id": "R1",
+    "text": "Pre causality. At pre(n), with rst=0 and n>0, a presented m_valid=1 must be justified by input accepted at edges before n. Its m_data and m_last must match that scoreboard. Otherwise the result is FAIL with data_spurious, data_premature, data_payload or data_last. This applies even if m_ready=0 and even if a later reset cancels the beat. The current input offer is never used to justify a pre observation."
+  },
+  {
+    "id": "R2",
+    "text": "Post visibility. At post(n), the scoreboard includes the input accepted at edge n. A presented m_valid or h_valid is judged against that scoreboard. Legal post-edge visibility of a newly accepted byte or status passes."
+  },
+  {
+    "id": "R3",
+    "text": "Status. A presented or transferred h_valid=1 requires a completed accepted frame at the status cursor. The fields must be h_original_length=L, h_length=min(max(L,4),8), h_pad=(L<4) and h_truncate=(L>8)."
+  },
+  {
+    "id": "R4",
+    "text": "Stability. If valid=1 and ready=0 at a sample, valid and payload must stay unchanged at the next sample until a transfer or reset."
+  },
+  {
+    "id": "R5",
+    "text": "Reset. Post of a reset edge has m_valid=h_valid=0. Reset discards the scoreboard and all obligations. Earlier failures are kept."
+  },
+  {
+    "id": "R6",
+    "text": "Data and status cursors are independent. No order is required between the two channels."
+  },
+  {
+    "id": "R7",
+    "text": "With require_drained=True, residual valids, an incomplete accepted frame, or unconsumed responses give FAIL. A quiet ready-high tail shorter than min_tail gives an unknown (drain_tail_short), so the verdict is never PASS. Final callers use min_tail=128 and development uses 32."
+  },
+  {
+    "id": "R8",
+    "text": "X/Z values are unresolved, never successful. Verdict precedence is FAIL > UNRESOLVED > PASS. Unknowns and resets never remove a failure."
+  }
+]

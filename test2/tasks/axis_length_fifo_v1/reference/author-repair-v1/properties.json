@@ -1,0 +1,10 @@
+[
+  "R0 data payload/order: every transferred m_data equals the expected byte (input bytes in order, first 8 of long frames, zero padding to 4 for short frames); presented payloads while m_valid are checked against the next expected beat when it is already determined",
+  "R1 data framing: exactly one m_last per output frame, on byte min(max(L,4),8); m_last=0 required before input completion unless 8 bytes already reached; no beat without an accepted input byte (or completed short frame) to justify it",
+  "R2 status content/order/causality: one status per completed uncancelled input frame, in input-frame order, h_original_length=L, h_length=min(max(L,4),8), h_pad=(L<4), h_truncate=(L>8); none transferred before its frame completes",
+  "R3 data stability: m_valid=1 with m_ready=0 at a sample requires m_valid/m_data/m_last unchanged at the next sample unless a reset edge intervenes",
+  "R4 status stability: h_valid=1 with h_ready=0 at a sample requires h_valid and all four status fields unchanged at the next sample unless a reset edge intervenes",
+  "R5 reset/completion: post of a reset edge has m_valid=h_valid=0; reset discards all epoch state and obligations; with require_drained, no residual offers, valids, incomplete input or unconsumed responses (finite completion only, not liveness)",
+  "X policy: any -1 on a meaningful field yields an unknown entry, never a pass; tracking lost after unresolvable boundaries is restored only by a known reset; earlier failures are preserved and FAIL dominates",
+  "Input policy: malformed rows or violated source assumptions (valid during reset, blocked source changing) yield INVALID_INPUT"
+]
