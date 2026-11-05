@@ -1,0 +1,603 @@
+{
+  "cycle_gap": {
+    "checked_rows": 0,
+    "failures": [
+      {
+        "category": "malformed",
+        "cycle": -1,
+        "detail": "row 3: cycles must be consecutive from 0",
+        "phase": "end"
+      }
+    ],
+    "unknown": [],
+    "verdict": "INVALID_INPUT"
+  },
+  "data_changes_while_stalled": {
+    "checked_rows": 139,
+    "failures": [
+      {
+        "category": "data_stability",
+        "cycle": 6,
+        "detail": "m_data changed while held",
+        "phase": "post"
+      },
+      {
+        "category": "data_payload",
+        "cycle": 6,
+        "detail": "presented m_data 77 expected 11",
+        "phase": "post"
+      },
+      {
+        "category": "data_payload",
+        "cycle": 7,
+        "detail": "presented m_data 77 expected 11",
+        "phase": "pre"
+      },
+      {
+        "category": "data_payload",
+        "cycle": 7,
+        "detail": "transferred m_data 77 expected 11 (frame 0 byte 0)",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [],
+    "verdict": "FAIL"
+  },
+  "definite_failure_plus_unknown": {
+    "checked_rows": 138,
+    "failures": [
+      {
+        "category": "data_payload",
+        "cycle": 5,
+        "detail": "presented m_data 99 expected 11",
+        "phase": "post"
+      },
+      {
+        "category": "data_payload",
+        "cycle": 6,
+        "detail": "presented m_data 99 expected 11",
+        "phase": "pre"
+      },
+      {
+        "category": "data_payload",
+        "cycle": 6,
+        "detail": "transferred m_data 99 expected 11 (frame 0 byte 0)",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [
+      {
+        "category": "x_payload",
+        "cycle": 5,
+        "detail": "h_length X/Z while h_valid",
+        "phase": "post"
+      },
+      {
+        "category": "x_payload",
+        "cycle": 6,
+        "detail": "h_length X/Z while h_valid",
+        "phase": "pre"
+      },
+      {
+        "category": "status_unresolved",
+        "cycle": 6,
+        "detail": "h_length X/Z on transfer",
+        "phase": "pre"
+      }
+    ],
+    "verdict": "FAIL"
+  },
+  "extra_status": {
+    "checked_rows": 138,
+    "failures": [
+      {
+        "category": "status_premature_or_spurious",
+        "cycle": 40,
+        "detail": "h_valid presented without a completed accepted frame (inputs accepted up to and including this edge)",
+        "phase": "post"
+      },
+      {
+        "category": "status_premature_or_spurious",
+        "cycle": 41,
+        "detail": "h_valid presented without a completed accepted frame (inputs accepted at earlier edges)",
+        "phase": "pre"
+      },
+      {
+        "category": "status_premature_or_spurious",
+        "cycle": 41,
+        "detail": "status transferred before its input frame completed at an earlier edge",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [
+      {
+        "category": "completion_unresolved",
+        "cycle": 137,
+        "detail": "scoreboard not fully known; completion cannot be proven",
+        "phase": "end"
+      }
+    ],
+    "verdict": "FAIL"
+  },
+  "final_tail_128": {
+    "checked_rows": 138,
+    "failures": [],
+    "unknown": [],
+    "verdict": "PASS"
+  },
+  "final_tail_32_not_128": {
+    "checked_rows": 42,
+    "failures": [],
+    "unknown": [
+      {
+        "category": "drain_tail_short",
+        "cycle": 41,
+        "detail": "quiet ready-high tail is 36 cycles (< min_tail 128)",
+        "phase": "end"
+      }
+    ],
+    "verdict": "UNRESOLVED"
+  },
+  "input_never_accepted": {
+    "checked_rows": 138,
+    "failures": [
+      {
+        "category": "completion",
+        "cycle": 137,
+        "detail": "s_valid still offered at end",
+        "phase": "end"
+      }
+    ],
+    "unknown": [
+      {
+        "category": "drain_tail_short",
+        "cycle": 137,
+        "detail": "quiet ready-high tail is 0 cycles (< min_tail 128)",
+        "phase": "end"
+      }
+    ],
+    "verdict": "FAIL"
+  },
+  "legal_both_stalled": {
+    "checked_rows": 139,
+    "failures": [],
+    "unknown": [],
+    "verdict": "PASS"
+  },
+  "legal_exact": {
+    "checked_rows": 138,
+    "failures": [],
+    "unknown": [],
+    "verdict": "PASS"
+  },
+  "legal_long_sink_stall": {
+    "checked_rows": 278,
+    "failures": [],
+    "unknown": [],
+    "verdict": "PASS"
+  },
+  "legal_pad": {
+    "checked_rows": 135,
+    "failures": [],
+    "unknown": [],
+    "verdict": "PASS"
+  },
+  "legal_reset_cancels_responses": {
+    "checked_rows": 135,
+    "failures": [],
+    "unknown": [],
+    "verdict": "PASS"
+  },
+  "legal_status_after_data": {
+    "checked_rows": 140,
+    "failures": [],
+    "unknown": [],
+    "verdict": "PASS"
+  },
+  "legal_status_before_data": {
+    "checked_rows": 139,
+    "failures": [],
+    "unknown": [],
+    "verdict": "PASS"
+  },
+  "legal_truncate": {
+    "checked_rows": 148,
+    "failures": [],
+    "unknown": [],
+    "verdict": "PASS"
+  },
+  "missing_both_response": {
+    "checked_rows": 138,
+    "failures": [
+      {
+        "category": "completion",
+        "cycle": 137,
+        "detail": "1 data response frame(s) not fully consumed",
+        "phase": "end"
+      },
+      {
+        "category": "completion",
+        "cycle": 137,
+        "detail": "1 status response(s) not consumed",
+        "phase": "end"
+      }
+    ],
+    "unknown": [],
+    "verdict": "FAIL"
+  },
+  "missing_data_response": {
+    "checked_rows": 138,
+    "failures": [
+      {
+        "category": "completion",
+        "cycle": 137,
+        "detail": "1 data response frame(s) not fully consumed",
+        "phase": "end"
+      }
+    ],
+    "unknown": [],
+    "verdict": "FAIL"
+  },
+  "missing_field": {
+    "checked_rows": 0,
+    "failures": [
+      {
+        "category": "malformed",
+        "cycle": -1,
+        "detail": "row 3: post must contain exactly the documented fields",
+        "phase": "end"
+      }
+    ],
+    "unknown": [],
+    "verdict": "INVALID_INPUT"
+  },
+  "missing_last_marker": {
+    "checked_rows": 138,
+    "failures": [
+      {
+        "category": "data_last",
+        "cycle": 8,
+        "detail": "presented m_last 0 expected 1",
+        "phase": "post"
+      },
+      {
+        "category": "data_last",
+        "cycle": 9,
+        "detail": "presented m_last 0 expected 1",
+        "phase": "pre"
+      },
+      {
+        "category": "data_last",
+        "cycle": 9,
+        "detail": "transferred m_last 0 expected 1 (frame 0 byte 3)",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [
+      {
+        "category": "completion_unresolved",
+        "cycle": 137,
+        "detail": "scoreboard not fully known; completion cannot be proven",
+        "phase": "end"
+      }
+    ],
+    "verdict": "FAIL"
+  },
+  "missing_status_response": {
+    "checked_rows": 138,
+    "failures": [
+      {
+        "category": "completion",
+        "cycle": 137,
+        "detail": "1 status response(s) not consumed",
+        "phase": "end"
+      }
+    ],
+    "unknown": [],
+    "verdict": "FAIL"
+  },
+  "pre_not_justified_by_current_input": {
+    "checked_rows": 135,
+    "failures": [
+      {
+        "category": "data_spurious",
+        "cycle": 2,
+        "detail": "m_valid presented with no accepted input byte to justify it (inputs accepted at earlier edges)",
+        "phase": "pre"
+      },
+      {
+        "category": "data_spurious",
+        "cycle": 2,
+        "detail": "data beat transferred without previously accepted input to justify it",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [
+      {
+        "category": "completion_unresolved",
+        "cycle": 134,
+        "detail": "scoreboard not fully known; completion cannot be proven",
+        "phase": "end"
+      }
+    ],
+    "verdict": "FAIL"
+  },
+  "premature_last_marker": {
+    "checked_rows": 138,
+    "failures": [
+      {
+        "category": "data_last",
+        "cycle": 5,
+        "detail": "presented m_last 1 expected 0",
+        "phase": "post"
+      },
+      {
+        "category": "data_last",
+        "cycle": 6,
+        "detail": "presented m_last 1 expected 0",
+        "phase": "pre"
+      },
+      {
+        "category": "data_last",
+        "cycle": 6,
+        "detail": "transferred m_last 1 expected 0 (frame 0 byte 0)",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [
+      {
+        "category": "completion_unresolved",
+        "cycle": 137,
+        "detail": "scoreboard not fully known; completion cannot be proven",
+        "phase": "end"
+      }
+    ],
+    "verdict": "FAIL"
+  },
+  "reset_does_not_clear_data": {
+    "checked_rows": 135,
+    "failures": [
+      {
+        "category": "reset_clear",
+        "cycle": 6,
+        "detail": "m_valid high after reset edge",
+        "phase": "post"
+      },
+      {
+        "category": "data_spurious",
+        "cycle": 7,
+        "detail": "m_valid presented with no accepted input byte to justify it (inputs accepted at earlier edges)",
+        "phase": "pre"
+      },
+      {
+        "category": "data_spurious",
+        "cycle": 7,
+        "detail": "data beat transferred without previously accepted input to justify it",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [
+      {
+        "category": "completion_unresolved",
+        "cycle": 134,
+        "detail": "scoreboard not fully known; completion cannot be proven",
+        "phase": "end"
+      }
+    ],
+    "verdict": "FAIL"
+  },
+  "reset_does_not_clear_status": {
+    "checked_rows": 135,
+    "failures": [
+      {
+        "category": "reset_clear",
+        "cycle": 6,
+        "detail": "h_valid high after reset edge",
+        "phase": "post"
+      },
+      {
+        "category": "status_premature_or_spurious",
+        "cycle": 7,
+        "detail": "h_valid presented without a completed accepted frame (inputs accepted at earlier edges)",
+        "phase": "pre"
+      },
+      {
+        "category": "status_premature_or_spurious",
+        "cycle": 7,
+        "detail": "status transferred before its input frame completed at an earlier edge",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [
+      {
+        "category": "completion_unresolved",
+        "cycle": 134,
+        "detail": "scoreboard not fully known; completion cannot be proven",
+        "phase": "end"
+      }
+    ],
+    "verdict": "FAIL"
+  },
+  "source_changes_while_blocked": {
+    "checked_rows": 0,
+    "failures": [
+      {
+        "category": "assumption_violation",
+        "cycle": 4,
+        "detail": "source changed s_data while blocked",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [],
+    "verdict": "INVALID_INPUT"
+  },
+  "spurious_stalled_data_then_reset": {
+    "checked_rows": 132,
+    "failures": [
+      {
+        "category": "data_spurious",
+        "cycle": 2,
+        "detail": "m_valid presented with no accepted input byte to justify it (inputs accepted at earlier edges)",
+        "phase": "pre"
+      },
+      {
+        "category": "data_spurious",
+        "cycle": 2,
+        "detail": "m_valid presented with no accepted input byte to justify it (inputs accepted up to and including this edge)",
+        "phase": "post"
+      }
+    ],
+    "unknown": [],
+    "verdict": "FAIL"
+  },
+  "spurious_stalled_status_then_reset": {
+    "checked_rows": 132,
+    "failures": [
+      {
+        "category": "status_premature_or_spurious",
+        "cycle": 2,
+        "detail": "h_valid presented without a completed accepted frame (inputs accepted at earlier edges)",
+        "phase": "pre"
+      },
+      {
+        "category": "status_premature_or_spurious",
+        "cycle": 2,
+        "detail": "h_valid presented without a completed accepted frame (inputs accepted up to and including this edge)",
+        "phase": "post"
+      }
+    ],
+    "unknown": [],
+    "verdict": "FAIL"
+  },
+  "status_changes_while_stalled": {
+    "checked_rows": 139,
+    "failures": [
+      {
+        "category": "status_stability",
+        "cycle": 6,
+        "detail": "h_length changed while held",
+        "phase": "post"
+      },
+      {
+        "category": "status_payload",
+        "cycle": 6,
+        "detail": "presented h_length 7 expected 4",
+        "phase": "post"
+      },
+      {
+        "category": "status_payload",
+        "cycle": 7,
+        "detail": "presented h_length 7 expected 4",
+        "phase": "pre"
+      },
+      {
+        "category": "status_payload",
+        "cycle": 7,
+        "detail": "transferred h_length 7 expected 4 (status 0)",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [],
+    "verdict": "FAIL"
+  },
+  "unknown_payload": {
+    "checked_rows": 138,
+    "failures": [],
+    "unknown": [
+      {
+        "category": "x_payload",
+        "cycle": 5,
+        "detail": "m_data X/Z while m_valid",
+        "phase": "post"
+      },
+      {
+        "category": "x_payload",
+        "cycle": 6,
+        "detail": "m_data X/Z while m_valid",
+        "phase": "pre"
+      },
+      {
+        "category": "data_unresolved",
+        "cycle": 6,
+        "detail": "transferred byte not determinable",
+        "phase": "pre"
+      }
+    ],
+    "verdict": "UNRESOLVED"
+  },
+  "unknown_status": {
+    "checked_rows": 138,
+    "failures": [],
+    "unknown": [
+      {
+        "category": "x_payload",
+        "cycle": 5,
+        "detail": "h_original_length X/Z while h_valid",
+        "phase": "post"
+      },
+      {
+        "category": "x_payload",
+        "cycle": 6,
+        "detail": "h_original_length X/Z while h_valid",
+        "phase": "pre"
+      },
+      {
+        "category": "status_unresolved",
+        "cycle": 6,
+        "detail": "h_original_length X/Z on transfer",
+        "phase": "pre"
+      }
+    ],
+    "verdict": "UNRESOLVED"
+  },
+  "wrong_payload": {
+    "checked_rows": 138,
+    "failures": [
+      {
+        "category": "data_payload",
+        "cycle": 5,
+        "detail": "presented m_data 99 expected 11",
+        "phase": "post"
+      },
+      {
+        "category": "data_payload",
+        "cycle": 6,
+        "detail": "presented m_data 99 expected 11",
+        "phase": "pre"
+      },
+      {
+        "category": "data_payload",
+        "cycle": 6,
+        "detail": "transferred m_data 99 expected 11 (frame 0 byte 0)",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [],
+    "verdict": "FAIL"
+  },
+  "wrong_status": {
+    "checked_rows": 135,
+    "failures": [
+      {
+        "category": "status_payload",
+        "cycle": 2,
+        "detail": "presented h_length 5 expected 4",
+        "phase": "post"
+      },
+      {
+        "category": "status_payload",
+        "cycle": 3,
+        "detail": "presented h_length 5 expected 4",
+        "phase": "pre"
+      },
+      {
+        "category": "status_payload",
+        "cycle": 3,
+        "detail": "transferred h_length 5 expected 4 (status 0)",
+        "phase": "pre"
+      }
+    ],
+    "unknown": [],
+    "verdict": "FAIL"
+  }
+}

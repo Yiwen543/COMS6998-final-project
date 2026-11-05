@@ -1,0 +1,29 @@
+{
+  "body": "reg seen=0, past_reset=0;\nreg hold_m=0, hold_h=0;\nreg [8:0] saved_m=0;\nreg [33:0] saved_h=0;\nreg tracking=1;\nreg [63:0] bytes_q [0:63];\nreg [3:0] lengths [0:63];\nreg complete_q [0:63];\nreg live_m [0:63];\nreg live_h [0:63];\nreg [5:0] wr=0, rd_m=0, rd_h=0;\nreg [3:0] in_pos=0, out_pos=0;\nreg [7:0] quiet=0;\ninteger i;\nreg justified, expected_last, drained;\nreg [7:0] expected_byte;\nreg [3:0] adjusted_m, adjusted_h;\ninitial begin\n    for (i=0; i<64; i=i+1) begin\n        bytes_q[i]=0;\n        lengths[i]=0;\n        complete_q[i]=0;\n        live_m[i]=0;\n        live_h[i]=0;\n    end\nend\nalways @* begin\n    adjusted_m=lengths[rd_m];\n    if (lengths[rd_m]<4) adjusted_m=4;\n    else if (lengths[rd_m]>8) adjusted_m=8;\n    adjusted_h=lengths[rd_h];\n    if (lengths[rd_h]<4) adjusted_h=4;\n    else if (lengths[rd_h]>8) adjusted_h=8;\n    justified=0;\n    expected_byte=0;\n    expected_last=0;\n    if (live_m[rd_m] && out_pos<8) begin\n        if (out_pos<lengths[rd_m]) begin\n            justified=1;\n            expected_byte=bytes_q[rd_m][out_pos*8 +: 8];\n        end else if (complete_q[rd_m] && out_pos<adjusted_m) begin\n            justified=1;\n            expected_byte=0;\n        end\n        if (complete_q[rd_m]) begin\n            if (out_pos>=adjusted_m) justified=0;\n            expected_last=(out_pos==adjusted_m-1);\n        end else expected_last=(out_pos==7);\n    end\n    drained=(in_pos==0);\n    for (integer k=0; k<64; k=k+1) begin\n        if (live_m[k] || live_h[k]) drained=0;\n    end\nend\nassign active[0]=seen && (past_reset || (tracking && quiet==128));\nassign ok[0]=past_reset ? (!m_valid && !h_valid) : (drained && !m_valid && !h_valid);\nassign active[1]=seen && hold_m;\nassign ok[1]=m_valid && ({m_last,m_data}==saved_m);\nassign active[2]=seen && hold_h;\nassign ok[2]=h_valid && ({h_pad,h_truncate,h_length,h_original_length}==saved_h);\nassign active[3]=seen && tracking && !past_reset && m_valid;\nassign ok[3]=justified && (m_data==expected_byte);\nassign active[4]=seen && tracking && !past_reset && m_valid;\nassign ok[4]=justified && (m_last==expected_last);\nassign active[5]=seen && tracking && !past_reset && h_valid;\nassign ok[5]=live_h[rd_h] && complete_q[rd_h] &&\n    (h_original_length=={12'b0,lengths[rd_h]}) &&\n    (h_length=={12'b0,adjusted_h}) &&\n    (h_pad==(lengths[rd_h]<4)) &&\n    (h_truncate==(lengths[rd_h]>8));\nalways @(posedge clk) begin\n    seen<=1;\n    past_reset<=rst;\n    hold_m<=!rst && m_valid && !m_ready;\n    hold_h<=!rst && h_valid && !h_ready;\n    saved_m<={m_last,m_data};\n    saved_h<={h_pad,h_truncate,h_length,h_original_length};\n    if (rst) begin\n        tracking<=1;\n        wr<=0;\n        rd_m<=0;\n        rd_h<=0;\n        in_pos<=0;\n        out_pos<=0;\n        quiet<=0;\n        for (integer j=0; j<64; j=j+1) begin\n            lengths[j]<=0;\n            complete_q[j]<=0;\n            live_m[j]<=0;\n            live_h[j]<=0;\n        end\n    end else begin\n        if (!s_valid && m_ready && h_ready) begin\n            if (quiet<128) quiet<=quiet+1'b1;\n        end else quiet<=0;\n        if (tracking) begin\n            if (m_valid && m_ready) begin\n                if (m_last) begin\n                    live_m[rd_m]<=0;\n                    rd_m<=rd_m+1'b1;\n                    out_pos<=0;\n                end else if (out_pos<8) out_pos<=out_pos+1'b1;\n            end\n            if (h_valid && h_ready) begin\n                live_h[rd_h]<=0;\n                rd_h<=rd_h+1'b1;\n            end\n            if (s_valid && s_ready) begin\n                if (in_pos==0) begin\n                    if (live_m[wr] || live_h[wr]) tracking<=0;\n                    live_m[wr]<=1;\n                    live_h[wr]<=1;\n                    complete_q[wr]<=0;\n                end\n                if (in_pos<8) bytes_q[wr][in_pos*8 +: 8]<=s_data;\n                lengths[wr]<=in_pos+1'b1;\n                if (s_last) begin\n                    complete_q[wr]<=1;\n                    wr<=wr+1'b1;\n                    in_pos<=0;\n                end else if (in_pos<14) in_pos<=in_pos+1'b1;\n            end\n        end\n    end\nend\n",
+  "properties": [
+    {
+      "description": "Synchronous reset clears both response valids after its edge. After 128 consecutive reset-free, no-offer, both-ready edges, tracked input and independent response obligations must be drained.",
+      "id": "P0"
+    },
+    {
+      "description": "A blocked data presentation retains valid, data and last across the next edge unless that edge resets the controller.",
+      "id": "P1"
+    },
+    {
+      "description": "A blocked status presentation retains valid and every status field across the next edge unless that edge resets the controller.",
+      "id": "P2"
+    },
+    {
+      "description": "Every valid data presentation, including a blocked one, is justified by the accepted input prefix or completed-frame zero padding. Bytes preserve frame order and retain only the first eight input bytes.",
+      "id": "P3"
+    },
+    {
+      "description": "Every valid data presentation has last exactly on the final byte of the frame length clamped to four through eight. Incomplete input prefixes cannot terminate before byte eight; excess output beats are rejected.",
+      "id": "P4"
+    },
+    {
+      "description": "Every valid status independently describes the next completed accepted input frame: exact original length, clamped output length, padding flag and truncation flag. Reset discards both response queues without imposing completion order between them.",
+      "id": "P5"
+    }
+  ]
+}

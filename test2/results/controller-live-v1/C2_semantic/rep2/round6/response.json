@@ -1,0 +1,29 @@
+{
+  "body": "reg started = 0, reset_edge = 0;\nreg [5:0] bad = 0;\nreg [7:0] wr_seq = 0, data_seq = 0, hdr_seq = 0;\nreg [3:0] in_len = 0, data_pos = 0;\nreg [63:0] frame_bytes [0:63];\nreg [3:0] frame_len [0:63];\nreg tracking = 1;\nreg m_hold = 0, h_hold = 0;\nreg [7:0] held_data = 0;\nreg held_last = 0;\nreg [33:0] held_header = 0;\nreg [5:0] enable_check, pass_check;\nreg data_exists, data_complete, byte_known;\nreg [7:0] data_distance, header_distance;\nreg [3:0] known_len, adjusted_len;\nreg [7:0] expected_byte;\nreg expected_last;\nreg [3:0] status_len, status_adjusted;\ninteger k;\ninitial begin\n    for (k=0; k<64; k=k+1) begin\n        frame_bytes[k] = 0;\n        frame_len[k] = 0;\n    end\nend\n\nalways @* begin\n    data_distance = wr_seq - data_seq;\n    header_distance = wr_seq - hdr_seq;\n    data_complete = (data_distance != 0) && (data_distance < 64);\n    data_exists = data_complete || ((data_seq == wr_seq) && (in_len != 0));\n    known_len = data_complete ? frame_len[data_seq[5:0]] :\n                ((data_seq == wr_seq) ? in_len : 4'd0);\n    adjusted_len = known_len < 4 ? 4 : (known_len > 8 ? 8 : known_len);\n    byte_known = data_exists && ((data_pos < known_len && data_pos < 8) ||\n                  (data_complete && data_pos < adjusted_len));\n    expected_byte = 0;\n    if (data_pos < known_len && data_pos < 8)\n        expected_byte = frame_bytes[data_seq[5:0]][data_pos*8 +: 8];\n    expected_last = data_complete ? (data_pos == adjusted_len-1) : (data_pos == 7);\n    status_len = frame_len[hdr_seq[5:0]];\n    status_adjusted = status_len < 4 ? 4 : (status_len > 8 ? 8 : status_len);\n\n    enable_check = 0;\n    pass_check = 6'b111111;\n    enable_check[0] = started && reset_edge;\n    pass_check[0] = !m_valid && !h_valid;\n    enable_check[1] = started && !reset_edge && tracking && m_valid;\n    pass_check[1] = byte_known && (m_data == expected_byte);\n    enable_check[2] = started && !reset_edge && tracking && m_valid;\n    pass_check[2] = byte_known && (m_last == expected_last);\n    enable_check[3] = started && !reset_edge && tracking && h_valid;\n    pass_check[3] = (header_distance != 0) && (header_distance < 64) &&\n                    (h_original_length == {12'b0,status_len}) &&\n                    (h_length == {12'b0,status_adjusted}) &&\n                    (h_pad == (status_len < 4)) &&\n                    (h_truncate == (status_len > 8));\n    enable_check[4] = started && !reset_edge && m_hold;\n    pass_check[4] = m_valid && (m_data == held_data) && (m_last == held_last);\n    enable_check[5] = started && !reset_edge && h_hold;\n    pass_check[5] = h_valid &&\n        ({h_pad,h_truncate,h_length,h_original_length} == held_header);\nend\nassign active = enable_check | bad;\nassign ok = pass_check & ~bad;\n\nalways @(posedge clk) begin\n    bad <= bad | (enable_check & ~pass_check);\n    reset_edge <= rst;\n    if (rst) begin\n        started <= 1;\n        wr_seq <= 0;\n        data_seq <= 0;\n        hdr_seq <= 0;\n        in_len <= 0;\n        data_pos <= 0;\n        tracking <= 1;\n        m_hold <= 0;\n        h_hold <= 0;\n    end else begin\n        m_hold <= m_valid && !m_ready;\n        h_hold <= h_valid && !h_ready;\n        held_data <= m_data;\n        held_last <= m_last;\n        held_header <= {h_pad,h_truncate,h_length,h_original_length};\n        if (started && tracking) begin\n            if (s_valid && s_ready) begin\n                if (in_len < 8)\n                    frame_bytes[wr_seq[5:0]][in_len*8 +: 8] <= s_data;\n                frame_len[wr_seq[5:0]] <= in_len + 1'b1;\n                if (s_last) begin\n                    wr_seq <= wr_seq + 1'b1;\n                    in_len <= 0;\n                    if (((wr_seq + 8'd1 - data_seq) >= 64) ||\n                        ((wr_seq + 8'd1 - hdr_seq) >= 64))\n                        tracking <= 0;\n                end else begin\n                    in_len <= in_len + 1'b1;\n                end\n            end\n            if (m_valid && m_ready && byte_known) begin\n                if (expected_last) begin\n                    data_seq <= data_seq + 1'b1;\n                    data_pos <= 0;\n                end else begin\n                    data_pos <= data_pos + 1'b1;\n                end\n            end\n            if (h_valid && h_ready && header_distance != 0 && header_distance < 64)\n                hdr_seq <= hdr_seq + 1'b1;\n        end\n    end\nend\n",
+  "properties": [
+    {
+      "description": "Following a synchronous reset edge, both response valids must be clear. Reset cancels outstanding epoch state without erasing recorded alarms.",
+      "id": "P0"
+    },
+    {
+      "description": "Every presented data byte, including a blocked byte, must match the next accepted input prefix in frame order. Only a completed short input frame justifies zero padding.",
+      "id": "P1"
+    },
+    {
+      "description": "Every presented data beat must have the correct last marker for the output length clamped to four through eight bytes, supporting partially accepted frames.",
+      "id": "P2"
+    },
+    {
+      "description": "Every presented status must describe the next completed accepted input frame with exact original length, adjusted length, padding and truncation flags. Status and data retire independently.",
+      "id": "P3"
+    },
+    {
+      "description": "A blocked data response must preserve valid, data and last across the next edge unless that edge resets the controller.",
+      "id": "P4"
+    },
+    {
+      "description": "A blocked status response must preserve valid and every status field across the next edge unless that edge resets the controller.",
+      "id": "P5"
+    }
+  ]
+}

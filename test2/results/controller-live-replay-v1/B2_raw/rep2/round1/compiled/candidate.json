@@ -1,0 +1,29 @@
+{
+  "body": "reg seen = 1'b0;\nreg reset_edge = 1'b0;\nreg hold_m = 1'b0, hold_h = 1'b0;\nreg [8:0] saved_m = 9'd0;\nreg [33:0] saved_h = 34'd0;\n\n// Independent consumers of a bounded accepted-input history.\nreg [63:0] bytes_q [0:63];\nreg [3:0] length_q [0:63];\nreg complete_q [0:63];\nreg [7:0] input_seq = 8'd0;\nreg [7:0] data_seq = 8'd0;\nreg [7:0] header_seq = 8'd0;\nreg [3:0] input_length = 4'd0;\nreg [3:0] data_position = 4'd0;\nreg tracking = 1'b1;\nwire [7:0] data_distance = input_seq - data_seq;\nwire [7:0] header_distance = input_seq - header_seq;\nwire data_exists = (data_distance != 0) || (input_length != 0);\nwire header_exists = (header_distance != 0);\nwire [3:0] dl = length_q[data_seq[5:0]];\nwire dc = (data_distance != 0) && complete_q[data_seq[5:0]];\nwire [3:0] adjusted_dl = dl < 4 ? 4 : (dl > 8 ? 8 : dl);\nwire [3:0] hl = length_q[header_seq[5:0]];\nwire [15:0] adjusted_hl = hl < 4 ? 16'd4 : (hl > 8 ? 16'd8 : {12'd0,hl});\nwire byte_known = data_exists && (data_position < 8) &&\n    ((data_position < dl) || (dc && data_position < adjusted_dl));\nreg [7:0] expected_byte;\nalways @* begin\n    expected_byte = 8'd0;\n    if (data_position < dl && data_position < 8)\n        expected_byte = bytes_q[data_seq[5:0]][data_position*8 +: 8];\nend\nwire last_known = byte_known && (dc || data_position == 7 || data_position + 1 < dl);\nwire expected_last = (data_position == 7) || (dc && data_position + 1 == adjusted_dl);\n\nassign active[0] = seen && reset_edge;\nassign ok[0] = !m_valid && !h_valid;\nassign active[1] = seen && !reset_edge && hold_m;\nassign ok[1] = m_valid && ({m_last,m_data} == saved_m);\nassign active[2] = seen && !reset_edge && hold_h;\nassign ok[2] = h_valid && ({h_pad,h_truncate,h_length,h_original_length} == saved_h);\nassign active[3] = seen && !reset_edge && tracking && m_valid;\nassign ok[3] = byte_known && m_data == expected_byte;\nassign active[4] = seen && !reset_edge && tracking && h_valid;\nassign ok[4] = header_exists && complete_q[header_seq[5:0]] &&\n    h_original_length == {12'd0,hl} && h_length == adjusted_hl &&\n    h_pad == (hl < 4) && h_truncate == (hl > 8);\nassign active[5] = seen && !reset_edge && tracking && m_valid;\nassign ok[5] = byte_known && (!last_known ? !m_last : m_last == expected_last);\n\nalways @(posedge clk) begin\n    seen <= 1'b1;\n    reset_edge <= rst;\n    hold_m <= !rst && m_valid && !m_ready;\n    hold_h <= !rst && h_valid && !h_ready;\n    saved_m <= {m_last,m_data};\n    saved_h <= {h_pad,h_truncate,h_length,h_original_length};\n    if (rst) begin\n        input_seq <= 0;\n        data_seq <= 0;\n        header_seq <= 0;\n        input_length <= 0;\n        data_position <= 0;\n        tracking <= 1'b1;\n    end else if (tracking) begin\n        // Stop rather than alias history if the monitor's capacity is exceeded.\n        if (data_distance >= 63 || header_distance >= 63)\n            tracking <= 1'b0;\n        if (s_valid && s_ready) begin\n            if (input_length < 8)\n                bytes_q[input_seq[5:0]][input_length*8 +: 8] <= s_data;\n            length_q[input_seq[5:0]] <= input_length + 1'b1;\n            complete_q[input_seq[5:0]] <= s_last;\n            if (s_last) begin\n                input_seq <= input_seq + 1'b1;\n                input_length <= 0;\n            end else begin\n                input_length <= input_length + 1'b1;\n            end\n        end\n        if (m_valid && m_ready && byte_known) begin\n            if (expected_last && last_known) begin\n                data_seq <= data_seq + 1'b1;\n                data_position <= 0;\n            end else begin\n                data_position <= data_position + 1'b1;\n            end\n        end\n        if (h_valid && h_ready && header_exists)\n            header_seq <= header_seq + 1'b1;\n    end\nend\n",
+  "properties": [
+    {
+      "description": "Synchronous reset clears both response valids after the reset edge; pre-reset presentations are not incorrectly suppressed.",
+      "id": "P0"
+    },
+    {
+      "description": "A blocked data response retains valid, byte and last across the edge unless reset cancels it.",
+      "id": "P1"
+    },
+    {
+      "description": "A blocked status response retains valid and every status field independently of data readiness.",
+      "id": "P2"
+    },
+    {
+      "description": "Every presented data byte is justified by the accepted input prefix in frame order, preserving the first eight bytes and inserting only completion-justified zero padding.",
+      "id": "P3"
+    },
+    {
+      "description": "Every presented status belongs to the next completed accepted input frame and reports its original length, clamped length, padding and truncation correctly.",
+      "id": "P4"
+    },
+    {
+      "description": "Presented data has last exactly on the adjusted frame boundary; an incomplete prefix cannot justify an early last. Data and status advance independently and reset starts a fresh epoch.",
+      "id": "P5"
+    }
+  ]
+}

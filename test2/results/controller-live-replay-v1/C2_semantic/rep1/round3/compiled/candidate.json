@@ -1,0 +1,29 @@
+{
+  "body": "reg seen = 0;\nreg reset_edge = 0;\nreg tracked = 1;\nreg [7:0] bytes_q [0:255];\nreg lasts_q [0:255];\nreg [15:0] lengths_q [0:127];\nreg [7:0] bw = 0, br = 0;\nreg [6:0] hw = 0, hr = 0;\nreg [8:0] bc = 0;\nreg [7:0] hc = 0;\nreg [15:0] input_pos = 0;\nreg ms = 0, hs = 0;\nreg [8:0] held_m = 0;\nreg [33:0] held_h = 0;\nreg [7:0] tail_count = 0;\ninteger added;\ninteger k;\ninteger idx;\nwire take_s = s_valid && s_ready && !rst;\nwire take_m = m_valid && m_ready && !rst;\nwire take_h = h_valid && h_ready && !rst;\nwire enabled = seen && tracked;\nwire [15:0] expected_original = lengths_q[hr];\nwire [15:0] expected_length = expected_original < 4 ? 16'd4 : (expected_original > 8 ? 16'd8 : expected_original);\nwire final_tail = enabled && !rst && !s_valid && m_ready && h_ready && tail_count >= 128;\n\nassign active[0] = (seen && reset_edge) || final_tail;\nassign ok[0] = (!reset_edge || (!m_valid && !h_valid)) &&\n    (!final_tail || (bc == 0 && hc == 0 && input_pos == 0 && !m_valid && !h_valid));\nassign active[1] = enabled && m_valid;\nassign ok[1] = (bc != 0) && (m_data == bytes_q[br]);\nassign active[2] = enabled && m_valid;\nassign ok[2] = (bc != 0) && (m_last == lasts_q[br]);\nassign active[3] = enabled && h_valid;\nassign ok[3] = (hc != 0) &&\n    (h_original_length == expected_original) &&\n    (h_length == expected_length) &&\n    (h_pad == (expected_original < 4)) &&\n    (h_truncate == (expected_original > 8));\nassign active[4] = seen && ms && !reset_edge;\nassign ok[4] = m_valid && ({m_data,m_last} == held_m);\nassign active[5] = seen && hs && !reset_edge;\nassign ok[5] = h_valid &&\n    ({h_pad,h_truncate,h_length,h_original_length} == held_h);\n\nalways @(posedge clk) begin\n    seen <= 1;\n    reset_edge <= rst;\n    ms <= !rst && m_valid && !m_ready;\n    hs <= !rst && h_valid && !h_ready;\n    held_m <= {m_data,m_last};\n    held_h <= {h_pad,h_truncate,h_length,h_original_length};\n    if (rst || s_valid || !m_ready || !h_ready)\n        tail_count <= 0;\n    else if (tail_count < 128)\n        tail_count <= tail_count + 1'b1;\n    if (rst) begin\n        bw <= 0;\n        br <= 0;\n        hw <= 0;\n        hr <= 0;\n        bc <= 0;\n        hc <= 0;\n        input_pos <= 0;\n        tracked <= 1;\n    end else if (tracked) begin\n        added = 0;\n        if (take_s) begin\n            if (input_pos < 8) begin\n                bytes_q[bw] <= s_data;\n                lasts_q[bw] <= (input_pos == 7) || (s_last && input_pos >= 3);\n                added = 1;\n            end\n            if (s_last && input_pos < 3) begin\n                for (k = 1; k <= 3; k = k+1) begin\n                    if (k <= 3-input_pos) begin\n                        idx = (bw+k) & 255;\n                        bytes_q[idx] <= 0;\n                        lasts_q[idx] <= (k == 3-input_pos);\n                    end\n                end\n                added = 4-input_pos;\n            end\n            if (s_last) begin\n                lengths_q[hw] <= input_pos+16'd1;\n                hw <= hw+1'b1;\n                input_pos <= 0;\n            end else begin\n                input_pos <= input_pos+16'd1;\n            end\n        end\n        bw <= bw+added;\n        if (take_m && bc != 0) br <= br+1'b1;\n        bc <= bc+added-((take_m && bc != 0) ? 1 : 0);\n        if (take_h && hc != 0) hr <= hr+1'b1;\n        case ({(take_s && s_last),(take_h && hc != 0)})\n            2'b10: hc <= hc+1'b1;\n            2'b01: hc <= hc-1'b1;\n            default: hc <= hc;\n        endcase\n        // Budget exhaustion disables queue comparisons, not protocol checks.\n        if (bc+added-((take_m && bc != 0) ? 1 : 0) > 256)\n            tracked <= 0;\n        if (take_s && s_last && hc == 128 && !(take_h && hc != 0))\n            tracked <= 0;\n    end\nend\n",
+  "properties": [
+    {
+      "description": "Synchronous reset clears both response valids and cancels the epoch. After a 128-cycle uninterrupted ready-high, reset-low, no-offer tail, all tracked data, status and partial-frame obligations must be drained; this is the finite-tail contract, not an unbounded liveness claim.",
+      "id": "P0"
+    },
+    {
+      "description": "Every presented data byte, including a blocked presentation, matches the oldest expected byte derived only from accepted inputs: preserve the first eight bytes and zero-pad completed short frames to four bytes.",
+      "id": "P1"
+    },
+    {
+      "description": "Every presented data beat has the expected final marker: byte four for padded frames, the original end for lengths four through eight, or byte eight for truncated frames.",
+      "id": "P2"
+    },
+    {
+      "description": "Every presented status matches the oldest completed input frame in original length, adjusted length and padding/truncation flags. Status accounting advances independently of data acceptance.",
+      "id": "P3"
+    },
+    {
+      "description": "A blocked data response retains valid, data and last across edges until acceptance or synchronous reset.",
+      "id": "P4"
+    },
+    {
+      "description": "A blocked status response retains valid and every status field across edges until acceptance or synchronous reset, independently of data-channel progress.",
+      "id": "P5"
+    }
+  ]
+}

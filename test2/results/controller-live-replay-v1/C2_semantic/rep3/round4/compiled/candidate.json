@@ -1,0 +1,29 @@
+{
+  "body": "reg seen=0, reset_edge=0, epoch=0, tracking=1;\nreg [15:0] wr_frame=0, data_frame=0, hdr_frame=0;\nreg [3:0] input_length=0, data_offset=0;\nreg [63:0] frame_bytes [0:63];\nreg [3:0] frame_length [0:63];\nreg data_hold=0, hdr_hold=0;\nreg [8:0] held_data=0;\nreg [33:0] held_header=0;\nreg [7:0] quiet_tail=0;\nwire [33:0] header_now={h_pad,h_truncate,h_length,h_original_length};\nwire input_fire=s_valid && s_ready && !rst;\nwire data_fire=m_valid && m_ready && !rst;\nwire hdr_fire=h_valid && h_ready && !rst;\nwire [15:0] data_distance=wr_frame-data_frame;\nwire [15:0] hdr_distance=wr_frame-hdr_frame;\nwire completed_data_frame=(data_distance!=0) && !data_distance[15];\nwire current_data_frame=(data_frame==wr_frame);\nwire data_available=completed_data_frame || (current_data_frame && input_length!=0);\nwire [3:0] known_length=completed_data_frame ? frame_length[data_frame[5:0]] : input_length;\nwire [3:0] adjusted_length=known_length<4 ? 4 : (known_length>8 ? 8 : known_length);\nwire byte_justified=data_available && data_offset<8 &&\n ((data_offset<known_length) || (completed_data_frame && data_offset<4));\nwire [7:0] expected_byte=data_offset<known_length ?\n (frame_bytes[data_frame[5:0]] >> (data_offset*8)) : 8'd0;\nwire expected_last=(data_offset==7) ||\n (completed_data_frame && data_offset==adjusted_length-1);\nwire status_available=(hdr_distance!=0) && !hdr_distance[15];\nwire [3:0] status_length=frame_length[hdr_frame[5:0]];\nwire [15:0] status_adjusted=status_length<4 ? 16'd4 :\n (status_length>8 ? 16'd8 : {12'd0,status_length});\nwire tail_check=quiet_tail>=128;\nwire data_drained=(input_length==0) && (data_frame==wr_frame) && !m_valid;\nwire status_drained=(hdr_frame==wr_frame) && !h_valid;\nassign active[0]=seen && reset_edge;\nassign ok[0]=!m_valid && !h_valid;\nassign active[1]=seen && epoch && !reset_edge && data_hold;\nassign ok[1]=m_valid && ({m_last,m_data}==held_data);\nassign active[2]=seen && epoch && !reset_edge && hdr_hold;\nassign ok[2]=h_valid && (header_now==held_header);\nassign active[3]=seen && epoch && tracking && !reset_edge && (m_valid || tail_check);\nassign ok[3]=(!m_valid || byte_justified) && (!tail_check || data_drained);\nassign active[4]=seen && epoch && tracking && !reset_edge && m_valid && byte_justified;\nassign ok[4]=(m_data==expected_byte) && (m_last==expected_last);\nassign active[5]=seen && epoch && tracking && !reset_edge && (h_valid || tail_check);\nassign ok[5]=(!tail_check || status_drained) && (!h_valid ||\n (status_available && (h_original_length=={12'd0,status_length}) &&\n (h_length==status_adjusted) && (h_pad==(status_length<4)) &&\n (h_truncate==(status_length>8))));\nalways @(posedge clk) begin\n seen<=1;\n reset_edge<=rst;\n if (rst) begin\n  epoch<=1;\n  tracking<=1;\n  wr_frame<=0;\n  data_frame<=0;\n  hdr_frame<=0;\n  input_length<=0;\n  data_offset<=0;\n  data_hold<=0;\n  hdr_hold<=0;\n  quiet_tail<=0;\n end else begin\n  data_hold<=m_valid && !m_ready;\n  hdr_hold<=h_valid && !h_ready;\n  held_data<={m_last,m_data};\n  held_header<=header_now;\n  if (s_valid || !m_ready || !h_ready) quiet_tail<=0;\n  else if (quiet_tail<255) quiet_tail<=quiet_tail+1'b1;\n  if (epoch && tracking) begin\n   // Disable only bounded scoreboarding before circular storage can alias.\n   if ((!data_distance[15] && data_distance>=63) ||\n       (!hdr_distance[15] && hdr_distance>=63)) tracking<=0;\n   if (input_fire) begin\n    if (input_length<8)\n     frame_bytes[wr_frame[5:0]][input_length*8 +: 8]<=s_data;\n    if (s_last) begin\n     frame_length[wr_frame[5:0]]<=input_length+1'b1;\n     wr_frame<=wr_frame+1'b1;\n     input_length<=0;\n    end else if (input_length<12) input_length<=input_length+1'b1;\n    else tracking<=0;\n   end\n   // Retire each response channel independently using expected boundaries.\n   if (data_fire && byte_justified) begin\n    if (expected_last) begin\n     data_frame<=data_frame+1'b1;\n     data_offset<=0;\n    end else data_offset<=data_offset+1'b1;\n   end\n   if (hdr_fire && status_available) hdr_frame<=hdr_frame+1'b1;\n  end\n end\nend\n",
+  "properties": [
+    {
+      "description": "After a synchronous reset edge both response valids are clear. Reset cancels the scoreboard epoch without prescribing invalid payloads or input readiness.",
+      "id": "P0"
+    },
+    {
+      "description": "A blocked data response retains valid, data and last until acceptance or a reset edge.",
+      "id": "P1"
+    },
+    {
+      "description": "A blocked status response retains valid and all status fields until acceptance or a reset edge, independently of data readiness.",
+      "id": "P2"
+    },
+    {
+      "description": "Every data presentation, even when blocked, is justified by an accepted input prefix or completed-frame padding. After 128 consecutive no-offer, both-ready cycles, tracked input and data obligations are drained.",
+      "id": "P3"
+    },
+    {
+      "description": "Justified data presentations preserve byte order, append zeros to minimum length four, truncate at length eight, and present last exactly at the expected frame boundary.",
+      "id": "P4"
+    },
+    {
+      "description": "Every status presentation describes the next completed accepted input frame with exact original length, clamped length and adjustment flags. Status retirement is independent of data retirement; tracked status obligations are drained after the 128-cycle ready-high idle tail.",
+      "id": "P5"
+    }
+  ]
+}
