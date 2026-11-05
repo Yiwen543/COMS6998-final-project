@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "yosys",
+    "-Q",
+    "-T",
+    "-p",
+    "read_verilog -sv /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/private/original_noformal.v; chparam -set BW 8 -set LGFLEN 4 -set OPT_ASYNC_READ 1 -set OPT_WRITE_ON_FULL 0 -set OPT_READ_ON_EMPTY 0 sfifo; rename sfifo gold; read_verilog -sv /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/public/sfifo.v; chparam -set BW 8 -set LGFLEN 4 -set OPT_ASYNC_READ 1 -set OPT_WRITE_ON_FULL 0 -set OPT_READ_ON_EMPTY 0 sfifo; rename sfifo gate; proc; memory; equiv_make gold gate equiv; hierarchy -top equiv; equiv_simple; equiv_induct -seq 24; equiv_status -assert"
+  ],
+  "log_sha256": "131b491a3891873c5d31c485ed50eaf04e6dec107d47f9c3e20265ccbc710c1b",
+  "returncode": 0,
+  "scope": "Fixed-parameter two-state implementation correspondence, not specification correctness",
+  "seconds": 0.05517841689288616,
+  "status": "complete"
+}

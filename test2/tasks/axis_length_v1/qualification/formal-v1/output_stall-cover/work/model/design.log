@@ -1,0 +1,1262 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)
+
+-- Executing script file `../model/design.ys' --
+
+1. Executing Verilog-2005 frontend: axis_frame_length_adjust.v
+Parsing formal SystemVerilog input from `axis_frame_length_adjust.v' to AST representation.
+Storing AST representation for module `$abstract\axis_frame_length_adjust'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: task_top_v3.sv
+Parsing formal SystemVerilog input from `task_top_v3.sv' to AST representation.
+Storing AST representation for module `$abstract\frame_task'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: harness.sv
+Parsing formal SystemVerilog input from `harness.sv' to AST representation.
+Storing AST representation for module `$abstract\formal_top'.
+Successfully finished Verilog frontend.
+
+4. Executing PREP pass.
+
+4.1. Executing HIERARCHY pass (managing design hierarchy).
+
+4.2. Executing AST frontend in derive mode using pre-parsed AST for module `\formal_top'.
+Generating RTLIL representation for module `\formal_top'.
+
+4.2.1. Analyzing design hierarchy..
+Top module:  \formal_top
+
+4.2.2. Executing AST frontend in derive mode using pre-parsed AST for module `\frame_task'.
+Generating RTLIL representation for module `\frame_task'.
+
+4.2.3. Analyzing design hierarchy..
+Top module:  \formal_top
+Used module:     \frame_task
+Parameter \DATA_WIDTH = 8
+Parameter \KEEP_ENABLE = 0
+Parameter \KEEP_WIDTH = 1
+Parameter \ID_ENABLE = 0
+Parameter \DEST_ENABLE = 0
+Parameter \USER_ENABLE = 0
+
+4.2.4. Executing AST frontend in derive mode using pre-parsed AST for module `\axis_frame_length_adjust'.
+Parameter \DATA_WIDTH = 8
+Parameter \KEEP_ENABLE = 0
+Parameter \KEEP_WIDTH = 1
+Parameter \ID_ENABLE = 0
+Parameter \DEST_ENABLE = 0
+Parameter \USER_ENABLE = 0
+Generating RTLIL representation for module `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust'.
+
+4.2.5. Analyzing design hierarchy..
+Top module:  \formal_top
+Used module:     \frame_task
+Used module:         $paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust
+
+4.2.6. Analyzing design hierarchy..
+Top module:  \formal_top
+Used module:     \frame_task
+Used module:         $paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust
+Removing unused module `$abstract\formal_top'.
+Removing unused module `$abstract\frame_task'.
+Removing unused module `$abstract\axis_frame_length_adjust'.
+Removed 3 unused modules.
+Module formal_top directly or indirectly contains formal properties -> setting "keep" attribute.
+
+4.3. Executing PROC pass (convert processes to netlists).
+
+4.3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 1 empty switch in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:107$148'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:107$148'.
+Found and cleaned up 1 empty switch in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+Cleaned up 2 empty switches.
+
+4.3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$axis_frame_length_adjust.v:579$147 in module $paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.
+Marked 3 switch rules as full_case in process $proc$axis_frame_length_adjust.v:551$144 in module $paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.
+Marked 1 switch rules as full_case in process $proc$axis_frame_length_adjust.v:483$137 in module $paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.
+Marked 28 switch rules as full_case in process $proc$axis_frame_length_adjust.v:168$67 in module $paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.
+Removed a total of 0 dead cases.
+
+4.3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 8 redundant assignments.
+Promoted 77 assignments to connections.
+
+4.3.4. Executing PROC_INIT pass (extract init attributes).
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:532$179'.
+  Set init value: \temp_m_axis_tdest_reg = 8'00000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:531$178'.
+  Set init value: \temp_m_axis_tid_reg = 8'00000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:530$177'.
+  Set init value: \temp_m_axis_tlast_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:529$176'.
+  Set init value: \temp_m_axis_tvalid_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:528$175'.
+  Set init value: \temp_m_axis_tkeep_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:527$174'.
+  Set init value: \temp_m_axis_tdata_reg = 8'00000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:525$173'.
+  Set init value: \m_axis_tuser_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:524$172'.
+  Set init value: \m_axis_tdest_reg = 8'00000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:523$171'.
+  Set init value: \m_axis_tid_reg = 8'00000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:522$170'.
+  Set init value: \m_axis_tlast_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:521$169'.
+  Set init value: \m_axis_tvalid_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:520$168'.
+  Set init value: \m_axis_tkeep_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:519$167'.
+  Set init value: \m_axis_tdata_reg = 8'00000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:157$166'.
+  Set init value: \s_axis_tready_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:150$165'.
+  Set init value: \m_axis_tready_int_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:144$164'.
+  Set init value: \status_frame_original_length_reg = 16'0000000000000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:143$163'.
+  Set init value: \status_frame_length_reg = 16'0000000000000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:142$162'.
+  Set init value: \status_frame_truncate_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:141$161'.
+  Set init value: \status_frame_pad_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:140$160'.
+  Set init value: \status_valid_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:138$159'.
+  Set init value: \last_word_user_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:137$158'.
+  Set init value: \last_word_dest_reg = 8'00000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:136$157'.
+  Set init value: \last_word_id_reg = 8'00000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:135$156'.
+  Set init value: \last_word_keep_reg = 1'0
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:134$155'.
+  Set init value: \last_word_data_reg = 8'00000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:132$154'.
+  Set init value: \long_counter_next = 16'0000000000000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:132$153'.
+  Set init value: \long_counter_reg = 16'0000000000000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:131$152'.
+  Set init value: \short_counter_next = 16'0000000000000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:131$151'.
+  Set init value: \short_counter_reg = 16'0000000000000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:126$150'.
+  Set init value: \frame_ptr_reg = 16'0000000000000000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:121$149'.
+  Set init value: \state_reg = 3'000
+Found init rule in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:533$180'.
+  Set init value: \temp_m_axis_tuser_reg = 1'0
+Found init rule in `\formal_top.$proc$harness.sv:7$66'.
+  Set init value: \past = 1'0
+
+4.3.5. Executing PROC_ARST pass (detect async resets in processes).
+
+4.3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~40 debug messages>
+
+4.3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:532$179'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:531$178'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:530$177'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:529$176'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:528$175'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:527$174'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:525$173'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:524$172'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:523$171'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:522$170'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:521$169'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:520$168'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:519$167'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:157$166'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:150$165'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:144$164'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:143$163'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:142$162'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:141$161'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:140$160'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:138$159'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:137$158'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:136$157'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:135$156'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:134$155'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:132$154'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:132$153'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:131$152'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:131$151'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:126$150'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:121$149'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:533$180'.
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+     1/15: $0\temp_m_axis_tvalid_reg[0:0]
+     2/15: $0\m_axis_tready_int_reg[0:0]
+     3/15: $0\m_axis_tvalid_reg[0:0]
+     4/15: $0\temp_m_axis_tuser_reg[0:0]
+     5/15: $0\temp_m_axis_tdest_reg[7:0]
+     6/15: $0\temp_m_axis_tid_reg[7:0]
+     7/15: $0\temp_m_axis_tlast_reg[0:0]
+     8/15: $0\temp_m_axis_tkeep_reg[0:0]
+     9/15: $0\temp_m_axis_tdata_reg[7:0]
+    10/15: $0\m_axis_tuser_reg[0:0]
+    11/15: $0\m_axis_tdest_reg[7:0]
+    12/15: $0\m_axis_tid_reg[7:0]
+    13/15: $0\m_axis_tlast_reg[0:0]
+    14/15: $0\m_axis_tkeep_reg[0:0]
+    15/15: $0\m_axis_tdata_reg[7:0]
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:551$144'.
+     1/12: $2\store_axis_temp_to_output[0:0]
+     2/12: $3\temp_m_axis_tvalid_next[0:0]
+     3/12: $3\m_axis_tvalid_next[0:0]
+     4/12: $2\store_axis_int_to_output[0:0]
+     5/12: $2\m_axis_tvalid_next[0:0]
+     6/12: $2\store_axis_int_to_temp[0:0]
+     7/12: $2\temp_m_axis_tvalid_next[0:0]
+     8/12: $1\store_axis_int_to_temp[0:0]
+     9/12: $1\store_axis_int_to_output[0:0]
+    10/12: $1\temp_m_axis_tvalid_next[0:0]
+    11/12: $1\m_axis_tvalid_next[0:0]
+    12/12: $1\store_axis_temp_to_output[0:0]
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+     1/11: $0\status_valid_reg[0:0]
+     2/11: $0\s_axis_tready_reg[0:0]
+     3/11: $0\long_counter_reg[15:0]
+     4/11: $0\short_counter_reg[15:0]
+     5/11: $0\frame_ptr_reg[15:0]
+     6/11: $0\state_reg[2:0]
+     7/11: $0\last_word_user_reg[0:0]
+     8/11: $0\last_word_dest_reg[7:0]
+     9/11: $0\last_word_id_reg[7:0]
+    10/11: $0\last_word_keep_reg[0:0]
+    11/11: $0\last_word_data_reg[7:0]
+Creating decoders for process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+     1/235: $17\state_next[2:0]
+     2/235: $20\long_counter_next[15:0]
+     3/235: $20\short_counter_next[15:0]
+     4/235: $17\frame_ptr_next[15:0]
+     5/235: $17\s_axis_tready_next[0:0]
+     6/235: $13\status_frame_original_length_next[15:0]
+     7/235: $17\status_frame_length_next[15:0]
+     8/235: $17\status_frame_truncate_next[0:0]
+     9/235: $17\status_frame_pad_next[0:0]
+    10/235: $17\status_valid_next[0:0]
+    11/235: $9\word_cnt[31:0]
+    12/235: $8\word_cnt[31:0]
+    13/235: $16\s_axis_tready_next[0:0]
+    14/235: $12\status_frame_original_length_next[15:0]
+    15/235: $16\status_frame_length_next[15:0]
+    16/235: $16\status_frame_truncate_next[0:0]
+    17/235: $16\status_frame_pad_next[0:0]
+    18/235: $16\status_valid_next[0:0]
+    19/235: $19\long_counter_next[15:0]
+    20/235: $19\short_counter_next[15:0]
+    21/235: $16\frame_ptr_next[15:0]
+    22/235: $16\state_next[2:0]
+    23/235: $4\i[31:0]
+    24/235: $7\word_cnt[31:0]
+    25/235: $15\state_next[2:0]
+    26/235: $18\long_counter_next[15:0]
+    27/235: $18\short_counter_next[15:0]
+    28/235: $15\frame_ptr_next[15:0]
+    29/235: $13\m_axis_tlast_int[0:0]
+    30/235: $13\m_axis_tkeep_int[0:0]
+    31/235: $15\s_axis_tready_next[0:0]
+    32/235: $15\status_frame_length_next[15:0]
+    33/235: $15\status_frame_truncate_next[0:0]
+    34/235: $15\status_frame_pad_next[0:0]
+    35/235: $15\status_valid_next[0:0]
+    36/235: $17\long_counter_next[15:0]
+    37/235: $17\short_counter_next[15:0]
+    38/235: $14\s_axis_tready_next[0:0]
+    39/235: $12\m_axis_tlast_int[0:0]
+    40/235: $12\m_axis_tkeep_int[0:0]
+    41/235: $14\status_frame_length_next[15:0]
+    42/235: $14\status_frame_truncate_next[0:0]
+    43/235: $14\status_frame_pad_next[0:0]
+    44/235: $14\status_valid_next[0:0]
+    45/235: $16\long_counter_next[15:0]
+    46/235: $16\short_counter_next[15:0]
+    47/235: $14\frame_ptr_next[15:0]
+    48/235: $14\state_next[2:0]
+    49/235: $13\state_next[2:0]
+    50/235: $13\store_last_word[0:0]
+    51/235: $11\m_axis_tlast_int[0:0]
+    52/235: $11\m_axis_tkeep_int[0:0]
+    53/235: $13\s_axis_tready_next[0:0]
+    54/235: $13\frame_ptr_next[15:0]
+    55/235: $13\status_frame_length_next[15:0]
+    56/235: $13\status_frame_truncate_next[0:0]
+    57/235: $13\status_frame_pad_next[0:0]
+    58/235: $13\status_valid_next[0:0]
+    59/235: $15\long_counter_next[15:0]
+    60/235: $15\short_counter_next[15:0]
+    61/235: $12\s_axis_tready_next[0:0]
+    62/235: $10\m_axis_tlast_int[0:0]
+    63/235: $10\m_axis_tkeep_int[0:0]
+    64/235: $12\status_frame_length_next[15:0]
+    65/235: $12\status_frame_truncate_next[0:0]
+    66/235: $12\status_frame_pad_next[0:0]
+    67/235: $12\status_valid_next[0:0]
+    68/235: $14\long_counter_next[15:0]
+    69/235: $14\short_counter_next[15:0]
+    70/235: $12\frame_ptr_next[15:0]
+    71/235: $12\store_last_word[0:0]
+    72/235: $12\state_next[2:0]
+    73/235: $11\status_frame_original_length_next[15:0]
+    74/235: $11\s_axis_tready_next[0:0]
+    75/235: $9\m_axis_tlast_int[0:0]
+    76/235: $9\m_axis_tkeep_int[0:0]
+    77/235: $10\status_frame_original_length_next[15:0]
+    78/235: $11\status_frame_length_next[15:0]
+    79/235: $11\status_frame_truncate_next[0:0]
+    80/235: $11\status_frame_pad_next[0:0]
+    81/235: $11\status_valid_next[0:0]
+    82/235: $13\long_counter_next[15:0]
+    83/235: $13\short_counter_next[15:0]
+    84/235: $11\frame_ptr_next[15:0]
+    85/235: $11\store_last_word[0:0]
+    86/235: $11\state_next[2:0]
+    87/235: $10\state_next[2:0]
+    88/235: $12\long_counter_next[15:0]
+    89/235: $12\short_counter_next[15:0]
+    90/235: $10\frame_ptr_next[15:0]
+    91/235: $10\s_axis_tready_next[0:0]
+    92/235: $9\status_frame_original_length_next[15:0]
+    93/235: $10\status_frame_length_next[15:0]
+    94/235: $10\status_frame_truncate_next[0:0]
+    95/235: $10\status_frame_pad_next[0:0]
+    96/235: $10\status_valid_next[0:0]
+    97/235: $7\m_axis_tvalid_int[0:0]
+    98/235: $10\store_last_word[0:0]
+    99/235: $9\s_axis_tready_next[0:0]
+   100/235: $6\m_axis_tvalid_int[0:0]
+   101/235: $8\status_frame_original_length_next[15:0]
+   102/235: $9\status_frame_length_next[15:0]
+   103/235: $9\status_frame_truncate_next[0:0]
+   104/235: $9\status_frame_pad_next[0:0]
+   105/235: $9\status_valid_next[0:0]
+   106/235: $11\long_counter_next[15:0]
+   107/235: $11\short_counter_next[15:0]
+   108/235: $9\frame_ptr_next[15:0]
+   109/235: $9\store_last_word[0:0]
+   110/235: $9\state_next[2:0]
+   111/235: $8\m_axis_tkeep_int[0:0]
+   112/235: $8\m_axis_tlast_int[0:0]
+   113/235: $10\long_counter_next[15:0]
+   114/235: $10\short_counter_next[15:0]
+   115/235: $6\word_cnt[31:0]
+   116/235: $8\s_axis_tready_next[0:0]
+   117/235: $7\m_axis_tlast_int[0:0]
+   118/235: $5\m_axis_tvalid_int[0:0]
+   119/235: $7\m_axis_tkeep_int[0:0]
+   120/235: $7\status_frame_original_length_next[15:0]
+   121/235: $8\status_frame_length_next[15:0]
+   122/235: $8\status_frame_truncate_next[0:0]
+   123/235: $8\status_frame_pad_next[0:0]
+   124/235: $8\status_valid_next[0:0]
+   125/235: $9\long_counter_next[15:0]
+   126/235: $9\short_counter_next[15:0]
+   127/235: $8\frame_ptr_next[15:0]
+   128/235: $8\store_last_word[0:0]
+   129/235: $8\state_next[2:0]
+   130/235: $3\i[31:0]
+   131/235: $5\word_cnt[31:0]
+   132/235: $7\state_next[2:0]
+   133/235: $7\store_last_word[0:0]
+   134/235: $6\m_axis_tlast_int[0:0]
+   135/235: $6\m_axis_tkeep_int[0:0]
+   136/235: $7\s_axis_tready_next[0:0]
+   137/235: $7\frame_ptr_next[15:0]
+   138/235: $7\status_frame_length_next[15:0]
+   139/235: $7\status_frame_truncate_next[0:0]
+   140/235: $7\status_frame_pad_next[0:0]
+   141/235: $7\status_valid_next[0:0]
+   142/235: $8\long_counter_next[15:0]
+   143/235: $8\short_counter_next[15:0]
+   144/235: $6\s_axis_tready_next[0:0]
+   145/235: $5\m_axis_tlast_int[0:0]
+   146/235: $5\m_axis_tkeep_int[0:0]
+   147/235: $6\status_frame_length_next[15:0]
+   148/235: $6\status_frame_truncate_next[0:0]
+   149/235: $6\status_frame_pad_next[0:0]
+   150/235: $6\status_valid_next[0:0]
+   151/235: $7\long_counter_next[15:0]
+   152/235: $7\short_counter_next[15:0]
+   153/235: $6\frame_ptr_next[15:0]
+   154/235: $6\store_last_word[0:0]
+   155/235: $6\state_next[2:0]
+   156/235: $6\status_frame_original_length_next[15:0]
+   157/235: $5\s_axis_tready_next[0:0]
+   158/235: $4\m_axis_tlast_int[0:0]
+   159/235: $4\m_axis_tkeep_int[0:0]
+   160/235: $5\status_frame_original_length_next[15:0]
+   161/235: $5\status_frame_length_next[15:0]
+   162/235: $5\status_frame_truncate_next[0:0]
+   163/235: $5\status_frame_pad_next[0:0]
+   164/235: $5\status_valid_next[0:0]
+   165/235: $6\long_counter_next[15:0]
+   166/235: $6\short_counter_next[15:0]
+   167/235: $5\frame_ptr_next[15:0]
+   168/235: $5\store_last_word[0:0]
+   169/235: $5\state_next[2:0]
+   170/235: $4\state_next[2:0]
+   171/235: $5\long_counter_next[15:0]
+   172/235: $5\short_counter_next[15:0]
+   173/235: $4\frame_ptr_next[15:0]
+   174/235: $4\s_axis_tready_next[0:0]
+   175/235: $4\status_frame_original_length_next[15:0]
+   176/235: $4\status_frame_length_next[15:0]
+   177/235: $4\status_frame_truncate_next[0:0]
+   178/235: $4\status_frame_pad_next[0:0]
+   179/235: $4\status_valid_next[0:0]
+   180/235: $4\m_axis_tvalid_int[0:0]
+   181/235: $4\store_last_word[0:0]
+   182/235: $3\s_axis_tready_next[0:0]
+   183/235: $3\m_axis_tvalid_int[0:0]
+   184/235: $3\status_frame_original_length_next[15:0]
+   185/235: $3\status_frame_length_next[15:0]
+   186/235: $3\status_frame_truncate_next[0:0]
+   187/235: $3\status_frame_pad_next[0:0]
+   188/235: $3\status_valid_next[0:0]
+   189/235: $4\long_counter_next[15:0]
+   190/235: $4\short_counter_next[15:0]
+   191/235: $3\frame_ptr_next[15:0]
+   192/235: $3\store_last_word[0:0]
+   193/235: $3\state_next[2:0]
+   194/235: $3\m_axis_tkeep_int[0:0]
+   195/235: $3\m_axis_tlast_int[0:0]
+   196/235: $3\long_counter_next[15:0]
+   197/235: $3\short_counter_next[15:0]
+   198/235: $4\word_cnt[31:0]
+   199/235: $3\word_cnt[31:0]
+   200/235: $2\s_axis_tready_next[0:0]
+   201/235: $2\m_axis_tlast_int[0:0]
+   202/235: $2\m_axis_tvalid_int[0:0]
+   203/235: $2\m_axis_tkeep_int[0:0]
+   204/235: $2\status_frame_original_length_next[15:0]
+   205/235: $2\status_frame_length_next[15:0]
+   206/235: $2\status_frame_truncate_next[0:0]
+   207/235: $2\status_frame_pad_next[0:0]
+   208/235: $2\status_valid_next[0:0]
+   209/235: $2\long_counter_next[15:0]
+   210/235: $2\short_counter_next[15:0]
+   211/235: $2\frame_ptr_next[15:0]
+   212/235: $2\store_last_word[0:0]
+   213/235: $2\state_next[2:0]
+   214/235: $2\i[31:0]
+   215/235: $2\word_cnt[31:0]
+   216/235: $1\word_cnt[31:0]
+   217/235: $1\s_axis_tready_next[0:0]
+   218/235: $1\m_axis_tlast_int[0:0]
+   219/235: $1\m_axis_tvalid_int[0:0]
+   220/235: $1\m_axis_tkeep_int[0:0]
+   221/235: $1\status_frame_original_length_next[15:0]
+   222/235: $1\status_frame_length_next[15:0]
+   223/235: $1\status_frame_truncate_next[0:0]
+   224/235: $1\status_frame_pad_next[0:0]
+   225/235: $1\status_valid_next[0:0]
+   226/235: $1\long_counter_next[15:0]
+   227/235: $1\short_counter_next[15:0]
+   228/235: $1\frame_ptr_next[15:0]
+   229/235: $1\store_last_word[0:0]
+   230/235: $1\state_next[2:0]
+   231/235: $1\i[31:0]
+   232/235: $1\m_axis_tuser_int[0:0]
+   233/235: $1\m_axis_tdest_int[7:0]
+   234/235: $1\m_axis_tid_int[7:0]
+   235/235: $1\m_axis_tdata_int[7:0]
+Creating decoders for process `\formal_top.$proc$harness.sv:7$66'.
+Creating decoders for process `\formal_top.$proc$harness.sv:8$21'.
+     1/3: $assert$harness.sv:14$51_EN
+     2/3: $assume$harness.sv:12$43_EN
+     3/3: $assume$harness.sv:9$33_EN
+
+4.3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tvalid_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:551$144'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\temp_m_axis_tvalid_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:551$144'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\store_axis_int_to_output' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:551$144'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\store_axis_int_to_temp' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:551$144'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\store_axis_temp_to_output' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:551$144'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\state_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\store_last_word' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\frame_ptr_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\s_axis_tdata_masked' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [0]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [1]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [2]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [3]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [4]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [5]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [6]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [7]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [8]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [9]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [10]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [11]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [12]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [13]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [14]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_next [15]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [0]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [1]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [2]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [3]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [4]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [5]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [6]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [7]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [8]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [9]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [10]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [11]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [12]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [13]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [14]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+Removing init bit 1'0 for non-memory siginal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_next [15]` in process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67`.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\status_valid_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\status_frame_pad_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\status_frame_truncate_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\status_frame_length_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\status_frame_original_length_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tdata_int' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tkeep_int' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tvalid_int' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tlast_int' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tid_int' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tdest_int' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tuser_int' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+No latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\s_axis_tready_next' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+Warning: Latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\i [0]' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67': $auto$proc_dlatch.cc:555:proc_dlatch$3205
+Warning: Latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\i [1]' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67': $auto$proc_dlatch.cc:557:proc_dlatch$3258
+Warning: Latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\i [31:2]' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67': $auto$proc_dlatch.cc:555:proc_dlatch$3261
+Warning: Latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\word_cnt [0]' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67': $auto$proc_dlatch.cc:559:proc_dlatch$3326
+Warning: Latch inferred for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\word_cnt [31:1]' from process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67': $auto$proc_dlatch.cc:555:proc_dlatch$3329
+
+4.3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tready_int_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3446' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tdata_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3447' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tkeep_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3448' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tvalid_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3449' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tlast_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3450' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tid_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3451' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tdest_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3452' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\m_axis_tuser_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3453' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\temp_m_axis_tdata_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3454' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\temp_m_axis_tkeep_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3455' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\temp_m_axis_tvalid_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3456' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\temp_m_axis_tlast_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3457' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\temp_m_axis_tid_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3458' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\temp_m_axis_tdest_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3459' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\temp_m_axis_tuser_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+  created $dff cell `$procdff$3460' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\state_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3461' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\frame_ptr_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3462' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\short_counter_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3463' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\long_counter_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3464' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\last_word_data_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3465' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\last_word_keep_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3466' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\last_word_id_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3467' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\last_word_dest_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3468' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\last_word_user_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3469' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\status_valid_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3470' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\status_frame_pad_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3471' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\status_frame_truncate_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3472' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\status_frame_length_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3473' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\status_frame_original_length_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3474' with positive edge clock.
+Creating register for signal `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.\s_axis_tready_reg' using process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+  created $dff cell `$procdff$3475' with positive edge clock.
+Creating register for signal `\formal_top.\past' using process `\formal_top.$proc$harness.sv:8$21'.
+  created $dff cell `$procdff$3476' with positive edge clock.
+Creating register for signal `\formal_top.$past$harness.sv:11$5$0' using process `\formal_top.$proc$harness.sv:8$21'.
+  created $dff cell `$procdff$3477' with positive edge clock.
+Creating register for signal `\formal_top.$past$harness.sv:11$6$0' using process `\formal_top.$proc$harness.sv:8$21'.
+  created $dff cell `$procdff$3478' with positive edge clock.
+Creating register for signal `\formal_top.$past$harness.sv:12$7$0' using process `\formal_top.$proc$harness.sv:8$21'.
+  created $dff cell `$procdff$3479' with positive edge clock.
+Creating register for signal `\formal_top.$past$harness.sv:12$8$0' using process `\formal_top.$proc$harness.sv:8$21'.
+  created $dff cell `$procdff$3480' with positive edge clock.
+Creating register for signal `\formal_top.$past$harness.sv:14$9$0' using process `\formal_top.$proc$harness.sv:8$21'.
+  created $dff cell `$procdff$3481' with positive edge clock.
+Creating register for signal `\formal_top.$past$harness.sv:14$10$0' using process `\formal_top.$proc$harness.sv:8$21'.
+  created $dff cell `$procdff$3482' with positive edge clock.
+Creating register for signal `\formal_top.$past$harness.sv:14$11$0' using process `\formal_top.$proc$harness.sv:8$21'.
+  created $dff cell `$procdff$3483' with positive edge clock.
+Creating register for signal `\formal_top.$past$harness.sv:14$12$0' using process `\formal_top.$proc$harness.sv:8$21'.
+  created $dff cell `$procdff$3484' with positive edge clock.
+Creating register for signal `\formal_top.$past$harness.sv:15$13$0' using process `\formal_top.$proc$harness.sv:8$21'.
+  created $dff cell `$procdff$3485' with positive edge clock.
+Creating register for signal `\formal_top.$past$harness.sv:15$14$0' using process `\formal_top.$proc$harness.sv:8$21'.
+  created $dff cell `$procdff$3486' with positive edge clock.
+
+4.3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+4.3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:532$179'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:531$178'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:530$177'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:529$176'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:528$175'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:527$174'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:525$173'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:524$172'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:523$171'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:522$170'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:521$169'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:520$168'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:519$167'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:157$166'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:150$165'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:144$164'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:143$163'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:142$162'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:141$161'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:140$160'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:138$159'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:137$158'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:136$157'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:135$156'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:134$155'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:132$154'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:132$153'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:131$152'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:131$151'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:126$150'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:121$149'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:533$180'.
+Found and cleaned up 4 empty switches in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:579$147'.
+Found and cleaned up 3 empty switches in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:551$144'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:551$144'.
+Found and cleaned up 2 empty switches in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:483$137'.
+Found and cleaned up 28 empty switches in `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+Removing empty process `$paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.$proc$axis_frame_length_adjust.v:168$67'.
+Removing empty process `formal_top.$proc$harness.sv:7$66'.
+Found and cleaned up 3 empty switches in `\formal_top.$proc$harness.sv:8$21'.
+Removing empty process `formal_top.$proc$harness.sv:8$21'.
+Cleaned up 40 empty switches.
+
+4.3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.
+<suppressed ~220 debug messages>
+Optimizing module frame_task.
+Optimizing module formal_top.
+<suppressed ~1 debug messages>
+
+4.4. Executing CHECK pass (checking for obvious problems).
+Checking module $paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust...
+Checking module frame_task...
+Checking module formal_top...
+Found and reported 0 problems.
+
+4.5. Executing FLATTEN pass (flatten design).
+Deleting now unused module $paramod$3ca683517b426711cae38fe6700d3c3af12cd181\axis_frame_length_adjust.
+Deleting now unused module frame_task.
+<suppressed ~2 debug messages>
+
+4.6. Executing FUTURE pass.
+
+4.7. Executing OPT_EXPR pass (perform const folding).
+Optimizing module formal_top.
+<suppressed ~12 debug messages>
+
+4.8. Executing CHECK pass (checking for obvious problems).
+Checking module formal_top...
+Found and reported 0 problems.
+
+4.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \formal_top..
+Removed 582 unused cells and 1695 unused wires.
+<suppressed ~623 debug messages>
+
+4.10. Executing OPT pass (performing simple optimizations).
+
+4.10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module formal_top.
+
+4.10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\formal_top'.
+Computing hashes of 723 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+Computing hashes of 553 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+Computing hashes of 552 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+<suppressed ~513 debug messages>
+Removed a total of 171 cells.
+
+4.10.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \formal_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+      Replacing known input bits on port A of cell $flatten\dut.\dut.$procmux$1180: \dut.dut.s_axis_tlast -> 1'0
+      Replacing known input bits on port A of cell $flatten\dut.\dut.$procmux$963: \dut.dut.s_axis_tlast -> 1'1
+      Replacing known input bits on port A of cell $flatten\dut.\dut.$procmux$747: \dut.dut.s_axis_tlast -> 1'1
+      Replacing known input bits on port A of cell $flatten\dut.\dut.$procmux$2332: \dut.dut.s_axis_tlast -> 1'0
+      Replacing known input bits on port A of cell $flatten\dut.\dut.$procmux$2102: \dut.dut.s_axis_tlast -> 1'1
+      Replacing known input bits on port A of cell $flatten\dut.\dut.$procmux$1875: \dut.dut.s_axis_tlast -> 1'1
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1269.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1267.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2665.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2816.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2826.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1641.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2828.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2455.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2457.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2219.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2850.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1639.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2852.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2862.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2864.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2874.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1630.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2876.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2459.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2289.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1187.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1185.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1183.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1173.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1628.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1171.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1169.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2287.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2284.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2111.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2667.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1142.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1719.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1140.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1138.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1135.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1125.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2669.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1123.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1121.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1118.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2908.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2917.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1608.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1091.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1089.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1087.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1084.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1074.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1606.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1072.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1070.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1067.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1057.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1055.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1053.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1050.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2926.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2109.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2107.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2104.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2093.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1597.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2091.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2089.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2086.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2075.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2073.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2071.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2068.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1595.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2980.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2989.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1586.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$972.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1711.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$970.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$968.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$965.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$955.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1584.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$953.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$951.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$948.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$938.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$936.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$934.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$931.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$929.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$927.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$918.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2680.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$916.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$914.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$911.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$909.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$907.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$898.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2682.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$896.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$894.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$891.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$889.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$887.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2998.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2066.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2064.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2054.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$3016.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2684.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$3025.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2052.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2050.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2047.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2045.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2043.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2033.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2694.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2031.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2029.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2696.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2706.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$798.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1703.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$796.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$794.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$791.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$789.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$787.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2708.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2199.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2197.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2194.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1531.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$758.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2217.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$756.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$754.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$751.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$749.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$747.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$738.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1529.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$736.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$734.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$731.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$729.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$727.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$718.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$716.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$714.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$711.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$709.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$707.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$698.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1520.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2026.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2024.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2022.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$684.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$677.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1518.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$670.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2273.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2485.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2487.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1509.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2489.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2500.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2502.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2650.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2504.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$635.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1507.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$628.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1505.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$621.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$619.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$611.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1495.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$609.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$601.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2652.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$599.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2515.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2517.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1493.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2519.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2530.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2532.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1491.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1481.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$561.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$559.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1479.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1477.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$541.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2337.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$539.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2335.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2324.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2291.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$521.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1685.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$519.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$511.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$509.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$501.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2425.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$499.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2427.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2215.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2237.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2429.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2534.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$479.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2545.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2547.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$467.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$461.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2766.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$455.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1683.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2768.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2778.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2780.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1411.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1674.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2549.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1409.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1928.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$425.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1407.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1926.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1924.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1921.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2233.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$402.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2790.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$400.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1919.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1917.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2271.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2269.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2266.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2575.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2577.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1886.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2212.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1884.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2792.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2440.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1383.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$357.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1672.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$355.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1882.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1879.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1877.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$339.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1381.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$337.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$330.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1379.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$328.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$321.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$319.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1875.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1865.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1369.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1863.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$269.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$263.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$257.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$251.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$245.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$239.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$233.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1767.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1861.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1858.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1856.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1854.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1844.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1367.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1365.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2230.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1842.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1840.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1837.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1355.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1835.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1833.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1663.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1353.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1351.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1341.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2579.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1339.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2235.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2322.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1337.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1327.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1661.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$2320.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1325.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1323.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1807.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1799.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2442.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2444.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2814.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2339.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1299.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1783.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2201.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1297.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1295.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1285.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$2654.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1283.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1271.
+    dead port 1/2 on $mux $flatten\dut.\dut.$procmux$1281.
+    dead port 2/2 on $mux $flatten\dut.\dut.$procmux$1775.
+Removed 324 multiplexer ports.
+<suppressed ~623 debug messages>
+
+4.10.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \formal_top.
+    New ctrl vector for $pmux cell $flatten\dut.\dut.$procmux$3157: { $flatten\dut.\dut.$procmux$3052_CMP $auto$opt_reduce.cc:137:opt_pmux$3490 }
+  Optimizing cells in module \formal_top.
+Performed a total of 1 changes.
+
+4.10.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\formal_top'.
+Computing hashes of 229 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+Computing hashes of 213 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+Computing hashes of 204 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+Computing hashes of 197 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+Computing hashes of 192 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+<suppressed ~111 debug messages>
+Removed a total of 37 cells.
+
+4.10.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \formal_top..
+Removed 0 unused cells and 532 unused wires.
+<suppressed ~1 debug messages>
+
+4.10.7. Executing OPT_EXPR pass (perform const folding).
+Optimizing module formal_top.
+
+4.10.8. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.10.9. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \formal_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~251 debug messages>
+
+4.10.10. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \formal_top.
+    New ctrl vector for $pmux cell $flatten\dut.\dut.$procmux$3057: { $flatten\dut.\dut.$procmux$3052_CMP $flatten\dut.\dut.$procmux$3053_CMP $auto$opt_reduce.cc:137:opt_pmux$3492 }
+    New ctrl vector for $pmux cell $flatten\dut.\dut.$procmux$3124: $auto$opt_reduce.cc:137:opt_pmux$3494
+    New ctrl vector for $pmux cell $flatten\dut.\dut.$procmux$3063: { $flatten\dut.\dut.$procmux$3052_CMP $flatten\dut.\dut.$procmux$3053_CMP $auto$opt_reduce.cc:137:opt_pmux$3496 }
+    New ctrl vector for $pmux cell $flatten\dut.\dut.$procmux$3098: { $flatten\dut.\dut.$procmux$3052_CMP $flatten\dut.\dut.$procmux$3053_CMP $auto$opt_reduce.cc:137:opt_pmux$3498 }
+  Optimizing cells in module \formal_top.
+Performed a total of 4 changes.
+
+4.10.11. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\formal_top'.
+Computing hashes of 196 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+Computing hashes of 192 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+<suppressed ~12 debug messages>
+Removed a total of 4 cells.
+
+4.10.12. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \formal_top..
+Removed 0 unused cells and 4 unused wires.
+<suppressed ~1 debug messages>
+
+4.10.13. Executing OPT_EXPR pass (perform const folding).
+Optimizing module formal_top.
+
+4.10.14. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.10.15. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \formal_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~205 debug messages>
+
+4.10.16. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \formal_top.
+Performed a total of 0 changes.
+
+4.10.17. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\formal_top'.
+Computing hashes of 192 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+Removed a total of 0 cells.
+
+4.10.18. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \formal_top..
+
+4.10.19. Executing OPT_EXPR pass (perform const folding).
+Optimizing module formal_top.
+
+4.10.20. Finished fast OPT passes. (There is nothing left to do.)
+
+4.11. Executing WREDUCE pass (reducing word size of cells).
+Removed top 31 bits (of 32) from port B of cell formal_top.$flatten\dut.\dut.$le$axis_frame_length_adjust.v:335$105 ($le).
+Removed top 31 bits (of 32) from port B of cell formal_top.$flatten\dut.\dut.$gt$axis_frame_length_adjust.v:411$122 ($gt).
+Removed top 31 bits (of 32) from port B of cell formal_top.$flatten\dut.\dut.$sub$axis_frame_length_adjust.v:412$123 ($sub).
+Removed top 16 bits (of 32) from port Y of cell formal_top.$flatten\dut.\dut.$sub$axis_frame_length_adjust.v:412$123 ($sub).
+Removed top 31 bits (of 32) from port B of cell formal_top.$flatten\dut.\dut.$gt$axis_frame_length_adjust.v:417$124 ($gt).
+Removed top 31 bits (of 32) from port B of cell formal_top.$flatten\dut.\dut.$sub$axis_frame_length_adjust.v:418$125 ($sub).
+Removed top 16 bits (of 32) from port Y of cell formal_top.$flatten\dut.\dut.$sub$axis_frame_length_adjust.v:418$125 ($sub).
+Removed top 31 bits (of 32) from port B of cell formal_top.$flatten\dut.\dut.$le$axis_frame_length_adjust.v:423$126 ($le).
+Removed top 1 bits (of 3) from mux cell formal_top.$flatten\dut.\dut.$procmux$497 ($mux).
+Removed top 1 bits (of 3) from mux cell formal_top.$flatten\dut.\dut.$procmux$696 ($mux).
+Removed top 1 bits (of 3) from mux cell formal_top.$flatten\dut.\dut.$procmux$1133 ($mux).
+Removed top 1 bits (of 3) from mux cell formal_top.$flatten\dut.\dut.$procmux$1334 ($mux).
+Removed top 2 bits (of 3) from port B of cell formal_top.$flatten\dut.\dut.$procmux$1720_CMP0 ($eq).
+Removed top 1 bits (of 3) from mux cell formal_top.$flatten\dut.\dut.$procmux$2513 ($mux).
+Removed top 1 bits (of 3) from mux cell formal_top.$flatten\dut.\dut.$procmux$2824 ($mux).
+Removed top 1 bits (of 3) from mux cell formal_top.$flatten\dut.\dut.$procmux$3023 ($mux).
+Removed top 1 bits (of 3) from port B of cell formal_top.$flatten\dut.\dut.$procmux$3052_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell formal_top.$flatten\dut.\dut.$procmux$3053_CMP0 ($eq).
+Removed top 1 bits (of 3) from wire formal_top.$flatten\dut.\dut.$2\state_next[2:0].
+Removed top 1 bits (of 3) from wire formal_top.$flatten\dut.\dut.$12\state_next[2:0].
+Removed top 1 bits (of 3) from wire formal_top.$flatten\dut.\dut.$11\state_next[2:0].
+Removed top 1 bits (of 3) from wire formal_top.$flatten\dut.\dut.$10\state_next[2:0].
+Removed top 1 bits (of 3) from wire formal_top.$flatten\dut.\dut.$14\state_next[2:0].
+Removed top 1 bits (of 3) from wire formal_top.$flatten\dut.\dut.$15\state_next[2:0].
+Removed top 1 bits (of 3) from wire formal_top.$flatten\dut.\dut.$3\state_next[2:0].
+Removed top 16 bits (of 32) from wire formal_top.$flatten\dut.\dut.$sub$axis_frame_length_adjust.v:235$80_Y.
+Removed top 16 bits (of 32) from wire formal_top.$flatten\dut.\dut.$sub$axis_frame_length_adjust.v:229$78_Y.
+
+4.12. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \formal_top..
+Removed 0 unused cells and 9 unused wires.
+<suppressed ~1 debug messages>
+
+4.13. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+4.14. Executing OPT pass (performing simple optimizations).
+
+4.14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module formal_top.
+
+4.14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\formal_top'.
+Computing hashes of 192 cells of `\formal_top'.
+Finding duplicate cells in `\formal_top'.
+Removed a total of 0 cells.
+
+4.14.3. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \formal_top..
+
+4.14.4. Finished fast OPT passes.
+
+4.15. Executing SORT pass.
+
+4.16. Printing statistics.
+
+=== formal_top ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      226 wires
+      909 wire bits
+       76 public wires
+      275 public wire bits
+        1 ports
+        1 port bits
+      192 cells
+        6   $anyseq
+        5   $check
+       24   $dff
+        7   $eq
+        2   $gt
+        2   $le
+       19   $logic_and
+       13   $logic_not
+        5   $logic_or
+       96   $mux
+        8   $pmux
+        1   $reduce_or
+        2   $scopeinfo
+        2   $sub
+
+4.17. Executing CHECK pass (checking for obvious problems).
+Checking module formal_top...
+Found and reported 0 problems.
+
+5. Executing HIERARCHY pass (managing design hierarchy).
+Attribute `top' found on module `formal_top'. Setting top module to formal_top.
+
+5.1. Analyzing design hierarchy..
+Top module:  \formal_top
+
+5.2. Analyzing design hierarchy..
+Top module:  \formal_top
+Removed 0 unused modules.
+Module formal_top directly or indirectly contains formal properties -> setting "keep" attribute.
+
+6. Executing jny backend.
+
+7. Executing RTLIL backend.
+Output filename: ../model/design.il
+
+Warnings: 5 unique messages, 5 total
+End of script. Logfile hash: af5db9a2d0, time: 0.07s, user: 0.07s, system: 0.00s, MEM: 32.95 MB peak
+Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)
+Time spent: 18% 1x proc_mux (0 sec), 15% 3x check (0 sec), ...

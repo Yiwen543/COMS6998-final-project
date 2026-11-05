@@ -1,0 +1,7 @@
+# running in /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_fifo_v1/qualification/formal-v2/status_stall-prove/work/src/
+read -formal -sv axis_frame_length_adjust.v axis_fifo.v axis_frame_length_adjust_fifo.v task_top_v3.sv harness.sv
+prep -top formal_top -flatten
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

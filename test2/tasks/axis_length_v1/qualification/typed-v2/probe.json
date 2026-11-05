@@ -1,0 +1,99 @@
+{
+  "configuration": {
+    "root": "test2/tasks/axis_length_v1/public",
+    "top": "frame_task",
+    "sources": [
+      "rtl/axis_frame_length_adjust.v",
+      "task_top.sv"
+    ],
+    "source_hashes": {
+      "test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "test2/tasks/axis_length_v1/public/task_top.sv": "39ff52fbdffdfc3e438fc9da60c4153bb4de835ea2381e3a6416972337035b8d"
+    },
+    "parameters": {},
+    "include_dirs": [],
+    "defines": [],
+    "proof_keep": [],
+    "clock": "clk",
+    "reset": "rst",
+    "reset_active": 1,
+    "reset_behavior": "synchronous active-high",
+    "seed_inputs": {
+      "rst": 0,
+      "s_valid": 0,
+      "s_data": 0,
+      "s_last": 0,
+      "m_ready": 1,
+      "h_ready": 1
+    },
+    "revision": "48ff7a7e2ef782cf778d47910cf85835c64b1bce"
+  },
+  "runs": [
+    {
+      "stage": "slang",
+      "returncode": 1,
+      "seconds": 0.06213400000706315,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/slang",
+        "--single-unit",
+        "--top",
+        "frame_task",
+        "--ast-json",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/qualification/typed-v2/ast.json",
+        "--ast-json-source-info",
+        "--ast-json-detailed-types",
+        "test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "test2/tasks/axis_length_v1/public/task_top.sv"
+      ]
+    },
+    {
+      "stage": "verilator",
+      "returncode": 0,
+      "seconds": 0.11031741602346301,
+      "command": [
+        "verilator",
+        "--lint-only",
+        "--timing",
+        "-Wno-fatal",
+        "--top-module",
+        "frame_task",
+        "test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "test2/tasks/axis_length_v1/public/task_top.sv"
+      ]
+    },
+    {
+      "stage": "iverilog",
+      "returncode": 0,
+      "seconds": 0.0251353750936687,
+      "command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "frame_task",
+        "-tnull",
+        "test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "test2/tasks/axis_length_v1/public/task_top.sv"
+      ]
+    },
+    {
+      "stage": "yosys",
+      "returncode": 0,
+      "seconds": 0.1583529580384493,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/yosys",
+        "-Q",
+        "-T",
+        "-s",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/qualification/typed-v2/probe.ys"
+      ]
+    }
+  ],
+  "source_sha256": {
+    "test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+    "test2/tasks/axis_length_v1/public/task_top.sv": "39ff52fbdffdfc3e438fc9da60c4153bb4de835ea2381e3a6416972337035b8d"
+  },
+  "no_model_calls": true,
+  "no_functional_checker_claim": true,
+  "qualified_for_B": false,
+  "assertions": "SYNTHESIS selects upstream synthesis-compatible assertion macros for flash; not assertion verification."
+}

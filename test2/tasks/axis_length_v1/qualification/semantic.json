@@ -1,0 +1,1372 @@
+{
+  "schema": "semantic_candidate_scan_v1",
+  "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+  "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+  "sources": {
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/task_top.sv": "39ff52fbdffdfc3e438fc9da60c4153bb4de835ea2381e3a6416972337035b8d"
+  },
+  "top": "frame_task",
+  "flatten": true,
+  "semantics": "binary/two-state; full process event context; original source locations separate",
+  "rewrite_proofs": {
+    "de-morgan-or": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "de-morgan-and": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "double-not": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "and-true": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "and-true-left": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    },
+    "not-false": {
+      "truth_table_rows": 4,
+      "z3_xor": "unsat"
+    }
+  },
+  "priority_proofs": [],
+  "alias_evidence": [
+    {
+      "lhs": "\\dut.s_axis_tready",
+      "rhs": "\\dut.s_axis_tready_reg",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.status_valid",
+      "rhs": "\\dut.status_valid_reg",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.status_frame_pad",
+      "rhs": "\\dut.status_frame_pad_reg",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.status_frame_truncate",
+      "rhs": "\\dut.status_frame_truncate_reg",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.status_frame_length",
+      "rhs": "\\dut.status_frame_length_reg",
+      "width": 16
+    },
+    {
+      "lhs": "\\dut.status_frame_original_length",
+      "rhs": "\\dut.status_frame_original_length_reg",
+      "width": 16
+    },
+    {
+      "lhs": "\\dut.m_axis_tdata",
+      "rhs": "\\dut.m_axis_tdata_reg",
+      "width": 8
+    },
+    {
+      "lhs": "\\dut.m_axis_tkeep",
+      "rhs": "\\dut.m_axis_tkeep_reg",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.m_axis_tvalid",
+      "rhs": "\\dut.m_axis_tvalid_reg",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.m_axis_tlast",
+      "rhs": "\\dut.m_axis_tlast_reg",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.m_axis_tready_int_early",
+      "rhs": "$flatten\\dut.$logic_or$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:549$196_Y",
+      "width": 1
+    },
+    {
+      "lhs": "\\h_original_length",
+      "rhs": "\\dut.status_frame_original_length",
+      "width": 16
+    },
+    {
+      "lhs": "\\h_length",
+      "rhs": "\\dut.status_frame_length",
+      "width": 16
+    },
+    {
+      "lhs": "\\h_truncate",
+      "rhs": "\\dut.status_frame_truncate",
+      "width": 1
+    },
+    {
+      "lhs": "\\h_pad",
+      "rhs": "\\dut.status_frame_pad",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.status_ready",
+      "rhs": "\\h_ready",
+      "width": 1
+    },
+    {
+      "lhs": "\\h_valid",
+      "rhs": "\\dut.status_valid",
+      "width": 1
+    },
+    {
+      "lhs": "\\m_last",
+      "rhs": "\\dut.m_axis_tlast",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.m_axis_tready",
+      "rhs": "\\m_ready",
+      "width": 1
+    },
+    {
+      "lhs": "\\m_valid",
+      "rhs": "\\dut.m_axis_tvalid",
+      "width": 1
+    },
+    {
+      "lhs": "\\m_data",
+      "rhs": "\\dut.m_axis_tdata",
+      "width": 8
+    },
+    {
+      "lhs": "\\dut.s_axis_tlast",
+      "rhs": "\\s_last",
+      "width": 1
+    },
+    {
+      "lhs": "\\s_ready",
+      "rhs": "\\dut.s_axis_tready",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.s_axis_tvalid",
+      "rhs": "\\s_valid",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.s_axis_tdata",
+      "rhs": "\\s_data",
+      "width": 8
+    },
+    {
+      "lhs": "\\dut.rst",
+      "rhs": "\\rst",
+      "width": 1
+    },
+    {
+      "lhs": "\\dut.clk",
+      "rhs": "\\clk",
+      "width": 1
+    }
+  ],
+  "unresolved_aliases": [
+    {
+      "lhs": "\\dut.m_axis_tid",
+      "rhs": "8'00000000",
+      "reason": "partial, unknown, or width-mismatched connection"
+    },
+    {
+      "lhs": "\\dut.m_axis_tdest",
+      "rhs": "8'00000000",
+      "reason": "partial, unknown, or width-mismatched connection"
+    },
+    {
+      "lhs": "\\dut.m_axis_tuser",
+      "rhs": "1'0",
+      "reason": "partial, unknown, or width-mismatched connection"
+    },
+    {
+      "lhs": "\\dut.length_max",
+      "rhs": "16'0000000000001000",
+      "reason": "partial, unknown, or width-mismatched connection"
+    },
+    {
+      "lhs": "\\dut.length_min",
+      "rhs": "16'0000000000000100",
+      "reason": "partial, unknown, or width-mismatched connection"
+    },
+    {
+      "lhs": "\\dut.s_axis_tuser",
+      "rhs": "1'0",
+      "reason": "partial, unknown, or width-mismatched connection"
+    },
+    {
+      "lhs": "\\dut.s_axis_tdest",
+      "rhs": "8'00000000",
+      "reason": "partial, unknown, or width-mismatched connection"
+    },
+    {
+      "lhs": "\\dut.s_axis_tid",
+      "rhs": "8'00000000",
+      "reason": "partial, unknown, or width-mismatched connection"
+    },
+    {
+      "lhs": "\\dut.s_axis_tkeep",
+      "rhs": "1'1",
+      "reason": "partial, unknown, or width-mismatched connection"
+    }
+  ],
+  "priority_simplifications": [],
+  "unsupported": [
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:107$201",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "case has no source mapping"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "case has no source mapping"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "case has no source mapping"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "case has no source mapping"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:551$197",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "case has no source mapping"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:483$190",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "case has no source mapping"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "case has no source mapping"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 3'000",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 202,
+        "start_column": 21,
+        "end_line": 202,
+        "end_column": 21
+      },
+      "reason": "case literal 3'000 has 0 source matches in switch 202-480"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 219,
+        "start_column": 17,
+        "end_line": 219,
+        "end_column": 47
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 224,
+        "start_column": 25,
+        "end_line": 224,
+        "end_column": 79
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 224,
+        "start_column": 25,
+        "end_line": 224,
+        "end_column": 79
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 228,
+        "start_column": 21,
+        "end_line": 228,
+        "end_column": 51
+      },
+      "reason": "unsupported predicate cell $gt at $flatten\\dut.$gt$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:228$130"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 230,
+        "start_column": 21,
+        "end_line": 230,
+        "end_column": 25
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 234,
+        "start_column": 21,
+        "end_line": 234,
+        "end_column": 50
+      },
+      "reason": "unsupported predicate cell $gt at $flatten\\dut.$gt$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:234$132"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 236,
+        "start_column": 21,
+        "end_line": 236,
+        "end_column": 25
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 240,
+        "start_column": 21,
+        "end_line": 240,
+        "end_column": 49
+      },
+      "reason": "unsupported predicate cell $le at $flatten\\dut.$le$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:240$134"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 242,
+        "start_column": 25,
+        "end_line": 242,
+        "end_column": 37
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 253,
+        "start_column": 25,
+        "end_line": 253,
+        "end_column": 29
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 258,
+        "start_column": 21,
+        "end_line": 258,
+        "end_column": 25
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 259,
+        "start_column": 25,
+        "end_line": 259,
+        "end_column": 37
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 261,
+        "start_column": 29,
+        "end_line": 261,
+        "end_column": 57
+      },
+      "reason": "unsupported predicate cell $gt at $flatten\\dut.$gt$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:261$141"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 262,
+        "start_column": 33,
+        "end_line": 262,
+        "end_column": 63
+      },
+      "reason": "unsupported predicate cell $gt at $flatten\\dut.$gt$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:262$142"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 269,
+        "start_column": 33,
+        "end_line": 269,
+        "end_column": 37
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 281,
+        "start_column": 29,
+        "end_line": 281,
+        "end_column": 33
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 293,
+        "start_column": 25,
+        "end_line": 293,
+        "end_column": 29
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 297,
+        "start_column": 17,
+        "end_line": 297,
+        "end_column": 21
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 3'001",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 300,
+        "start_column": 12,
+        "end_line": 300,
+        "end_column": 12
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 314,
+        "start_column": 17,
+        "end_line": 314,
+        "end_column": 47
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 319,
+        "start_column": 25,
+        "end_line": 319,
+        "end_column": 79
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 323,
+        "start_column": 21,
+        "end_line": 323,
+        "end_column": 51
+      },
+      "reason": "unsupported predicate cell $gt at $flatten\\dut.$gt$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:323$154"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 325,
+        "start_column": 21,
+        "end_line": 325,
+        "end_column": 25
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 329,
+        "start_column": 21,
+        "end_line": 329,
+        "end_column": 50
+      },
+      "reason": "unsupported predicate cell $gt at $flatten\\dut.$gt$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:329$156"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 331,
+        "start_column": 21,
+        "end_line": 331,
+        "end_column": 25
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 335,
+        "start_column": 21,
+        "end_line": 335,
+        "end_column": 49
+      },
+      "reason": "unsupported predicate cell $le at $flatten\\dut.$le$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:335$158"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 337,
+        "start_column": 25,
+        "end_line": 337,
+        "end_column": 37
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 348,
+        "start_column": 25,
+        "end_line": 348,
+        "end_column": 29
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 353,
+        "start_column": 21,
+        "end_line": 353,
+        "end_column": 25
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 354,
+        "start_column": 25,
+        "end_line": 354,
+        "end_column": 37
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 356,
+        "start_column": 29,
+        "end_line": 356,
+        "end_column": 57
+      },
+      "reason": "unsupported predicate cell $gt at $flatten\\dut.$gt$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:356$165"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 357,
+        "start_column": 33,
+        "end_line": 357,
+        "end_column": 63
+      },
+      "reason": "unsupported predicate cell $gt at $flatten\\dut.$gt$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:357$166"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 364,
+        "start_column": 33,
+        "end_line": 364,
+        "end_column": 37
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 376,
+        "start_column": 29,
+        "end_line": 376,
+        "end_column": 33
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 388,
+        "start_column": 25,
+        "end_line": 388,
+        "end_column": 29
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 392,
+        "start_column": 17,
+        "end_line": 392,
+        "end_column": 21
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 3'010",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 395,
+        "start_column": 12,
+        "end_line": 395,
+        "end_column": 12
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 408,
+        "start_column": 17,
+        "end_line": 408,
+        "end_column": 38
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 411,
+        "start_column": 21,
+        "end_line": 411,
+        "end_column": 51
+      },
+      "reason": "unsupported predicate cell $gt at $flatten\\dut.$gt$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:411$175"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 413,
+        "start_column": 21,
+        "end_line": 413,
+        "end_column": 25
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 417,
+        "start_column": 21,
+        "end_line": 417,
+        "end_column": 50
+      },
+      "reason": "unsupported predicate cell $gt at $flatten\\dut.$gt$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:417$177"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 419,
+        "start_column": 21,
+        "end_line": 419,
+        "end_column": 25
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 423,
+        "start_column": 21,
+        "end_line": 423,
+        "end_column": 52
+      },
+      "reason": "unsupported predicate cell $le at $flatten\\dut.$le$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:423$179"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 435,
+        "start_column": 21,
+        "end_line": 435,
+        "end_column": 25
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 438,
+        "start_column": 17,
+        "end_line": 438,
+        "end_column": 21
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 3'011",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 441,
+        "start_column": 12,
+        "end_line": 441,
+        "end_column": 12
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 454,
+        "start_column": 17,
+        "end_line": 454,
+        "end_column": 47
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 458,
+        "start_column": 25,
+        "end_line": 458,
+        "end_column": 79
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 458,
+        "start_column": 25,
+        "end_line": 458,
+        "end_column": 79
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case 1'1",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 462,
+        "start_column": 21,
+        "end_line": 462,
+        "end_column": 33
+      },
+      "reason": "case outside active parent arm"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 473,
+        "start_column": 21,
+        "end_line": 473,
+        "end_column": 25
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": {
+        "file": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+        "start_line": 476,
+        "start_column": 17,
+        "end_line": 476,
+        "end_column": 21
+      },
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    },
+    {
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "rtlil_case": "case",
+      "source": null,
+      "reason": "prior case arm was unsupported; full priority guard unavailable"
+    }
+  ],
+  "atoms": {
+    "p_52b3e31b4f70f160": {
+      "op": "nonzero",
+      "signal": "\\dut.store_axis_int_to_output",
+      "width": 1,
+      "signed": false
+    },
+    "p_d4352a5f1c7165ff": {
+      "op": "nonzero",
+      "signal": "\\dut.store_axis_temp_to_output",
+      "width": 1,
+      "signed": false
+    },
+    "p_540756fa1554e8fe": {
+      "op": "nonzero",
+      "signal": "\\dut.store_axis_int_to_temp",
+      "width": 1,
+      "signed": false
+    },
+    "p_c477b390c6c224ec": {
+      "op": "nonzero",
+      "signal": "\\rst",
+      "width": 1,
+      "signed": false
+    },
+    "p_6af61b57d570c64e": {
+      "op": "nonzero",
+      "signal": "\\dut.m_axis_tready_int_reg",
+      "width": 1,
+      "signed": false
+    },
+    "p_923458d21dd489ac": {
+      "op": "nonzero",
+      "signal": "\\m_ready",
+      "width": 1,
+      "signed": false
+    },
+    "p_8080a4a9144b42a9": {
+      "op": "nonzero",
+      "signal": "\\m_valid",
+      "width": 1,
+      "signed": false
+    },
+    "p_6dcd60594cb2077f": {
+      "op": "nonzero",
+      "signal": "\\dut.store_last_word",
+      "width": 1,
+      "signed": false
+    },
+    "p_e35dee309ab9f7fa": {
+      "op": "case_eq",
+      "signal": "\\dut.state_reg",
+      "width": 3,
+      "value": 0,
+      "signed": false
+    },
+    "p_e56835c369e4a826": {
+      "op": "nonzero",
+      "signal": "\\s_ready",
+      "width": 1,
+      "signed": false
+    },
+    "p_934e45fc504d72bc": {
+      "op": "nonzero",
+      "signal": "\\s_valid",
+      "width": 1,
+      "signed": false
+    },
+    "p_a9f364c8803e6ad5": {
+      "op": "eq",
+      "lhs": "\\dut.s_axis_tkeep",
+      "rhs": "1'0",
+      "lhs_width": 1,
+      "rhs_width": 1,
+      "lhs_signed": false,
+      "rhs_signed": false
+    },
+    "p_3332958edcd835b3": {
+      "op": "eq",
+      "lhs": "\\dut.s_axis_tkeep",
+      "rhs": "1'1",
+      "lhs_width": 1,
+      "rhs_width": 1,
+      "lhs_signed": false,
+      "rhs_signed": false
+    },
+    "p_0ac46200e342e120": {
+      "op": "nonzero",
+      "signal": "\\s_last",
+      "width": 1,
+      "signed": false
+    }
+  },
+  "targets": [
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200:585:9:1'1",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 585,
+      "column": 9,
+      "source_text": "m_axis_tkeep_reg <= m_axis_tkeep_int;",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200",
+      "event_context": [
+        "posedge \\clk"
+      ],
+      "case_value": "1'1",
+      "switch_signal": "\\dut.store_axis_int_to_output",
+      "compact": "p_52b3e31b4f70f160",
+      "guard_depth": 1,
+      "logic": "two_state_binary",
+      "kind": "explicit_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200:592:9:default",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 592,
+      "column": 9,
+      "source_text": "m_axis_tkeep_reg <= temp_m_axis_tkeep_reg;",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200",
+      "event_context": [
+        "posedge \\clk"
+      ],
+      "case_value": "default",
+      "switch_signal": "\\dut.store_axis_int_to_output",
+      "compact": "(and (not p_52b3e31b4f70f160) true)",
+      "guard_depth": 1,
+      "logic": "two_state_binary",
+      "kind": "default_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200:592:18:1'1",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 592,
+      "column": 18,
+      "source_text": "m_axis_tkeep_reg <= temp_m_axis_tkeep_reg;",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200",
+      "event_context": [
+        "posedge \\clk"
+      ],
+      "case_value": "1'1",
+      "switch_signal": "\\dut.store_axis_temp_to_output",
+      "compact": "(and (and (not p_52b3e31b4f70f160) true) p_d4352a5f1c7165ff)",
+      "guard_depth": 2,
+      "logic": "two_state_binary",
+      "kind": "explicit_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200:601:9:1'1",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 601,
+      "column": 9,
+      "source_text": "temp_m_axis_tkeep_reg <= m_axis_tkeep_int;",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200",
+      "event_context": [
+        "posedge \\clk"
+      ],
+      "case_value": "1'1",
+      "switch_signal": "\\dut.store_axis_int_to_temp",
+      "compact": "p_540756fa1554e8fe",
+      "guard_depth": 1,
+      "logic": "two_state_binary",
+      "kind": "explicit_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200:610:9:1'1",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 610,
+      "column": 9,
+      "source_text": "m_axis_tready_int_reg <= 1'b0;",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200",
+      "event_context": [
+        "posedge \\clk"
+      ],
+      "case_value": "1'1",
+      "switch_signal": "\\rst",
+      "compact": "p_c477b390c6c224ec",
+      "guard_depth": 1,
+      "logic": "two_state_binary",
+      "kind": "explicit_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:551$197:560:9:1'1",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 560,
+      "column": 9,
+      "source_text": "if (m_axis_tready || !m_axis_tvalid_reg) begin",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:551$197",
+      "event_context": [
+        "combinational"
+      ],
+      "case_value": "1'1",
+      "switch_signal": "\\dut.m_axis_tready_int_reg",
+      "compact": "p_6af61b57d570c64e",
+      "guard_depth": 1,
+      "logic": "two_state_binary",
+      "kind": "explicit_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:551$197:562:13:1'1",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 562,
+      "column": 13,
+      "source_text": "m_axis_tvalid_next = m_axis_tvalid_int;",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:551$197",
+      "event_context": [
+        "combinational"
+      ],
+      "case_value": "1'1",
+      "switch_signal": "$flatten\\dut.$logic_or$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:562$199_Y",
+      "compact": "(and p_6af61b57d570c64e (or p_923458d21dd489ac (not p_8080a4a9144b42a9)))",
+      "guard_depth": 2,
+      "logic": "two_state_binary",
+      "kind": "explicit_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:551$197:566:13:default",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 566,
+      "column": 13,
+      "source_text": "temp_m_axis_tvalid_next = m_axis_tvalid_int;",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:551$197",
+      "event_context": [
+        "combinational"
+      ],
+      "case_value": "default",
+      "switch_signal": "$flatten\\dut.$logic_or$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:562$199_Y",
+      "compact": "(and p_6af61b57d570c64e (and (not (or p_923458d21dd489ac (not p_8080a4a9144b42a9))) true))",
+      "guard_depth": 2,
+      "logic": "two_state_binary",
+      "kind": "default_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:551$197:571:9:default",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 571,
+      "column": 9,
+      "source_text": "m_axis_tvalid_next = temp_m_axis_tvalid_reg;",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:551$197",
+      "event_context": [
+        "combinational"
+      ],
+      "case_value": "default",
+      "switch_signal": "\\dut.m_axis_tready_int_reg",
+      "compact": "(and (not p_6af61b57d570c64e) true)",
+      "guard_depth": 1,
+      "logic": "two_state_binary",
+      "kind": "default_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:551$197:571:18:1'1",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 571,
+      "column": 18,
+      "source_text": "m_axis_tvalid_next = temp_m_axis_tvalid_reg;",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:551$197",
+      "event_context": [
+        "combinational"
+      ],
+      "case_value": "1'1",
+      "switch_signal": "\\m_ready",
+      "compact": "(and (and (not p_6af61b57d570c64e) true) p_923458d21dd489ac)",
+      "guard_depth": 2,
+      "logic": "two_state_binary",
+      "kind": "explicit_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:483$190:484:9:1'1",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 484,
+      "column": 9,
+      "source_text": "frame_ptr_reg <= 16'd0;",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:483$190",
+      "event_context": [
+        "posedge \\clk"
+      ],
+      "case_value": "1'1",
+      "switch_signal": "\\rst",
+      "compact": "p_c477b390c6c224ec",
+      "guard_depth": 1,
+      "logic": "two_state_binary",
+      "kind": "explicit_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:483$190:491:9:default",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 491,
+      "column": 9,
+      "source_text": "",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:483$190",
+      "event_context": [
+        "posedge \\clk"
+      ],
+      "case_value": "default",
+      "switch_signal": "\\rst",
+      "compact": "(and (not p_c477b390c6c224ec) true)",
+      "guard_depth": 1,
+      "logic": "two_state_binary",
+      "kind": "default_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:483$190:509:9:1'1",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 509,
+      "column": 9,
+      "source_text": "last_word_keep_reg <= m_axis_tkeep_int;",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:483$190",
+      "event_context": [
+        "posedge \\clk"
+      ],
+      "case_value": "1'1",
+      "switch_signal": "\\dut.store_last_word",
+      "compact": "p_6dcd60594cb2077f",
+      "guard_depth": 1,
+      "logic": "two_state_binary",
+      "kind": "explicit_case"
+    },
+    {
+      "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119:194:9:1'1",
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+      "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "line": 194,
+      "column": 9,
+      "source_text": "s_axis_tdata_masked[i*DATA_WORD_WIDTH +: DATA_WORD_WIDTH] = s_axis_tkeep[i] ? s_axis_tdata[i*DATA_WORD_WIDTH +: DATA_WORD_WIDTH] : {DATA_WORD_WIDTH{1'b0}};",
+      "source_mapping": "yosys_src",
+      "process": "$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:168$119",
+      "event_context": [
+        "combinational"
+      ],
+      "case_value": "1'1",
+      "switch_signal": "1'1",
+      "compact": "true",
+      "guard_depth": 1,
+      "logic": "two_state_binary",
+      "kind": "explicit_case"
+    }
+  ],
+  "groups": [
+    {
+      "eclass": 7,
+      "event_context": [
+        "posedge \\clk"
+      ],
+      "representative": "p_c477b390c6c224ec",
+      "eclass_nodes": [
+        {
+          "children": [],
+          "op": "p_c477b390c6c224ec"
+        }
+      ],
+      "distinct_input_expressions": 1,
+      "requires_egg_rewrite_to_merge": false,
+      "member_ids": [
+        "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200:610:9:1'1",
+        "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:483$190:484:9:1'1"
+      ],
+      "members": [
+        {
+          "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:579$200:610:9:1'1",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+          "line": 610,
+          "column": 9,
+          "source_text": "m_axis_tready_int_reg <= 1'b0;",
+          "compact": "p_c477b390c6c224ec",
+          "guard_depth": 1,
+          "case_value": "1'1",
+          "source_mapping": "yosys_src",
+          "event_context": [
+            "posedge \\clk"
+          ]
+        },
+        {
+          "id": "axis_frame_length_adjust:$flatten\\dut.$proc$/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v:483$190:484:9:1'1",
+          "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v",
+          "line": 484,
+          "column": 9,
+          "source_text": "frame_ptr_reg <= 16'd0;",
+          "compact": "p_c477b390c6c224ec",
+          "guard_depth": 1,
+          "case_value": "1'1",
+          "source_mapping": "yosys_src",
+          "event_context": [
+            "posedge \\clk"
+          ]
+        }
+      ],
+      "independent_z3_checks": 1,
+      "status": "semantic_only_pending_raw_counter_and_reachability"
+    }
+  ],
+  "egg": {
+    "engine": "egg 0.11.0",
+    "iterations": 3,
+    "stop_reason": "Some(Saturated)",
+    "eclass_count": 20,
+    "enode_count": 26,
+    "timing_seconds": {
+      "extract_and_build_json": 0.000141084,
+      "saturation": 0.200234084
+    }
+  },
+  "seconds": {
+    "rewrite_z3": 0.08221699995920062,
+    "frontend_yosys_extract": 0.05656129168346524,
+    "priority_z3": 5.420297384262085e-07,
+    "egg_saturation_and_astsize": 0.20717316633090377,
+    "pair_z3": 0.00650795828551054
+  }
+}

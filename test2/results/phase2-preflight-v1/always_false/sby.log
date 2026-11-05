@@ -1,0 +1,33 @@
+SBY 23:39:26 [work] Copy '/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/phase2-preflight-v1/always_false/dut.v' to '/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/phase2-preflight-v1/always_false/work/src/dut.v'.
+SBY 23:39:26 [work] Copy '/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/phase2-preflight-v1/always_false/candidate.sv' to '/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/phase2-preflight-v1/always_false/work/src/candidate.sv'.
+SBY 23:39:26 [work] Copy '/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/phase2-preflight-v1/always_false/harness.sv' to '/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/phase2-preflight-v1/always_false/work/src/harness.sv'.
+SBY 23:39:26 [work] engine_0: smtbmc z3
+SBY 23:39:26 [work] base: starting process "cd work/src; yosys -ql ../model/design.log ../model/design.ys"
+SBY 23:39:26 [work] base: finished (returncode=0)
+SBY 23:39:26 [work] prep: starting process "cd work/model; yosys -ql design_prep.log design_prep.ys"
+SBY 23:39:26 [work] prep: finished (returncode=0)
+SBY 23:39:26 [work] smt2: starting process "cd work/model; yosys -ql design_smt2.log design_smt2.ys"
+SBY 23:39:26 [work] smt2: finished (returncode=0)
+SBY 23:39:26 [work] engine_0: starting process "cd work; yosys-smtbmc -s z3 --presat --noprogress -t 48  --append 0 --dump-vcd engine_0/trace.vcd --dump-yw engine_0/trace.yw --dump-vlogtb engine_0/trace_tb.v --dump-smtc engine_0/trace.smtc model/design_smt2.smt2"
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Solver: z3
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Checking assumptions in step 0..
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Checking assertions in step 0..
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Checking assumptions in step 1..
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Checking assertions in step 1..
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Checking assumptions in step 2..
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Checking assertions in step 2..
+SBY 23:39:26 [work] engine_0: ##   0:00:00  BMC failed!
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Assert failed in formal_top: harness.sv:14.5-14.32 (_witness_.check_assert_harness_sv_14_14)
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Writing trace to VCD file: engine_0/trace.vcd
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Writing trace to Verilog testbench: engine_0/trace_tb.v
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Writing trace to constraints file: engine_0/trace.smtc
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Writing trace to Yosys witness file: engine_0/trace.yw
+SBY 23:39:26 [work] engine_0: ##   0:00:00  Status: failed
+SBY 23:39:26 [work] engine_0: finished (returncode=1)
+SBY 23:39:26 [work] engine_0: Status returned by engine: FAIL
+SBY 23:39:26 [work] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)
+SBY 23:39:26 [work] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)
+SBY 23:39:26 [work] summary: engine_0 (smtbmc z3) returned FAIL
+SBY 23:39:26 [work] summary: counterexample trace: work/engine_0/trace.vcd
+SBY 23:39:26 [work] summary:   failed assertion formal_top._witness_.check_assert_harness_sv_14_14 at harness.sv:14.5-14.32 step 2
+SBY 23:39:26 [work] DONE (FAIL, rc=2)
