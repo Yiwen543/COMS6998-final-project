@@ -1,3 +1,56 @@
+# test2 — 固定刺激的 SystemVerilog monitor 研究
+
+当前包括原FIFO试验和后续真实控制器试验；生成monitor与原项目的刺激生成分开。
+最新结果及在做事项以 [PROJECT_STATUS](../docs/PROJECT_STATUS.md) 和
+[HANDOFF](../docs/HANDOFF.md) 为准。独立Claude checker、历史候选与旧分数不可覆盖。
+
+本机新鲜验收已完成：63项test2测试通过，完整`--formal all`入口执行成功，
+独立核验见[资格报告](results/controller-offline-e2e-fresh-v1/report.md)和
+[acceptance.json](results/controller-offline-e2e-fresh-v1/acceptance.json)。
+原33条BMC反例已全部双模拟器物理复核；所有旧冻结、分数和超时保留。
+新结束标记仍是离线原型，不是新的付费LLM对照结果。
+
+## 控制器与无需API的资格入口
+
+- 已有controller B/C证据：`results/controller-analysis-v1/analysis.md`。
+- 新API-free资格登记：`configs/controller_offline_qualification_v2.json`；
+  显式有限控制、原始计数审计、typed/QF_BV/egg复核、物理反例复核、交错形式配置。
+- 结束标记原型：`configs/controller_done_abi_v1.json`；仅最终post暴露`trace_done`，
+  不改DUT输入、不添时钟。它是新接口离线准备，live=false。
+
+在仓库根目录运行，必须指定不存在的新输出目录：
+
+```sh
+.venv/bin/python -B test2/scripts/controller_offline_pipeline.py \
+  --output test2/results/offline-reproduction-NEW --formal all
+```
+
+这条命令执行本地资格流程，**不调用API、不生成新LLM候选**。formal部分最多
+18项校准（150solver秒，另有工具/物理回放开销）和108项正确源检查（1080solver秒）。
+已有生成候选是输入；所有同模型历史请求及usage留在原run中。源码、observer、checker、
+raw coverage与全部冻结会在执行前后核对。所有输出和新失败落在新目录。
+
+仅显式复用已经完成的formal证据时，使用：
+
+```sh
+.venv/bin/python -B test2/scripts/controller_offline_pipeline.py \
+  --output test2/results/offline-reproduction-REUSE \
+  --formal reuse \
+  --calibration test2/results/controller-formal-diagnostic-v2 \
+  --balanced test2/results/controller-balanced-correct-v1
+```
+
+复用模式仍新执行控制/候选回放与语义审计；保存formal证据的SHA和来源，不能称为
+新的formal执行或新的LLM试验。`--formal skip`会明确标为partial。
+合成规格控制不自动等于原DUT物理可达轨迹，义务检出矩阵也不是RTL覆盖率。
+
+当前本机依赖包括已有`.venv`、Yosys/SBY/Z3/Icarus/Verilator和
+`egraph/target/debug/guard_proofs`（egg0.11.0）；入口记录实际版本和binary SHA，
+不会安装工具或联网构建。单独clone尚未保证包含这些ignored依赖与未提交证据。
+新付费试验需另登记并授权；不要直接重跑旧live runner。
+
+## 初始FIFO试验记录（历史范围与预算）
+
 # test2 — 固定刺激下的 FIFO 监视器生成实验
 
 本目录是新的独立登记，不替换此前的刺激生成实验或其负结果。

@@ -1,10 +1,52 @@
-# Project status — 2026-11-04 (America/New_York)
+# Project status — 2026-11-05 (America/New_York)
 
-**Current outcome:** original stimulus trials have not established a stable general C-over-B benefit. The separately registered `test2` monitor pilot is complete: fixed-trace detection ties, C costs more tokens. This is limited evidence, not a refutation of E-graphs. The user selected next-stage fixed-stimulus monitor preparation; the new live task is not yet frozen. [S1,S2,S3,S4]
+**Current outcome:** fixed-stimulus controller B/C completed2026-11-05. All36 candidates reach11/11 observable faults and106/106eligible pairs from round1; C mean tokens+6.919%. Short-formal confirmed types B0/8/0 versus C6/3/8, with equal pooled8-type unions; one C status-stall slot completes BMC24/prove.473formal TIMEOUT remain. This is a local descriptive signal in formal decidability, not a general/pure-semantic C advantage or full monitor soundness proof. Historical stimulus and older monitor results remain unchanged. [latest evidence below; S1–S5 historical]
 
 Evidence labels: **[V]** directly inspected/recomputed (original entries: migration audit; latest preparation: explicitly dated below); **[R]** saved report/run evidence inspected, experiment not rerun; **[C]** visible conversation; **[P]** proposed; **[?]** not established. All paths below are repository-relative.
 
-## Latest preparation — 2026-11-04
+## Autonomous qualification plan — accepted with scope 2026-11-05
+
+User authorized sustained reversible local work; completed the next minimum task, bridge repair, formal diagnostic, balanced replay, end-marker prototype, source/coverage/semantic audit, complete CLI reproduction and independent acceptance without new API calls. Evidence: `test2/results/controller-offline-e2e-fresh-v1/report.md`, `acceptance.json`;63fresh test2 tests passed. No new model sample or old score rewrite.
+
+| Phase | Status | Actual acceptance evidence |
+|---|---|---|
+| Audit | Verified | main00e0dd9...,old3486/reference212/controller239 members match; tools recorded, keys absent; migration531functional files and retained history intact. |
+| Obligation controls | Completed |32independent checker labels;all36frozen candidates/1044replays/145152cycles; old completion/ABI gaps observed; synthetic controls distinguished from physical reachability and RTL coverage. |
+| Formal qualification | Completed with unknowns retained | v1failed bridge preserved,v2strict actual-alarm dual-physical/reference gate passed;108balanced correct-source jobs50PASS/56TIMEOUT/1UNKNOWN/1coverFAIL. B6/C3single-slot prove completions under this profile do not imply stronger properties/general benefit. |
+| Offline end-to-end | Completed and freshly reproduced | Full one-command `--formal all`826.336s,126new formal jobs;5882QF_BV queries/281rules/real egg;1052raw replay logs and145728cycles verified.63current test2 tests pass. |
+| Original witness closure | Completed | All33original BMCFAIL witnesses physically reproduce and independent referenceFAIL;66physical runs/548cycles, old labels unchanged. |
+
+Verified implementation includes the existing recorded live B/C flow, immutable releases, independent reference evaluation and the new runnable local qualifier. Partial: no whole monitor soundness, end-marker remains offline prototype. Planned/not executed: newly registered live end-marker/placebo study. Unknown: general causal C effect,current API connectivity/USD costs,remote/submission status. Future paid work requires a concrete new proposal/authorization; no paid stage is pending.
+
+Raw coverage is3168actual Verilator counters (110line/176branch/248expr/2634toggle), with1989unhit across fixed development inputs; no behavioral equivalence class is counted as RTL coverage. Existing main simulation comparison remains11/11ties/C tokens+6.919%. Representation-sensitive formal results limit robust causal interpretation of the original local C signal.
+
+## Controller live stage — completed 2026-11-05
+
+[V] Read `test2/results/controller-analysis-v1/analysis.md` and `controller-report-v1/report.md`. New immutable freeze239 files, old3486/new-reference212 matched. Nine new tests passed; all36 saved-response replay matches;5832 scoring logs/1124640cycles verified. No new DUT simulation. Old25-test suite not rerun.
+
+[V] Actual token gate v1 failed before generation. Identical lossless dictionary re-encoding retains all3168 counters/RTL/spec/observations and unchanged C groups; count v2 passed. New `controller_run_v2.json` retains parent configurations and failed evidence.36generation requests/0retries,44count requests,1878181tokens. All actual usage caps pass; no hidden scoring before all36 snapshots froze.
+
+[V] B/C each3×6 rounds: all11/11observable types and106/106eligible pairs,0correct-control alarms/unknown. Boundary4/4,handshake3/3(4raw),payload4/4;12raw faults retained including unconfirmed M08. Cost-to-target round1 for all6; C mean input+output tokens+6.91854%, with no simulation detection gain.
+
+[V] Formal540jobs, no skipped jobs,3626.314s measured wall.473TIMEOUT;31activation cover PASS;1BMC24 PASS;1prove PASS;33reference-confirmed mutant counterexamples;1unreached cover. C rep3 P2 proves status-stall stability under fixed assumptions, not full monitor correctness. Per-session confirmed mutant types B0/8/0 vs C6/3/8, pooled union8/8. Descriptive formal improvement is limited by3reps,whole-package/no-placebo comparison, fixed B-then-C formal order and wall-time sensitivity.
+
+[V,P] Source-only diagnosis finds C rep2 omits128-cycle completion checking despite full score. Keep primary scores unchanged. Next minimum is API-free obligation/negative-control qualification and a small fixed-control formal cone/witness diagnostic before further paid B/C. No new experiment launched. Key retained throughout this concrete task, with final cleanup recorded after verification. HEAD00e0dd9..., no agent commit/push/fetch; preserve dirty work.
+
+## Earlier controller qualification — 2026-11-05
+
+[V] Final local HEAD is `00e0dd974d3a910b37de3c029f61e7beeb7953fd`. Two commits (test2_phase1/test2_phase2) appeared during this session; the agent did not run commit/push/fetch. New completion artifacts remain partly untracked. Artifact hashes, not an assertion that all files belong to HEAD, identify the actual run; remote live state is unverified.
+
+[V,C] The requested minimum task is complete: original verilog-axis frame-length-adjuster FIFO controller, fixed byte interface/specification, MIN4/MAX8, data/header FIFO32/8, independent data/status pressure and reset flush. Direct-core scope rejected on a status-stall counterexample reproduced by both simulators; no DUT/checker weakening. See `docs/test2_controller_qualification_2026-11-05.md`.
+
+[V] Selected scope:168 combinational definition checks certified;9 nontrivial groups;142 mapped/6 unresolved targets;3168 raw counters retained. Local reset/output-stall/status-stall bmc/prove/cover PASS (11jobs including positive/negative plumbing controls,24.492s), not whole-design correctness. New3dev/6hidden correct traces agree in both simulators.
+
+[V,R] Claude-only reference authorship/repair and fresh review completed. Contract-v2 reference `test2/tasks/axis_length_fifo_v1/reference/frozen-v2/` has50selftests/20independent finite controls/18correct traces and scoped acceptance, with conservative unknown/diagnostic/reset-pre/continuity limits retained.5CLI role calls including failure reported$3.714620. User authorized key retention between calls; the reference task finished and its main staged key was then cleared.
+
+[V] All12 new single-site faults and144fault/trace/simulator outcomes retained. Each simulator has53/72 eligible sampled violations,11observable fault types; one has no reference-confirmed violation on this fixed corpus. These are eligibility data, not generated-monitor detection scores. No new B/C call or C advantage measured.
+
+[P] Next minimum: new passive-monitor ABI/replay/runner boundary and every-round release tests, actual provider token-count check, then a new live freeze. Shared budget draft uses64k input for this larger original hierarchy, equal across arms; C-min adds4 certified groups, all selected source points already hit in development boundary traces. No placebo/pure-semantic causal claim. Candidate live remains false.
+
+## Earlier preparation — 2026-11-04
 
 [V,C] The user's subsequent instruction continues the monitor question under fixed stimuli and matched resource budgets. `docs/test2_phase2_preflight_2026-11-04.md` records a fresh saved-evidence/hash audit and new offline infrastructure calibration, not a rerun of v1. Old3486 freeze members and reference/candidates/scores remained unchanged. New tests:7/7; old25-test suite not rerun.
 

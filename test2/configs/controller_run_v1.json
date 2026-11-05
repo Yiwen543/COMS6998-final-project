@@ -1,0 +1,178 @@
+{
+  "C_B_effect_measured": false,
+  "active_contract": {
+    "test2/tasks/axis_length_fifo_v1/public/observer_contract_v2.md": "87ad4bb18d7c8899f8393af23c2f5e9cbc7ce685ecb9f2ef35d2d6441ef4f736",
+    "test2/tasks/axis_length_fifo_v1/public/specification_v2.md": "63d003c6c844b08c982c484da979957c0e36090227e6cf61a9eda881534b6c3f"
+  },
+  "budget_change_reason": "More original RTL/source counters in the FIFO hierarchy; use equal64k input caps for B/C, fixed before any candidate calls, not an observed C outcome.",
+  "candidate_feedback": {
+    "C_only": "4 predeclared transfer/pad equivalent-guard groups with full context; all raw source counters retained separately",
+    "packet_audit": "test2/tasks/axis_length_fifo_v1/qualification/prompt-audit-v2/summary.json",
+    "provider_token_count": "PENDING",
+    "sha256": "643f3f4a65abea1b3a63b110e0a28ac0431d6f03ba098448adebc391891f3189"
+  },
+  "candidate_live_allowed": "conditional_on_controller_live_freeze_v1",
+  "candidate_model_budget": {
+    "arms": [
+      "B2_raw",
+      "C2_semantic"
+    ],
+    "compile_timeout_seconds": 60,
+    "input_tokens": 64000,
+    "max_retries": 1,
+    "model": "gpt-6.1-sol",
+    "output_tokens": 8192,
+    "property_slots": 6,
+    "reasoning_effort": "low",
+    "repetitions": 3,
+    "replay_timeout_seconds": 15,
+    "request_timeout_seconds": 120,
+    "rounds": 6,
+    "source_body_bytes": 16000,
+    "state_bits": 8192
+  },
+  "credential_policy": {
+    "path": "build/private/midterm-openai-key",
+    "retain": "Across count/generation/failures until this task finishes; then clear. Never print or pass to tool children."
+  },
+  "date": "2026-11-05",
+  "experiment_id": "axis_length_fifo_monitor_live_v1",
+  "formal_candidate_schedule": {
+    "correct_source": {
+      "depth": 24,
+      "modes": [
+        "bmc",
+        "prove",
+        "cover"
+      ],
+      "slots": 6,
+      "timeout_each": 10
+    },
+    "hidden_faults": {
+      "depth": 24,
+      "modes": [
+        "bmc"
+      ],
+      "planned_faults": 12,
+      "slots": 6,
+      "timeout_each": 5
+    },
+    "overall_cap": 720,
+    "overall_cap_policy": "720 wall seconds per final candidate including fixed process grace; stop starting jobs when remaining cap is less than timeout+5 and record NOT_RUN_TOTAL_CAP. No arm-specific retries.",
+    "policy": "Fixed schedule before B/C; unknown/timeout retained; no arm-specific retries; cover/bounded/proof separate",
+    "total_solver_seconds_cap": 540
+  },
+  "hypotheses": [
+    "C may help complete activation/acceptance guards under compound data/status stalls and boundary transitions absent from routine observations",
+    "C may improve correct active conditions and reduce false positives on legal backpressure/reset transitions",
+    "Pure data corruption/order remains a negative-control stratum for combinational guard normalization; no guaranteed C benefit"
+  ],
+  "input_lengths": [
+    1,
+    12
+  ],
+  "input_manifest": {
+    "note": "Source/actions remain unchanged; active_contract above selects v2 spec/interface, original v1 docs retained as provenance",
+    "path": "test2/tasks/axis_length_fifo_v1/input-manifest-v1.json",
+    "sha256": "76b8110585b4b412befc4ce600b3109679635e9f6213fc9fd396fc40a9ba2823"
+  },
+  "local_formal_qualification": {
+    "depth": 24,
+    "flatten": true,
+    "jobs": 11,
+    "max_solver_seconds": 100,
+    "modes": [
+      "bmc",
+      "prove",
+      "cover"
+    ],
+    "plumbing_controls": {
+      "depth": 3,
+      "expected": [
+        "PASS",
+        "FAIL"
+      ],
+      "timeout_each": 5
+    },
+    "properties": [
+      "reset",
+      "output_stall",
+      "status_stall"
+    ],
+    "scope": "No independent functional reference claim",
+    "solver": "z3",
+    "timeout_each": 10
+  },
+  "max_length": 8,
+  "min_length": 4,
+  "parent_registration_sha256": "4f1270b028bcc8f58adf2b9982efe4b4c92d7dcae30bbb18bd695ac5b37e43e4",
+  "parent_task_registration_sha256": "6312d1e32e9e73a38c97984def0c3eb1c350a40ebd4e6d42e7fcdc9e2f3eacd1",
+  "public_parameters": {
+    "DATA_WIDTH": 8,
+    "DEST_ENABLE": 0,
+    "FRAME_FIFO_DEPTH": 32,
+    "HEADER_FIFO_DEPTH": 8,
+    "ID_ENABLE": 0,
+    "KEEP_ENABLE": 0,
+    "KEEP_WIDTH": 1,
+    "USER_ENABLE": 0
+  },
+  "public_wrapper": "task_top_v3.sv",
+  "qualification_gates": {
+    "B_C_common_information_and_counter_roundtrip": true,
+    "actual_provider_token_counts": false,
+    "every_round_snapshot_release_tests": false,
+    "fixed_development_and_fresh_hidden_inputs": true,
+    "hidden_observability_all_raw_outcomes_retained": true,
+    "independent_reference_review_controls": true,
+    "local_formal_profile": true,
+    "new_candidate_ABI_replay_runner_boundary": false,
+    "new_live_freeze": false,
+    "source_spec_interface": true,
+    "typed_definitions_and_guard_source_mapping": true
+  },
+  "reference": {
+    "checker_sha256": "b44f32b27c11b968d23fd93ecf8b0d714e773460fc0b505d89adf23df3cd7dee",
+    "freeze_path": "test2/tasks/axis_length_fifo_v1/reference/frozen-v2/freeze.json",
+    "freeze_sha256": "bbac094bcf82eecb44e57fd85a3dbdabb27dd07af00559300617753103ed7c67",
+    "scope": "Independent finite-trace reference, accepted scope and residual limits in frozen review/scope-notes; not full soundness proof"
+  },
+  "reference_budget": {
+    "author_calls": 1,
+    "fresh_review_calls": 1,
+    "max_usd_per_call": 4,
+    "model": "claude-opus-5-5",
+    "stage_key": "build/private/anthropic-crosscheck-key",
+    "timeout_seconds_per_call": 600
+  },
+  "reference_calls_allowed": false,
+  "scope_change_reason": "Direct core violated status stall stability under legal inputs; counterexample physically reproduced by both simulators. Reject that scope. Qualify the original upstream FIFO wrapper with unchanged independent backpressure contract; no DUT patch or weakened assertion.",
+  "scoring_addendum": {
+    "all_round_simulation": true,
+    "causal_limit": "Whole feedback-package comparison; no token-matched placebo or pure semantic causality",
+    "correct_controls": "All9 fixed correct observations on both simulators must complete with no alarms or unknowns",
+    "cost_to_target": "First frozen round attaining all11 observable distinct faults with correct-control gate on both simulators; sum all attempted generation input+output usage through that round; not-reached/missing usage retained",
+    "formal_final_candidates_only": true,
+    "kill": "Reference sampled-safety eligible pair only; complete candidate replay, correct-control gate, at least one definite alarm at/after first reference violation, and no earlier alarm anywhere on that pair",
+    "observable_fault_denominator": 11,
+    "raw_fault_denominator": 12,
+    "strata": "Predeclared boundary_guard, handshake_reset, payload_status; raw and observable denominators both reported"
+  },
+  "selection_limits": [
+    "No B/C model outcomes used for source or fault selection",
+    "Previously inspected verilog-axis family, not a new unseen repository",
+    "Only whole C feedback-package effect without token-matched placebo; actual tokens measured",
+    "Routine and compound strata both reported even if no C advantage"
+  ],
+  "selection_policy": "Last schema/boundary/compile-valid candidate through round6 in each own-history session; all36 rounds frozen before any hidden scoring. Invalid/unresolved rounds retained.",
+  "source_registration_sha256": "beea29730bc3e0f578053454d596ea1825c78836fa59cfd5c6a4a8ebd2e89662",
+  "source_revision": "48ff7a7e2ef782cf778d47910cf85835c64b1bce",
+  "status": "registered_before_candidate_calls",
+  "stop_policy": "User authorized B/C after offline boundary/release tests and actual provider counts pass; new immutable live freeze is mandatory. No hidden feedback or post-release candidate repairs.",
+  "strata_before_outcomes": [
+    "boundary_guard",
+    "handshake_reset",
+    "payload_status"
+  ],
+  "task_root": "test2/tasks/axis_length_fifo_v1"
+}

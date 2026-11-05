@@ -53,8 +53,50 @@ Latest v5: predeclared B′ rep1 only, six separate BMC48/10s jobs (60s total so
 
 `test2/configs/registration_v2_draft.json` is a future study contract with equal draft caps, fresh hidden faults/traces, independent Claude reference and every-round candidate snapshots. `live_allowed=false`; no executable entrypoint; task/spec/interface and formal schedule unset; all live gates false. Do not repurpose the frozen v1 runner for this draft. Bind a new registration/runner/live freeze only after one task passes offline feasibility and independent reference gates. No requirement here imports the original stimulus ordinary-unhit/B-before-C gate.
 
+## Track M controller task — 2026-11-05
+
+Concrete scope: `test2/configs/controller_task_v2.json`, `test2/tasks/axis_length_fifo_v1/`. Original verilog-axis revision48ff7a7e2ef782cf778d47910cf85835c64b1bce, byte stream, KEEP/ID/DEST/USER disabled, MIN4/MAX8, data/header FIFO32/8, input frames1..12bytes, independent data/status channels, synchronous reset cancellation. Direct-core status-stall FAIL and prior frontend/definition failures remain separate evidence. No original RTL edits.
+
+Active reference contract: `public/specification_v2.md`, `observer_contract_v2.md`. Claude writes the checker; GPT does not patch it.50selftests/20independent controls/18correct traces plus fresh review yield scoped acceptance, not complete soundness. Reference frozen in `reference/frozen-v2/`; all unknown/diagnostic/reset-pre/continuity limits retained. Newhidden12faults×6traces×2simulators kept; each simulator53/72eligible pairs and11observable fault types, one unconfirmed retained. No candidate score yet.
+
+Local formal qualification is11jobs/100s solver cap including two controls; selected three public interface properties pass bmc/prove/cover. Future candidate schedule is6slots×3modes×10s on correct source plus12faults×6slots×bmc×5s, total540s/candidate (common overallcap720), depth24/z3/flatten. No arm-specific retry/resource increase. BMC/cover/unbounded local proof remain distinct.
+
+Shared candidate budget is3independent sessions×6rounds/arm, gpt-6.1-sol low,64k input/8192output,120s, retry1; new larger-hierarchy budget declared before new B/C outcomes. Source/state caps remain16000bytes/8192bits. Public-only B/C packets retain3168 raw counters; C-min adds4predeclared certified guard groups. Actual provider tokens and new ABI/runner/all-round-release gates remain pending; candidate live false. Never launch the old FIFO runner for this task.
+
+User2026-11-05 explicitly authorized keeping the main staged Anthropic key through needed repairs/reviews until completion. A new adapter leaves the immutable old caller unchanged and uses per-call0600 copies. The reference task has completed; key cleanup occurred afterwards.5CLI role calls including the initial failure cost$3.714620 as reported, with all artifacts retained.
+
 ## Environment and recovery limits
 
 [V] Local environment checked2026-11-04: Python3.13.9, OpenAI SDK2.54.0, Verilator5.050, Icarus12.0, Yosys0.70+post, SBY0.70, Z3 CLI5.1.0, Cargo1.99.0. Saved run versions: `test2/results/preflight-v2/versions.json`; current commands/exit codes: `docs/audits/migration_2026-11-04.json`. egg version is locked in `egraph/Cargo.lock`. Historical OpenTitan jobs used an isolated OSS CAD/Slang environment; do not assume the default Yosys reproduces all those frontends.
 
 [P] Reliability and R0/R1/R2 recovery need their own registration, assumptions, fault-free controls and metrics. Hash/schema guards and replay logs alone do not establish agent diagnosis accuracy or recovery success. No new APIs/experiments are authorized by this summary.
+
+## Controller B/C live v2 — authorized 2026-11-05
+
+User authorized running matched B/C after new replay/snapshot/token gates. `controller_run_v2.json` and `controller_live_freeze_v1.json` bind a new scope; old freezes and Claude checker remain untouched. First actual count failed with zero candidate calls; common coverage dictionary re-encoding is exactly reversible and has no selection/truncation. Second count passed unchanged64k cap. Every real attempt is counted before generation; cap failures remain ungenerated, not successful trials.
+
+All36 candidates including invalid/missing outcomes freeze before hidden scoring; selected final is last compile-valid, never best hidden score. Six stateless own-history sessions,3 per arm,6 rounds,low gpt-6.1-sol,64k/8192,120s,one failure retry. Simulation covers all frozen rounds; formal uses six selected finals only. Scoring requires no correct-control alarms/unknowns and an eligible pair with no candidate alarm before reference onset. Report12 raw/11 observable faults,106 eligible simulator-trace pairs, three predeclared strata, all-round cost-to-all11 and missing usage/not-reached states. A definite faulty-trace detection may coexist with explicitly retained unknowns.
+
+Formal assumes initial reset, reset implies no source offer, blocked-source stability until reset, and1..12 accepted bytes/frame. Depth24,per-slot mode budgets and global720s cap remain matched. Reference-adjudicated reachable BMC witnesses differ from induction failures; cover/finite BMC/proof never pooled. Retain the staged OpenAI key through this concrete task, then clean it after report/audit completion.
+
+### Controller live v2 completion
+
+Completion artifacts: `test2/results/controller-live-v1/`, `controller-final-v1/`, `controller-report-v1/`, `controller-analysis-v1/`. All36 freezes precede final scoring.36generation/0retry,44count calls,1878181tokens; actual caps pass. All36 reach fixed-corpus11/11types and106/106eligible pairs at round1; raw12 and M08 unconfirmed remain. C mean tokens+6.91854%.
+
+All540formal jobs retained:473TIMEOUT,31cover PASS,1BMC PASS,1prove PASS,33reference-confirmed mutant BMC FAIL,1unreached cover FAIL. Local proof is C rep3 P2 status-stall only. Both arm pooled fault unions8; per-session B0/8/0 vs C6/3/8 are descriptive, not complete soundness/general causal evidence. Correct-control acceptance remains finite. Source-obligation omission in C rep2 is exploratory and does not change scores. Reports/audits preserve full role/source/input boundaries, global caps and raw log hashes. No automatic rerun follows completion.
+
+## Autonomous offline qualification v2 — 2026-11-05
+
+Registration `test2/configs/controller_offline_qualification_v2.json` preserves v1 failed witness alignment and all previous freezes. It authorizes no API/model calls. Controls are explicit synthetic finite observations, frozen before all36 old candidate replays; independent checker labels9legal/17FAIL/3unknown/3invalid. Reference-accepted examples are not automatically physically reachable, so their alarms cannot alone prove DUT-relative unsoundness. Obligation control recall is not RTL coverage and never rewrites the registered mutant score.
+
+Formal variants retain or remove output keep attributes with identical logic/legal-source assumptions; all inputs kept for strict transport decoding. Depth24,5s controls/known mutant anchor,10s selected probes;18jobs/150declared solver-seconds, overall360s. Probes disclose deterministic first B reset plus known positive C status-stall anchor; anchor selection is diagnostic, not outcome-blind C-effect estimation. v2 physical bridge verifies observed active/ok failure time rather than terminal native assert-report step. Missing/unknown/unsupported input/output or mismatched physical alarm stays unresolved. Dual simulators reconstruct actual outputs from literal inputs; no carried/fabricated terminal post.
+
+After passing controls and physical reference anchors, all6finals×6slots×bmc/prove/cover use the cone profile,24steps/10s each,108jobs/1080solver-seconds, interleaved B/C order. No arm-specific retries, candidate edits or old status relabel. The single-command fresh reproduction repeats this local qualification on frozen programs; it is not a new LLM sample. Current tests are freshly executed separately from historical test counts.
+
+`controller_done_abi_v1.json` is an offline-only prototype: trace_done exactly at finalpost, no extra DUT edge/input. It exposes finite evaluation termination, with independent check_rows unchanged. Unknown tails do not become PASS. A future trace_done=0 formal projection has safety-only scope. New live study remains unregistered/unauthorized by this prototype.
+
+### Offline acceptance and closure
+
+Full fresh CLI actual command/output: `controller_offline_pipeline.py --output test2/results/controller-offline-e2e-fresh-v1 --formal all`,826.336s;126local formal jobs and63separate current test2 tests. Explicit evidence-reuse invocation remains separately labeled. Raw logs/versions/source/native status are bound in acceptance.json; component timing overlaps wall timing and must not be added twice.
+
+`controller_witness_replay_v1.json` registers all33original BMCFAIL witnesses, no outcome-based subset. It ran after timed checks, physically reconstructed literal inputs in both simulators and reproduced actual candidate alarms; all33independent checker verdicts FAIL.66physical runs/548cycles and33monitor replays/274cycles are diagnostic costs, not new independent LLM trials, RTL coverage gains or old formal reruns. All old scores/timeouts remain unchanged.

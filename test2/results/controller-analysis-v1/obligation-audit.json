@@ -1,0 +1,192 @@
+{
+  "candidates": [
+    {
+      "arm": "B2_raw",
+      "repetition": 1,
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/controller-live-v1/B2_raw/rep1/round6/compiled/candidate.sv",
+      "source_sha256": "9b934d00530ddfae9ec687d7afad6f4e429908835b52812f5e70d76cf3060abb",
+      "state_bits": 5265,
+      "tail_related_source_lines": [
+        {
+          "line": 67,
+          "text": "assign active[5] = seen && tracking && !rst && tail >= 128 &&"
+        }
+      ]
+    },
+    {
+      "arm": "B2_raw",
+      "repetition": 2,
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/controller-live-v1/B2_raw/rep2/round6/compiled/candidate.sv",
+      "source_sha256": "d246bfa4af919914780da2c8ef9af78ea5362f9e7ae40a527556595450056ef2",
+      "state_bits": 5220,
+      "tail_related_source_lines": [
+        {
+          "line": 30,
+          "text": "reg [7:0] drain_tail = 0;"
+        },
+        {
+          "line": 50,
+          "text": "wire drained_check = drain_tail >= 128;"
+        },
+        {
+          "line": 51,
+          "text": "wire drained = input_length == 0 && data_distance == 0 &&"
+        },
+        {
+          "line": 64,
+          "text": "assign active[5] = seen && !reset_edge && tracking && (m_valid || drained_check);"
+        },
+        {
+          "line": 66,
+          "text": "(!drained_check || drained);"
+        },
+        {
+          "line": 81,
+          "text": "drain_tail <= 0;"
+        },
+        {
+          "line": 84,
+          "text": "if (drain_tail < 128) drain_tail <= drain_tail+1'b1;"
+        },
+        {
+          "line": 85,
+          "text": "end else drain_tail <= 0;"
+        }
+      ]
+    },
+    {
+      "arm": "B2_raw",
+      "repetition": 3,
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/controller-live-v1/B2_raw/rep3/round6/compiled/candidate.sv",
+      "source_sha256": "1194cf0e865ec4cd0c33d2e1aa8ac0508238561d2cb3d71bbbbb6fdca6eb4d5e",
+      "state_bits": 4626,
+      "tail_related_source_lines": [
+        {
+          "line": 32,
+          "text": "reg [7:0] quiet=0;"
+        },
+        {
+          "line": 34,
+          "text": "reg justified, expected_last, drained;"
+        },
+        {
+          "line": 69,
+          "text": "drained=(in_pos==0);"
+        },
+        {
+          "line": 71,
+          "text": "if (live_m[k] || live_h[k]) drained=0;"
+        },
+        {
+          "line": 74,
+          "text": "assign active[0]=seen && (past_reset || (tracking && quiet==128));"
+        },
+        {
+          "line": 75,
+          "text": "assign ok[0]=past_reset ? (!m_valid && !h_valid) : (drained && !m_valid && !h_valid);"
+        },
+        {
+          "line": 104,
+          "text": "quiet<=0;"
+        },
+        {
+          "line": 113,
+          "text": "if (quiet<128) quiet<=quiet+1'b1;"
+        },
+        {
+          "line": 114,
+          "text": "end else quiet<=0;"
+        }
+      ]
+    },
+    {
+      "arm": "C2_semantic",
+      "repetition": 1,
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/controller-live-v1/C2_semantic/rep1/round6/compiled/candidate.sv",
+      "source_sha256": "5e1ebe994ec0439d5a5e4758c7e39d8e3328d10ce8e352bbefb8cf50ecb1829d",
+      "state_bits": 4471,
+      "tail_related_source_lines": [
+        {
+          "line": 44,
+          "text": "wire final_tail = enabled && !rst && !s_valid && m_ready && h_ready && tail_count >= 128;"
+        },
+        {
+          "line": 74,
+          "text": "else if (tail_count < 128)"
+        },
+        {
+          "line": 122,
+          "text": "if (take_s && s_last && hc == 128 && !(take_h && hc != 0))"
+        }
+      ]
+    },
+    {
+      "arm": "C2_semantic",
+      "repetition": 2,
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/controller-live-v1/C2_semantic/rep2/round6/compiled/candidate.sv",
+      "source_sha256": "1354c0c37bce1a444824168822734bfe1fa0ff05d2180d20eec6a943d87fa990",
+      "state_bits": 4438,
+      "tail_related_source_lines": []
+    },
+    {
+      "arm": "C2_semantic",
+      "repetition": 3,
+      "source": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/controller-live-v1/C2_semantic/rep3/round6/compiled/candidate.sv",
+      "source_sha256": "7fe9a22feda7796591c3fe96ff541f9b5bd1ee34d0d089705e6b4e47d1832373",
+      "state_bits": 4465,
+      "tail_related_source_lines": [
+        {
+          "line": 28,
+          "text": "reg [7:0] quiet_tail=0;"
+        },
+        {
+          "line": 50,
+          "text": "wire tail_check=quiet_tail>=128;"
+        },
+        {
+          "line": 51,
+          "text": "wire data_drained=(input_length==0) && (data_frame==wr_frame) && !m_valid;"
+        },
+        {
+          "line": 52,
+          "text": "wire status_drained=(hdr_frame==wr_frame) && !h_valid;"
+        },
+        {
+          "line": 60,
+          "text": "assign ok[3]=(!m_valid || byte_justified) && (!tail_check || data_drained);"
+        },
+        {
+          "line": 64,
+          "text": "assign ok[5]=(!tail_check || status_drained) && (!h_valid ||"
+        },
+        {
+          "line": 81,
+          "text": "quiet_tail<=0;"
+        },
+        {
+          "line": 87,
+          "text": "if (s_valid || !m_ready || !h_ready) quiet_tail<=0;"
+        },
+        {
+          "line": 88,
+          "text": "else if (quiet_tail<255) quiet_tail<=quiet_tail+1'b1;"
+        }
+      ]
+    }
+  ],
+  "finding": {
+    "candidate": "C2_semantic/rep2/round6",
+    "inference": "If outstanding obligations remain while both response valids stay low, presentation/stall enables can remain inactive indefinitely; source inspection indicates no finite-completion alarm. This conceptual condition was not executed as an added test.",
+    "interpretation": "Omission of an obligation from the chosen property set; not a retroactive invalidation of valid selected properties or change to registered scores.",
+    "obligation": "finite completion after128 quiet ready-high cycles",
+    "observation": "No idle-duration state or drain-deadline check exists in this complete frozen source. Six checks cover reset, presented data, last, presented status, data stall and status stall."
+  },
+  "next_minimum": {
+    "cases": "Separate presented-valid safety from delayed/missing response finite completion; independent frozen reference labels; matched time horizon; preserve all current scores",
+    "formal_diagnostic": "Separate cone-retention/witness observability cost from property proof cost using fixed controls and a preselected frozen monitor; no old runner edits or solver-budget increase within this run",
+    "scope": "API-free new registration for obligation/negative-control qualification before any new B/C"
+  },
+  "not_a_complete_source_correctness_audit": true,
+  "original_scores_unchanged": true,
+  "type": "exploratory_source_inspection_not_a_new_trial"
+}

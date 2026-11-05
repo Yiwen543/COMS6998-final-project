@@ -1,0 +1,83 @@
+{
+  "API_calls_allowed": false,
+  "date": "2026-11-05",
+  "fixture_sha256": "04db6edfda7093b6f2fd19cf0124964f243c80cac43db055fd56127f8b48280e",
+  "followup": {
+    "candidates": "All6 frozen finals, all6 slots, bmc/prove/cover, depth24/10s",
+    "correct_source_replay_only": true,
+    "gate": "Controls PASS/FAIL at full depth and physical witness/reference bridge agree",
+    "jobs": 108,
+    "new_hidden_faults": false,
+    "order": "Alternate arms by repetition/slot/mode; no arm-specific retry",
+    "profile": "cone only, selected by control gates rather than C outcomes",
+    "solver_seconds_cap": 1080
+  },
+  "formal": {
+    "control_timeout": 5,
+    "controls": [
+      "always_true",
+      "always_false"
+    ],
+    "depth": 24,
+    "max_solver_seconds": 150,
+    "modes": [
+      "bmc",
+      "prove",
+      "cover"
+    ],
+    "mutant_probe": {
+      "arm": "B2_raw",
+      "mutant": "M02",
+      "reason": "Previously adjudicated witness anchor for physical bridge",
+      "rep": 2,
+      "round": 6,
+      "slot": 4,
+      "timeout": 5
+    },
+    "overall_wall_cap": 360,
+    "probe_timeout": 10,
+    "probes": [
+      {
+        "arm": "B2_raw",
+        "reason": "Deterministic first frozen final, not selected by C performance",
+        "rep": 1,
+        "round": 6,
+        "slot": 0
+      },
+      {
+        "arm": "C2_semantic",
+        "reason": "Disclosed replay of known local proof; diagnostic positive anchor, not unbiased effect estimate",
+        "rep": 3,
+        "round": 6,
+        "slot": 2
+      }
+    ],
+    "solver": "z3",
+    "stop_before_probes_if_cone_controls_or_witness_bridge_fail": true,
+    "tool_grace_seconds": 5,
+    "variants": [
+      "retained",
+      "cone"
+    ]
+  },
+  "id": "controller_offline_qualification_v1",
+  "new_model_trials": 0,
+  "obligation_scope": "Synthetic contract-level controls, not necessarily physically reachable. Reference acceptance is not DUT-relative soundness. Invalid/unresolved labels retained.",
+  "paid_calls_allowed": false,
+  "preserve": [
+    "Old31 and new473timeouts",
+    "All prior source/reference/candidate freezes and scores",
+    "Unknown/missing/error/invalid controls and resource costs"
+  ],
+  "release": {
+    "path": "test2/results/controller-live-v1/release.json",
+    "sha256": "8dc3e2d93993c3ac205b028a1006af1421e0dabcf716439b17efb895317fe049"
+  },
+  "scope": "Post-hoc API-free qualification on already frozen candidates; no new B/C causal evidence or old score modification",
+  "seed": "No randomness; explicit finite fixtures and deterministic diagnostic order",
+  "source_freezes": {
+    "test2/configs/controller_live_freeze_v1.json": "f1c9fcdebb0ede38e5756af947d8dceb985808787353572c98024dffb37ed20c",
+    "test2/configs/live_freeze_v1.json": "7f2be65ac1b8013d614c5391b49e6cde2b821dbaca6f3e8bae609e63ed67b912",
+    "test2/tasks/axis_length_fifo_v1/reference/frozen-v2/freeze.json": "bbac094bcf82eecb44e57fd85a3dbdabb27dd07af00559300617753103ed7c67"
+  }
+}

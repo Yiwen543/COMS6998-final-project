@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Lossless public-only B/C task packet, no recursive workspace reads."""
 from collections import defaultdict
+import argparse
 import json
 from pathlib import Path
 import re
@@ -104,7 +105,7 @@ def semantic_feedback():
             'observer_boundary': 'Internal terms describe implementation; candidate monitors can observe public pins only.'}
 
 
-def packet(arm):
+def packet(arm, contract_v2=False):
     if arm not in ('B2_raw', 'C2_semantic'):
         raise ValueError('Unsupported arm')
     names = ['basic', 'boundary_pressure', 'reset_reuse']
@@ -123,8 +124,8 @@ def packet(arm):
         packed = [[r['cycle']] + [r['inputs'][k] for k in INPUTS] + [r[p][k] for p in ('pre', 'post') for k in OUTPUTS] for r in rows]
         development[name] = {'columns': columns, 'rows': packed}
     files = ['rtl/axis_frame_length_adjust.v', 'rtl/axis_fifo.v', 'rtl/axis_frame_length_adjust_fifo.v', 'task_top_v3.sv']
-    data = {'specification': (TASK / 'public/specification.md').read_text(),
-            'observer_contract': (TASK / 'public/observer_contract.md').read_text(),
+    data = {'specification': (TASK / 'public' / ('specification_v2.md' if contract_v2 else 'specification.md')).read_text(),
+            'observer_contract': (TASK / 'public' / ('observer_contract_v2.md' if contract_v2 else 'observer_contract.md')).read_text(),
             'rtl': {name: (TASK / 'public' / name).read_text() for name in files},
             'development': development, 'coverage_trace_order': names, 'raw_coverage': coverage}
     if arm == 'C2_semantic':
@@ -133,9 +134,12 @@ def packet(arm):
 
 
 def main():
-    out = TASK / 'qualification/prompt-audit-v1'
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--contract-v2', action='store_true')
+    args = parser.parse_args()
+    out = TASK / 'qualification' / ('prompt-audit-v2' if args.contract_v2 else 'prompt-audit-v1')
     out.mkdir(exist_ok=False)
-    b, c = packet('B2_raw'), packet('C2_semantic')
+    b, c = packet('B2_raw', args.contract_v2), packet('C2_semantic', args.contract_v2)
     common = dict(c)
     common.pop('egraph_feedback')
     if b != common:
@@ -144,6 +148,7 @@ def main():
         dump(out / (arm+'.json'), data)
     dump(out / 'summary.json', {'common_information_equal': True, 'raw_counters_roundtrip': b['raw_coverage']['counter_count'],
          'semantic_groups': len(c['egraph_feedback']['groups']), 'prompt_bytes': {a: (out/(a+'.json')).stat().st_size for a in ('B2_raw','C2_semantic')},
+         'compact_json_bytes': {a: len(json.dumps(data, separators=(',', ':')).encode()) for a, data in [('B2_raw', b), ('C2_semantic', c)]},
          'provider_token_count_status': 'PENDING_API_COUNT_NO_ESTIMATE_CLAIM', 'candidate_generation_allowed': False,
          'packet_source_sha256': sha(Path(__file__))})
     print((out / 'summary.json').read_text())
