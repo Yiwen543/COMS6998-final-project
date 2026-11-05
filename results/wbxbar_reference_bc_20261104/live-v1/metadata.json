@@ -1,0 +1,94 @@
+{
+  "mode": "live",
+  "scope": "wbxbar_reference_bc_v1",
+  "freeze_sha256": "094ff2a54540e73d73186c7cf0a6746089bac570637bbd5ecb2c420ed67f23ae",
+  "versions": {
+    "python": "3.13.9",
+    "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+    "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+    "openai_sdk": "2.54.0",
+    "matplotlib": "3.11.2"
+  },
+  "model_settings": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "input_tokens": 32000,
+    "output_tokens": 16384,
+    "timeout_seconds": 120,
+    "max_retries": 1,
+    "max_output_tokens": 16384
+  },
+  "status": "completed",
+  "checker_sha256": "682fcf01eb44079cc9814aa66b551cfe40e45756f05fea8d82bbdc703c117a1d",
+  "checker_candidate": "results/wbxbar_reference_replay_20261104/frozen-checker",
+  "session_ids": {
+    "rep1-B": "8f4714fa-3549-42cd-92a8-189d7bedc2ab",
+    "rep1-C": "a24a699c-110a-49d7-80a7-1a54e41d67f2",
+    "rep2-B": "ef9ec8b1-9bf9-423c-b671-c64ebd05de6f",
+    "rep2-C": "952b0730-a248-4ff3-bd47-3450a398506c",
+    "rep3-B": "5bf7c0a3-3d84-476f-ae69-648ada8051b5",
+    "rep3-C": "2ceb132a-b539-4a4a-8cfd-480638cd7dec"
+  },
+  "compilations": 2,
+  "compile_seconds": 15.457057334017009,
+  "simulation_executions": 42,
+  "executed_cycles": 8400,
+  "requested_cycles": 8400,
+  "simulation_seconds": 1.9270085752941668,
+  "api_generation_calls": 36,
+  "api_count_requests": 36,
+  "egraph_preprocessing_seconds_this_run": 0,
+  "egraph_preprocessing": "Reused frozen offline artifacts; historical preprocessing reported separately.",
+  "simulation_policy": "Fresh cumulative seed+actions replay; all physical cycles counted; no extra drain.",
+  "independent_sessions": "Responses calls have no conversation or previous_response_id; only own-arm history is rendered.",
+  "compile_commands": [
+    {
+      "simulator": "verilator",
+      "seconds": 15.422330666799098,
+      "command": [
+        "verilator",
+        "--binary",
+        "--timing",
+        "--coverage-line",
+        "--coverage-toggle",
+        "--coverage-expr",
+        "-Wno-fatal",
+        "--top-module",
+        "tb_natural_inventory",
+        "--Mdir",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_reference_bc_20261104/live-v1/shared/verilator/obj",
+        "-j",
+        "2",
+        "third_party/wb2axip_candidate/rtl/skidbuffer.v",
+        "third_party/wb2axip_candidate/rtl/addrdecode.v",
+        "third_party/wb2axip_candidate/rtl/wbxbar.v",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_reference_bc_20261104/live-v1/shared/tb_natural_inventory.sv"
+      ]
+    },
+    {
+      "simulator": "iverilog",
+      "seconds": 0.022120792418718338,
+      "command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "tb_natural_inventory",
+        "-o",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_reference_bc_20261104/live-v1/shared/iverilog/tb.vvp",
+        "third_party/wb2axip_candidate/rtl/skidbuffer.v",
+        "third_party/wb2axip_candidate/rtl/addrdecode.v",
+        "third_party/wb2axip_candidate/rtl/wbxbar.v",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_reference_bc_20261104/live-v1/shared/tb_natural_inventory.sv"
+      ]
+    }
+  ],
+  "elapsed_seconds": 819.6201870832592,
+  "api_usage": {
+    "input_tokens": 699656,
+    "output_tokens": 73798,
+    "unknown_usage_attempts": 0
+  }
+}

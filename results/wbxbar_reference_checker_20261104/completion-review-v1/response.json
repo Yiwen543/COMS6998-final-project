@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 22489,
+  "stop_reason": "end_turn",
+  "session_id": "7a60d8ed-a833-4708-b50c-df15e71a6274",
+  "total_cost_usd": 1.027671,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 198607,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1731,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 198607
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 1731,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 198607,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 198607,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1731,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 198607,
+      "webSearchRequests": 0,
+      "costUSD": 1.027671,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"ready_for_replay_registration\":false,\"findings\":[{\"id\":\"N1\",\"severity\":\"high\",\"area\":\"evidence retention on undefined DUT control output (termination path)\",\"detail\":\"In check_rows, when _validate returns pd (undefined pre DUT control) and no pe, the code records the K10 failure, appends unjudgeable_row, sets truncated=True and breaks. It never calls boundary() and never flushes S['rowtags']. After the loop, close_epoch is skipped because truncated is true. Tags carried by histories feasible at the start of that row are therefore silently lost. The supplied boundary_recheck/undefined_DUT_control result confirms this: possible_starvation_err@3, which is present in the identical valid prefix for missing_input_field, missing_post_field, noncontiguous and undefined_input_control, is absent from unresolved, and K6 is reported as checked_not_refuted rather than unresolved. The verdict, dut_violation, is correct and the genuine failure must stay. However, the per-clause status falsely reads as not refuted with no open unknowns, and prefix evidence is dropped. This is a real reporting defect that a passing test suite cannot override. The same path also leaves prefix_status null and pending-work information unreported.\"},{\"id\":\"N2\",\"severity\":\"medium\",\"area\":\"property_status after truncation\",\"detail\":\"Because truncated skips close_epoch, K12 pending_at_batch_end and the pending_alternatives closure for the active epoch are also absent on the undefined-DUT path. In the reported case, two live entries were pending at the start of row 8 and are not disclosed. Clause statuses such as K6 checked_not_refuted are reported on a prefix without the prefix qualifier.\"},{\"id\":\"N3\",\"severity\":\"low\",\"area\":\"valid-prefix flush at env/schema/mixed boundaries\",\"detail\":\"Static trace of boundary(): the rowtags snapshot is taken before validation of each row and cleared in close_epoch and exhaust, so tags are flushed at most once. Row-e-created tags are excluded because the snapshot precedes processing. The flush happens once even when a mixed death occurs, and disc entries for that death cycle are removed. The supplied missing_input, missing_post, noncontiguous, undefined_input and _tag_mixed results agree. This is acceptable, apart from the omission on the pd path (N1).\"},{\"id\":\"N4\",\"severity\":\"low\",\"area\":\"K11 accounting\",\"detail\":\"sub('K11_env_checks') is called once per processed non-reset row before boundary checks, including row e when that row passes schema validation. Schema-failed rows are not counted, which matches the declared delimitation. checked == activations always holds, since the obligation is association-free. Counts are exposure only and are not coverage.\"},{\"id\":\"N5\",\"severity\":\"low\",\"area\":\"undefined read-data rule\",\"detail\":\"S['sfq'] stores (row, o_swe) at slave acceptance and is cleared on o_scyc low. This is pin-derived and hypothesis-independent, and is acceptable as a scoped assumption. Note one gap: a slave acceptance whose projection is undefined is still pushed with its WE, which is fine. The rule covers orphan reads by design. It remains a non-normative decision.\"}],\"contract_decision_assessments\":[{\"id\":\"valid_prefix_flush_any_boundary\",\"assessment\":\"accept_with_gap\",\"detail\":\"Correct for env, schema and mixed-death boundaries. It must also apply to the undefined-DUT-output termination path.\"},{\"id\":\"K11_activation_unit\",\"assessment\":\"accept\",\"detail\":\"Exposure only. The delimitation is stated.\"},{\"id\":\"undefined_read_pin_fifo\",\"assessment\":\"accept_as_scoped_assumption\"},{\"id\":\"P4_ACK_only\",\"assessment\":\"accept\"},{\"id\":\"undefined_DUT_control_stops_judgment\",\"assessment\":\"accept_verdict_reject_reporting\",\"detail\":\"Keep the dut_violation. Flush the row-start tags as open prefix unknowns, report pending entries and prefix status, and mark clauses as prefix-qualified.\"}],\"required_followup\":[\"On the pd-only path, call a boundary-like flush of S['rowtags'], or close_epoch with a truncation reason, before breaking. Retain the K10 failure and unjudgeable_row. Report pending entries, prefix_status and prefix-qualified clause statuses.\",\"Add a selftest equivalent to boundary_recheck/undefined_DUT_control that asserts possible_starvation_err remains in unresolved and that K6 is not reported as checked_not_refuted.\",\"Rerun all 155 cases and the selftests, then perform a fresh review. Freeze, replay and B/C remain unauthorized.\"],\"limitations\":[\"Static reasoning only, with no execution. The delta-encoded results were inspected selectively: the boundary, focused and limit cases were decoded, and not all 155 were fully reconstructed.\",\"No certification is given. K5, C1-C4, F1-F8, timeout and cancellation bounds remain open or unproved. Repeated HR ERRs stay unknown.\",\"A positive opinion would not freeze the checker or authorize B/C in any case.\"]}",
+  "ttft_ms": 22791,
+  "type": "result",
+  "duration_ms": 22817,
+  "uuid": "fc5464c7-53e2-4822-8445-6b070991e3a2",
+  "ttft_stream_ms": 7386,
+  "time_to_request_ms": 326,
+  "first_content_frame_ms": 7386,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1731,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 198607,
+      "webSearchRequests": 0,
+      "costUSD": 1.027671,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

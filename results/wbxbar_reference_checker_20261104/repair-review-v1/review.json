@@ -1,0 +1,91 @@
+{
+  "ready_for_replay_registration": false,
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "high",
+      "area": "offline gate",
+      "detail": "One of 46 author selftests fails: mixed_same_edge_explicit. The offline gate is therefore false. Agreement on the 127+6 control cases cannot override this. Registration stays blocked until the test and the rule are reconciled and the whole suite passes."
+    },
+    {
+      "id": "R2",
+      "severity": "high",
+      "area": "P4 mixed-edge dependency (diagnostic/author_mixed_same_edge)",
+      "detail": "The trace has three relevant facts. In row 3, master 0 changes a stalled payload, which is an env violation. Master 1 has CYC high and STB low and was never accepted. Master 1 then receives an ACK.\n\nThe K6 count bound for an ACK uses only rows < c acceptances and the DUT o_mack pin. An ACK never uses HR branch B. Master 1's own inputs are valid. So for an ACK the failure depends only on pins and inputs from rows < e, and rule (2) supports keeping dut_violation.\n\nThe old selftest expectation (input_or_scope_invalid) is therefore stale for the ACK case, and P4 is acceptable for ACKs.\n\nERRs are different. Classifying an ERR as non-HR depends on row-c held or accept conditions (o_mstall, STB and the projection in row c, plus the identity comparison with row c-1). These are row-e inputs. A K6 count failure caused by a non-HR ERR in row e must stay mixed_same_edge, unless the HR determination uses only master m's row-c pins and m is not the env-violating port. Even then this must be argued explicitly. The code currently keeps every K6_count_projection failure (pin=True), including ERR-driven ones. The fix is to make ERR-driven K6 count failures in row e non-pin.\n\nThe second unresolved entry is correctly mixed: the membership_empty_H item is association-dependent."
+    },
+    {
+      "id": "R3",
+      "severity": "medium",
+      "area": "P1 discarded evidence at invalid boundary",
+      "detail": "In diagnostic/tag_then_mixed_same_edge, DUT judgment at row 19 is withheld as mixed_same_edge. Even so, discarded_epoch_evidence labels the possible_starvation_err@8 histories as 'refuted at cycle 19 by concrete pin contradiction'. That refutation is invalid: it rests on row-e evidence whose DUT judgment the contract withholds.\n\nThe tag also lies wholly in the valid prefix (row 8 < e), yet it is absent from unresolved. The prefix status is reported as prefix_unresolved without the item that makes it unresolved.\n\nRequired behaviour when the death happens at row e and is reclassified as mixed: do not record it as refuted. Flush the row-start tags as cumulative valid-prefix unknowns, using the tag_row and class unknown."
+    },
+    {
+      "id": "R4",
+      "severity": "medium",
+      "area": "P1 dying-row tags and exhaustion snapshot",
+      "detail": "Omitting tags created in the dying row is acceptable for a genuine death, because every history died. It must be disclosed per event, not only in prose.\n\nAt exhaustion, exhaust() flushes the tags of S['H'] as they stand at call time. When it is called from the step-5 branching pre-check, that is the pre-expansion set. When it is called from exhaust_check after expansion, it is the post-expansion set. The report says 'feasible immediately before suspension' without stating which applies.\n\nThe report should state the snapshot point. It should also report the projected history count (the total) separately from the actual count."
+    },
+    {
+      "id": "R5",
+      "severity": "medium",
+      "area": "P2 scope accounting",
+      "detail": "The clause_activations counters increment even while the reference is suspended or dead. Example: tag_then_exhaustion counts K6, K7 and K8 activations after row 15, when attribution has stopped.\n\nThe status still shows 'suspended', so no false pass results. However, the report does not meet the contract's requirement to separate exposure from checked rows. It needs per clause:\n- activations;\n- checked_activations (made while mode was active);\n- suspended_activations;\n- post_death_activations;\n- unknown-tag count.\n\nIt should also split association-free sub-obligations, such as the K4 count projection and the K6 count bound, from the association sub-obligations."
+    },
+    {
+      "id": "R6",
+      "severity": "low",
+      "area": "P3",
+      "detail": "The display totals, displayed and omitted counts are present and nothing is pruned. P3 is acceptable."
+    },
+    {
+      "id": "R7",
+      "severity": "low",
+      "area": "P5",
+      "detail": "P5 decisions, assessed individually:\n- B2 with an already-forwarded entry: acceptable, because B1 is always kept and the result is tagged unknown. focused/hr_acceptance_and_forward_same_row shows that only branch B survives, with a tag, and the verdict is unresolved.\n- Hypothesis-dependent env classification of undefined i_sdata: should become association-free. Make undefined i_sdata on any slave ACK an env violation when that slave's FIFO head is a read forward in any history, and document this. Alternatively, keep the current rule but list it as an unresolved contract gap.\n- Undefined DUT control output treated as a DUT violation that stops judgment: acceptable.\n- K13 not judged on the first row: harmless, since the first row must be a reset row.\n\nProposed contract decisions must not be labelled normative."
+    },
+    {
+      "id": "R8",
+      "severity": "low",
+      "area": "documentation drift",
+      "detail": "properties.json K10 and VERDICT do not mention P4 (K6 count kept at row e). contract.md still lists F4 as a blocker while also stating P4. The hr_err_unjudged and activation fields are undocumented in properties.json."
+    }
+  ],
+  "contract_decision_assessments": [
+    {
+      "id": "P1",
+      "assessment": "partially_accept",
+      "detail": "Pre-suspension flushing and per-epoch records are accepted. Refuted disclosure is accepted only for deaths wholly before e. A death at row e reclassified as mixed must flush its tags as open unknowns. The snapshot point must be stated."
+    },
+    {
+      "id": "P2",
+      "assessment": "reject_as_insufficient",
+      "detail": "Raw counters must be split into checked, suspended and post-death counts. Zero activation must never count as a pass or a cover claim."
+    },
+    {
+      "id": "P3",
+      "assessment": "accept"
+    },
+    {
+      "id": "P4",
+      "assessment": "accept_for_ACK_only",
+      "detail": "ERR-driven K6 count failures at row e depend on row-e HR inputs and must be mixed_same_edge. The K4 projection stays mixed, as does membership death."
+    },
+    {
+      "id": "P5",
+      "assessment": "partially_accept",
+      "detail": "B2-forwarded, undefined DUT control output and first-row K13 are accepted as scoped decisions. The undefined i_sdata env rule should be made association-free or kept listed as an open gap."
+    }
+  ],
+  "required_followup": [
+    "Change the K6 count failure to pin=False when the response is an ERR (or when the boundary row's HR classification is involved). Keep it pin=True for ACKs.",
+    "Update mixed_same_edge_explicit to expect dut_violation, plus a K6_count_projection failure and a mixed_same_edge unresolved entry for the ACK. Add a companion ERR case expecting input_or_scope_invalid with mixed_same_edge. The gate requires 46 or more of 46 passing.",
+    "In boundary(), when the membership death is reclassified as mixed, move its disc entries to unresolved as valid-prefix unknown tags. Do not label them refuted.",
+    "Add per-clause checked, suspended, post-death and unknown counts. State the exhaustion snapshot point and the projected count.",
+    "Sync contract.md and properties.json, remove the stale blocker text, then rerun all 144 traces and the selftests. Registration is still required. No freeze and no B/C."
+  ],
+  "limitations": [
+    "Static reasoning only. No execution. The traces were spot-checked, with the diagnostics, focused and limit cases decoded; not all 144 were fully decoded.",
+    "This review cannot override the failing gate. It certifies nothing and authorizes neither replay nor B/C.",
+    "K5, C1-C4, the F1-F8 formal targets, and timeout and cancellation bounds remain unknown or unproved."
+  ]
+}

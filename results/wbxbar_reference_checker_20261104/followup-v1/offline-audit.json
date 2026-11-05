@@ -1,0 +1,55 @@
+{
+  "status": "offline_gate_failed_no_freeze_or_replay",
+  "candidate_sha256": {
+    "checker.py": "99d12449ef9c3ff11757ca6651b5d953ddc9e37c2920f469879a0ba68a6b6776",
+    "selftest.py": "fa26f9e4c51eaf66225da425d6845892f2873b56b4aae6d6d158ca2beda45f23",
+    "properties.json": "32285cf6359c7cfe74df6b1cc8ffd97666407361aa49456f1fdc0b06591ed4a0",
+    "contract.md": "ecaa3a69413f60cee5069087388f2aaafd8f85ffd2e4fe6fc54c2f1ac2afc6cb"
+  },
+  "authorship": "35 exact Claude patches; no GPT checker or selftest edits",
+  "selftests_passed": 53,
+  "selftests_total": 54,
+  "selftest_failures": [
+    "mixed_death_keeps_prefix_tag_open"
+  ],
+  "normal_classifications_agreed": 127,
+  "normal_total": 127,
+  "limit_classifications_agreed": 6,
+  "limit_total": 6,
+  "worker_errors": [],
+  "focused_cases_executed": 13,
+  "focused_infrastructure_errors": [],
+  "diagnostics_executed": 4,
+  "remaining_issues": [
+    {
+      "id": "valid_prefix_retention",
+      "evidence": "author-test-diagnostic.json",
+      "finding": "Rows0..7 retain possible_starvation_err@3; adding first invalid row8 loses it while histories are active. Existing failed author test must be kept."
+    },
+    {
+      "id": "K11_scope_accounting",
+      "evidence": "evaluation-focused/outputs.json",
+      "finding": "K11_env raw_activations33 on tag_then_exhaustion, but measured sub-obligation scope all0; environment checking exists but is not instrumented."
+    },
+    {
+      "id": "contract_drift",
+      "evidence": "candidate/contract.md",
+      "finding": "Old proposed P1/P4 and status enum need reconciliation with new ACK/ERR boundary semantics and not_activated."
+    }
+  ],
+  "fresh_independent_review_completed": false,
+  "offline_gate_passed": false,
+  "checker_validated": false,
+  "replay_allowed": false,
+  "live_B_allowed": false,
+  "live_C_allowed": false,
+  "new_DUT_simulations": 0,
+  "new_GPT_calls": 0,
+  "staged_key_present": false,
+  "evidence_sha256": {
+    "followup-v1/evaluation-original/summary.json": "79fe0e6deeeec1419de018538716dfdee777eda934679dcb1fe171f67ec606e6",
+    "followup-v1/evaluation-focused/outputs.json": "cf43060b305f03da4a5bb93bb682d65d1599d4f987d1a2505fcd002ded813e3d",
+    "followup-v1/author-test-diagnostic.json": "85baa32a039afce22ed46a038eb2c6175c3aadc51189505ff123c9895735d1f6",
+    "followup-v1/patches.json": "3b58fe2105be340094080b2157b8175ffc75d49a0630736480517104e319cd36"
+  }
+}

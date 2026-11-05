@@ -1,0 +1,65 @@
+{
+  "patches": [
+    {
+      "file": "checker.py",
+      "before": "    ('K10_handshake', ('K10_dut_master_handshake', False)),",
+      "after": "    ('K10_handshake', ('K10_dut_master_handshake', False)),\n    ('K11_env_checks', ('K11_env', False)),"
+    },
+    {
+      "file": "checker.py",
+      "before": "        S['mode'] = 'suspended'\n        S['H'] = None",
+      "after": "        S['mode'] = 'suspended'\n        S['H'] = None\n        S['rowtags'] = None"
+    },
+    {
+      "file": "checker.py",
+      "before": "        H = S['H']\n        n = len(H)\n        agg = collections.OrderedDict()",
+      "after": "        H = S['H']\n        n = len(H)\n        S['rowtags'] = None\n        agg = collections.OrderedDict()"
+    },
+    {
+      "file": "checker.py",
+      "before": "        if any(f['category'] == 'membership_empty_H' for f in mixed):\n            moved = [d for d in S['disc'] if d.get('death_cycle') == c]\n            S['disc'] = [d for d in S['disc'] if d.get('death_cycle') != c]\n            for d in moved:\n                unr(d['tag_row'], d['tag'], '%s [class unknown; valid-prefix tag carried by %d of %d histories alive at the start of boundary row %s; the membership death at that row is mixed_same_edge and is NOT a refutation; reset_epoch %d]' % (d['detail'], d['carried_by'], d['of_histories'], c, d['reset_epoch']), TAG_CLAUSE.get(d['tag'], 'unknown_tag'))\n            for a in alts:",
+      "after": "        mdeath = any(f['category'] == 'membership_empty_H' for f in mixed)\n        if mdeath:\n            S['disc'] = [d for d in S['disc'] if d.get('death_cycle') != c]\n        rt = S['rowtags']\n        S['rowtags'] = None\n        if rt:\n            ragg, rn = rt\n            for key in ragg:\n                unr(key[1], key[0], '%s [class unknown; valid-prefix tag carried by %d of %d histories feasible at the start of boundary row %s (snapshot before processing that row; tags created in row %s are not promoted); %s; reset_epoch %d]' % (key[2], ragg[key], rn, c, c, 'the membership death at that row is mixed_same_edge and is NOT a refutation' if mdeath else 'judgment stops at the first invalid input row', S['rep']), TAG_CLAUSE.get(key[0], 'unknown_tag'))\n        if mdeath:\n            for a in alts:"
+    },
+    {
+      "file": "checker.py",
+      "before": "                cnt['act_K11_env'] += 1\n",
+      "after": "                cnt['act_K11_env'] += 1\n                sub('K11_env_checks')\n"
+    },
+    {
+      "file": "properties.json",
+      "before": "tags of histories alive at a row-e mixed death are kept as open valid-prefix unknowns, not refuted;",
+      "after": "at any first invalid-input boundary (env violation, schema failure, or mixed death) the tags of histories feasible at the start of row e are flushed once as open valid-prefix unknowns with original tag rows, never as refuted and never including tags created in row e; K11 env checks are counted per non-reset row in subobligation K11_env_checks (input schema validation and reset-row rule 3.20 checks are not instrumented as activations);"
+    },
+    {
+      "file": "contract.md",
+      "before": "(violated, suspended, unresolved, checked_not_refuted, prefix_checked_not_refuted, excluded_not_judged)",
+      "after": "(violated, env_violation_recorded, suspended, unresolved, not_activated, checked_not_refuted, prefix_checked_not_refuted, excluded_not_judged)"
+    },
+    {
+      "file": "contract.md",
+      "before": "- P4 (F4): The K6 per-CYC count bound uses only DUT response pins and acceptances from rows < c within the current CYC (a CYC drop at row c routes the response to K13), so at row e it depends only on pins and inputs from rows < e and is kept as dut_violation under precedence rule (2).",
+      "after": "- P4 (F4) [SUPERSEDED: narrowed to ACK only; ERR-driven count failures at row e are mixed_same_edge]: An ACK-driven K6 per-CYC count-bound failure uses only DUT response pins and acceptances from rows < c within the current CYC, so at row e it is kept as dut_violation under precedence rule (2)."
+    },
+    {
+      "file": "contract.md",
+      "before": "- P1 (F1): On exhaustion,",
+      "after": "- P1 (F1) [SUPERSEDED IN PART: at any first invalid-input boundary, including a mixed death, row-start tags are flushed once as open valid-prefix unknowns, not refuted]: On exhaustion,"
+    },
+    {
+      "file": "contract.md",
+      "before": "- Still open: K5,",
+      "after": "- Valid-prefix retention: at every first invalid-input boundary (env row, schema failure, mixed death) a snapshot of tags carried by histories feasible at the start of row e is flushed once (cleared after reset/batch-end/exhaustion flush to avoid double counting). K11 scope: K11_env_checks counts non-reset rows; schema validation and reset-row 3.20 checks are not instrumented.\n- Still open: K5,"
+    }
+  ],
+  "rationale": [
+    "The mixed_death_keeps_prefix_tag_open failure exposed a real gap: boundary() only retained row-start tags for a mixed membership death. Now any invalid boundary flushes the pre-row snapshot as valid-prefix unknowns, so the possible_starvation_err@3 survives in _tag_mixed with no death and no refutation; test and fixture unchanged.",
+    "Double counting avoided by clearing the snapshot in close_epoch and exhaust (which already flush tags); row-e tags are never in the snapshot since it is taken before processing.",
+    "K11 accounting added as an association-free sub-obligation with explicit delimitation of unmeasured subchecks.",
+    "Stale P1/P4 and status list superseded in contract.md; properties.json VERDICT synced."
+  ],
+  "contract_decisions": [
+    "Proposed (not normative): valid-prefix tags at any first invalid boundary are open unknowns with original tag rows.",
+    "Proposed (not normative): K11 activation unit = non-reset processed row; schema and rule 3.20 checks unmeasured.",
+    "Undefined i_sdata pin-FIFO-head rule remains a scoped assumption pending independent review; no formal obligation claimed proven."
+  ]
+}

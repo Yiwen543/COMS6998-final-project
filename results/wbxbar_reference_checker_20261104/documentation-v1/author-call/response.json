@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 17618,
+  "stop_reason": "end_turn",
+  "session_id": "6f72dbba-bf6f-4688-abd9-c7a7c04879c6",
+  "total_cost_usd": 0.15566100000000002,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 24261,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1717,
+    "output_tokens_details": {
+      "thinking_tokens": 616
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 24261
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 1717,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 24261,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 24261,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1717,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 24261,
+      "webSearchRequests": 0,
+      "costUSD": 0.15566100000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 616,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"patches\":[{\"file\":\"contract.md\",\"before\":\"Later rows, including resets, are not processed.\",\"after\":\"Later rows, including resets, are not processed.\\n\\n## Reporting clarifications (review T2/T4/T5; documentation only, no semantic change)\\n- T2 row numbering on termination: for the epoch closed with reason terminated_unjudgeable_dut_output, pending_alternatives.closed_at and the cycle of the pending_at_unjudgeable_row record are the last processed row (c-1). counts.termination_boundary is the unjudged row c, where judgment terminated on undefined DUT control output. The closed state is the explicit history set at the end of row c-1, which is the start of row c. closed_at must not be read as the terminated row. If the undefined DUT control output occurs before any reset, there is no active epoch, so no closure record is emitted.\\n- T4 counts.checked_scope.rows_beyond_input_boundary: despite its name, this is total_rows_in_trace - processed_rows, i.e. the number of unprocessed rows. It applies at either boundary: the first invalid-input boundary (counts.input_validity_boundary) or the termination boundary (counts.termination_boundary). It is nonzero on the termination path even when input_validity_boundary is null. A row that fails schema or validity checks, or that terminates on undefined DUT control output, is not processed and is included. A row in which an environment violation is detected during processing counts as processed and is not included. The field name is unchanged.\\n- T5 counts.clause_scope.<clause>.unknown_tag_records: this counts only entries in the unresolved list whose item is one of the classified tag kinds. Those kinds are post_abort_forward and unexplained_mapped_err (K9 and K8), possible_starvation_err and starvation_attributed (K6), and same_edge_response_after_abort (K13). Every flush that contributes such entries is included: reset, batch end, pre-suspension, valid-prefix boundary and termination. It excludes pending_at_batch_end, pending_at_unjudgeable_row, unresolved_on_limit, mixed_same_edge, unjudgeable_row and unclassified tags, as well as counts.discarded_epoch_evidence (refuted-history disclosure, not in the unresolved list). It is a historical count of unknown-class tag records. It is not the total of unresolved diagnostics, not a clause status (see property_status) and not coverage.\"}],\"rationale\":[\"T2: closure is called with the last processed row, while termination_boundary names the unjudged row; this documents the existing behavior so consumers do not misread closed_at.\",\"T4: the field is computed as total minus processed rows on both boundary paths; it is documented rather than renamed, so code and metric output stay unchanged.\",\"T5: unknown_tag_records filters the unresolved list on the classified tag map; its exact inclusions and exclusions are stated to prevent it being read as total unresolved diagnostics or as coverage.\",\"Text is inserted after the unique N1/N2 sentence only. All existing assumptions, exclusions (K5, C1-C4, F1-F8, HR ERRs unknown, rule 3.05), non-proof claims and candidate status remain unchanged. This change does not freeze, replay or authorize B/C.\"],\"contract_decisions\":[]}",
+  "ttft_ms": 8002,
+  "type": "result",
+  "duration_ms": 17741,
+  "uuid": "9dae6216-00a2-4efc-ac95-63edfc4878a3",
+  "ttft_stream_ms": 2529,
+  "time_to_request_ms": 119,
+  "first_content_frame_ms": 2529,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 1717,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 24261,
+      "webSearchRequests": 0,
+      "costUSD": 0.15566100000000002,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 616,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

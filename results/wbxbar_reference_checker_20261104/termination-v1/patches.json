@@ -1,0 +1,76 @@
+{
+  "patches": [
+    {
+      "file": "checker.py",
+      "before": "         'e': None, 'prefix': None, 'rowtags': None, 'disc': [], 'sub': {}}",
+      "after": "         'e': None, 'prefix': None, 'rowtags': None, 'disc': [], 'sub': {}, 'term': None}"
+    },
+    {
+      "file": "checker.py",
+      "before": "    def close_epoch(c, end):\n        if S['mode'] != 'active' or not S['H']:\n            return",
+      "after": "    def close_epoch(c, end, term=None):\n        if S['mode'] != 'active' or not S['H']:\n            return\n        tnote = ('; valid-prefix state at the start of row %s, where judgment terminated on undefined DUT control output (not reset, not batch end, not an input-validity boundary)' % S['term']) if term else ''"
+    },
+    {
+      "file": "checker.py",
+      "before": "            unr(key[1], key[0], '%s [class unknown; carried by %d of %d surviving histories; reset_epoch %d]' % (key[2], agg[key], n, S['rep']), TAG_CLAUSE.get(key[0], 'unknown_tag'))",
+      "after": "            unr(key[1], key[0], '%s [class unknown; carried by %d of %d surviving histories; reset_epoch %d%s]' % (key[2], agg[key], n, S['rep'], tnote), TAG_CLAUSE.get(key[0], 'unknown_tag'))"
+    },
+    {
+      "file": "checker.py",
+      "before": "        alts.append({'reset_epoch': S['rep'], 'closed_at': c, 'reason': 'batch_end' if end else 'reset',",
+      "after": "        alts.append({'reset_epoch': S['rep'], 'closed_at': c, 'reason': 'batch_end' if end else (term or 'reset'),"
+    },
+    {
+      "file": "checker.py",
+      "before": "        if end:\n            cnt['act_K12_batch_end'] += 1",
+      "after": "        if term:\n            if max(pend) > 0:\n                unr(c, 'pending_at_unjudgeable_row', 'live entries not retired in surviving histories at the start of row %s, where judgment terminated on undefined DUT control output (min %d, max %d); inconclusive, never a liveness failure, not a batch-end closure' % (S['term'], min(pend), max(pend)), 'K12_batch_end')\n            cnt['slave_canceled_live_at_termination'] += scan\n        elif end:\n            cnt['act_K12_batch_end'] += 1"
+    },
+    {
+      "file": "checker.py",
+      "before": "                if not pe:\n                    truncated = True\n                    unresolved.append(",
+      "after": "                if not pe:\n                    truncated = True\n                    S['term'] = c\n                    S['prefix'] = 'prefix_dut_violation' if nf > 0 else ('prefix_scoped_pass' if snap else 'prefix_unresolved')\n                    close_epoch(lastc, False, 'terminated_unjudgeable_dut_output')\n                    S['rowtags'] = None\n                    unresolved.append("
+    },
+    {
+      "file": "checker.py",
+      "before": "        elif S['e'] is not None:\n            ps[k] = 'prefix_checked_not_refuted'",
+      "after": "        elif S['e'] is not None or S['term'] is not None:\n            ps[k] = 'prefix_checked_not_refuted'"
+    },
+    {
+      "file": "checker.py",
+      "before": "    counts['prefix_status'] = S['prefix']",
+      "after": "    counts['prefix_status'] = S['prefix']\n    counts['termination_boundary'] = S['term']\n    counts['termination_reason'] = 'undefined_dut_control_output' if S['term'] is not None else None"
+    },
+    {
+      "file": "selftest.py",
+      "before": "def _has(res, item):",
+      "after": "def _undef_dut(suffix=False):\n    r = _held()[:4]\n    r.append(_row(4))\n    r.append(_row(5, i_mcyc=3, i_mstb=3, i_maddr=0x505, i_msel=0xFF))\n    r.append(_row(6, i_mcyc=3, o_scyc=1, o_sstb=1, o_saddr=5, o_ssel=0xF))\n    r.append(_row(7, i_mcyc=3, i_mstb=2, i_maddr=0x400, i_msel=0xF0, o_mstall=2, i_sack=1, i_sdata=0x11, o_scyc=1, o_sstb=1, o_saddr=5, o_ssel=0xF))\n    r.append(_row(8, i_mcyc=3, i_mstb=2, i_maddr=0x400, i_msel=0xF0, o_mstall=None, i_sack=1, i_sdata=0x22, o_scyc=1, o_mack=1, o_mdata=0x22))\n    if suffix:\n        r.append(_row(9, i_reset=1))\n    return r\n\n\ndef _has(res, item):"
+    },
+    {
+      "file": "selftest.py",
+      "before": "        ('k5_excluded_reported',",
+      "after": "        ('undef_dut_keeps_failure_and_prefix_tag', lambda: (lambda x: x['verdict'] == 'dut_violation' and any(f['category'] == 'K10_dut_master_handshake' for f in x['failures']) and not x['assumption_violations'] and _has(x, 'possible_starvation_err') and _has(x, 'unjudgeable_row'))(check_rows(_undef_dut()))),\n        ('undef_dut_reports_pending_and_scope', lambda: (lambda x: _has(x, 'pending_at_unjudgeable_row') and x['counts']['property_status']['K6_response_order'] == 'unresolved' and x['counts']['property_status']['K12_batch_end'] == 'unresolved' and x['counts']['prefix_status'] == 'prefix_unresolved' and x['counts']['input_validity_boundary'] is None and x['counts']['termination_boundary'] == 8 and any(a['reason'] == 'terminated_unjudgeable_dut_output' for a in x['counts']['pending_alternatives']))(check_rows(_undef_dut()))),\n        ('undef_dut_reset_suffix_unprocessed', lambda: (lambda x: x['counts']['total_rows'] == 8 and x['counts']['reset_epochs'] == 2 and _has(x, 'possible_starvation_err'))(check_rows(_undef_dut(True)))),\n        ('undef_dut_clean_prefix', lambda: (lambda x: x['verdict'] == 'dut_violation' and x['counts']['prefix_status'] == 'prefix_scoped_pass' and x['counts']['property_status']['K1_reset'] == 'prefix_checked_not_refuted')(check_rows(_rst() + [_row(2), _row(3, o_mack=None)]))),\n        ('k5_excluded_reported',"
+    },
+    {
+      "file": "properties.json",
+      "before": "Prefix status reported. scoped_pass excludes K5",
+      "after": "Prefix status reported. On an undefined DUT control output (DUT violation, judgment stops; not an input-validity boundary, not reset, not batch end) the active epoch state at the start of that row is closed with reason terminated_unjudgeable_dut_output: its tags are flushed once as open unknowns, pending live work is reported as pending_at_unjudgeable_row (K12 unresolved), prefix_status is set, clause statuses are prefix-qualified and counts.termination_boundary records the row; already-flushed suspension tags and refuted-history disclosures are unchanged; later rows (including resets) are not processed. scoped_pass excludes K5"
+    },
+    {
+      "file": "contract.md",
+      "before": "- Still open: K5, C1-C4, F1-F8, timeout/cancellation bounds, both_interfaces_pending, rule 3.05 sub-row reset.",
+      "after": "- Still open: K5, C1-C4, F1-F8, timeout/cancellation bounds, both_interfaces_pending, rule 3.05 sub-row reset.\n- N1/N2 repair: undefined pre DUT control output stays a dut_violation (K10) and stops judgment, with unjudgeable_row. It is reported as counts.termination_boundary / termination_reason, distinct from input_validity_boundary. Unit: the explicit history set at the start of that row (no processing of the row occurs). If active, it is closed once with reason terminated_unjudgeable_dut_output: its tags are flushed as open unknowns, pending live entries give pending_at_unjudgeable_row (K12 unresolved, not a batch-end activation), and slave-canceled ones are counted. If suspended or dead, nothing is reflushed, so suspension tags and refuted disclosures are not double counted. prefix_status is derived as for input boundaries, and non-violated activated clauses report prefix_checked_not_refuted. Later rows, including resets, are not processed."
+    }
+  ],
+  "rationale": [
+    "Review N1/N2: the pd-only termination path broke out without flushing row-start tags or closing the epoch. As a result, possible_starvation_err and the pending entries were lost, and K6 was misreported as checked_not_refuted.",
+    "The repair closes the unchanged row-start H with a distinct termination reason. It is not labelled as reset, batch end or an env boundary, and the K10 failure and unjudgeable_row are kept.",
+    "Suspended and dead modes are untouched because close_epoch returns early, so there is no double flush and the discarded-evidence disclosure is preserved.",
+    "Four new selftests cover the retained tag, pending work, scope statuses, the distinct boundary fields, the unprocessed reset suffix and the clean-prefix case. All existing tests and limits are unchanged."
+  ],
+  "contract_decisions": [
+    "Undefined DUT control output: dut_violation is retained. The valid-prefix snapshot unit is the history set at the start of the terminated row, and it is closed as terminated_unjudgeable_dut_output.",
+    "Pending work at termination is reported as pending_at_unjudgeable_row under K12 (unresolved). It is not counted as a K12 batch-end activation.",
+    "termination_boundary is kept separate from input_validity_boundary. Prefix qualification of clause statuses applies to both.",
+    "No timeout or cancellation semantics are added, no rule is weakened, and no freeze, replay or B/C is authorized."
+  ]
+}

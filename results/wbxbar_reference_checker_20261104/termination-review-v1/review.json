@@ -1,0 +1,92 @@
+{
+  "ready_for_replay_registration": true,
+  "findings": [
+    {
+      "id": "T1",
+      "severity": "info",
+      "area": "N1/N2 repair, pd-only termination path",
+      "detail": "Static trace of check_rows confirms that when _validate returns pd and no pe, three things happen in order. (1) The K10 failure is recorded with pin=True. (2) S['term']=c is set, and prefix_status is derived from the row-start clean() snapshot. (3) close_epoch(lastc, False, 'terminated_unjudgeable_dut_output') runs, then unjudgeable_row is appended and the loop breaks. close_epoch acts only when mode=='active' and H is non-empty. It flushes tags from the unmodified row-start H, which is valid because no row-c processing has occurred. It emits pending_at_unjudgeable_row with clause K12 and records a pending_alternatives entry with the distinct reason. The decoded boundary_recheck/undefined_DUT_control result matches: dut_violation (K10@8); possible_starvation_err@3 retained as open; pending min/max 2; K6 and K12 unresolved; prefix_unresolved; input_validity_boundary=null; termination_boundary=8; termination_reason set; no assumption_violations. termination_boundary is correctly distinct from input_validity_boundary, reset and batch end. The prior N1/N2 defects are repaired."
+    },
+    {
+      "id": "T2",
+      "severity": "low",
+      "area": "row numbering of the termination closure",
+      "detail": "close_epoch is called with lastc, so pending_alternatives.closed_at and the pending_at_unjudgeable_row record carry cycle 7 (the last processed row). The record's detail text names row 8, and termination_boundary=8. This is internally consistent, since state is closed at the end of row 7 / start of row 8. Consumers should not read closed_at as the terminated row. Nonblocking; a documentation note is sufficient."
+    },
+    {
+      "id": "T3",
+      "severity": "low",
+      "area": "suspended and dead termination paths; reset suffix",
+      "detail": "Suspended and dead modes make close_epoch return early. Decoding supplementary_recheck/undefined_after_suspension shows a single possible_starvation_err record (the pre-suspension flush), unresolved_on_limit, and unjudgeable_row, with no duplicate. undefined_after_valid_membership_failure keeps the K7 membership failure@19 and its discarded_epoch_evidence, and reports prefix_dut_violation. undefined_with_ignored_reset_suffix shows 8 processed rows of 10, with the reset row 9 not processed (break before suffix). For the first-row case, mode is pre_reset, so close_epoch is a no-op. The clean-prefix selftest yields prefix_scoped_pass with no invented reset or liveness claim. Acceptable."
+    },
+    {
+      "id": "T4",
+      "severity": "low",
+      "area": "checked_scope.rows_beyond_input_boundary naming",
+      "detail": "On the termination path, rows_beyond_input_boundary = nrows - processed (2 in the suffix case), but no input boundary exists. The value is correct as 'unprocessed rows', but the label is misleading next to input_validity_boundary=null. Nonblocking. Rename the field or document it as unprocessed rows from either boundary."
+    },
+    {
+      "id": "T5",
+      "severity": "low",
+      "area": "K12 and unknown_tag_records metric scope",
+      "detail": "pending_at_unjudgeable_row correctly makes K12 unresolved through cl_unk without incrementing act_K12_batch_end, so it is not a batch-end activation. clause_scope.unknown_tag_records counts only items in TAG_CLAUSE, so it excludes pending_at_batch_end, pending_at_unjudgeable_row, unresolved_on_limit, mixed_same_edge and unjudgeable_row. As a 'historical unknown-class tag' count it is honest. It must not be read as the total of unresolved diagnostics or as coverage. Recommend documenting this scope explicitly. Nonblocking."
+    },
+    {
+      "id": "T6",
+      "severity": "info",
+      "area": "precedence and property_status",
+      "detail": "cl_unk takes precedence over prefix qualification, so terminated runs show K6/K12 as 'unresolved' rather than prefix-qualified. Other activated, non-violated clauses show prefix_checked_not_refuted. This is conservative and consistent with the contract."
+    }
+  ],
+  "contract_decision_assessments": [
+    {
+      "id": "undefined_DUT_control_stops_judgment",
+      "assessment": "accept",
+      "detail": "The dut_violation is retained. The row-start H is closed with the distinct reason. Tags stay open, not refuted, and the suffix is not processed."
+    },
+    {
+      "id": "pending_at_unjudgeable_row_K12_unresolved_not_batch_end",
+      "assessment": "accept"
+    },
+    {
+      "id": "termination_boundary_distinct_from_input_validity_boundary",
+      "assessment": "accept",
+      "detail": "Pair this with the clarification in T4."
+    },
+    {
+      "id": "valid_prefix_flush_any_boundary",
+      "assessment": "accept",
+      "detail": "The prior gap on the pd path is now closed."
+    },
+    {
+      "id": "undefined_read_pin_fifo",
+      "assessment": "accept_as_scoped_assumption"
+    },
+    {
+      "id": "P4_ACK_only",
+      "assessment": "accept"
+    },
+    {
+      "id": "K11_activation_unit",
+      "assessment": "accept",
+      "detail": "Exposure only."
+    },
+    {
+      "id": "unknown_tag_records_scope",
+      "assessment": "accept_with_documentation",
+      "detail": "Tag-class records only; not all unresolved diagnostics; not coverage."
+    }
+  ],
+  "required_followup": [
+    "Nonblocking: document that closed_at on a terminated epoch is the last processed row, and that termination_boundary is the unjudged row.",
+    "Nonblocking: rename rows_beyond_input_boundary to unprocessed rows, or document that it also counts rows after termination_boundary.",
+    "Nonblocking: state in contract.md that unknown_tag_records counts only TAG_CLAUSE tags and excludes pending, limit, mixed and unjudgeable records.",
+    "Any replay must be separately registered with saved actions and frozen hashes. This opinion does not freeze, replay, or authorize B or C."
+  ],
+  "limitations": [
+    "Static review only; no code was executed. I decoded and inspected the five raw boundary traces and the delta results for the boundary_recheck, supplementary_recheck, focused_recheck and limit cases. The remaining cases were spot-checked, not fully reconstructed.",
+    "This is not certification. K5 is excluded. C1-C4 and F1-F8 are unproved. Timeout and cancellation bounds remain open, along with both_interfaces_pending and sub-row reset length. Repeated HR ERRs remain unknown.",
+    "Test agreement was not taken as evidence of correctness. The assessment is against the reviewed contract and the public specification paraphrase.",
+    "A positive readiness opinion permits only consideration of a separately registered replay. It is not authorization for freeze, replay, or B/C."
+  ]
+}

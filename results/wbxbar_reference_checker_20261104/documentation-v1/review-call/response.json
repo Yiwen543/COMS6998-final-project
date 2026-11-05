@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 21765,
+  "stop_reason": "end_turn",
+  "session_id": "c506e67f-6c15-43cc-8911-6af0c3c3446a",
+  "total_cost_usd": 0.193146,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 29942,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 2171,
+    "output_tokens_details": {
+      "thinking_tokens": 909
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 29942
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 2171,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 29942,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 29942,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 2171,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 29942,
+      "webSearchRequests": 0,
+      "costUSD": 0.193146,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 909,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\"ready_for_contract_addendum\":true,\"findings\":[{\"id\":\"D1\",\"severity\":\"info\",\"area\":\"scope of change\",\"detail\":\"The before and after contracts differ only by the inserted 'Reporting clarifications (review T2/T4/T5)' section, placed after the unique N1/N2 sentence. The specification, assumptions, checker rules, metric definitions, exclusions (K5, C1-C4, F1-F8, HR ERRs unknown, rule 3.05), verdict and readiness meaning, and candidate status are textually unchanged. The functional artifacts are declared unchanged, and the supplied source is consistent with the documented behavior.\"},{\"id\":\"D2\",\"severity\":\"info\",\"area\":\"T2 accuracy\",\"detail\":\"This clarification is accurate. close_epoch(lastc, False, 'terminated_unjudgeable_dut_output') sets closed_at to lastc, and the pending_at_unjudgeable_row record also carries cycle lastc. The termination path requires that pe is empty, and _validate puts a non-contiguous cycle into pe, so lastc is c-1 on this path. termination_boundary is S['term'], which equals c. On the first row, or before any reset, mode is pre_reset, so close_epoch returns without emitting a record. The text is also scoped to 'the epoch closed', which matches the existing statement that nothing is reflushed when the epoch is suspended or dead. T2 is fulfilled.\"},{\"id\":\"D3\",\"severity\":\"low\",\"area\":\"T4 completeness\",\"detail\":\"The core statement is accurate. rows_beyond_input_boundary is computed as nrows - total_rows. total_rows is incremented only after validation passes and before the row is processed. A row that fails validation or terminates on undefined DUT control output therefore breaks before the increment and is counted. A row where an environment violation is detected during processing is counted as processed. One case is not covered: with invalid limits, nrows = len(rows) and processed is 0, so the field equals all rows while neither input_validity_boundary nor termination_boundary is set. The phrase 'applies at either boundary' could be read as exhaustive. This is nonblocking; an optional note could cover the invalid_limits case. T4 is fulfilled as a documentation clarification and leaves the field name and computation unchanged.\"},{\"id\":\"D4\",\"severity\":\"low\",\"area\":\"T5 completeness\",\"detail\":\"The filter description matches the code: TAG_CLAUSE.get(u['item']) == k, and the listed exclusions are correct. However, same_edge_response_after_abort records (K13) are never carried in history tags. They are emitted directly by unr in the per-row K13 branch, not by any flush. The list of contributing flushes therefore omits the only source of K13 unknown_tag_records. The governing sentence ('counts only entries in the unresolved list whose item is one of the classified tag kinds') still makes the metric correct. This is nonblocking; an optional note could add 'and the direct per-row K13 same-edge record'. T5 is fulfilled. The text states the metric is not the total of unresolved diagnostics, not a clause status and not coverage.\"}],\"limitations\":[\"This is a static, read-only documentation review of the supplied packet only. No code was executed and no traces were re-decoded for this call.\",\"This review judges only whether the contract addendum accurately documents existing behavior for T2, T4 and T5. The prior code review and the full 158-case evidence remain separately authoritative.\",\"This opinion is not certification or whole-IP proof. K5, C1-C4 and F1-F8 remain excluded or unproved. Timeout and cancellation bounds, both_interfaces_pending and rule 3.05 sub-row reset remain open.\",\"This opinion does not freeze, register or authorize any replay, and does not authorize B or C.\"]}\n```",
+  "ttft_ms": 10487,
+  "type": "result",
+  "duration_ms": 21843,
+  "uuid": "ef17bc5c-5cdb-42e0-9a94-c3532eb59e6d",
+  "ttft_stream_ms": 1952,
+  "time_to_request_ms": 75,
+  "first_content_frame_ms": 1952,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 2171,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 29942,
+      "webSearchRequests": 0,
+      "costUSD": 0.193146,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 909,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

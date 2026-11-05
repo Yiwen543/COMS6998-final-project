@@ -1,0 +1,138 @@
+[
+  {
+    "id": "K1_reset",
+    "requirement": "In every row with pre.i_reset=1, post o_scyc and o_sstb are 0 (DUT). Master CYC/STB high in a reset row following a reset row is an environment violation. At a reset row all hypotheses, live entries, orphans and canceled identities are discarded and reset_epoch increments; cumulative unresolved records (tags flushed from surviving histories) persist. o_mack/o_merr in reset rows are judged only by K13 and rule 3.45.",
+    "source": "WB B4 3.1.1 rules 3.00, 3.05, 3.15, 3.20",
+    "assumptions": [
+      "Synchronous reset sampled per row",
+      "One sampled reset row counts as one complete cycle (rule 3.05 not otherwise observable)"
+    ],
+    "support_status": "implemented; normative; association-free"
+  },
+  {
+    "id": "K2_accept_identity",
+    "requirement": "Acceptance is CYC&STB&!STALL per port per row; each such row is one request. Identity is (WE,addr,SEL) for reads and additionally SEL-enabled data lanes for writes. Undefined identity projection on an accepted or held strobed request is an env violation on a master port and a DUT violation on a slave port.",
+    "source": "WB B4 rules 3.57, 3.58, 3.60",
+    "assumptions": [
+      "None means undefined"
+    ],
+    "support_status": "implemented; normative"
+  },
+  {
+    "id": "K3_routing",
+    "requirement": "A slave acceptance on port s requires decode(addr)==s; unmapped addresses are never forwarded.",
+    "source": "Packet address_configuration",
+    "assumptions": [],
+    "support_status": "implemented; association-free"
+  },
+  {
+    "id": "K4_no_invention_multiplicity",
+    "requirement": "Each slave acceptance consumes exactly one identity-equal candidate (live unforwarded entry of any master from rows <= c, or a canceled-pool member), each at most once, branching over all candidates; a hypothesis with no candidate dies. Association-free projection: per identity, slave acceptances <= master acceptances in the reset epoch.",
+    "source": "WB B4 3.1.3.2; README 188-196; crossbar article",
+    "assumptions": [
+      "Inferred clause"
+    ],
+    "support_status": "implemented; per-candidate part suspended on exhaustion, count projection always exact"
+  },
+  {
+    "id": "K5_forward_order",
+    "requirement": "Forward and side-effect order is NOT judged, within or across slaves.",
+    "source": "none public",
+    "assumptions": [],
+    "support_status": "excluded; listed in every scoped_pass"
+  },
+  {
+    "id": "K6_response_order",
+    "requirement": "A master response in row c retires that master's oldest live entry from rows < c; an ACK or non-HR ERR with no such entry kills the hypothesis. An ERR under HR(m,c) (held, or acceptance edge after identical held row) branches: A ordinary retirement; B retire nothing (possible_starvation_err); in case (ii) B2 moves the row-c entry to the canceled pool tagged starvation_attributed. Association-free bound: ACKs + non-HR ERRs in the current CYC <= acceptances in earlier rows of that CYC; HR ERRs counted separately. Repeated HR ERRs during one held request are not judged and stay unknown. Boundary row e: an ACK-driven count-bound failure depends only on pins and rows < e and stays dut_violation; an ERR-driven one depends on row-e HR inputs and becomes mixed_same_edge. hr_err_unjudged counts HR ERRs excluded from the bound.",
+    "source": "README 188-196; WB B4 3.1.3.2; wbxbar.v header 37-39",
+    "assumptions": [
+      "Inferred clause"
+    ],
+    "support_status": "implemented; inferred; suspended on exhaustion except count bound"
+  },
+  {
+    "id": "K7_ack_basis_read_data",
+    "requirement": "A master ACK requires the retired entry to be bound to a slave ACK in a row <= c in the same hypothesis; for reads the full 32-bit o_mdata equals that slave ACK's i_sdata slice.",
+    "source": "WB B4 obs 3.10; 3.1.3.2; README",
+    "assumptions": [
+      "Same-row slave-to-master path allowed"
+    ],
+    "support_status": "implemented; suspended on exhaustion"
+  },
+  {
+    "id": "K8_errors",
+    "requirement": "ACK retiring an unmapped or slave-ERRed entry kills the hypothesis; ERR retiring them is consistent; ERR retiring a mapped entry without slave ERR is tagged unexplained_mapped_err (unknown). No eventual-ERR or deadline claim.",
+    "source": "WB B4 perm 3.20, rule 3.45; crossbar article; wbxbar.v header 32-39",
+    "assumptions": [],
+    "support_status": "implemented; unknown cases unresolved; suspended on exhaustion"
+  },
+  {
+    "id": "K9_cancellation_orphans",
+    "requirement": "On a row with pre i_mcyc[m]=0, unforwarded live entries become distinct canceled-pool members tagged (master, master_epoch, reset_epoch, accept_row); forwarded ones become orphans whose slave responses bind positionally and never reach a master. Consuming a pool member (including same-row as the drop) is tagged post_abort_forward. Canceled identities persist until reset.",
+    "source": "WB B4 3.1.2, rule 3.30; crossbar article (supplementary)",
+    "assumptions": [
+      "No C1 certificate, so no mid-epoch release"
+    ],
+    "support_status": "implemented; residual forwards unresolved"
+  },
+  {
+    "id": "K10_dut_master_handshake",
+    "requirement": "A DUT-stalled slave request must persist with identical identity projection or o_scyc drops; o_sstb without o_scyc and o_mack&o_merr are violations; undefined DUT control outputs are violations.",
+    "source": "WB B4 3.1.3.2, rules 3.25, 3.45",
+    "assumptions": [],
+    "support_status": "implemented; association-free"
+  },
+  {
+    "id": "K11_env",
+    "requirement": "Master hold change/withdrawal under stall with CYC high, slave ACK&ERR together, slave response with empty FIFO or while o_scyc is low, undefined i_sdata on a slave ACK whose public per-slave forward FIFO head (pin-derived, association-free) was a read, undefined inputs, malformed rows and missing initial reset are environment violations (input_or_scope_invalid). Slave CYC withdrawal marks FIFO forwards slave_canceled. Processing stops at the first env row e.",
+    "source": "Packet environment_contract; WB 3.30, 3.45",
+    "assumptions": [
+      "Assumption clause"
+    ],
+    "support_status": "implemented"
+  },
+  {
+    "id": "K12_batch_end",
+    "requirement": "Live non-slave-canceled entries unretired at trace end in any surviving history yield pending_at_batch_end (unresolved), never a liveness failure; slave_canceled live entries, pool members and orphans are non-obligations (counted only).",
+    "source": "Packet requested obligations",
+    "assumptions": [],
+    "support_status": "implemented; reporting"
+  },
+  {
+    "id": "K13_response_without_cyc",
+    "requirement": "o_mack/o_merr with pre i_mcyc low in rows c-1 and c is a DUT violation; if i_mcyc fell exactly in row c it is unresolved same_edge_response_after_abort and never retired.",
+    "source": "WB B4 3.1.2, rule 3.30 (inferred reading)",
+    "assumptions": [
+      "First trace row has no c-1 and is not judged"
+    ],
+    "support_status": "implemented; inferred"
+  },
+  {
+    "id": "LIMITS",
+    "requirement": "Default MAX_HYP=4096, MAX_LIVE_PER_MASTER=64, MAX_CANCELED_POOL=256; optional limits dict (development selftests only) validated as positive ints. On exhaustion: no pruning, unresolved_on_limit with sizes, association clauses suspended for all masters until reset, suspended rows/fraction reported.",
+    "source": "Reviewed resource_limits",
+    "assumptions": [],
+    "support_status": "implemented"
+  },
+  {
+    "id": "VERDICT",
+    "requirement": "DUT violations wholly before e stay dut_violation; pin-only DUT checks at row e stay, including the ACK-driven K6 count bound; ERR-driven K6 count failures, K4 count projection and membership death at row e become mixed_same_edge unresolved; tags of histories alive at a row-e mixed death are kept as open valid-prefix unknowns, not refuted; otherwise input_or_scope_invalid if e exists, else violation > unresolved > scoped_pass. Prefix status reported. scoped_pass excludes K5 and C1-C4 and means not refuted by the reference.",
+    "source": "Reviewed verdict_semantics",
+    "assumptions": [],
+    "support_status": "implemented"
+  },
+  {
+    "id": "SCOPE_ACCOUNTING",
+    "requirement": "counts.subobligation_activations gives per sub-obligation activations, checked_activations, suspended_activations and post_death_activations; counts.clause_scope sums them per clause with raw_activations and unknown_tag_records. Association-free sub-obligations are checked in every mode. Exhaustion records state snapshot (pre_expansion_branching_precheck or post_expansion_step_check) and actual vs projected hypotheses. Membership-death records disclose omitted dying-row tags. Activations are exposure, never cover or proof.",
+    "source": "Review R4/R5 (reporting decision, not normative protocol authority)",
+    "assumptions": [],
+    "support_status": "implemented; reporting"
+  },
+  {
+    "id": "FORMAL_F1_F8",
+    "requirement": "Formal obligations F1-F8 and characterization C1-C4.",
+    "source": "Reviewed formal_obligations",
+    "assumptions": [],
+    "support_status": "unproved targets; not implemented"
+  }
+]

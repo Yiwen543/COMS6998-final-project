@@ -1,0 +1,273 @@
+{
+  "err_clean_baseline": {
+    "failures": [
+      {
+        "cycle": 3,
+        "category": "K6_count_projection",
+        "detail": "master 1: ACKs (0) + non-HR ERRs (1) in current CYC exceed acceptances from earlier rows (0); HR ERRs (0) counted separately"
+      },
+      {
+        "cycle": 3,
+        "category": "membership_empty_H",
+        "detail": "no surviving explicit history at cycle 3; per-branch witnesses: K6: master 1 ERR with no live entry before cycle 3 and no HR [witnesses shown 1 of 1, omitted 0]; clauses used: K6_response_order (K4 per-candidate, K6, K7, K8 and K12 are inferred)"
+      }
+    ],
+    "assumption_violations": [],
+    "unresolved": [],
+    "events": [],
+    "verdict": "dut_violation",
+    "counts": {
+      "total_rows": 4,
+      "reset_rows": 2,
+      "act_K1_reset": 2,
+      "live_discarded_by_reset": 0,
+      "nonreset_rows": 2,
+      "act_K11_env": 2,
+      "act_K2_accept_identity": 2,
+      "act_K6_response_order": 1,
+      "act_K8_errors": 1,
+      "property_status": {
+        "K1_reset": "checked_not_refuted",
+        "K2_accept_identity": "checked_not_refuted",
+        "K3_routing": "not_activated",
+        "K4_no_invention_multiplicity": "not_activated",
+        "K5_forward_order": "excluded_not_judged",
+        "K6_response_order": "violated",
+        "K7_ack_basis_read_data": "not_activated",
+        "K8_errors": "checked_not_refuted",
+        "K9_cancellation_orphans": "not_activated",
+        "K10_dut_master_handshake": "not_activated",
+        "K11_env": "checked_not_refuted",
+        "K12_batch_end": "not_activated",
+        "K13_response_without_cyc": "not_activated",
+        "C1_C4_characterization": "excluded_unproved"
+      },
+      "checked_scope": {
+        "total_rows_in_trace": 4,
+        "processed_rows": 4,
+        "nonreset_rows": 2,
+        "suspended_rows": 0,
+        "suspended_fraction": 0.0,
+        "rows_after_membership_death": 1,
+        "effective_association_checked_rows": 1,
+        "exhaustions": [],
+        "rows_beyond_input_boundary": 0
+      },
+      "input_validity_boundary": null,
+      "prefix_status": null,
+      "pending_alternatives": [
+        {
+          "reset_epoch": 1,
+          "closed_at": 1,
+          "reason": "reset",
+          "surviving_histories": 1,
+          "ownership": "unique_by_elimination",
+          "pending_live_per_history": [
+            0
+          ],
+          "tag_sets": [
+            []
+          ],
+          "histories_total": 1,
+          "histories_displayed": 1,
+          "histories_omitted": 0
+        },
+        {
+          "reset_epoch": 2,
+          "closed_at": 3,
+          "reason": "membership_dead",
+          "surviving_histories": 0,
+          "histories_alive_at_row_start": 1,
+          "ownership": "none_surviving",
+          "histories_total": 0,
+          "histories_displayed": 0,
+          "histories_omitted": 0
+        }
+      ],
+      "declared_exclusions": [
+        "K5 forward and side-effect order (within one slave and across slaves) is not judged; no pass asserts order preservation",
+        "C1-C4 characterization (restart-safe noninterference, survivor set, forward order, timeout/starvation conditions and precedence) is unproved and excluded from every scoped_pass",
+        "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+        "No liveness, latency, timeout deadline or eventual-ERR claim",
+        "DUT o_mack/o_merr inside reset rows are judged only by K13 and rule 3.45",
+        "Payload while STB is low, read data lanes on requests and SEL-disabled write lanes",
+        "Write ACK data",
+        "Rule 3.05 minimum reset length: one sampled reset row is taken as one complete cycle; shorter pulses are not observable in row traces",
+        "Formal obligations F1-F8 are unproved targets"
+      ],
+      "scoped_pass_excludes": [
+        "K5_forward_order",
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "hr_err_note": "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+      "limits": {
+        "MAX_HYP": 4096,
+        "MAX_LIVE_PER_MASTER": 64,
+        "MAX_CANCELED_POOL": 256
+      },
+      "reset_epochs": 2,
+      "clause_activations": {
+        "K1_reset": 2,
+        "K2_accept_identity": 2,
+        "K3_routing": 0,
+        "K4_no_invention_multiplicity": 0,
+        "K6_response_order": 1,
+        "K7_ack_basis_read_data": 0,
+        "K8_errors": 1,
+        "K9_cancellation_orphans": 0,
+        "K10_dut_master_handshake": 0,
+        "K11_env": 2,
+        "K12_batch_end": 0,
+        "K13_response_without_cyc": 0
+      },
+      "discarded_epoch_evidence": [],
+      "display_limits": {
+        "histories": 16,
+        "witnesses": 8,
+        "note": "displays only; histories are never pruned for reporting"
+      }
+    }
+  },
+  "err_same_edge_invalid": {
+    "failures": [
+      {
+        "cycle": 3,
+        "category": "K6_count_projection",
+        "detail": "master 1: ACKs (0) + non-HR ERRs (1) in current CYC exceed acceptances from earlier rows (0); HR ERRs (0) counted separately"
+      }
+    ],
+    "assumption_violations": [
+      {
+        "cycle": 3,
+        "category": "K11_env",
+        "detail": "master 0 changed or withdrew a stalled request while CYC stayed high (write addr=0x05 sel=0xf data(enabled lanes)=0x00000001 -> write addr=0x06 sel=0xf data(enabled lanes)=0x00000001)"
+      }
+    ],
+    "unresolved": [
+      {
+        "cycle": 3,
+        "item": "mixed_same_edge",
+        "detail": "mixed_same_edge(dut_candidate, env): membership_empty_H: no surviving explicit history at cycle 3; per-branch witnesses: K6: master 1 ERR with no live entry before cycle 3 and no HR [witnesses shown 1 of 1, omitted 0]; clauses used: K6_response_order (K4 per-candidate, K6, K7, K8 and K12 are inferred); no public ordering exists between this DUT candidate and the same-row input violation; unresolved for the DUT"
+      }
+    ],
+    "events": [],
+    "verdict": "dut_violation",
+    "counts": {
+      "total_rows": 4,
+      "reset_rows": 2,
+      "act_K1_reset": 2,
+      "live_discarded_by_reset": 0,
+      "nonreset_rows": 2,
+      "act_K11_env": 2,
+      "act_K2_accept_identity": 2,
+      "act_K6_response_order": 1,
+      "act_K8_errors": 1,
+      "property_status": {
+        "K1_reset": "prefix_checked_not_refuted",
+        "K2_accept_identity": "prefix_checked_not_refuted",
+        "K3_routing": "not_activated",
+        "K4_no_invention_multiplicity": "not_activated",
+        "K5_forward_order": "excluded_not_judged",
+        "K6_response_order": "violated",
+        "K7_ack_basis_read_data": "not_activated",
+        "K8_errors": "prefix_checked_not_refuted",
+        "K9_cancellation_orphans": "not_activated",
+        "K10_dut_master_handshake": "not_activated",
+        "K11_env": "env_violation_recorded",
+        "K12_batch_end": "not_activated",
+        "K13_response_without_cyc": "not_activated",
+        "C1_C4_characterization": "excluded_unproved"
+      },
+      "checked_scope": {
+        "total_rows_in_trace": 4,
+        "processed_rows": 4,
+        "nonreset_rows": 2,
+        "suspended_rows": 0,
+        "suspended_fraction": 0.0,
+        "rows_after_membership_death": 1,
+        "effective_association_checked_rows": 1,
+        "exhaustions": [],
+        "rows_beyond_input_boundary": 0
+      },
+      "input_validity_boundary": 3,
+      "prefix_status": "prefix_scoped_pass",
+      "pending_alternatives": [
+        {
+          "reset_epoch": 1,
+          "closed_at": 1,
+          "reason": "reset",
+          "surviving_histories": 1,
+          "ownership": "unique_by_elimination",
+          "pending_live_per_history": [
+            0
+          ],
+          "tag_sets": [
+            []
+          ],
+          "histories_total": 1,
+          "histories_displayed": 1,
+          "histories_omitted": 0
+        },
+        {
+          "reset_epoch": 2,
+          "closed_at": 3,
+          "reason": "membership_dead",
+          "surviving_histories": 0,
+          "histories_alive_at_row_start": 1,
+          "ownership": "none_surviving",
+          "histories_total": 0,
+          "histories_displayed": 0,
+          "histories_omitted": 0
+        }
+      ],
+      "declared_exclusions": [
+        "K5 forward and side-effect order (within one slave and across slaves) is not judged; no pass asserts order preservation",
+        "C1-C4 characterization (restart-safe noninterference, survivor set, forward order, timeout/starvation conditions and precedence) is unproved and excluded from every scoped_pass",
+        "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+        "No liveness, latency, timeout deadline or eventual-ERR claim",
+        "DUT o_mack/o_merr inside reset rows are judged only by K13 and rule 3.45",
+        "Payload while STB is low, read data lanes on requests and SEL-disabled write lanes",
+        "Write ACK data",
+        "Rule 3.05 minimum reset length: one sampled reset row is taken as one complete cycle; shorter pulses are not observable in row traces",
+        "Formal obligations F1-F8 are unproved targets"
+      ],
+      "scoped_pass_excludes": [
+        "K5_forward_order",
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "hr_err_note": "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+      "limits": {
+        "MAX_HYP": 4096,
+        "MAX_LIVE_PER_MASTER": 64,
+        "MAX_CANCELED_POOL": 256
+      },
+      "reset_epochs": 2,
+      "clause_activations": {
+        "K1_reset": 2,
+        "K2_accept_identity": 2,
+        "K3_routing": 0,
+        "K4_no_invention_multiplicity": 0,
+        "K6_response_order": 1,
+        "K7_ack_basis_read_data": 0,
+        "K8_errors": 1,
+        "K9_cancellation_orphans": 0,
+        "K10_dut_master_handshake": 0,
+        "K11_env": 2,
+        "K12_batch_end": 0,
+        "K13_response_without_cyc": 0
+      },
+      "discarded_epoch_evidence": [],
+      "display_limits": {
+        "histories": 16,
+        "witnesses": 8,
+        "note": "displays only; histories are never pruned for reporting"
+      }
+    }
+  }
+}

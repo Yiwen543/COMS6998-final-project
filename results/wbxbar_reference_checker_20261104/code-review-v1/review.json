@@ -1,0 +1,49 @@
+{
+  "ready_for_replay_registration": false,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "medium",
+      "area": "resource exhaustion and unknown-tag persistence",
+      "detail": "exhaust() sets S['H']=None without first flushing tags from the surviving histories. Unknown tags recorded earlier in the same reset epoch are therefore lost: post_abort_forward, unexplained_mapped_err, possible_starvation_err and starvation_attributed. close_epoch() also returns early when mode!='active', so a suspended epoch produces no pending_alternatives record. The limit/reset_then_clean_work result shows this: reset_epoch 2 is missing from pending_alternatives. The verdict stays unresolved through unresolved_on_limit, so no unknown becomes a pass. However, the cumulative-unknown record required by the contract ('reset never erases cumulative uncertainty') is incomplete. The same loss occurs for tags in an epoch whose H became empty ('dead'). That case is masked by dut_violation, but the per-epoch disclosure is still dropped."
+    },
+    {
+      "id": "F2",
+      "severity": "medium",
+      "area": "per-clause status versus actual activation",
+      "detail": "property_status reports 'checked_not_refuted' for every clause that was not violated, unresolved or suspended. This includes clauses that never activated on the trace, for example K9 with no CYC drop, K8 with no ERR, and K13 with no response while CYC is low. checked_scope gives only aggregate row exposure (nonreset_rows, suspended_rows). It has no per-clause activation counts. The reviewed contract requires distinguishing aggregate nonreset row exposure from clause activation. The vacuity rule ('every assert needs a reached cover') is not reflected in the reference reports."
+    },
+    {
+      "id": "F3",
+      "severity": "low",
+      "area": "truncated displays",
+      "detail": "pending_alternatives truncates pending_live_per_history and tag_sets to 16 histories. The death witnesses are truncated to 8 (wits[:8]). Neither truncation is flagged in the output. Ownership 'indistinguishable(n)' is reported, but the displayed lists may be partial without notice."
+    },
+    {
+      "id": "F4",
+      "severity": "low",
+      "area": "same-edge classification of association-free projections",
+      "detail": "boundary() treats every failure with pin=False as an association-dependent mixed_same_edge candidate. This includes the K4 per-identity count projection and the K6 per-CYC count bound. The reviewed contract lists both as association-free checks that remain valid after exhaustion. Rule (2) keeps a row-e DUT violation only if it depends on pins plus inputs from rows < e; the count projections also count row-e master acceptances. This split is disclosed in contract.md, but it is an author decision that the contract does not settle. It should be explicitly reviewed and accepted, not left implicit."
+    },
+    {
+      "id": "F5",
+      "severity": "low",
+      "area": "unsettled implementation decisions",
+      "detail": "Several behaviours are acknowledged as decisions where the contract is silent: B2 on an entry already forwarded in the same row (orphan plus tags); env classification of an undefined i_sdata that depends on hypotheses; and an undefined DUT control output in pre treated as a DUT violation that stops judgment. They are listed in contract.md as blockers, not resolved by authority. Spot checks found no verdict-changing errors in core branching, aliasing (deepcopy per branch), multiplicity, SEL projection, orphan binding, the HR A/B/B2 alternatives or the time-bounded precedence. The spot-checked labels, including fault/live_order_swap, identical_heads and stale_after_reset, are consistent with the reviewed contract."
+    }
+  ],
+  "limitations": [
+    "Static review only; no code was executed and no traces were replayed independently.",
+    "The heldback and limit results were checked by spot inspection of the deltas and diagnostics, not by full decoding of every trace.",
+    "Passing the author selftests and the synthetic labels is not certification.",
+    "Formal obligations F1-F8 and characterization items C1-C4 are unimplemented, and no claim about them is made.",
+    "The K5 order, timeout/starvation conditions and cancellation survivor set remain unknown by design."
+  ],
+  "required_followup": [
+    "Flush the tags of all surviving histories into cumulative unresolved records before discarding H at exhaustion (and at death). Emit a pending_alternatives entry marked suspended or dead for that epoch.",
+    "Add per-clause activation counts. Report 'not_activated' instead of 'checked_not_refuted' for a clause with no reached activation.",
+    "Disclose truncation counts for histories shown and witnesses shown.",
+    "Obtain an explicit reviewer decision on whether the K4 and K6 count projections at row e are pin-only (keep dut_violation) or mixed_same_edge.",
+    "After the fixes, re-run all 91 labels plus the 36 heldback and 6 limit cases. Then consider a separate saved-action replay freeze only, not B/C or whole-IP claims."
+  ]
+}

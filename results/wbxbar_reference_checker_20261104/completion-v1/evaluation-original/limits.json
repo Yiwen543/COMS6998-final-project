@@ -1,0 +1,2365 @@
+{
+  "hypotheses": {
+    "failures": [],
+    "assumption_violations": [],
+    "unresolved": [
+      {
+        "cycle": 8,
+        "item": "unresolved_on_limit",
+        "detail": "resource limit exceeded at cycle 8 (pre_expansion_branching_precheck snapshot; actual hypotheses 1, projected 2), sizes={'hypotheses': 1, 'max_live_per_master': 1, 'max_canceled_pool': 0, 'actual_hypotheses': 1, 'projected_hypotheses': 2}, limits={'MAX_HYP': 1, 'MAX_LIVE_PER_MASTER': 64, 'MAX_CANCELED_POOL': 256}; no pruning or branch selection; K4 per-candidate consumption, K6, K7, K8 attribution, K9 tags and K12 suspended for all masters until reset; earlier violations stay final"
+      }
+    ],
+    "events": [],
+    "verdict": "unresolved",
+    "counts": {
+      "total_rows": 28,
+      "reset_rows": 2,
+      "act_K1_reset": 2,
+      "live_discarded_by_reset": 0,
+      "nonreset_rows": 26,
+      "act_K11_env": 26,
+      "act_K2_accept_identity": 4,
+      "master_accepted": 2,
+      "slave_accepted": 2,
+      "act_K3_routing": 2,
+      "act_K4_no_invention_multiplicity": 2,
+      "act_K10_dut_master_handshake": 2,
+      "slave_responses": 2,
+      "act_K6_response_order": 2,
+      "act_K8_errors": 2,
+      "act_K7_ack_basis_read_data": 2,
+      "act_K9_cancellation_orphans": 2,
+      "property_status": {
+        "K1_reset": "checked_not_refuted",
+        "K2_accept_identity": "checked_not_refuted",
+        "K3_routing": "checked_not_refuted",
+        "K4_no_invention_multiplicity": "suspended",
+        "K5_forward_order": "excluded_not_judged",
+        "K6_response_order": "suspended",
+        "K7_ack_basis_read_data": "suspended",
+        "K8_errors": "suspended",
+        "K9_cancellation_orphans": "suspended",
+        "K10_dut_master_handshake": "checked_not_refuted",
+        "K11_env": "checked_not_refuted",
+        "K12_batch_end": "suspended",
+        "K13_response_without_cyc": "not_activated",
+        "C1_C4_characterization": "excluded_unproved"
+      },
+      "checked_scope": {
+        "total_rows_in_trace": 28,
+        "processed_rows": 28,
+        "nonreset_rows": 26,
+        "suspended_rows": 20,
+        "suspended_fraction": 0.7692307692307693,
+        "rows_after_membership_death": 0,
+        "effective_association_checked_rows": 6,
+        "exhaustions": [
+          {
+            "cycle": 8,
+            "reset_epoch": 2,
+            "sizes": {
+              "hypotheses": 1,
+              "max_live_per_master": 1,
+              "max_canceled_pool": 0,
+              "actual_hypotheses": 1,
+              "projected_hypotheses": 2
+            },
+            "snapshot": "pre_expansion_branching_precheck",
+            "actual_hypotheses": 1,
+            "projected_hypotheses": 2
+          }
+        ],
+        "rows_beyond_input_boundary": 0
+      },
+      "input_validity_boundary": null,
+      "prefix_status": null,
+      "pending_alternatives": [
+        {
+          "reset_epoch": 1,
+          "closed_at": 1,
+          "reason": "reset",
+          "surviving_histories": 1,
+          "ownership": "unique_by_elimination",
+          "pending_live_per_history": [
+            0
+          ],
+          "tag_sets": [
+            []
+          ],
+          "histories_total": 1,
+          "histories_displayed": 1,
+          "histories_omitted": 0
+        },
+        {
+          "reset_epoch": 2,
+          "closed_at": 8,
+          "reason": "suspended_on_limit",
+          "snapshot": "pre_expansion_branching_precheck",
+          "actual_hypotheses": 1,
+          "projected_hypotheses": 2,
+          "surviving_histories": 1,
+          "ownership": "not_reported_suspended",
+          "histories_total": 1,
+          "histories_displayed": 0,
+          "histories_omitted": 1,
+          "tag_kinds_before_suspension": []
+        }
+      ],
+      "declared_exclusions": [
+        "K5 forward and side-effect order (within one slave and across slaves) is not judged; no pass asserts order preservation",
+        "C1-C4 characterization (restart-safe noninterference, survivor set, forward order, timeout/starvation conditions and precedence) is unproved and excluded from every scoped_pass",
+        "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+        "No liveness, latency, timeout deadline or eventual-ERR claim",
+        "DUT o_mack/o_merr inside reset rows are judged only by K13 and rule 3.45",
+        "Payload while STB is low, read data lanes on requests and SEL-disabled write lanes",
+        "Write ACK data",
+        "Rule 3.05 minimum reset length: one sampled reset row is taken as one complete cycle; shorter pulses are not observable in row traces",
+        "Formal obligations F1-F8 are unproved targets"
+      ],
+      "scoped_pass_excludes": [
+        "K5_forward_order",
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "hr_err_note": "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+      "limits": {
+        "MAX_HYP": 1,
+        "MAX_LIVE_PER_MASTER": 64,
+        "MAX_CANCELED_POOL": 256
+      },
+      "reset_epochs": 2,
+      "clause_activations": {
+        "K1_reset": 2,
+        "K2_accept_identity": 4,
+        "K3_routing": 2,
+        "K4_no_invention_multiplicity": 2,
+        "K6_response_order": 2,
+        "K7_ack_basis_read_data": 2,
+        "K8_errors": 2,
+        "K9_cancellation_orphans": 2,
+        "K10_dut_master_handshake": 2,
+        "K11_env": 26,
+        "K12_batch_end": 0,
+        "K13_response_without_cyc": 0
+      },
+      "discarded_epoch_evidence": [],
+      "display_limits": {
+        "histories": 16,
+        "witnesses": 8,
+        "note": "displays only; histories are never pruned for reporting"
+      },
+      "subobligation_activations": {
+        "K1_reset_outputs": {
+          "clause": "K1_reset",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_master_identity_env": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_slave_identity": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K3_routing": {
+          "clause": "K3_routing",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_count_projection": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_candidate_consumption": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 1,
+          "suspended_activations": 1,
+          "post_death_activations": 0
+        },
+        "K6_count_bound": {
+          "clause": "K6_response_order",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K6_attribution": {
+          "clause": "K6_response_order",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K7_ack_basis": {
+          "clause": "K7_ack_basis_read_data",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K8_attribution": {
+          "clause": "K8_errors",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K9_cancellation": {
+          "clause": "K9_cancellation_orphans",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K10_handshake": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K11_env_checks": {
+          "clause": "K11_env",
+          "association_dependent": false,
+          "activations": 26,
+          "checked_activations": 26,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K10_rule_3_45": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K12_batch_end": {
+          "clause": "K12_batch_end",
+          "association_dependent": true,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 1,
+          "post_death_activations": 0
+        },
+        "K13_response_without_cyc": {
+          "clause": "K13_response_without_cyc",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        }
+      },
+      "clause_scope": {
+        "K1_reset": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K2_accept_identity": {
+          "raw_activations": 4,
+          "activations": 4,
+          "checked_activations": 4,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K3_routing": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K4_no_invention_multiplicity": {
+          "raw_activations": 2,
+          "activations": 4,
+          "checked_activations": 3,
+          "suspended_activations": 1,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K6_response_order": {
+          "raw_activations": 2,
+          "activations": 4,
+          "checked_activations": 2,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K7_ack_basis_read_data": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K8_errors": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K9_cancellation_orphans": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K10_dut_master_handshake": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K11_env": {
+          "raw_activations": 26,
+          "activations": 26,
+          "checked_activations": 26,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K12_batch_end": {
+          "raw_activations": 0,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 1,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K13_response_without_cyc": {
+          "raw_activations": 0,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        }
+      },
+      "scope_note": "activations are exposure, not coverage; association-free sub-obligations are checked in every mode (suspended/post_death counts are 0 by definition); association-dependent ones count as checked only while the explicit history set is active; zero activation is never a pass, cover or proof claim"
+    }
+  },
+  "live_entries": {
+    "failures": [],
+    "assumption_violations": [],
+    "unresolved": [
+      {
+        "cycle": 9,
+        "item": "unresolved_on_limit",
+        "detail": "resource limit exceeded at cycle 9 (post_expansion_step_check snapshot; actual hypotheses 1, projected 1), sizes={'hypotheses': 1, 'max_live_per_master': 2, 'max_canceled_pool': 0, 'actual_hypotheses': 1, 'projected_hypotheses': 1}, limits={'MAX_HYP': 4096, 'MAX_LIVE_PER_MASTER': 1, 'MAX_CANCELED_POOL': 256}; no pruning or branch selection; K4 per-candidate consumption, K6, K7, K8 attribution, K9 tags and K12 suspended for all masters until reset; earlier violations stay final"
+      }
+    ],
+    "events": [],
+    "verdict": "unresolved",
+    "counts": {
+      "total_rows": 24,
+      "reset_rows": 2,
+      "act_K1_reset": 2,
+      "live_discarded_by_reset": 0,
+      "nonreset_rows": 22,
+      "act_K11_env": 22,
+      "act_K2_accept_identity": 4,
+      "master_accepted": 2,
+      "slave_accepted": 2,
+      "act_K3_routing": 2,
+      "act_K4_no_invention_multiplicity": 2,
+      "act_K10_dut_master_handshake": 2,
+      "slave_responses": 2,
+      "act_K6_response_order": 2,
+      "act_K8_errors": 2,
+      "act_K7_ack_basis_read_data": 2,
+      "act_K9_cancellation_orphans": 1,
+      "property_status": {
+        "K1_reset": "checked_not_refuted",
+        "K2_accept_identity": "checked_not_refuted",
+        "K3_routing": "checked_not_refuted",
+        "K4_no_invention_multiplicity": "suspended",
+        "K5_forward_order": "excluded_not_judged",
+        "K6_response_order": "suspended",
+        "K7_ack_basis_read_data": "suspended",
+        "K8_errors": "suspended",
+        "K9_cancellation_orphans": "suspended",
+        "K10_dut_master_handshake": "checked_not_refuted",
+        "K11_env": "checked_not_refuted",
+        "K12_batch_end": "suspended",
+        "K13_response_without_cyc": "not_activated",
+        "C1_C4_characterization": "excluded_unproved"
+      },
+      "checked_scope": {
+        "total_rows_in_trace": 24,
+        "processed_rows": 24,
+        "nonreset_rows": 22,
+        "suspended_rows": 15,
+        "suspended_fraction": 0.6818181818181818,
+        "rows_after_membership_death": 0,
+        "effective_association_checked_rows": 7,
+        "exhaustions": [
+          {
+            "cycle": 9,
+            "reset_epoch": 2,
+            "sizes": {
+              "hypotheses": 1,
+              "max_live_per_master": 2,
+              "max_canceled_pool": 0,
+              "actual_hypotheses": 1,
+              "projected_hypotheses": 1
+            },
+            "snapshot": "post_expansion_step_check",
+            "actual_hypotheses": 1,
+            "projected_hypotheses": 1
+          }
+        ],
+        "rows_beyond_input_boundary": 0
+      },
+      "input_validity_boundary": null,
+      "prefix_status": null,
+      "pending_alternatives": [
+        {
+          "reset_epoch": 1,
+          "closed_at": 1,
+          "reason": "reset",
+          "surviving_histories": 1,
+          "ownership": "unique_by_elimination",
+          "pending_live_per_history": [
+            0
+          ],
+          "tag_sets": [
+            []
+          ],
+          "histories_total": 1,
+          "histories_displayed": 1,
+          "histories_omitted": 0
+        },
+        {
+          "reset_epoch": 2,
+          "closed_at": 9,
+          "reason": "suspended_on_limit",
+          "snapshot": "post_expansion_step_check",
+          "actual_hypotheses": 1,
+          "projected_hypotheses": 1,
+          "surviving_histories": 1,
+          "ownership": "not_reported_suspended",
+          "histories_total": 1,
+          "histories_displayed": 0,
+          "histories_omitted": 1,
+          "tag_kinds_before_suspension": []
+        }
+      ],
+      "declared_exclusions": [
+        "K5 forward and side-effect order (within one slave and across slaves) is not judged; no pass asserts order preservation",
+        "C1-C4 characterization (restart-safe noninterference, survivor set, forward order, timeout/starvation conditions and precedence) is unproved and excluded from every scoped_pass",
+        "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+        "No liveness, latency, timeout deadline or eventual-ERR claim",
+        "DUT o_mack/o_merr inside reset rows are judged only by K13 and rule 3.45",
+        "Payload while STB is low, read data lanes on requests and SEL-disabled write lanes",
+        "Write ACK data",
+        "Rule 3.05 minimum reset length: one sampled reset row is taken as one complete cycle; shorter pulses are not observable in row traces",
+        "Formal obligations F1-F8 are unproved targets"
+      ],
+      "scoped_pass_excludes": [
+        "K5_forward_order",
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "hr_err_note": "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+      "limits": {
+        "MAX_HYP": 4096,
+        "MAX_LIVE_PER_MASTER": 1,
+        "MAX_CANCELED_POOL": 256
+      },
+      "reset_epochs": 2,
+      "clause_activations": {
+        "K1_reset": 2,
+        "K2_accept_identity": 4,
+        "K3_routing": 2,
+        "K4_no_invention_multiplicity": 2,
+        "K6_response_order": 2,
+        "K7_ack_basis_read_data": 2,
+        "K8_errors": 2,
+        "K9_cancellation_orphans": 1,
+        "K10_dut_master_handshake": 2,
+        "K11_env": 22,
+        "K12_batch_end": 0,
+        "K13_response_without_cyc": 0
+      },
+      "discarded_epoch_evidence": [],
+      "display_limits": {
+        "histories": 16,
+        "witnesses": 8,
+        "note": "displays only; histories are never pruned for reporting"
+      },
+      "subobligation_activations": {
+        "K1_reset_outputs": {
+          "clause": "K1_reset",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_master_identity_env": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_slave_identity": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K3_routing": {
+          "clause": "K3_routing",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_count_projection": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_candidate_consumption": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K6_count_bound": {
+          "clause": "K6_response_order",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K6_attribution": {
+          "clause": "K6_response_order",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K7_ack_basis": {
+          "clause": "K7_ack_basis_read_data",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K8_attribution": {
+          "clause": "K8_errors",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K9_cancellation": {
+          "clause": "K9_cancellation_orphans",
+          "association_dependent": true,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 1,
+          "post_death_activations": 0
+        },
+        "K10_handshake": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K11_env_checks": {
+          "clause": "K11_env",
+          "association_dependent": false,
+          "activations": 22,
+          "checked_activations": 22,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K10_rule_3_45": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K12_batch_end": {
+          "clause": "K12_batch_end",
+          "association_dependent": true,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 1,
+          "post_death_activations": 0
+        },
+        "K13_response_without_cyc": {
+          "clause": "K13_response_without_cyc",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        }
+      },
+      "clause_scope": {
+        "K1_reset": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K2_accept_identity": {
+          "raw_activations": 4,
+          "activations": 4,
+          "checked_activations": 4,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K3_routing": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K4_no_invention_multiplicity": {
+          "raw_activations": 2,
+          "activations": 4,
+          "checked_activations": 2,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K6_response_order": {
+          "raw_activations": 2,
+          "activations": 4,
+          "checked_activations": 2,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K7_ack_basis_read_data": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K8_errors": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K9_cancellation_orphans": {
+          "raw_activations": 1,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 1,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K10_dut_master_handshake": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K11_env": {
+          "raw_activations": 22,
+          "activations": 22,
+          "checked_activations": 22,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K12_batch_end": {
+          "raw_activations": 0,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 1,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K13_response_without_cyc": {
+          "raw_activations": 0,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        }
+      },
+      "scope_note": "activations are exposure, not coverage; association-free sub-obligations are checked in every mode (suspended/post_death counts are 0 by definition); association-dependent ones count as checked only while the explicit history set is active; zero activation is never a pass, cover or proof claim"
+    }
+  },
+  "canceled_pool": {
+    "failures": [],
+    "assumption_violations": [],
+    "unresolved": [
+      {
+        "cycle": 9,
+        "item": "unresolved_on_limit",
+        "detail": "resource limit exceeded at cycle 9 (post_expansion_step_check snapshot; actual hypotheses 1, projected 1), sizes={'hypotheses': 1, 'max_live_per_master': 0, 'max_canceled_pool': 3, 'actual_hypotheses': 1, 'projected_hypotheses': 1}, limits={'MAX_HYP': 4096, 'MAX_LIVE_PER_MASTER': 64, 'MAX_CANCELED_POOL': 1}; no pruning or branch selection; K4 per-candidate consumption, K6, K7, K8 attribution, K9 tags and K12 suspended for all masters until reset; earlier violations stay final"
+      }
+    ],
+    "events": [],
+    "verdict": "unresolved",
+    "counts": {
+      "total_rows": 32,
+      "reset_rows": 2,
+      "act_K1_reset": 2,
+      "live_discarded_by_reset": 0,
+      "nonreset_rows": 30,
+      "act_K11_env": 30,
+      "act_K2_accept_identity": 4,
+      "master_accepted": 3,
+      "act_K9_cancellation_orphans": 1,
+      "slave_accepted": 1,
+      "act_K3_routing": 1,
+      "act_K4_no_invention_multiplicity": 1,
+      "act_K10_dut_master_handshake": 1,
+      "slave_responses": 1,
+      "property_status": {
+        "K1_reset": "checked_not_refuted",
+        "K2_accept_identity": "checked_not_refuted",
+        "K3_routing": "checked_not_refuted",
+        "K4_no_invention_multiplicity": "suspended",
+        "K5_forward_order": "excluded_not_judged",
+        "K6_response_order": "suspended",
+        "K7_ack_basis_read_data": "suspended",
+        "K8_errors": "suspended",
+        "K9_cancellation_orphans": "suspended",
+        "K10_dut_master_handshake": "checked_not_refuted",
+        "K11_env": "checked_not_refuted",
+        "K12_batch_end": "suspended",
+        "K13_response_without_cyc": "not_activated",
+        "C1_C4_characterization": "excluded_unproved"
+      },
+      "checked_scope": {
+        "total_rows_in_trace": 32,
+        "processed_rows": 32,
+        "nonreset_rows": 30,
+        "suspended_rows": 23,
+        "suspended_fraction": 0.7666666666666667,
+        "rows_after_membership_death": 0,
+        "effective_association_checked_rows": 7,
+        "exhaustions": [
+          {
+            "cycle": 9,
+            "reset_epoch": 2,
+            "sizes": {
+              "hypotheses": 1,
+              "max_live_per_master": 0,
+              "max_canceled_pool": 3,
+              "actual_hypotheses": 1,
+              "projected_hypotheses": 1
+            },
+            "snapshot": "post_expansion_step_check",
+            "actual_hypotheses": 1,
+            "projected_hypotheses": 1
+          }
+        ],
+        "rows_beyond_input_boundary": 0
+      },
+      "input_validity_boundary": null,
+      "prefix_status": null,
+      "pending_alternatives": [
+        {
+          "reset_epoch": 1,
+          "closed_at": 1,
+          "reason": "reset",
+          "surviving_histories": 1,
+          "ownership": "unique_by_elimination",
+          "pending_live_per_history": [
+            0
+          ],
+          "tag_sets": [
+            []
+          ],
+          "histories_total": 1,
+          "histories_displayed": 1,
+          "histories_omitted": 0
+        },
+        {
+          "reset_epoch": 2,
+          "closed_at": 9,
+          "reason": "suspended_on_limit",
+          "snapshot": "post_expansion_step_check",
+          "actual_hypotheses": 1,
+          "projected_hypotheses": 1,
+          "surviving_histories": 1,
+          "ownership": "not_reported_suspended",
+          "histories_total": 1,
+          "histories_displayed": 0,
+          "histories_omitted": 1,
+          "tag_kinds_before_suspension": []
+        }
+      ],
+      "declared_exclusions": [
+        "K5 forward and side-effect order (within one slave and across slaves) is not judged; no pass asserts order preservation",
+        "C1-C4 characterization (restart-safe noninterference, survivor set, forward order, timeout/starvation conditions and precedence) is unproved and excluded from every scoped_pass",
+        "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+        "No liveness, latency, timeout deadline or eventual-ERR claim",
+        "DUT o_mack/o_merr inside reset rows are judged only by K13 and rule 3.45",
+        "Payload while STB is low, read data lanes on requests and SEL-disabled write lanes",
+        "Write ACK data",
+        "Rule 3.05 minimum reset length: one sampled reset row is taken as one complete cycle; shorter pulses are not observable in row traces",
+        "Formal obligations F1-F8 are unproved targets"
+      ],
+      "scoped_pass_excludes": [
+        "K5_forward_order",
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "hr_err_note": "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+      "limits": {
+        "MAX_HYP": 4096,
+        "MAX_LIVE_PER_MASTER": 64,
+        "MAX_CANCELED_POOL": 1
+      },
+      "reset_epochs": 2,
+      "clause_activations": {
+        "K1_reset": 2,
+        "K2_accept_identity": 4,
+        "K3_routing": 1,
+        "K4_no_invention_multiplicity": 1,
+        "K6_response_order": 0,
+        "K7_ack_basis_read_data": 0,
+        "K8_errors": 0,
+        "K9_cancellation_orphans": 1,
+        "K10_dut_master_handshake": 1,
+        "K11_env": 30,
+        "K12_batch_end": 0,
+        "K13_response_without_cyc": 0
+      },
+      "discarded_epoch_evidence": [],
+      "display_limits": {
+        "histories": 16,
+        "witnesses": 8,
+        "note": "displays only; histories are never pruned for reporting"
+      },
+      "subobligation_activations": {
+        "K1_reset_outputs": {
+          "clause": "K1_reset",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_master_identity_env": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_slave_identity": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 1,
+          "checked_activations": 1,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K3_routing": {
+          "clause": "K3_routing",
+          "association_dependent": false,
+          "activations": 1,
+          "checked_activations": 1,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_count_projection": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": false,
+          "activations": 1,
+          "checked_activations": 1,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_candidate_consumption": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": true,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 1,
+          "post_death_activations": 0
+        },
+        "K6_count_bound": {
+          "clause": "K6_response_order",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K6_attribution": {
+          "clause": "K6_response_order",
+          "association_dependent": true,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K7_ack_basis": {
+          "clause": "K7_ack_basis_read_data",
+          "association_dependent": true,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K8_attribution": {
+          "clause": "K8_errors",
+          "association_dependent": true,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K9_cancellation": {
+          "clause": "K9_cancellation_orphans",
+          "association_dependent": true,
+          "activations": 1,
+          "checked_activations": 1,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K10_handshake": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 1,
+          "checked_activations": 1,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K11_env_checks": {
+          "clause": "K11_env",
+          "association_dependent": false,
+          "activations": 30,
+          "checked_activations": 30,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K10_rule_3_45": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K12_batch_end": {
+          "clause": "K12_batch_end",
+          "association_dependent": true,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 1,
+          "post_death_activations": 0
+        },
+        "K13_response_without_cyc": {
+          "clause": "K13_response_without_cyc",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        }
+      },
+      "clause_scope": {
+        "K1_reset": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K2_accept_identity": {
+          "raw_activations": 4,
+          "activations": 4,
+          "checked_activations": 4,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K3_routing": {
+          "raw_activations": 1,
+          "activations": 1,
+          "checked_activations": 1,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K4_no_invention_multiplicity": {
+          "raw_activations": 1,
+          "activations": 2,
+          "checked_activations": 1,
+          "suspended_activations": 1,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K6_response_order": {
+          "raw_activations": 0,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K7_ack_basis_read_data": {
+          "raw_activations": 0,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K8_errors": {
+          "raw_activations": 0,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K9_cancellation_orphans": {
+          "raw_activations": 1,
+          "activations": 1,
+          "checked_activations": 1,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K10_dut_master_handshake": {
+          "raw_activations": 1,
+          "activations": 1,
+          "checked_activations": 1,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K11_env": {
+          "raw_activations": 30,
+          "activations": 30,
+          "checked_activations": 30,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K12_batch_end": {
+          "raw_activations": 0,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 1,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K13_response_without_cyc": {
+          "raw_activations": 0,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        }
+      },
+      "scope_note": "activations are exposure, not coverage; association-free sub-obligations are checked in every mode (suspended/post_death counts are 0 by definition); association-dependent ones count as checked only while the explicit history set is active; zero activation is never a pass, cover or proof claim"
+    }
+  },
+  "association_free_fault_after_limit": {
+    "failures": [
+      {
+        "cycle": 20,
+        "category": "K10_dut_master_handshake",
+        "detail": "rule 3.45: o_mack and o_merr both high on master 0; response not attributed"
+      }
+    ],
+    "assumption_violations": [],
+    "unresolved": [
+      {
+        "cycle": 8,
+        "item": "unresolved_on_limit",
+        "detail": "resource limit exceeded at cycle 8 (pre_expansion_branching_precheck snapshot; actual hypotheses 1, projected 2), sizes={'hypotheses': 1, 'max_live_per_master': 1, 'max_canceled_pool': 0, 'actual_hypotheses': 1, 'projected_hypotheses': 2}, limits={'MAX_HYP': 1, 'MAX_LIVE_PER_MASTER': 64, 'MAX_CANCELED_POOL': 256}; no pruning or branch selection; K4 per-candidate consumption, K6, K7, K8 attribution, K9 tags and K12 suspended for all masters until reset; earlier violations stay final"
+      }
+    ],
+    "events": [],
+    "verdict": "dut_violation",
+    "counts": {
+      "total_rows": 28,
+      "reset_rows": 2,
+      "act_K1_reset": 2,
+      "live_discarded_by_reset": 0,
+      "nonreset_rows": 26,
+      "act_K11_env": 26,
+      "act_K2_accept_identity": 4,
+      "master_accepted": 2,
+      "slave_accepted": 2,
+      "act_K3_routing": 2,
+      "act_K4_no_invention_multiplicity": 2,
+      "act_K10_dut_master_handshake": 3,
+      "slave_responses": 2,
+      "act_K6_response_order": 2,
+      "act_K8_errors": 2,
+      "act_K7_ack_basis_read_data": 2,
+      "act_K9_cancellation_orphans": 3,
+      "property_status": {
+        "K1_reset": "checked_not_refuted",
+        "K2_accept_identity": "checked_not_refuted",
+        "K3_routing": "checked_not_refuted",
+        "K4_no_invention_multiplicity": "suspended",
+        "K5_forward_order": "excluded_not_judged",
+        "K6_response_order": "suspended",
+        "K7_ack_basis_read_data": "suspended",
+        "K8_errors": "suspended",
+        "K9_cancellation_orphans": "suspended",
+        "K10_dut_master_handshake": "violated",
+        "K11_env": "checked_not_refuted",
+        "K12_batch_end": "suspended",
+        "K13_response_without_cyc": "not_activated",
+        "C1_C4_characterization": "excluded_unproved"
+      },
+      "checked_scope": {
+        "total_rows_in_trace": 28,
+        "processed_rows": 28,
+        "nonreset_rows": 26,
+        "suspended_rows": 20,
+        "suspended_fraction": 0.7692307692307693,
+        "rows_after_membership_death": 0,
+        "effective_association_checked_rows": 6,
+        "exhaustions": [
+          {
+            "cycle": 8,
+            "reset_epoch": 2,
+            "sizes": {
+              "hypotheses": 1,
+              "max_live_per_master": 1,
+              "max_canceled_pool": 0,
+              "actual_hypotheses": 1,
+              "projected_hypotheses": 2
+            },
+            "snapshot": "pre_expansion_branching_precheck",
+            "actual_hypotheses": 1,
+            "projected_hypotheses": 2
+          }
+        ],
+        "rows_beyond_input_boundary": 0
+      },
+      "input_validity_boundary": null,
+      "prefix_status": null,
+      "pending_alternatives": [
+        {
+          "reset_epoch": 1,
+          "closed_at": 1,
+          "reason": "reset",
+          "surviving_histories": 1,
+          "ownership": "unique_by_elimination",
+          "pending_live_per_history": [
+            0
+          ],
+          "tag_sets": [
+            []
+          ],
+          "histories_total": 1,
+          "histories_displayed": 1,
+          "histories_omitted": 0
+        },
+        {
+          "reset_epoch": 2,
+          "closed_at": 8,
+          "reason": "suspended_on_limit",
+          "snapshot": "pre_expansion_branching_precheck",
+          "actual_hypotheses": 1,
+          "projected_hypotheses": 2,
+          "surviving_histories": 1,
+          "ownership": "not_reported_suspended",
+          "histories_total": 1,
+          "histories_displayed": 0,
+          "histories_omitted": 1,
+          "tag_kinds_before_suspension": []
+        }
+      ],
+      "declared_exclusions": [
+        "K5 forward and side-effect order (within one slave and across slaves) is not judged; no pass asserts order preservation",
+        "C1-C4 characterization (restart-safe noninterference, survivor set, forward order, timeout/starvation conditions and precedence) is unproved and excluded from every scoped_pass",
+        "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+        "No liveness, latency, timeout deadline or eventual-ERR claim",
+        "DUT o_mack/o_merr inside reset rows are judged only by K13 and rule 3.45",
+        "Payload while STB is low, read data lanes on requests and SEL-disabled write lanes",
+        "Write ACK data",
+        "Rule 3.05 minimum reset length: one sampled reset row is taken as one complete cycle; shorter pulses are not observable in row traces",
+        "Formal obligations F1-F8 are unproved targets"
+      ],
+      "scoped_pass_excludes": [
+        "K5_forward_order",
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "hr_err_note": "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+      "limits": {
+        "MAX_HYP": 1,
+        "MAX_LIVE_PER_MASTER": 64,
+        "MAX_CANCELED_POOL": 256
+      },
+      "reset_epochs": 2,
+      "clause_activations": {
+        "K1_reset": 2,
+        "K2_accept_identity": 4,
+        "K3_routing": 2,
+        "K4_no_invention_multiplicity": 2,
+        "K6_response_order": 2,
+        "K7_ack_basis_read_data": 2,
+        "K8_errors": 2,
+        "K9_cancellation_orphans": 3,
+        "K10_dut_master_handshake": 3,
+        "K11_env": 26,
+        "K12_batch_end": 0,
+        "K13_response_without_cyc": 0
+      },
+      "discarded_epoch_evidence": [],
+      "display_limits": {
+        "histories": 16,
+        "witnesses": 8,
+        "note": "displays only; histories are never pruned for reporting"
+      },
+      "subobligation_activations": {
+        "K1_reset_outputs": {
+          "clause": "K1_reset",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_master_identity_env": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_slave_identity": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K3_routing": {
+          "clause": "K3_routing",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_count_projection": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_candidate_consumption": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 1,
+          "suspended_activations": 1,
+          "post_death_activations": 0
+        },
+        "K6_count_bound": {
+          "clause": "K6_response_order",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K6_attribution": {
+          "clause": "K6_response_order",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K7_ack_basis": {
+          "clause": "K7_ack_basis_read_data",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K8_attribution": {
+          "clause": "K8_errors",
+          "association_dependent": true,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K9_cancellation": {
+          "clause": "K9_cancellation_orphans",
+          "association_dependent": true,
+          "activations": 3,
+          "checked_activations": 0,
+          "suspended_activations": 3,
+          "post_death_activations": 0
+        },
+        "K10_handshake": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K11_env_checks": {
+          "clause": "K11_env",
+          "association_dependent": false,
+          "activations": 26,
+          "checked_activations": 26,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K10_rule_3_45": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 1,
+          "checked_activations": 1,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K12_batch_end": {
+          "clause": "K12_batch_end",
+          "association_dependent": true,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 1,
+          "post_death_activations": 0
+        },
+        "K13_response_without_cyc": {
+          "clause": "K13_response_without_cyc",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        }
+      },
+      "clause_scope": {
+        "K1_reset": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K2_accept_identity": {
+          "raw_activations": 4,
+          "activations": 4,
+          "checked_activations": 4,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K3_routing": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 2,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K4_no_invention_multiplicity": {
+          "raw_activations": 2,
+          "activations": 4,
+          "checked_activations": 3,
+          "suspended_activations": 1,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K6_response_order": {
+          "raw_activations": 2,
+          "activations": 4,
+          "checked_activations": 2,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K7_ack_basis_read_data": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K8_errors": {
+          "raw_activations": 2,
+          "activations": 2,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K9_cancellation_orphans": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 0,
+          "suspended_activations": 3,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K10_dut_master_handshake": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K11_env": {
+          "raw_activations": 26,
+          "activations": 26,
+          "checked_activations": 26,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K12_batch_end": {
+          "raw_activations": 0,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 1,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K13_response_without_cyc": {
+          "raw_activations": 0,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        }
+      },
+      "scope_note": "activations are exposure, not coverage; association-free sub-obligations are checked in every mode (suspended/post_death counts are 0 by definition); association-dependent ones count as checked only while the explicit history set is active; zero activation is never a pass, cover or proof claim"
+    }
+  },
+  "reset_then_clean_work": {
+    "failures": [],
+    "assumption_violations": [],
+    "unresolved": [
+      {
+        "cycle": 8,
+        "item": "unresolved_on_limit",
+        "detail": "resource limit exceeded at cycle 8 (pre_expansion_branching_precheck snapshot; actual hypotheses 1, projected 2), sizes={'hypotheses': 1, 'max_live_per_master': 1, 'max_canceled_pool': 0, 'actual_hypotheses': 1, 'projected_hypotheses': 2}, limits={'MAX_HYP': 1, 'MAX_LIVE_PER_MASTER': 64, 'MAX_CANCELED_POOL': 256}; no pruning or branch selection; K4 per-candidate consumption, K6, K7, K8 attribution, K9 tags and K12 suspended for all masters until reset; earlier violations stay final"
+      }
+    ],
+    "events": [],
+    "verdict": "unresolved",
+    "counts": {
+      "total_rows": 44,
+      "reset_rows": 4,
+      "act_K1_reset": 4,
+      "live_discarded_by_reset": 0,
+      "nonreset_rows": 40,
+      "act_K11_env": 40,
+      "act_K2_accept_identity": 6,
+      "master_accepted": 3,
+      "slave_accepted": 3,
+      "act_K3_routing": 3,
+      "act_K4_no_invention_multiplicity": 3,
+      "act_K10_dut_master_handshake": 3,
+      "slave_responses": 3,
+      "act_K6_response_order": 3,
+      "act_K8_errors": 3,
+      "act_K7_ack_basis_read_data": 3,
+      "act_K9_cancellation_orphans": 3,
+      "act_K12_batch_end": 1,
+      "slave_canceled_live_at_end": 0,
+      "property_status": {
+        "K1_reset": "checked_not_refuted",
+        "K2_accept_identity": "checked_not_refuted",
+        "K3_routing": "checked_not_refuted",
+        "K4_no_invention_multiplicity": "suspended",
+        "K5_forward_order": "excluded_not_judged",
+        "K6_response_order": "suspended",
+        "K7_ack_basis_read_data": "suspended",
+        "K8_errors": "suspended",
+        "K9_cancellation_orphans": "suspended",
+        "K10_dut_master_handshake": "checked_not_refuted",
+        "K11_env": "checked_not_refuted",
+        "K12_batch_end": "suspended",
+        "K13_response_without_cyc": "not_activated",
+        "C1_C4_characterization": "excluded_unproved"
+      },
+      "checked_scope": {
+        "total_rows_in_trace": 44,
+        "processed_rows": 44,
+        "nonreset_rows": 40,
+        "suspended_rows": 20,
+        "suspended_fraction": 0.5,
+        "rows_after_membership_death": 0,
+        "effective_association_checked_rows": 20,
+        "exhaustions": [
+          {
+            "cycle": 8,
+            "reset_epoch": 2,
+            "sizes": {
+              "hypotheses": 1,
+              "max_live_per_master": 1,
+              "max_canceled_pool": 0,
+              "actual_hypotheses": 1,
+              "projected_hypotheses": 2
+            },
+            "snapshot": "pre_expansion_branching_precheck",
+            "actual_hypotheses": 1,
+            "projected_hypotheses": 2
+          }
+        ],
+        "rows_beyond_input_boundary": 0
+      },
+      "input_validity_boundary": null,
+      "prefix_status": null,
+      "pending_alternatives": [
+        {
+          "reset_epoch": 1,
+          "closed_at": 1,
+          "reason": "reset",
+          "surviving_histories": 1,
+          "ownership": "unique_by_elimination",
+          "pending_live_per_history": [
+            0
+          ],
+          "tag_sets": [
+            []
+          ],
+          "histories_total": 1,
+          "histories_displayed": 1,
+          "histories_omitted": 0
+        },
+        {
+          "reset_epoch": 2,
+          "closed_at": 8,
+          "reason": "suspended_on_limit",
+          "snapshot": "pre_expansion_branching_precheck",
+          "actual_hypotheses": 1,
+          "projected_hypotheses": 2,
+          "surviving_histories": 1,
+          "ownership": "not_reported_suspended",
+          "histories_total": 1,
+          "histories_displayed": 0,
+          "histories_omitted": 1,
+          "tag_kinds_before_suspension": []
+        },
+        {
+          "reset_epoch": 3,
+          "closed_at": 29,
+          "reason": "reset",
+          "surviving_histories": 1,
+          "ownership": "unique_by_elimination",
+          "pending_live_per_history": [
+            0
+          ],
+          "tag_sets": [
+            []
+          ],
+          "histories_total": 1,
+          "histories_displayed": 1,
+          "histories_omitted": 0
+        },
+        {
+          "reset_epoch": 4,
+          "closed_at": 43,
+          "reason": "batch_end",
+          "surviving_histories": 1,
+          "ownership": "unique_by_elimination",
+          "pending_live_per_history": [
+            0
+          ],
+          "tag_sets": [
+            []
+          ],
+          "histories_total": 1,
+          "histories_displayed": 1,
+          "histories_omitted": 0
+        }
+      ],
+      "declared_exclusions": [
+        "K5 forward and side-effect order (within one slave and across slaves) is not judged; no pass asserts order preservation",
+        "C1-C4 characterization (restart-safe noninterference, survivor set, forward order, timeout/starvation conditions and precedence) is unproved and excluded from every scoped_pass",
+        "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+        "No liveness, latency, timeout deadline or eventual-ERR claim",
+        "DUT o_mack/o_merr inside reset rows are judged only by K13 and rule 3.45",
+        "Payload while STB is low, read data lanes on requests and SEL-disabled write lanes",
+        "Write ACK data",
+        "Rule 3.05 minimum reset length: one sampled reset row is taken as one complete cycle; shorter pulses are not observable in row traces",
+        "Formal obligations F1-F8 are unproved targets"
+      ],
+      "scoped_pass_excludes": [
+        "K5_forward_order",
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "hr_err_note": "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+      "limits": {
+        "MAX_HYP": 1,
+        "MAX_LIVE_PER_MASTER": 64,
+        "MAX_CANCELED_POOL": 256
+      },
+      "reset_epochs": 4,
+      "clause_activations": {
+        "K1_reset": 4,
+        "K2_accept_identity": 6,
+        "K3_routing": 3,
+        "K4_no_invention_multiplicity": 3,
+        "K6_response_order": 3,
+        "K7_ack_basis_read_data": 3,
+        "K8_errors": 3,
+        "K9_cancellation_orphans": 3,
+        "K10_dut_master_handshake": 3,
+        "K11_env": 40,
+        "K12_batch_end": 1,
+        "K13_response_without_cyc": 0
+      },
+      "discarded_epoch_evidence": [],
+      "display_limits": {
+        "histories": 16,
+        "witnesses": 8,
+        "note": "displays only; histories are never pruned for reporting"
+      },
+      "subobligation_activations": {
+        "K1_reset_outputs": {
+          "clause": "K1_reset",
+          "association_dependent": false,
+          "activations": 4,
+          "checked_activations": 4,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_master_identity_env": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_slave_identity": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K3_routing": {
+          "clause": "K3_routing",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_count_projection": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_candidate_consumption": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": true,
+          "activations": 3,
+          "checked_activations": 2,
+          "suspended_activations": 1,
+          "post_death_activations": 0
+        },
+        "K6_count_bound": {
+          "clause": "K6_response_order",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K6_attribution": {
+          "clause": "K6_response_order",
+          "association_dependent": true,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K7_ack_basis": {
+          "clause": "K7_ack_basis_read_data",
+          "association_dependent": true,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K8_attribution": {
+          "clause": "K8_errors",
+          "association_dependent": true,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K9_cancellation": {
+          "clause": "K9_cancellation_orphans",
+          "association_dependent": true,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K10_handshake": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K11_env_checks": {
+          "clause": "K11_env",
+          "association_dependent": false,
+          "activations": 40,
+          "checked_activations": 40,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K10_rule_3_45": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K12_batch_end": {
+          "clause": "K12_batch_end",
+          "association_dependent": true,
+          "activations": 1,
+          "checked_activations": 1,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K13_response_without_cyc": {
+          "clause": "K13_response_without_cyc",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        }
+      },
+      "clause_scope": {
+        "K1_reset": {
+          "raw_activations": 4,
+          "activations": 4,
+          "checked_activations": 4,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K2_accept_identity": {
+          "raw_activations": 6,
+          "activations": 6,
+          "checked_activations": 6,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K3_routing": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K4_no_invention_multiplicity": {
+          "raw_activations": 3,
+          "activations": 6,
+          "checked_activations": 5,
+          "suspended_activations": 1,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K6_response_order": {
+          "raw_activations": 3,
+          "activations": 6,
+          "checked_activations": 4,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K7_ack_basis_read_data": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K8_errors": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K9_cancellation_orphans": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K10_dut_master_handshake": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K11_env": {
+          "raw_activations": 40,
+          "activations": 40,
+          "checked_activations": 40,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K12_batch_end": {
+          "raw_activations": 1,
+          "activations": 1,
+          "checked_activations": 1,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K13_response_without_cyc": {
+          "raw_activations": 0,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        }
+      },
+      "scope_note": "activations are exposure, not coverage; association-free sub-obligations are checked in every mode (suspended/post_death counts are 0 by definition); association-dependent ones count as checked only while the explicit history set is active; zero activation is never a pass, cover or proof claim"
+    }
+  },
+  "reset_then_bad_data": {
+    "failures": [
+      {
+        "cycle": 37,
+        "category": "membership_empty_H",
+        "detail": "no surviving explicit history at cycle 37; per-branch witnesses: K7: master 0 read data 324508638 differs from bound slave ACK data 324508639 (entry accepted@33) [witnesses shown 1 of 1, omitted 0]; clauses used: K7_ack_basis_read_data (K4 per-candidate, K6, K7, K8 and K12 are inferred)"
+      }
+    ],
+    "assumption_violations": [],
+    "unresolved": [
+      {
+        "cycle": 8,
+        "item": "unresolved_on_limit",
+        "detail": "resource limit exceeded at cycle 8 (pre_expansion_branching_precheck snapshot; actual hypotheses 1, projected 2), sizes={'hypotheses': 1, 'max_live_per_master': 1, 'max_canceled_pool': 0, 'actual_hypotheses': 1, 'projected_hypotheses': 2}, limits={'MAX_HYP': 1, 'MAX_LIVE_PER_MASTER': 64, 'MAX_CANCELED_POOL': 256}; no pruning or branch selection; K4 per-candidate consumption, K6, K7, K8 attribution, K9 tags and K12 suspended for all masters until reset; earlier violations stay final"
+      }
+    ],
+    "events": [],
+    "verdict": "dut_violation",
+    "counts": {
+      "total_rows": 44,
+      "reset_rows": 4,
+      "act_K1_reset": 4,
+      "live_discarded_by_reset": 0,
+      "nonreset_rows": 40,
+      "act_K11_env": 40,
+      "act_K2_accept_identity": 6,
+      "master_accepted": 3,
+      "slave_accepted": 3,
+      "act_K3_routing": 3,
+      "act_K4_no_invention_multiplicity": 3,
+      "act_K10_dut_master_handshake": 3,
+      "slave_responses": 3,
+      "act_K6_response_order": 3,
+      "act_K8_errors": 3,
+      "act_K7_ack_basis_read_data": 3,
+      "act_K9_cancellation_orphans": 3,
+      "property_status": {
+        "K1_reset": "checked_not_refuted",
+        "K2_accept_identity": "checked_not_refuted",
+        "K3_routing": "checked_not_refuted",
+        "K4_no_invention_multiplicity": "suspended",
+        "K5_forward_order": "excluded_not_judged",
+        "K6_response_order": "suspended",
+        "K7_ack_basis_read_data": "violated",
+        "K8_errors": "suspended",
+        "K9_cancellation_orphans": "suspended",
+        "K10_dut_master_handshake": "checked_not_refuted",
+        "K11_env": "checked_not_refuted",
+        "K12_batch_end": "suspended",
+        "K13_response_without_cyc": "not_activated",
+        "C1_C4_characterization": "excluded_unproved"
+      },
+      "checked_scope": {
+        "total_rows_in_trace": 44,
+        "processed_rows": 44,
+        "nonreset_rows": 40,
+        "suspended_rows": 20,
+        "suspended_fraction": 0.5,
+        "rows_after_membership_death": 7,
+        "effective_association_checked_rows": 13,
+        "exhaustions": [
+          {
+            "cycle": 8,
+            "reset_epoch": 2,
+            "sizes": {
+              "hypotheses": 1,
+              "max_live_per_master": 1,
+              "max_canceled_pool": 0,
+              "actual_hypotheses": 1,
+              "projected_hypotheses": 2
+            },
+            "snapshot": "pre_expansion_branching_precheck",
+            "actual_hypotheses": 1,
+            "projected_hypotheses": 2
+          }
+        ],
+        "rows_beyond_input_boundary": 0
+      },
+      "input_validity_boundary": null,
+      "prefix_status": null,
+      "pending_alternatives": [
+        {
+          "reset_epoch": 1,
+          "closed_at": 1,
+          "reason": "reset",
+          "surviving_histories": 1,
+          "ownership": "unique_by_elimination",
+          "pending_live_per_history": [
+            0
+          ],
+          "tag_sets": [
+            []
+          ],
+          "histories_total": 1,
+          "histories_displayed": 1,
+          "histories_omitted": 0
+        },
+        {
+          "reset_epoch": 2,
+          "closed_at": 8,
+          "reason": "suspended_on_limit",
+          "snapshot": "pre_expansion_branching_precheck",
+          "actual_hypotheses": 1,
+          "projected_hypotheses": 2,
+          "surviving_histories": 1,
+          "ownership": "not_reported_suspended",
+          "histories_total": 1,
+          "histories_displayed": 0,
+          "histories_omitted": 1,
+          "tag_kinds_before_suspension": []
+        },
+        {
+          "reset_epoch": 3,
+          "closed_at": 29,
+          "reason": "reset",
+          "surviving_histories": 1,
+          "ownership": "unique_by_elimination",
+          "pending_live_per_history": [
+            0
+          ],
+          "tag_sets": [
+            []
+          ],
+          "histories_total": 1,
+          "histories_displayed": 1,
+          "histories_omitted": 0
+        },
+        {
+          "reset_epoch": 4,
+          "closed_at": 37,
+          "reason": "membership_dead",
+          "surviving_histories": 0,
+          "histories_alive_at_row_start": 1,
+          "dying_row_tags": "not_captured: tags created in row 37 by branches that all died in row 37 are omitted",
+          "ownership": "none_surviving",
+          "histories_total": 0,
+          "histories_displayed": 0,
+          "histories_omitted": 0
+        }
+      ],
+      "declared_exclusions": [
+        "K5 forward and side-effect order (within one slave and across slaves) is not judged; no pass asserts order preservation",
+        "C1-C4 characterization (restart-safe noninterference, survivor set, forward order, timeout/starvation conditions and precedence) is unproved and excluded from every scoped_pass",
+        "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+        "No liveness, latency, timeout deadline or eventual-ERR claim",
+        "DUT o_mack/o_merr inside reset rows are judged only by K13 and rule 3.45",
+        "Payload while STB is low, read data lanes on requests and SEL-disabled write lanes",
+        "Write ACK data",
+        "Rule 3.05 minimum reset length: one sampled reset row is taken as one complete cycle; shorter pulses are not observable in row traces",
+        "Formal obligations F1-F8 are unproved targets"
+      ],
+      "scoped_pass_excludes": [
+        "K5_forward_order",
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "hr_err_note": "Repeated HR ERRs during one held request are absorbed by branch B and are not judged; they stay unknown.",
+      "limits": {
+        "MAX_HYP": 1,
+        "MAX_LIVE_PER_MASTER": 64,
+        "MAX_CANCELED_POOL": 256
+      },
+      "reset_epochs": 4,
+      "clause_activations": {
+        "K1_reset": 4,
+        "K2_accept_identity": 6,
+        "K3_routing": 3,
+        "K4_no_invention_multiplicity": 3,
+        "K6_response_order": 3,
+        "K7_ack_basis_read_data": 3,
+        "K8_errors": 3,
+        "K9_cancellation_orphans": 3,
+        "K10_dut_master_handshake": 3,
+        "K11_env": 40,
+        "K12_batch_end": 0,
+        "K13_response_without_cyc": 0
+      },
+      "discarded_epoch_evidence": [],
+      "display_limits": {
+        "histories": 16,
+        "witnesses": 8,
+        "note": "displays only; histories are never pruned for reporting"
+      },
+      "subobligation_activations": {
+        "K1_reset_outputs": {
+          "clause": "K1_reset",
+          "association_dependent": false,
+          "activations": 4,
+          "checked_activations": 4,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_master_identity_env": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K2_slave_identity": {
+          "clause": "K2_accept_identity",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K3_routing": {
+          "clause": "K3_routing",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_count_projection": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K4_candidate_consumption": {
+          "clause": "K4_no_invention_multiplicity",
+          "association_dependent": true,
+          "activations": 3,
+          "checked_activations": 2,
+          "suspended_activations": 1,
+          "post_death_activations": 0
+        },
+        "K6_count_bound": {
+          "clause": "K6_response_order",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K6_attribution": {
+          "clause": "K6_response_order",
+          "association_dependent": true,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K7_ack_basis": {
+          "clause": "K7_ack_basis_read_data",
+          "association_dependent": true,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K8_attribution": {
+          "clause": "K8_errors",
+          "association_dependent": true,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0
+        },
+        "K9_cancellation": {
+          "clause": "K9_cancellation_orphans",
+          "association_dependent": true,
+          "activations": 3,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 1
+        },
+        "K10_handshake": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K11_env_checks": {
+          "clause": "K11_env",
+          "association_dependent": false,
+          "activations": 40,
+          "checked_activations": 40,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K10_rule_3_45": {
+          "clause": "K10_dut_master_handshake",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        },
+        "K12_batch_end": {
+          "clause": "K12_batch_end",
+          "association_dependent": true,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 1
+        },
+        "K13_response_without_cyc": {
+          "clause": "K13_response_without_cyc",
+          "association_dependent": false,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0
+        }
+      },
+      "clause_scope": {
+        "K1_reset": {
+          "raw_activations": 4,
+          "activations": 4,
+          "checked_activations": 4,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K2_accept_identity": {
+          "raw_activations": 6,
+          "activations": 6,
+          "checked_activations": 6,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K3_routing": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K4_no_invention_multiplicity": {
+          "raw_activations": 3,
+          "activations": 6,
+          "checked_activations": 5,
+          "suspended_activations": 1,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K6_response_order": {
+          "raw_activations": 3,
+          "activations": 6,
+          "checked_activations": 4,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K7_ack_basis_read_data": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K8_errors": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 1,
+          "suspended_activations": 2,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K9_cancellation_orphans": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 0,
+          "suspended_activations": 2,
+          "post_death_activations": 1,
+          "unknown_tag_records": 0
+        },
+        "K10_dut_master_handshake": {
+          "raw_activations": 3,
+          "activations": 3,
+          "checked_activations": 3,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K11_env": {
+          "raw_activations": 40,
+          "activations": 40,
+          "checked_activations": 40,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        },
+        "K12_batch_end": {
+          "raw_activations": 0,
+          "activations": 1,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 1,
+          "unknown_tag_records": 0
+        },
+        "K13_response_without_cyc": {
+          "raw_activations": 0,
+          "activations": 0,
+          "checked_activations": 0,
+          "suspended_activations": 0,
+          "post_death_activations": 0,
+          "unknown_tag_records": 0
+        }
+      },
+      "scope_note": "activations are exposure, not coverage; association-free sub-obligations are checked in every mode (suspended/post_death counts are 0 by definition); association-dependent ones count as checked only while the explicit history set is active; zero activation is never a pass, cover or proof claim"
+    }
+  }
+}
