@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 44990,
+  "stop_reason": "end_turn",
+  "session_id": "867dcdd1-423d-436f-9f21-b777566e540f",
+  "total_cost_usd": 0.433056,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 69360,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 4312,
+    "output_tokens_details": {
+      "thinking_tokens": 1595
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 69360
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 4312,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 69360,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 69360,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 4312,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 69360,
+      "webSearchRequests": 0,
+      "costUSD": 0.433056,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1595,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\n  \"ready_for_offline_gate\": true,\n  \"readiness_scope\": \"Limited readiness only. The repaired pin-level checker and the fixed offer driver may enter the offline gate. This is not a formal proof, not a full WBXBAR correctness claim, and not authorization for B/C. Final reachability, prompt and hash freeze remain separate.\",\n  \"findings\": [\n    {\n      \"id\": \"V1\",\n      \"severity\": \"resolved\",\n      \"topic\": \"Prior R4: v3 abort identity repair\",\n      \"detail\": \"Confirmed from source. When master CYC drops, only entries in state 'new' with a mapped slave move into ab[m]; forwarded entries become 'aborted'. A later downstream acceptance is attributed to an aborted identity only when all of these hold: no live candidate exists; the identity is the first ab[m] entry for that slave; and WE, address, SEL and SEL-masked data match exactly. The identity is then removed (consumed once) and an unresolved post_abort_forward is recorded. The response is pushed with own=None, so it is never credited as a completion. There is no timing window and no payload or address relaxation. Reset clears ab, and unresolved items are never cleared. Live+aborted or live+live matches set amb and record ownership_ambiguous, so ownership is not guessed.\"\n    },\n    {\n      \"id\": \"V2\",\n      \"severity\": \"resolved\",\n      \"topic\": \"Prior R3: error_burst_restart cycle-14 attribution\",\n      \"detail\": \"Re-derived from the supplied delta trace. m0 has three identical read accepts of addr 3 (at 8, 9 and 11; cycle 10 was stalled). Slave0 accepts at 11 and 12, and i_serr arrives at 12. Master ERR at 13 retires acc@8. CYC drops at 14, aborting acc@9 (forwarded) and acc@11 (new). Slave0 accepts addr 3 at 14, which matches the unique aborted-unforwarded acc@11. No slave response follows and no master completion is credited. The verdict 'unresolved' (post_abort_forward@14) is the correct attribution: it is neither a DUT violation nor a checker false positive. The driver behaved correctly (the ERR caused the abort with a one-cycle low-CYC gap). Abort-propagation timing remains unresolved at the public specification level.\"\n    },\n    {\n      \"id\": \"V3\",\n      \"severity\": \"ok\",\n      \"topic\": \"Four new boundary controls\",\n      \"detail\": [\n        \"duplicate_aborted_forward: fails at 16 because the identity was already consumed at 13.\",\n        \"reset_clears_aborted_identity: fails post-reset at 17.\",\n        \"post_abort_then_reset: the cycle-13 unresolved observation persists across the reset.\",\n        \"live_aborted_ambiguity: reports ownership_ambiguous with no guessed completion.\",\n        \"corrupt_data and unaccepted_address: both fail.\",\n        \"These five negatives use an unresolved baseline. They are correctly marked baseline_scoped_pass=false and credited_detection=false, and their raw detection is shown separately. Hand control timing is treated as a fixture only.\"\n      ]\n    },\n    {\n      \"id\": \"V4\",\n      \"severity\": \"ok\",\n      \"topic\": \"Prior R1/F1 and R2/F6 still hold\",\n      \"detail\": \"A mapped ERR without a matching slave ERR becomes unexplained_mapped_err. This holds both early (1 cycle) and late (20 cycles), is never scoped_pass, and persists after reset (selftest). _weq masks write data by SEL for both payload matching and hold checks. masked_write_bytes passes, and enabled-lane faults fail.\"\n    },\n    {\n      \"id\": \"V5\",\n      \"severity\": \"minor\",\n      \"topic\": \"Control mislabelled: negative/stale_after_reset\",\n      \"detail\": [\n        \"This control is labelled single_fault but returns scoped_pass.\",\n        \"Cause: the injected o_mack lands at row 14, where master CYC is low. Responses while CYC is low fall under the declared P11 exclusion and are ignored.\",\n        \"Effect: the control does not test stale-after-reset detection at all. Stale responses while CYC is high are covered by stale_into_new_epoch and abort_late_slave_restart.\",\n        \"It is correctly not credited (credited_detection=false). It should be relabelled as an exclusion-demonstration control, or omitted from the sensitivity denominator, before freeze.\",\n        \"Not blocking.\"\n      ]\n    },\n    {\n      \"id\": \"V6\",\n      \"severity\": \"minor\",\n      \"topic\": \"Events, false positives and isolation\",\n      \"detail\": [\n        \"Events are descriptive only. They are dropped whenever a failure or assumption violation falls in their window, or when any cycle-less record exists.\",\n        \"A transaction event requires the sequence: slave accept, slave ACK, then master ACK.\",\n        \"No false positives were found in the 16 hand positives or in the 44 ordinary plus 4 driver DUT observations shown. Only pending_prefix and error_burst_restart are unresolved, and both for correct reasons.\",\n        \"Isolation is respected: the checker reads only pre/post pins, not driver ledgers or QUEUE records. Unshown DUT traces were not reread.\"\n      ]\n    },\n    {\n      \"id\": \"V7\",\n      \"severity\": \"ok\",\n      \"topic\": \"Driver protocol and accounting\",\n      \"detail\": [\n        \"Sampling: inputs are set while the clock is low; PRE is captured at +4ns before the rising edge.\",\n        \"Acceptance and ERR use pre-edge values (the pre_error fix applies).\",\n        \"STB and payload are held from the queue head until sampled acceptance. CYC stays high while work is queued or pending.\",\n        \"On ERR, accepted work is discarded and unaccepted offers are kept. The cooldown gives exactly one low-CYC cycle.\",\n        \"Reset discards both queued and pending work. Offers during reset are rejected.\",\n        \"There are no hidden drains, and PENDING is reported rather than fatal.\",\n        \"The Python parser re-derives the expected pins and ledgers and fails on mismatch. The template-replacement count guard detects drift.\",\n        \"The slave model never stalls and acknowledges one cycle after acceptance only while o_scyc is high. Read data is a function of address. Under the CYC-gated rule this cannot produce unsolicited responses.\",\n        \"No slave-stall coverage is claimed, which is consistent.\"\n      ]\n    },\n    {\n      \"id\": \"V8\",\n      \"severity\": \"advisory\",\n      \"topic\": \"Residual conservatism\",\n      \"detail\": [\n        \"Aborted identities persist until reset with no age bound. This is conservative: it yields unresolved, never pass.\",\n        \"An ambiguity suspends functional checks until reset. A long trace after ambiguity is therefore weakly checked, but it is reported as unresolved.\",\n        \"Requests from a master whose CYC is low at the slave-acceptance edge are attributed only through the aborted-identity path.\"\n      ]\n    }\n  ],\n  \"limitations\": [\n    \"Not checked: timeout and starvation latency bounds. Unexplained mapped ERR remains unresolved.\",\n    \"Not checked: abort-propagation timing and eventual o_scyc withdrawal.\",\n    \"Not checked: post-reset o_mack/o_merr, minimum reset duration, and responses while master CYC is low (P11).\",\n    \"No slave-stall or slave-backpressure stimulus is in the driver. Stall behaviour is exercised only by hand controls.\",\n    \"Identical concurrent requests suspend ownership checks until reset.\",\n    \"Pending work at batch end is reported only, with no liveness claim.\",\n    \"The reviewer audited only the supplied traces and source. The 44 + 48 DUT diagnostics not shown were not independently reread.\",\n    \"Selftests and controls are minimal fixtures, not certification. This review is not a formal proof, and B/C authorization and the final freeze are separate decisions.\"\n  ]\n}\n```",
+  "ttft_ms": 20316,
+  "type": "result",
+  "duration_ms": 45179,
+  "uuid": "40023ea5-6f7e-460a-85d3-ec54a8abd25a",
+  "ttft_stream_ms": 2171,
+  "time_to_request_ms": 183,
+  "first_content_frame_ms": 2171,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 4312,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 69360,
+      "webSearchRequests": 0,
+      "costUSD": 0.433056,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1595,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

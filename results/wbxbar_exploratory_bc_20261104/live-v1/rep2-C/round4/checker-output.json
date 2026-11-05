@@ -1,0 +1,847 @@
+{
+  "selftests": [
+    {
+      "name": "write_positive",
+      "pass": true
+    },
+    {
+      "name": "write_payload_fault",
+      "pass": true
+    },
+    {
+      "name": "write_misroute_fault",
+      "pass": true
+    },
+    {
+      "name": "read_positive",
+      "pass": true
+    },
+    {
+      "name": "read_data_fault",
+      "pass": true
+    },
+    {
+      "name": "unmapped_err_positive",
+      "pass": true
+    },
+    {
+      "name": "unmapped_ack_fault",
+      "pass": true
+    },
+    {
+      "name": "invented_ack_fault",
+      "pass": true
+    },
+    {
+      "name": "incomplete_unresolved",
+      "pass": true
+    },
+    {
+      "name": "early_unexplained_err_unresolved",
+      "pass": true
+    },
+    {
+      "name": "unexplained_err_persists_after_reset",
+      "pass": true
+    },
+    {
+      "name": "slave_err_positive",
+      "pass": true
+    },
+    {
+      "name": "masked_lane_write_positive",
+      "pass": true
+    },
+    {
+      "name": "enabled_lane_write_fault",
+      "pass": true
+    },
+    {
+      "name": "unsolicited_slave_ack_env",
+      "pass": true
+    }
+  ],
+  "cases": {
+    "batch": {
+      "failures": [
+        {
+          "cycle": 44,
+          "category": "routing_payload",
+          "detail": "slave 1 accepted request (we=0,a=19,sel=0,d=0) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 224,
+          "category": "routing_payload",
+          "detail": "slave 1 accepted request (we=0,a=20,sel=5,d=0) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 231,
+          "category": "routing_payload",
+          "detail": "slave 1 accepted request (we=1,a=20,sel=3,d=229064922) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 8,
+          "end_cycle": 13,
+          "evidence": "m0 accept@8 slave0 accept@11 slaveACK@12 masterACK@13"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 8,
+          "end_cycle": 13,
+          "evidence": "m1 accept@8 slave1 accept@11 slaveACK@12 masterACK@13"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 9,
+          "end_cycle": 14,
+          "evidence": "m0 accept@9 slave0 accept@12 slaveACK@13 masterACK@14"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 9,
+          "end_cycle": 14,
+          "evidence": "m1 accept@9 slave1 accept@12 slaveACK@13 masterACK@14"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 11,
+          "end_cycle": 15,
+          "evidence": "m0 accept@11 slave0 accept@13 slaveACK@14 masterACK@15"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 11,
+          "end_cycle": 15,
+          "evidence": "m1 accept@11 slave1 accept@13 slaveACK@14 masterACK@15"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 12,
+          "end_cycle": 16,
+          "evidence": "m0 accept@12 slave0 accept@14 slaveACK@15 masterACK@16"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 12,
+          "end_cycle": 16,
+          "evidence": "m1 accept@12 slave1 accept@14 slaveACK@15 masterACK@16"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 13,
+          "end_cycle": 17,
+          "evidence": "m0 accept@13 slave0 accept@15 slaveACK@16 masterACK@17"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 14,
+          "end_cycle": 18,
+          "evidence": "m0 accept@14 slave0 accept@16 slaveACK@17 masterACK@18"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 15,
+          "end_cycle": 23,
+          "evidence": "m0 accept@15 slave1 accept@21 slaveACK@22 masterACK@23"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 16,
+          "end_cycle": 24,
+          "evidence": "m0 accept@16 slave1 accept@22 slaveACK@23 masterACK@24"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 13,
+          "end_cycle": 24,
+          "evidence": "m1 accept@13 slave0 accept@22 slaveACK@23 masterACK@24"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 14,
+          "end_cycle": 25,
+          "evidence": "m1 accept@14 slave0 accept@23 slaveACK@24 masterACK@25"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 24,
+          "end_cycle": 28,
+          "evidence": "m0 accept@24 slave1 accept@26 slaveACK@27 masterACK@28"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 25,
+          "end_cycle": 31,
+          "evidence": "m0 accept@25 state new ERR@31"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 26,
+          "end_cycle": 32,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 22,
+          "end_cycle": 34,
+          "evidence": "m1 accept@22 slave1 accept@32 slaveACK@33 masterACK@34"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 23,
+          "end_cycle": 35,
+          "evidence": "m1 accept@23 slave1 accept@33 slaveACK@34 masterACK@35"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 33,
+          "end_cycle": 38,
+          "evidence": "m0 accept@33 slave0 accept@36 slaveACK@37 masterACK@38"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 32,
+          "end_cycle": 38,
+          "evidence": "m1 accept@32 state new ERR@38"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 33,
+          "end_cycle": 39,
+          "evidence": "master 1 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 36,
+          "end_cycle": 43,
+          "evidence": "m0 accept@36 state serr ERR@43"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 40,
+          "end_cycle": 43,
+          "evidence": "m1 accept@40 state new ERR@43"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 48,
+          "end_cycle": 48,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 52,
+          "end_cycle": 52,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 53,
+          "end_cycle": 58,
+          "evidence": "m0 accept@53 slave0 accept@56 slaveACK@57 masterACK@58"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 54,
+          "end_cycle": 59,
+          "evidence": "m0 accept@54 slave0 accept@57 slaveACK@58 masterACK@59"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 56,
+          "end_cycle": 62,
+          "evidence": "m0 accept@56 state new ERR@62"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 57,
+          "end_cycle": 63,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 53,
+          "end_cycle": 65,
+          "evidence": "m1 accept@53 slave0 accept@63 slaveACK@64 masterACK@65"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 54,
+          "end_cycle": 66,
+          "evidence": "m1 accept@54 slave0 accept@64 slaveACK@65 masterACK@66"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 63,
+          "end_cycle": 67,
+          "evidence": "m1 accept@63 slave0 accept@65 slaveACK@66 masterACK@67"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 64,
+          "end_cycle": 68,
+          "evidence": "m1 accept@64 slave0 accept@66 slaveACK@67 masterACK@68"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 64,
+          "end_cycle": 69,
+          "evidence": "m0 accept@64 slave1 accept@67 slaveACK@68 masterACK@69"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 65,
+          "end_cycle": 69,
+          "evidence": "m1 accept@65 slave0 accept@67 slaveACK@68 masterACK@69"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 65,
+          "end_cycle": 70,
+          "evidence": "m0 accept@65 slave1 accept@68 slaveACK@69 masterACK@70"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 66,
+          "end_cycle": 70,
+          "evidence": "m1 accept@66 slave0 accept@68 slaveACK@69 masterACK@70"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 72,
+          "end_cycle": 77,
+          "evidence": "m0 accept@72 slave0 accept@75 slaveACK@76 masterACK@77"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 73,
+          "end_cycle": 78,
+          "evidence": "m0 accept@73 slave0 accept@76 slaveACK@77 masterACK@78"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 75,
+          "end_cycle": 79,
+          "evidence": "m0 accept@75 slave0 accept@77 slaveACK@78 masterACK@79"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 76,
+          "end_cycle": 80,
+          "evidence": "m0 accept@76 slave0 accept@78 slaveACK@79 masterACK@80"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 77,
+          "end_cycle": 81,
+          "evidence": "m0 accept@77 slave0 accept@79 slaveACK@80 masterACK@81"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 78,
+          "end_cycle": 82,
+          "evidence": "m0 accept@78 slave0 accept@80 slaveACK@81 masterACK@82"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 79,
+          "end_cycle": 83,
+          "evidence": "m0 accept@79 slave0 accept@81 slaveACK@82 masterACK@83"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 80,
+          "end_cycle": 84,
+          "evidence": "m0 accept@80 slave0 accept@82 slaveACK@83 masterACK@84"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 81,
+          "end_cycle": 85,
+          "evidence": "m0 accept@81 slave0 accept@83 slaveACK@84 masterACK@85"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 82,
+          "end_cycle": 86,
+          "evidence": "m0 accept@82 slave0 accept@84 slaveACK@85 masterACK@86"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 83,
+          "end_cycle": 87,
+          "evidence": "m0 accept@83 slave0 accept@85 slaveACK@86 masterACK@87"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 84,
+          "end_cycle": 88,
+          "evidence": "m0 accept@84 slave0 accept@86 slaveACK@87 masterACK@88"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 85,
+          "end_cycle": 89,
+          "evidence": "m0 accept@85 slave0 accept@87 slaveACK@88 masterACK@89"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 86,
+          "end_cycle": 90,
+          "evidence": "m0 accept@86 slave0 accept@88 slaveACK@89 masterACK@90"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 87,
+          "end_cycle": 91,
+          "evidence": "m0 accept@87 slave0 accept@89 slaveACK@90 masterACK@91"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 88,
+          "end_cycle": 92,
+          "evidence": "m0 accept@88 slave0 accept@90 slaveACK@91 masterACK@92"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 89,
+          "end_cycle": 93,
+          "evidence": "m0 accept@89 slave0 accept@91 slaveACK@92 masterACK@93"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 90,
+          "end_cycle": 94,
+          "evidence": "m0 accept@90 slave0 accept@92 slaveACK@93 masterACK@94"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 91,
+          "end_cycle": 95,
+          "evidence": "m0 accept@91 slave0 accept@93 slaveACK@94 masterACK@95"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 92,
+          "end_cycle": 96,
+          "evidence": "m0 accept@92 slave0 accept@94 slaveACK@95 masterACK@96"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 93,
+          "end_cycle": 97,
+          "evidence": "m0 accept@93 slave0 accept@95 slaveACK@96 masterACK@97"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 94,
+          "end_cycle": 98,
+          "evidence": "m0 accept@94 slave0 accept@96 slaveACK@97 masterACK@98"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 95,
+          "end_cycle": 99,
+          "evidence": "m0 accept@95 slave0 accept@97 slaveACK@98 masterACK@99"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 96,
+          "end_cycle": 100,
+          "evidence": "m0 accept@96 slave0 accept@98 slaveACK@99 masterACK@100"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 72,
+          "end_cycle": 106,
+          "evidence": "m1 accept@72 state serr ERR@106"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 102,
+          "end_cycle": 107,
+          "evidence": "master 1 dropped CYC with 2 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 102,
+          "end_cycle": 112,
+          "evidence": "m0 accept@102 slave0 accept@110 slaveACK@111 masterACK@112"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 103,
+          "end_cycle": 113,
+          "evidence": "m0 accept@103 slave0 accept@111 slaveACK@112 masterACK@113"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 108,
+          "end_cycle": 113,
+          "evidence": "m1 accept@108 slave1 accept@111 slaveACK@112 masterACK@113"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 110,
+          "end_cycle": 119,
+          "evidence": "m0 accept@110 slave1 accept@117 slaveACK@118 masterACK@119"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 109,
+          "end_cycle": 119,
+          "evidence": "m1 accept@109 slave0 accept@117 slaveACK@118 masterACK@119"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 111,
+          "end_cycle": 120,
+          "evidence": "m1 accept@111 slave0 accept@118 slaveACK@119 masterACK@120"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 117,
+          "end_cycle": 123,
+          "evidence": "m1 accept@117 state new ERR@123"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 118,
+          "end_cycle": 124,
+          "evidence": "master 1 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 111,
+          "end_cycle": 126,
+          "evidence": "m0 accept@111 slave0 accept@124 slaveACK@125 masterACK@126"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 117,
+          "end_cycle": 131,
+          "evidence": "m0 accept@117 slave1 accept@129 slaveACK@130 masterACK@131"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 125,
+          "end_cycle": 132,
+          "evidence": "m1 accept@125 slave0 accept@130 slaveACK@131 masterACK@132"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 124,
+          "end_cycle": 134,
+          "evidence": "m0 accept@124 state new ERR@134"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 129,
+          "end_cycle": 135,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 126,
+          "end_cycle": 135,
+          "evidence": "m1 accept@126 state new ERR@135"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 130,
+          "end_cycle": 136,
+          "evidence": "master 1 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 136,
+          "end_cycle": 141,
+          "evidence": "m0 accept@136 slave0 accept@139 slaveACK@140 masterACK@141"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 137,
+          "end_cycle": 142,
+          "evidence": "m1 accept@137 slave1 accept@140 slaveACK@141 masterACK@142"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 137,
+          "end_cycle": 144,
+          "evidence": "m0 accept@137 state new ERR@144"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 139,
+          "end_cycle": 145,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 138,
+          "end_cycle": 147,
+          "evidence": "m1 accept@138 slave0 accept@145 slaveACK@146 masterACK@147"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 140,
+          "end_cycle": 152,
+          "evidence": "m1 accept@140 slave1 accept@150 slaveACK@151 masterACK@152"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 146,
+          "end_cycle": 153,
+          "evidence": "m0 accept@146 slave0 accept@151 slaveACK@152 masterACK@153"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 147,
+          "end_cycle": 158,
+          "evidence": "m0 accept@147 slave1 accept@156 slaveACK@157 masterACK@158"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 145,
+          "end_cycle": 159,
+          "evidence": "m1 accept@145 slave0 accept@157 slaveACK@158 masterACK@159"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 200,
+          "end_cycle": 200,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 202,
+          "end_cycle": 207,
+          "evidence": "master 0 dropped CYC with 4 outstanding"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 210,
+          "end_cycle": 214,
+          "evidence": "master 1 dropped CYC with 4 outstanding"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 217,
+          "end_cycle": 217,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 218,
+          "end_cycle": 223,
+          "evidence": "m0 accept@218 state serr ERR@223"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 234,
+          "end_cycle": 234,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 235,
+          "end_cycle": 238,
+          "evidence": "m0 accept@235 state new ERR@238"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 235,
+          "end_cycle": 238,
+          "evidence": "m1 accept@235 state new ERR@238"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 236,
+          "end_cycle": 239,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 236,
+          "end_cycle": 239,
+          "evidence": "master 1 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 241,
+          "end_cycle": 246,
+          "evidence": "master 0 dropped CYC with 2 outstanding"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 241,
+          "end_cycle": 246,
+          "evidence": "master 1 dropped CYC with 2 outstanding"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 250,
+          "end_cycle": 256,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 250,
+          "end_cycle": 256,
+          "evidence": "master 1 dropped CYC with 1 outstanding"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 163,
+          "item": "ownership_ambiguous",
+          "detail": "slave 1 request matches multiple live/aborted owners; ownership/data checks suspended until reset"
+        },
+        {
+          "cycle": 204,
+          "item": "ownership_ambiguous",
+          "detail": "slave 0 request matches multiple live/aborted owners; ownership/data checks suspended until reset"
+        },
+        {
+          "cycle": 243,
+          "item": "ownership_ambiguous",
+          "detail": "slave 0 request matches multiple live/aborted owners; ownership/data checks suspended until reset"
+        }
+      ],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 14,
+        "master_accepted": 175,
+        "slave_accepted": 121,
+        "forwarded": 78,
+        "completed_ok": 69,
+        "decode_err": 10,
+        "aborted": 38,
+        "slave_err": 4,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    }
+  },
+  "errors": []
+}

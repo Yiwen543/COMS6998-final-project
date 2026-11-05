@@ -1,0 +1,74 @@
+`timescale 1ns/1ps
+module tb_natural_inventory;
+logic clk;
+logic rst;
+logic [15:0] s_axis_write_desc_addr;
+logic [19:0] s_axis_write_desc_len;
+logic [7:0] s_axis_write_desc_tag;
+logic s_axis_write_desc_valid;
+logic s_axis_write_desc_ready;
+logic [19:0] m_axis_write_desc_status_len;
+logic [7:0] m_axis_write_desc_status_tag;
+logic [7:0] m_axis_write_desc_status_id;
+logic [7:0] m_axis_write_desc_status_dest;
+logic m_axis_write_desc_status_user;
+logic [3:0] m_axis_write_desc_status_error;
+logic m_axis_write_desc_status_valid;
+logic [31:0] s_axis_write_data_tdata;
+logic [3:0] s_axis_write_data_tkeep;
+logic s_axis_write_data_tvalid;
+logic s_axis_write_data_tready;
+logic s_axis_write_data_tlast;
+logic [7:0] s_axis_write_data_tid;
+logic [7:0] s_axis_write_data_tdest;
+logic s_axis_write_data_tuser;
+logic [7:0] m_axi_awid;
+logic [15:0] m_axi_awaddr;
+logic [7:0] m_axi_awlen;
+logic [2:0] m_axi_awsize;
+logic [1:0] m_axi_awburst;
+logic m_axi_awlock;
+logic [3:0] m_axi_awcache;
+logic [2:0] m_axi_awprot;
+logic m_axi_awvalid;
+logic m_axi_awready;
+logic [31:0] m_axi_wdata;
+logic [3:0] m_axi_wstrb;
+logic m_axi_wlast;
+logic m_axi_wvalid;
+logic m_axi_wready;
+logic [7:0] m_axi_bid;
+logic [1:0] m_axi_bresp;
+logic m_axi_bvalid;
+logic m_axi_bready;
+logic enable;
+logic abort;
+axi_dma_wr #(.AXI_DATA_WIDTH(32),.AXI_ADDR_WIDTH(16),.AXI_STRB_WIDTH(4),.AXI_ID_WIDTH(8),.AXI_MAX_BURST_LEN(16),.AXIS_DATA_WIDTH(32),.AXIS_KEEP_ENABLE(1),.AXIS_KEEP_WIDTH(4),.AXIS_LAST_ENABLE(1),.AXIS_ID_ENABLE(0),.AXIS_ID_WIDTH(8),.AXIS_DEST_ENABLE(0),.AXIS_DEST_WIDTH(8),.AXIS_USER_ENABLE(1),.AXIS_USER_WIDTH(1),.LEN_WIDTH(20),.TAG_WIDTH(8),.ENABLE_SG(0),.ENABLE_UNALIGNED(1)) dut(.*);
+initial begin
+clk='0;
+rst='0;
+s_axis_write_desc_addr='0;
+s_axis_write_desc_len='0;
+s_axis_write_desc_tag='0;
+s_axis_write_desc_valid='0;
+s_axis_write_data_tdata='0;
+s_axis_write_data_tkeep='0;
+s_axis_write_data_tvalid='0;
+s_axis_write_data_tlast='0;
+s_axis_write_data_tid='0;
+s_axis_write_data_tdest='0;
+s_axis_write_data_tuser='0;
+m_axi_awready='0;
+m_axi_wready='0;
+m_axi_bid='0;
+m_axi_bresp='0;
+m_axi_bvalid='0;
+enable='0;
+abort='0;
+rst=1;
+for(integer i=0;i<8;i=i+1) begin
+clk=0; if(i==2) rst=0; #5; clk=1; #5;
+end
+$display("INVENTORY_OK cycles=8"); $finish;
+end
+endmodule

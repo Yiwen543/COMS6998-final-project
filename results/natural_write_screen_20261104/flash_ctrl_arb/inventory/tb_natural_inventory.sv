@@ -1,0 +1,74 @@
+`timescale 1ns/1ps
+module tb_natural_inventory;
+logic clk_i;
+logic rst_ni;
+logic [3:0] disable_i;
+logic [13:0] ctrl_err_addr_o;
+logic [19:0] sw_ctrl_i;
+logic [15:0] sw_addr_i;
+logic sw_ack_o;
+logic [6:0] sw_err_o;
+logic sw_wvalid_i;
+logic sw_wready_o;
+logic [38:0] sw_wdata_i;
+logic hw_req_i;
+logic [19:0] hw_ctrl_i;
+logic [1:0] hw_phase_i;
+logic [15:0] hw_addr_i;
+logic hw_ack_o;
+logic [6:0] hw_err_o;
+logic hw_wvalid_i;
+logic [38:0] hw_wdata_i;
+logic hw_wready_o;
+logic [19:0] muxed_ctrl_o;
+logic [15:0] muxed_addr_o;
+logic prog_ack_i;
+logic [6:0] prog_err_i;
+logic [13:0] prog_err_addr_i;
+logic rd_ack_i;
+logic [6:0] rd_err_i;
+logic [13:0] rd_err_addr_i;
+logic erase_ack_i;
+logic [6:0] erase_err_i;
+logic [13:0] erase_err_addr_i;
+logic prog_fifo_wvalid_o;
+logic [38:0] prog_fifo_wdata_o;
+logic prog_fifo_wready_i;
+logic flash_phy_busy_i;
+logic fifo_clr_o;
+logic [1:0] phase_o;
+logic [1:0] sel_o;
+logic fsm_err_o;
+flash_ctrl_arb dut(.*);
+initial begin
+clk_i='0;
+rst_ni='0;
+disable_i='0;
+sw_ctrl_i='0;
+sw_addr_i='0;
+sw_wvalid_i='0;
+sw_wdata_i='0;
+hw_req_i='0;
+hw_ctrl_i='0;
+hw_phase_i='0;
+hw_addr_i='0;
+hw_wvalid_i='0;
+hw_wdata_i='0;
+prog_ack_i='0;
+prog_err_i='0;
+prog_err_addr_i='0;
+rd_ack_i='0;
+rd_err_i='0;
+rd_err_addr_i='0;
+erase_ack_i='0;
+erase_err_i='0;
+erase_err_addr_i='0;
+prog_fifo_wready_i='0;
+flash_phy_busy_i='0;
+rst_ni=0;
+for(integer i=0;i<8;i=i+1) begin
+clk_i=0; if(i==2) rst_ni=1; #5; clk_i=1; #5;
+end
+$display("INVENTORY_OK cycles=8"); $finish;
+end
+endmodule

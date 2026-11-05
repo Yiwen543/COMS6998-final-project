@@ -1,0 +1,287 @@
+{
+  "scope": "Independent hand-constructed public-protocol controls; no DUT/Claude source or target evidence used.",
+  "never_model_stimulus": true,
+  "controls": [
+    {
+      "name": "positive/read",
+      "kind": "positive",
+      "obligation": "Read response/payload conservation",
+      "baseline": null
+    },
+    {
+      "name": "positive/write_mask",
+      "kind": "positive",
+      "obligation": "Write payload and byte enables",
+      "baseline": null
+    },
+    {
+      "name": "positive/slave_error",
+      "kind": "positive",
+      "obligation": "Slave ERR propagation, not a successful read",
+      "baseline": null
+    },
+    {
+      "name": "positive/unmapped",
+      "kind": "positive",
+      "obligation": "Documented unmapped-address error without slave request",
+      "baseline": null
+    },
+    {
+      "name": "positive/concurrent",
+      "kind": "positive",
+      "obligation": "Two different destinations and response owners",
+      "baseline": null
+    },
+    {
+      "name": "positive/pipeline",
+      "kind": "positive",
+      "obligation": "Consecutive accepts, slave accept/response overlap, ACK while STB is low",
+      "baseline": null
+    },
+    {
+      "name": "positive/accept_and_return",
+      "kind": "positive",
+      "obligation": "Master acceptance and earlier response on the same edge",
+      "baseline": null
+    },
+    {
+      "name": "positive/master1",
+      "kind": "positive",
+      "obligation": "Upper public packed port slices",
+      "baseline": null
+    },
+    {
+      "name": "positive/reset_then_new",
+      "kind": "positive",
+      "obligation": "New transaction after completed work and synchronous reset",
+      "baseline": null
+    },
+    {
+      "name": "positive/reset_inflight",
+      "kind": "positive",
+      "obligation": "Reset cancels outstanding work; new epoch completes independently",
+      "baseline": null
+    },
+    {
+      "name": "negative/read_data",
+      "kind": "single_fault",
+      "obligation": "Wrong returned read data",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "negative/write_data",
+      "kind": "single_fault",
+      "obligation": "Wrong forwarded write payload",
+      "baseline": "positive/write_mask"
+    },
+    {
+      "name": "negative/write_mask",
+      "kind": "single_fault",
+      "obligation": "Wrong forwarded byte mask",
+      "baseline": "positive/write_mask"
+    },
+    {
+      "name": "negative/address",
+      "kind": "single_fault",
+      "obligation": "Wrong forwarded address",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "negative/direction",
+      "kind": "single_fault",
+      "obligation": "Read changed to write",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "negative/missing_forward",
+      "kind": "single_fault",
+      "obligation": "Fabricated master completion without forwarding or slave response",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "negative/wrong_owner",
+      "kind": "single_fault",
+      "obligation": "Response delivered to wrong master",
+      "baseline": "positive/concurrent"
+    },
+    {
+      "name": "negative/duplicate_response",
+      "kind": "single_fault",
+      "obligation": "No response without outstanding accepted work",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "negative/error_as_success",
+      "kind": "single_fault",
+      "obligation": "Slave error cannot become success",
+      "baseline": "positive/slave_error"
+    },
+    {
+      "name": "negative/stale_after_reset",
+      "kind": "single_fault",
+      "obligation": "Stale response in a reset-cleared epoch",
+      "baseline": "positive/reset_inflight"
+    },
+    {
+      "name": "negative/stale_into_new_epoch",
+      "kind": "single_fault",
+      "obligation": "Premature completion of new accepted work before forwarding/response, after reset",
+      "baseline": "positive/reset_inflight"
+    },
+    {
+      "name": "negative/early_unexplained_error",
+      "kind": "single_fault",
+      "obligation": "Mapped request fails one cycle after first activity without slave ERR or elapsed OPT_TIMEOUT=16; requires independent review of timeout applicability",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "incomplete/missing_return",
+      "kind": "incomplete",
+      "obligation": "No complete/scoped pass with unretired work; no invented liveness deadline",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "incomplete/truncated",
+      "kind": "incomplete",
+      "obligation": "Pending response at end must remain explicit",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "invalid/master_changes_stalled_payload",
+      "kind": "invalid_environment",
+      "obligation": "Changing stalled request is an external assumption violation",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "positive/masked_write_bytes",
+      "kind": "positive",
+      "obligation": "Disabled write byte lanes are not specified data",
+      "baseline": null
+    },
+    {
+      "name": "positive/slave_stall",
+      "kind": "positive",
+      "obligation": "Held slave request through backpressure",
+      "baseline": null
+    },
+    {
+      "name": "negative/slave_stalled_payload",
+      "kind": "single_fault",
+      "obligation": "DUT must hold stalled request",
+      "baseline": "positive/slave_stall"
+    },
+    {
+      "name": "negative/slave_stalled_strobe",
+      "kind": "single_fault",
+      "obligation": "DUT cannot withdraw a stalled request without abort",
+      "baseline": "positive/slave_stall"
+    },
+    {
+      "name": "negative/ack_and_err",
+      "kind": "single_fault",
+      "obligation": "ACK and ERR cannot both terminate the same request",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "negative/reset_slave_cycle",
+      "kind": "single_fault",
+      "obligation": "Slave-side CYC must be reset on the sampling edge",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "unresolved/identical_heads",
+      "kind": "expected_unresolved",
+      "obligation": "Identical concurrent candidates cannot be assigned by guesswork",
+      "baseline": null
+    },
+    {
+      "name": "positive/contention",
+      "kind": "positive",
+      "obligation": "Same destination, distinguishable write requests and in-order ownership",
+      "baseline": null
+    },
+    {
+      "name": "positive/mapped_decode_restart",
+      "kind": "positive",
+      "obligation": "Decode error behind a mapped response then fresh mapped work",
+      "baseline": null
+    },
+    {
+      "name": "positive/slave_error_burst_restart",
+      "kind": "positive",
+      "obligation": "Slave error terminates a pipelined cycle; restart has no stale completion",
+      "baseline": null
+    },
+    {
+      "name": "positive/abort_late_slave_restart",
+      "kind": "positive",
+      "obligation": "Late slave ACK while old slave CYC remains high cannot retire new master work",
+      "baseline": null
+    },
+    {
+      "name": "unresolved/unclassified_late_error",
+      "kind": "expected_unresolved",
+      "obligation": "Without a proved timeout origin, ERR must not become scoped_pass or a successful recovery event",
+      "baseline": null
+    },
+    {
+      "name": "incomplete/both_interfaces_pending",
+      "kind": "incomplete",
+      "obligation": "Master and slave accepted work both pending at batch end",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "unresolved/post_abort_forward",
+      "kind": "expected_unresolved",
+      "obligation": "Matching accepted-but-unforwarded old write appears after abort; attribution unresolved, no completion credit",
+      "baseline": null
+    },
+    {
+      "name": "unresolved/late_post_abort_forward",
+      "kind": "expected_unresolved",
+      "obligation": "Same identity later after abort; no invented undocumented timing cutoff; cannot be scoped_pass",
+      "baseline": null
+    },
+    {
+      "name": "negative/post_abort_corrupt_data",
+      "kind": "single_fault",
+      "obligation": "Even at abort boundary, changed enabled write lane must not match accepted work",
+      "baseline": "unresolved/post_abort_forward"
+    },
+    {
+      "name": "negative/post_abort_unaccepted_address",
+      "kind": "single_fault",
+      "obligation": "No matching accepted address; abort is not permission for arbitrary new transactions",
+      "baseline": "unresolved/post_abort_forward"
+    },
+    {
+      "name": "negative/duplicate_aborted_forward",
+      "kind": "single_fault",
+      "obligation": "An aborted identity can justify at most one downstream acceptance; duplicate must fail, despite unresolved timing baseline",
+      "baseline": "unresolved/post_abort_forward"
+    },
+    {
+      "name": "unresolved/post_abort_then_reset",
+      "kind": "unresolved",
+      "obligation": "A later reset clears old identities but cannot erase the earlier unresolved post-abort observation",
+      "baseline": "unresolved/post_abort_forward"
+    },
+    {
+      "name": "negative/reset_clears_aborted_identity",
+      "kind": "single_fault",
+      "obligation": "Pre-reset accepted work cannot justify a post-reset downstream request",
+      "baseline": "unresolved/post_abort_forward"
+    },
+    {
+      "name": "unresolved/live_aborted_ambiguity",
+      "kind": "unresolved",
+      "obligation": "Indistinguishable live and aborted owners require unresolved attribution, not guessed ownership or completion",
+      "baseline": "unresolved/post_abort_forward"
+    }
+  ],
+  "authority": "Wishbone B4 pp31\u201338; public WBXBAR interface/README intent in spec-packet-v1. Chosen trace delays are test fixtures, not asserted implementation latency.",
+  "credit": "Positive requires no functional/assumption errors and declared obligations checked; negative only credited with clean baseline and valid environment; incomplete must retain pending/unresolved, never success. Disputed controls require independent review, not forced checker changes.",
+  "script_sha256": "a7f4488f27f6129a46da723a3f32af4d9a3aedd0426b638aebf6e8b51ca7cb71",
+  "inputs_sha256": "c2e1622b7afbb9647ade55741e13557ef5db83656a23afce7c769c7a4fa29c11",
+  "parent_manifest_sha256": "39f57c7515684bd750047b774548c34c60806f058048a2db1b6b2eef31549597"
+}

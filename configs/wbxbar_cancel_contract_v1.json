@@ -1,0 +1,54 @@
+{
+  "id": "wbxbar_cancel_contract_v1",
+  "date": "2026-11-04",
+  "purpose": "Post-hoc specification/checker repair and retrospective replay, not a new independent effectiveness experiment.",
+  "parent_freeze": "configs/wbxbar_exploratory_bc_freeze_v1.json",
+  "prior_checker": "results/wbxbar_exploratory_bc_20261104/claude-v3/candidate",
+  "preserved_hashes": {
+    "configs/wbxbar_exploratory_bc_freeze_v1.json": "216ef3ea4cf3748c6a65be215bbdca7fb2c2ce832ff4dc745c1386641b5715aa",
+    "results/wbxbar_exploratory_bc_20261104/claude-v3/candidate/authorship.json": "07de4bfd64f80b7e33a2aa71600c9bae21645455dfa59c3cb8706415d95b6ff0",
+    "results/wbxbar_abort_contract_20261104/original-evidence-manifest.json": "1d4a980eaaac5d2e6e659fa08a2857b303177a5e8799873a8c5cb6329b6a5cc9",
+    "results/wbxbar_abort_contract_20261104/controls-v1/manifest.json": "e0e8426589c99e709579f654d87c7b977a5094d3020df5f74bc4aacfeaf36c6d",
+    "results/wbxbar_abort_contract_20261104/controls-v1/private-inputs.json": "73cc90a6aea7864a4b160093f1ad34efae72e4a6c92a537a9f15bfb401a0ff9b"
+  },
+  "experiment_budget": {
+    "repetitions": 3,
+    "rounds": 6,
+    "max_new_cycles": 64,
+    "seed_cycles": 8
+  },
+  "model_limits": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "input_tokens": 32000,
+    "output_tokens": 16384,
+    "timeout_seconds": 120,
+    "max_retries": 1
+  },
+  "new_stimulus_generation_calls": 0,
+  "planned_claude_calls": 2,
+  "cli_budget_per_call_usd": 4,
+  "roles": {
+    "Claude": "Public contract, exact checker patch and selftests; fresh read-only reviewer. Author receives no DUT implementation or real trace.",
+    "GPT": "Synthetic controls, integration, fixed-driver saved-action replay, accounting. Never edits checker."
+  },
+  "gate": [
+    "Keep all known-clean historical positives and previously detected clean-baseline faults.",
+    "Independently review new controls; ambiguous cancellation is unresolved, not a pass.",
+    "Preserve ordinary ordering, enabled payload, response, reset and duplicate checks. Separate unresolved-baseline detections.",
+    "Worker and selftests pass; fresh Claude review ready; new hashes frozen before retrospective replay."
+  ],
+  "replay": {
+    "batches": 42,
+    "original_physical_cycles": 8360,
+    "simulator": "Original frozen Verilator binary/driver; exact saved JSON; require counters and pins to match.",
+    "costs": "Record replay executions/cycles/wall separately. Original API costs and coverage stay unchanged.",
+    "limits": "Old trajectories used old checker feedback. Reclassification is not a new causal B/C comparison."
+  },
+  "prohibited": [
+    "Modify original artifacts",
+    "Generate replacement model stimuli",
+    "Change DUT, driver, targets, denominator or budgets",
+    "Retroactively rewrite old verdicts"
+  ]
+}

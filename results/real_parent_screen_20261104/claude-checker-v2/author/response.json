@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 70764,
+  "stop_reason": "end_turn",
+  "session_id": "eb843e90-3175-44dd-91d4-4753ce565db4",
+  "total_cost_usd": 0.348306,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 36786,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 8218,
+    "output_tokens_details": {
+      "thinking_tokens": 3849
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 36786
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 8218,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 36786,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 36786,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 8218,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 36786,
+      "webSearchRequests": 0,
+      "costUSD": 0.348306,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 3849,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"patches\":[{\"file\":\"checker.py\",\"before\":\"'words': [], 'starve': None,\",\"after\":\"'words': [], 'bnd': None, 'starve': None,\"},{\"file\":\"checker.py\",\"before\":\"            while st['bp'] < 4 and not (be >> (3 - st['bp'])) & 1:\\n                st['bp'] += 1\\n            if st['bp'] < 4:\\n                b = (d >> (8 * (3 - st['bp']))) & 255\",\"after\":\"            # registered contract spi_host_core_public_contract_v2_lsb: lanes 0..3 ascending\\n            while st['bp'] < 4 and not (be >> st['bp']) & 1:\\n                st['bp'] += 1\\n            if st['bp'] < 4:\\n                b = (d >> (8 * st['bp'])) & 255\"},{\"file\":\"checker.py\",\"before\":\"elif bi > 0 and wc > cur['last'] and t - cur['last'] > cur['half'] and cur['starve'] is None:\\n                        cur['starve'] = (cur['last'], wc)\",\"after\":\"elif bi > 0 and cur['bnd'] is not None and wc >= cur['bnd'] and cur['starve'] is None:\\n                        cur['starve'] = (cur['bnd'], wc)\"},{\"file\":\"checker.py\",\"before\":\"        cur['edges'] += 1\\n        cur['last'] = t\",\"after\":\"        cur['edges'] += 1\\n        cur['last'] = t\\n        if cur['edges'] % (16 // w) == 0:\\n            cur['bnd'] = t\"},{\"file\":\"checker.py\",\"before\":\"                n = st['q'][0] if st['q'] else None\\n                if n is None or (n['csid'] == p['csid'] and n['cfg'] == p['cfg']):\",\"after\":\"                if st['q']:\\n                    n = (st['q'][0]['csid'], st['q'][0]['cfg'])\\n                elif st['cmd_off'] is not None:\\n                    n = (st['cmd_off'][0], tuple(st['cmd_off'][6:]))\\n                else:\\n                    n = None\\n                if n is None or (n[0] == p['csid'] and n[1] == p['cfg']):\"},{\"file\":\"checker.py\",\"before\":\"            if sp == 3 or (wr and rd and sp != 0) or (not wr and not rd):\\n                av(c, 'unsupported_command', 'reserved speed, non-Standard bidirectional, or dummy segment (dummy cycle count not in supplied spec); checking blocked until reset')\\n                st['blocked'] = True\",\"after\":\"            if sp == 3 or (wr and rd and sp != 0):\\n                av(c, 'unsupported_command', 'reserved speed or non-Standard bidirectional segment; checking blocked until reset')\\n                st['blocked'] = True\\n            elif not wr and not rd:\\n                note('dummy segment accepted at cycle %d: legal but outside checker scope (dummy cycle count not in supplied spec); serial checking suspended until reset' % c)\\n                st['blocked'] = True\"},{\"file\":\"checker.py\",\"before\":\"    if st['cur'] is not None:\\n        note('segment %d incomplete\",\"after\":\"    cs = st['cur']\\n    if cs is not None and cs['wr'] and cs['starve'] is None and cs['edges'] > 0 and cs['edges'] % (16 // cs['w']) == 0 and st['wi'] >= len(st['words']):\\n        cs['starve'] = (cs['last'], None)\\n    if st['cur'] is not None:\\n        note('segment %d incomplete\"},{\"file\":\"checker.py\",\"before\":\"ev('tx_starvation_resume', _ci(s['starve'][0]), done(s), 'segment %d paused after edge %.1f; next TX word accepted cycle %d; completion %s'\",\"after\":\"ev('tx_starvation_resume', s['acc'], done(s), 'segment %d starved at byte boundary %.1f; next TX word accepted cycle %s; completion %s'\"},{\"file\":\"checker.py\",\"before\":\"ev('rx_backpressure_resume', s['bpt'], done(s),\",\"after\":\"ev('rx_backpressure_resume', s['acc'], done(s),\"},{\"file\":\"checker.py\",\"before\":\"got = (data >> (8 * (3 - k))) & 255\",\"after\":\"got = (data >> (8 * k)) & 255\"},{\"file\":\"checker.py\",\"before\":\"'%s reset at %d aborted segment %d; release %s; fresh segment %s' % (ab['kind'], ab['trig'], ab['seg']['id'], ab['rel'], nx['id'] if nx else None))\",\"after\":\"'%s reset at %d aborted segment %d; release %s; fresh segment %s' % (ab['kind'], ab['trig'], ab['seg']['id'], ab['rel'], nx['id'] if nx else None))\\n        if ab['kind'] == 'software' and EV[-1]['kind'] == 'pass':\\n            EV[-1]['kind'] = 'pass_unresolved'\"},{\"file\":\"selftest.py\",\"before\":\"def _gen(wr=1, rd=0, txb=0xA5, rxb=0x3C, flip=False, early=False, short=False, drop=False, dummy=False, spur=False, rxpad=0):\",\"after\":\"def _gen(wr=1, rd=0, txb=0xA5, rxb=0x3C, flip=False, early=False, short=False, drop=False, dummy=False, spur=False, rxpad=0, keep=0, pend=None):\"},{\"file\":\"selftest.py\",\"before\":\"            a['read'] = 0 if dummy else rd\\n\",\"after\":\"            a['read'] = 0 if dummy else rd\\n            a['keep_cs'] = keep\\n\"},{\"file\":\"selftest.py\",\"before\":\"                a['tx_data'] = txb << 24\\n                a['tx_be'] = 8\",\"after\":\"                a['tx_data'] = 0xC3B2E100 | txb\\n                a['tx_be'] = 1\\n        if pend and c >= 20:\\n            a['csid'] = 1\\n            a['write'] = 1\\n            a['valid'] = 1 if pend == 'valid' else 0\"},{\"file\":\"selftest.py\",\"before\":\"        o['ready'] = 0 if (c < 1 or (drop and c == 1)) else 1\",\"after\":\"        o['ready'] = 0 if (c < 1 or (drop and c == 1) or (pend and c >= 19)) else 1\"},{\"file\":\"selftest.py\",\"before\":\"            o['rx_data'] = (rxb << 24) | rxpad\",\"after\":\"            o['rx_data'] = rxb | (rxpad << 8)\"},{\"file\":\"selftest.py\",\"before\":\"rx_data=(0x3D << 24))\",\"after\":\"rx_data=0x3D)\"},{\"file\":\"selftest.py\",\"before\":\"('dummy_segment_blocked', lambda: _gen(dummy=True), lambda r: r['verdict'] == 'blocked'),\",\"after\":\"('dummy_segment_scope_unresolved', lambda: _gen(dummy=True), lambda r: r['verdict'] == 'inconclusive' and not r['assumption_violations']),\\n        ('csaat_rise_without_change_fails', lambda: _gen(keep=1), lambda r: 'csaat' in cats(r)),\\n        ('csaat_rise_pending_csid_change_ok', lambda: _gen(keep=1, pend='valid'), lambda r: 'csaat' not in cats(r)),\\n        ('csaat_rise_invalid_offer_fails', lambda: _gen(keep=1, pend='invalid'), lambda r: 'csaat' in cats(r)),\"},{\"file\":\"properties.json\",\"before\":\"equals the next enabled byte of accepted words, most-significant first, skipping be=0 bytes;\",\"after\":\"equals the next enabled byte of accepted words in increasing lane order 0..3 (lane i = bits 8i+7:8i, enabled by tx_be[i]; registered amendment spi_host_core_public_contract_v2_lsb supersedes the MSB-lane-first reading of theory 698-702, retained as historical conflict), bits MSB-first within a byte, skipping be=0 bytes;\"},{\"file\":\"properties.json\",\"before\":\"Received bytes are packed MSB-first into words, a word emitted every 4 bytes and at segment end, partial words zero-padded in least-significant positions;\",\"after\":\"Received bytes b0..b3 are packed into bits 7:0,15:8,23:16,31:24 (registered amendment v2_lsb per theory 412-419,483, registers RXDATA, programmer guide; supersedes theory 735-738 which is retained as historical conflict), a word emitted every 4 bytes and at segment end, partial words zero-padded in unused HIGH lanes;\"},{\"file\":\"properties.json\",\"before\":\"\\\"requirement\\\": \\\"Reserved speed 3, Dual/Quad bidirectional, and dummy (no read, no write) segments are blocking assumption violations.\\\",\",\"after\":\"\\\"requirement\\\": \\\"Reserved speed 3 and Dual/Quad bidirectional segments are blocking assumption violations; legal dummy (no read, no write) segments are recorded as unresolved scope-unsupported and suspend serial checking until reset.\\\",\"},{\"file\":\"properties.json\",\"before\":\"after CSAAT=1 CSB stays low unless the next accepted segment changes CSID or configuration;\",\"after\":\"after CSAAT=1 CSB stays low unless a detected next segment (accepted, or stably offered with valid=1 while ready=0) changes CSID or configuration; fields with valid=0 never permit release;\"},{\"file\":\"contract.md\",\"before\":\"- dummy segments, because the dummy-cycle semantics are absent from the supplied excerpts;\\n\",\"after\":\"\"},{\"file\":\"contract.md\",\"before\":\"- Dual or Quad bidirectional segments.\\n\",\"after\":\"- Dual or Quad bidirectional segments.\\n\\n**Scope-unsupported (unresolved, not a driver violation).** Legal dummy segments: dummy-cycle semantics are absent from the supplied excerpts, so serial checking is suspended until reset and the verdict is at most inconclusive.\\n\"},{\"file\":\"contract.md\",\"before\":\"- **TX:** expected bytes are the enabled bytes of accepted words, most-significant first.\",\"after\":\"- **TX:** expected bytes are the enabled bytes of accepted words in increasing lane order 0,1,2,3 (lane i = bits 8i+7:8i, enabled by tx_be[i]); each byte MSB-first on the wire.\"},{\"file\":\"contract.md\",\"before\":\"- **RX words:** bytes are packed most-significant first, with zero padding in the low bytes.\",\"after\":\"- **RX words:** successive bytes b0..b3 go to bits 7:0,15:8,23:16,31:24, with zero padding in unused HIGH lanes.\"},{\"file\":\"contract.md\",\"before\":\"- After CSAAT=1, CSB stays low unless the next accepted segment changes CSID or configuration.\",\"after\":\"- After CSAAT=1, CSB stays low unless a detected next segment (accepted, or stably offered valid=1 while ready=0) changes CSID or configuration. Fields with valid=0 never permit release.\\n\\n**Byte-order amendment history.** Registered amendment spi_host_core_public_contract_v2_lsb (rev 0ea5236f) supersedes only byte-ordering clauses. Theory 698-702 and 735-740 (MSB-lane-first, low padding) contradict theory 412-419/483, registers RXDATA/TXDATA and the programmer guide for ByteOrder=1; the older text and the original MSB-first checker results are retained as historical contract-disagreement evidence. This is a registered project interpretation, not an upstream erratum. Bit order within a byte is unchanged (MSB first; Standard TX SD[0], RX SD[1]).\\n\\n**Events.** Starvation/backpressure windows start at segment acceptance so earlier payload faults dirty them. Starvation is triggered when a TX word used by a byte was accepted at or after the boundary edge ending the previous byte; a trace ending at a starved boundary yields a pending event. Software reset events that complete are labelled pass_unresolved, never proven.\"}],\"rationale\":\"Applies registered amendment v2_lsb to TX lane fetch and RX packing, preserving MSB-first bits and keeping conflict history in properties/contract. CSAAT release now considers a stable valid pending offer, not valid=0 fields. Starvation uses the previous byte-boundary edge so a word accepted before the resume edge is caught, with pending events for traces ending starved; event windows start at acceptance. Dummy segments become unresolved scope rather than assumption violations; software-reset events are pass_unresolved. Selftests use asymmetric lanes/padding and CSAAT pending-versus-invalid offers.\"}",
+  "ttft_ms": 39704,
+  "type": "result",
+  "duration_ms": 70877,
+  "uuid": "cf2d1d15-7923-49b2-8a93-642e9e6ae8a7",
+  "ttft_stream_ms": 1095,
+  "time_to_request_ms": 107,
+  "first_content_frame_ms": 1096,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 8218,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 36786,
+      "webSearchRequests": 0,
+      "costUSD": 0.348306,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 3849,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

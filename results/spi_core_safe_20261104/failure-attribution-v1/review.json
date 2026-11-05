@@ -1,0 +1,168 @@
+{
+  "case_findings": [
+    {
+      "case_id": "case_x",
+      "classification": "DUT violation (probable), with checker cascade",
+      "confidence": "medium",
+      "earliest_causal_cycle": 196,
+      "evidence": [
+        "The command offered at cycle 192 (change index 91) is a Quad RX-only, len=0, keep_cs=1 segment. It keeps the same CSID and configuration as the previous segment and is accepted at 192.",
+        "The command offered at cycle 193 (index 92) keeps the same CSID 0 but changes the configuration: keep_cs=0, idle/lead/trail=1, full_cycle=1, cpha=0, cpol=1.",
+        "The queue record (col70=193 at index 95) shows that command accepted at cycle 196. At that point the previous CSAAT segment had ended and CSB[0] had stayed low.",
+        "No CSB rise or CSNIDLE gap appears between the CSAAT segment and the next SCK activity.",
+        "SCK changes at cycle 198 under the new CPOL. CSB[0] then rises at 200 and ACTIVE goes low from 203."
+      ],
+      "root_cause_hypotheses": [
+        {
+          "hypothesis": "The DUT does not close the CSAAT transaction when the configuration changes but the CSID does not. In IdleCSBActive it accepts the command and clocks with the new CPOL/CPHA without the required idle pulse. This contradicts spec lines 241-249.",
+          "weight": "primary"
+        },
+        {
+          "hypothesis": "The checker misinterprets the CPOL level change while CS is still held as a segment edge. This is a checker defect in attribution only, not in the verdict.",
+          "weight": "secondary"
+        },
+        {
+          "hypothesis": "Driver defect.",
+          "weight": "rejected",
+          "reason": "Transport conserved, no assumption violations, offers stable."
+        },
+        {
+          "hypothesis": "Specification ambiguity.",
+          "weight": "low",
+          "reason": "Spec lines 246-249 explicitly require close-out on a configuration change after CSAAT."
+        }
+      ],
+      "cascaded_diagnostics": [
+        "cpol@198",
+        "sck_phase@198",
+        "cs_rise_midsegment@200",
+        "active_low_inflight x13 (203-215)",
+        "unresolved: segment 7 incomplete"
+      ],
+      "specification_basis": [
+        "theory_of_operation 241-249: configuration changes take effect only with all CSB deasserted; with CSAAT=1 the IP closes the transaction and applies the configuration after idle.",
+        "theory_of_operation 254-259: TIDLE and TLEAD minima.",
+        "experimental_contract: keep_cs bullet."
+      ],
+      "checker_source_basis": [
+        "checker.py edge(): the 'cont' branch requires prev['cfg']==cur['cfg'] and otherwise reports cs_framing. This category is the correct primary diagnostic.",
+        "The cpol and sck_phase checks in the same function fire as consequences.",
+        "rise() reports cs_rise_midsegment because the checker treats the segment as already started.",
+        "The active_low_inflight check in the main loop repeats every cycle (repeated, not distinct)."
+      ],
+      "rtl_source_basis": [
+        "spi_host_fsm.sv next_state_after_idle_csb_active: compares only command_csid_i != csid_q. config_changed is consulted only in next_state_after_idle, from Idle or WaitIdle.",
+        "IdleCSBActive then asserts command_ready_idle_csb_active=1 and moves to InternalClkLow/High using the new cpol through sck_d = cpol ? ...",
+        "Configuration registers update on new_command, so CPOL flips while CSB stays low."
+      ],
+      "unresolved": [
+        "Exact cycle-level mechanism of the CSB rise at 200 and ACTIVE low thereafter is not fully reconstructed.",
+        "Whether segment 7 payload would be correct is not judged."
+      ]
+    },
+    {
+      "case_id": "case_z",
+      "classification": "DUT violation (probable; same root cause as case_x), with checker cascade",
+      "confidence": "medium",
+      "earliest_causal_cycle": 187,
+      "evidence": [
+        "The command offered at 184 (index 233) is a Quad TX, keep_cs=1, csid 0 segment with clkdiv=0, cpha=0, cpol=0, accepted at 184.",
+        "The command offered at 185 (index 234) is a Quad RX segment on the same csid 0 with a changed configuration: idle/lead/trail=1, cpha=1, cpol=1, keep_cs=0. Queue shows it accepted at about 187 (col70=185).",
+        "CSB[0] stays low across the boundary, then rises at 192 with no completed trailing edges for the new segment.",
+        "ACTIVE goes low from 195, and the trace ends with segment 9 not started."
+      ],
+      "root_cause_hypotheses": [
+        {
+          "hypothesis": "Same as case_x: IdleCSBActive accepts a same-CSID command with changed configuration without the CSAAT close-out and idle the spec requires.",
+          "weight": "primary"
+        },
+        {
+          "hypothesis": "Checker defect: the SCK level change to the new CPOL while CS is held is counted as the first edge of segment 8. The checker never directly reports the missing close-out here; its first diagnostic is cs_rise_midsegment, which is a mislabel.",
+          "weight": "secondary"
+        },
+        {
+          "hypothesis": "Driver defect.",
+          "weight": "rejected",
+          "reason": "Transport conserved, no assumption violations."
+        }
+      ],
+      "cascaded_diagnostics": [
+        "cs_rise_midsegment@192",
+        "active_low_inflight x5 (195-199)",
+        "unresolved: segment 8 incomplete, segment 9 not started"
+      ],
+      "specification_basis": [
+        "theory_of_operation 241-249",
+        "theory_of_operation 254-259",
+        "theory_of_operation 283-286 (CPOL/CPHA)"
+      ],
+      "checker_source_basis": [
+        "checker.py edge(): the CPOL-setup exemption applies only when mid==3 (all CSB idle), so the held-CS level change is treated as a segment edge.",
+        "rise(): reports cs_rise_midsegment.",
+        "The checker lacks a direct check for a configuration change under held CS without a CSB rise."
+      ],
+      "rtl_source_basis": [
+        "spi_host_fsm.sv next_state_after_idle_csb_active: compares CSID only.",
+        "sck_d depends on the newly latched cpol.",
+        "csb_single_d is held low in IdleCSBActive and InternalClk states."
+      ],
+      "unresolved": [
+        "Cycle-exact edge sequence 187-192 is not fully reconstructed by this reviewer.",
+        "Checker diagnostic category differs from case_x for the same suspected cause."
+      ]
+    },
+    {
+      "case_id": "case_y",
+      "classification": "pass (positive control; not proof of checker)",
+      "confidence": "low",
+      "earliest_causal_cycle": null,
+      "evidence": [
+        "No failures.",
+        "Command 148 to command 149 is a CSID change (csid 1 to 0), which the RTL handles via WaitTrail. It does not exercise same-CSID configuration change after CSAAT."
+      ],
+      "root_cause_hypotheses": [],
+      "cascaded_diagnostics": [],
+      "specification_basis": [
+        "theory_of_operation 204-208"
+      ],
+      "checker_source_basis": [
+        "Not discriminating for the failing scope."
+      ],
+      "rtl_source_basis": [
+        "CSID-change path in next_state_after_idle_csb_active."
+      ],
+      "unresolved": [
+        "Not Icarus-replayed.",
+        "Does not cover the failing scenario."
+      ]
+    }
+  ],
+  "distinct_root_cause_summary": [
+    "RC1 (DUT, probable): a same-CSID configuration change after a CSAAT segment is accepted in IdleCSBActive without closing CS or applying idle. Accounts for case_x (17 failures) and case_z (6 failures); 23 repeated diagnostics reduce to 1 root cause.",
+    "RC2 (checker diagnostic quality, secondary): the checker has no direct close-out check. It reports cascades (cpol, sck_phase, cs_rise_midsegment, repeated active_low_inflight) with case-dependent labels. This does not change the verdict direction."
+  ],
+  "additional_discriminating_controls": [
+    "Same-CSID CSAAT segment followed by a segment differing only in CLKDIV, keeping CPOL/CPHA equal. Isolates the configuration-change path from SCK-level effects.",
+    "Same-CSID CSAAT followed by an identical-configuration segment. Should pass with CS held.",
+    "Changed-CSID CSAAT followed by a changed-configuration segment. Should show CSB rise, CSNIDLE, then new CS.",
+    "CSAAT=0 followed by a configuration change. Should go through Idle and CSBSwitch.",
+    "CPOL-only change after CSAAT on the same CSID, run with CPHA 0 and 1 separately.",
+    "Replay case_y on Icarus."
+  ],
+  "checker_fit_for_new_scope": false,
+  "required_followup": [
+    "A specification-only author should add an explicit check: configuration change after CSAAT on the same CSID requires a CSB rise, CSNTRAIL, CSNIDLE and new CSNLEAD before the new segment.",
+    "The same author should suppress cascades after the first framing fault.",
+    "Independent controls must pass before reuse.",
+    "Retain the frozen verdicts unchanged.",
+    "Confirm RC1 against upstream issue tracker or maintainer before labelling it a confirmed DUT bug."
+  ],
+  "limitations": [
+    "No tools.",
+    "Trace decoding was done manually from the change dictionary, so cycle values may be off by about \u00b11-2.",
+    "DUT RTL was used diagnostically only.",
+    "Two-simulator agreement is reproducibility only.",
+    "Dummy segments and software reset remain out of scope.",
+    "This review cannot authorize B/C."
+  ]
+}

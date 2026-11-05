@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 111939,
+  "stop_reason": "end_turn",
+  "session_id": "490a32ea-d14e-4c9e-8c16-4c3503938de0",
+  "total_cost_usd": 0.426046,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 40270,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 11234,
+    "output_tokens_details": {
+      "thinking_tokens": 7935
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 40270
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 11234,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 40270,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 40270,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 11234,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 40270,
+      "webSearchRequests": 0,
+      "costUSD": 0.426046,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 7935,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"patches\":[{\"file\":\"checker.py\",\"before\":\"'words': [], 'samp': 0, 'starves': [], 'bpt': None, 'ab': False, 'unres': False}\",\"after\":\"'words': [], 'samp': 0, 'starves': [], 'bpt': None, 'bpc': None, 'ab': False, 'unres': False}\"},{\"file\":\"checker.py\",\"before\":\"                    elif cur['starves'] and cur['starves'][-1][1] is None:\\n                        cur['starves'][-1][1] = wc\",\"after\":\"                    elif cur['starves'] and cur['starves'][-1][1] is None:\\n                        cur['starves'][-1][1] = wc\\n                        due = cur['last'] + cur['half']\\n                        if wc >= due and t > due:\\n                            cur['starves'][-1][2] = True\"},{\"file\":\"checker.py\",\"before\":\"cs_['starves'].append([c, None])\",\"after\":\"cs_['starves'].append([c, None, False])\"},{\"file\":\"checker.py\",\"before\":\"        trans(pre, post, c, False)\\n        prev_post = post\",\"after\":\"        trans(pre, post, c, False)\\n        cz = st['cur']\\n        if cz is not None and cz['last'] is not None and c > cz['last'] + cz['half']:\\n            due = cz['last'] + cz['half']\\n            if cz['wr'] and cz['starves'] and cz['starves'][-1][1] is None and not peek(due):\\n                cz['starves'][-1][2] = True\\n            if cz['rd'] and cz['bpt'] is not None and cz['bpc'] is None and pre['rx_valid'] and not a.get('rx_ready', 0):\\n                cz['bpc'] = c\\n        prev_post = post\"},{\"file\":\"checker.py\",\"before\":\"        for sv in s['starves']:\\n            dn = done(s)\",\"after\":\"        for sv in s['starves']:\\n            if not sv[2]:\\n                continue\\n            dn = done(s)\"},{\"file\":\"checker.py\",\"before\":\"        if s['bpt'] is not None:\\n            ev('rx_backpressure_resume', s['acc'], done(s), 'segment %d RX word held (rx_valid & !rx_ready) mid-segment at %d' % (s['id'], s['bpt']))\",\"after\":\"        if s['bpc'] is not None:\\n            ev('rx_backpressure_resume', s['acc'], done(s), 'segment %d RX word held (rx_valid & !rx_ready) mid-segment from %d; selected SCK edge overdue while held at %d' % (s['id'], s['bpt'], s['bpc']))\"},{\"file\":\"selftest.py\",\"before\":\"def _gen2(bts, words, cpol=0, stall_at=None, stall_len=0, flip=None, trunc=None):\",\"after\":\"def _rxgen(hold, stall=0, flags=False):\\n    bts = [0xA5, 0x5A, 0x3C, 0x11, 0x22]\\n    bits = [(b >> (7 - j)) & 1 for b in bts for j in range(8)]\\n    ser = [(0, 0)]\\n    samp = []\\n    for i, b in enumerate(bits):\\n        samp.append(len(ser) + 3)\\n        ser.append((1, b))\\n        if i == 33:\\n            ser.extend([(1, b)] * stall)\\n        ser.append((0, b))\\n    end = 3 + len(ser)\\n    w1 = samp[31] + 2\\n    w2 = samp[39] + 2\\n    total = max(end, w2) + 4\\n    rows = []\\n    prev = dict(BASE)\\n    for c in range(total):\\n        a = dict((k, 0) for k in KEYS)\\n        a['rst_n'] = 0 if c < 2 else 1\\n        a['enable'] = 1\\n        a['rx_ready'] = 0 if w1 <= c < w1 + hold else 1\\n        if c == 2:\\n            a.update(valid=1, read=1, length=4)\\n        if 3 <= c < end:\\n            a['sd'] = ser[c - 3][1] << 1\\n        o = dict(BASE)\\n        o['ready'] = 1 if c >= 1 else 0\\n        o['tx_ready'] = 1 if c >= 1 else 0\\n        if 3 <= c < end:\\n            o['sck'] = ser[c - 3][0]\\n            o['csb'] = 2\\n        o['active'] = 1 if 2 <= c < end else 0\\n        if w1 - 1 <= c <= w1 - 1 + hold:\\n            o['rx_valid'] = 1\\n            o['rx_data'] = 0x113C5AA5\\n        if c == w2 - 1:\\n            o['rx_valid'] = 1\\n            o['rx_data'] = 0x22\\n        if flags and c >= 3:\\n            o['rx_stall'] = 1\\n            o['tx_stall'] = 1\\n        rows.append({'cycle': c, 'action': a, 'pre': dict(prev), 'post': o})\\n        prev = o\\n    return rows\\n\\n\\ndef _rxev(r, kind=None):\\n    return any(e['family'] == 'rx_backpressure_resume' and (kind is None or e['kind'] == kind) for e in r['events'])\\n\\n\\ndef _gen2(bts, words, cpol=0, stall_at=None, stall_len=0, flip=None, trunc=None, div=0):\"},{\"file\":\"selftest.py\",\"before\":\"    ser.append((cpol, ser[-1][1]))\\n    end = 3 + len(ser)\",\"after\":\"    ser.append((cpol, ser[-1][1]))\\n    ser = [x for x in ser for _ in range(div + 1)]\\n    end = 3 + len(ser)\"},{\"file\":\"selftest.py\",\"before\":\"            a.update(valid=1, write=1, cpol=cpol, length=len(bts) - 1)\",\"after\":\"            a.update(valid=1, write=1, cpol=cpol, length=len(bts) - 1, clkdiv=div)\"},{\"file\":\"selftest.py\",\"before\":\"        ('spurious_sck_fails', lambda: _gen(spur=True), lambda r: 'spurious_sck' in cats(r)),\",\"after\":\"        ('spurious_sck_fails', lambda: _gen(spur=True), lambda r: 'spurious_sck' in cats(r)),\\n        ('late_nonstalling_refill_div2_no_starvation_event', lambda: _gen2([0xD4, 0x55], [(2, 0xD4, 1), (50, 0x55, 1)], div=2), lambda r: r['verdict'] == 'pass' and not any(e['family'] == 'tx_starvation_resume' for e in r['events'])),\\n        ('brief_rx_hold_no_pause_no_event', lambda: _rxgen(2), lambda r: r['verdict'] == 'pass' and not _rxev(r)),\\n        ('flag_only_fake_recovery_no_event', lambda: _rxgen(2, flags=True), lambda r: not _rxev(r) and not any(e['family'] == 'tx_starvation_resume' for e in r['events'])),\\n        ('true_rx_backpressure_pause_resume_passes', lambda: _rxgen(6, stall=6), lambda r: _rxev(r, 'pass') and r['verdict'] == 'pass'),\\n        ('true_rx_backpressure_truncated_pending', lambda: _rxgen(6, stall=6)[:80], lambda r: _rxev(r, 'pending') and r['verdict'] != 'pass'),\"},{\"file\":\"properties.json\",\"before\":\"occur with no failures or assumption violations in the window; otherwise fail/blocked/pending.\\\",\",\"after\":\"occur with no failures or assumption violations in the window; otherwise fail/blocked/pending. A TX starvation or RX backpressure episode is only confirmed when a selected SCK edge becomes overdue (> CLKDIV+1 clocks after the previous edge) while the TX refill was not available by the due time, or while rx_valid&!rx_ready is held. Unconfirmed candidates (late but non-stalling refill, brief absorbed RX hold) produce no event; stall flags alone never confirm. Confirmed episodes stay pending/fail/blocked on truncation or error.\\\",\"},{\"file\":\"contract.md\",\"before\":\"Each episode yields an event; unresolved or incomplete episodes are pending.\",\"after\":\"A candidate becomes a confirmed episode only if a selected SCK edge is overdue (later than previous edge + CLKDIV+1) and the refill word was not accepted before that due time; a late word that still permits every edge at its configured half period yields no event. RX backpressure is confirmed only if a selected SCK edge becomes overdue while rx_valid&!rx_ready is held; brief absorbed holds yield no event. RX_STALL/TX_STALL flags never confirm an episode. Only confirmed episodes yield events; unresolved or incomplete confirmed episodes are pending.\"}],\"rationale\":\"Event qualification only: TX starvation and RX backpressure candidates now require an observed overdue selected SCK edge attributable to absent TX data (refill not accepted by the due time) or held RX output; unconfirmed candidates are discarded, confirmed ones keep pending/fail/blocked semantics. Payload ordering (v2_lsb), CPOL setup, CS framing/timing, reset separation, software-reset pass_unresolved and transaction-wide dirty windows are unchanged. Self-tests add slower-divider late non-stalling refill, brief RX hold, flag-only fake, true RX pause/resume and truncated genuine stall; existing true TX stall, truncated stall and bad resumed payload tests retained.\"}",
+  "ttft_ms": 89717,
+  "type": "result",
+  "duration_ms": 112439,
+  "uuid": "9e3bcf1c-85d5-4fdf-bd9f-a1308578612e",
+  "ttft_stream_ms": 2649,
+  "time_to_request_ms": 496,
+  "first_content_frame_ms": 2649,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 11234,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 40270,
+      "webSearchRequests": 0,
+      "costUSD": 0.426046,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 7935,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

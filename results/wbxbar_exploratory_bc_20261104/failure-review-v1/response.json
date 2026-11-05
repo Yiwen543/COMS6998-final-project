@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 89145,
+  "stop_reason": "end_turn",
+  "session_id": "64a3de32-ccf8-4b21-be97-f56cfbffd283",
+  "total_cost_usd": 0.575131,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 80791,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 8558,
+    "output_tokens_details": {
+      "thinking_tokens": 4770
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 80791
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 8558,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 80791,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 80791,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 8558,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 80791,
+      "webSearchRequests": 0,
+      "costUSD": 0.575131,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 4770,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\"case_findings\":[{\"case_id\":\"case_1\",\"classification\":\"unresolved: leading hypothesis is a checker false positive on post-abort forwarding; a DUT post-abort strobe is also possible, and the specification does not settle whether that strobe is a fault\",\"confidence\":\"low-medium\",\"earliest_causal_cycle\":\"About 41-43. Slave1 i_serr is followed by the m1 o_merr that the checker logs as ERR@43 (retiring m1 accept@36), and the driver then holds i_mcyc[1] low for one cycle. The checker's frozen failure is at 44.\",\"evidence\":[\"At the failing row, i_mcyc=1 (master1 CYC is low, master0 high). o_scyc=3 and o_sstb=2. Slave1 is strobed with we=1, addr 0x13, sel=0x0, data 0x00000001, and i_sstall=0. Slave0 has addr 0x10, sel 0xf, but is not strobed.\",\"Two cycles earlier, m1 offered write 0x13, sel 0, data 1, which is a legal pin value. Master1 was not stalled when it offered.\",\"The DUT registers r_scyc/r_sstb, so a slave strobe can persist for one edge after the owning master drops CYC.\",\"The checker events show earlier mapped aborts in the same reset epoch (m0 CYC drop at 28, m1 at 31) and a slave error at 43. None of these were cleared by reset before 44.\",\"The verdict is single-simulator independent, but replay on a second simulator only establishes reproducibility.\"],\"specification_basis\":\"WB B4 3.1.2 and the crossbar article. A master may drop CYC to abort; completed data must not be attributed to new work. Nothing in the public sources says whether an already-forwarded or in-flight request must be withdrawn from the slave within N cycles of the abort. The packet's environment contract says slave work is cancelled on cycle withdrawal. Delivering ACK/ERR to a master whose CYC is low is unattributable.\",\"checker_source_basis\":[\"In check_rows' master loop, a CYC-low cycle moves only entries with st=='new' and sl!=None into ab[m]. Those entries are never pruned except by reset.\",\"Forward matching (tc) compares only the first ab[m] entry for slave s. If an older aborted entry for the same slave was never forwarded, it blocks matching of any later post-abort forward from that master. The result is a 'routing_payload' failure instead of 'post_abort_forward'.\",\"An entry that ERR popped, or that is already 'fwd', is not in ab. A DUT re-strobe of such an entry therefore also reports as invented/duplicated.\",\"No assumption violation was raised, so the driver input is legal at pin level, including SEL=0.\"],\"rtl_source_basis\":[\"wbxbar.v 748-773: r_scyc/r_sstb clear one edge after !i_mcyc[sindex], or on s_err of that slave.\",\"wbxbar.v 884-894: m_stall is forced to 0 while o_merr is high, so the DUT can accept a new master request in the ERR cycle.\",\"wbxbar.v 266: skidbuffer reset includes !i_mcyc.\",\"addrdecode.v 235-273: OPT_REGISTERED; o_valid is reset only by i_reset, so stage contents can survive a CYC drop until the next edge.\"],\"root_cause_hypotheses\":[\"H1 (checker): the ab head-only, never-pruned matching misattributes a legitimate post-abort forward of m1's 0x13 write as invented.\",\"H2 (DUT): the 0x13 request, accepted around the ERR/CYC-drop window, is forwarded to the slave while its owner's CYC is low. This is abort-propagation lag, and conformance is unspecified.\",\"H3 (DUT, less likely): the request was duplicated or re-strobed after s_err cleared r_sstb, i.e. it had already been forwarded once.\"],\"cascaded_diagnostics\":[\"unresolved ownership_ambiguous@52 is downstream of the same aborted-entry bookkeeping\",\"pending_at_batch_end@71 (2 master-side) is inconclusive and not independent\"],\"unresolved\":[\"Whether a single-cycle post-abort strobe violates any normative requirement\",\"Exact contents of ab[1] at 44; this needs a checker state dump\"]},{\"case_id\":\"case_2\",\"classification\":\"unresolved: likely the same mechanism as case_1 (an error or abort window followed by a forward the checker cannot match); checker false positive and DUT discrepancy are not yet separated\",\"confidence\":\"low\",\"earliest_causal_cycle\":\"307 (m1 ERR, retiring m1 accept@299 after a slave1 error), with the failure at 308. The causal chain starts at the slave error preceding 307.\",\"evidence\":[\"At 308, slave0 accepted a read, addr 0x03, sel 0xc, which the checker found matching no oldest unforwarded request.\",\"The reset at 251 cleared the earlier ambiguity (92) and the earlier post_abort_forward (38), so this failure is in a fresh epoch.\",\"The preceding event is slave_err m1 accept@299, ERR@307. The driver then inserts a counted low-CYC cycle, and m_stall is forced low during o_merr, which opens an acceptance window.\",\"No assumption violations were raised.\"],\"specification_basis\":\"Same as case_1: WB B4 3.1.2 abort semantics, rule 3.60 payload ownership, and the README 'responses won't get crossed' claim. Post-ERR master reaction is unspecified by the base protocol (permission 3.20).\",\"checker_source_basis\":[\"Same ab/head-only matching limitation as case_1.\",\"The master response loop pops the oldest entry on ERR even if that ERR belongs to work still in flight in the DUT pipeline.\",\"Per-master forwarding order is an assumption the contract derives from the no-crossed-ACK claim. The public spec does not state it.\",\"The checker cannot distinguish a DUT re-forward of an ERR-retired request from an invented one.\"],\"rtl_source_basis\":[\"wbxbar.v 893-894 (stall released during ERR), 911-921 (ERR generation and clear), 1033 (pending counter cleared on o_merr while the downstream skid/decoder stages may still hold a request), 769 (slave cyc cleared only for the erring slave).\",\"Slave0 is unaffected by slave1's s_err, so a request queued for slave0 continues to be forwarded.\"],\"root_cause_hypotheses\":[\"H1 (DUT): after ERR, the crossbar still forwards a request that is accepted or buffered from the erring master (lclpending reset vs. buffered work). This is plausibly a real accounting discrepancy, but whether the spec forbids it is unresolved.\",\"H2 (checker): the ERR pop or abort bookkeeping removed or misordered the entry, so a legitimate forward is reported as invented.\",\"H3: identity of the owning master (m0 or m1) for addr 0x03 is not established from this review.\"],\"cascaded_diagnostics\":[\"pending_at_batch_end@327 (3 master-side, 1 slave-side)\",\"later decode_err/abort events at 320-327 are downstream\",\"earlier post_abort_forward@38 and ownership_ambiguous@42/92 are separate epochs, but they reflect the same abort-matching weakness\"],\"unresolved\":[\"Which master issued addr 0x03 sel 0xc, and its accept cycle relative to 307\",\"Whether it was already forwarded once\"]},{\"case_id\":\"control_read\",\"classification\":\"pass (scoped_pass, consistent)\",\"confidence\":\"high\",\"earliest_causal_cycle\":null,\"evidence\":[\"Single read: m0 accept@8, slave accept@10, ACK@11, master ACK@12; data matches.\"],\"specification_basis\":\"WB B4 3.1.3.2 and observation 3.10\",\"checker_source_basis\":[\"normal forward/ack path\"],\"rtl_source_basis\":[\"nominal 3-4 cycle latency per header\"],\"root_cause_hypotheses\":[],\"cascaded_diagnostics\":[],\"unresolved\":[]},{\"case_id\":\"control_masked_write\",\"classification\":\"pass (scoped_pass, consistent)\",\"confidence\":\"high\",\"earliest_causal_cycle\":null,\"evidence\":[\"Masked write: m0 sel 0x5, data 0x12345678 is forwarded as 0x12345678; the checker compares data only on SEL-enabled lanes.\"],\"specification_basis\":\"WB B4 3.1.3.2 and rule 3.60\",\"checker_source_basis\":[\"_weq SEL-lane comparison\"],\"rtl_source_basis\":[\"wbxbar.v 850-857 payload pass-through\"],\"root_cause_hypotheses\":[],\"cascaded_diagnostics\":[],\"unresolved\":[]}],\"distinct_root_cause_summary\":[\"R1, the single shared root-cause candidate: forwarding behaviour after a slave ERR, master ERR or master CYC-drop window. The DUT releases stall during ERR, clears pending counts on ERR or CYC drop, and slave CYC/STB lag by one registered edge. Either the DUT forwards orphaned or buffered work (a discrepancy whose spec status is unresolved), or the checker's abort/ERR bookkeeping (head-only, never-pruned ab list; ERR pops the oldest entry) misclassifies a legitimate post-abort forward as invented. Cases 1 and 2 are probably the same root, not two.\",\"No illegal driver input is identified; the checker raised no assumption violations, and SEL=0 is not forbidden.\",\"No measurement error is identified; pre/post sampling is consistent and Icarus and Verilator agree, which shows reproducibility only.\"],\"additional_discriminating_controls\":[\"Dump the checker's mq/ab state at cycles 40-44 (case_1) and 300-308 (case_2) to see whether the failing request is the ab head, a non-head ab entry, ERR-popped, or already 'fwd'.\",\"Minimal fixture A: m1 issues 2 mapped writes to the same slave, then CYC drops with neither forwarded, then a 3rd write after re-raising CYC. This tests ab head blocking.\",\"Minimal fixture B: slave1 ERR while m1 has a request in the ERR-cycle acceptance window (o_merr high, o_mstall low). Observe whether it is later strobed to a slave after CYC drop.\",\"Check whether any later ACK/ERR for the orphaned forward reaches a master with CYC high (true epoch leak) versus only a slave-side strobe.\",\"Re-run the frozen traces with a checker variant that searches all ab entries, recorded separately without altering the frozen verdict.\"],\"limitations\":[\"Trace decoding was done by hand from the change dictionary; exact cycle-index mapping is approximate within \u00b11, and the checker's own reported cycles are used as authoritative.\",\"DUT RTL is diagnostic only. The public spec does not define abort-propagation latency or post-ERR acceptance, so no DUT-fault classification is final.\",\"Frozen verdicts (dut_violation for case_1 and case_2) are not changed.\",\"Timeout/starvation, liveness and post-reset master outputs remain explicitly excluded.\"]}\n```",
+  "ttft_ms": 51455,
+  "type": "result",
+  "duration_ms": 89203,
+  "uuid": "0fbcc49d-1061-458f-b395-278b602df117",
+  "ttft_stream_ms": 1245,
+  "time_to_request_ms": 52,
+  "first_content_frame_ms": 1245,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 8558,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 80791,
+      "webSearchRequests": 0,
+      "costUSD": 0.575131,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 4770,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

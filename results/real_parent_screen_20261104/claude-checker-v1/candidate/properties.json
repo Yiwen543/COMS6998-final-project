@@ -1,0 +1,124 @@
+[
+  {
+    "id": "P_TRANSPORT_CMD",
+    "requirement": "A command is accepted only when pre.ready and action.valid are both 1 at a rising edge outside reset; an offered but unaccepted command must be held unchanged until handshake or reset, otherwise assumption violation.",
+    "source": "packet interface.transport; theory_of_operation.md:667",
+    "assumptions": [
+      "handshake uses pre values only",
+      "command offered during SW_RST is a driver protocol violation"
+    ],
+    "support_status": "supported"
+  },
+  {
+    "id": "P_TRANSPORT_TX",
+    "requirement": "TX words handshake on pre.tx_ready & tx_valid; offered words must hold until accepted or reset.",
+    "source": "packet interface.transport; theory_of_operation.md:667,692",
+    "assumptions": [],
+    "support_status": "supported"
+  },
+  {
+    "id": "P_CMD_SCOPE",
+    "requirement": "Reserved speed 3, Dual/Quad bidirectional, and dummy (no read, no write) segments are blocking assumption violations.",
+    "source": "theory_of_operation.md:129-130,194; packet aliases",
+    "assumptions": [
+      "dummy cycle count semantics are not in the supplied excerpts, so dummy segments are unsupported"
+    ],
+    "support_status": "blocking_unsupported"
+  },
+  {
+    "id": "P_TX_PAYLOAD",
+    "requirement": "Each TX byte at the device sampling edge (leading edge if CPHA=0, trailing if CPHA=1) equals the next enabled byte of accepted words, most-significant first, skipping be=0 bytes; at segment end the rest of a partially consumed word is discarded (flush).",
+    "source": "theory_of_operation.md:39-42,695-702",
+    "assumptions": [
+      "Dual/Quad: higher-numbered SD line carries more significant bit (lane order not stated in excerpts)",
+      "TX word accepted at the same edge as a sampling edge is not yet available"
+    ],
+    "support_status": "supported_with_assumption"
+  },
+  {
+    "id": "P_TX_UNDERFLOW",
+    "requirement": "No SCK edge consumes a TX byte when no accepted data is available; TX starvation must pause SCK with CSB held.",
+    "source": "theory_of_operation.md:581-582",
+    "assumptions": [],
+    "support_status": "supported"
+  },
+  {
+    "id": "P_RX_PACK",
+    "requirement": "Received bytes are packed MSB-first into words, a word emitted every 4 bytes and at segment end, partial words zero-padded in least-significant positions; words delivered in order without loss or duplication, never before their last byte is sampled.",
+    "source": "theory_of_operation.md:670-671,731-738",
+    "assumptions": [
+      "host samples SD on the CPHA sampling edge (FULLCYC=1: CLKDIV+1 clocks later); an RX bit is only judged if action.sd is stable over the sample window, else unresolved",
+      "Standard RX uses SD[1]"
+    ],
+    "support_status": "supported_with_unresolved_obligations"
+  },
+  {
+    "id": "P_DIRECTION",
+    "requirement": "Standard: host never drives SD[1] at sampling edges; TX segments enable used lines; Dual/Quad RX segments do not drive used lines.",
+    "source": "theory_of_operation.md:28-32,194",
+    "assumptions": [
+      "checked only at sampling edges"
+    ],
+    "support_status": "supported"
+  },
+  {
+    "id": "P_CS_FRAMING",
+    "requirement": "Exactly the commanded CSB line is low during SCK edges; CSB never deasserts mid-segment; after CSAAT=0 CSB deasserts before the next segment; after CSAAT=1 CSB stays low unless the next accepted segment changes CSID or configuration; never both CSB low.",
+    "source": "theory_of_operation.md:94-95,204-208,236-249",
+    "assumptions": [
+      "no deadline imposed on CSB deassertion after CSAAT=0"
+    ],
+    "support_status": "supported"
+  },
+  {
+    "id": "P_CS_TIMING",
+    "requirement": "Minimum CSB fall to first SCK edge >= (CSNLEAD+1)*(CLKDIV+1) clocks, last SCK edge to CSB rise >= (CSNTRAIL+1)*(CLKDIV+1) (previous config), CSB idle >= (CSNIDLE+1)*(CLKDIV+1) (new config), SCK half period >= CLKDIV+1; minima only.",
+    "source": "theory_of_operation.md:232,254-281",
+    "assumptions": [
+      "ticks measured in clk cycles from observed pin transitions"
+    ],
+    "support_status": "supported"
+  },
+  {
+    "id": "P_CPOL",
+    "requirement": "SCK is at CPOL level at CSB assertion and before the first edge; edges alternate leading/trailing consistent with CPOL.",
+    "source": "theory_of_operation.md:35-42",
+    "assumptions": [],
+    "support_status": "supported"
+  },
+  {
+    "id": "P_ACTIVE",
+    "requirement": "ACTIVE is high while a started segment is mid-transfer.",
+    "source": "theory_of_operation.md:366-368",
+    "assumptions": [
+      "no exact-cycle deadline for ACTIVE rise/fall"
+    ],
+    "support_status": "supported"
+  },
+  {
+    "id": "P_HW_RESET",
+    "requirement": "While rst_n=0 all CSB are deasserted; all queued state and pending data are discarded; post-reset traffic must carry no stale payload.",
+    "source": "theory_of_operation.md:629; packet aliases rst_n async",
+    "assumptions": [],
+    "support_status": "supported"
+  },
+  {
+    "id": "P_SW_RESET",
+    "requirement": "Driver must observe ACTIVE=0 and CSB idle before releasing SW_RST (else assumption violation); post-release traffic must carry no stale payload. Stronger in-stall behaviour is recorded as unresolved.",
+    "source": "theory_of_operation.md:239,643-644",
+    "assumptions": [
+      "TXQD/RXQD not observable at core pins",
+      "RX words delivered during SW_RST not judged"
+    ],
+    "support_status": "partially_supported_unresolved"
+  },
+  {
+    "id": "P_EVENTS",
+    "requirement": "Event windows (tx_starvation_resume, rx_backpressure_resume, partial_word_then_next_transaction [held_cs|csid_change], reset_abort_restart [hardware|software]) pass only if trigger, resolution and full segment completion (serial beats, payload, words delivered, CSB rise when CSAAT=0) occur with no failures or assumption violations in the window; otherwise fail/blocked/pending.",
+    "source": "packet requested_events",
+    "assumptions": [
+      "event completion is not coverage or equivalence evidence"
+    ],
+    "support_status": "supported"
+  }
+]

@@ -1,0 +1,170 @@
+{
+  "configuration": {
+    "top": "wbxbar",
+    "root": "third_party/wb2axip_candidate",
+    "sources": [
+      "rtl/skidbuffer.v",
+      "rtl/addrdecode.v",
+      "rtl/wbxbar.v"
+    ],
+    "include_dirs": [],
+    "defines": [],
+    "parameters": {
+      "NM": 2,
+      "NS": 2,
+      "AW": 8,
+      "DW": 32,
+      "SLAVE_ADDR": 4096,
+      "SLAVE_MASK": 61680,
+      "LGMAXBURST": 3,
+      "OPT_TIMEOUT": 16,
+      "OPT_STARVATION_TIMEOUT": 1,
+      "OPT_DBLBUFFER": 1,
+      "OPT_LOWPOWER": 1
+    },
+    "seed_inputs": {},
+    "event_families": [
+      "contended slave ownership held by outstanding responses then drain and transfer to waiting master",
+      "nonresponding slave times out and aborts then new cycle to same slave succeeds",
+      "master aborts outstanding pipelined cycle and a subsequent owner acquires resource without stale response"
+    ],
+    "ordinary_policy": "Ordinary isolated reads/writes from each master to each mapped slave and unmapped address; direct mapped ranges 0x00-0x0f/0x10-0x1f. Concurrent accesses to different slaves, one-master prompt pipelined bursts 1/2/4/7 and alternating destinations only after replies. Prompt in-order ACK/ERR, no engineered stall/timeouts or competing ownership; byte masks vary. Include normal release/reacquire. Aborted work is separate targeted event, not ordinary.",
+    "proof_keep": [],
+    "clock": "i_clk",
+    "reset": "i_reset",
+    "reset_active": 1,
+    "reset_behavior": "synchronous active-high",
+    "revision": "2e8d3bc2d26ddc33d1881022a2a2b9d3f0c16b9b",
+    "source_hashes": {
+      "third_party/wb2axip_candidate/rtl/skidbuffer.v": "ed1fda9192563fd7fd7033b564e8cf47ad6cb63ba4f578ed2c302037d47a5389",
+      "third_party/wb2axip_candidate/rtl/addrdecode.v": "97b348693a5d266a3fb42a2993f9726dd36912bfc084b05b68b9afacb390eb2d",
+      "third_party/wb2axip_candidate/rtl/wbxbar.v": "d3fd1f2d7fb8909c2c2950c666e04c97d704c501c867201aedab5011ee106d2e",
+      "third_party/wb2axip_candidate/README.md": "e21ffe5300b43bf2c38286ee8f2e201606d0a93f974b67f4c7235bd605904dd3"
+    },
+    "git_blobs": {
+      "third_party/wb2axip_candidate/rtl/skidbuffer.v": "0e567844d98a66fa489930a03bf214308faa8535",
+      "third_party/wb2axip_candidate/rtl/addrdecode.v": "3a1cdc11312316cf7157f1f7ce042febf5057d57",
+      "third_party/wb2axip_candidate/rtl/wbxbar.v": "6468f15942dbe23f077f23599cd8ffa9bcb5abee",
+      "third_party/wb2axip_candidate/README.md": "9de0b2cb826103b55a5e7f91779ad8aca881065e"
+    },
+    "proof_boundary": "Original parent and real original children; no DUT rewrite, replica counters, protocol stubs, source-derived golden model or state-reachability assumptions.",
+    "specification": "https://github.com/ZipCPU/wb2axip/blob/2e8d3bc2d26ddc33d1881022a2a2b9d3f0c16b9b/README.md",
+    "public_contract_addendum": "Public module/interface comments are separate cited intent; checker author must not receive executable RTL or formal implementation-specific properties."
+  },
+  "runs": [
+    {
+      "stage": "slang",
+      "returncode": 0,
+      "seconds": 0.04390358319506049,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/slang",
+        "--single-unit",
+        "--top",
+        "wbxbar",
+        "-G",
+        "NM=2",
+        "-G",
+        "NS=2",
+        "-G",
+        "AW=8",
+        "-G",
+        "DW=32",
+        "-G",
+        "SLAVE_ADDR=4096",
+        "-G",
+        "SLAVE_MASK=61680",
+        "-G",
+        "LGMAXBURST=3",
+        "-G",
+        "OPT_TIMEOUT=16",
+        "-G",
+        "OPT_STARVATION_TIMEOUT=1",
+        "-G",
+        "OPT_DBLBUFFER=1",
+        "-G",
+        "OPT_LOWPOWER=1",
+        "--ast-json",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/transaction_recovery_screen_20261104/wbxbar-v2/ast.json",
+        "--ast-json-source-info",
+        "--ast-json-detailed-types",
+        "third_party/wb2axip_candidate/rtl/skidbuffer.v",
+        "third_party/wb2axip_candidate/rtl/addrdecode.v",
+        "third_party/wb2axip_candidate/rtl/wbxbar.v"
+      ]
+    },
+    {
+      "stage": "verilator",
+      "returncode": 0,
+      "seconds": 0.08982629235833883,
+      "command": [
+        "verilator",
+        "--lint-only",
+        "--timing",
+        "-Wno-fatal",
+        "--top-module",
+        "wbxbar",
+        "-GNM=2",
+        "-GNS=2",
+        "-GAW=8",
+        "-GDW=32",
+        "-GSLAVE_ADDR=4096",
+        "-GSLAVE_MASK=61680",
+        "-GLGMAXBURST=3",
+        "-GOPT_TIMEOUT=16",
+        "-GOPT_STARVATION_TIMEOUT=1",
+        "-GOPT_DBLBUFFER=1",
+        "-GOPT_LOWPOWER=1",
+        "third_party/wb2axip_candidate/rtl/skidbuffer.v",
+        "third_party/wb2axip_candidate/rtl/addrdecode.v",
+        "third_party/wb2axip_candidate/rtl/wbxbar.v"
+      ]
+    },
+    {
+      "stage": "iverilog",
+      "returncode": 0,
+      "seconds": 0.02133129071444273,
+      "command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "wbxbar",
+        "-tnull",
+        "-Pwbxbar.NM=2",
+        "-Pwbxbar.NS=2",
+        "-Pwbxbar.AW=8",
+        "-Pwbxbar.DW=32",
+        "-Pwbxbar.SLAVE_ADDR=4096",
+        "-Pwbxbar.SLAVE_MASK=61680",
+        "-Pwbxbar.LGMAXBURST=3",
+        "-Pwbxbar.OPT_TIMEOUT=16",
+        "-Pwbxbar.OPT_STARVATION_TIMEOUT=1",
+        "-Pwbxbar.OPT_DBLBUFFER=1",
+        "-Pwbxbar.OPT_LOWPOWER=1",
+        "third_party/wb2axip_candidate/rtl/skidbuffer.v",
+        "third_party/wb2axip_candidate/rtl/addrdecode.v",
+        "third_party/wb2axip_candidate/rtl/wbxbar.v"
+      ]
+    },
+    {
+      "stage": "yosys",
+      "returncode": 0,
+      "seconds": 0.08565083285793662,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/yosys",
+        "-Q",
+        "-T",
+        "-s",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/transaction_recovery_screen_20261104/wbxbar-v2/probe.ys"
+      ]
+    }
+  ],
+  "source_sha256": {
+    "third_party/wb2axip_candidate/rtl/skidbuffer.v": "ed1fda9192563fd7fd7033b564e8cf47ad6cb63ba4f578ed2c302037d47a5389",
+    "third_party/wb2axip_candidate/rtl/addrdecode.v": "97b348693a5d266a3fb42a2993f9726dd36912bfc084b05b68b9afacb390eb2d",
+    "third_party/wb2axip_candidate/rtl/wbxbar.v": "d3fd1f2d7fb8909c2c2950c666e04c97d704c501c867201aedab5011ee106d2e"
+  },
+  "no_model_calls": true,
+  "no_functional_checker_claim": true,
+  "qualified_for_B": false,
+  "assertions": "SYNTHESIS selects upstream synthesis-compatible assertion macros for flash; not assertion verification."
+}

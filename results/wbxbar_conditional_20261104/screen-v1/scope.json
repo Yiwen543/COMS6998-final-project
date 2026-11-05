@@ -1,0 +1,161 @@
+{
+  "status": "Prospectively registered before new conditional-state proof, mappings, ordinary traffic or model calls.",
+  "repository_commit": "50d7ee83d61989017e28e981420cd58f4c5f0787",
+  "development_budget": {
+    "repetitions": 3,
+    "rounds": 6,
+    "max_new_cycles": 64,
+    "seed_cycles": 8
+  },
+  "model_limits": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "input_tokens": 32000,
+    "output_tokens": 16384,
+    "timeout_seconds": 120,
+    "max_retries": 1
+  },
+  "development_acceptance": {
+    "min_repetitions_with_two_groups_unhit_after_round_one": 2,
+    "min_repetitions_with_later_group_progress": 2
+  },
+  "all_repetitions_complete_and_protocol_legal": true,
+  "offline_acceptance": {
+    "min_source_distinct_groups": 3,
+    "min_nontrivial_source_groups": 2,
+    "each_group_min_seed_zero_source_counters": 2,
+    "min_distinct_reachable_event_families": 3,
+    "min_event_discriminating_groups": 3,
+    "min_event_families_with_disjoint_group_increment": 3,
+    "max_calibration_cycles_excluding_seed": 384,
+    "checker_author_must_differ_from_stimulus_author": true,
+    "require_no_unresolved_property_blocking_selected_scope": true
+  },
+  "event_discrimination": {
+    "ordinary_union": "Union hits>0 over registered ordinary traces, preserving each raw identity; all target members must remain zero in that baseline. This selection union is not replacement of per-run raw counts.",
+    "positive": "Spec-checker-clean multistep event completed within 384 new physical cycles, each mapped source member actually executed.",
+    "causal_controls": [
+      "Prefix before the registered prerequisite/resolution leaves target sources unhit.",
+      "Same-budget control removing the prerequisite or resolution does not hit those source targets.",
+      "Separate event families cannot be counted from the same shared stall/reset/ready group."
+    ],
+    "claims": "Finite ordinary/control non-hits are evidence for the screening gate, not universal unreachability. Formal claims require separately proved assumptions. Plain mode selection is not a multistep target."
+  },
+  "semantics": {
+    "engine": "typed full activation guards; independent Yosys definitions, bounded egg and Z3; source mapping and edge/reset context retained",
+    "values": "Two-state; only independently inductively proved, hash-bound state-domain lemmas may restrict subsequent queries. No assumed/unproven invariants.",
+    "unsupported": "Explicitly unresolved; no unsupported mapping admitted, no removal from raw denominator",
+    "clock": "single posedge with original synchronous reset; do not merge contexts"
+  },
+  "roles": {
+    "checker_author": "Claude specification-only; no RTL/private calibrated traces/B-C outcomes",
+    "reviewer": "Fresh Claude read-only, may inspect implementation solely for attribution",
+    "driver_and_calibration": "GPT/Codex, fixed public-port JSON driver; no checker expected-output edits",
+    "experimental_stimulus": "gpt-6.1-sol JSON only after offline freeze; no solver/handwritten target witnesses",
+    "measurement": "Fixed simulator counters/hash/schema; no model edits"
+  },
+  "stop_rules": [
+    "Static failures are retained; do not buy checker/model calls for an unqualified scope.",
+    "One three-repetition B development per frozen qualifying scope; no selective replacement or budget tightening.",
+    "C only after the unchanged B gate; fresh matched formal B, A/C and own-trajectory token-matched placebo require separate final freeze."
+  ],
+  "B_allowed": false,
+  "C_allowed": false,
+  "id": "wbxbar_conditional_index_v1",
+  "created_utc": "2026-11-04T20:33:10.578047+00:00",
+  "prior_result": "wbxbar old scope blocked by unsafe free m_stall due unproved index range; old scope/results remain immutable. No C results used.",
+  "selection_order": [
+    "wbxbar"
+  ],
+  "independence": "Same fixed wbxbar design/config as prior screen; new conditional proof scope, not an independent IP.",
+  "candidates": [
+    {
+      "top": "wbxbar",
+      "root": "third_party/wb2axip_candidate",
+      "sources": [
+        "rtl/skidbuffer.v",
+        "rtl/addrdecode.v",
+        "rtl/wbxbar.v"
+      ],
+      "include_dirs": [],
+      "defines": [],
+      "parameters": {
+        "NM": 2,
+        "NS": 2,
+        "AW": 8,
+        "DW": 32,
+        "SLAVE_ADDR": 4096,
+        "SLAVE_MASK": 61680,
+        "LGMAXBURST": 3,
+        "OPT_TIMEOUT": 16,
+        "OPT_STARVATION_TIMEOUT": 1,
+        "OPT_DBLBUFFER": 1,
+        "OPT_LOWPOWER": 1
+      },
+      "seed_inputs": {},
+      "event_families": [
+        "contended slave ownership held by outstanding responses then drain and transfer to waiting master",
+        "nonresponding slave times out and aborts then new cycle to same slave succeeds",
+        "master aborts outstanding pipelined cycle and a subsequent owner acquires resource without stale response"
+      ],
+      "ordinary_policy": "Ordinary isolated reads/writes from each master to each mapped slave and unmapped address; direct mapped ranges 0x00-0x0f/0x10-0x1f. Concurrent accesses to different slaves, one-master prompt pipelined bursts 1/2/4/7 and alternating destinations only after replies. Prompt in-order ACK/ERR, no engineered stall/timeouts or competing ownership; byte masks vary. Include normal release/reacquire. Aborted work is separate targeted event, not ordinary.",
+      "proof_keep": [],
+      "clock": "i_clk",
+      "reset": "i_reset",
+      "reset_active": 1,
+      "reset_behavior": "synchronous active-high",
+      "revision": "2e8d3bc2d26ddc33d1881022a2a2b9d3f0c16b9b",
+      "source_hashes": {
+        "third_party/wb2axip_candidate/rtl/skidbuffer.v": "ed1fda9192563fd7fd7033b564e8cf47ad6cb63ba4f578ed2c302037d47a5389",
+        "third_party/wb2axip_candidate/rtl/addrdecode.v": "97b348693a5d266a3fb42a2993f9726dd36912bfc084b05b68b9afacb390eb2d",
+        "third_party/wb2axip_candidate/rtl/wbxbar.v": "d3fd1f2d7fb8909c2c2950c666e04c97d704c501c867201aedab5011ee106d2e",
+        "third_party/wb2axip_candidate/README.md": "e21ffe5300b43bf2c38286ee8f2e201606d0a93f974b67f4c7235bd605904dd3"
+      },
+      "git_blobs": {
+        "third_party/wb2axip_candidate/rtl/skidbuffer.v": "0e567844d98a66fa489930a03bf214308faa8535",
+        "third_party/wb2axip_candidate/rtl/addrdecode.v": "3a1cdc11312316cf7157f1f7ce042febf5057d57",
+        "third_party/wb2axip_candidate/rtl/wbxbar.v": "6468f15942dbe23f077f23599cd8ffa9bcb5abee",
+        "third_party/wb2axip_candidate/README.md": "9de0b2cb826103b55a5e7f91779ad8aca881065e"
+      },
+      "proof_boundary": "Original parent and real original children; no DUT rewrite, replica counters, protocol stubs, source-derived golden model or state-reachability assumptions.",
+      "specification": "https://github.com/ZipCPU/wb2axip/blob/2e8d3bc2d26ddc33d1881022a2a2b9d3f0c16b9b/README.md",
+      "public_contract_addendum": "Public module/interface comments are separate cited intent; checker author must not receive executable RTL or formal implementation-specific properties."
+    }
+  ],
+  "parent_scope": {
+    "path": "configs/transaction_recovery_screen_v1.json",
+    "sha256": "efa89c6703c8f0281355e6eae8004e05fb265dd85c0dd4ac5f077daf4ecf4393"
+  },
+  "conditional_proof": {
+    "primary": "For each master N=0,1: mgrant[N] implies unsigned mindex[N] <= NS (2). Actual request index site activation additionally includes !grant[N][NS], and final m_stall excludes o_merr[N]. Prove the stronger mgrant-only property first.",
+    "site": {
+      "source": "third_party/wb2axip_candidate/rtl/wbxbar.v",
+      "line": 888,
+      "expression": "request[N][mindex[N]]",
+      "request_width": 3,
+      "index_width": 2,
+      "signed": false
+    },
+    "helper_lemmas": [
+      "request[N] is onehot0",
+      "grant[N] is onehot0",
+      "mgrant[N] == (|grant[N])",
+      "mgrant[N] implies grant[N] == (3-bit 1 << mindex[N])"
+    ],
+    "environment": "Original RTL initial assignments; all unspecified registers arbitrary. Reset synchronous active-high. Start with NO master/slave protocol assumptions and no fixed inputs. If initial reset needed, separately label first two edges reset-high and do not generalize pre-reset. Do not initialize mindex to zero.",
+    "proof_engines": "Yosys original transition system with SMTBMC/Z3 base and induction; bounded proof alone not accepted. Alternative SAT temporal induction allowed with explicit evidence.",
+    "limits": {
+      "max_induction_depth": 20,
+      "bmc_depth": 20,
+      "cover_depth": 40,
+      "timeout_seconds_per_task": 120
+    },
+    "negative_controls": [
+      "Unconditional index range should not be presumed: retain witness with uninitialized mindex=3 and mgrant=0 if possible.",
+      "A false active-index assertion (e.g. mgrant implies index==0) must produce counterexample.",
+      "Nonvacuity: each master can reach active index 0,1,2; preserve witnesses privately."
+    ],
+    "binding": "Proof source/config/observer/engine outputs hashed. Proof-only observers do not alter DUT sources. Import only proved lemmas, not cover witnesses. Out-of-range select stays arbitrary outside its valid domain; test wrong bound, missing lemma, and tampered hashes fail closed.",
+    "coverage": "Simulation uses original SV only. No added observer/replica source counters; original denominator retained."
+  }
+}

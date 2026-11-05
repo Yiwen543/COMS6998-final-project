@@ -1,0 +1,105 @@
+{
+  "ready_to_freeze": true,
+  "findings": [
+    {
+      "id": "F1_round1_prompt",
+      "severity": "minor",
+      "prior_blocker": "T9_unseen_system_prompt",
+      "result": "resolved for B, with residual wording risk",
+      "detail": "The exact round-1 system and user messages are supplied and hash-bound to the runner artifact prompt-1-1.json, with equals_fresh_render=true. The system prompt has no instruction to hold valid. The embedded hardware_pin_contract still says 'Hold all command fields and valid stable until acceptance' and the trace columns are labelled input.valid. Several parts of the prompt override this: the offer_interface text ('enqueue pulses, NOT DUT valid signals', 'Do not repeat an offer merely to keep it valid', 'A 1 in two successive actions means two separate requests') and the explicit 'distinction' field. These pin-level clauses describe the actual pins the driver produces, so the documents are consistent. A model could still misread them and duplicate offers. That would be a behavioral outcome, not a transport defect. Both checker and transport feedback would expose it."
+    },
+    {
+      "id": "F2_faulty_sv_controls",
+      "severity": "info",
+      "prior_blocker": "T10_negative_controls",
+      "result": "resolved",
+      "detail": "Four mutated SV drivers were compiled and simulated: dropped_offer, duplicate_acceptance, reordered_head and post_edge_acceptance. Each patch was checked to apply to a unique location. Each run was rejected with stage='transport'. The duplicate run has a real duplicate accept ID (8), even though SV conservation was disabled. In the post-edge run, pre and post ready differ at cycle 8, so the wrong sampling phase was actually exercised. freeze() now requires all four names, transport-stage rejection, and a production driver hash equal to the frozen driver. Limitations: all four mutations are on the command channel only, and only Verilator was used."
+    },
+    {
+      "id": "F3_pending_prefix_replay",
+      "severity": "minor",
+      "prior_blocker": "T12_prefix_replay",
+      "result": "resolved for command channel",
+      "detail": "The 89-row pending_prefix trace and transport ledger exactly equal the first 89 rows of the full case. At the last prefix row (cycle 88) one command is pending, and the full run accepts it at cycle 90. Cumulative replay therefore reconstructs pending work at the boundary. This is a case-level prefix comparison. Runner round boundaries are covered separately by offline mock/replay equality only. No TX item pending across a boundary is evidenced."
+    },
+    {
+      "id": "F4_scripts_in_packet",
+      "severity": "info",
+      "prior_blocker": "T14_unreviewed_artifacts",
+      "result": "resolved",
+      "detail": "The create, preflight, review, fault and accounting-test sources are supplied in full. The model client excerpt is supplied with a whole-file hash. Preflight and fault summaries are hash-listed, and freeze includes faults/summary.json in the bound paths."
+    },
+    {
+      "id": "F5_failure_classification",
+      "severity": "minor",
+      "prior_finding": "T7_classification",
+      "result": "improved",
+      "detail": "SafeExecutionError carries a stage (simulator, transport, coverage or checker_worker), and failures.jsonl records stage, type and detail. Rows now carry measurement_fresh, measurement_round and a stale-measurement note. Accounting tests inject failures. Residual issues are listed in the next three items."
+    },
+    {
+      "id": "F5a_denominator_change_classification",
+      "severity": "minor",
+      "result": "residual classification gap",
+      "detail": "A change in the raw denominator or counter identities is an integrity breach of the experiment. It is currently classified as a per-row 'coverage' simulation failure, so the run continues instead of aborting."
+    },
+    {
+      "id": "F5b_failure_json_coverage",
+      "severity": "minor",
+      "result": "residual inconsistency",
+      "detail": "Simulator-stage errors do not write failure.json, while checked_stage errors do."
+    },
+    {
+      "id": "F5c_test_mock_signature",
+      "severity": "minor",
+      "result": "residual test-fidelity gap",
+      "detail": "The accounting test mocks compile_driver with a 3-tuple, but the real function returns a 2-tuple. The mock therefore does not match the production signature."
+    },
+    {
+      "id": "F6_physical_cap_binding",
+      "severity": "info",
+      "result": "resolved",
+      "detail": "freeze() parses Capacity from the driver. It requires Capacity to equal seed_cycles + rounds*max_new_cycles (8+6*64=392) and both registered queue depths."
+    },
+    {
+      "id": "F7_simulator_result_hash_difference",
+      "severity": "info",
+      "result": "documented",
+      "detail": "result.json differs between simulators because of command, path, timing and Verilator-only coverage. Checker, transport, completion flags and cycle counts agree. Trace and ledger files are claimed byte-identical. This is accepted as an explanation only, not as evidence of correctness."
+    },
+    {
+      "id": "F8_review_gate_optional",
+      "severity": "minor",
+      "result": "unverified",
+      "detail": "freeze() takes review=None by default. The supplied diff does not show whether an independent review with ready_to_freeze=true is enforced. Enforcement should be confirmed before live B."
+    },
+    {
+      "id": "F9_oracle_independence",
+      "severity": "minor",
+      "result": "unchanged limitation",
+      "detail": "The Python transport oracle and the SV driver have the same author. The Claude checker v4 is unchanged (hash matches) and was separately authored. Simulation agreement is not taken as evidence that the checker is correct."
+    },
+    {
+      "id": "F10_fairness_BC",
+      "severity": "minor",
+      "result": "deferred",
+      "detail": "No C or P builder exists. The prompt's claim that 'all experimental arms receive the same transport information' is unvalidated for future arms. It does not block B development."
+    }
+  ],
+  "limitations": [
+    "Read-only static review of the supplied packet. Nothing was executed and no formal proof is claimed.",
+    "Unchanged driver, oracle and checker bodies are hash-bound only and were not re-reviewed here. Only the diffs and newly supplied sources were examined.",
+    "Fault controls cover the command channel on Verilator only. Equivalent TX-channel faults are untested.",
+    "Pending replay evidence is a case-level prefix comparison with only the command channel pending. Runner-level round splitting is evidenced only by offline mock/replay equality.",
+    "Finite controls, cross-simulator agreement and mock/replay equality are not proof of driver or checker correctness.",
+    "This decision is not approval for C/P or for full IP correctness."
+  ],
+  "required_followup": [
+    "Before live B (light, nonblocking for the freeze artifact): confirm freeze() or the live runner refuses to proceed without an independent review whose ready_to_freeze is true.",
+    "Treat a raw denominator or counter identity change as a run-aborting integrity failure, not a per-row 'coverage' simulation failure.",
+    "Write failure.json for simulator-stage errors too, for uniform per-round forensics.",
+    "Align the accounting-test compile_driver mock with the real 2-tuple return signature.",
+    "Add TX-channel faulty-SV controls (dropped, duplicate, reordered and post-edge TX acceptance) and a TX-pending-across-boundary replay check.",
+    "Before formal C/P, verify byte-identical transport feedback and prompt framing across arms and add feedback-isolation checks.",
+    "Monitor live B for duplicate-offer behavior caused by the pin-contract 'hold valid' wording. Report it as model behavior, not as a transport result."
+  ]
+}

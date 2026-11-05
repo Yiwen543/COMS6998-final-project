@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 45700,
+  "stop_reason": "end_turn",
+  "session_id": "59f616f8-e56c-49c8-a194-4868c293e4b1",
+  "total_cost_usd": 0.5116259999999999,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 85730,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 4148,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 85730
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 4148,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 85730,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 85730,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 4148,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 85730,
+      "webSearchRequests": 0,
+      "costUSD": 0.5116259999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"findings\":[{\"id\":\"R1\",\"severity\":\"blocking\",\"topic\":\"D1 verdict lattice\",\"finding\":\"The rule that a trace is consistent when at least one surviving hypothesis is tag-free mixes three different claims. The first is observable trace membership: some legal history explains the trace. The second is a universal checked property: every surviving history satisfies clause K. The third is hidden ownership. Existential survival of one tag-free history is a membership claim only. It cannot discharge an obligation that is unknown in other histories. Concrete scenario: m0's write to 0x06 is canceled while unforwarded, and m1 later issues a live write with the same identity. A single forward of that identity then has two explanations: a live consumption (tag-free) and a post-abort residual (K9 tag). The proposal reports consistent. But in the residual branch the live m1 entry is still unforwarded, so its later ACK, or its absence, and the side effect differ. The pass silently picks the live owner. Uncertainty must persist as an existential/universal split with per-clause 'unknown in some feasible history' records, not as a promotion to pass.\"},{\"id\":\"R2\",\"severity\":\"blocking\",\"topic\":\"D2 symmetry quotient\",\"finding\":\"Canonical sorting of entries with equal identity, same master, same state and unbound data is not shown to be an exact quotient. In a per-master FIFO A,B,A the two A entries sit at different retirement positions relative to B. Swapping them changes which future slave response retires before B. For a single master this is harmless only if the renaming preserves all order edges. Across masters, or across slave FIFO references, sorting can merge histories that diverge under future data binding. Only a renaming that is an automorphism of the full state is acceptable. That means master FIFO positions, slave FIFO references, canceled-identity multiplicity and epoch must all be preserved, with a bisimulation argument. Otherwise the reduction is unsound: it can prune a surviving history and turn unresolved or pass into violation, or the reverse.\"},{\"id\":\"R3\",\"severity\":\"blocking\",\"topic\":\"D3 partitioning\",\"finding\":\"Components are defined as linked only by shared identity candidates. That misses real couplings. Per-master retirement FIFOs force entries of distinct identities on the same master to share order. Per-slave response FIFOs bind responses positionally across masters. Cancellation and epoch state couple a master's old and new work. Consider M0 issuing A (ambiguous with M1's A) followed by distinct C on the same slave. C's response position depends on how the A branch resolved, so C cannot be checked in a singleton component. This affects the claims for 'ambiguity/followed_by_distinct_work' and 'later_data_corruption'. Those verdicts are only right because the ambiguous entries had fully retired before C. No closure rule or proof is given.\"},{\"id\":\"R4\",\"severity\":\"blocking\",\"topic\":\"resource-limit fallback\",\"finding\":\"On-limit fallback stops judging only K4/K6/K7 for the affected entries and masters, then resumes after closure. Without a sound dependency closure (R3), work on other masters that shares slave FIFOs with the limited component can still be judged wrongly. Under the proposal, a component that hits the limit is never pruned but is also never tracked, so it cannot 'close' except by reset. The resume_rule ('after an ambiguity component closes') contradicts the on_limit rule ('released at reset'). Which applies must be stated exactly.\"},{\"id\":\"R5\",\"severity\":\"blocking\",\"topic\":\"D4 ghost association\",\"finding\":\"F3/F4 tag slave acceptances with ghost IDs carried through ghost FIFOs. If the tag is assigned by watching which master the DUT internally served, that is internal observation. If it is assigned by assuming per-master, per-slave forward order, that reintroduces the withdrawn K5. Either way, the harness would be using an assumed correct mapping to prove the mapping correct. The tracked transaction T must be universally quantified (free index on the master side). The forward-to-T association must be existentially or nondeterministically chosen and then constrained by observable identity and slave in-order response, with the property asserted over all consistent choices. Alternatively, prove the property for all associations that satisfy F2-style counting. This requires an explicit quantifier structure; otherwise the proof proves nothing about the black-box claim.\"},{\"id\":\"R6\",\"severity\":\"major\",\"topic\":\"D6 ERR consistency\",\"finding\":\"F3 asserts ERR iff unmapped or slave-ERRed. With OPT_TIMEOUT=16 and OPT_STARVATION_TIMEOUT=1, the wbxbar.v header explicitly documents ERR on timeout or starvation for mapped work. F3 is therefore expected to fail or be false. It also contradicts K8, which treats such ERR as unknown (unexplained_mapped_err). The direction must become 'unmapped or slave-ERR implies ERR' and 'slave-ACK implies not ERR'. A mapped ERR without a slave ERR must remain unconstrained or guarded. F2's counter 'count(slave X) <= count(master X)' needs declared widths, a saturation invariant and reset clearing. Unbounded induction cannot rely on finite trace length.\"},{\"id\":\"R7\",\"severity\":\"major\",\"topic\":\"D5 cancellation / epoch\",\"finding\":\"C1 bounds only residual forwards in a quiet interval with no new acceptance. It says nothing once m restarts, because buffered old work could still be forwarded after a new acceptance. Empty slave outputs do not imply empty internal buffers. Discarding canceled identities requires a restart-safe noninterference certificate: after an abort, no old-identity forward occurs after any new acceptance, or after k cycles regardless of new traffic. F4's single ghost epoch bit aliases under repeated aborts (abort, restart, abort). It needs a counter of adequate width or a monotone per-transaction epoch tag.\"},{\"id\":\"R8\",\"severity\":\"major\",\"topic\":\"K9 vs F4 / orphan response routing\",\"finding\":\"K9 calls the retirement of an orphan response into new work a violation in every hypothesis. But under the stated environment, slaves cancel work on CYC withdrawal. The DUT may keep o_scyc high if the other master shares the slave, so the slave may legitimately respond to an orphan forward. The checker must then bind that slave response to the orphan in the slave FIFO and require that it not appear on the master. It must not just assume that the slave dropped it. Whether o_scyc dropped is observable and must decide whether the orphan entry is expected to receive a response or is canceled. The existing case multi_abort/live_aborted_same_identity is the test. M0 is aborted with 0x05, 0x06 and 0x07 unforwarded. Later M1 writes 0x06 with different data on lane 0x5 ... wait, its payload is 0x237... equal on enabled lanes? A forward of 0x06/data 0x23456781/sel 5 then occurs while only M1 is active. That forward matches m0's canceled identity exactly. m1's identity (data 0x2345..., per its slice) must be compared on SEL-enabled lanes. If m1 does not match, this is a residual forward with no live match, which is unresolved, and m1's own request remains pending at batch end. No o_mack ever occurs for m1, and m1 drops CYC at cycle 18 without an ACK. The design must label this case explicitly. It must not infer that a pass or violation is possible.\"},{\"id\":\"R9\",\"severity\":\"major\",\"topic\":\"D7 control labels\",\"finding\":\"K5 withdraws forward order both within a slave and across slaves. Earlier same-slave reordered-write controls labeled violation now lack a basis unless the side-effect order to a slave is asserted from an explicit source. None is cited; README only covers ACK non-crossing. These labels must be re-derived and recorded as changes before replay, not left as 'retained'. Conversely, K6 and K7 must not be weakened. In cross_slave/early_forward, the pass rests on inferred K6 and the label must say so.\"},{\"id\":\"R10\",\"severity\":\"minor\",\"topic\":\"fixture values\",\"finding\":\"The design prose quotes 0x98765432, 0x88888877 and 0x88888876. The actual rows carry 0x9876FEDC, 0x88887777 and 0x88887776. The control assessments were written from prose, not from the rows. They must be re-derived from the rows before freezing.\"},{\"id\":\"R11\",\"severity\":\"minor\",\"topic\":\"K1 reset\",\"finding\":\"K1 requires post o_scyc=0 at every reset edge. That is a reasonable interpretation of rules 3.00/3.20 for the DUT acting as master. However, reset discarding canceled identities assumes the DUT clears its buffers. That holds under rule 3.15, but only after the edge. Residual forwards in the same post-sample as the reset edge need an explicit rule.\"},{\"id\":\"R12\",\"severity\":\"meta\",\"topic\":\"proposal status\",\"finding\":\"This is a useful design proposal and nothing more. No algorithm is implemented. No soundness proof exists for the quotient, the partitioning, the limit fallback or the ghost-association quantification. No formal result exists. All 'prove' entries are targets. The 'sound' labels on the reductions are unsupported claims.\"}],\"corrected_contract_requirements\":[\"Report three separate claim types: trace_membership (exists a feasible history), clause_universal (holds in all surviving histories), and ownership (unique or indistinguishable(k)). An aggregate pass requires clause_universal for each judged clause. Any clause that relies on an unknown-tagged branch in some surviving history is unresolved(clause), not pass.\",\"Residual-forward ambiguity with live identical work: record it as unresolved_owner_alternative. The record lists both branches and the downstream consequences (pending live entry vs consumed). No owner is selected.\",\"Write identity: equality on WE, address, SEL and data restricted to enabled lanes. Read identity: WE, address and SEL; read requests ignore data.\",\"K8: unmapped => ERR (inferred); slave ERR => master ERR (inferred); slave ACK => no ERR; mapped ERR without slave ERR => unexplained (unknown under OPT_TIMEOUT/starvation). No iff.\",\"K5: no forward-order or side-effect-order judgment within or across slaves unless a separately sourced clause exists.\",\"K9: an orphan entry's expected fate is decided by observing whether o_scyc[s] dropped while it was outstanding. If o_scyc stayed high, a slave response to it is legal and must be consumed by the orphan, never by new work.\",\"Epoch tagging uses monotone counters, never a single bit.\",\"Canceled identities persist until reset unless a restart-safe certificate applies.\"],\"required_design_changes\":[\"Replace 'at least one tag-free hypothesis implies consistent' with the per-clause universal semantics, and add a control for the old-canceled vs new-live identical-identity case.\",\"Specify symmetry as a state automorphism: a renaming that preserves master FIFO order, slave FIFO references, canceled multiplicity, epoch and pending bindings. Provide the argument or drop the quotient. Add the A,B,A control.\",\"Define dependency closure over shared identity, the same master FIFO, the same slave FIFO and the epoch/cancellation link. Prove that local checking and limit fallback are conservative: any clause touching a limited closure is unresolved. Reconcile resume_rule with on_limit.\",\"Rewrite F3/F4 with an explicit quantifier structure: universal over T and over all observably consistent forward associations (or existential with a matching argument). No association derived from internal state or assumed order. Add a false control for a wrong association.\",\"Fix F3's ERR direction and guard timeout/starvation. Add counter widths, overflow assertions and reset clears to F2.\",\"Restate C1 as a restart-safe noninterference property covering new acceptances and repeated aborts. Document that empty outputs do not certify empty buffers.\",\"Re-derive all control labels from the actual rows (corrected hex values), including multi_abort/live_aborted_same_identity, with clause-cited expected verdicts written before implementation by an independent author.\",\"Re-label retained same-slave ordering controls under the K5 withdrawal, and record each change.\",\"Mark all formal items as targets with no evidence yet.\"],\"ready_for_implementation\":false}",
+  "ttft_ms": 45751,
+  "type": "result",
+  "duration_ms": 45775,
+  "uuid": "278307ba-9259-4067-b59e-0d6ea623d284",
+  "ttft_stream_ms": 1239,
+  "time_to_request_ms": 70,
+  "first_content_frame_ms": 1239,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 4148,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 85730,
+      "webSearchRequests": 0,
+      "costUSD": 0.5116259999999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

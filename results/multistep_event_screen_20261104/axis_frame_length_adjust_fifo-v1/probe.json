@@ -1,0 +1,176 @@
+{
+  "configuration": {
+    "top": "axis_frame_length_adjust_fifo",
+    "root": "third_party/verilog_axis_candidate",
+    "sources": [
+      "rtl/axis_frame_length_adjust.v",
+      "rtl/axis_fifo.v",
+      "rtl/axis_frame_length_adjust_fifo.v"
+    ],
+    "source_hashes": {
+      "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+      "third_party/verilog_axis_candidate/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+      "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v": "26f1636f5d4f219ca1dcf336b45b636e74a0977826ee51cdcab4e5c2d136b7ce",
+      "third_party/verilog_axis_candidate/README.md": "34b574d6c8a289209346008a8dcf3308c621f4e2f7dfc11a6f8680728b126c9c",
+      "third_party/verilog_axis_candidate/COPYING": "8ea57f95365e9b16a5b516f422b71269183a1ae53bab5878ae6d69039e58fe77"
+    },
+    "git_blobs": {
+      "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v": "6c2188bbcb7cf41417f51da5281e56e6721d450d",
+      "third_party/verilog_axis_candidate/rtl/axis_fifo.v": "dfa465792f052486ac6f8d4c483318d4a338076d",
+      "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v": "f2bc4a06564dc7014f615af29b7d7370d14f779d",
+      "third_party/verilog_axis_candidate/README.md": "e09d23134d380e276acebbe172c238a6b263496e",
+      "third_party/verilog_axis_candidate/COPYING": "dc298464e7aade999ebfa48632f6af2779439bcb"
+    },
+    "revision": "48ff7a7e2ef782cf778d47910cf85835c64b1bce",
+    "parameters": {
+      "DATA_WIDTH": 8,
+      "KEEP_ENABLE": 0,
+      "KEEP_WIDTH": 1,
+      "ID_ENABLE": 0,
+      "ID_WIDTH": 8,
+      "DEST_ENABLE": 0,
+      "DEST_WIDTH": 8,
+      "USER_ENABLE": 1,
+      "USER_WIDTH": 1,
+      "FRAME_FIFO_DEPTH": 32,
+      "HEADER_FIFO_DEPTH": 8
+    },
+    "family": "packet_length_adjuster",
+    "include_dirs": [],
+    "defines": [],
+    "clock": "clk",
+    "reset": "rst",
+    "reset_active": 1,
+    "reset_behavior": "synchronous active-high",
+    "seed_inputs": {
+      "length_min": 4,
+      "length_max": 16,
+      "m_axis_hdr_ready": 1,
+      "m_axis_tready": 1
+    },
+    "event_families": [
+      "padding followed by completion under independent header/data backpressure",
+      "truncate and drain remaining input then next frame",
+      "header FIFO pressure and data release across frame boundaries"
+    ],
+    "proof_boundary": "Original parent and original children; no RTL rewriting or counter replication.",
+    "specification": "https://github.com/alexforencich/verilog-axis/blob/48ff7a7e2ef782cf778d47910cf85835c64b1bce/README.md",
+    "ordinary_policy": "Isolated legal transactions across supported modes and boundary lengths, prompt response readiness, continuous legal input and inter-frame/burst idle; include normal pass/pad/truncate or short/long bursts. Test all ordinary modes before counting event-only increments. No calibrated solution in LLM prompts."
+  },
+  "runs": [
+    {
+      "stage": "slang",
+      "returncode": 0,
+      "seconds": 0.12911037495359778,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/slang",
+        "--single-unit",
+        "--top",
+        "axis_frame_length_adjust_fifo",
+        "-G",
+        "DATA_WIDTH=8",
+        "-G",
+        "KEEP_ENABLE=0",
+        "-G",
+        "KEEP_WIDTH=1",
+        "-G",
+        "ID_ENABLE=0",
+        "-G",
+        "ID_WIDTH=8",
+        "-G",
+        "DEST_ENABLE=0",
+        "-G",
+        "DEST_WIDTH=8",
+        "-G",
+        "USER_ENABLE=1",
+        "-G",
+        "USER_WIDTH=1",
+        "-G",
+        "FRAME_FIFO_DEPTH=32",
+        "-G",
+        "HEADER_FIFO_DEPTH=8",
+        "--ast-json",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/multistep_event_screen_20261104/axis_frame_length_adjust_fifo-v1/ast.json",
+        "--ast-json-source-info",
+        "--ast-json-detailed-types",
+        "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v",
+        "third_party/verilog_axis_candidate/rtl/axis_fifo.v",
+        "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v"
+      ]
+    },
+    {
+      "stage": "verilator",
+      "returncode": 0,
+      "seconds": 0.10286712506785989,
+      "command": [
+        "verilator",
+        "--lint-only",
+        "--timing",
+        "-Wno-fatal",
+        "--top-module",
+        "axis_frame_length_adjust_fifo",
+        "-GDATA_WIDTH=8",
+        "-GKEEP_ENABLE=0",
+        "-GKEEP_WIDTH=1",
+        "-GID_ENABLE=0",
+        "-GID_WIDTH=8",
+        "-GDEST_ENABLE=0",
+        "-GDEST_WIDTH=8",
+        "-GUSER_ENABLE=1",
+        "-GUSER_WIDTH=1",
+        "-GFRAME_FIFO_DEPTH=32",
+        "-GHEADER_FIFO_DEPTH=8",
+        "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v",
+        "third_party/verilog_axis_candidate/rtl/axis_fifo.v",
+        "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v"
+      ]
+    },
+    {
+      "stage": "iverilog",
+      "returncode": 0,
+      "seconds": 0.02440349990502,
+      "command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "axis_frame_length_adjust_fifo",
+        "-tnull",
+        "-Paxis_frame_length_adjust_fifo.DATA_WIDTH=8",
+        "-Paxis_frame_length_adjust_fifo.KEEP_ENABLE=0",
+        "-Paxis_frame_length_adjust_fifo.KEEP_WIDTH=1",
+        "-Paxis_frame_length_adjust_fifo.ID_ENABLE=0",
+        "-Paxis_frame_length_adjust_fifo.ID_WIDTH=8",
+        "-Paxis_frame_length_adjust_fifo.DEST_ENABLE=0",
+        "-Paxis_frame_length_adjust_fifo.DEST_WIDTH=8",
+        "-Paxis_frame_length_adjust_fifo.USER_ENABLE=1",
+        "-Paxis_frame_length_adjust_fifo.USER_WIDTH=1",
+        "-Paxis_frame_length_adjust_fifo.FRAME_FIFO_DEPTH=32",
+        "-Paxis_frame_length_adjust_fifo.HEADER_FIFO_DEPTH=8",
+        "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v",
+        "third_party/verilog_axis_candidate/rtl/axis_fifo.v",
+        "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v"
+      ]
+    },
+    {
+      "stage": "yosys",
+      "returncode": 0,
+      "seconds": 0.2806507907807827,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/yosys",
+        "-Q",
+        "-T",
+        "-s",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/multistep_event_screen_20261104/axis_frame_length_adjust_fifo-v1/probe.ys"
+      ]
+    }
+  ],
+  "source_sha256": {
+    "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+    "third_party/verilog_axis_candidate/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+    "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v": "26f1636f5d4f219ca1dcf336b45b636e74a0977826ee51cdcab4e5c2d136b7ce"
+  },
+  "no_model_calls": true,
+  "no_functional_checker_claim": true,
+  "qualified_for_B": false,
+  "assertions": "SYNTHESIS selects upstream synthesis-compatible assertion macros for flash; not assertion verification."
+}

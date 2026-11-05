@@ -1,0 +1,8 @@
+# running in /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_conformance_gate_20261104/boundary-v1/nonvacuity/src/
+read_slang --top wbxbar_quiet_observer -U FORMAL -D OBS_COVER skidbuffer.v addrdecode.v wbxbar.v observer.sv
+prep -top wbxbar_quiet_observer
+
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

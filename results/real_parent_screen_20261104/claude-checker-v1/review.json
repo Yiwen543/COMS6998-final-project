@@ -1,0 +1,67 @@
+{
+  "ready_for_offline_gate": false,
+  "summary": "Read-only audit of the checker, controls and public traces in the packet. The checker catches the hand-built single faults on clean baselines and raises no false alarms on the four independent positives. It is still not ready for an offline gate. Every calibration trace that the DUT produced with a non-uniform payload fails on byte order, which leaves an unresolved conflict between the documentation and the DUT. There is also at least one likely checker false positive (CSAAT/CSID), one event-reporting gap (TX starvation), one invalid control, and no coverage of hardware-reset abort. This is reviewer judgement, not a formal proof.",
+  "findings": [
+    {
+      "id": "F1_byte_order_unresolved",
+      "class": "unresolved_assumption / plausible DUT-vs-doc discrepancy",
+      "severity": "blocking",
+      "detail": "All DUT TX traces send the enabled bytes least-significant first. For word 0xA1B2C3D4 the wire order is D4, C3, B2, A1 in ordinary_standard_write, ordinary_three_speeds and tx_starvation_resume. All DUT RX traces pack received bytes into the low bytes first: 3x0xFF arrives as 0x00FFFFFF, not 0xFFFFFF00 (fullcycle_read, partial_then_csid_switch, software_reset_restart seg1 = 0x0000FFFF). This matches the checker's own reasoning, which follows theory_of_operation.md:699-702 and 735-738 (MSB first, padding in the low bytes). The reversal is perfectly consistent across TX, RX, all three speeds and both resets. That pattern points to a systematic convention mismatch, possibly a stale document or swapping placed at a different boundary than described, rather than random corruption. The checker's behaviour is defensible under the supplied spec. However, calling this a confirmed DUT bug needs an authority decision on byte order inside the core boundary. Until that decision exists, every calibration event other than rx_backpressure is masked by this failure."
+    },
+    {
+      "id": "F2_csaat_false_positive_on_offered_csid_change",
+      "class": "likely checker error",
+      "severity": "blocking",
+      "detail": "In partial_then_csid_switch, segment 0 has CSAAT=1 on CSID 0. At cycle 89 the next command (CSID=1) is offered while pre.ready=0, and CSB rises in that same cycle. The handshake only happens at cycle 90. In rise(), the check reads st['q'][0], which is the accepted queue, finds it empty, and flags 'csaat'. The spec at lines 204-205 says 'If a change is detected in CSID'. It does not say the change must already be handshaken, and a core ending the held CS when it sees a pending CSID change is a plausible reading. The checker should treat a valid-but-unaccepted offered command as the trigger, or downgrade this case to unresolved. As written, it produces a false failure on the requested csid_change event."
+    },
+    {
+      "id": "F3_tx_starvation_event_never_emitted",
+      "class": "checker event-reporting gap plus possible DUT violation",
+      "severity": "blocking",
+      "detail": "calibration/tx_starvation_resume emits no event at all, even though a 53+ cycle stall with tx_stall=1 is visible. The starve marker is only set when fetch() returns a byte. Around cycle 74 the trace shows an SCK rise, a leading edge that is the CPHA=0 sampling edge for byte 4, followed by a stall with SCK parked high. That edge consumes no available word, so tx_underflow fires, starve stays None and the event family disappears instead of reporting 'fail'. This is also a plausible DUT violation of lines 581-582 (no SCK ticks during a stall). An alternative explanation is a checker misreading of the park edge. It cannot be settled from the packet, because only the first 4 of 8 failures are listed. Separately, an event that fails must still be reported; silent omission hides failed attempts."
+    },
+    {
+      "id": "F4_invalid_input_control_invalid",
+      "class": "invalid control",
+      "severity": "major",
+      "detail": "invalid_input/drop_pending_command only clears action.valid at row 89. The DUT outputs are not re-simulated, so the post-change behaviour is not causally consistent with the modified input. The verdict is 'fail', with 7 failures inherited from the baseline (byte order plus F2), and correct_input_classification is false. The checker also lets failures outrank assumption violations even when the failures come after, or depend on, a transport violation. The control should either be re-simulated or rebased on a clean baseline. The checker should consider blocking judgement from the first assumption violation onward."
+    },
+    {
+      "id": "F5_uncredited_controls_on_failing_baselines",
+      "class": "control coverage gap",
+      "severity": "major",
+      "detail": "clock_during_tx_stall and wrong_reset_select sit on failing baselines and correctly receive no credit. As a result, there is no credited detection for stall-clocking or for CS behaviour during reset. The wrong_reset_select mutation sets post.csb=0 during SW_RST, and that is not flagged at all: failures equal the baseline's 4. The cause is that trans(..., quiet=True) skips all CSB checks during software reset. This is a real checker blind spot: both CSB lines asserted during SW_RST goes undetected."
+    },
+    {
+      "id": "F6_no_hardware_reset_abort_control",
+      "class": "control coverage gap",
+      "severity": "major",
+      "detail": "The only hardware reset in any trace is the initial one, with nothing in flight. The hardware variant of reset_abort_restart has no positive, negative or truncated control, so it is unvalidated."
+    },
+    {
+      "id": "F7_rx_backpressure_pass_is_weak",
+      "class": "weak positive",
+      "severity": "minor",
+      "detail": "The only passing event (rx_backpressure_resume, 74..327) uses a constant sd=0b1010, so every byte is 0xFF. That makes byte order, byte duplication and byte reordering within or across words invisible. Only word count and timing are actually checked. wrong_recovered_rx_word is credited, but that is a word-level corruption."
+    },
+    {
+      "id": "F8_positive_controls_share_interpretation",
+      "class": "independence limitation",
+      "severity": "minor",
+      "detail": "The four reference positives are hand-written from the same doc lines the checker uses: Standard mode 0, CLKDIV=0, single segment. They show the checker does not raise false alarms in that narrow scope. They cannot arbitrate F1, and they do not exercise CPHA=1, CPOL=1, FULLCYC, CLKDIV>0, CSNLEAD/TRAIL/IDLE>0 or multi-segment CSAAT."
+    },
+    {
+      "id": "F9_checks_that_look_sound",
+      "class": "positive observation",
+      "severity": "info",
+      "detail": "Dual and Quad lane ordering agree with the DUT: three_speeds fails only on byte order, never on bits. Truncated traces are never reported as pass; they come out pending, inconclusive or fail. missing_rx_word is correctly left inconclusive and uncredited, since no deadline is specified. Duplicate words, wrong CS line, premature deselect and selection during an RX stall are all detected on clean baselines. Transport hold checks are implemented on pre-sampled values."
+    }
+  ],
+  "limitations": [
+    "No tools were used. Traces were reasoned about from the lossless encoding only partially, and the full failure lists are truncated to 4 entries per case.",
+    "Without RTL or further authority, F1 cannot be classified as a DUT bug versus a documentation or scope mismatch.",
+    "F3's root cause (DUT clocking during a stall versus checker edge attribution) is unresolved.",
+    "Reviewer agreement or disagreement is not a formal proof. Event results and credited detections are not coverage or equivalence evidence.",
+    "No stimulus generation, target selection, artifact edits or B authorization were performed or implied."
+  ]
+}

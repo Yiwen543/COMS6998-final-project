@@ -1,0 +1,4410 @@
+{
+  "creator": "Yosys 0.70+309 (git sha1 bd3168b1a, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
+  "modules": {
+    "flash_ctrl_arb": {
+      "attributes": {
+        "top": "00000000000000000000000000000001",
+        "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:15.8"
+      },
+      "ports": {
+        "clk_i": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "rst_ni": {
+          "direction": "input",
+          "bits": [ 3 ]
+        },
+        "disable_i": {
+          "direction": "input",
+          "bits": [ 4, 5, 6, 7 ]
+        },
+        "ctrl_err_addr_o": {
+          "direction": "output",
+          "bits": [ 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ]
+        },
+        "sw_ctrl_i": {
+          "direction": "input",
+          "bits": [ 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 ]
+        },
+        "sw_addr_i": {
+          "direction": "input",
+          "bits": [ 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57 ]
+        },
+        "sw_ack_o": {
+          "direction": "output",
+          "bits": [ 58 ]
+        },
+        "sw_err_o": {
+          "direction": "output",
+          "bits": [ 59, 60, 61, 62, 63, 64, 65 ]
+        },
+        "sw_wvalid_i": {
+          "direction": "input",
+          "bits": [ 66 ]
+        },
+        "sw_wready_o": {
+          "direction": "output",
+          "bits": [ 67 ]
+        },
+        "sw_wdata_i": {
+          "direction": "input",
+          "bits": [ 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106 ]
+        },
+        "hw_req_i": {
+          "direction": "input",
+          "bits": [ 107 ]
+        },
+        "hw_ctrl_i": {
+          "direction": "input",
+          "bits": [ 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127 ]
+        },
+        "hw_phase_i": {
+          "direction": "input",
+          "bits": [ 128, 129 ]
+        },
+        "hw_addr_i": {
+          "direction": "input",
+          "bits": [ 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145 ]
+        },
+        "hw_ack_o": {
+          "direction": "output",
+          "bits": [ 146 ]
+        },
+        "hw_err_o": {
+          "direction": "output",
+          "bits": [ 147, 148, 149, 150, 151, 152, 153 ]
+        },
+        "hw_wvalid_i": {
+          "direction": "input",
+          "bits": [ 154 ]
+        },
+        "hw_wdata_i": {
+          "direction": "input",
+          "bits": [ 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193 ]
+        },
+        "hw_wready_o": {
+          "direction": "output",
+          "bits": [ 194 ]
+        },
+        "muxed_ctrl_o": {
+          "direction": "output",
+          "bits": [ 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214 ]
+        },
+        "muxed_addr_o": {
+          "direction": "output",
+          "bits": [ 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230 ]
+        },
+        "prog_ack_i": {
+          "direction": "input",
+          "bits": [ 231 ]
+        },
+        "prog_err_i": {
+          "direction": "input",
+          "bits": [ 232, 233, 234, 235, 236, 237, 238 ]
+        },
+        "prog_err_addr_i": {
+          "direction": "input",
+          "bits": [ 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252 ]
+        },
+        "rd_ack_i": {
+          "direction": "input",
+          "bits": [ 253 ]
+        },
+        "rd_err_i": {
+          "direction": "input",
+          "bits": [ 254, 255, 256, 257, 258, 259, 260 ]
+        },
+        "rd_err_addr_i": {
+          "direction": "input",
+          "bits": [ 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274 ]
+        },
+        "erase_ack_i": {
+          "direction": "input",
+          "bits": [ 275 ]
+        },
+        "erase_err_i": {
+          "direction": "input",
+          "bits": [ 276, 277, 278, 279, 280, 281, 282 ]
+        },
+        "erase_err_addr_i": {
+          "direction": "input",
+          "bits": [ 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296 ]
+        },
+        "prog_fifo_wvalid_o": {
+          "direction": "output",
+          "bits": [ 297 ]
+        },
+        "prog_fifo_wdata_o": {
+          "direction": "output",
+          "bits": [ 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336 ]
+        },
+        "prog_fifo_wready_i": {
+          "direction": "input",
+          "bits": [ 337 ]
+        },
+        "flash_phy_busy_i": {
+          "direction": "input",
+          "bits": [ 338 ]
+        },
+        "fifo_clr_o": {
+          "direction": "output",
+          "bits": [ 339 ]
+        },
+        "phase_o": {
+          "direction": "output",
+          "bits": [ 340, 341 ]
+        },
+        "sel_o": {
+          "direction": "output",
+          "bits": [ 342, 343 ]
+        },
+        "fsm_err_o": {
+          "direction": "output",
+          "bits": [ 344 ]
+        }
+      },
+      "cells": {
+        "$0": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 22 ],
+            "Y": [ 345 ]
+          }
+        },
+        "$10": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "Y": [ 346 ]
+          }
+        },
+        "$11": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 3 ],
+            "Y": [ 347 ]
+          }
+        },
+        "$12": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 348, 349, 350, 351, 352, 353, 354, 355, 356, 357 ],
+            "Y": [ 358, 359, 360, 361, 362, 363, 364, 365, 366, 367 ]
+          }
+        },
+        "$13": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 368, 369, 370, 371, 372, 373, 374, 375, 376, 377 ],
+            "Y": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ]
+          }
+        },
+        "$15": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000001",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:136.13-136.30"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 338 ],
+            "Y": [ 388 ]
+          }
+        },
+        "$17": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000001",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:146.13-146.22"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 107 ],
+            "Y": [ 389 ]
+          }
+        },
+        "$19": {
+          "hide_name": 1,
+          "type": "$ne",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000100",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000100",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim/rtl/prim_mubi_pkg.sv:65.12-65.29"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "1", "0", "0", "1" ],
+            "B": [ 4, 5, 6, 7 ],
+            "Y": [ 390 ]
+          }
+        },
+        "$2": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000001",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 391 ],
+            "Y": [ 392 ]
+          }
+        },
+        "$25": {
+          "hide_name": 1,
+          "type": "$logic_or",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000001",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000001",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:174.13-174.35"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 231 ],
+            "B": [ 253 ],
+            "Y": [ 393 ]
+          }
+        },
+        "$26": {
+          "hide_name": 1,
+          "type": "$logic_or",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000001",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000001",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:174.13-174.50"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 393 ],
+            "B": [ 275 ],
+            "Y": [ 394 ]
+          }
+        },
+        "$32": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001110"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 395, 396, 397, 398, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408 ],
+            "Y": [ 339, 344, 409, 410, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357 ]
+          }
+        },
+        "$4": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 346 ],
+            "Y": [ 411 ]
+          }
+        },
+        "$44": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000001011110"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500, 501, 502, 503, 504, 505 ],
+            "Y": [ 58, 59, 60, 61, 62, 63, 64, 65, 67, 146, 147, 148, 149, 150, 151, 152, 153, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336 ]
+          }
+        },
+        "$5": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 347 ],
+            "Y": [ 391 ]
+          }
+        },
+        "$51": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000010110"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 506, 507, 508, 509, 510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527 ],
+            "Y": [ 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 528, 529, 530, 531, 532, 533, 534, 535 ]
+          }
+        },
+        "$52": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000010"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "Y": [ 342, 343 ]
+          }
+        },
+        "$53": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:278.20-278.37"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "1", "0" ],
+            "Y": [ 536 ]
+          }
+        },
+        "$54": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000010"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:278.20-278.65"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 128, 129 ],
+            "B": [ "1", "1" ],
+            "S": [ 536 ],
+            "Y": [ 537, 538 ]
+          }
+        },
+        "$55": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000010"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 537, 538 ],
+            "Y": [ 340, 341 ]
+          }
+        },
+        "$6": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 358, 359, 360, 361, 362, 363, 364, 365, 366, 367 ],
+            "Y": [ 539, 540, 541, 542, 543, 544, 545, 546, 547, 548 ]
+          }
+        },
+        "$7": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 549, 550, 551, 552, 553, 554, 555, 556, 557, 558 ],
+            "Y": [ 559, 560, 561, 562, 563, 564, 565, 566, 567, 568 ]
+          }
+        },
+        "$8": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 559, 560, 561, 562, 563, 564, 565, 566, 567, 568 ],
+            "Y": [ 368, 369, 370, 371, 372, 373, 374, 375, 376, 377 ]
+          }
+        },
+        "$9": {
+          "hide_name": 1,
+          "type": "$buf",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "Y": [ 569 ]
+          }
+        },
+        "$driver$u_state_regs.u_state_flop.q_o": {
+          "hide_name": 1,
+          "type": "$aldff",
+          "parameters": {
+            "ALOAD_POLARITY": "00000000000000000000000000000000",
+            "CLK_POLARITY": "00000000000000000000000000000001",
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim_generic/rtl/prim_flop.sv:17.3"
+          },
+          "port_directions": {
+            "AD": "input",
+            "ALOAD": "input",
+            "CLK": "input",
+            "D": "input",
+            "Q": "output"
+          },
+          "connections": {
+            "AD": [ "0", "1", "1", "0", "1", "0", "1", "1", "0", "0" ],
+            "ALOAD": [ 391 ],
+            "CLK": [ 411 ],
+            "D": [ 539, 540, 541, 542, 543, 544, 545, 546, 547, 548 ],
+            "Q": [ 549, 550, 551, 552, 553, 554, 555, 556, 557, 558 ]
+          }
+        },
+        "$procmux$10": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000010",
+            "WIDTH": "00000000000000000000000000010000"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
+            "B": [ 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145 ],
+            "S": [ 570, 571 ],
+            "Y": [ 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465 ]
+          }
+        },
+        "$procmux$103": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:143.13-149.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ "1" ],
+            "S": [ 572 ],
+            "Y": [ 398 ]
+          }
+        },
+        "$procmux$104_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:143.13-149.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "1", "1", "0", "1", "1", "1", "1", "1" ],
+            "Y": [ 572 ]
+          }
+        },
+        "$procmux$108": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000010",
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:169.19-177.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ "1", "1" ],
+            "S": [ 573, 574 ],
+            "Y": [ 397 ]
+          }
+        },
+        "$procmux$109_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:169.19-177.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "1", "0", "0", "1", "0", "1", "0", "0", "1", "1" ],
+            "Y": [ 573 ]
+          }
+        },
+        "$procmux$111_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "0", "0", "0", "0", "0", "0", "0", "1" ],
+            "Y": [ 574 ]
+          }
+        },
+        "$procmux$117": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:139.11-139.26|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:136.9-140.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0", "1", "1", "1", "0", "1", "1", "1", "1", "1" ],
+            "B": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "S": [ 338 ],
+            "Y": [ 575, 576, 577, 578, 579, 580, 581, 582, 583, 584 ]
+          }
+        },
+        "$procmux$119": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:136.9-140.12|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "x", "x", "x", "x", "x", "x", "x", "x", "x", "x" ],
+            "B": [ 575, 576, 577, 578, 579, 580, 581, 582, 583, 584 ],
+            "S": [ 585 ],
+            "Y": [ 586, 587, 588, 589, 590, 591, 592, 593, 594, 595 ]
+          }
+        },
+        "$procmux$11_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "1", "0" ],
+            "Y": [ 570 ]
+          }
+        },
+        "$procmux$120_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:136.9-140.12|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "1", "0", "1", "0", "1", "1", "0", "0" ],
+            "Y": [ 585 ]
+          }
+        },
+        "$procmux$122": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000101",
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:180.9-180.30|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "1", "0", "1", "0", "1", "0", "0", "0", "1", "0", 596, 597, 598, 599, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 586, 587, 588, 589, 590, 591, 592, 593, 594, 595 ],
+            "S": [ 626, 627, 628, 629, 630 ],
+            "Y": [ 399, 400, 401, 402, 403, 404, 405, 406, 407, 408 ]
+          }
+        },
+        "$procmux$123_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:180.9-180.30|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "1", "0", "1", "0", "1", "0", "0", "0", "1", "0" ],
+            "Y": [ 626 ]
+          }
+        },
+        "$procmux$125_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:169.19-177.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "1", "0", "0", "1", "0", "1", "0", "0", "1", "1" ],
+            "Y": [ 627 ]
+          }
+        },
+        "$procmux$127_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "0", "0", "0", "0", "0", "0", "0", "1" ],
+            "Y": [ 628 ]
+          }
+        },
+        "$procmux$129_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:143.13-149.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "1", "1", "0", "1", "1", "1", "1", "1" ],
+            "Y": [ 629 ]
+          }
+        },
+        "$procmux$12_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:207.14-218.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "0", "1" ],
+            "Y": [ 571 ]
+          }
+        },
+        "$procmux$131_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:136.9-140.12|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "1", "0", "1", "0", "1", "1", "0", "0" ],
+            "Y": [ 630 ]
+          }
+        },
+        "$procmux$136": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:147.11-147.30|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:146.9-148.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0", "1", "0", "0", "0", "0", "0", "0", "0", "1" ],
+            "B": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "S": [ 107 ],
+            "Y": [ 631, 632, 633, 634, 635, 636, 637, 638, 639, 640 ]
+          }
+        },
+        "$procmux$138": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:143.13-149.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "x", "x", "x", "x", "x", "x", "x", "x", "x", "x" ],
+            "B": [ 631, 632, 633, 634, 635, 636, 637, 638, 639, 640 ],
+            "S": [ 641 ],
+            "Y": [ 616, 617, 618, 619, 620, 621, 622, 623, 624, 625 ]
+          }
+        },
+        "$procmux$139_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:143.13-149.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "1", "1", "0", "1", "1", "1", "1", "1" ],
+            "Y": [ 641 ]
+          }
+        },
+        "$procmux$14": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000010",
+            "WIDTH": "00000000000000000000000000010100"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
+            "B": [ 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127 ],
+            "S": [ 642, 643 ],
+            "Y": [ 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449 ]
+          }
+        },
+        "$procmux$141": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000101",
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:180.9-180.30|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "1" ],
+            "B": [ "0", "0", "0", "0", "0" ],
+            "S": [ 644, 645, 646, 647, 648 ],
+            "Y": [ 396 ]
+          }
+        },
+        "$procmux$142_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:180.9-180.30|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "1", "0", "1", "0", "1", "0", "0", "0", "1", "0" ],
+            "Y": [ 644 ]
+          }
+        },
+        "$procmux$143_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:169.19-177.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "1", "0", "0", "1", "0", "1", "0", "0", "1", "1" ],
+            "Y": [ 645 ]
+          }
+        },
+        "$procmux$144_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "0", "0", "0", "0", "0", "0", "0", "1" ],
+            "Y": [ 646 ]
+          }
+        },
+        "$procmux$145_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:143.13-149.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "1", "1", "0", "1", "1", "1", "1", "1" ],
+            "Y": [ 647 ]
+          }
+        },
+        "$procmux$146_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:136.9-140.12|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "1", "0", "1", "0", "1", "1", "0", "0" ],
+            "Y": [ 648 ]
+          }
+        },
+        "$procmux$151": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 649 ],
+            "S": [ 650 ],
+            "Y": [ 395 ]
+          }
+        },
+        "$procmux$152_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "0", "0", "0", "0", "0", "0", "0", "1" ],
+            "Y": [ 650 ]
+          }
+        },
+        "$procmux$153": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:266.33-269.12|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:266.9-269.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ "1" ],
+            "S": [ 195 ],
+            "Y": [ 651 ]
+          }
+        },
+        "$procmux$156": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000011",
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 651 ],
+            "B": [ "x", "x", "x" ],
+            "S": [ 652, 653, 654 ],
+            "Y": [ 655 ]
+          }
+        },
+        "$procmux$157_CMP0": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "Y": [ 652 ]
+          }
+        },
+        "$procmux$158_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:251.21-255.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "0", "1" ],
+            "Y": [ 653 ]
+          }
+        },
+        "$procmux$159_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:245.23-249.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "1", "0" ],
+            "Y": [ 654 ]
+          }
+        },
+        "$procmux$15_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "1", "0" ],
+            "Y": [ 642 ]
+          }
+        },
+        "$procmux$160": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:266.33-269.12|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:266.9-269.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ "1" ],
+            "S": [ 195 ],
+            "Y": [ 656 ]
+          }
+        },
+        "$procmux$163": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000011",
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 656 ],
+            "B": [ "x", "x", "x" ],
+            "S": [ 657, 658, 659 ],
+            "Y": [ 660 ]
+          }
+        },
+        "$procmux$164_CMP0": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "Y": [ 657 ]
+          }
+        },
+        "$procmux$165_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:251.21-255.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "0", "1" ],
+            "Y": [ 658 ]
+          }
+        },
+        "$procmux$166_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:245.23-249.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "1", "0" ],
+            "Y": [ 659 ]
+          }
+        },
+        "$procmux$169": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000011",
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 655 ],
+            "B": [ 260, 282, 238 ],
+            "S": [ 661, 662, 663 ],
+            "Y": [ 527 ]
+          }
+        },
+        "$procmux$16_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:207.14-218.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "0", "1" ],
+            "Y": [ 643 ]
+          }
+        },
+        "$procmux$170_CMP0": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "Y": [ 661 ]
+          }
+        },
+        "$procmux$171_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:251.21-255.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "0", "1" ],
+            "Y": [ 662 ]
+          }
+        },
+        "$procmux$172_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:245.23-249.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "1", "0" ],
+            "Y": [ 663 ]
+          }
+        },
+        "$procmux$174": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000011",
+            "WIDTH": "00000000000000000000000000000110"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0", "0", "0", "0", "0", "0" ],
+            "B": [ 254, 255, 256, 257, 258, 259, 276, 277, 278, 279, 280, 281, 232, 233, 234, 235, 236, 237 ],
+            "S": [ 664, 665, 666 ],
+            "Y": [ 521, 522, 523, 524, 525, 526 ]
+          }
+        },
+        "$procmux$175_CMP0": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "Y": [ 664 ]
+          }
+        },
+        "$procmux$176_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:251.21-255.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "0", "1" ],
+            "Y": [ 665 ]
+          }
+        },
+        "$procmux$177_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:245.23-249.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "1", "0" ],
+            "Y": [ 666 ]
+          }
+        },
+        "$procmux$180": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000011",
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 660 ],
+            "B": [ 253, 275, 231 ],
+            "S": [ 667, 668, 669 ],
+            "Y": [ 520 ]
+          }
+        },
+        "$procmux$181_CMP0": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "Y": [ 667 ]
+          }
+        },
+        "$procmux$182_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:251.21-255.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "0", "1" ],
+            "Y": [ 668 ]
+          }
+        },
+        "$procmux$183_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:245.23-249.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "1", "0" ],
+            "Y": [ 669 ]
+          }
+        },
+        "$procmux$185": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000011",
+            "WIDTH": "00000000000000000000000000001110"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
+            "B": [ 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252 ],
+            "S": [ 670, 671, 672 ],
+            "Y": [ 506, 507, 508, 509, 510, 511, 512, 513, 514, 515, 516, 517, 518, 519 ]
+          }
+        },
+        "$procmux$186_CMP0": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:257.20-261.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "Y": [ 670 ]
+          }
+        },
+        "$procmux$187_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:251.21-255.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "0", "1" ],
+            "Y": [ 671 ]
+          }
+        },
+        "$procmux$188_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:245.23-249.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 196, 197 ],
+            "B": [ "1", "0" ],
+            "Y": [ 672 ]
+          }
+        },
+        "$procmux$19": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:207.14-218.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 337 ],
+            "S": [ 673 ],
+            "Y": [ 429 ]
+          }
+        },
+        "$procmux$2": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000010",
+            "WIDTH": "00000000000000000000000000100111"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
+            "B": [ 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193 ],
+            "S": [ 674, 675 ],
+            "Y": [ 467, 468, 469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500, 501, 502, 503, 504, 505 ]
+          }
+        },
+        "$procmux$20_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:207.14-218.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "0", "1" ],
+            "Y": [ 673 ]
+          }
+        },
+        "$procmux$23": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000111"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:207.14-218.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0", "0", "0", "0", "0", "0", "0" ],
+            "B": [ 529, 530, 531, 532, 533, 534, 535 ],
+            "S": [ 676 ],
+            "Y": [ 422, 423, 424, 425, 426, 427, 428 ]
+          }
+        },
+        "$procmux$24_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:207.14-218.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "0", "1" ],
+            "Y": [ 676 ]
+          }
+        },
+        "$procmux$27": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:207.14-218.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 528 ],
+            "S": [ 677 ],
+            "Y": [ 421 ]
+          }
+        },
+        "$procmux$28_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:207.14-218.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "0", "1" ],
+            "Y": [ 677 ]
+          }
+        },
+        "$procmux$30": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 337 ],
+            "S": [ 678 ],
+            "Y": [ 420 ]
+          }
+        },
+        "$procmux$31_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "1", "0" ],
+            "Y": [ 678 ]
+          }
+        },
+        "$procmux$33": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000111"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0", "0", "0", "0", "0", "0", "0" ],
+            "B": [ 529, 530, 531, 532, 533, 534, 535 ],
+            "S": [ 679 ],
+            "Y": [ 413, 414, 415, 416, 417, 418, 419 ]
+          }
+        },
+        "$procmux$34_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "1", "0" ],
+            "Y": [ 679 ]
+          }
+        },
+        "$procmux$36": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 528 ],
+            "S": [ 680 ],
+            "Y": [ 412 ]
+          }
+        },
+        "$procmux$37_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "1", "0" ],
+            "Y": [ 680 ]
+          }
+        },
+        "$procmux$3_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "1", "0" ],
+            "Y": [ 674 ]
+          }
+        },
+        "$procmux$40": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:175.11-175.30|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:174.9-176.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "0", "0", "0", "0", "0", "0", "0", "1" ],
+            "S": [ 394 ],
+            "Y": [ 681, 682, 683, 684, 685, 686, 687, 688, 689, 690 ]
+          }
+        },
+        "$procmux$42": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:169.19-177.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "x", "x", "x", "x", "x", "x", "x", "x", "x", "x" ],
+            "B": [ 681, 682, 683, 684, 685, 686, 687, 688, 689, 690 ],
+            "S": [ 691 ],
+            "Y": [ 596, 597, 598, 599, 600, 601, 602, 603, 604, 605 ]
+          }
+        },
+        "$procmux$43_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:169.19-177.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "1", "0", "0", "1", "0", "1", "0", "0", "1", "1" ],
+            "Y": [ 691 ]
+          }
+        },
+        "$procmux$47": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:165.11-165.32|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:164.18-166.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "1", "0", "0", "1", "0", "1", "0", "0", "1", "1" ],
+            "S": [ 345 ],
+            "Y": [ 692, 693, 694, 695, 696, 697, 698, 699, 700, 701 ]
+          }
+        },
+        "$procmux$4_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:207.14-218.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "0", "1" ],
+            "Y": [ 675 ]
+          }
+        },
+        "$procmux$50": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:159.32-164.12|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:159.18-166.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 692, 693, 694, 695, 696, 697, 698, 699, 700, 701 ],
+            "B": [ "x", "x", "x", "x", "x", "x", "x", "x", "x", "x" ],
+            "S": [ 107 ],
+            "Y": [ 702, 703, 704, 705, 706, 707, 708, 709, 710, 711 ]
+          }
+        },
+        "$procmux$53": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:158.11-158.32|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:155.9-166.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 702, 703, 704, 705, 706, 707, 708, 709, 710, 711 ],
+            "B": [ "x", "x", "x", "x", "x", "x", "x", "x", "x", "x" ],
+            "S": [ 390 ],
+            "Y": [ 712, 713, 714, 715, 716, 717, 718, 719, 720, 721 ]
+          }
+        },
+        "$procmux$55": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "x", "x", "x", "x", "x", "x", "x", "x", "x", "x" ],
+            "B": [ 712, 713, 714, 715, 716, 717, 718, 719, 720, 721 ],
+            "S": [ 722 ],
+            "Y": [ 723, 724, 725, 726, 727, 728, 729, 730, 731, 732 ]
+          }
+        },
+        "$procmux$56_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "0", "0", "0", "0", "0", "0", "0", "1" ],
+            "Y": [ 722 ]
+          }
+        },
+        "$procmux$6": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000010",
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ 66, 154 ],
+            "S": [ 733, 734 ],
+            "Y": [ 466 ]
+          }
+        },
+        "$procmux$62": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:159.32-164.12|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:159.18-166.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 723, 724, 725, 726, 727, 728, 729, 730, 731, 732 ],
+            "B": [ "0", "1", "1", "1", "0", "1", "1", "1", "1", "1" ],
+            "S": [ 107 ],
+            "Y": [ 735, 736, 737, 738, 739, 740, 741, 742, 743, 744 ]
+          }
+        },
+        "$procmux$65": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:158.11-158.32|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:155.9-166.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 735, 736, 737, 738, 739, 740, 741, 742, 743, 744 ],
+            "B": [ "x", "x", "x", "x", "x", "x", "x", "x", "x", "x" ],
+            "S": [ 390 ],
+            "Y": [ 745, 746, 747, 748, 749, 750, 751, 752, 753, 754 ]
+          }
+        },
+        "$procmux$67": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "x", "x", "x", "x", "x", "x", "x", "x", "x", "x" ],
+            "B": [ 745, 746, 747, 748, 749, 750, 751, 752, 753, 754 ],
+            "S": [ 755 ],
+            "Y": [ 756, 757, 758, 759, 760, 761, 762, 763, 764, 765 ]
+          }
+        },
+        "$procmux$68_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "0", "0", "0", "0", "0", "0", "0", "1" ],
+            "Y": [ 755 ]
+          }
+        },
+        "$procmux$73": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:159.32-164.12|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:159.18-166.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "0" ],
+            "B": [ "1" ],
+            "S": [ 107 ],
+            "Y": [ 766 ]
+          }
+        },
+        "$procmux$76": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:158.11-158.32|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:155.9-166.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 766 ],
+            "B": [ "x" ],
+            "S": [ 390 ],
+            "Y": [ 767 ]
+          }
+        },
+        "$procmux$78": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "x" ],
+            "B": [ 767 ],
+            "S": [ 768 ],
+            "Y": [ 769 ]
+          }
+        },
+        "$procmux$79_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "0", "0", "0", "0", "0", "0", "0", "1" ],
+            "Y": [ 768 ]
+          }
+        },
+        "$procmux$7_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:220.14-232.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "1", "0" ],
+            "Y": [ 733 ]
+          }
+        },
+        "$procmux$85": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:158.11-158.32|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:155.9-166.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 756, 757, 758, 759, 760, 761, 762, 763, 764, 765 ],
+            "B": [ "1", "0", "1", "0", "1", "0", "0", "0", "1", "0" ],
+            "S": [ 390 ],
+            "Y": [ 770, 771, 772, 773, 774, 775, 776, 777, 778, 779 ]
+          }
+        },
+        "$procmux$87": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "x", "x", "x", "x", "x", "x", "x", "x", "x", "x" ],
+            "B": [ 770, 771, 772, 773, 774, 775, 776, 777, 778, 779 ],
+            "S": [ 780 ],
+            "Y": [ 606, 607, 608, 609, 610, 611, 612, 613, 614, 615 ]
+          }
+        },
+        "$procmux$88_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "0", "0", "0", "0", "0", "0", "0", "1" ],
+            "Y": [ 780 ]
+          }
+        },
+        "$procmux$8_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:207.14-218.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 409, 410 ],
+            "B": [ "0", "1" ],
+            "Y": [ 734 ]
+          }
+        },
+        "$procmux$94": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:158.11-158.32|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:155.9-166.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 769 ],
+            "B": [ "0" ],
+            "S": [ 390 ],
+            "Y": [ 781 ]
+          }
+        },
+        "$procmux$96": {
+          "hide_name": 1,
+          "type": "$mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "x" ],
+            "B": [ 781 ],
+            "S": [ 782 ],
+            "Y": [ 649 ]
+          }
+        },
+        "$procmux$97_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000001010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000001010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "parallel_case": "00000000000000000000000000000001",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:151.17-167.10|third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+            "B": [ "0", "1", "0", "0", "0", "0", "0", "0", "0", "1" ],
+            "Y": [ 782 ]
+          }
+        }
+      },
+      "netnames": {
+        "$15y": {
+          "hide_name": 1,
+          "bits": [ 388 ],
+          "attributes": {
+          }
+        },
+        "$17y": {
+          "hide_name": 1,
+          "bits": [ 389 ],
+          "attributes": {
+          }
+        },
+        "$19y": {
+          "hide_name": 1,
+          "bits": [ 390 ],
+          "attributes": {
+          }
+        },
+        "$25y": {
+          "hide_name": 1,
+          "bits": [ 393 ],
+          "attributes": {
+          }
+        },
+        "$26y": {
+          "hide_name": 1,
+          "bits": [ 394 ],
+          "attributes": {
+          }
+        },
+        "$2y": {
+          "hide_name": 1,
+          "bits": [ 392 ],
+          "attributes": {
+          }
+        },
+        "$3y": {
+          "hide_name": 1,
+          "bits": [ 391 ],
+          "attributes": {
+          }
+        },
+        "$53y": {
+          "hide_name": 1,
+          "bits": [ 536 ],
+          "attributes": {
+          }
+        },
+        "$54y": {
+          "hide_name": 1,
+          "bits": [ 537, 538 ],
+          "attributes": {
+          }
+        },
+        "$ctrl_ack$46": {
+          "hide_name": 1,
+          "bits": [ 660 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:266.9-269.12"
+          }
+        },
+        "$ctrl_ack$49": {
+          "hide_name": 1,
+          "bits": [ 520 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          }
+        },
+        "$ctrl_err$50": {
+          "hide_name": 1,
+          "bits": [ 521, 522, 523, 524, 525, 526, 527 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          }
+        },
+        "$ctrl_err[6]$47": {
+          "hide_name": 1,
+          "bits": [ 655 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:266.9-269.12"
+          }
+        },
+        "$ctrl_err_addr_o$48": {
+          "hide_name": 1,
+          "bits": [ 506, 507, 508, 509, 510, 511, 512, 513, 514, 515, 516, 517, 518, 519 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:244.5-272.12"
+          }
+        },
+        "$fifo_clr_o$21": {
+          "hide_name": 1,
+          "bits": [ 769 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:159.18-166.12"
+          }
+        },
+        "$fifo_clr_o$23": {
+          "hide_name": 1,
+          "bits": [ 649 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:155.9-166.12"
+          }
+        },
+        "$fifo_clr_o$28": {
+          "hide_name": 1,
+          "bits": [ 395 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          }
+        },
+        "$fsm_err_o$29": {
+          "hide_name": 1,
+          "bits": [ 396 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          }
+        },
+        "$func_sel$30": {
+          "hide_name": 1,
+          "bits": [ 397, 398 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          }
+        },
+        "$hw_ack_o$37": {
+          "hide_name": 1,
+          "bits": [ 421 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          }
+        },
+        "$hw_err_o$38": {
+          "hide_name": 1,
+          "bits": [ 422, 423, 424, 425, 426, 427, 428 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          }
+        },
+        "$hw_wready_o$39": {
+          "hide_name": 1,
+          "bits": [ 429 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          }
+        },
+        "$muxed_addr_o$41": {
+          "hide_name": 1,
+          "bits": [ 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          }
+        },
+        "$muxed_ctrl_o$40": {
+          "hide_name": 1,
+          "bits": [ 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          }
+        },
+        "$procmux$103_Y": {
+          "hide_name": 1,
+          "bits": [ 398 ],
+          "attributes": {
+          }
+        },
+        "$procmux$104_CMP": {
+          "hide_name": 1,
+          "bits": [ 572 ],
+          "attributes": {
+          }
+        },
+        "$procmux$108_Y": {
+          "hide_name": 1,
+          "bits": [ 397 ],
+          "attributes": {
+          }
+        },
+        "$procmux$109_CMP": {
+          "hide_name": 1,
+          "bits": [ 573 ],
+          "attributes": {
+          }
+        },
+        "$procmux$10_Y": {
+          "hide_name": 1,
+          "bits": [ 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465 ],
+          "attributes": {
+          }
+        },
+        "$procmux$111_CMP": {
+          "hide_name": 1,
+          "bits": [ 574 ],
+          "attributes": {
+          }
+        },
+        "$procmux$117_Y": {
+          "hide_name": 1,
+          "bits": [ 575, 576, 577, 578, 579, 580, 581, 582, 583, 584 ],
+          "attributes": {
+          }
+        },
+        "$procmux$118_CMP": {
+          "hide_name": 1,
+          "bits": [ 388 ],
+          "attributes": {
+          }
+        },
+        "$procmux$119_Y": {
+          "hide_name": 1,
+          "bits": [ 586, 587, 588, 589, 590, 591, 592, 593, 594, 595 ],
+          "attributes": {
+          }
+        },
+        "$procmux$11_CMP": {
+          "hide_name": 1,
+          "bits": [ 570 ],
+          "attributes": {
+          }
+        },
+        "$procmux$120_CMP": {
+          "hide_name": 1,
+          "bits": [ 585 ],
+          "attributes": {
+          }
+        },
+        "$procmux$122_Y": {
+          "hide_name": 1,
+          "bits": [ 399, 400, 401, 402, 403, 404, 405, 406, 407, 408 ],
+          "attributes": {
+          }
+        },
+        "$procmux$123_CMP": {
+          "hide_name": 1,
+          "bits": [ 626 ],
+          "attributes": {
+          }
+        },
+        "$procmux$125_CMP": {
+          "hide_name": 1,
+          "bits": [ 627 ],
+          "attributes": {
+          }
+        },
+        "$procmux$127_CMP": {
+          "hide_name": 1,
+          "bits": [ 628 ],
+          "attributes": {
+          }
+        },
+        "$procmux$129_CMP": {
+          "hide_name": 1,
+          "bits": [ 629 ],
+          "attributes": {
+          }
+        },
+        "$procmux$12_CMP": {
+          "hide_name": 1,
+          "bits": [ 571 ],
+          "attributes": {
+          }
+        },
+        "$procmux$131_CMP": {
+          "hide_name": 1,
+          "bits": [ 630 ],
+          "attributes": {
+          }
+        },
+        "$procmux$136_Y": {
+          "hide_name": 1,
+          "bits": [ 631, 632, 633, 634, 635, 636, 637, 638, 639, 640 ],
+          "attributes": {
+          }
+        },
+        "$procmux$137_CMP": {
+          "hide_name": 1,
+          "bits": [ 389 ],
+          "attributes": {
+          }
+        },
+        "$procmux$138_Y": {
+          "hide_name": 1,
+          "bits": [ 616, 617, 618, 619, 620, 621, 622, 623, 624, 625 ],
+          "attributes": {
+          }
+        },
+        "$procmux$139_CMP": {
+          "hide_name": 1,
+          "bits": [ 641 ],
+          "attributes": {
+          }
+        },
+        "$procmux$141_Y": {
+          "hide_name": 1,
+          "bits": [ 396 ],
+          "attributes": {
+          }
+        },
+        "$procmux$142_CMP": {
+          "hide_name": 1,
+          "bits": [ 644 ],
+          "attributes": {
+          }
+        },
+        "$procmux$143_CMP": {
+          "hide_name": 1,
+          "bits": [ 645 ],
+          "attributes": {
+          }
+        },
+        "$procmux$144_CMP": {
+          "hide_name": 1,
+          "bits": [ 646 ],
+          "attributes": {
+          }
+        },
+        "$procmux$145_CMP": {
+          "hide_name": 1,
+          "bits": [ 647 ],
+          "attributes": {
+          }
+        },
+        "$procmux$146_CMP": {
+          "hide_name": 1,
+          "bits": [ 648 ],
+          "attributes": {
+          }
+        },
+        "$procmux$14_Y": {
+          "hide_name": 1,
+          "bits": [ 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449 ],
+          "attributes": {
+          }
+        },
+        "$procmux$151_Y": {
+          "hide_name": 1,
+          "bits": [ 395 ],
+          "attributes": {
+          }
+        },
+        "$procmux$152_CMP": {
+          "hide_name": 1,
+          "bits": [ 650 ],
+          "attributes": {
+          }
+        },
+        "$procmux$153_Y": {
+          "hide_name": 1,
+          "bits": [ 651 ],
+          "attributes": {
+          }
+        },
+        "$procmux$154_CMP": {
+          "hide_name": 1,
+          "bits": [ 195 ],
+          "attributes": {
+          }
+        },
+        "$procmux$156_Y": {
+          "hide_name": 1,
+          "bits": [ 655 ],
+          "attributes": {
+          }
+        },
+        "$procmux$157_CMP": {
+          "hide_name": 1,
+          "bits": [ 652 ],
+          "attributes": {
+          }
+        },
+        "$procmux$158_CMP": {
+          "hide_name": 1,
+          "bits": [ 653 ],
+          "attributes": {
+          }
+        },
+        "$procmux$159_CMP": {
+          "hide_name": 1,
+          "bits": [ 654 ],
+          "attributes": {
+          }
+        },
+        "$procmux$15_CMP": {
+          "hide_name": 1,
+          "bits": [ 642 ],
+          "attributes": {
+          }
+        },
+        "$procmux$160_Y": {
+          "hide_name": 1,
+          "bits": [ 656 ],
+          "attributes": {
+          }
+        },
+        "$procmux$161_CMP": {
+          "hide_name": 1,
+          "bits": [ 195 ],
+          "attributes": {
+          }
+        },
+        "$procmux$163_Y": {
+          "hide_name": 1,
+          "bits": [ 660 ],
+          "attributes": {
+          }
+        },
+        "$procmux$164_CMP": {
+          "hide_name": 1,
+          "bits": [ 657 ],
+          "attributes": {
+          }
+        },
+        "$procmux$165_CMP": {
+          "hide_name": 1,
+          "bits": [ 658 ],
+          "attributes": {
+          }
+        },
+        "$procmux$166_CMP": {
+          "hide_name": 1,
+          "bits": [ 659 ],
+          "attributes": {
+          }
+        },
+        "$procmux$169_Y": {
+          "hide_name": 1,
+          "bits": [ 527 ],
+          "attributes": {
+          }
+        },
+        "$procmux$16_CMP": {
+          "hide_name": 1,
+          "bits": [ 643 ],
+          "attributes": {
+          }
+        },
+        "$procmux$170_CMP": {
+          "hide_name": 1,
+          "bits": [ 661 ],
+          "attributes": {
+          }
+        },
+        "$procmux$171_CMP": {
+          "hide_name": 1,
+          "bits": [ 662 ],
+          "attributes": {
+          }
+        },
+        "$procmux$172_CMP": {
+          "hide_name": 1,
+          "bits": [ 663 ],
+          "attributes": {
+          }
+        },
+        "$procmux$174_Y": {
+          "hide_name": 1,
+          "bits": [ 521, 522, 523, 524, 525, 526 ],
+          "attributes": {
+          }
+        },
+        "$procmux$175_CMP": {
+          "hide_name": 1,
+          "bits": [ 664 ],
+          "attributes": {
+          }
+        },
+        "$procmux$176_CMP": {
+          "hide_name": 1,
+          "bits": [ 665 ],
+          "attributes": {
+          }
+        },
+        "$procmux$177_CMP": {
+          "hide_name": 1,
+          "bits": [ 666 ],
+          "attributes": {
+          }
+        },
+        "$procmux$180_Y": {
+          "hide_name": 1,
+          "bits": [ 520 ],
+          "attributes": {
+          }
+        },
+        "$procmux$181_CMP": {
+          "hide_name": 1,
+          "bits": [ 667 ],
+          "attributes": {
+          }
+        },
+        "$procmux$182_CMP": {
+          "hide_name": 1,
+          "bits": [ 668 ],
+          "attributes": {
+          }
+        },
+        "$procmux$183_CMP": {
+          "hide_name": 1,
+          "bits": [ 669 ],
+          "attributes": {
+          }
+        },
+        "$procmux$185_Y": {
+          "hide_name": 1,
+          "bits": [ 506, 507, 508, 509, 510, 511, 512, 513, 514, 515, 516, 517, 518, 519 ],
+          "attributes": {
+          }
+        },
+        "$procmux$186_CMP": {
+          "hide_name": 1,
+          "bits": [ 670 ],
+          "attributes": {
+          }
+        },
+        "$procmux$187_CMP": {
+          "hide_name": 1,
+          "bits": [ 671 ],
+          "attributes": {
+          }
+        },
+        "$procmux$188_CMP": {
+          "hide_name": 1,
+          "bits": [ 672 ],
+          "attributes": {
+          }
+        },
+        "$procmux$19_Y": {
+          "hide_name": 1,
+          "bits": [ 429 ],
+          "attributes": {
+          }
+        },
+        "$procmux$20_CMP": {
+          "hide_name": 1,
+          "bits": [ 673 ],
+          "attributes": {
+          }
+        },
+        "$procmux$23_Y": {
+          "hide_name": 1,
+          "bits": [ 422, 423, 424, 425, 426, 427, 428 ],
+          "attributes": {
+          }
+        },
+        "$procmux$24_CMP": {
+          "hide_name": 1,
+          "bits": [ 676 ],
+          "attributes": {
+          }
+        },
+        "$procmux$27_Y": {
+          "hide_name": 1,
+          "bits": [ 421 ],
+          "attributes": {
+          }
+        },
+        "$procmux$28_CMP": {
+          "hide_name": 1,
+          "bits": [ 677 ],
+          "attributes": {
+          }
+        },
+        "$procmux$2_Y": {
+          "hide_name": 1,
+          "bits": [ 467, 468, 469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500, 501, 502, 503, 504, 505 ],
+          "attributes": {
+          }
+        },
+        "$procmux$30_Y": {
+          "hide_name": 1,
+          "bits": [ 420 ],
+          "attributes": {
+          }
+        },
+        "$procmux$31_CMP": {
+          "hide_name": 1,
+          "bits": [ 678 ],
+          "attributes": {
+          }
+        },
+        "$procmux$33_Y": {
+          "hide_name": 1,
+          "bits": [ 413, 414, 415, 416, 417, 418, 419 ],
+          "attributes": {
+          }
+        },
+        "$procmux$34_CMP": {
+          "hide_name": 1,
+          "bits": [ 679 ],
+          "attributes": {
+          }
+        },
+        "$procmux$36_Y": {
+          "hide_name": 1,
+          "bits": [ 412 ],
+          "attributes": {
+          }
+        },
+        "$procmux$37_CMP": {
+          "hide_name": 1,
+          "bits": [ 680 ],
+          "attributes": {
+          }
+        },
+        "$procmux$3_CMP": {
+          "hide_name": 1,
+          "bits": [ 674 ],
+          "attributes": {
+          }
+        },
+        "$procmux$40_Y": {
+          "hide_name": 1,
+          "bits": [ 681, 682, 683, 684, 685, 686, 687, 688, 689, 690 ],
+          "attributes": {
+          }
+        },
+        "$procmux$41_CMP": {
+          "hide_name": 1,
+          "bits": [ 394 ],
+          "attributes": {
+          }
+        },
+        "$procmux$42_Y": {
+          "hide_name": 1,
+          "bits": [ 596, 597, 598, 599, 600, 601, 602, 603, 604, 605 ],
+          "attributes": {
+          }
+        },
+        "$procmux$43_CMP": {
+          "hide_name": 1,
+          "bits": [ 691 ],
+          "attributes": {
+          }
+        },
+        "$procmux$47_Y": {
+          "hide_name": 1,
+          "bits": [ 692, 693, 694, 695, 696, 697, 698, 699, 700, 701 ],
+          "attributes": {
+          }
+        },
+        "$procmux$48_CMP": {
+          "hide_name": 1,
+          "bits": [ 345 ],
+          "attributes": {
+          }
+        },
+        "$procmux$4_CMP": {
+          "hide_name": 1,
+          "bits": [ 675 ],
+          "attributes": {
+          }
+        },
+        "$procmux$50_Y": {
+          "hide_name": 1,
+          "bits": [ 702, 703, 704, 705, 706, 707, 708, 709, 710, 711 ],
+          "attributes": {
+          }
+        },
+        "$procmux$51_CMP": {
+          "hide_name": 1,
+          "bits": [ 107 ],
+          "attributes": {
+          }
+        },
+        "$procmux$53_Y": {
+          "hide_name": 1,
+          "bits": [ 712, 713, 714, 715, 716, 717, 718, 719, 720, 721 ],
+          "attributes": {
+          }
+        },
+        "$procmux$54_CMP": {
+          "hide_name": 1,
+          "bits": [ 390 ],
+          "attributes": {
+          }
+        },
+        "$procmux$55_Y": {
+          "hide_name": 1,
+          "bits": [ 723, 724, 725, 726, 727, 728, 729, 730, 731, 732 ],
+          "attributes": {
+          }
+        },
+        "$procmux$56_CMP": {
+          "hide_name": 1,
+          "bits": [ 722 ],
+          "attributes": {
+          }
+        },
+        "$procmux$62_Y": {
+          "hide_name": 1,
+          "bits": [ 735, 736, 737, 738, 739, 740, 741, 742, 743, 744 ],
+          "attributes": {
+          }
+        },
+        "$procmux$63_CMP": {
+          "hide_name": 1,
+          "bits": [ 107 ],
+          "attributes": {
+          }
+        },
+        "$procmux$65_Y": {
+          "hide_name": 1,
+          "bits": [ 745, 746, 747, 748, 749, 750, 751, 752, 753, 754 ],
+          "attributes": {
+          }
+        },
+        "$procmux$66_CMP": {
+          "hide_name": 1,
+          "bits": [ 390 ],
+          "attributes": {
+          }
+        },
+        "$procmux$67_Y": {
+          "hide_name": 1,
+          "bits": [ 756, 757, 758, 759, 760, 761, 762, 763, 764, 765 ],
+          "attributes": {
+          }
+        },
+        "$procmux$68_CMP": {
+          "hide_name": 1,
+          "bits": [ 755 ],
+          "attributes": {
+          }
+        },
+        "$procmux$6_Y": {
+          "hide_name": 1,
+          "bits": [ 466 ],
+          "attributes": {
+          }
+        },
+        "$procmux$73_Y": {
+          "hide_name": 1,
+          "bits": [ 766 ],
+          "attributes": {
+          }
+        },
+        "$procmux$74_CMP": {
+          "hide_name": 1,
+          "bits": [ 107 ],
+          "attributes": {
+          }
+        },
+        "$procmux$76_Y": {
+          "hide_name": 1,
+          "bits": [ 767 ],
+          "attributes": {
+          }
+        },
+        "$procmux$77_CMP": {
+          "hide_name": 1,
+          "bits": [ 390 ],
+          "attributes": {
+          }
+        },
+        "$procmux$78_Y": {
+          "hide_name": 1,
+          "bits": [ 769 ],
+          "attributes": {
+          }
+        },
+        "$procmux$79_CMP": {
+          "hide_name": 1,
+          "bits": [ 768 ],
+          "attributes": {
+          }
+        },
+        "$procmux$7_CMP": {
+          "hide_name": 1,
+          "bits": [ 733 ],
+          "attributes": {
+          }
+        },
+        "$procmux$85_Y": {
+          "hide_name": 1,
+          "bits": [ 770, 771, 772, 773, 774, 775, 776, 777, 778, 779 ],
+          "attributes": {
+          }
+        },
+        "$procmux$86_CMP": {
+          "hide_name": 1,
+          "bits": [ 390 ],
+          "attributes": {
+          }
+        },
+        "$procmux$87_Y": {
+          "hide_name": 1,
+          "bits": [ 606, 607, 608, 609, 610, 611, 612, 613, 614, 615 ],
+          "attributes": {
+          }
+        },
+        "$procmux$88_CMP": {
+          "hide_name": 1,
+          "bits": [ 780 ],
+          "attributes": {
+          }
+        },
+        "$procmux$8_CMP": {
+          "hide_name": 1,
+          "bits": [ 734 ],
+          "attributes": {
+          }
+        },
+        "$procmux$94_Y": {
+          "hide_name": 1,
+          "bits": [ 781 ],
+          "attributes": {
+          }
+        },
+        "$procmux$95_CMP": {
+          "hide_name": 1,
+          "bits": [ 390 ],
+          "attributes": {
+          }
+        },
+        "$procmux$96_Y": {
+          "hide_name": 1,
+          "bits": [ 649 ],
+          "attributes": {
+          }
+        },
+        "$procmux$97_CMP": {
+          "hide_name": 1,
+          "bits": [ 782 ],
+          "attributes": {
+          }
+        },
+        "$prog_fifo_wdata_o$43": {
+          "hide_name": 1,
+          "bits": [ 467, 468, 469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500, 501, 502, 503, 504, 505 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          }
+        },
+        "$prog_fifo_wvalid_o$42": {
+          "hide_name": 1,
+          "bits": [ 466 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          }
+        },
+        "$root.prim_mubi_pkg.mubi4_test_true_loose.val": {
+          "hide_name": 1,
+          "bits": [ 783, 784, 785, 786 ],
+          "attributes": {
+            "hdlname": "$root prim_mubi_pkg mubi4_test_true_loose val",
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim/rtl/prim_mubi_pkg.sv:64.58"
+          }
+        },
+        "$state_d$16": {
+          "hide_name": 1,
+          "bits": [ 586, 587, 588, 589, 590, 591, 592, 593, 594, 595 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:136.9-140.12"
+          }
+        },
+        "$state_d$18": {
+          "hide_name": 1,
+          "bits": [ 616, 617, 618, 619, 620, 621, 622, 623, 624, 625 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:146.9-148.12"
+          }
+        },
+        "$state_d$20": {
+          "hide_name": 1,
+          "bits": [ 723, 724, 725, 726, 727, 728, 729, 730, 731, 732 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:164.18-166.12"
+          }
+        },
+        "$state_d$22": {
+          "hide_name": 1,
+          "bits": [ 756, 757, 758, 759, 760, 761, 762, 763, 764, 765 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:159.18-166.12"
+          }
+        },
+        "$state_d$24": {
+          "hide_name": 1,
+          "bits": [ 606, 607, 608, 609, 610, 611, 612, 613, 614, 615 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:155.9-166.12"
+          }
+        },
+        "$state_d$27": {
+          "hide_name": 1,
+          "bits": [ 596, 597, 598, 599, 600, 601, 602, 603, 604, 605 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:174.9-176.12"
+          }
+        },
+        "$state_d$31": {
+          "hide_name": 1,
+          "bits": [ 399, 400, 401, 402, 403, 404, 405, 406, 407, 408 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:132.5-186.12"
+          }
+        },
+        "$sw_ack_o$34": {
+          "hide_name": 1,
+          "bits": [ 412 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          }
+        },
+        "$sw_err_o$35": {
+          "hide_name": 1,
+          "bits": [ 413, 414, 415, 416, 417, 418, 419 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          }
+        },
+        "$sw_wready_o$36": {
+          "hide_name": 1,
+          "bits": [ 420 ],
+          "attributes": {
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:206.5-235.12"
+          }
+        },
+        "clk_i": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "hdlname": "clk_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:16.9"
+          }
+        },
+        "ctrl_ack": {
+          "hide_name": 0,
+          "bits": [ 528 ],
+          "attributes": {
+            "hdlname": "ctrl_ack",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:190.9"
+          }
+        },
+        "ctrl_err": {
+          "hide_name": 0,
+          "bits": [ 529, 530, 531, 532, 533, 534, 535 ],
+          "attributes": {
+            "hdlname": "ctrl_err",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:191.20"
+          }
+        },
+        "ctrl_err_addr_o": {
+          "hide_name": 0,
+          "bits": [ 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ],
+          "attributes": {
+            "hdlname": "ctrl_err_addr_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:22.31"
+          }
+        },
+        "disable_i": {
+          "hide_name": 0,
+          "bits": [ 4, 5, 6, 7 ],
+          "attributes": {
+            "hdlname": "disable_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:19.32"
+          }
+        },
+        "erase_ack_i": {
+          "hide_name": 0,
+          "bits": [ 275 ],
+          "attributes": {
+            "hdlname": "erase_ack_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:57.9"
+          }
+        },
+        "erase_err_addr_i": {
+          "hide_name": 0,
+          "bits": [ 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296 ],
+          "attributes": {
+            "hdlname": "erase_err_addr_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:59.24"
+          }
+        },
+        "erase_err_i": {
+          "hide_name": 0,
+          "bits": [ 276, 277, 278, 279, 280, 281, 282 ],
+          "attributes": {
+            "hdlname": "erase_err_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:58.26"
+          }
+        },
+        "fifo_clr_o": {
+          "hide_name": 0,
+          "bits": [ 339 ],
+          "attributes": {
+            "hdlname": "fifo_clr_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:70.16"
+          }
+        },
+        "flash_phy_busy_i": {
+          "hide_name": 0,
+          "bits": [ 338 ],
+          "attributes": {
+            "hdlname": "flash_phy_busy_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:67.15"
+          }
+        },
+        "fsm_err_o": {
+          "hide_name": 0,
+          "bits": [ 344 ],
+          "attributes": {
+            "hdlname": "fsm_err_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:79.16"
+          }
+        },
+        "func_sel": {
+          "hide_name": 0,
+          "bits": [ 409, 410 ],
+          "attributes": {
+            "hdlname": "func_sel",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:116.15"
+          }
+        },
+        "hw_ack_o": {
+          "hide_name": 0,
+          "bits": [ 146 ],
+          "attributes": {
+            "hdlname": "hw_ack_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:40.16"
+          }
+        },
+        "hw_addr_i": {
+          "hide_name": 0,
+          "bits": [ 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145 ],
+          "attributes": {
+            "hdlname": "hw_addr_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:39.28"
+          }
+        },
+        "hw_ctrl_i": {
+          "hide_name": 0,
+          "bits": [ 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127 ],
+          "attributes": {
+            "hdlname": "hw_ctrl_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:37.61"
+          }
+        },
+        "hw_err_o": {
+          "hide_name": 0,
+          "bits": [ 147, 148, 149, 150, 151, 152, 153 ],
+          "attributes": {
+            "hdlname": "hw_err_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:41.27"
+          }
+        },
+        "hw_phase_i": {
+          "hide_name": 0,
+          "bits": [ 128, 129 ],
+          "attributes": {
+            "hdlname": "hw_phase_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:38.29"
+          }
+        },
+        "hw_req_i": {
+          "hide_name": 0,
+          "bits": [ 107 ],
+          "attributes": {
+            "hdlname": "hw_req_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:36.9"
+          }
+        },
+        "hw_wdata_i": {
+          "hide_name": 0,
+          "bits": [ 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193 ],
+          "attributes": {
+            "hdlname": "hw_wdata_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:45.28"
+          }
+        },
+        "hw_wready_o": {
+          "hide_name": 0,
+          "bits": [ 194 ],
+          "attributes": {
+            "hdlname": "hw_wready_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:46.16"
+          }
+        },
+        "hw_wvalid_i": {
+          "hide_name": 0,
+          "bits": [ 154 ],
+          "attributes": {
+            "hdlname": "hw_wvalid_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:44.9"
+          }
+        },
+        "muxed_addr_o": {
+          "hide_name": 0,
+          "bits": [ 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230 ],
+          "attributes": {
+            "hdlname": "muxed_addr_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:50.35"
+          }
+        },
+        "muxed_ctrl_o": {
+          "hide_name": 0,
+          "bits": [ 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214 ],
+          "attributes": {
+            "hdlname": "muxed_ctrl_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:49.62"
+          }
+        },
+        "phase_o": {
+          "hide_name": 0,
+          "bits": [ 340, 341 ],
+          "attributes": {
+            "hdlname": "phase_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:73.30"
+          }
+        },
+        "prog_ack_i": {
+          "hide_name": 0,
+          "bits": [ 231 ],
+          "attributes": {
+            "hdlname": "prog_ack_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:51.9"
+          }
+        },
+        "prog_err_addr_i": {
+          "hide_name": 0,
+          "bits": [ 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252 ],
+          "attributes": {
+            "hdlname": "prog_err_addr_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:53.24"
+          }
+        },
+        "prog_err_i": {
+          "hide_name": 0,
+          "bits": [ 232, 233, 234, 235, 236, 237, 238 ],
+          "attributes": {
+            "hdlname": "prog_err_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:52.26"
+          }
+        },
+        "prog_fifo_wdata_o": {
+          "hide_name": 0,
+          "bits": [ 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336 ],
+          "attributes": {
+            "hdlname": "prog_fifo_wdata_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:63.35"
+          }
+        },
+        "prog_fifo_wready_i": {
+          "hide_name": 0,
+          "bits": [ 337 ],
+          "attributes": {
+            "hdlname": "prog_fifo_wready_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:64.15"
+          }
+        },
+        "prog_fifo_wvalid_o": {
+          "hide_name": 0,
+          "bits": [ 297 ],
+          "attributes": {
+            "hdlname": "prog_fifo_wvalid_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:62.16"
+          }
+        },
+        "rd_ack_i": {
+          "hide_name": 0,
+          "bits": [ 253 ],
+          "attributes": {
+            "hdlname": "rd_ack_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:54.9"
+          }
+        },
+        "rd_err_addr_i": {
+          "hide_name": 0,
+          "bits": [ 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274 ],
+          "attributes": {
+            "hdlname": "rd_err_addr_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:56.24"
+          }
+        },
+        "rd_err_i": {
+          "hide_name": 0,
+          "bits": [ 254, 255, 256, 257, 258, 259, 260 ],
+          "attributes": {
+            "hdlname": "rd_err_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:55.26"
+          }
+        },
+        "rst_ni": {
+          "hide_name": 0,
+          "bits": [ 3 ],
+          "attributes": {
+            "hdlname": "rst_ni",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:17.9"
+          }
+        },
+        "sel_o": {
+          "hide_name": 0,
+          "bits": [ 342, 343 ],
+          "attributes": {
+            "hdlname": "sel_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:76.22"
+          }
+        },
+        "state_d": {
+          "hide_name": 0,
+          "bits": [ 348, 349, 350, 351, 352, 353, 354, 355, 356, 357 ],
+          "attributes": {
+            "hdlname": "state_d",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:117.24"
+          }
+        },
+        "state_q": {
+          "hide_name": 0,
+          "bits": [ 378, 379, 380, 381, 382, 383, 384, 385, 386, 387 ],
+          "attributes": {
+            "hdlname": "state_q",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:117.15"
+          }
+        },
+        "sw_ack_o": {
+          "hide_name": 0,
+          "bits": [ 58 ],
+          "attributes": {
+            "hdlname": "sw_ack_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:27.16"
+          }
+        },
+        "sw_addr_i": {
+          "hide_name": 0,
+          "bits": [ 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57 ],
+          "attributes": {
+            "hdlname": "sw_addr_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:26.28"
+          }
+        },
+        "sw_ctrl_i": {
+          "hide_name": 0,
+          "bits": [ 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 ],
+          "attributes": {
+            "hdlname": "sw_ctrl_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:25.61"
+          }
+        },
+        "sw_err_o": {
+          "hide_name": 0,
+          "bits": [ 59, 60, 61, 62, 63, 64, 65 ],
+          "attributes": {
+            "hdlname": "sw_err_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:28.27"
+          }
+        },
+        "sw_req": {
+          "hide_name": 0,
+          "bits": [ 345 ],
+          "attributes": {
+            "hdlname": "sw_req",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:119.9"
+          }
+        },
+        "sw_wdata_i": {
+          "hide_name": 0,
+          "bits": [ 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106 ],
+          "attributes": {
+            "hdlname": "sw_wdata_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:33.28"
+          }
+        },
+        "sw_wready_o": {
+          "hide_name": 0,
+          "bits": [ 67 ],
+          "attributes": {
+            "hdlname": "sw_wready_o",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:32.16"
+          }
+        },
+        "sw_wvalid_i": {
+          "hide_name": 0,
+          "bits": [ 66 ],
+          "attributes": {
+            "hdlname": "sw_wvalid_i",
+            "src": "third_party/opentitan_flash_closure/hw/top_englishbreakfast/ip_autogen/flash_ctrl/rtl/flash_ctrl_arb.sv:31.9"
+          }
+        },
+        "u_state_regs.clk_i": {
+          "hide_name": 0,
+          "bits": [ 346 ],
+          "attributes": {
+            "hdlname": "u_state_regs clk_i",
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim/rtl/prim_sparse_fsm_flop.sv:22.21"
+          }
+        },
+        "u_state_regs.rst_ni": {
+          "hide_name": 0,
+          "bits": [ 347 ],
+          "attributes": {
+            "hdlname": "u_state_regs rst_ni",
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim/rtl/prim_sparse_fsm_flop.sv:23.21"
+          }
+        },
+        "u_state_regs.state_i": {
+          "hide_name": 0,
+          "bits": [ 358, 359, 360, 361, 362, 363, 364, 365, 366, 367 ],
+          "attributes": {
+            "hdlname": "u_state_regs state_i",
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim/rtl/prim_sparse_fsm_flop.sv:24.21"
+          }
+        },
+        "u_state_regs.state_o": {
+          "hide_name": 0,
+          "bits": [ 368, 369, 370, 371, 372, 373, 374, 375, 376, 377 ],
+          "attributes": {
+            "hdlname": "u_state_regs state_o",
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim/rtl/prim_sparse_fsm_flop.sv:25.21"
+          }
+        },
+        "u_state_regs.state_raw": {
+          "hide_name": 0,
+          "bits": [ 559, 560, 561, 562, 563, 564, 565, 566, 567, 568 ],
+          "attributes": {
+            "hdlname": "u_state_regs state_raw",
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim/rtl/prim_sparse_fsm_flop.sv:30.21"
+          }
+        },
+        "u_state_regs.u_state_flop.clk_i": {
+          "hide_name": 0,
+          "bits": [ 411 ],
+          "attributes": {
+            "hdlname": "u_state_regs u_state_flop clk_i",
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim_generic/rtl/prim_flop.sv:11.28"
+          }
+        },
+        "u_state_regs.u_state_flop.d_i": {
+          "hide_name": 0,
+          "bits": [ 539, 540, 541, 542, 543, 544, 545, 546, 547, 548 ],
+          "attributes": {
+            "hdlname": "u_state_regs u_state_flop d_i",
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim_generic/rtl/prim_flop.sv:13.28"
+          }
+        },
+        "u_state_regs.u_state_flop.q_o": {
+          "hide_name": 0,
+          "bits": [ 549, 550, 551, 552, 553, 554, 555, 556, 557, 558 ],
+          "attributes": {
+            "hdlname": "u_state_regs u_state_flop q_o",
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim_generic/rtl/prim_flop.sv:14.28"
+          }
+        },
+        "u_state_regs.u_state_flop.rst_ni": {
+          "hide_name": 0,
+          "bits": [ 391 ],
+          "attributes": {
+            "hdlname": "u_state_regs u_state_flop rst_ni",
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim_generic/rtl/prim_flop.sv:12.28"
+          }
+        },
+        "u_state_regs.unused_err_o": {
+          "hide_name": 0,
+          "bits": [ 569 ],
+          "attributes": {
+            "hdlname": "u_state_regs unused_err_o",
+            "src": "third_party/opentitan_flash_closure/hw/ip/prim/rtl/prim_sparse_fsm_flop.sv:28.9"
+          }
+        }
+      }
+    }
+  }
+}

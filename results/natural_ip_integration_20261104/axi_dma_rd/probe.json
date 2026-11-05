@@ -1,0 +1,86 @@
+{
+  "configuration": {
+    "root": "third_party/verilog_axi_candidate",
+    "top": "axi_dma_rd",
+    "sources": [
+      "rtl/axi_dma_rd.v"
+    ],
+    "include_dirs": [],
+    "defines": [],
+    "parameters": {
+      "ENABLE_UNALIGNED": 1
+    },
+    "clock": "clk",
+    "reset": "rst",
+    "reset_active": 1,
+    "revision": "516bd5dadc3365b7f9e225d2af8fe0b8d804fe53"
+  },
+  "runs": [
+    {
+      "stage": "slang",
+      "returncode": 0,
+      "seconds": 0.04643191723152995,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/slang",
+        "--single-unit",
+        "--top",
+        "axi_dma_rd",
+        "-G",
+        "ENABLE_UNALIGNED=1",
+        "--ast-json",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/natural_ip_integration_20261104/axi_dma_rd/ast.json",
+        "--ast-json-source-info",
+        "--ast-json-detailed-types",
+        "third_party/verilog_axi_candidate/rtl/axi_dma_rd.v"
+      ]
+    },
+    {
+      "stage": "verilator",
+      "returncode": 0,
+      "seconds": 0.13239333406090736,
+      "command": [
+        "verilator",
+        "--lint-only",
+        "--timing",
+        "-Wno-fatal",
+        "--top-module",
+        "axi_dma_rd",
+        "-GENABLE_UNALIGNED=1",
+        "third_party/verilog_axi_candidate/rtl/axi_dma_rd.v"
+      ]
+    },
+    {
+      "stage": "iverilog",
+      "returncode": 0,
+      "seconds": 0.05027687503024936,
+      "command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "axi_dma_rd",
+        "-tnull",
+        "-Paxi_dma_rd.ENABLE_UNALIGNED=1",
+        "third_party/verilog_axi_candidate/rtl/axi_dma_rd.v"
+      ]
+    },
+    {
+      "stage": "yosys",
+      "returncode": 0,
+      "seconds": 0.10705962497740984,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/yosys",
+        "-Q",
+        "-T",
+        "-s",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/natural_ip_integration_20261104/axi_dma_rd/probe.ys"
+      ]
+    }
+  ],
+  "source_sha256": {
+    "third_party/verilog_axi_candidate/rtl/axi_dma_rd.v": "853ff3aedc44ec0c12ef3ae8b84d7559800d372f76832c7c133ed5eecac61dd8"
+  },
+  "no_model_calls": true,
+  "no_functional_checker_claim": true,
+  "qualified_for_B": false,
+  "assertions": "SYNTHESIS selects upstream synthesis-compatible assertion macros for flash; not assertion verification."
+}

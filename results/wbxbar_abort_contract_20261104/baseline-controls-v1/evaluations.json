@@ -1,0 +1,3223 @@
+{
+  "selftests": [
+    {
+      "name": "write_positive",
+      "pass": true
+    },
+    {
+      "name": "write_payload_fault",
+      "pass": true
+    },
+    {
+      "name": "write_misroute_fault",
+      "pass": true
+    },
+    {
+      "name": "read_positive",
+      "pass": true
+    },
+    {
+      "name": "read_data_fault",
+      "pass": true
+    },
+    {
+      "name": "unmapped_err_positive",
+      "pass": true
+    },
+    {
+      "name": "unmapped_ack_fault",
+      "pass": true
+    },
+    {
+      "name": "invented_ack_fault",
+      "pass": true
+    },
+    {
+      "name": "incomplete_unresolved",
+      "pass": true
+    },
+    {
+      "name": "early_unexplained_err_unresolved",
+      "pass": true
+    },
+    {
+      "name": "unexplained_err_persists_after_reset",
+      "pass": true
+    },
+    {
+      "name": "slave_err_positive",
+      "pass": true
+    },
+    {
+      "name": "masked_lane_write_positive",
+      "pass": true
+    },
+    {
+      "name": "enabled_lane_write_fault",
+      "pass": true
+    },
+    {
+      "name": "unsolicited_slave_ack_env",
+      "pass": true
+    }
+  ],
+  "cases": {
+    "positive/read": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 slave0 accept@10 slaveACK@11 masterACK@12"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/write_mask": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 slave0 accept@10 slaveACK@11 masterACK@12"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/slave_error": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 state serr ERR@12"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "slave_err": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/unmapped": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 state new ERR@12"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "decode_err": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/concurrent": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 slave0 accept@10 slaveACK@11 masterACK@12"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 9,
+          "end_cycle": 13,
+          "evidence": "m1 accept@9 slave1 accept@11 slaveACK@12 masterACK@13"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 2,
+        "completed_ok": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/pipeline": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 slave0 accept@10 slaveACK@11 masterACK@12"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 9,
+          "end_cycle": 13,
+          "evidence": "m0 accept@9 slave0 accept@11 slaveACK@12 masterACK@13"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 2,
+        "completed_ok": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/accept_and_return": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 slave0 accept@10 slaveACK@11 masterACK@12"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 12,
+          "end_cycle": 16,
+          "evidence": "m0 accept@12 slave0 accept@14 slaveACK@15 masterACK@16"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 2,
+        "completed_ok": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/master1": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m1 accept@8 slave1 accept@10 slaveACK@11 masterACK@12"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/reset_then_new": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 slave0 accept@10 slaveACK@11 masterACK@12"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 15,
+          "end_cycle": 15,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 16,
+          "end_cycle": 16,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 18,
+          "end_cycle": 22,
+          "evidence": "m0 accept@18 slave0 accept@20 slaveACK@21 masterACK@22"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 2,
+        "completed_ok": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/reset_inflight": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 11,
+          "end_cycle": 11,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 12,
+          "end_cycle": 12,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 16,
+          "end_cycle": 20,
+          "evidence": "m0 accept@16 slave0 accept@18 slaveACK@19 masterACK@20"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 1,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 2,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/read_data": {
+      "failures": [
+        {
+          "cycle": 12,
+          "category": "read_data",
+          "detail": "master 0 got 2882400019, slave returned 2882400018"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/write_data": {
+      "failures": [
+        {
+          "cycle": 10,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=3,sel=5,d=305419897) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 12,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is new (decode error, slave error, dropped, or no slave ACK)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/write_mask": {
+      "failures": [
+        {
+          "cycle": 10,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=3,sel=15,d=305419896) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 12,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is new (decode error, slave error, dropped, or no slave ACK)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/address": {
+      "failures": [
+        {
+          "cycle": 10,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=0,a=4,sel=15,d=305419896) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 12,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is new (decode error, slave error, dropped, or no slave ACK)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/direction": {
+      "failures": [
+        {
+          "cycle": 10,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=3,sel=15,d=305419896) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 12,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is new (decode error, slave error, dropped, or no slave ACK)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/missing_forward": {
+      "failures": [
+        {
+          "cycle": 12,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is new (decode error, slave error, dropped, or no slave ACK)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/wrong_owner": {
+      "failures": [
+        {
+          "cycle": 12,
+          "category": "read_data",
+          "detail": "master 1 got 0, slave returned 1437230592"
+        },
+        {
+          "cycle": 13,
+          "category": "invented_response",
+          "detail": "master 1 ACK with no outstanding request"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 2,
+        "completed_ok": 1,
+        "aborted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/duplicate_response": {
+      "failures": [
+        {
+          "cycle": 13,
+          "category": "invented_response",
+          "detail": "master 0 ACK with no outstanding request"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 slave0 accept@10 slaveACK@11 masterACK@12"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/error_as_success": {
+      "failures": [
+        {
+          "cycle": 12,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is serr (decode error, slave error, dropped, or no slave ACK)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/stale_after_reset": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 11,
+          "end_cycle": 11,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 12,
+          "end_cycle": 12,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 16,
+          "end_cycle": 20,
+          "evidence": "m0 accept@16 slave0 accept@18 slaveACK@19 masterACK@20"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 1,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 2,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/stale_into_new_epoch": {
+      "failures": [
+        {
+          "cycle": 16,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is new (decode error, slave error, dropped, or no slave ACK)"
+        },
+        {
+          "cycle": 18,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=0,a=6,sel=15,d=305419896) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 20,
+          "category": "invented_response",
+          "detail": "master 0 ACK with no outstanding request"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 11,
+          "end_cycle": 11,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 12,
+          "end_cycle": 12,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 1,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/early_unexplained_error": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 9,
+          "item": "unexplained_mapped_err",
+          "detail": "m0 accept@8 addr 3 slave0 state new ERR@9 (1 cycles) with no matching slave ERR; timeout/starvation eligibility not established; persists for batch"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "unexplained_err": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "incomplete/missing_return": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 23,
+          "item": "pending_at_batch_end",
+          "detail": "1 master-side and 0 slave-side obligations outstanding; inconclusive, not a liveness violation"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "pending_master": 1,
+        "pending_slave": 0
+      }
+    },
+    "incomplete/truncated": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 11,
+          "item": "pending_at_batch_end",
+          "detail": "1 master-side and 0 slave-side obligations outstanding; inconclusive, not a liveness violation"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "pending_master": 1,
+        "pending_slave": 0
+      }
+    },
+    "invalid/master_changes_stalled_payload": {
+      "failures": [
+        {
+          "cycle": 10,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=0,a=3,sel=15,d=305419896) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 12,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is new (decode error, slave error, dropped, or no slave ACK)"
+        }
+      ],
+      "assumption_violations": [
+        {
+          "cycle": 9,
+          "category": "hold",
+          "detail": "master 0 changed/withdrew stalled request without dropping CYC"
+        }
+      ],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "input_or_scope_invalid",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/masked_write_bytes": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 slave0 accept@10 slaveACK@11 masterACK@12"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/slave_stall": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 8,
+          "end_cycle": 14,
+          "evidence": "m0 accept@8 slave0 accept@12 slaveACK@13 masterACK@14"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/slave_stalled_payload": {
+      "failures": [
+        {
+          "cycle": 11,
+          "category": "hold",
+          "detail": "slave 0 stalled request changed/withdrawn without dropping CYC"
+        },
+        {
+          "cycle": 12,
+          "category": "hold",
+          "detail": "slave 0 stalled request changed/withdrawn without dropping CYC"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/slave_stalled_strobe": {
+      "failures": [
+        {
+          "cycle": 11,
+          "category": "hold",
+          "detail": "slave 0 stalled request changed/withdrawn without dropping CYC"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/ack_and_err": {
+      "failures": [
+        {
+          "cycle": 12,
+          "category": "protocol",
+          "detail": "master 0 ACK and ERR coincide"
+        },
+        {
+          "cycle": 12,
+          "category": "response",
+          "detail": "master 0 ERR although slave ACKed oldest request"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/reset_slave_cycle": {
+      "failures": [
+        {
+          "cycle": 0,
+          "category": "reset",
+          "detail": "post-reset-edge o_scyc not inactive: 1"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 slave0 accept@10 slaveACK@11 masterACK@12"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "unresolved/identical_heads": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 10,
+          "item": "ownership_ambiguous",
+          "detail": "slave 0 request matches multiple live/aborted owners; ownership/data checks suspended until reset"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/contention": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 slave0 accept@10 slaveACK@11 masterACK@12"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 8,
+          "end_cycle": 15,
+          "evidence": "m1 accept@8 slave0 accept@13 slaveACK@14 masterACK@15"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 2,
+        "completed_ok": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/mapped_decode_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 slave0 accept@10 slaveACK@11 masterACK@12"
+        },
+        {
+          "family": "error",
+          "kind": "decode_err",
+          "start_cycle": 9,
+          "end_cycle": 13,
+          "evidence": "m0 accept@9 state new ERR@13"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 16,
+          "end_cycle": 20,
+          "evidence": "m0 accept@16 slave0 accept@18 slaveACK@19 masterACK@20"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 2,
+        "forwarded": 2,
+        "completed_ok": 2,
+        "decode_err": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/slave_error_burst_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 state serr ERR@12"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 9,
+          "end_cycle": 13,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 16,
+          "end_cycle": 20,
+          "evidence": "m0 accept@16 slave0 accept@18 slaveACK@19 masterACK@20"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 3,
+        "forwarded": 3,
+        "slave_err": 1,
+        "aborted": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/abort_late_slave_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 8,
+          "end_cycle": 11,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 15,
+          "end_cycle": 19,
+          "evidence": "m0 accept@15 slave0 accept@17 slaveACK@18 masterACK@19"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 2,
+        "aborted": 1,
+        "orphan_slave_responses_discarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "unresolved/unclassified_late_error": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 28,
+          "item": "unexplained_mapped_err",
+          "detail": "m0 accept@8 addr 3 slave0 state fwd ERR@28 (20 cycles) with no matching slave ERR; timeout/starvation eligibility not established; persists for batch"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "unexplained_err": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "incomplete/both_interfaces_pending": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 10,
+          "item": "pending_at_batch_end",
+          "detail": "1 master-side and 1 slave-side obligations outstanding; inconclusive, not a liveness violation"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 1,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "pending_master": 1,
+        "pending_slave": 1
+      }
+    },
+    "unresolved/post_abort_forward": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 state serr ERR@12"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 9,
+          "end_cycle": 13,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 20,
+          "end_cycle": 24,
+          "evidence": "m0 accept@20 slave0 accept@22 slaveACK@23 masterACK@24"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 13,
+          "item": "post_abort_forward",
+          "detail": "slave 0 accepted m0 request accepted@9, aborted (CYC withdrawn) before forwarding, forwarded@13; abort-propagation status not established by public spec; return discarded, never counted as completion; persists for batch"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 3,
+        "forwarded": 2,
+        "slave_err": 1,
+        "aborted": 1,
+        "post_abort_forward": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "unresolved/late_post_abort_forward": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 state serr ERR@12"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 9,
+          "end_cycle": 13,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 20,
+          "end_cycle": 24,
+          "evidence": "m0 accept@20 slave0 accept@22 slaveACK@23 masterACK@24"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 16,
+          "item": "post_abort_forward",
+          "detail": "slave 0 accepted m0 request accepted@9, aborted (CYC withdrawn) before forwarding, forwarded@16; abort-propagation status not established by public spec; return discarded, never counted as completion; persists for batch"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 3,
+        "forwarded": 2,
+        "slave_err": 1,
+        "aborted": 1,
+        "post_abort_forward": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/post_abort_corrupt_data": {
+      "failures": [
+        {
+          "cycle": 13,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=4,sel=5,d=287454021) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 state serr ERR@12"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 20,
+          "end_cycle": 24,
+          "evidence": "m0 accept@20 slave0 accept@22 slaveACK@23 masterACK@24"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 3,
+        "forwarded": 2,
+        "slave_err": 1,
+        "aborted": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/post_abort_unaccepted_address": {
+      "failures": [
+        {
+          "cycle": 13,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=7,sel=5,d=287454020) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 state serr ERR@12"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 20,
+          "end_cycle": 24,
+          "evidence": "m0 accept@20 slave0 accept@22 slaveACK@23 masterACK@24"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 3,
+        "forwarded": 2,
+        "slave_err": 1,
+        "aborted": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/duplicate_aborted_forward": {
+      "failures": [
+        {
+          "cycle": 16,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=4,sel=5,d=287454020) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 state serr ERR@12"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 9,
+          "end_cycle": 13,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 20,
+          "end_cycle": 24,
+          "evidence": "m0 accept@20 slave0 accept@22 slaveACK@23 masterACK@24"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 13,
+          "item": "post_abort_forward",
+          "detail": "slave 0 accepted m0 request accepted@9, aborted (CYC withdrawn) before forwarding, forwarded@13; abort-propagation status not established by public spec; return discarded, never counted as completion; persists for batch"
+        }
+      ],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 4,
+        "forwarded": 2,
+        "slave_err": 1,
+        "aborted": 1,
+        "post_abort_forward": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "unresolved/post_abort_then_reset": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 state serr ERR@12"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 9,
+          "end_cycle": 13,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 16,
+          "end_cycle": 16,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 17,
+          "end_cycle": 17,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 20,
+          "end_cycle": 24,
+          "evidence": "m0 accept@20 slave0 accept@22 slaveACK@23 masterACK@24"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 13,
+          "item": "post_abort_forward",
+          "detail": "slave 0 accepted m0 request accepted@9, aborted (CYC withdrawn) before forwarding, forwarded@13; abort-propagation status not established by public spec; return discarded, never counted as completion; persists for batch"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 3,
+        "forwarded": 2,
+        "slave_err": 1,
+        "aborted": 1,
+        "post_abort_forward": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "negative/reset_clears_aborted_identity": {
+      "failures": [
+        {
+          "cycle": 17,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=4,sel=5,d=287454020) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 state serr ERR@12"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 9,
+          "end_cycle": 13,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 14,
+          "end_cycle": 14,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 15,
+          "end_cycle": 15,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "read_ok",
+          "start_cycle": 20,
+          "end_cycle": 24,
+          "evidence": "m0 accept@20 slave0 accept@22 slaveACK@23 masterACK@24"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 3,
+        "forwarded": 2,
+        "slave_err": 1,
+        "aborted": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "unresolved/live_aborted_ambiguity": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 8,
+          "end_cycle": 12,
+          "evidence": "m0 accept@8 state serr ERR@12"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 9,
+          "end_cycle": 13,
+          "evidence": "master 0 dropped CYC with 1 outstanding"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 13,
+          "item": "ownership_ambiguous",
+          "detail": "slave 0 request matches multiple live/aborted owners; ownership/data checks suspended until reset"
+        },
+        {
+          "cycle": 31,
+          "item": "pending_at_batch_end",
+          "detail": "1 master-side and 0 slave-side obligations outstanding; inconclusive, not a liveness violation"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 4,
+        "slave_accepted": 3,
+        "forwarded": 1,
+        "slave_err": 1,
+        "aborted": 1,
+        "pending_master": 1,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/m0_s0_later_identity": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/m0_s1_later_identity": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 1 accepted request (we=1,a=22,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/m1_s0_later_identity": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 1 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/m1_s1_later_identity": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 1 accepted request (we=1,a=22,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 1 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/third_identity": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=7,sel=5,d=591751042) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/late_identity": {
+      "failures": [
+        {
+          "cycle": 23,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/disabled_byte_change": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=5,d=591763585) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/sel_zero": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=0,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "fault/aborted_address": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=12,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "fault/aborted_enabled_byte": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=5,d=591751056) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "fault/aborted_direction": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=0,a=6,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "fault/aborted_select": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=7,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "fault/duplicate_consumed_identity": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 18,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "fault/reset_then_old_forward": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 11,
+          "end_cycle": 11,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 12,
+          "end_cycle": 12,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/reset_preserves_prior_uncertainty": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 19,
+          "end_cycle": 19,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 20,
+          "end_cycle": 20,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/live_aborted_same_identity": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 12,
+          "end_cycle": 18,
+          "evidence": "master 1 dropped CYC with 1 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 4,
+        "aborted": 4,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/identical_aborted_requests": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 14,
+          "item": "post_abort_forward",
+          "detail": "slave 0 accepted m0 request accepted@6, aborted (CYC withdrawn) before forwarding, forwarded@14; abort-propagation status not established by public spec; return discarded, never counted as completion; persists for batch"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "post_abort_forward": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/cancel_all_then_fresh": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 18,
+          "end_cycle": 22,
+          "evidence": "m0 accept@18 slave0 accept@20 slaveACK@21 masterACK@22"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 4,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "fault/stale_ack_into_fresh": {
+      "failures": [
+        {
+          "cycle": 18,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is new (decode error, slave error, dropped, or no slave ACK)"
+        },
+        {
+          "cycle": 20,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=11,sel=15,d=2882400001) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 22,
+          "category": "invented_response",
+          "detail": "master 0 ACK with no outstanding request"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 6,
+          "end_cycle": 9,
+          "evidence": "master 0 dropped CYC with 3 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 4,
+        "aborted": 3,
+        "slave_accepted": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "positive/live_fifo_order": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 6,
+          "end_cycle": 12,
+          "evidence": "m0 accept@6 slave0 accept@10 slaveACK@11 masterACK@12"
+        },
+        {
+          "family": "transaction",
+          "kind": "write_ok",
+          "start_cycle": 7,
+          "end_cycle": 13,
+          "evidence": "m0 accept@7 slave0 accept@11 slaveACK@12 masterACK@13"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "scoped_pass",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 2,
+        "completed_ok": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "fault/live_order_swap": {
+      "failures": [
+        {
+          "cycle": 10,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=6,sel=5,d=591751041) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 13,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is new (decode error, slave error, dropped, or no slave ACK)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "multi_abort/accept_same_edge_err": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=7,sel=5,d=591751042) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 6,
+          "end_cycle": 10,
+          "evidence": "m0 accept@6 state serr ERR@10"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 7,
+          "end_cycle": 11,
+          "evidence": "master 0 dropped CYC with 2 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 2,
+        "forwarded": 1,
+        "slave_err": 1,
+        "aborted": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "fault/retired_error_identity_reused": {
+      "failures": [
+        {
+          "cycle": 14,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=7,sel=5,d=591751042) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 18,
+          "category": "routing_payload",
+          "detail": "slave 0 accepted request (we=1,a=5,sel=5,d=591751040) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "error",
+          "kind": "slave_err",
+          "start_cycle": 6,
+          "end_cycle": 10,
+          "evidence": "m0 accept@6 state serr ERR@10"
+        },
+        {
+          "family": "abort",
+          "kind": "master_cycle_withdrawn",
+          "start_cycle": 7,
+          "end_cycle": 11,
+          "evidence": "master 0 dropped CYC with 2 outstanding"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 3,
+        "forwarded": 1,
+        "slave_err": 1,
+        "aborted": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    }
+  },
+  "errors": []
+}

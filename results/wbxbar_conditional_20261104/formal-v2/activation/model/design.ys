@@ -1,0 +1,8 @@
+# running in /Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_conditional_20261104/formal-v2/activation/src/
+read_slang --top wbxbar_range_formal -U FORMAL -D CHECK_COVER skidbuffer.v addrdecode.v wbxbar.v wbxbar_range_formal.sv
+prep -top wbxbar_range_formal
+
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

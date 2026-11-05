@@ -1,0 +1,39 @@
+{
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "major",
+      "area": "starvation ERR vs live entries (soundness)",
+      "text": "The K6 possible_starvation_err exception applies only when master m has no live entry. Suppose m has older live entries and also holds a stalled, unaccepted request. An ERR in that row is then forced to retire the oldest live entry, tagged unexplained_mapped_err. If the ERR was really a starvation ERR for the held request, that entry's later genuine ACK will retire the next entry. That can produce a K7 data mismatch or K6 invention, and so an empty H and a false dut_violation. No public source orders a starvation ERR against outstanding retirements; wbxbar.v header 37-39 gives no phase or precedence. The checker must branch here, not choose one reading."
+    },
+    {
+      "id": "R2",
+      "severity": "minor",
+      "area": "starvation ERR same-edge",
+      "text": "The exception requires pre o_mstall[m]=1 in row c. Two same-edge cases are not covered: a starvation ERR in the row where the request is finally accepted (stall low), and an ERR one row after the held request is withdrawn. If no live entry exists, either case is an invented ERR and a dut_violation. The header gives no timing, so this verdict uses unpublished precedence. Prefer an unknown tag over hypothesis death for an ERR (never an ACK) on these edges."
+    },
+    {
+      "id": "V1",
+      "severity": "info",
+      "area": "cycle verification",
+      "text": "Decoded the supplied rows. new_starvation/unaccepted_err: request held from cycle 6 with pre o_mstall=1 through cycle 8; pre o_merr at 8; CYC drops at 9. This matches the ledger. unaccepted_ack is the same with o_mack at 8, so the dut_violation via inferred K6 is consistent. new_prefix/clean_before_invalid_input: accept 6, slave accept 8, slave ACK 9, master ACK 10; stalled request at 15 changes address 5->7 at 16 with pre stall still 1, giving env e=16. earlier_data_change: corruption at 10 < e, so the dut_violation stands. write_enabled_changes: stall at row 8, enabled lane 0 changes in row 9 with STB high, so K10 fails; accept at 10. new_epoch/two_aborts_then_identical_restart: accepts 6/10/14, forward 16, slave ACK 17, master ACK 18, as the ledger states. K7 elimination of the canceled-copy branches holds. Post-column changes were not treated as transfers."
+    },
+    {
+      "id": "V2",
+      "severity": "info",
+      "area": "verdict semantics/exclusions",
+      "text": "These are adequate for implementation: time-bounded precedence of a valid prefix over an invalid suffix, the mixed_same_edge rule, no pruning on resource exhaustion, preserved association-free projections, the K5 exclusion, K13 resting on inferred status alone, and canceled identities persisting until reset. Payload identity masks (WE, address, SEL, SEL-enabled write lanes) are consistent across K2, K4 and K10."
+    },
+    {
+      "id": "V3",
+      "severity": "info",
+      "area": "scope",
+      "text": "All formal items remain unimplemented targets. Nothing here implies certification or B/C readiness."
+    }
+  ],
+  "required_changes": [
+    "K6/K8: when master m holds a stalled strobed request and has live entries, an ERR must branch. One branch retires the oldest live entry under the existing K8 tags. The other branch is possible_starvation_err: it retires nothing, keeps the live entries, and is tagged unknown. Update the post-exhaustion count rule to match.",
+    "K6: either extend the possible_starvation_err tag to ERRs on the acceptance edge and the withdrawal edge of a held request, or explicitly justify why these are invention. Add synthetic controls for both cases and for the live-entry-plus-held-request case."
+  ],
+  "ready_for_implementation": false
+}

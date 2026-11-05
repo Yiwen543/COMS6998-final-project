@@ -1,0 +1,359 @@
+{
+  "selftests": [
+    {
+      "name": "write_positive",
+      "pass": true
+    },
+    {
+      "name": "write_payload_fault",
+      "pass": true
+    },
+    {
+      "name": "write_misroute_fault",
+      "pass": true
+    },
+    {
+      "name": "read_positive",
+      "pass": true
+    },
+    {
+      "name": "read_data_fault",
+      "pass": true
+    },
+    {
+      "name": "unmapped_err_positive",
+      "pass": true
+    },
+    {
+      "name": "unmapped_ack_fault",
+      "pass": true
+    },
+    {
+      "name": "invented_ack_fault",
+      "pass": true
+    },
+    {
+      "name": "incomplete_unresolved",
+      "pass": true
+    },
+    {
+      "name": "early_unexplained_err_unresolved",
+      "pass": true
+    },
+    {
+      "name": "unexplained_err_persists_after_reset",
+      "pass": true
+    },
+    {
+      "name": "slave_err_positive",
+      "pass": true
+    },
+    {
+      "name": "masked_lane_write_positive",
+      "pass": true
+    },
+    {
+      "name": "enabled_lane_write_fault",
+      "pass": true
+    },
+    {
+      "name": "abort_nonoldest_forward_unresolved",
+      "pass": true
+    },
+    {
+      "name": "abort_both_forward_unresolved",
+      "pass": true
+    },
+    {
+      "name": "abort_reverse_forward_unresolved",
+      "pass": true
+    },
+    {
+      "name": "abort_none_forwarded_pass",
+      "pass": true
+    },
+    {
+      "name": "abort_enabled_byte_corrupt_fault",
+      "pass": true
+    },
+    {
+      "name": "abort_double_consumption_fault",
+      "pass": true
+    },
+    {
+      "name": "abort_then_reset_forward_fault",
+      "pass": true
+    },
+    {
+      "name": "unsolicited_slave_ack_env",
+      "pass": true
+    }
+  ],
+  "cases": {
+    "cross_slave/early_forward_ordered_retirement": {
+      "failures": [
+        {
+          "cycle": 9,
+          "category": "routing_payload",
+          "detail": "slave 1 accepted request (we=0,a=21,sel=15,d=305419896) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 13,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is new (decode error, slave error, dropped, or no slave ACK)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "cross_slave/wrong_retirement_data": {
+      "failures": [
+        {
+          "cycle": 9,
+          "category": "routing_payload",
+          "detail": "slave 1 accepted request (we=0,a=21,sel=15,d=305419896) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted"
+        },
+        {
+          "cycle": 12,
+          "category": "read_data",
+          "detail": "master 0 got 2557935324, slave returned 305441741"
+        },
+        {
+          "cycle": 13,
+          "category": "response",
+          "detail": "master 0 ACK but oldest request state is new (decode error, slave error, dropped, or no slave ACK)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "dut_violation",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "forwarded": 1,
+        "completed_ok": 1,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "ambiguity/identical_requests_later_responses": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 8,
+          "item": "ownership_ambiguous",
+          "detail": "slave 0 request matches multiple live/aborted owners; ownership/data checks suspended until reset"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "ambiguity/followed_by_distinct_work": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 8,
+          "item": "ownership_ambiguous",
+          "detail": "slave 0 request matches multiple live/aborted owners; ownership/data checks suspended until reset"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 3,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "ambiguity/later_data_corruption": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 8,
+          "item": "ownership_ambiguous",
+          "detail": "slave 0 request matches multiple live/aborted owners; ownership/data checks suspended until reset"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 3,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "ambiguity/later_unaccepted_address": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 8,
+          "item": "ownership_ambiguous",
+          "detail": "slave 0 request matches multiple live/aborted owners; ownership/data checks suspended until reset"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 3,
+        "slave_accepted": 3,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    },
+    "ambiguity/inherently_indistinguishable": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 0,
+          "end_cycle": 0,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        },
+        {
+          "family": "reset",
+          "kind": "reset_edge",
+          "start_cycle": 1,
+          "end_cycle": 1,
+          "evidence": "i_reset high at rising edge (synchronous)"
+        }
+      ],
+      "unresolved": [
+        {
+          "cycle": 8,
+          "item": "ownership_ambiguous",
+          "detail": "slave 0 request matches multiple live/aborted owners; ownership/data checks suspended until reset"
+        }
+      ],
+      "verdict": "unresolved",
+      "counts": {
+        "discarded_by_reset": 0,
+        "master_accepted": 2,
+        "slave_accepted": 2,
+        "pending_master": 0,
+        "pending_slave": 0
+      }
+    }
+  },
+  "errors": []
+}

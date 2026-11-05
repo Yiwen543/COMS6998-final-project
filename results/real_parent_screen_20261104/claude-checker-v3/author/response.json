@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 119762,
+  "stop_reason": "end_turn",
+  "session_id": "49ea0f57-ebe0-41c2-9ab8-54401f326834",
+  "total_cost_usd": 0.44975600000000004,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 38336,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 12903,
+    "output_tokens_details": {
+      "thinking_tokens": 9425
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 38336
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 12903,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 38336,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 38336,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 12903,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 38336,
+      "webSearchRequests": 0,
+      "costUSD": 0.44975600000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 9425,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"patches\":[{\"file\":\"checker.py\",\"before\":\"        if cur is None:\\n            if not st['q']:\",\"after\":\"        if cur is None and (mid & 3) == 3:\\n            nq = st['q'][0] if st['q'] else None\\n            if nq is None or s1['sck'] != nq['cfg'][6]:\\n                fail(t, 'spurious_sck', 'SCK toggled with all CSB idle and not as setup to the pending segment CPOL idle level')\\n            return\\n        if cur is None:\\n            if not st['q']:\"},{\"file\":\"checker.py\",\"before\":\"'words': [], 'bnd': None, 'starve': None,\",\"after\":\"'words': [], 'samp': 0, 'starves': [],\"},{\"file\":\"checker.py\",\"before\":\"    def edge(t, s0, s1, mid):\",\"after\":\"    def peek(t):\\n        W = st['words']\\n        wi = st['wi']\\n        bp = st['bp']\\n        while wi < len(W):\\n            wc, d, be = W[wi]\\n            if wc >= t:\\n                return False\\n            while bp < 4 and not (be >> bp) & 1:\\n                bp += 1\\n            if bp < 4:\\n                return True\\n            wi += 1\\n            bp = 0\\n        return False\\n\\n    def edge(t, s0, s1, mid):\"},{\"file\":\"checker.py\",\"before\":\"                    elif bi > 0 and cur['bnd'] is not None and wc >= cur['bnd'] and cur['starve'] is None:\\n                        cur['starve'] = (cur['bnd'], wc)\",\"after\":\"                    elif cur['starves'] and cur['starves'][-1][1] is None:\\n                        cur['starves'][-1][1] = wc\"},{\"file\":\"checker.py\",\"before\":\"                rec[1] = (rec[1] << w) | (s0['sd'] & mask)\",\"after\":\"                rec[1] = (rec[1] << w) | (s0['sd'] & mask)\\n                cur['samp'] += 1\"},{\"file\":\"checker.py\",\"before\":\"        if cur['edges'] % (16 // w) == 0:\\n            cur['bnd'] = t\\n\",\"after\":\"\"},{\"file\":\"checker.py\",\"before\":\"        cur = st['cur']\\n        if pre['rx_valid'] and not a.get('rx_ready', 0)\",\"after\":\"        cs_ = st['cur']\\n        if cs_ is not None and cs_['wr'] and cs_['edges'] > 0 and len(cs_['txb']) < cs_['n'] and cs_['samp'] // (8 // cs_['w']) == len(cs_['txb']) and not peek(c + 0.5):\\n            if not cs_['starves'] or cs_['starves'][-1][1] is not None:\\n                cs_['starves'].append([c, None])\\n        cur = st['cur']\\n        if pre['rx_valid'] and not a.get('rx_ready', 0)\"},{\"file\":\"checker.py\",\"before\":\"    cs = st['cur']\\n    if cs is not None and cs['wr'] and cs['starve'] is None and cs['edges'] > 0 and cs['edges'] % (16 // cs['w']) == 0 and st['wi'] >= len(st['words']):\\n        cs['starve'] = (cs['last'], None)\\n\",\"after\":\"\"},{\"file\":\"checker.py\",\"before\":\"        if s['starve'] is not None:\\n            ev('tx_starvation_resume', s['acc'], done(s), 'segment %d starved at byte boundary %.1f; next TX word accepted cycle %s; completion %s' % (s['id'], s['starve'][0], s['starve'][1], done(s)))\",\"after\":\"        for sv in s['starves']:\\n            dn = done(s) if sv[1] is not None else None\\n            ev('tx_starvation_resume', s['acc'], dn, 'segment %d missing next enabled TX byte from cycle %d; refill word accepted cycle %s; completion %s' % (s['id'], sv[0], sv[1], dn))\"},{\"file\":\"selftest.py\",\"before\":\"def run(check_rows):\",\"after\":\"def _gen2(bts, words, cpol=0, stall_at=None, stall_len=0, flip=None, trunc=None):\\n    bits = [(b >> (7 - j)) & 1 for b in bts for j in range(8)]\\n    ser = []\\n    for i, bit in enumerate(bits):\\n        v = bit ^ 1 if flip == i else bit\\n        ser.append((cpol, v))\\n        ser.append((1 - cpol, v))\\n        if stall_at == i:\\n            ser.extend([(1 - cpol, v)] * stall_len)\\n    ser.append((cpol, ser[-1][1]))\\n    end = 3 + len(ser)\\n    total = end + 5\\n    wmap = dict((wc, (d, be)) for wc, d, be in words)\\n    posts = []\\n    acts = []\\n    for c in range(total):\\n        a = dict((k, 0) for k in KEYS)\\n        a['rst_n'] = 0 if c < 2 else 1\\n        a['enable'] = 1\\n        a['rx_ready'] = 1\\n        if c == 2:\\n            a.update(valid=1, write=1, cpol=cpol, length=len(bts) - 1)\\n        if c in wmap:\\n            a['tx_valid'] = 1\\n            a['tx_data'], a['tx_be'] = wmap[c]\\n        o = dict(BASE)\\n        o['ready'] = 1 if c >= 1 else 0\\n        o['tx_ready'] = 1 if c >= 1 else 0\\n        o['sck'] = cpol if c >= 2 else 0\\n        if 3 <= c < end:\\n            o['sck'], o['sd'] = ser[c - 3]\\n        if 3 <= c <= end:\\n            o['csb'] = 2\\n            o['sd_en'] = 1\\n        o['active'] = 1 if 2 <= c <= end else 0\\n        posts.append(o)\\n        acts.append(a)\\n    rows = [{'cycle': c, 'action': acts[c], 'pre': dict(posts[c - 1]) if c else dict(BASE), 'post': posts[c]} for c in range(total)]\\n    return rows[:trunc] if trunc else rows\\n\\n\\ndef _starve(**k):\\n    return _gen2([0xD4, 0x55], [(2, 0xD4, 1), (21, 0x55, 1)], stall_at=7, stall_len=6, **k)\\n\\n\\ndef _sev(r, kind):\\n    return any(e['family'] == 'tx_starvation_resume' and e['kind'] == kind for e in r['events'])\\n\\n\\ndef run(check_rows):\"},{\"file\":\"selftest.py\",\"before\":\"        ('spurious_sck_fails',\",\"after\":\"        ('cpol1_idle_setup_good_passes', lambda: _gen2([0xD4, 0xC3], [(2, 0xA1B2C3D4, 3)], cpol=1), lambda r: r['verdict'] == 'pass' and not r['failures']),\\n        ('cpol1_idle_setup_bad_payload_fails', lambda: _gen2([0xD4, 0xC3], [(2, 0xA1B2C3D4, 3)], cpol=1, flip=3), lambda r: 'tx_payload' in cats(r)),\\n        ('starvation_exhausted_be_postponed_trailing_early_refill_passes', lambda: _starve(), lambda r: _sev(r, 'pass') and r['verdict'] == 'pass'),\\n        ('starvation_truncated_pending', lambda: _starve(trunc=23), lambda r: _sev(r, 'pending') and r['verdict'] != 'pass'),\\n        ('starvation_dirty_resume_fails', lambda: _starve(flip=9), lambda r: _sev(r, 'fail') and 'tx_payload' in cats(r)),\\n        ('spurious_sck_fails',\"},{\"file\":\"properties.json\",\"before\":\"\\\"requirement\\\": \\\"SCK is at CPOL level at CSB assertion and before the first edge; edges alternate leading/trailing consistent with CPOL.\\\",\",\"after\":\"\\\"requirement\\\": \\\"SCK is at CPOL level at CSB assertion and before the first edge; edges alternate leading/trailing consistent with CPOL. An SCK change while all CSB are idle and no segment is in progress is an idle-level setup (not a payload edge) only if it moves SCK to the CPOL of an accepted pending segment; otherwise spurious_sck.\\\",\"},{\"file\":\"contract.md\",\"before\":\"**Events.** Starvation/backpressure windows start at segment acceptance so earlier payload faults dirty them. Starvation is triggered when a TX word used by a byte was accepted at or after the boundary edge ending the previous byte; a trace ending at a starved boundary yields a pending event.\",\"after\":\"**CPOL idle setup.** With all CSB idle and no segment in flight, an SCK change to the pending accepted segment's CPOL level is idle setup: it does not start the segment or count as an edge. Any other unselected SCK change is spurious_sck.\\n\\n**Events.** Starvation/backpressure windows start at segment acceptance so earlier payload faults dirty them. A starvation episode opens on any row where an in-flight TX segment has sampled all bits of every fetched byte, still needs bytes, and no enabled byte is available non-destructively (exhausted byte-enable cursor counts; pause may precede the trailing edge). It resolves when the next byte is fetched from a refill word (which may be accepted before the postponed edge). Each episode yields an event; unresolved or incomplete episodes are pending.\"}],\"rationale\":\"Kept LSB-first lanes, pending-CSID handling and all timing/phase checks. CPOL idle setup with all CSB high now only validates against the pending segment's CPOL and no longer pops the segment or shifts edge parity. Starvation now uses a non-destructive enabled-byte peek plus a per-segment sampled-bit count, so a stall after the last sampling edge but before the trailing edge is caught. Episodes open while paused, resolve on the refill fetch and each produce an event; truncated runs are pending and dirty runs fail. New selftests cover these cases.\"}",
+  "ttft_ms": 95969,
+  "type": "result",
+  "duration_ms": 119934,
+  "uuid": "ae6eb9bd-e8d3-4ec2-8da3-8a011b9985f8",
+  "ttft_stream_ms": 2423,
+  "time_to_request_ms": 169,
+  "first_content_frame_ms": 2424,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 12903,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 38336,
+      "webSearchRequests": 0,
+      "costUSD": 0.44975600000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 9425,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

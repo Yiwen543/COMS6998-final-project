@@ -1,0 +1,110 @@
+test_certificate_lemma_and_provenance_fail_closed (test_wbxbar_conditional.ConditionalDomainTests.test_certificate_lemma_and_provenance_fail_closed) ... ok
+test_exact_select_domain_and_no_clock_fabrication (test_wbxbar_conditional.ConditionalDomainTests.test_exact_select_domain_and_no_clock_fabrication) ... ok
+test_modified_bound_cannot_reuse_certificate (test_wbxbar_conditional.ConditionalDomainTests.test_modified_bound_cannot_reuse_certificate) ... ok
+test_only_primary_lemma_imported (test_wbxbar_conditional.ConditionalDomainTests.test_only_primary_lemma_imported) ... ok
+test_removing_lemma_exposes_definition_mismatch (test_wbxbar_conditional.ConditionalDomainTests.test_removing_lemma_exposes_definition_mismatch) ... ok
+test_corrupt_abort_pin_rejected (test_wbxbar_driver.OfferDriverTests.test_corrupt_abort_pin_rejected) ... ok
+test_error_and_reset_discard_are_not_successful_returns (test_wbxbar_driver.OfferDriverTests.test_error_and_reset_discard_are_not_successful_returns) ... ok
+test_error_has_counted_low_cycle_gap (test_wbxbar_driver.OfferDriverTests.test_error_has_counted_low_cycle_gap) ... ok
+test_offers_in_reset_rejected (test_wbxbar_driver.OfferDriverTests.test_offers_in_reset_rejected) ... ok
+test_pending_is_not_automatic_completion (test_wbxbar_driver.OfferDriverTests.test_pending_is_not_automatic_completion) ... ok
+test_replay_prefix_preserves_actual_pins (test_wbxbar_driver.OfferDriverTests.test_replay_prefix_preserves_actual_pins) ... ok
+test_all_original_counters_are_separate (test_wbxbar_experiment.WbxbarExperimentTests.test_all_original_counters_are_separate) ... ok
+test_all_preprocessed_code_and_actions_preserved (test_wbxbar_experiment.WbxbarExperimentTests.test_all_preprocessed_code_and_actions_preserved) ... ok
+test_cached_and_reasoning_not_double_counted (test_wbxbar_experiment.WbxbarExperimentTests.test_cached_and_reasoning_not_double_counted) ... ok
+test_changed_budget_cannot_be_rehashed_into_freeze (test_wbxbar_experiment.WbxbarExperimentTests.test_changed_budget_cannot_be_rehashed_into_freeze) ... ok
+test_common_information_is_identical (test_wbxbar_experiment.WbxbarExperimentTests.test_common_information_is_identical) ... ERROR
+test_compacted_relations_restore_exact_guards (test_wbxbar_experiment.WbxbarExperimentTests.test_compacted_relations_restore_exact_guards) ... ERROR
+test_interleaving_and_equal_limits (test_wbxbar_experiment.WbxbarExperimentTests.test_interleaving_and_equal_limits) ... ok
+test_strict_action_validation (test_wbxbar_experiment.WbxbarExperimentTests.test_strict_action_validation) ... ok
+test_author_does_not_receive_targets_or_implementation (test_wbxbar_exploratory.ExploratoryPreparationTests.test_author_does_not_receive_targets_or_implementation) ... ok
+test_only_difficulty_admission_relaxed (test_wbxbar_exploratory.ExploratoryPreparationTests.test_only_difficulty_admission_relaxed) ... ok
+test_packet_edit_fails_before_transport (test_wbxbar_exploratory.ExploratoryPreparationTests.test_packet_edit_fails_before_transport) ... ok
+test_public_ports_match_elaboration (test_wbxbar_exploratory.ExploratoryPreparationTests.test_public_ports_match_elaboration) ... ok
+test_rehashed_extra_author_field_still_rejected (test_wbxbar_exploratory.ExploratoryPreparationTests.test_rehashed_extra_author_field_still_rejected) ... ok
+test_scoped_wrapper_restores_transport_without_model_call (test_wbxbar_exploratory.ExploratoryPreparationTests.test_scoped_wrapper_restores_transport_without_model_call) ... ok
+test_corrupt_acceptance_ledger_rejected (test_wbxbar_ordinary.OrdinaryTransportTests.test_corrupt_acceptance_ledger_rejected) ... ok
+test_corrupt_payload_rejected (test_wbxbar_ordinary.OrdinaryTransportTests.test_corrupt_payload_rejected) ... ok
+test_illegal_width_type_fields_and_seed_rejected (test_wbxbar_ordinary.OrdinaryTransportTests.test_illegal_width_type_fields_and_seed_rejected) ... ok
+test_missing_cycle_rejected (test_wbxbar_ordinary.OrdinaryTransportTests.test_missing_cycle_rejected) ... ok
+test_saved_transport_is_complete (test_wbxbar_ordinary.OrdinaryTransportTests.test_saved_transport_is_complete) ... ok
+test_unknown_active_payload_is_not_masked (test_wbxbar_ordinary.OrdinaryTransportTests.test_unknown_active_payload_is_not_masked) ... ok
+
+======================================================================
+ERROR: test_common_information_is_identical (test_wbxbar_experiment.WbxbarExperimentTests.test_common_information_is_identical)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/tests/test_wbxbar_experiment.py", line 27, in test_common_information_is_identical
+    c=messages(self.config,'C',[],self.prior,self.points,[],1)
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 206, in messages
+    **compact_relations([g for g in config['semantic_relations'] if g['eclass'] in pending])}
+      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 164, in compact_relations
+    return {'groups':rename(groups),'typed_atoms':{aliases[k]:v for k,v in atoms.items()},
+                     ~~~~~~^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 161, in rename
+    if isinstance(value,list):return [rename(v) for v in value]
+                                      ~~~~~~^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 162, in rename
+    if isinstance(value,dict):return {k:rename(v) for k,v in value.items()}
+                                        ~~~~~~^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 161, in rename
+    if isinstance(value,list):return [rename(v) for v in value]
+                                      ~~~~~~^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 162, in rename
+    if isinstance(value,dict):return {k:rename(v) for k,v in value.items()}
+                                        ~~~~~~^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 161, in rename
+    if isinstance(value,list):return [rename(v) for v in value]
+                                      ~~~~~~^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 160, in rename
+    if isinstance(value,str):return re.sub(r'p_[a-f0-9]+',lambda m:aliases[m[0]],value)
+                                    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py", line 208, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 160, in <lambda>
+    if isinstance(value,str):return re.sub(r'p_[a-f0-9]+',lambda m:aliases[m[0]],value)
+                                                                   ~~~~~~~^^^^^^
+KeyError: 'p_ca'
+
+======================================================================
+ERROR: test_compacted_relations_restore_exact_guards (test_wbxbar_experiment.WbxbarExperimentTests.test_compacted_relations_restore_exact_guards)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/tests/test_wbxbar_experiment.py", line 76, in test_compacted_relations_restore_exact_guards
+    original=semantic_relations(self.config['targets']);packed=compact_relations(original)
+                                                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 164, in compact_relations
+    return {'groups':rename(groups),'typed_atoms':{aliases[k]:v for k,v in atoms.items()},
+                     ~~~~~~^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 161, in rename
+    if isinstance(value,list):return [rename(v) for v in value]
+                                      ~~~~~~^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 162, in rename
+    if isinstance(value,dict):return {k:rename(v) for k,v in value.items()}
+                                        ~~~~~~^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 161, in rename
+    if isinstance(value,list):return [rename(v) for v in value]
+                                      ~~~~~~^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 162, in rename
+    if isinstance(value,dict):return {k:rename(v) for k,v in value.items()}
+                                        ~~~~~~^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 161, in rename
+    if isinstance(value,list):return [rename(v) for v in value]
+                                      ~~~~~~^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 160, in rename
+    if isinstance(value,str):return re.sub(r'p_[a-f0-9]+',lambda m:aliases[m[0]],value)
+                                    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py", line 208, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/wbxbar_experiment.py", line 160, in <lambda>
+    if isinstance(value,str):return re.sub(r'p_[a-f0-9]+',lambda m:aliases[m[0]],value)
+                                                                   ~~~~~~~^^^^^^
+KeyError: 'p_ca'
+
+----------------------------------------------------------------------
+Ran 31 tests in 3.174s
+
+FAILED (errors=2)

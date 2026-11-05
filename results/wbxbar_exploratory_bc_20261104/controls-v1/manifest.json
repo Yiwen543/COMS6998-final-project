@@ -1,0 +1,136 @@
+{
+  "scope": "Independent hand-constructed public-protocol controls; no DUT/Claude source or target evidence used.",
+  "never_model_stimulus": true,
+  "controls": [
+    {
+      "name": "positive/read",
+      "kind": "positive",
+      "obligation": "Read response/payload conservation",
+      "baseline": null
+    },
+    {
+      "name": "positive/write_mask",
+      "kind": "positive",
+      "obligation": "Write payload and byte enables",
+      "baseline": null
+    },
+    {
+      "name": "positive/slave_error",
+      "kind": "positive",
+      "obligation": "Slave ERR propagation, not a successful read",
+      "baseline": null
+    },
+    {
+      "name": "positive/unmapped",
+      "kind": "positive",
+      "obligation": "Documented unmapped-address error without slave request",
+      "baseline": null
+    },
+    {
+      "name": "positive/concurrent",
+      "kind": "positive",
+      "obligation": "Two different destinations and response owners",
+      "baseline": null
+    },
+    {
+      "name": "positive/pipeline",
+      "kind": "positive",
+      "obligation": "Consecutive accepts, slave accept/response overlap, ACK while STB is low",
+      "baseline": null
+    },
+    {
+      "name": "positive/accept_and_return",
+      "kind": "positive",
+      "obligation": "Master acceptance and earlier response on the same edge",
+      "baseline": null
+    },
+    {
+      "name": "positive/master1",
+      "kind": "positive",
+      "obligation": "Upper public packed port slices",
+      "baseline": null
+    },
+    {
+      "name": "positive/reset_then_new",
+      "kind": "positive",
+      "obligation": "New transaction after completed work and synchronous reset",
+      "baseline": null
+    },
+    {
+      "name": "negative/read_data",
+      "kind": "single_fault",
+      "obligation": "Wrong returned read data",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "negative/write_data",
+      "kind": "single_fault",
+      "obligation": "Wrong forwarded write payload",
+      "baseline": "positive/write_mask"
+    },
+    {
+      "name": "negative/write_mask",
+      "kind": "single_fault",
+      "obligation": "Wrong forwarded byte mask",
+      "baseline": "positive/write_mask"
+    },
+    {
+      "name": "negative/address",
+      "kind": "single_fault",
+      "obligation": "Wrong forwarded address",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "negative/direction",
+      "kind": "single_fault",
+      "obligation": "Read changed to write",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "negative/missing_forward",
+      "kind": "single_fault",
+      "obligation": "Master completion without forwarded transfer",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "negative/wrong_owner",
+      "kind": "single_fault",
+      "obligation": "Response delivered to wrong master",
+      "baseline": "positive/concurrent"
+    },
+    {
+      "name": "negative/duplicate_response",
+      "kind": "single_fault",
+      "obligation": "No response without outstanding accepted work",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "negative/error_as_success",
+      "kind": "single_fault",
+      "obligation": "Slave error cannot become success",
+      "baseline": "positive/slave_error"
+    },
+    {
+      "name": "incomplete/missing_return",
+      "kind": "incomplete",
+      "obligation": "No complete/scoped pass with unretired work; no invented liveness deadline",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "incomplete/truncated",
+      "kind": "incomplete",
+      "obligation": "Pending response at end must remain explicit",
+      "baseline": "positive/read"
+    },
+    {
+      "name": "invalid/master_changes_stalled_payload",
+      "kind": "invalid_environment",
+      "obligation": "Changing stalled request is an external assumption violation",
+      "baseline": "positive/read"
+    }
+  ],
+  "authority": "Wishbone B4 pp31\u201338; public WBXBAR interface/README intent in spec-packet-v1. Chosen trace delays are test fixtures, not asserted implementation latency.",
+  "credit": "Positive requires no functional/assumption errors and declared obligations checked; negative only credited with clean baseline and valid environment; incomplete must retain pending/unresolved, never success. Disputed controls require independent review, not forced checker changes.",
+  "script_sha256": "3b1b23ff07100c54875c6f28fe51f922985bf587bc7137425cd614af814de93b",
+  "inputs_sha256": "359f5cf85a51db2b7d6968edee547d57f88fbfcd0d13738c2e478577f52b4b58"
+}

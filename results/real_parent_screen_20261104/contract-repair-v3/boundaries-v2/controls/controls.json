@@ -1,0 +1,34 @@
+[
+  {
+    "name": "held_cs_continuation",
+    "kind": "observational_positive",
+    "expected": "Judge complete public protocol trace; do not assume DUT correct"
+  },
+  {
+    "name": "same_csid_config_change",
+    "kind": "observational_positive",
+    "expected": "Judge complete public protocol trace; do not assume DUT correct"
+  },
+  {
+    "name": "pending_cpol_csid_change",
+    "kind": "observational_positive",
+    "expected": "Judge complete public protocol trace; do not assume DUT correct"
+  },
+  {
+    "name": "zero_be_then_payload",
+    "kind": "observational_positive",
+    "expected": "Judge complete public protocol trace; do not assume DUT correct"
+  },
+  {
+    "name": "negative/premature_held_cs_release",
+    "kind": "single_fault",
+    "baseline": "held_cs_continuation",
+    "expected": "CSAAT release without valid changed offer must fail; trace mutation, not RTL mutant"
+  },
+  {
+    "name": "negative/wrong_cpol_at_select",
+    "kind": "single_fault",
+    "baseline": "pending_cpol_csid_change",
+    "expected": "CPOL violation at a real new select assertion"
+  }
+]

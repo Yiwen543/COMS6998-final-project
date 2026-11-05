@@ -1,0 +1,161 @@
+{
+  "configuration": {
+    "root": "third_party/verilog_i2c_candidate",
+    "revision": "a65be4045e898a52e791c6ee71f8f79a7cd2e129",
+    "top": "i2c_master_axil",
+    "sources": [
+      "rtl/axis_fifo.v",
+      "rtl/i2c_master.v",
+      "rtl/i2c_master_axil.v"
+    ],
+    "include_dirs": [],
+    "defines": [],
+    "parameters": {
+      "DEFAULT_PRESCALE": 1,
+      "FIXED_PRESCALE": 0,
+      "CMD_FIFO": 1,
+      "CMD_FIFO_DEPTH": 32,
+      "WRITE_FIFO": 1,
+      "WRITE_FIFO_DEPTH": 32,
+      "READ_FIFO": 1,
+      "READ_FIFO_DEPTH": 32
+    },
+    "clock": "clk",
+    "reset": "rst",
+    "reset_active": 1,
+    "family": "verilog_i2c",
+    "reset_behavior": "synchronous active-high",
+    "proof_boundary": "Original AXI-Lite parent, original master, three original FIFO instances; documented open-drain bus boundary",
+    "event_families": [
+      "queued write after FIFO starvation",
+      "read FIFO pressure and drain",
+      "repeated START and NACK/restart"
+    ],
+    "proof_keep": [],
+    "public_specifications": [
+      "README.md",
+      "rtl/i2c_master_axil.v: upstream register/protocol comment only"
+    ],
+    "specification_limit": "Author packet must extract upstream comments only; executable implementation withheld. Register timing ambiguities require unresolved status.",
+    "source_hashes": {
+      "third_party/verilog_i2c_candidate/rtl/axis_fifo.v": "58ee6fd1d5c670c4db9bb9740fcc806dc75c2ac407996e364aebd870649461d1",
+      "third_party/verilog_i2c_candidate/rtl/i2c_master.v": "9c4e05759f356e9ddd91af6981a1fcc10466cad0af6e5afb6553787fe9ea0328",
+      "third_party/verilog_i2c_candidate/rtl/i2c_master_axil.v": "e913a758b804116b2365911ec636153b26fd452dce8875ffd54bdafa8be9278e",
+      "third_party/verilog_i2c_candidate/README.md": "866d533508f25657452994e5fe17c98b9400e10e2787f88d7b3b1204b039f7f4"
+    },
+    "git_blobs": {
+      "rtl/axis_fifo.v": "b8dfb0b5edb8aa54624d99766082e0868aa6e811",
+      "rtl/i2c_master.v": "9c69b48e235a98a32c5157b27584db4d65811127",
+      "rtl/i2c_master_axil.v": "10c0625cf515c7e6c34790cf6f1f1ce2ffbac363",
+      "README.md": "c747b53bbd823208a5bc7739b0bb5f85ec354027"
+    },
+    "seed_inputs": {
+      "i2c_scl_i": 1,
+      "i2c_sda_i": 1
+    }
+  },
+  "runs": [
+    {
+      "stage": "slang",
+      "returncode": 0,
+      "seconds": 0.035304584074765444,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/slang",
+        "--single-unit",
+        "--top",
+        "i2c_master_axil",
+        "-G",
+        "DEFAULT_PRESCALE=1",
+        "-G",
+        "FIXED_PRESCALE=0",
+        "-G",
+        "CMD_FIFO=1",
+        "-G",
+        "CMD_FIFO_DEPTH=32",
+        "-G",
+        "WRITE_FIFO=1",
+        "-G",
+        "WRITE_FIFO_DEPTH=32",
+        "-G",
+        "READ_FIFO=1",
+        "-G",
+        "READ_FIFO_DEPTH=32",
+        "--ast-json",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/i2c_master_axil/ast.json",
+        "--ast-json-source-info",
+        "--ast-json-detailed-types",
+        "third_party/verilog_i2c_candidate/rtl/axis_fifo.v",
+        "third_party/verilog_i2c_candidate/rtl/i2c_master.v",
+        "third_party/verilog_i2c_candidate/rtl/i2c_master_axil.v"
+      ]
+    },
+    {
+      "stage": "verilator",
+      "returncode": 0,
+      "seconds": 0.05924720922484994,
+      "command": [
+        "verilator",
+        "--lint-only",
+        "--timing",
+        "-Wno-fatal",
+        "--top-module",
+        "i2c_master_axil",
+        "-GDEFAULT_PRESCALE=1",
+        "-GFIXED_PRESCALE=0",
+        "-GCMD_FIFO=1",
+        "-GCMD_FIFO_DEPTH=32",
+        "-GWRITE_FIFO=1",
+        "-GWRITE_FIFO_DEPTH=32",
+        "-GREAD_FIFO=1",
+        "-GREAD_FIFO_DEPTH=32",
+        "third_party/verilog_i2c_candidate/rtl/axis_fifo.v",
+        "third_party/verilog_i2c_candidate/rtl/i2c_master.v",
+        "third_party/verilog_i2c_candidate/rtl/i2c_master_axil.v"
+      ]
+    },
+    {
+      "stage": "iverilog",
+      "returncode": 0,
+      "seconds": 0.013778415974229574,
+      "command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "i2c_master_axil",
+        "-tnull",
+        "-Pi2c_master_axil.DEFAULT_PRESCALE=1",
+        "-Pi2c_master_axil.FIXED_PRESCALE=0",
+        "-Pi2c_master_axil.CMD_FIFO=1",
+        "-Pi2c_master_axil.CMD_FIFO_DEPTH=32",
+        "-Pi2c_master_axil.WRITE_FIFO=1",
+        "-Pi2c_master_axil.WRITE_FIFO_DEPTH=32",
+        "-Pi2c_master_axil.READ_FIFO=1",
+        "-Pi2c_master_axil.READ_FIFO_DEPTH=32",
+        "third_party/verilog_i2c_candidate/rtl/axis_fifo.v",
+        "third_party/verilog_i2c_candidate/rtl/i2c_master.v",
+        "third_party/verilog_i2c_candidate/rtl/i2c_master_axil.v"
+      ]
+    },
+    {
+      "stage": "yosys",
+      "returncode": 0,
+      "seconds": 0.07886354206129909,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/yosys",
+        "-Q",
+        "-T",
+        "-s",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/i2c_master_axil/probe.ys"
+      ]
+    }
+  ],
+  "source_sha256": {
+    "third_party/verilog_i2c_candidate/rtl/axis_fifo.v": "58ee6fd1d5c670c4db9bb9740fcc806dc75c2ac407996e364aebd870649461d1",
+    "third_party/verilog_i2c_candidate/rtl/i2c_master.v": "9c4e05759f356e9ddd91af6981a1fcc10466cad0af6e5afb6553787fe9ea0328",
+    "third_party/verilog_i2c_candidate/rtl/i2c_master_axil.v": "e913a758b804116b2365911ec636153b26fd452dce8875ffd54bdafa8be9278e"
+  },
+  "no_model_calls": true,
+  "no_functional_checker_claim": true,
+  "qualified_for_B": false,
+  "assertions": "SYNTHESIS selects upstream synthesis-compatible assertion macros for flash; not assertion verification."
+}

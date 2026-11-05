@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 47173,
+  "stop_reason": "end_turn",
+  "session_id": "c593924b-ea26-4cda-8522-0415590ba9a0",
+  "total_cost_usd": 0.47317600000000004,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 77336,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 4324,
+    "output_tokens_details": {
+      "thinking_tokens": 1936
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 77336
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 4324,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 77336,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 77336,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 4324,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 77336,
+      "webSearchRequests": 0,
+      "costUSD": 0.47317600000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1936,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\n  \"ready_for_offline_gate\": true,\n  \"gate_scope\": \"LIMITED supported event checker only: stable-window sampling, Standard/Dual/Quad data segments (no Dual/Quad bidirectional), hardware reset. Dummy segments and software-reset completion are still unresolved; they do not pass. This is not a certification of spi_host_core. B/C is not authorized. Finite controls are not formal proof.\",\n  \"findings\": [\n    {\n      \"id\": \"F1_cpol_idle\",\n      \"severity\": \"info\",\n      \"result\": \"acceptable\",\n      \"detail\": \"With all CSB lines high, an SCK change is accepted only if it moves to the CPOL of the head of the accepted queue. A second idle toggle, or a toggle with no pending segment, still raises spurious_sck. Payload and phase checks are not skipped. hand/wrong_cpol1_payload fails at a real sample, and boundary/negative/wrong_cpol_at_select fails CPOL at CSB assertion. Residual gap: an idle-level change driven by an offered but not-yet-accepted command (cmd_off) would be flagged. No control exercises this, so the possible false alarm is unvalidated.\"\n    },\n    {\n      \"id\": \"F2_byte_bit_counts_order\",\n      \"severity\": \"info\",\n      \"result\": \"acceptable\",\n      \"detail\": \"The expected edge count is 2*n*8/width. TX visits enabled lanes in order 0..3, MSB-first per byte, and flushes the partial word at segment end. RX packs into lanes 7:0 upward with zero HIGH padding. All of this matches the registered amendment and the examples. It is justified by theory 412-419 and 483. Superseded lines 698-702 and 735-740 are retained as history. The Dual/Quad lane significance matches line 419. Negative controls cover: reversed lanes, nonzero padding, wrong low byte, wrong TX bit, zero_be_then_payload and sparse BE.\"\n    },\n    {\n      \"id\": \"F3_event_false_success\",\n      \"severity\": \"info\",\n      \"result\": \"acceptable\",\n      \"detail\": \"An event is confirmed only by an overdue selected SCK edge, never by flags. Both flag_only controls produce no event. Benign-delay controls behave correctly: tx_refill_260 to 268 and rx_one_cycle_hold produce no event, and tx_refill_300 produces one. The ev() window starts at segment acceptance (or at the reset trigger), so earlier payload faults make it dirty. Confirmed results: dirty_tx, dirty_rx and dirty_starvation are fail; clock_during_tx_stall is fail. Truncated runs give pending or no event, never pass. done() requires sdone, a CSB rise when CSAAT=0, every RX word observed, and resolved RX bits.\"\n    },\n    {\n      \"id\": \"F4_prefix_expectation_change\",\n      \"severity\": \"info\",\n      \"result\": \"justified\",\n      \"detail\": \"At the old cutoffs, the elapsed time equals exactly CLKDIV+1. An edge at that moment is still legal, so there is no witnessed pause. Requiring an event there would have to rely on flag evidence. The obligation is preserved, not weakened:\\n- The original traces now forbid success.\\n- New prefixes one cycle later require pending, and they are pending.\\n- The original failures are archived.\"\n    },\n    {\n      \"id\": \"F5_csid_config_changes\",\n      \"severity\": \"info\",\n      \"result\": \"acceptable\",\n      \"detail\": \"CSAAT release is permitted only by an accepted, or stably offered, next segment with a different CSID or configuration. Offers with valid=0 never permit release (self-test plus the premature_held_cs_release fault). partial_then_csid_switch and pending_cpol_csid_change pass. boundary/same_csid_config_change keeps a failure as a DUT-versus-theory 241-249 conflict. It is correctly not waived, and it is not claimed as a production bug. Its sck_phase failures are cascade noise, not separate defects.\"\n    },\n    {\n      \"id\": \"F6_reset\",\n      \"severity\": \"minor\",\n      \"result\": \"limited evidence\",\n      \"detail\": \"Hardware reset clears the queue, words and rxexp, so stale TX data would surface as underflow or mismatch, and stale RX data as rx_unexpected_word. The supporting controls are one positive (hardware_abort_restart), one CSB fault and one truncation. There is no injected stale-payload-after-hardware-reset negative control, so stale-data detection is argued from code, not demonstrated. An abort is recorded only if the segment had already started edges; a reset that hits a queued but unstarted segment yields no event. Software reset is correctly labelled pass_unresolved, giving an inconclusive verdict.\"\n    },\n    {\n      \"id\": \"F7_rx_backpressure_vs_natural_gaps\",\n      \"severity\": \"minor\",\n      \"result\": \"residual risk\",\n      \"detail\": \"An event is declared if any selected edge exceeds last+half while rx_valid&!rx_ready is held. An implementation-dependent transient inter-byte gap (theory 584) that coincides with a multi-cycle benign hold could be labelled backpressure. That would be a mislabelled event, not a false failure. Only a one-cycle hold is controlled.\"\n    },\n    {\n      \"id\": \"F8_negative_accounting\",\n      \"severity\": \"info\",\n      \"result\": \"consistent\",\n      \"detail\": \"There are 14 negatives and 13 credited detections. The uncredited one is negative/missing_rx_word, which by design gives inconclusive with no invented timeout. Unsupported speed or bidirectional segments are blocked. After a dummy segment, later segments never complete, so the outcome is inconclusive with no false pass.\"\n    },\n    {\n      \"id\": \"F9_isolation_driver\",\n      \"severity\": \"info\",\n      \"result\": \"acceptable\",\n      \"detail\": \"The driver replays inputs only and contains no expected values. Timing is pre at +4, edge at +5, post at +9. The validator rejects illegal or out-of-width inputs and transfers during reset. The checker and controls are hash-pinned. No DUT internals are used. Eighteen omitted raw traces were not inspected; only their diagnostics were reviewed.\"\n    }\n  ],\n  \"limitations\": [\n    \"Read-only review of the supplied packet. Nothing was executed, and there is no proof of checker correctness or completeness.\",\n    \"Dummy-segment semantics and software-reset completion or data disposition remain unresolved obligations.\",\n    \"The same-CSID config-change-after-CSAAT conflict stays open pending upstream interpretation.\",\n    \"There is no negative control for stale data after hardware reset, for an unaccepted-offer CPOL idle change, or for a long benign RX hold coinciding with a transient gap.\",\n    \"The 18 omitted traces were not inspected.\",\n    \"Only two-state signals and the core boundary are covered: no TLUL, FIFOs or four-state behaviour.\",\n    \"This review grants no B/C authorization and makes no coverage, equivalence or formal claim.\"\n  ]\n}\n```",
+  "ttft_ms": 25565,
+  "type": "result",
+  "duration_ms": 47507,
+  "uuid": "39f65c9e-6415-49b4-914b-b617f64ef8a1",
+  "ttft_stream_ms": 1603,
+  "time_to_request_ms": 332,
+  "first_content_frame_ms": 1603,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 4324,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 77336,
+      "webSearchRequests": 0,
+      "costUSD": 0.47317600000000004,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1936,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

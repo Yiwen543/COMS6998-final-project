@@ -1,0 +1,6030 @@
+{
+  "metadata": {
+    "mode": "replay",
+    "scope": "wbxbar_exploratory_bc_freeze_v1",
+    "freeze_sha256": "5e934e4a301b9f41e8471f5d3dec2531b0a060bac4891880c46dceeb328b44cb",
+    "versions": {
+      "python": "3.13.9",
+      "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+      "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+      "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+      "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+      "openai_sdk": "2.54.0",
+      "matplotlib": "3.11.2"
+    },
+    "model_settings": {
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "low",
+      "input_tokens": 32000,
+      "output_tokens": 16384,
+      "timeout_seconds": 120,
+      "max_retries": 1,
+      "max_output_tokens": 16384
+    },
+    "status": "completed",
+    "compilations": 2,
+    "compile_seconds": 15.712500667199492,
+    "simulation_executions": 42,
+    "executed_cycles": 8400,
+    "requested_cycles": 8400,
+    "simulation_seconds": 1.8950127097778022,
+    "api_generation_calls": 0,
+    "api_count_requests": 0,
+    "egraph_preprocessing_seconds_this_run": 0,
+    "egraph_preprocessing": "Reused frozen offline artifacts; historical preprocessing reported separately.",
+    "simulation_policy": "Fresh cumulative seed+actions replay; all physical cycles counted; no extra drain.",
+    "independent_sessions": "Responses calls have no conversation or previous_response_id; only own-arm history is rendered.",
+    "source_mode": "mock",
+    "replay_source_sha256": "5687ddef914846f5038e78eb7c0b46992b705b112ca2a9e6135475fc6dc06442",
+    "compile_commands": [
+      {
+        "simulator": "verilator",
+        "seconds": 15.681439749896526,
+        "command": [
+          "verilator",
+          "--binary",
+          "--timing",
+          "--coverage-line",
+          "--coverage-toggle",
+          "--coverage-expr",
+          "-Wno-fatal",
+          "--top-module",
+          "tb_natural_inventory",
+          "--Mdir",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/replay-v1/shared/verilator/obj",
+          "-j",
+          "2",
+          "third_party/wb2axip_candidate/rtl/skidbuffer.v",
+          "third_party/wb2axip_candidate/rtl/addrdecode.v",
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/replay-v1/shared/tb_natural_inventory.sv"
+        ]
+      },
+      {
+        "simulator": "iverilog",
+        "seconds": 0.019329584203660488,
+        "command": [
+          "iverilog",
+          "-g2012",
+          "-s",
+          "tb_natural_inventory",
+          "-o",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/replay-v1/shared/iverilog/tb.vvp",
+          "third_party/wb2axip_candidate/rtl/skidbuffer.v",
+          "third_party/wb2axip_candidate/rtl/addrdecode.v",
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/replay-v1/shared/tb_natural_inventory.sv"
+        ]
+      }
+    ],
+    "elapsed_seconds": 21.007178417406976,
+    "api_usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "unknown_usage_attempts": 36
+    }
+  },
+  "rows": [
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 1,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.32638866594061255,
+      "active_wall_seconds": 0.46828629169613123,
+      "elapsed_run_seconds": 16.44629304204136
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 1,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.07792820874601603,
+      "active_wall_seconds": 0.20998866576701403,
+      "elapsed_run_seconds": 16.65737950010225
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 1,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.3652095412835479,
+      "active_wall_seconds": 0.574582124594599,
+      "elapsed_run_seconds": 16.76482616737485
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 1,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.118089041672647,
+      "active_wall_seconds": 0.32402441557496786,
+      "elapsed_run_seconds": 16.880054207984358
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 1,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.4058367912657559,
+      "active_wall_seconds": 0.6871299156919122,
+      "elapsed_run_seconds": 16.99372133333236
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 1,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.15492529142647982,
+      "active_wall_seconds": 0.432174498680979,
+      "elapsed_run_seconds": 17.10295491712168
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 1,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.4423240004107356,
+      "active_wall_seconds": 0.7951289564371109,
+      "elapsed_run_seconds": 17.212066542357206
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 1,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.1934777912683785,
+      "active_wall_seconds": 0.5449494984932244,
+      "elapsed_run_seconds": 17.3259205003269
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 1,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.48054920928552747,
+      "active_wall_seconds": 0.9061170816421509,
+      "elapsed_run_seconds": 17.438057250343263
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 1,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.23292566603049636,
+      "active_wall_seconds": 0.6594730825163424,
+      "elapsed_run_seconds": 17.553777458146214
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 1,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.5199826671741903,
+      "active_wall_seconds": 1.025957706850022,
+      "elapsed_run_seconds": 17.67475250037387
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 1,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.27273104107007384,
+      "active_wall_seconds": 0.7792885405942798,
+      "elapsed_run_seconds": 17.795703458134085
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 2,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.07462929142639041,
+      "active_wall_seconds": 0.20600774977356195,
+      "elapsed_run_seconds": 18.002826375421137
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 2,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.07654708437621593,
+      "active_wall_seconds": 0.2033426659181714,
+      "elapsed_run_seconds": 18.207302667200565
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 2,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.11513449950143695,
+      "active_wall_seconds": 0.3256452917121351,
+      "elapsed_run_seconds": 18.328227792400867
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 2,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.11700766766443849,
+      "active_wall_seconds": 0.3185538318939507,
+      "elapsed_run_seconds": 18.446970000397414
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 2,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.16380041651427746,
+      "active_wall_seconds": 0.4495430835522711,
+      "elapsed_run_seconds": 18.57216341700405
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 2,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.15677762683480978,
+      "active_wall_seconds": 0.4339349567890167,
+      "elapsed_run_seconds": 18.68875666707754
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 2,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.20053308364003897,
+      "active_wall_seconds": 0.567058333195746,
+      "elapsed_run_seconds": 18.807495542336255
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 2,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.19559125183150172,
+      "active_wall_seconds": 0.5499616656452417,
+      "elapsed_run_seconds": 18.924684416968375
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 2,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.23571083368733525,
+      "active_wall_seconds": 0.6810788330622017,
+      "elapsed_run_seconds": 19.03997079236433
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 2,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.23385637672618032,
+      "active_wall_seconds": 0.6655562072992325,
+      "elapsed_run_seconds": 19.15674608340487
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 2,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.2762132086791098,
+      "active_wall_seconds": 0.8017594167031348,
+      "elapsed_run_seconds": 19.27858058316633
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 2,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.2752271266654134,
+      "active_wall_seconds": 0.7871517073363066,
+      "elapsed_run_seconds": 19.40143029205501
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 3,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.08037370815873146,
+      "active_wall_seconds": 0.2220585416071117,
+      "elapsed_run_seconds": 19.624644082970917
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 3,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.0794709580950439,
+      "active_wall_seconds": 0.21083550015464425,
+      "elapsed_run_seconds": 19.836760042235255
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 3,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.11913612531498075,
+      "active_wall_seconds": 0.33118766639381647,
+      "elapsed_run_seconds": 19.947165583260357
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 3,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.11825024941936135,
+      "active_wall_seconds": 0.3191845412366092,
+      "elapsed_run_seconds": 20.056739958003163
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 3,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.16121554234996438,
+      "active_wall_seconds": 0.45396120846271515,
+      "elapsed_run_seconds": 20.18132908316329
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 3,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.15718674939125776,
+      "active_wall_seconds": 0.43775112414732575,
+      "elapsed_run_seconds": 20.301278167404234
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 3,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.202053458429873,
+      "active_wall_seconds": 0.5695290002040565,
+      "elapsed_run_seconds": 20.41805574996397
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 3,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.19253924954682589,
+      "active_wall_seconds": 0.5488640409894288,
+      "elapsed_run_seconds": 20.530326375272125
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 3,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.24225233355537057,
+      "active_wall_seconds": 0.6863624169491231,
+      "elapsed_run_seconds": 20.648918750230223
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 3,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.23059237468987703,
+      "active_wall_seconds": 0.6625191662460566,
+      "elapsed_run_seconds": 20.763671250082552
+    },
+    {
+      "mode": "replay",
+      "arm": "B",
+      "repetition": 3,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.28141795890405774,
+      "active_wall_seconds": 0.8043030831031501,
+      "elapsed_run_seconds": 20.88278350001201
+    },
+    {
+      "mode": "replay",
+      "arm": "C",
+      "repetition": 3,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.26944070728495717,
+      "active_wall_seconds": 0.7854213332757354,
+      "elapsed_run_seconds": 21.006987917236984
+    }
+  ]
+}

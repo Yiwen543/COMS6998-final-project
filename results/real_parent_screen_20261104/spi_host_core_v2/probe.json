@@ -1,0 +1,198 @@
+{
+  "configuration": {
+    "root": "third_party/opentitan_candidate",
+    "revision": "0ea5236fe749e70ba18f56ba19c4be982ef46da7",
+    "top": "spi_host_core",
+    "sources": [
+      "hw/ip/prim_generic/rtl/prim_flop_en.sv",
+      "hw/ip/prim/rtl/prim_util_pkg.sv",
+      "hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+      "hw/ip/prim/rtl/prim_packer_fifo.sv",
+      "hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+      "hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+      "hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+      "hw/ip/spi_host/rtl/spi_host_fsm.sv",
+      "hw/ip/spi_host/rtl/spi_host_core.sv"
+    ],
+    "include_dirs": [
+      "hw/ip/prim/rtl"
+    ],
+    "defines": [
+      "SYNTHESIS"
+    ],
+    "parameters": {
+      "NumCS": 2
+    },
+    "clock": "clk_i",
+    "reset": "rst_ni",
+    "reset_active": 0,
+    "family": "opentitan_spi_host",
+    "reset_behavior": "asynchronous active-low; sw_rst synchronous retained separately",
+    "proof_boundary": "Original spi_host_core with actual byte merge/select, shift register, FSM and two parameterized prim_packer_fifo children; no emulated sr_ready inputs",
+    "event_families": [
+      "TX starvation then resume",
+      "RX word backpressure then resume",
+      "partial-word transaction end and next transaction or software reset restart"
+    ],
+    "proof_keep": [],
+    "public_specifications": [
+      "hw/ip/spi_host/doc/theory_of_operation.md",
+      "hw/ip/spi_host/doc/programmers_guide.md",
+      "hw/ip/prim/rtl/prim_assert.sv",
+      "hw/ip/prim/rtl/prim_assert_dummy_macros.svh",
+      "hw/ip/prim/rtl/prim_assert_standard_macros.svh",
+      "hw/ip/prim/rtl/prim_assert_yosys_macros.svh",
+      "hw/ip/prim/rtl/prim_assert_sec_cm.svh",
+      "hw/ip/prim/rtl/prim_flop_macros.sv"
+    ],
+    "source_hashes": {
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv": "12ec73502dc8115cf1e6051f10cba6fc73259f066581722d9d895d1e634676b2",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv": "a9a44c9cc067c6b0904cfff2f3056b9312a475518be32e36efe0c8a951e1af8d",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv": "99aeb7564474111dc6662488c9f4ca6b788723e449b128d08ac54f8fc2da5cd2",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv": "68b2c02faa5893399cfa5c48151c67a1d251da1bfe553d2c09674dce8ecf2431",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv": "8fe85d2fb05aaa0abbc7742c3e136ab5e7af9143ddfdb902beaf67f6f3121b97",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv": "8521227fb238f1962e34d671ffc274b5d43d7c4b5582549c00d6093fe5b0d2ce",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv": "5324b93183a0475c5e955b76a7b1e9c1c9739e810a70d213491c5657837ee47c",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv": "dc89b9b63ba31a219eef38999e77ae01b8e361007ef1eaf99306d5e50c72cd7b",
+      "third_party/opentitan_candidate/hw/ip/spi_host/doc/theory_of_operation.md": "2db47bf4eaff25bfd618221d1e926a37072cde4aefdca7eca74994b672bbbfdb",
+      "third_party/opentitan_candidate/hw/ip/spi_host/doc/programmers_guide.md": "1d509c8ce4f953248664d01ed1437f5efe117aae2377b73553e0bc3514e95613",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert.sv": "d717d5dbcba3b5aa8a731ef9f8af18b036b49edef282f0a43a51f5ad2dd9bb40",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert_dummy_macros.svh": "cac4a930105da662547de873f0b80246074fb22df9a398663e1c8ac3e7998218",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert_standard_macros.svh": "4835706249e017eae999256ea807c526a39a49729196fc0aa18bb8818de86ab6",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert_yosys_macros.svh": "d1fd8c350785a7c6d8cccc0b0c385392b71575397e7dc58c70f07716c8f9f3a3",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert_sec_cm.svh": "25db89fe5f250c1bcbd808d0b4808206b9e85ac337b26e4ebb23f2ad569e1a13",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_flop_macros.sv": "2e8e6c2ee484899ae5d0020eaf0c9732c31537c60c30cb2a0a0acd2e92baee03",
+      "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv": "68854581eaa23a57f00c4b49ee0ce972147ffca9f2800da2859d1fe38cc5b476"
+    },
+    "git_blobs": {
+      "hw/ip/prim/rtl/prim_util_pkg.sv": "29293161b510f359a9891522cc39762a90cda93f",
+      "hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv": "f471b07884496fa5a7e15775b1d115c72b9804f0",
+      "hw/ip/prim/rtl/prim_packer_fifo.sv": "1f78e7770eaa7bd318dd7d00e505a1a7f81a09c5",
+      "hw/ip/spi_host/rtl/spi_host_byte_merge.sv": "16f3796b40bea09ebfacbdfbc6db6bf9457af68f",
+      "hw/ip/spi_host/rtl/spi_host_byte_select.sv": "c370142e3fe8930e5217abfa34b0b3a49caca3d8",
+      "hw/ip/spi_host/rtl/spi_host_shift_register.sv": "e617041bab5860f74e4d8564f88f4bf44e31c6ad",
+      "hw/ip/spi_host/rtl/spi_host_fsm.sv": "a346717c736d2dd4fd0d3b3b1a9749554933d000",
+      "hw/ip/spi_host/rtl/spi_host_core.sv": "f58ae91a8f8504a6bd4ab91a86ee6ab50b90997d",
+      "hw/ip/spi_host/doc/theory_of_operation.md": "e6c8f71512c71c626f1bc9ec7743844ac9159a07",
+      "hw/ip/spi_host/doc/programmers_guide.md": "156b6bc3d4c705391d8ddc3e35d250c8ab562b61",
+      "hw/ip/prim/rtl/prim_assert.sv": "43030af17f400a136090f11b3320ccdf4decab93",
+      "hw/ip/prim/rtl/prim_assert_dummy_macros.svh": "c4421093b987a8b4ede7c79b9503eb3f906492d4",
+      "hw/ip/prim/rtl/prim_assert_standard_macros.svh": "61847c534ec527163b9ae77240925d5ca0c6f965",
+      "hw/ip/prim/rtl/prim_assert_yosys_macros.svh": "48a0473d7804b6796b3eb32edb9e0306abe10917",
+      "hw/ip/prim/rtl/prim_assert_sec_cm.svh": "0bf68441763f55e254edf6895d72420a8fe81195",
+      "hw/ip/prim/rtl/prim_flop_macros.sv": "ce59bb29d45ea4045ac524466a36de21793a0678",
+      "hw/ip/prim_generic/rtl/prim_flop_en.sv": "aaea0ea7a1498189279cbd30e00082630a48ad41"
+    },
+    "seed_inputs": {}
+  },
+  "runs": [
+    {
+      "stage": "slang",
+      "returncode": 0,
+      "seconds": 0.04809720814228058,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/slang",
+        "--single-unit",
+        "--top",
+        "spi_host_core",
+        "-G",
+        "NumCS=2",
+        "-D",
+        "SYNTHESIS",
+        "-I",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl",
+        "--ast-json",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/spi_host_core_v2/ast.json",
+        "--ast-json-source-info",
+        "--ast-json-detailed-types",
+        "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv"
+      ]
+    },
+    {
+      "stage": "verilator",
+      "returncode": 0,
+      "seconds": 0.08203541720286012,
+      "command": [
+        "verilator",
+        "--lint-only",
+        "--timing",
+        "-Wno-fatal",
+        "--top-module",
+        "spi_host_core",
+        "-GNumCS=2",
+        "-DSYNTHESIS",
+        "-Ithird_party/opentitan_candidate/hw/ip/prim/rtl",
+        "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv"
+      ]
+    },
+    {
+      "stage": "iverilog",
+      "returncode": 0,
+      "seconds": 0.019781415816396475,
+      "command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "spi_host_core",
+        "-tnull",
+        "-Pspi_host_core.NumCS=2",
+        "-D",
+        "SYNTHESIS",
+        "-I",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl",
+        "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv"
+      ]
+    },
+    {
+      "stage": "yosys",
+      "returncode": 0,
+      "seconds": 0.0889670830219984,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/yosys",
+        "-Q",
+        "-T",
+        "-s",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/spi_host_core_v2/probe.ys"
+      ]
+    }
+  ],
+  "source_sha256": {
+    "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv": "68854581eaa23a57f00c4b49ee0ce972147ffca9f2800da2859d1fe38cc5b476",
+    "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv": "12ec73502dc8115cf1e6051f10cba6fc73259f066581722d9d895d1e634676b2",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv": "a9a44c9cc067c6b0904cfff2f3056b9312a475518be32e36efe0c8a951e1af8d",
+    "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv": "99aeb7564474111dc6662488c9f4ca6b788723e449b128d08ac54f8fc2da5cd2",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv": "68b2c02faa5893399cfa5c48151c67a1d251da1bfe553d2c09674dce8ecf2431",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv": "8fe85d2fb05aaa0abbc7742c3e136ab5e7af9143ddfdb902beaf67f6f3121b97",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv": "8521227fb238f1962e34d671ffc274b5d43d7c4b5582549c00d6093fe5b0d2ce",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv": "5324b93183a0475c5e955b76a7b1e9c1c9739e810a70d213491c5657837ee47c",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv": "dc89b9b63ba31a219eef38999e77ae01b8e361007ef1eaf99306d5e50c72cd7b"
+  },
+  "no_model_calls": true,
+  "no_functional_checker_claim": true,
+  "qualified_for_B": false,
+  "assertions": "SYNTHESIS selects upstream synthesis-compatible assertion macros for flash; not assertion verification."
+}

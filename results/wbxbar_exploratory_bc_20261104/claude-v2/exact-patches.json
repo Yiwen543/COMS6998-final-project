@@ -1,0 +1,76 @@
+{
+  "patches": [
+    {
+      "file": "checker.py",
+      "before": "def _dec(a):",
+      "after": "def _lm(sel):\n    m=0\n    for i in range(4):\n        if sel is not None and (sel>>i)&1:\n            m|=0xff<<(8*i)\n    return m\n\ndef _weq(d1,d2,sel):\n    # write-data equality over SEL-enabled byte lanes only (F6)\n    if d1 is None or d2 is None:\n        return d1==d2\n    m=_lm(sel)\n    return (d1&m)==(d2&m)\n\ndef _dec(a):"
+    },
+    {
+      "file": "checker.py",
+      "before": "(p('i_mwe',m) and p('i_mdata',m)!=g('i_mdata',m))",
+      "after": "(p('i_mwe',m) and not _weq(p('i_mdata',m),g('i_mdata',m),p('i_msel',m)))"
+    },
+    {
+      "file": "checker.py",
+      "before": "(p('o_swe',s) and p('o_sdata',s)!=g('o_sdata',s))",
+      "after": "(p('o_swe',s) and not _weq(p('o_sdata',s),g('o_sdata',s),p('o_ssel',s)))"
+    },
+    {
+      "file": "checker.py",
+      "before": "h['sel']==sel and ((not we) or h['d']==d):",
+      "after": "h['sel']==sel and ((not we) or _weq(h['d'],d,sel)):"
+    },
+    {
+      "file": "checker.py",
+      "before": "                    kind='decode_err' if e['sl'] is None else ('slave_err' if st=='serr' else 'timeout_or_starvation_err')\n                    cnt[kind]+=1\n                    events.append({'family':'error','kind':kind,'start_cycle':e['acc'],'end_cycle':c,'evidence':'m%d accept@%d state %s ERR@%d'%(m,e['acc'],st,c)})",
+      "after": "                    if e['sl'] is None or st=='serr':\n                        kind='decode_err' if e['sl'] is None else 'slave_err'\n                        cnt[kind]+=1\n                        events.append({'family':'error','kind':kind,'start_cycle':e['acc'],'end_cycle':c,'evidence':'m%d accept@%d state %s ERR@%d'%(m,e['acc'],st,c)})\n                    else:\n                        cnt['unexplained_err']+=1\n                        unresolved.append({'cycle':c,'item':'unexplained_mapped_err','detail':'m%d accept@%d addr %r slave%r state %s ERR@%d (%d cycles) with no matching slave ERR; timeout/starvation eligibility not established; persists for batch'%(m,e['acc'],e['a'],e['sl'],st,c,c-e['acc'])})"
+    },
+    {
+      "file": "selftest.py",
+      "before": "def _wr(sd=0xAB,sa=0x05,ss=0):\n    rows=_base()\n    rows.append(_row(2,i_mcyc=1,i_mstb=1,i_mwe=1,i_maddr=0x05,i_mdata=0xAB,i_msel=0xF))\n    rows.append(_row(3,i_mcyc=1,o_scyc=1<<ss,o_sstb=1<<ss,o_swe=1<<ss,o_saddr=sa<<(8*ss),o_sdata=sd<<(32*ss),o_ssel=0xF<<(4*ss)))",
+      "after": "def _wr(sd=0xAB,sa=0x05,ss=0,sel=0xF):\n    rows=_base()\n    rows.append(_row(2,i_mcyc=1,i_mstb=1,i_mwe=1,i_maddr=0x05,i_mdata=0xAB,i_msel=sel))\n    rows.append(_row(3,i_mcyc=1,o_scyc=1<<ss,o_sstb=1<<ss,o_swe=1<<ss,o_saddr=sa<<(8*ss),o_sdata=sd<<(32*ss),o_ssel=sel<<(4*ss)))"
+    },
+    {
+      "file": "selftest.py",
+      "before": "def run(check_rows):",
+      "after": "def _shift(rows,off):\n    return [{'cycle':r['cycle']+off,'pre':r['pre'],'post':r['post']} for r in rows]\n\ndef _early_err():\n    rows=_base()\n    rows.append(_row(2,i_mcyc=1,i_mstb=1,i_maddr=0x05,i_msel=0xF))\n    rows.append(_row(3,i_mcyc=1,o_merr=1))\n    rows.append(_row(4))\n    return rows\n\ndef _early_err_then_reset():\n    return _early_err()+[_row(5,i_reset=1)]+_shift(_wr()[2:],4)\n\ndef _slave_err():\n    rows=_base()\n    rows.append(_row(2,i_mcyc=1,i_mstb=1,i_maddr=0x05,i_msel=0xF))\n    rows.append(_row(3,i_mcyc=1,o_scyc=1,o_sstb=1,o_saddr=0x05,o_ssel=0xF))\n    rows.append(_row(4,i_mcyc=1,o_scyc=1,i_serr=1))\n    rows.append(_row(5,i_mcyc=1,o_merr=1))\n    rows.append(_row(6))\n    return rows\n\ndef run(check_rows):"
+    },
+    {
+      "file": "selftest.py",
+      "before": "        ('incomplete_unresolved',_wr()[:4],'unresolved'),",
+      "after": "        ('incomplete_unresolved',_wr()[:4],'unresolved'),\n        ('early_unexplained_err_unresolved',_early_err(),'unresolved'),\n        ('unexplained_err_persists_after_reset',_early_err_then_reset(),'unresolved'),\n        ('slave_err_positive',_slave_err(),'scoped_pass'),\n        ('masked_lane_write_positive',_wr(sd=0x5500AB,sel=0x1),'scoped_pass'),\n        ('enabled_lane_write_fault',_wr(sd=0xAC,sel=0x1),'dut_violation'),"
+    },
+    {
+      "file": "properties.json",
+      "before": "\"requirement\": \"Each forwarded request equals the oldest unforwarded mapped request of exactly one master in WE, address, SEL, and write data; no request is forwarded twice or invented.\",",
+      "after": "\"requirement\": \"Each forwarded request equals the oldest unforwarded mapped request of exactly one master in WE, address, SEL, and write data on SEL-enabled byte lanes (masked lanes are not compared; same rule for stalled-request hold); no request is forwarded twice or invented.\","
+    },
+    {
+      "file": "properties.json",
+      "before": "    \"requirement\": \"OPT_TIMEOUT=16 / starvation ERR: ERR on unforwarded or unanswered forwarded requests is accepted; exact cycle count not checked.\",\n    \"source\": \"wbxbar.v header 32-39\",\n    \"assumptions\": [\n      \"Latency prose insufficient for an exact bound\"\n    ],\n    \"support_status\": \"unproved (permissive)\"",
+      "after": "    \"requirement\": \"A master ERR on a mapped request without a matching slave ERR is recorded as an unresolved obligation (unexplained_mapped_err) with acceptance/ERR cycles; it is never scoped_pass nor credited as a timeout/starvation mechanism. The obligation persists across later reset/restart in the same batch. Decode ERR and matched slave ERR remain handled.\",\n    \"source\": \"wbxbar.v header 32-39; crossbar article\",\n    \"assumptions\": [\n      \"Prose insufficient for an exact timeout/arbitration bound; no timer is modeled\"\n    ],\n    \"support_status\": \"unresolved (not passed, not failed)\""
+    },
+    {
+      "file": "properties.json",
+      "before": "    \"requirement\": \"Outstanding obligations at trace end are reported as pending, not as failures.\",\n    \"source\": \"Packet instructions\",\n    \"assumptions\": [],\n    \"support_status\": \"reported only\"\n  }",
+      "after": "    \"requirement\": \"Outstanding obligations at trace end are reported as pending, not as failures.\",\n    \"source\": \"Packet instructions\",\n    \"assumptions\": [],\n    \"support_status\": \"reported only\"\n  },\n  {\n    \"id\": \"P11_exclusions\",\n    \"requirement\": \"Declared exclusions: master ACK/ERR while master CYC is low are not attributed (WB B4 3.1.2); post-reset o_mack/o_merr, minimum reset duration, eventual o_scyc withdrawal after abort/timeout, and timeout/starvation latency are not checked.\",\n    \"source\": \"WB B4 3.1.1, 3.1.2; review F2/F4\",\n    \"assumptions\": [],\n    \"support_status\": \"not checked (documented)\"\n  }"
+    },
+    {
+      "file": "contract.md",
+      "before": "- payload and SEL preservation (write data only)",
+      "after": "- payload and SEL preservation (write data compared only on SEL-enabled byte lanes; address, WE, SEL compared fully)"
+    },
+    {
+      "file": "contract.md",
+      "before": "- Exact arbitration, pipeline and timeout latencies are not checked. Timeout/starvation ERR is accepted for any request that has no slave ACK.\n- Responses while master CYC is low are ignored.",
+      "after": "- Exact arbitration, pipeline and timeout latencies are not checked. A master ERR on a mapped request with no matching slave ERR is recorded as unresolved (unexplained_mapped_err, with accept/ERR cycles); it is never scoped_pass and is not labeled timeout/starvation. It persists across later reset/restart in the same batch.\n- Responses while master CYC is low are ignored (not attributable per WB B4 3.1.2); stale responses landing on new work are checked.\n- Not checked: o_mack/o_merr inactive after reset, minimum reset duration, eventual o_scyc withdrawal after abort/timeout (liveness)."
+    }
+  ],
+  "rationale": [
+    "F1 (disposition a): mapped ERR without matching slave ERR now appends an unresolved item carrying accept/ERR cycles and state; no timeout/starvation event or timer is asserted. The unresolved list is never cleared by reset, so the obligation persists across restart. Decode ERR and matched slave ERR keep their events and counts.",
+    "F6: write-data comparisons for forwarding match and for the stalled-request hold check use only SEL-enabled lanes. Address, WE and SEL are still compared exactly; read-data checks are unchanged. The negative/write_data control (enabled lane 0 differs) still fails; positive/masked_write_bytes (only masked lane 1 differs) passes.",
+    "Selftests added: early unexplained ERR -> unresolved; the same followed by reset and a clean write -> still unresolved; slave ERR -> scoped_pass; masked-lane positive; enabled-lane fault.",
+    "properties.json and contract.md were updated consistently: P2 masking, P9 unresolved, and a new P11 for declared exclusions (inactive-CYC responses, reset limits, abort/timeout liveness).",
+    "Control early_unexplained_error is classified unresolved, not a positively detected defect. The packet does not justify an exact bound for asserting a defect."
+  ]
+}

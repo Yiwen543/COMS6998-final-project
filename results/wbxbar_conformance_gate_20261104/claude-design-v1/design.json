@@ -1,0 +1,340 @@
+{
+  "clause_matrix": [
+    {
+      "id": "K1_reset",
+      "source": "WB B4 3.1.1 rules 3.00/3.05/3.15/3.20 pp31-32",
+      "status": "normative",
+      "observables": "pre.i_reset; post.o_scyc and post.o_sstb at the reset edge; i_mcyc and i_mstb during reset",
+      "acceptance": "At every edge with i_reset=1, post o_scyc and o_sstb must be 0, otherwise dut_violation. Master CYC or STB high during reset is an environment violation. Reset is the only sound epoch boundary: it discards all live identities, canceled identities and hypotheses.",
+      "exclusions": "o_mack and o_merr after reset are not judged, because the WB slave-role reset output requirement is not explicit for the DUT. Minimum reset length is an environment property."
+    },
+    {
+      "id": "K2_accept",
+      "source": "WB B4 rules 3.57/3.58, 3.1.3.2, rule 3.60",
+      "status": "normative",
+      "observables": "Master acceptance: i_mcyc&i_mstb&!o_mstall in pre. Slave acceptance: o_scyc&o_sstb&!i_sstall in pre.",
+      "acceptance": "Identity is the tuple (WE, full address, full SEL, write data on SEL-enabled lanes only). Undefined active payload is an environment violation on master inputs and a DUT violation on slave outputs.",
+      "exclusions": "Payload while STB is low is ignored."
+    },
+    {
+      "id": "K3_routing",
+      "source": "Packet address_configuration (public parameters)",
+      "status": "normative (parameter-defined)",
+      "observables": "o_saddr slice s at slave acceptance",
+      "acceptance": "decode(a) must equal s. An unmapped address must never be forwarded.",
+      "exclusions": "none"
+    },
+    {
+      "id": "K4_no_invention_multiplicity",
+      "source": "WB B4 3.1.3.2; README 188-196; crossbar article",
+      "status": "inferred (an interconnect forwards only master-originated work)",
+      "observables": "Slave acceptance events versus the multiset of unforwarded live or canceled identities in the epoch",
+      "acceptance": "Every slave acceptance must consume exactly one identity-equal entry in at least one feasible hypothesis. Otherwise dut_violation. Each entry may be consumed at most once.",
+      "exclusions": "No claim about which of several identical entries was consumed."
+    },
+    {
+      "id": "K5_forward_order",
+      "source": "none public",
+      "status": "unknown",
+      "observables": "Relative slave-acceptance order of one master's requests, both across slaves and within one slave",
+      "acceptance": "NOT judged. The prior P2 'oldest unforwarded head' rule is withdrawn. Response order does not imply forward order, because a DUT may buffer and reorder internally.",
+      "exclusions": "Global and per-master forward order. These are offered only as a characterization obligation (C3)."
+    },
+    {
+      "id": "K6_response_order",
+      "source": "README 188-196 'ACK responses won't get crossed'; WB B4 3.1.3.2 'N ACKs terminate N transactions'",
+      "status": "inferred (public maintainer claim, not WB-normative)",
+      "observables": "o_mack/o_merr per master while i_mcyc=1",
+      "acceptance": "Each response retires that master's oldest outstanding accepted request. Labels that depend on K6 must cite 'inferred'.",
+      "exclusions": "Responses while master CYC=0 are not attributable (WB B4 3.1.2)."
+    },
+    {
+      "id": "K7_ack_basis_and_read_data",
+      "source": "WB B4 obs 3.10, 3.1.3.2 'read data valid with ACK'; README",
+      "status": "normative for data validity; inferred for end-to-end preservation",
+      "observables": "i_sack/i_sdata on the slave side, matched by hypothesis to the slave-queue entry; o_mack/o_mdata on the master",
+      "acceptance": "A master ACK requires the retired entry to have been forwarded and slave-ACKed in the same hypothesis. For reads, o_mdata must equal the i_sdata of that slave ACK. The full 32 bits are compared for reads, because SEL does not mask read data in B4 text.",
+      "exclusions": "Write ACK carries no data check."
+    },
+    {
+      "id": "K8_errors",
+      "source": "WB B4 perm 3.20, rule 3.45; crossbar article (unmapped -> ERR); wbxbar.v header 32-39",
+      "status": "normative: ACK/ERR exclusivity; inferred: decode ERR and slave-ERR propagation; unknown: exact timeout/starvation conditions",
+      "observables": "o_merr, i_serr, decode of the entry",
+      "acceptance": "An ACK on an unmapped or slave-ERRed entry is a violation. An ERR on a slave-ACKed entry is a violation. An ERR on a mapped, unforwarded or un-ERRed entry is unexplained_mapped_err (unresolved, property-local).",
+      "exclusions": "No timeout latency. The master's reaction to ERR is not judged."
+    },
+    {
+      "id": "K9_cancellation",
+      "source": "WB B4 3.1.2/rule 3.30; crossbar article abort prose (supplementary)",
+      "status": "inferred: no attribution of responses across a master CYC drop; unknown: survivor set, propagation latency, residual forward order",
+      "observables": "i_mcyc falling with outstanding entries; later slave acceptances and responses",
+      "acceptance": "On a master CYC drop, unforwarded entries become canceled identities. Forwarded entries become orphan-pending. A later slave acceptance matching a canceled identity is legal-unknown: it is tagged unresolved post_abort_forward on that branch only. Responses to orphan or canceled work must never be retired into the master's new work; that is a violation in every hypothesis where it occurs. Canceled identities persist until reset.",
+      "exclusions": "Idle o_scyc/o_sstb and quiet slaves never discard canceled identities. There is no grace period and no delay bound."
+    },
+    {
+      "id": "K10_hold_handshake",
+      "source": "WB B4 3.1.3.2 ('waits' while STALL), rule 3.45, rule 3.25",
+      "status": "normative for the DUT acting as master to slaves",
+      "observables": "o_s* across a stalled cycle; o_sstb versus o_scyc; o_mack&o_merr",
+      "acceptance": "A violation if the DUT changes or withdraws a stalled slave request without dropping CYC, raises STB without CYC, or asserts ACK and ERR together.",
+      "exclusions": "none"
+    },
+    {
+      "id": "K11_env",
+      "source": "Packet environment_contract",
+      "status": "assumption",
+      "observables": "master hold, slave in-order responses, no unsolicited response, slave cancel on CYC drop",
+      "acceptance": "Violations are recorded separately and yield input_or_scope_invalid. They are never reported as DUT faults.",
+      "exclusions": "Driver ledgers are not trusted."
+    },
+    {
+      "id": "K12_batch_end",
+      "source": "Packet requested obligations",
+      "status": "assumption (reporting)",
+      "observables": "Outstanding entries per surviving hypothesis",
+      "acceptance": "Pending work yields pending_at_batch_end (unresolved). It is never a liveness failure.",
+      "exclusions": "Liveness and starvation."
+    }
+  ],
+  "ownership_algorithm": {
+    "model": "Nondeterministic reference checked as trace acceptance. State is a set H of hypotheses for the current epoch.",
+    "hypothesis_contents": [
+      "per-master FIFO of entries: identity, state (new/fwd/sacked/serr/canceled/orphan), read data, uncertainty tags",
+      "per-slave FIFO of entry references, or 'orphan'",
+      "consumption status of each canceled identity"
+    ],
+    "step": {
+      "slave_acceptance": "Branch on every eligible entry (live or canceled, any master, any position) whose identity equals the accepted request. Canceled branches get tag K9_post_abort_forward.",
+      "slave_response": "Bind the response to the head of the slave FIFO in each hypothesis.",
+      "master_response": "Retire the oldest entry per K6 and apply K7/K8. A hypothesis that fails a K-check is removed and the failure is recorded as a witness."
+    },
+    "verdict_semantics": [
+      {
+        "case": "H empty",
+        "result": "dut_violation",
+        "detail": "Report the earliest cycle at which the last hypothesis died, with the per-branch failure witnesses. This is sound for the nondeterministic reference: no legal history explains the trace."
+      },
+      {
+        "case": "H nonempty and every surviving hypothesis depends on an unknown-status clause (a K9 tag or unexplained ERR)",
+        "result": "unresolved",
+        "detail": "Property-local, naming the clause."
+      },
+      {
+        "case": "H nonempty and at least one surviving hypothesis is tag-free",
+        "result": "consistent for checked clauses"
+      }
+    ],
+    "owner_claims": "Ownership is reported per entry as 'unique' only if all surviving hypotheses agree; otherwise it is 'indistinguishable(k candidates)'. Consistency is never presented as proof of hidden ownership.",
+    "sound_reductions": [
+      {
+        "name": "partitioning",
+        "rule": "Hypotheses factor into independent components linked only by shared identity candidates. Unrelated traffic stays in singleton components and keeps being checked."
+      },
+      {
+        "name": "symmetry quotient",
+        "rule": "Entries with equal identity, same master, same state and no bound data are interchangeable. Store them canonically sorted, an exact quotient. Binding read data breaks the symmetry."
+      },
+      {
+        "name": "component closure",
+        "rule": "A component closes when all its entries are retired or the epoch resets. Its tags then become final records."
+      }
+    ],
+    "resource_limit": "MAX_HYP_PER_COMPONENT = 4096 and MAX_COMPONENTS = 64, declared constants.",
+    "on_limit": "Mark the component unresolved_on_limit with its entries and cycle. Stop judging only the clauses that depend on that component's entries: K4 for its identities, K6/K7 for masters with an entry in it. Do not prune. Continue all other components and masters. The component is released at reset, at which point checking of affected masters resumes. Never select a branch.",
+    "resume_rule": "A master's order and data checks resume after an ambiguity component closes. Distinct later work is checked even inside the same epoch.",
+    "cumulative_records": "post_abort_forward, unexplained_mapped_err and unresolved_on_limit persist across reset within the batch."
+  },
+  "formal_obligations": {
+    "version_independent_safety": [
+      {
+        "id": "F1_route",
+        "prop": "Slave acceptance on s implies decode(o_saddr[s]) == s, and no slave acceptance carries an unmapped address.",
+        "env": "none",
+        "evidence": "unbounded prove (k-induction); bmc depth reported separately",
+        "cover": "an acceptance on each slave",
+        "false_control": "assert decode == 1-s; it must fail"
+      },
+      {
+        "id": "F2_no_invention",
+        "prop": "A ghost multiset over master-accepted identities in the epoch (live and canceled) must contain each slave-accepted identity, removed once. Use a symbolic-identity counter: for a free constant identity X, count(slave X) <= count(master X).",
+        "env": "K11 master hold; reset",
+        "evidence": "prove via induction with an auxiliary counter invariant; bmc only if induction fails, labeled bounded",
+        "cover": "X forwarded twice from two masters",
+        "false_control": "assert count(slave X) < count(master X) when a forward exists; it must fail"
+      },
+      {
+        "id": "F3_order_data_tracked",
+        "prop": "Tracked symbolic transaction T: free choice of master m and a nondeterministic acceptance index. The DUT response retiring T's position equals ERR iff T is unmapped or slave-ERRed. For a read, o_mdata equals the slave data of T's forward, where the forward is identified by a ghost tag carried on the slave side through ghost FIFOs keyed by slave acceptance.",
+        "env": "K11 slave in-order responses and no unsolicited responses",
+        "evidence": "prove target; else bmc",
+        "cover": [
+          "T is a read crossing slaves with a younger forward first",
+          "T is a write",
+          "T is an ERR"
+        ],
+        "false_control": "mutated property expecting the younger transaction's data; it must fail with a cex"
+      },
+      {
+        "id": "F4_epoch",
+        "prop": "A master response retiring a new-epoch entry (accepted after a CYC drop or reset) is never based on a slave response to a pre-drop or pre-reset forward. Ghost epoch bit on the slave-FIFO tags. Covers read data and write ACK in the new epoch.",
+        "env": "K11 slaves cancel on CYC drop",
+        "evidence": "prove target",
+        "cover": "abort with orphan in flight, then new read ACK",
+        "false_control": "assert no new-epoch ACK ever occurs; it must fail, showing nonvacuity"
+      },
+      {
+        "id": "F5_reset_out",
+        "prop": "After a reset edge, o_scyc and o_sstb are 0.",
+        "env": "none",
+        "evidence": "prove",
+        "cover": "reset with traffic outstanding",
+        "false_control": "assert o_scyc=1 after reset; it must fail"
+      },
+      {
+        "id": "F6_handshake",
+        "prop": "Slave-side hold under stall; never o_sstb without o_scyc; never o_mack&o_merr.",
+        "env": "none",
+        "evidence": "prove",
+        "cover": "stalled slave request",
+        "false_control": "assert never stalled; it must fail"
+      },
+      {
+        "id": "F7_partial_cancel_identity",
+        "prop": "Any slave acceptance after a master CYC drop either matches a ghost canceled identity (any position) or a live one.",
+        "env": "K11",
+        "evidence": "prove target",
+        "cover": "some residual forward exists, without asserting its legality",
+        "false_control": "assert a residual never matches; it must fail if the cover is hit"
+      }
+    ],
+    "notes": "Each assert gets a reachable cover; an unreached cover marks the assert vacuous and evidence-void. Environment assumptions are listed per property and are never assumed of DUT outputs. No assertion appears in assume form. BMC results state depth. Prove claims require induction success.",
+    "implementation_specific_characterization": [
+      {
+        "id": "C1_residual_bound",
+        "question": "Does a k exist such that no master-m-sourced forward occurs more than k cycles after a CYC drop with no new acceptance?",
+        "assumptions": [
+          "rev 2e8d3bc2 RTL",
+          "the exact parameters",
+          "K11"
+        ],
+        "method": "cover search to find the max observed k, then attempt to prove for that k",
+        "use": "Only certified results may later enable discarding identities. A certificate requires a freeze and review. Never a guessed bound."
+      },
+      {
+        "id": "C2_survivor_set",
+        "question": "Which buffered entries survive partial propagation?",
+        "method": "cover enumeration",
+        "use": "Descriptive only."
+      },
+      {
+        "id": "C3_forward_order",
+        "question": "Is per-master forward order (per slave, across slaves) preserved?",
+        "method": "prove or cex",
+        "use": "Characterization only. Not a contract claim unless certified and separately registered."
+      },
+      {
+        "id": "C4_timeout",
+        "question": "Does a mapped ERR without a slave ERR occur only when OPT_TIMEOUT or starvation conditions hold?",
+        "method": "prove under RTL",
+        "use": "May later reclassify unexplained_mapped_err with a certificate."
+      }
+    ]
+  },
+  "synthetic_control_assessments": [
+    {
+      "name": "cross_slave/early_forward_ordered_retirement",
+      "assessment": "M0 reads 0x05 (slave0) then 0x15 (slave1). Slave1 is forwarded first. Slave ACK data: 0x98765432 on slave1, 0x1234ABCD on slave0. Master retires 0x1234ABCD then 0x98765432, which is correct per K6/K7. The prior checker wrongly reported a routing_payload violation.",
+      "label": "scoped_pass",
+      "basis": "K5 is unknown, so forward order is not judged. K6 is inferred. The pass covers order and data only and makes no forward-order claim."
+    },
+    {
+      "name": "cross_slave/wrong_retirement_data",
+      "assessment": "Same trace, but the first master ACK delivers 0x98765432, which is the younger request's data.",
+      "label": "dut_violation",
+      "basis": "No hypothesis survives K6+K7. The label rests on inferred K6 (README) and must be stated as such."
+    },
+    {
+      "name": "ambiguity/identical_requests_later_responses",
+      "assessment": "Both masters read 0x05. Two forwards occur. Slave data is 0x1234ABCD then 0x98765432. M0 gets the first, m1 the second.",
+      "label": "scoped_pass",
+      "basis": "The hypothesis with forward1 owned by m1 dies because m1 would need 0x1234ABCD. One surviving hypothesis remains. Ownership is reported as 'unique by elimination under the reference', not as proof of hidden state."
+    },
+    {
+      "name": "ambiguity/followed_by_distinct_work",
+      "assessment": "The later distinct read 0x07 returns 0x88888877, which is correct.",
+      "label": "scoped_pass",
+      "basis": "The component closed and checking resumed. The whole epoch is not disabled."
+    },
+    {
+      "name": "ambiguity/later_data_corruption",
+      "assessment": "The later read delivers 0x88888876 while the slave returned 0x88888877.",
+      "label": "dut_violation",
+      "basis": "The singleton component fails in all hypotheses."
+    },
+    {
+      "name": "ambiguity/later_unaccepted_address",
+      "assessment": "The 0x07 request is forwarded as 0x0C. 0x0C routes legally to slave0, but no live or canceled identity matches it.",
+      "label": "dut_violation",
+      "basis": "K4 fails in all hypotheses. The later ACK is irrelevant to the label."
+    },
+    {
+      "name": "ambiguity/inherently_indistinguishable",
+      "assessment": "Both slave ACKs carry 0x1234ABCD, so both hypotheses survive.",
+      "label": "scoped_pass",
+      "basis": "Observable clauses hold under every feasible history. Ownership is reported as indistinguishable(2). No hidden-owner claim is made. The label is not 'unresolved', because no unknown clause is relied on."
+    },
+    {
+      "name": "prior selftests retained",
+      "tests": [
+        "write/read positive and faults",
+        "masked-lane",
+        "unmapped ERR/ACK",
+        "invented ACK",
+        "incomplete -> unresolved",
+        "unexplained ERR, persisting across reset",
+        "slave ERR",
+        "abort nonoldest/both/reverse -> unresolved",
+        "enabled-byte corrupt and double consumption -> violation",
+        "abort-then-reset forward -> violation",
+        "unsolicited slave ACK -> env"
+      ],
+      "assessment": "All labels remain justified under the new model. abort_none_forwarded_pass stays scoped_pass: unforwarded canceled identities are legal and are not pending obligations. Note that this does not certify empty buffers."
+    },
+    {
+      "name": "prior inferred rule withdrawn",
+      "assessment": "P2's 'oldest unforwarded head' was the wrongly inferred expectation. It caused cross-slave early forwarding to be labeled a violation and is removed."
+    },
+    {
+      "name": "new controls to add",
+      "controls": [
+        "Same-master identical reads to the same slave with distinct data, retired in correct order: pass.",
+        "The same with swapped data: violation.",
+        "ERR during ambiguity: m1 gets ERR while the slave ACKed both. Hypotheses die, so violation.",
+        "ERR after ambiguity on distinct mapped work with no slave ERR: unresolved, local.",
+        "Partial cancel: abort with one forwarded and one unforwarded entry; the orphan's ACK must not retire new-epoch work. Violation if it does, pass otherwise.",
+        "New-epoch read and write after abort and after reset: each checked.",
+        "Residual forward after abort that matches a canceled identity, interleaved with live identical work from the other master: unresolved only if every surviving hypothesis uses the canceled branch.",
+        "Hypothesis-limit control with a lowered test constant: unresolved_on_limit is local, and an unrelated master is still checked.",
+        "Write identical except on masked lanes: treated as equal identity."
+      ]
+    }
+  ],
+  "implementation_plan": [
+    "1. Implement the checker v2 contract (K1-K12) and the hypothesis engine with partitioning, symmetry quotient, declared limits and per-clause verdicts. Keep verdict precedence env > violation > unresolved > pass, reported per clause and in aggregate.",
+    "2. Have an independent author write the controls from the clause matrix, not from checker code. This covers all controls above plus the retained prior ones.",
+    "3. Fresh code review against this matrix, including mutation checks. Each K-check is disabled in turn and must be caught by at least one control.",
+    "4. Write the formal harness: ghost FIFOs, symbolic tracked transaction, covers and false controls. Record the bmc/prove distinction. Characterization C1-C4 goes in a separate report, and any contract change requires a certificate and re-review.",
+    "5. Freeze the checker, controls and harness hashes, then perform immutable saved-action replay before live B/C.",
+    "6. Live B/C uses the original driver, budgets and traffic. No error suppression, forced reset, unique tags or one-outstanding restriction without a separately registered scope."
+  ],
+  "unresolved": [
+    "Forward order (K5), the cancellation survivor set and latency (K9), and timeout/starvation eligibility (K8) are unknowable from public sources.",
+    "Hidden ownership of identical requests with identical responses is inherently indistinguishable.",
+    "Response order (K6) is inferred from README prose, not WB-normative.",
+    "No sound cancellation boundary other than reset exists without a certified C1. Canceled identities therefore persist, and residual forwards matching them stay unresolved.",
+    "DUT post-reset o_mack/o_merr and the eventual withdrawal of slave CYC after an abort remain unchecked.",
+    "Any pass is scoped to the checked clauses, the feasible-history semantics and the declared limits."
+  ],
+  "ready_for_implementation": "true for checker v2, controls and formal harness implementation; false for live B/C until steps 2-5 are completed"
+}

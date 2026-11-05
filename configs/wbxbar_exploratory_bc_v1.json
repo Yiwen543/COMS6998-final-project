@@ -1,0 +1,344 @@
+{
+  "id": "wbxbar_exploratory_bc_v1",
+  "status": "registered_before_checker_or_live_models_not_a_live_freeze",
+  "created_utc": "2026-11-04T20:56:26.517752+00:00",
+  "classification": "exploratory_easy_target_control_after_known_offline_screen_failure",
+  "user_direction": "User requested lowering admission difficulty to try independent Claude checker and B/C. Only difficulty admission is relaxed; correctness, isolation and accounting remain mandatory.",
+  "parent": {
+    "path": "configs/wbxbar_conditional_index_v1.json",
+    "sha256": "7d72cedd06a695ba01c76062a871ffe4aab7f1030e277c21a27a73fbda1b1146",
+    "ordinary_result": "results/wbxbar_conditional_20261104/ordinary-v1/summary.json",
+    "ordinary_sha256": "7129193289be93d5ad8c0f4a6ea1ce65a7f087f326c27dcd95b2976d85c98758"
+  },
+  "known_selection_information": "All eight groups/17 counters are hit by ordinary handcrafted reads. No WBXBAR live LLM outcomes have been observed. Selection is not blind to offline results.",
+  "repository_commit": "50d7ee83d61989017e28e981420cd58f4c5f0787",
+  "candidate": {
+    "top": "wbxbar",
+    "root": "third_party/wb2axip_candidate",
+    "sources": [
+      "rtl/skidbuffer.v",
+      "rtl/addrdecode.v",
+      "rtl/wbxbar.v"
+    ],
+    "include_dirs": [],
+    "defines": [],
+    "parameters": {
+      "NM": 2,
+      "NS": 2,
+      "AW": 8,
+      "DW": 32,
+      "SLAVE_ADDR": 4096,
+      "SLAVE_MASK": 61680,
+      "LGMAXBURST": 3,
+      "OPT_TIMEOUT": 16,
+      "OPT_STARVATION_TIMEOUT": 1,
+      "OPT_DBLBUFFER": 1,
+      "OPT_LOWPOWER": 1
+    },
+    "seed_inputs": {},
+    "event_families": [
+      "contended slave ownership held by outstanding responses then drain and transfer to waiting master",
+      "nonresponding slave times out and aborts then new cycle to same slave succeeds",
+      "master aborts outstanding pipelined cycle and a subsequent owner acquires resource without stale response"
+    ],
+    "ordinary_policy": "Ordinary isolated reads/writes from each master to each mapped slave and unmapped address; direct mapped ranges 0x00-0x0f/0x10-0x1f. Concurrent accesses to different slaves, one-master prompt pipelined bursts 1/2/4/7 and alternating destinations only after replies. Prompt in-order ACK/ERR, no engineered stall/timeouts or competing ownership; byte masks vary. Include normal release/reacquire. Aborted work is separate targeted event, not ordinary.",
+    "proof_keep": [],
+    "clock": "i_clk",
+    "reset": "i_reset",
+    "reset_active": 1,
+    "reset_behavior": "synchronous active-high",
+    "revision": "2e8d3bc2d26ddc33d1881022a2a2b9d3f0c16b9b",
+    "source_hashes": {
+      "third_party/wb2axip_candidate/rtl/skidbuffer.v": "ed1fda9192563fd7fd7033b564e8cf47ad6cb63ba4f578ed2c302037d47a5389",
+      "third_party/wb2axip_candidate/rtl/addrdecode.v": "97b348693a5d266a3fb42a2993f9726dd36912bfc084b05b68b9afacb390eb2d",
+      "third_party/wb2axip_candidate/rtl/wbxbar.v": "d3fd1f2d7fb8909c2c2950c666e04c97d704c501c867201aedab5011ee106d2e",
+      "third_party/wb2axip_candidate/README.md": "e21ffe5300b43bf2c38286ee8f2e201606d0a93f974b67f4c7235bd605904dd3"
+    },
+    "git_blobs": {
+      "third_party/wb2axip_candidate/rtl/skidbuffer.v": "0e567844d98a66fa489930a03bf214308faa8535",
+      "third_party/wb2axip_candidate/rtl/addrdecode.v": "3a1cdc11312316cf7157f1f7ce042febf5057d57",
+      "third_party/wb2axip_candidate/rtl/wbxbar.v": "6468f15942dbe23f077f23599cd8ffa9bcb5abee",
+      "third_party/wb2axip_candidate/README.md": "9de0b2cb826103b55a5e7f91779ad8aca881065e"
+    },
+    "proof_boundary": "Original parent and real original children; no DUT rewrite, replica counters, protocol stubs, source-derived golden model or state-reachability assumptions.",
+    "specification": "https://github.com/ZipCPU/wb2axip/blob/2e8d3bc2d26ddc33d1881022a2a2b9d3f0c16b9b/README.md",
+    "public_contract_addendum": "Public module/interface comments are separate cited intent; checker author must not receive executable RTL or formal implementation-specific properties."
+  },
+  "development_budget": {
+    "repetitions": 3,
+    "rounds": 6,
+    "max_new_cycles": 64,
+    "seed_cycles": 8
+  },
+  "model_limits": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "input_tokens": 32000,
+    "output_tokens": 16384,
+    "timeout_seconds": 120,
+    "max_retries": 1
+  },
+  "arms": [
+    "B",
+    "C"
+  ],
+  "roles": {
+    "checker_author": "Claude specification-only; no RTL/private calibrated traces/B-C outcomes",
+    "reviewer": "Fresh Claude read-only, may inspect implementation solely for attribution",
+    "driver_and_calibration": "GPT/Codex, fixed public-port JSON driver; no checker expected-output edits",
+    "experimental_stimulus": "gpt-6.1-sol JSON only after offline freeze; no solver/handwritten target witnesses",
+    "measurement": "Fixed simulator counters/hash/schema; no model edits"
+  },
+  "relaxed_admission": [
+    "ordinary-union target non-hit",
+    "three disjoint late-event target families",
+    "B difficulty gate before C"
+  ],
+  "retained_admission": [
+    "certified typed two-state semantics and exact source mappings",
+    "all original raw counter identities retained including unresolved",
+    "Claude spec-only checker plus fresh independent review",
+    "independent positive and single-fault controls for every claimed property",
+    "checker-validated target reachability without model access to witnesses",
+    "fixed validated protocol-safe driver and same interface in B/C",
+    "frozen prompts, targets, checker, driver, denominator, budgets before live calls"
+  ],
+  "B_difficulty_results": "Report original gate descriptively. Do not use it to decide whether to run C, change targets, shorten budgets, discard repetitions or alter feedback.",
+  "session_policy": {
+    "independent_sessions": true,
+    "seed_cycles": 8,
+    "feedback_from": "Common seed measurement before round 1; then whole previous completed batch. B raw, C same raw plus certified relations.",
+    "round_policy": "All six scheduled rounds for every session; do not stop merely for target saturation. Infrastructure failure is reported, never silently replaced.",
+    "simulation": "Fresh process with cumulative seed+actions replay per round; reset and counters start fresh. Count all repeated cycles and executions. No uncounted drain cycles.",
+    "scheduling": "Interleave arms each round, alternate B/C order by repetition; no shared model history. Use fresh B and C, no qualifying B trial pooled into comparison."
+  },
+  "targets": [
+    {
+      "eclass": 184,
+      "nontrivial": true,
+      "source_counter_identities": [
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          482,
+          4,
+          "branch",
+          "if",
+          "tb_natural_inventory.dut"
+        ],
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          574,
+          5,
+          "branch",
+          "if",
+          "tb_natural_inventory.dut"
+        ],
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          673,
+          6,
+          "branch",
+          "if",
+          "tb_natural_inventory.dut"
+        ]
+      ]
+    },
+    {
+      "eclass": 190,
+      "nontrivial": true,
+      "source_counter_identities": [
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          494,
+          4,
+          "branch",
+          "if",
+          "tb_natural_inventory.dut"
+        ],
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          571,
+          6,
+          "branch",
+          "else",
+          "tb_natural_inventory.dut"
+        ]
+      ]
+    },
+    {
+      "eclass": 238,
+      "nontrivial": true,
+      "source_counter_identities": [
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          559,
+          6,
+          "line",
+          "elsif",
+          "tb_natural_inventory.dut"
+        ],
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          666,
+          6,
+          "line",
+          "elsif",
+          "tb_natural_inventory.dut"
+        ]
+      ]
+    },
+    {
+      "eclass": 272,
+      "nontrivial": true,
+      "source_counter_identities": [
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          562,
+          12,
+          "branch",
+          "else",
+          "tb_natural_inventory.dut"
+        ],
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          668,
+          12,
+          "branch",
+          "else",
+          "tb_natural_inventory.dut"
+        ]
+      ]
+    },
+    {
+      "eclass": 286,
+      "nontrivial": true,
+      "source_counter_identities": [
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          565,
+          7,
+          "branch",
+          "else",
+          "tb_natural_inventory.dut"
+        ],
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          671,
+          7,
+          "branch",
+          "else",
+          "tb_natural_inventory.dut"
+        ]
+      ]
+    },
+    {
+      "eclass": 289,
+      "nontrivial": false,
+      "source_counter_identities": [
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          569,
+          5,
+          "branch",
+          "if",
+          "tb_natural_inventory.dut"
+        ],
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          886,
+          5,
+          "line",
+          "elsif",
+          "tb_natural_inventory.dut"
+        ]
+      ]
+    },
+    {
+      "eclass": 320,
+      "nontrivial": true,
+      "source_counter_identities": [
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          684,
+          6,
+          "branch",
+          "else",
+          "tb_natural_inventory.dut"
+        ],
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          687,
+          6,
+          "branch",
+          "if",
+          "tb_natural_inventory.dut"
+        ]
+      ]
+    },
+    {
+      "eclass": 453,
+      "nontrivial": false,
+      "source_counter_identities": [
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          917,
+          6,
+          "branch",
+          "else",
+          "tb_natural_inventory.dut"
+        ],
+        [
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          1033,
+          4,
+          "branch",
+          "else",
+          "tb_natural_inventory.dut"
+        ]
+      ]
+    }
+  ],
+  "primary_endpoint": {
+    "name": "first_round_all_17_original_target_counters_hit",
+    "not_reached": "retain censored trial; do not drop",
+    "validity": "Report raw attainment separately from checker/transport validity. DUT violation is not automatically a bad testbench. Unresolved scope cannot be called verified attainment."
+  },
+  "secondary_endpoints": [
+    "per-round target counters and complete groups",
+    "raw DUT line/branch/expr/toggle separately",
+    "input+output API tokens and reasoning/cached subcounts without double counting",
+    "simulator executions/all executed cycles/compile+simulation+semantic+model+wall time",
+    "tokens, cycles and executions at first target attainment",
+    "new raw branch points per 1000 API input+output tokens",
+    "functional diagnostics and distinct attributed categories"
+  ],
+  "fixed_targets_policy": "All eight statically admitted groups; no retrospective target selection. Target count is 17 source counters, NOT 17 branch points.",
+  "feedback_policy": "Same base instructions, full spec/RTL access, raw feedback selection policy and evidence. C adds only certified equivalent relations and guards. No solver/private witnesses, manual hints or checker editing. Preserve actual input lengths; this two-arm pilot has no length-matched placebo, so token/semantic effects are not isolated.",
+  "interpretation": "Exploratory descriptive comparison, not confirmatory generalization; known easy targets may tie in round 1. First-round ties are not evidence of equal global capability. Do not force a C benefit or tune after outcomes.",
+  "freeze_pending": [
+    "independent_checker",
+    "checker_controls_and_review",
+    "experimental_driver_controls",
+    "checker_validated_reachability",
+    "rendered_prompt_isolation",
+    "raw_denominator_recheck",
+    "final_hash_freeze"
+  ],
+  "checker_author_calls": {
+    "model": "claude-opus-5-5",
+    "initial_author_max": 1,
+    "fresh_review_max": 1,
+    "cli_budget_per_call_usd": 4,
+    "timeout_seconds_per_call": 600,
+    "tools": []
+  },
+  "live_B_allowed": false,
+  "live_C_allowed": false,
+  "checker_commission_allowed": true,
+  "evidence_hashes": {
+    "results/wbxbar_conditional_20261104/domain-certificate.json": "12d521b621e0c32d706aeb2c864901b24b1a682b727b3e2e81b719b88a47fee5",
+    "results/wbxbar_conditional_20261104/screen-v2/screen/screen.json": "ac801fd257e6291bec25423b6aa92ae40dae092ce808717a808ff0fc63771dff",
+    "results/wbxbar_conditional_20261104/screen-v2/proof/proof.json": "97ac47e6eff0285148a079381cc618035a15c7968c67ef8de9ce7d9b5bcfe96c",
+    "results/wbxbar_conditional_20261104/screen-v2/inventory/raw-points.json": "1c8a2f06244a33a362eb83f4129df52de55cedcf641ada4a84efbd5948dadb89"
+  }
+}

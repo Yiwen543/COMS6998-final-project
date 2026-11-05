@@ -1,0 +1,55 @@
+{
+  "ready_for_offline_gate": false,
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "resolved",
+      "topic": "Prior F1 (permissive timeout/starvation ERR)",
+      "detail": "A mapped-request ERR without a matching slave ERR now goes to unresolved as 'unexplained_mapped_err'. It does not increment a timeout counter and does not emit an error or transaction event. Verdict precedence (av > failures > unresolved > scoped_pass) means it can never reach scoped_pass. The unresolved list is not cleared on reset, so the item persists after a later reset. The selftest 'unexplained_err_persists_after_reset' and both controls agree: negative/early_unexplained_error and unresolved/unclassified_late_error, the 20-cycle case, both report unresolved. These controls are correctly not credited as detections. Residual: no rule fails an implausibly early mapped ERR, so an always-ERR DUT yields 'unresolved', not 'dut_violation'. That is acceptable only because it is disclosed in P9 and contract.md."
+    },
+    {
+      "id": "R2",
+      "severity": "resolved",
+      "topic": "Prior F6 (masked write lanes)",
+      "detail": "_weq masks only write data, using the SEL of the request being compared. WE, address and SEL are still compared in full, in both forwarding matching and the hold checks. When SEL is undefined (None), _lm yields mask 0, which disables data comparison; that path is already an assumption violation for master payload and a failure for slave payload. Controls behave as expected: positive/masked_write_bytes passes; negative/write_data (enabled lane) and negative/write_mask are detected. Ambiguity handling is unchanged: identical heads produce 'ownership_ambiguous' as unresolved, with no guessing, and unresolved/identical_heads confirms this."
+    },
+    {
+      "id": "R3",
+      "severity": "blocking",
+      "topic": "error_burst_restart cycle-14 routing_payload: attribution unresolved, current label likely overstrict",
+      "detail": "Reconstruction from the trace, cycle by cycle:\n- Cycles 8 and 9: master 0 accepts two read requests at addr 3.\n- Cycle 11: master 0 accepts a third request; the slave accepts entry 1.\n- Cycle 12: the slave accepts entry 2 while asserting i_serr for entry 1; master 0 accepts a fourth request.\n- Cycle 12 edge: the DUT drops o_scyc (s_err branch, lines 769-773).\n- Cycle 13 pre: i_mcyc=1 and o_merr=1, retiring entry 1 as slave_err. o_scyc=0, so entry 2 is marked dropped.\n- Cycle 13 edge: sgrant is still held and i_mcyc is still high, so r_scyc and r_sstb reassert (lines 750-762), carrying a still-queued request already accepted from master 0.\n- Cycle 14 pre: master CYC is low because of the driver's legal post-ERR gap. The checker marks all master-0 entries aborted and clears mq before slave matching. The DUT-presented addr-3 read, accepted with sstall=0, therefore matches nothing and is labeled 'invented'.\n\nThe payload equals genuinely accepted master work. The DUT decided to present it at an edge where the master's CYC was still high and it had not aborted. WB B4 does not require ERR to cancel later pipelined requests; the master reaction is unspecified. A registered output cannot withdraw combinationally. So this is not a demonstrated invented or ghost transaction, and the driver did not misbehave: STB/payload were held, the CYC drop after ERR is legal, and the gap was counted. It may still be a real abort-latency concern: one slave-side acceptance of aborted work, which for writes would be a side effect. The cited authority gives no cycle bound for abort propagation, so this cannot be called a specification violation either. Classification: unresolved public timing semantics, with the checker's 'routing_payload/invented' label overstated. It must not be counted as a DUT defect, nor forced to pass."
+    },
+    {
+      "id": "R4",
+      "severity": "blocking (required change before freeze)",
+      "topic": "Checker repair needed at the abort boundary",
+      "detail": "The minimal change is to retain aborted master entries, or a per-slave set of aborted-but-unforwarded heads, for matching. A downstream acceptance that matches the oldest aborted, unforwarded entry of exactly one master should be recorded in unresolved, for example as 'post_abort_forward' with acceptance, abort and forward cycles. It should never earn completion credit, and any response to it should be discarded as an orphan. Non-matching downstream requests must still fail as routing_payload. Optionally, bound this to requests whose presentation was decided at or before the abort edge, and keep later ones as failures; document this as a conservative, non-spec-derived choice. Add independent hand controls:\n(a) Post-error forward of matching aborted work: expect unresolved.\n(b) Same scenario with corrupted payload: expect dut_violation.\n(c) Post-abort forward several cycles after CYC drop: decide and document the expected outcome.\nThen re-run all controls and the 48 driver observations."
+    },
+    {
+      "id": "R5",
+      "severity": "ok",
+      "topic": "Driver error/reset accounting",
+      "detail": "The SV uses pre_error (i_mcyc & o_merr sampled at +4ns), not POST. On error it zeroes pending accepted work while keeping unaccepted queued offers (head/tail untouched). cooldown=1 forces exactly one low-CYC cycle: it is checked when i_mcyc is computed in the next cycle, then decremented. STB and payload are driven from the queue head and change only after a sampled acceptance, so they are held under o_mstall (cycles 9-10 in error_burst_restart). Reset clears queues, pending and cooldown, and offers during reset are rejected. The tail emits PENDING lines instead of draining or fatally aborting. One action maps to one physical edge; the Python parser checks this via contiguous cycles and the ledger count of 2 per cycle. The parser reconstructs wanted pins independently and cross-checks the ledger. pending_prefix yields unresolved with delivery_complete=false, which is correct.\n\nMinor points:\n- The orphan_response path silently clamps pending to 0. It is surfaced as a diagnostic and should stay classified as DUT-attribution input, not driver truth.\n- The driver slave model ACKs exactly one cycle after acceptance, with no i_sstall. Slave-stall and long-latency behaviors are therefore never exercised by this driver.\n- The driver relies on probe_wbxbar_ordinary template text replacement guarded by count checks. That is acceptable, but the frozen hash must cover both files."
+    },
+    {
+      "id": "R6",
+      "severity": "minor",
+      "topic": "Event false positives and isolation",
+      "detail": "Events are emitted only for slave-ACK-attributed completions, decode ERR, matched slave ERR, aborts and resets. They are dropped inside any failure or assumption window. Unexplained ERRs emit no event. Under R4, post-abort forwards must also emit no recovery or completion event.\n\nIsolation: the checker consumes only public pins, and the driver ledger is cross-checked rather than trusted. RTL excerpts were used here only for attribution of R3 and should not feed back into checker thresholds.\n\nnegative/stale_after_reset is correctly not credited (declared exclusion, P11)."
+    },
+    {
+      "id": "R7",
+      "severity": "advisory",
+      "topic": "Remaining coverage gaps (not blocking once disclosed)",
+      "detail": "The following remain unchecked:\n- o_mack/o_merr after reset.\n- Minimum reset duration.\n- Eventual o_scyc withdrawal after an abort.\n- A lower bound on mapped ERR latency.\n- Starvation-window contention.\n- Driver-side slave stall.\n\nKeep these as documented exclusions. No B/C comparability, coverage target or calibration witness should be inferred."
+    }
+  ],
+  "limitations": [
+    "Read-only review of the supplied packet; nothing was executed and no artifacts were modified.",
+    "Not a formal proof; hand controls and roughly 92 DUT observations do not establish whole-IP correctness, reachability or B/C validity.",
+    "The R3 attribution relies on manual delta decoding of one trace plus limited RTL excerpts. Exact skid/decoder internals were not fully reviewed, and the wbspec PDF was available only as a paraphrase.",
+    "Only 6 of 48 driver traces and the 38 hand controls were shown; the others were assessed via reported verdicts.",
+    "Abort-propagation latency is not bounded by the cited authority; any bound adopted under R4 is a documented choice, not a spec requirement.",
+    "This verdict does not authorize B/C runs; the final reachability, prompt and hash freeze is separate."
+  ]
+}

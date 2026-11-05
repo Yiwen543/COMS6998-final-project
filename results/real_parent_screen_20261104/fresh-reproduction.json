@@ -1,0 +1,206 @@
+{
+  "status": "pass",
+  "stages": [
+    "probe",
+    "preserve",
+    "inventory",
+    "proof",
+    "screen"
+  ],
+  "same_seed_counter_identities_and_hits": true,
+  "counts": {
+    "raw_targets": 289,
+    "typed_supported": 283,
+    "mapped": 269,
+    "unresolved": 14,
+    "static_candidate_groups": 20,
+    "nontrivial_static_candidates": 9,
+    "pair_counts": {
+      "sat": 22747,
+      "unsat": 780,
+      "unknown": 0
+    },
+    "raw_dut_denominator": 3107
+  },
+  "proof": {
+    "status": "pass",
+    "environment_satisfiable": true
+  },
+  "runs": [
+    {
+      "stage": "slang",
+      "returncode": 0,
+      "seconds": 0.027637457940727472,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/slang",
+        "--single-unit",
+        "--top",
+        "spi_host_core",
+        "-G",
+        "NumCS=2",
+        "-D",
+        "SYNTHESIS",
+        "-I",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl",
+        "--ast-json",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/reproduce_real_parent_20261104/spi_host_core/ast.json",
+        "--ast-json-source-info",
+        "--ast-json-detailed-types",
+        "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv"
+      ]
+    },
+    {
+      "stage": "verilator",
+      "returncode": 0,
+      "seconds": 0.08715108409523964,
+      "command": [
+        "verilator",
+        "--lint-only",
+        "--timing",
+        "-Wno-fatal",
+        "--top-module",
+        "spi_host_core",
+        "-GNumCS=2",
+        "-DSYNTHESIS",
+        "-Ithird_party/opentitan_candidate/hw/ip/prim/rtl",
+        "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv"
+      ]
+    },
+    {
+      "stage": "iverilog",
+      "returncode": 0,
+      "seconds": 0.020575957838445902,
+      "command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "spi_host_core",
+        "-tnull",
+        "-Pspi_host_core.NumCS=2",
+        "-D",
+        "SYNTHESIS",
+        "-I",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl",
+        "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+        "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+        "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv"
+      ]
+    },
+    {
+      "stage": "yosys",
+      "returncode": 0,
+      "seconds": 0.08797449991106987,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/yosys",
+        "-Q",
+        "-T",
+        "-s",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/reproduce_real_parent_20261104/spi_host_core/probe.ys"
+      ]
+    }
+  ],
+  "inventory": {
+    "status": "inventory_only",
+    "cycles": 8,
+    "no_checker": true,
+    "no_reachability_claim": true,
+    "seed_inputs": {},
+    "compile_seconds": 11.996601833030581,
+    "simulation_seconds": 0.20546712493523955,
+    "compile_command": [
+      "verilator",
+      "--binary",
+      "--timing",
+      "--coverage-line",
+      "--coverage-toggle",
+      "--coverage-expr",
+      "-Wno-fatal",
+      "--top-module",
+      "tb_natural_inventory",
+      "--Mdir",
+      "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/reproduce_real_parent_20261104/spi_host_core/inventory/verilator-build",
+      "-j",
+      "2",
+      "-DSYNTHESIS",
+      "-Ithird_party/opentitan_candidate/hw/ip/prim/rtl",
+      "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv",
+      "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/reproduce_real_parent_20261104/spi_host_core/inventory/tb_natural_inventory.sv"
+    ],
+    "simulation_command": [
+      "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/reproduce_real_parent_20261104/spi_host_core/inventory/verilator-build/Vtb_natural_inventory",
+      "+verilator+coverage+file+/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/reproduce_real_parent_20261104/spi_host_core/inventory/seed.dat"
+    ],
+    "coverage": {
+      "branch": {
+        "covered": 114,
+        "total": 234,
+        "percent": 48.718
+      },
+      "expr": {
+        "covered": 175,
+        "total": 349,
+        "percent": 50.143
+      },
+      "line": {
+        "covered": 29,
+        "total": 64,
+        "percent": 45.312
+      },
+      "toggle": {
+        "covered": 73,
+        "total": 2460,
+        "percent": 2.967
+      }
+    },
+    "policy": "Original DUT and all real child source counters; TB excluded. Fresh process. Reset/initialization included. Shared counters retained exactly as emitted.",
+    "hashes": {
+      "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv": "68854581eaa23a57f00c4b49ee0ce972147ffca9f2800da2859d1fe38cc5b476",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv": "12ec73502dc8115cf1e6051f10cba6fc73259f066581722d9d895d1e634676b2",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv": "a9a44c9cc067c6b0904cfff2f3056b9312a475518be32e36efe0c8a951e1af8d",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv": "99aeb7564474111dc6662488c9f4ca6b788723e449b128d08ac54f8fc2da5cd2",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv": "68b2c02faa5893399cfa5c48151c67a1d251da1bfe553d2c09674dce8ecf2431",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv": "8fe85d2fb05aaa0abbc7742c3e136ab5e7af9143ddfdb902beaf67f6f3121b97",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv": "8521227fb238f1962e34d671ffc274b5d43d7c4b5582549c00d6093fe5b0d2ce",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv": "5324b93183a0475c5e955b76a7b1e9c1c9739e810a70d213491c5657837ee47c",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv": "dc89b9b63ba31a219eef38999e77ae01b8e361007ef1eaf99306d5e50c72cd7b"
+    },
+    "driver_sha256": "272abd080b6e30ba2e9634a19ea834fe4a5025fdb2b78226f770ed7d91ec5c2e",
+    "raw_sha256": "aa7cf75143e844bd098e38d4dead9ac08c2307349f1248b31fcc4032be8f0819"
+  },
+  "fresh_root": "build/reproduce_real_parent_20261104/spi_host_core",
+  "evidence_sha256": {
+    "build/reproduce_real_parent_20261104/spi_host_core/screen/screen.json": "f39ea3419e93666bb4df31b8c67bc700e52730c3f24f810ff028b9b3b6499f5f",
+    "build/reproduce_real_parent_20261104/spi_host_core/proof/proof.json": "5728b7fb4382b64d6dab4b90c86f2e63d910705538e0de62a132907d04320c02",
+    "build/reproduce_real_parent_20261104/spi_host_core/inventory/raw-points.json": "98671c6fbe6c9b42411f37a4ec07dd0ae1f94ff2a88003cf21f30ff201abbc09"
+  }
+}

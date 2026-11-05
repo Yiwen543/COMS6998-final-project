@@ -1,0 +1,163 @@
+{
+  "configuration": {
+    "top": "axi_fifo",
+    "root": "third_party/verilog_axi_candidate",
+    "sources": [
+      "rtl/axi_fifo_rd.v",
+      "rtl/axi_fifo_wr.v",
+      "rtl/axi_fifo.v"
+    ],
+    "source_hashes": {
+      "third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v": "ecdb21c322732e8e185c6a1408438565d6990f852a8f271b5442e878174a20aa",
+      "third_party/verilog_axi_candidate/rtl/axi_fifo_wr.v": "e0f06c5c6e3deae0b764e85319e16395c7b2e428b7419853c264129350df67ca",
+      "third_party/verilog_axi_candidate/rtl/axi_fifo.v": "bae5ea55dcd8c145a56d75931c555697d284a5c7972c0914ac12df4a452cc71d",
+      "third_party/verilog_axi_candidate/README.md": "99499ca09430eff2c4aca5ed472759e4090bf51c1dcef5e07b880f9a11fc3a61",
+      "third_party/verilog_axi_candidate/COPYING": "ba81481b2d63a33e0dce336d9e736130709549feeaf6cd424b34beba712baa50"
+    },
+    "git_blobs": {
+      "third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v": "8037faa52dd2e393e586811d9a151ad2fa22db7f",
+      "third_party/verilog_axi_candidate/rtl/axi_fifo_wr.v": "668d45e4ce3619acc910b2cbb95f168a534fd46e",
+      "third_party/verilog_axi_candidate/rtl/axi_fifo.v": "2170efbbf67763d6be06193419940c5af8d0fa3e",
+      "third_party/verilog_axi_candidate/README.md": "4d50b4213d546ddbadf31bb5ad78b22eb02292fa",
+      "third_party/verilog_axi_candidate/COPYING": "6923387c7569f15368fefc084c0f3c46e18e3622"
+    },
+    "revision": "516bd5dadc3365b7f9e225d2af8fe0b8d804fe53",
+    "parameters": {
+      "DATA_WIDTH": 32,
+      "ADDR_WIDTH": 16,
+      "STRB_WIDTH": 4,
+      "ID_WIDTH": 4,
+      "READ_FIFO_DEPTH": 16,
+      "WRITE_FIFO_DEPTH": 16,
+      "READ_FIFO_DELAY": 1,
+      "WRITE_FIFO_DELAY": 1
+    },
+    "family": "axi_burst_fifo_controller",
+    "include_dirs": [],
+    "defines": [],
+    "clock": "clk",
+    "reset": "rst",
+    "reset_active": 1,
+    "reset_behavior": "synchronous active-high",
+    "seed_inputs": {
+      "s_axi_bready": 1,
+      "s_axi_rready": 1,
+      "m_axi_awready": 1,
+      "m_axi_wready": 1,
+      "m_axi_arready": 1
+    },
+    "event_families": [
+      "write address release after complete buffered burst",
+      "long write burst fills FIFO then proceeds under downstream backpressure",
+      "read burst reservation exhausts capacity then returns capacity through response acceptance"
+    ],
+    "proof_boundary": "Original parent and original children; no RTL rewriting or counter replication.",
+    "specification": "https://github.com/alexforencich/verilog-axi/blob/516bd5dadc3365b7f9e225d2af8fe0b8d804fe53/README.md",
+    "ordinary_policy": "Isolated legal transactions across supported modes and boundary lengths, prompt response readiness, continuous legal input and inter-frame/burst idle; include normal pass/pad/truncate or short/long bursts. Test all ordinary modes before counting event-only increments. No calibrated solution in LLM prompts.",
+    "proof_keep": []
+  },
+  "runs": [
+    {
+      "stage": "slang",
+      "returncode": 0,
+      "seconds": 0.02714312495663762,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/slang",
+        "--single-unit",
+        "--top",
+        "axi_fifo",
+        "-G",
+        "DATA_WIDTH=32",
+        "-G",
+        "ADDR_WIDTH=16",
+        "-G",
+        "STRB_WIDTH=4",
+        "-G",
+        "ID_WIDTH=4",
+        "-G",
+        "READ_FIFO_DEPTH=16",
+        "-G",
+        "WRITE_FIFO_DEPTH=16",
+        "-G",
+        "READ_FIFO_DELAY=1",
+        "-G",
+        "WRITE_FIFO_DELAY=1",
+        "--ast-json",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/multistep_event_screen_20261104/axi_fifo-v1/ast.json",
+        "--ast-json-source-info",
+        "--ast-json-detailed-types",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo_wr.v",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo.v"
+      ]
+    },
+    {
+      "stage": "verilator",
+      "returncode": 0,
+      "seconds": 0.047376707661896944,
+      "command": [
+        "verilator",
+        "--lint-only",
+        "--timing",
+        "-Wno-fatal",
+        "--top-module",
+        "axi_fifo",
+        "-GDATA_WIDTH=32",
+        "-GADDR_WIDTH=16",
+        "-GSTRB_WIDTH=4",
+        "-GID_WIDTH=4",
+        "-GREAD_FIFO_DEPTH=16",
+        "-GWRITE_FIFO_DEPTH=16",
+        "-GREAD_FIFO_DELAY=1",
+        "-GWRITE_FIFO_DELAY=1",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo_wr.v",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo.v"
+      ]
+    },
+    {
+      "stage": "iverilog",
+      "returncode": 0,
+      "seconds": 0.011821791995316744,
+      "command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "axi_fifo",
+        "-tnull",
+        "-Paxi_fifo.DATA_WIDTH=32",
+        "-Paxi_fifo.ADDR_WIDTH=16",
+        "-Paxi_fifo.STRB_WIDTH=4",
+        "-Paxi_fifo.ID_WIDTH=4",
+        "-Paxi_fifo.READ_FIFO_DEPTH=16",
+        "-Paxi_fifo.WRITE_FIFO_DEPTH=16",
+        "-Paxi_fifo.READ_FIFO_DELAY=1",
+        "-Paxi_fifo.WRITE_FIFO_DELAY=1",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo_wr.v",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo.v"
+      ]
+    },
+    {
+      "stage": "yosys",
+      "returncode": 0,
+      "seconds": 0.031263583805412054,
+      "command": [
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/build/tools/oss-cad-20261103/oss-cad-suite/bin/yosys",
+        "-Q",
+        "-T",
+        "-s",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/multistep_event_screen_20261104/axi_fifo-v1/probe.ys"
+      ]
+    }
+  ],
+  "source_sha256": {
+    "third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v": "ecdb21c322732e8e185c6a1408438565d6990f852a8f271b5442e878174a20aa",
+    "third_party/verilog_axi_candidate/rtl/axi_fifo_wr.v": "e0f06c5c6e3deae0b764e85319e16395c7b2e428b7419853c264129350df67ca",
+    "third_party/verilog_axi_candidate/rtl/axi_fifo.v": "bae5ea55dcd8c145a56d75931c555697d284a5c7972c0914ac12df4a452cc71d"
+  },
+  "no_model_calls": true,
+  "no_functional_checker_claim": true,
+  "qualified_for_B": false,
+  "assertions": "SYNTHESIS selects upstream synthesis-compatible assertion macros for flash; not assertion verification."
+}

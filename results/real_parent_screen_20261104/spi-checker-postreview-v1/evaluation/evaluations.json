@@ -1,0 +1,189 @@
+{
+  "selftests": [
+    {
+      "name": "std_tx_good_passes",
+      "pass": true
+    },
+    {
+      "name": "std_tx_bitflip_fails",
+      "pass": true
+    },
+    {
+      "name": "cs_rise_midsegment_fails",
+      "pass": true
+    },
+    {
+      "name": "csnlead_violation_fails",
+      "pass": true
+    },
+    {
+      "name": "withdrawn_command_is_assumption_violation",
+      "pass": true
+    },
+    {
+      "name": "std_rx_partial_word_passes",
+      "pass": true
+    },
+    {
+      "name": "rx_nonzero_padding_fails",
+      "pass": true
+    },
+    {
+      "name": "rx_wrong_byte_fails",
+      "pass": true
+    },
+    {
+      "name": "dummy_segment_blocked",
+      "pass": true
+    },
+    {
+      "name": "truncated_trace_inconclusive",
+      "pass": true
+    },
+    {
+      "name": "spurious_sck_fails",
+      "pass": true
+    }
+  ],
+  "cases": {
+    "uniform_write_baseline": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 136,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      }
+    },
+    "withdraw_pending_command": {
+      "failures": [],
+      "assumption_violations": [
+        {
+          "cycle": 29,
+          "category": "cmd_transport",
+          "detail": "offered command withdrawn or changed before pre ready&valid handshake"
+        }
+      ],
+      "events": [],
+      "unresolved": [],
+      "verdict": "blocked",
+      "counts": {
+        "rows": 136,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 1,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      }
+    },
+    "hardware_abort_restart": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset_abort_restart",
+          "kind": "pass",
+          "start_cycle": 48,
+          "end_cycle": 125,
+          "evidence": "hardware reset at 48 aborted segment 0; release 50; fresh segment 1"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "pass",
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 2,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 1,
+        "events_fail": 0,
+        "events_pending": 0
+      }
+    },
+    "negative/hardware_reset_select": {
+      "failures": [
+        {
+          "cycle": 48,
+          "category": "reset_csb",
+          "detail": "CSB asserted while rst_n low"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset_abort_restart",
+          "kind": "fail",
+          "start_cycle": 48,
+          "end_cycle": 125,
+          "evidence": "hardware reset at 48 aborted segment 0; release 50; fresh segment 1"
+        }
+      ],
+      "unresolved": [],
+      "verdict": "fail",
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 2,
+        "segments_completed": 1,
+        "failures": 1,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 1,
+        "events_pending": 0
+      }
+    },
+    "truncated/hardware_abort": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset_abort_restart",
+          "kind": "pending",
+          "start_cycle": 48,
+          "end_cycle": null,
+          "evidence": "hardware reset at 48 aborted segment 0; release None; fresh segment None"
+        }
+      ],
+      "unresolved": [
+        "trace ends with reset asserted"
+      ],
+      "verdict": "inconclusive",
+      "counts": {
+        "rows": 50,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 1,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 1
+      }
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,5029 @@
+{
+  "mode": "live",
+  "gate": {
+    "pass": false,
+    "repetitions": [
+      {
+        "repetition": 1,
+        "complete": true,
+        "legal": true,
+        "first_round_unhit_groups": 5,
+        "final_unhit_groups": 0,
+        "not_immediately_saturated": true,
+        "later_group_progress": true,
+        "final_verdict": "pass"
+      },
+      {
+        "repetition": 2,
+        "complete": true,
+        "legal": true,
+        "first_round_unhit_groups": 7,
+        "final_unhit_groups": 0,
+        "not_immediately_saturated": true,
+        "later_group_progress": true,
+        "final_verdict": "pass"
+      },
+      {
+        "repetition": 3,
+        "complete": true,
+        "legal": false,
+        "first_round_unhit_groups": 5,
+        "final_unhit_groups": 0,
+        "not_immediately_saturated": false,
+        "later_group_progress": false,
+        "final_verdict": "blocked"
+      }
+    ],
+    "mock_or_replay_is_not_new_live_evidence": false,
+    "C_started": false,
+    "next": "Independent formal trial preparation only if live B passes; do not change original budget to favor C."
+  },
+  "metadata": {
+    "mode": "live",
+    "arm": "B",
+    "scope": "original spi_host_core integration; development only",
+    "freeze_sha256": "c32d95f9626b601295965d564f794d0aaac7a358a5a291036121a672021f7f8c",
+    "versions": {
+      "python": "3.13.9",
+      "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+      "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+      "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+      "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+      "openai_sdk": "2.54.0",
+      "matplotlib": "3.11.2"
+    },
+    "compilations": 1,
+    "api_generation_calls": 18,
+    "api_count_requests": 18,
+    "compile_seconds": 13.092817582655698,
+    "status": "completed",
+    "model_settings": {
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "low",
+      "input_tokens": 32000,
+      "output_tokens": 16384,
+      "timeout_seconds": 120,
+      "max_retries": 1,
+      "max_output_tokens": 16384
+    },
+    "simulation_executions": 21,
+    "executed_cycles": 2394,
+    "requested_cycles": 2394,
+    "simulation_seconds": 1.038015169557184,
+    "source_mode": null,
+    "egraph_preprocessing_seconds_this_run": 0,
+    "compile_command": [
+      "verilator",
+      "--binary",
+      "--timing",
+      "--coverage-line",
+      "--coverage-toggle",
+      "--coverage-expr",
+      "-Wno-fatal",
+      "--top-module",
+      "tb_spi_core",
+      "--Mdir",
+      "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/spi_core_b_live_v1/shared/obj",
+      "-j",
+      "2",
+      "-DSYNTHESIS",
+      "-Ithird_party/opentitan_candidate/hw/ip/prim/rtl",
+      "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv",
+      "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/examples/spi_core_integration/verif/tb_spi_core.sv"
+    ],
+    "elapsed_seconds": 658.344276458025,
+    "api_usage": {
+      "input_tokens": 454635,
+      "output_tokens": 70085,
+      "unknown_usage_attempts": 0
+    }
+  },
+  "rows": [
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 1,
+      "round": 1,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 185,
+          "total": 234,
+          "percent": 79.06
+        },
+        "expr": {
+          "covered": 256,
+          "total": 349,
+          "percent": 73.352
+        },
+        "line": {
+          "covered": 45,
+          "total": 64,
+          "percent": 70.312
+        },
+        "toggle": {
+          "covered": 855,
+          "total": 2460,
+          "percent": 34.756
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [],
+        "unresolved": [],
+        "verdict": "pass",
+        "counts": {
+          "rows": 24,
+          "tx_words_accepted": 1,
+          "rx_words_observed": 0,
+          "commands_accepted": 1,
+          "segments_completed": 1,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 0,
+          "events_pass": 0,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            21,
+            21
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            117,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            117,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            117,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            24,
+            24
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            8,
+            8
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            130,
+            130,
+            130,
+            130
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            125,
+            125
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            16,
+            16
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 23063,
+        "output_tokens": 1773,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 24836,
+      "token_roi_new_branch_points_per_1000": 2.8587534224512803,
+      "new_branch_points": 71,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 32,
+      "unique_generated_cycles": 16,
+      "simulation_seconds": 0.22693258384242654,
+      "round_wall_seconds": 21.5429152501747,
+      "repetition_wall_seconds": 21.819276666734368,
+      "elapsed_run_seconds": 35.569209082983434
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 1,
+      "round": 2,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 202,
+          "total": 234,
+          "percent": 86.325
+        },
+        "expr": {
+          "covered": 303,
+          "total": 349,
+          "percent": 86.819
+        },
+        "line": {
+          "covered": 51,
+          "total": 64,
+          "percent": 79.688
+        },
+        "toggle": {
+          "covered": 1308,
+          "total": 2460,
+          "percent": 53.171
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "rx_backpressure_resume",
+            "kind": "pass",
+            "start_cycle": 24,
+            "end_cycle": 57,
+            "evidence": "segment 1 RX word held (rx_valid & !rx_ready) mid-segment from 42; selected SCK edge overdue while held at 49"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "pass",
+        "counts": {
+          "rows": 60,
+          "tx_words_accepted": 1,
+          "rx_words_observed": 2,
+          "commands_accepted": 2,
+          "segments_completed": 2,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 0,
+          "events_pass": 1,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            21,
+            21
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            405,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            405,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            405,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            48,
+            48
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            72,
+            72
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            16,
+            16
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            418,
+            418,
+            418,
+            418
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            8,
+            8
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            408,
+            408
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            47,
+            47
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 47273,
+        "output_tokens": 5538,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 52811,
+      "token_roi_new_branch_points_per_1000": 1.6663195167673401,
+      "new_branch_points": 88,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 92,
+      "unique_generated_cycles": 52,
+      "simulation_seconds": 0.2680694586597383,
+      "round_wall_seconds": 34.03091558301821,
+      "repetition_wall_seconds": 55.850322667043656,
+      "elapsed_run_seconds": 69.60025512520224
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 1,
+      "round": 3,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 221,
+          "total": 234,
+          "percent": 94.444
+        },
+        "expr": {
+          "covered": 324,
+          "total": 349,
+          "percent": 92.837
+        },
+        "line": {
+          "covered": 57,
+          "total": 64,
+          "percent": 89.062
+        },
+        "toggle": {
+          "covered": 1485,
+          "total": 2460,
+          "percent": 60.366
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "rx_backpressure_resume",
+            "kind": "pass",
+            "start_cycle": 24,
+            "end_cycle": 57,
+            "evidence": "segment 1 RX word held (rx_valid & !rx_ready) mid-segment from 42; selected SCK edge overdue while held at 49"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 24,
+            "end_cycle": 94,
+            "evidence": "csid_change: segment 1 (6 bytes) then segment 2"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "pass",
+        "counts": {
+          "rows": 100,
+          "tx_words_accepted": 2,
+          "rx_words_observed": 2,
+          "commands_accepted": 3,
+          "segments_completed": 3,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 0,
+          "events_pass": 2,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            10,
+            10
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            45,
+            45
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            725,
+            91
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            317,
+            40
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            408,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            408,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            48,
+            48
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            96,
+            96
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            24,
+            24
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            610,
+            610,
+            610,
+            610
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            16,
+            16
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            11,
+            11,
+            11,
+            11,
+            11,
+            11,
+            11,
+            11
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            595,
+            595
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            65,
+            65
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 71619,
+        "output_tokens": 9748,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 81367,
+      "token_roi_new_branch_points_per_1000": 1.3150294345373432,
+      "new_branch_points": 107,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 192,
+      "unique_generated_cycles": 92,
+      "simulation_seconds": 0.3110244586132467,
+      "round_wall_seconds": 39.400809459388256,
+      "repetition_wall_seconds": 95.25142724998295,
+      "elapsed_run_seconds": 109.00135962525383
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 1,
+      "round": 4,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 223,
+          "total": 234,
+          "percent": 95.299
+        },
+        "expr": {
+          "covered": 329,
+          "total": 349,
+          "percent": 94.269
+        },
+        "line": {
+          "covered": 58,
+          "total": 64,
+          "percent": 90.625
+        },
+        "toggle": {
+          "covered": 1757,
+          "total": 2460,
+          "percent": 71.423
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "rx_backpressure_resume",
+            "kind": "pass",
+            "start_cycle": 24,
+            "end_cycle": 57,
+            "evidence": "segment 1 RX word held (rx_valid & !rx_ready) mid-segment from 42; selected SCK edge overdue while held at 49"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 24,
+            "end_cycle": 94,
+            "evidence": "csid_change: segment 1 (6 bytes) then segment 2"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "pass",
+        "counts": {
+          "rows": 144,
+          "tx_words_accepted": 3,
+          "rx_words_observed": 3,
+          "commands_accepted": 4,
+          "segments_completed": 4,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 0,
+          "events_pass": 2,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            15,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            61,
+            61
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            346,
+            346
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            736,
+            92
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            328,
+            41
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            408,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            408,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            56,
+            56
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            152,
+            152
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            32,
+            32
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            810,
+            810,
+            810,
+            810
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            24,
+            24
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            11,
+            11,
+            11,
+            11,
+            11,
+            11,
+            11,
+            11
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            790,
+            790
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            90,
+            90
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 95821,
+        "output_tokens": 14379,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 110200,
+      "token_roi_new_branch_points_per_1000": 0.9891107078039928,
+      "new_branch_points": 109,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 336,
+      "unique_generated_cycles": 136,
+      "simulation_seconds": 0.3540032086893916,
+      "round_wall_seconds": 43.59521537506953,
+      "repetition_wall_seconds": 138.84699254203588,
+      "elapsed_run_seconds": 152.59692491730675
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 1,
+      "round": 5,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 223,
+          "total": 234,
+          "percent": 95.299
+        },
+        "expr": {
+          "covered": 330,
+          "total": 349,
+          "percent": 94.556
+        },
+        "line": {
+          "covered": 59,
+          "total": 64,
+          "percent": 92.188
+        },
+        "toggle": {
+          "covered": 1853,
+          "total": 2460,
+          "percent": 75.325
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "rx_backpressure_resume",
+            "kind": "pass",
+            "start_cycle": 24,
+            "end_cycle": 57,
+            "evidence": "segment 1 RX word held (rx_valid & !rx_ready) mid-segment from 42; selected SCK edge overdue while held at 49"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 24,
+            "end_cycle": 94,
+            "evidence": "csid_change: segment 1 (6 bytes) then segment 2"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 101,
+            "end_cycle": 155,
+            "evidence": "csid_change: segment 3 (1 bytes) then segment 4"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 144,
+            "end_cycle": 168,
+            "evidence": "held_cs: segment 4 (1 bytes) then segment 5"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "pass",
+        "counts": {
+          "rows": 172,
+          "tx_words_accepted": 3,
+          "rx_words_observed": 5,
+          "commands_accepted": 6,
+          "segments_completed": 6,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 0,
+          "events_pass": 4,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            15,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            61,
+            61
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            344,
+            344
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            957,
+            120
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            328,
+            41
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            629,
+            79
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            629,
+            79
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            80,
+            80
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            176,
+            176
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            30,
+            30,
+            30,
+            30,
+            30,
+            30,
+            30,
+            30,
+            30,
+            30,
+            30,
+            30,
+            30,
+            30,
+            30,
+            30
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            48,
+            48
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            1034,
+            1034,
+            1034,
+            1034
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            32,
+            32
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            11,
+            11,
+            11,
+            11,
+            11,
+            11,
+            11,
+            11
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1004,
+            1004
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            118,
+            118
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 121634,
+        "output_tokens": 17376,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 139010,
+      "token_roi_new_branch_points_per_1000": 0.7841162506294511,
+      "new_branch_points": 109,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 508,
+      "unique_generated_cycles": 164,
+      "simulation_seconds": 0.39410270890221,
+      "round_wall_seconds": 30.602986790705472,
+      "repetition_wall_seconds": 169.45031991694123,
+      "elapsed_run_seconds": 183.20025245798752
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 1,
+      "round": 6,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 223,
+          "total": 234,
+          "percent": 95.299
+        },
+        "expr": {
+          "covered": 330,
+          "total": 349,
+          "percent": 94.556
+        },
+        "line": {
+          "covered": 59,
+          "total": 64,
+          "percent": 92.188
+        },
+        "toggle": {
+          "covered": 1949,
+          "total": 2460,
+          "percent": 79.228
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "rx_backpressure_resume",
+            "kind": "pass",
+            "start_cycle": 24,
+            "end_cycle": 57,
+            "evidence": "segment 1 RX word held (rx_valid & !rx_ready) mid-segment from 42; selected SCK edge overdue while held at 49"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 24,
+            "end_cycle": 94,
+            "evidence": "csid_change: segment 1 (6 bytes) then segment 2"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 101,
+            "end_cycle": 155,
+            "evidence": "csid_change: segment 3 (1 bytes) then segment 4"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 144,
+            "end_cycle": 168,
+            "evidence": "held_cs: segment 4 (1 bytes) then segment 5"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 156,
+            "end_cycle": 207,
+            "evidence": "csid_change: segment 5 (2 bytes) then segment 6"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "pass",
+        "counts": {
+          "rows": 212,
+          "tx_words_accepted": 3,
+          "rx_words_observed": 6,
+          "commands_accepted": 7,
+          "segments_completed": 7,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 0,
+          "events_pass": 5,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            15,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            61,
+            61
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            344,
+            344
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1277,
+            160
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            645,
+            81
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            632,
+            79
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            632,
+            79
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            112,
+            112
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            272,
+            272
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            35,
+            35,
+            35,
+            35,
+            35,
+            35,
+            35,
+            35,
+            35,
+            35,
+            35,
+            35,
+            35,
+            35,
+            35,
+            35
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            56,
+            56
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            1354,
+            1354,
+            1354,
+            1354
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            40,
+            40
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            11,
+            11,
+            11,
+            11,
+            11,
+            11,
+            11,
+            11
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1319,
+            1319
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            158,
+            158
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 148624,
+        "output_tokens": 21520,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 170144,
+      "token_roi_new_branch_points_per_1000": 0.6406338160616889,
+      "new_branch_points": 109,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 720,
+      "unique_generated_cycles": 204,
+      "simulation_seconds": 0.4366730838082731,
+      "round_wall_seconds": 37.92788404226303,
+      "repetition_wall_seconds": 207.37855308363214,
+      "elapsed_run_seconds": 221.12848558323458
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 2,
+      "round": 1,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 184,
+          "total": 234,
+          "percent": 78.632
+        },
+        "expr": {
+          "covered": 257,
+          "total": 349,
+          "percent": 73.639
+        },
+        "line": {
+          "covered": 42,
+          "total": 64,
+          "percent": 65.625
+        },
+        "toggle": {
+          "covered": 870,
+          "total": 2460,
+          "percent": 35.366
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [],
+        "unresolved": [
+          "segment 0 incomplete at end of trace"
+        ],
+        "verdict": "inconclusive",
+        "counts": {
+          "rows": 40,
+          "tx_words_accepted": 1,
+          "rx_words_observed": 0,
+          "commands_accepted": 1,
+          "segments_completed": 0,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 1,
+          "events_pass": 0,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            21,
+            21
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            8,
+            8
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            112,
+            112
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            8,
+            8
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            258,
+            258,
+            258,
+            258
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            253,
+            253
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            32,
+            32
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 23063,
+        "output_tokens": 3400,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 26463,
+      "token_roi_new_branch_points_per_1000": 2.6452027358954013,
+      "new_branch_points": 70,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 48,
+      "unique_generated_cycles": 32,
+      "simulation_seconds": 0.08125091763213277,
+      "round_wall_seconds": 35.06156420800835,
+      "repetition_wall_seconds": 35.17938649980351,
+      "elapsed_run_seconds": 256.30827366700396
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 2,
+      "round": 2,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 208,
+          "total": 234,
+          "percent": 88.889
+        },
+        "expr": {
+          "covered": 288,
+          "total": 349,
+          "percent": 82.521
+        },
+        "line": {
+          "covered": 53,
+          "total": 64,
+          "percent": 82.812
+        },
+        "toggle": {
+          "covered": 1531,
+          "total": 2460,
+          "percent": 62.236
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pending",
+            "start_cycle": 9,
+            "end_cycle": null,
+            "evidence": "csid_change: segment 0 (3 bytes) then segment 1"
+          }
+        ],
+        "unresolved": [
+          "segment 1 incomplete at end of trace"
+        ],
+        "verdict": "inconclusive",
+        "counts": {
+          "rows": 72,
+          "tx_words_accepted": 1,
+          "rx_words_observed": 1,
+          "commands_accepted": 2,
+          "segments_completed": 1,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 1,
+          "events_pass": 0,
+          "events_fail": 0,
+          "events_pending": 1
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            21,
+            21
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            45,
+            6
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            45,
+            6
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            45,
+            6
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            24,
+            24
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            173,
+            173
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            32,
+            32
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            514,
+            514,
+            514,
+            514
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            8,
+            8
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            501,
+            501
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            64,
+            64
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 47968,
+        "output_tokens": 6845,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 54813,
+      "token_roi_new_branch_points_per_1000": 1.7149216426760074,
+      "new_branch_points": 94,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 120,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.12274625152349472,
+      "round_wall_seconds": 34.59149791719392,
+      "repetition_wall_seconds": 69.77109458297491,
+      "elapsed_run_seconds": 290.89998175017536
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 2,
+      "round": 3,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 223,
+          "total": 234,
+          "percent": 95.299
+        },
+        "expr": {
+          "covered": 325,
+          "total": 349,
+          "percent": 93.123
+        },
+        "line": {
+          "covered": 58,
+          "total": 64,
+          "percent": 90.625
+        },
+        "toggle": {
+          "covered": 1696,
+          "total": 2460,
+          "percent": 68.943
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 9,
+            "end_cycle": 85,
+            "evidence": "csid_change: segment 0 (3 bytes) then segment 1"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 66,
+            "end_cycle": 133,
+            "evidence": "csid_change: segment 1 (3 bytes) then segment 2"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "pass",
+        "counts": {
+          "rows": 136,
+          "tx_words_accepted": 2,
+          "rx_words_observed": 2,
+          "commands_accepted": 3,
+          "segments_completed": 3,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 0,
+          "events_pass": 2,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            10,
+            10
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            45,
+            45
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            354,
+            354
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            557,
+            70
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            349,
+            44
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            208,
+            26
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            208,
+            26
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            48,
+            48
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            240,
+            240
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            40,
+            40
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            874,
+            874,
+            874,
+            874
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            24,
+            24
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            856,
+            856
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            104,
+            104
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 73106,
+        "output_tokens": 13495,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 86601,
+      "token_roi_new_branch_points_per_1000": 1.2586459740649647,
+      "new_branch_points": 109,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 256,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.17314700176939368,
+      "round_wall_seconds": 50.62149029178545,
+      "repetition_wall_seconds": 120.39293379196897,
+      "elapsed_run_seconds": 341.5218209582381
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 2,
+      "round": 4,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 223,
+          "total": 234,
+          "percent": 95.299
+        },
+        "expr": {
+          "covered": 329,
+          "total": 349,
+          "percent": 94.269
+        },
+        "line": {
+          "covered": 58,
+          "total": 64,
+          "percent": 90.625
+        },
+        "toggle": {
+          "covered": 1835,
+          "total": 2460,
+          "percent": 74.593
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 9,
+            "end_cycle": 85,
+            "evidence": "csid_change: segment 0 (3 bytes) then segment 1"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 66,
+            "end_cycle": 133,
+            "evidence": "csid_change: segment 1 (3 bytes) then segment 2"
+          },
+          {
+            "family": "rx_backpressure_resume",
+            "kind": "pending",
+            "start_cycle": 136,
+            "end_cycle": null,
+            "evidence": "segment 3 RX word held (rx_valid & !rx_ready) mid-segment from 156; selected SCK edge overdue while held at 163"
+          }
+        ],
+        "unresolved": [
+          "segment 3 incomplete at end of trace"
+        ],
+        "verdict": "inconclusive",
+        "counts": {
+          "rows": 184,
+          "tx_words_accepted": 2,
+          "rx_words_observed": 3,
+          "commands_accepted": 4,
+          "segments_completed": 3,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 1,
+          "events_pass": 2,
+          "events_fail": 0,
+          "events_pending": 1
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            10,
+            10
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            45,
+            45
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            352,
+            352
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            941,
+            118
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            352,
+            44
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            589,
+            74
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            589,
+            74
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            104,
+            104
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            304,
+            304
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            48,
+            48
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            1258,
+            1258,
+            1258,
+            1258
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            24,
+            24
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1235,
+            1235
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            137,
+            137
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 98923,
+        "output_tokens": 18439,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 117362,
+      "token_roi_new_branch_points_per_1000": 0.9287503621274348,
+      "new_branch_points": 109,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 440,
+      "unique_generated_cycles": 176,
+      "simulation_seconds": 0.22435754351317883,
+      "round_wall_seconds": 40.1496764998883,
+      "repetition_wall_seconds": 160.54296891670674,
+      "elapsed_run_seconds": 381.67185608297586
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 2,
+      "round": 5,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 223,
+          "total": 234,
+          "percent": 95.299
+        },
+        "expr": {
+          "covered": 330,
+          "total": 349,
+          "percent": 94.556
+        },
+        "line": {
+          "covered": 59,
+          "total": 64,
+          "percent": 92.188
+        },
+        "toggle": {
+          "covered": 1843,
+          "total": 2460,
+          "percent": 74.919
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 9,
+            "end_cycle": 85,
+            "evidence": "csid_change: segment 0 (3 bytes) then segment 1"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 66,
+            "end_cycle": 133,
+            "evidence": "csid_change: segment 1 (3 bytes) then segment 2"
+          },
+          {
+            "family": "rx_backpressure_resume",
+            "kind": "pass",
+            "start_cycle": 136,
+            "end_cycle": 187,
+            "evidence": "segment 3 RX word held (rx_valid & !rx_ready) mid-segment from 156; selected SCK edge overdue while held at 163"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 194,
+            "end_cycle": 212,
+            "evidence": "held_cs: segment 4 (1 bytes) then segment 5"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "pass",
+        "counts": {
+          "rows": 214,
+          "tx_words_accepted": 2,
+          "rx_words_observed": 6,
+          "commands_accepted": 6,
+          "segments_completed": 6,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 0,
+          "events_pass": 4,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            10,
+            10
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            45,
+            45
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            352,
+            352
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1181,
+            148
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            352,
+            44
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            829,
+            104
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            829,
+            104
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            128,
+            128
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            320,
+            320
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            64,
+            64
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            1498,
+            1498,
+            1498,
+            1498
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            32,
+            32
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1465,
+            1465
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            167,
+            167
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 126683,
+        "output_tokens": 21647,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 148330,
+      "token_roi_new_branch_points_per_1000": 0.7348479741117778,
+      "new_branch_points": 109,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 654,
+      "unique_generated_cycles": 206,
+      "simulation_seconds": 0.26911591831594706,
+      "round_wall_seconds": 31.11789704207331,
+      "repetition_wall_seconds": 191.6614627498202,
+      "elapsed_run_seconds": 412.79034991702065
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 2,
+      "round": 6,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 223,
+          "total": 234,
+          "percent": 95.299
+        },
+        "expr": {
+          "covered": 330,
+          "total": 349,
+          "percent": 94.556
+        },
+        "line": {
+          "covered": 59,
+          "total": 64,
+          "percent": 92.188
+        },
+        "toggle": {
+          "covered": 1848,
+          "total": 2460,
+          "percent": 75.122
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 9,
+            "end_cycle": 85,
+            "evidence": "csid_change: segment 0 (3 bytes) then segment 1"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 66,
+            "end_cycle": 133,
+            "evidence": "csid_change: segment 1 (3 bytes) then segment 2"
+          },
+          {
+            "family": "rx_backpressure_resume",
+            "kind": "pass",
+            "start_cycle": 136,
+            "end_cycle": 187,
+            "evidence": "segment 3 RX word held (rx_valid & !rx_ready) mid-segment from 156; selected SCK edge overdue while held at 163"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 194,
+            "end_cycle": 212,
+            "evidence": "held_cs: segment 4 (1 bytes) then segment 5"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 203,
+            "end_cycle": 256,
+            "evidence": "csid_change: segment 5 (1 bytes) then segment 6"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "pass",
+        "counts": {
+          "rows": 262,
+          "tx_words_accepted": 2,
+          "rx_words_observed": 7,
+          "commands_accepted": 7,
+          "segments_completed": 7,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 0,
+          "events_pass": 5,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            10,
+            10
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            45,
+            45
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            738,
+            738
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1565,
+            196
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            733,
+            92
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            832,
+            104
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            832,
+            104
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            144,
+            144
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            368,
+            368
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            72,
+            72
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            1698,
+            1698,
+            1698,
+            1698
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            40,
+            40
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1660,
+            1660
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            192,
+            192
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 155626,
+        "output_tokens": 26651,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 182277,
+      "token_roi_new_branch_points_per_1000": 0.5979909697877407,
+      "new_branch_points": 109,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 916,
+      "unique_generated_cycles": 254,
+      "simulation_seconds": 0.3131539183668792,
+      "round_wall_seconds": 42.706455625128,
+      "repetition_wall_seconds": 234.36831924971193,
+      "elapsed_run_seconds": 455.49720641737804
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 3,
+      "round": 1,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 185,
+          "total": 234,
+          "percent": 79.06
+        },
+        "expr": {
+          "covered": 256,
+          "total": 349,
+          "percent": 73.352
+        },
+        "line": {
+          "covered": 45,
+          "total": 64,
+          "percent": 70.312
+        },
+        "toggle": {
+          "covered": 909,
+          "total": 2460,
+          "percent": 36.951
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [],
+        "unresolved": [],
+        "verdict": "pass",
+        "counts": {
+          "rows": 24,
+          "tx_words_accepted": 1,
+          "rx_words_observed": 0,
+          "commands_accepted": 1,
+          "segments_completed": 1,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 0,
+          "events_pass": 0,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            21,
+            21
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            117,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            117,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            117,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            24,
+            24
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            8,
+            8
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            130,
+            130,
+            130,
+            130
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            125,
+            125
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            16,
+            16
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 23063,
+        "output_tokens": 1727,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 24790,
+      "token_roi_new_branch_points_per_1000": 2.8640580879386848,
+      "new_branch_points": 71,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 32,
+      "unique_generated_cycles": 16,
+      "simulation_seconds": 0.0615217094309628,
+      "round_wall_seconds": 21.000136541202664,
+      "repetition_wall_seconds": 21.08972558286041,
+      "elapsed_run_seconds": 476.5873443749733
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 3,
+      "round": 2,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 210,
+          "total": 234,
+          "percent": 89.744
+        },
+        "expr": {
+          "covered": 290,
+          "total": 349,
+          "percent": 83.095
+        },
+        "line": {
+          "covered": 54,
+          "total": 64,
+          "percent": 84.375
+        },
+        "toggle": {
+          "covered": 1409,
+          "total": 2460,
+          "percent": 57.276
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [],
+        "unresolved": [],
+        "verdict": "pass",
+        "counts": {
+          "rows": 60,
+          "tx_words_accepted": 1,
+          "rx_words_observed": 2,
+          "commands_accepted": 2,
+          "segments_completed": 2,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 0,
+          "events_pass": 0,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            21,
+            21
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            405,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            405,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            405,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            40,
+            40
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            64,
+            64
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13,
+            13
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            32,
+            32
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            418,
+            418,
+            418,
+            418
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            16,
+            16
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            405,
+            405
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            52,
+            52
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 47273,
+        "output_tokens": 5575,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 52848,
+      "token_roi_new_branch_points_per_1000": 1.8165304268846503,
+      "new_branch_points": 96,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 92,
+      "unique_generated_cycles": 52,
+      "simulation_seconds": 0.1066748765297234,
+      "round_wall_seconds": 34.66624199971557,
+      "repetition_wall_seconds": 55.75632241694257,
+      "elapsed_run_seconds": 511.25394120812416
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 3,
+      "round": 3,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 221,
+          "total": 234,
+          "percent": 94.444
+        },
+        "expr": {
+          "covered": 327,
+          "total": 349,
+          "percent": 93.696
+        },
+        "line": {
+          "covered": 56,
+          "total": 64,
+          "percent": 87.5
+        },
+        "toggle": {
+          "covered": 1548,
+          "total": 2460,
+          "percent": 62.927
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pending",
+            "start_cycle": 26,
+            "end_cycle": null,
+            "evidence": "csid_change: segment 1 (5 bytes) then segment 2"
+          }
+        ],
+        "unresolved": [
+          "segment 2: RX word for bytes 0..0 not yet delivered"
+        ],
+        "verdict": "inconclusive",
+        "counts": {
+          "rows": 104,
+          "tx_words_accepted": 2,
+          "rx_words_observed": 2,
+          "commands_accepted": 3,
+          "segments_completed": 2,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 1,
+          "events_pass": 0,
+          "events_fail": 0,
+          "events_pending": 1
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            10,
+            10
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            45,
+            45
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            354,
+            354
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            408,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            408,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            408,
+            51
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            48,
+            48
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            120,
+            120
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            40,
+            40
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            618,
+            618,
+            618,
+            618
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            24,
+            24
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            600,
+            600
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            71,
+            71
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 71710,
+        "output_tokens": 10145,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 81855,
+      "token_roi_new_branch_points_per_1000": 1.3071895424836601,
+      "new_branch_points": 107,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 196,
+      "unique_generated_cycles": 96,
+      "simulation_seconds": 0.15291020972654223,
+      "round_wall_seconds": 38.958728624973446,
+      "repetition_wall_seconds": 94.71543345786631,
+      "elapsed_run_seconds": 550.2130523333326
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 3,
+      "round": 4,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 221,
+          "total": 234,
+          "percent": 94.444
+        },
+        "expr": {
+          "covered": 329,
+          "total": 349,
+          "percent": 94.269
+        },
+        "line": {
+          "covered": 56,
+          "total": 64,
+          "percent": 87.5
+        },
+        "toggle": {
+          "covered": 1645,
+          "total": 2460,
+          "percent": 66.87
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 26,
+            "end_cycle": 144,
+            "evidence": "csid_change: segment 1 (5 bytes) then segment 2"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pending",
+            "start_cycle": 60,
+            "end_cycle": null,
+            "evidence": "csid_change: segment 2 (1 bytes) then segment 3"
+          },
+          {
+            "family": "rx_backpressure_resume",
+            "kind": "pending",
+            "start_cycle": 104,
+            "end_cycle": null,
+            "evidence": "segment 3 RX word held (rx_valid & !rx_ready) mid-segment from 107; selected SCK edge overdue while held at 115"
+          }
+        ],
+        "unresolved": [
+          "segment 3 incomplete at end of trace"
+        ],
+        "verdict": "inconclusive",
+        "counts": {
+          "rows": 152,
+          "tx_words_accepted": 2,
+          "rx_words_observed": 3,
+          "commands_accepted": 4,
+          "segments_completed": 3,
+          "failures": 0,
+          "assumption_violations": 0,
+          "unresolved": 1,
+          "events_pass": 1,
+          "events_fail": 0,
+          "events_pending": 2
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            10,
+            10
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            45,
+            45
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            352,
+            352
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            789,
+            99
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            789,
+            99
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            789,
+            99
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            72,
+            72
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            152,
+            152
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23,
+            23
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            48,
+            48
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            1002,
+            1002,
+            1002,
+            1002
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            24,
+            24
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            37,
+            37,
+            37,
+            37,
+            37,
+            37,
+            37,
+            37
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            979,
+            979
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            88,
+            88
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 95991,
+        "output_tokens": 15239,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 111230,
+      "token_roi_new_branch_points_per_1000": 0.9619706913602445,
+      "new_branch_points": 107,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 348,
+      "unique_generated_cycles": 144,
+      "simulation_seconds": 0.19626400154083967,
+      "round_wall_seconds": 48.517310249619186,
+      "repetition_wall_seconds": 143.23333929199725,
+      "elapsed_run_seconds": 598.7309580831788
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 3,
+      "round": 5,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 221,
+          "total": 234,
+          "percent": 94.444
+        },
+        "expr": {
+          "covered": 330,
+          "total": 349,
+          "percent": 94.556
+        },
+        "line": {
+          "covered": 58,
+          "total": 64,
+          "percent": 90.625
+        },
+        "toggle": {
+          "covered": 1780,
+          "total": 2460,
+          "percent": 72.358
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [
+          {
+            "cycle": 174,
+            "category": "cmd_transport",
+            "detail": "offered command withdrawn or changed before pre ready&valid handshake"
+          }
+        ],
+        "events": [
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 26,
+            "end_cycle": 144,
+            "evidence": "csid_change: segment 1 (5 bytes) then segment 2"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 60,
+            "end_cycle": 171,
+            "evidence": "csid_change: segment 2 (1 bytes) then segment 3"
+          },
+          {
+            "family": "rx_backpressure_resume",
+            "kind": "pass",
+            "start_cycle": 104,
+            "end_cycle": 171,
+            "evidence": "segment 3 RX word held (rx_valid & !rx_ready) mid-segment from 107; selected SCK edge overdue while held at 115"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "blocked",
+        "counts": {
+          "rows": 194,
+          "tx_words_accepted": 3,
+          "rx_words_observed": 5,
+          "commands_accepted": 4,
+          "segments_completed": 4,
+          "failures": 0,
+          "assumption_violations": 1,
+          "unresolved": 0,
+          "events_pass": 3,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            15,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            56,
+            56
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            352,
+            352
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1125,
+            141
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1125,
+            141
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1125,
+            141
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            112,
+            112
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            184,
+            184
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            31,
+            31,
+            31,
+            31,
+            31,
+            31,
+            31,
+            31,
+            31,
+            31,
+            31,
+            31,
+            31,
+            31,
+            31,
+            31
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            56,
+            56
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            1338,
+            1338,
+            1338,
+            1338
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            24,
+            24
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1307,
+            1307
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            129,
+            129
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 122302,
+        "output_tokens": 19634,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 141936,
+      "token_roi_new_branch_points_per_1000": 0.7538608950512907,
+      "new_branch_points": 107,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 542,
+      "unique_generated_cycles": 186,
+      "simulation_seconds": 0.24571141740307212,
+      "round_wall_seconds": 38.53440595790744,
+      "repetition_wall_seconds": 181.76838404219598,
+      "elapsed_run_seconds": 637.2660028752871
+    },
+    {
+      "mode": "live",
+      "arm": "B",
+      "repetition": 3,
+      "round": 6,
+      "status": "simulated",
+      "coverage": {
+        "branch": {
+          "covered": 223,
+          "total": 234,
+          "percent": 95.299
+        },
+        "expr": {
+          "covered": 330,
+          "total": 349,
+          "percent": 94.556
+        },
+        "line": {
+          "covered": 59,
+          "total": 64,
+          "percent": 92.188
+        },
+        "toggle": {
+          "covered": 1804,
+          "total": 2460,
+          "percent": 73.333
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [
+          {
+            "cycle": 174,
+            "category": "cmd_transport",
+            "detail": "offered command withdrawn or changed before pre ready&valid handshake"
+          }
+        ],
+        "events": [
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 26,
+            "end_cycle": 144,
+            "evidence": "csid_change: segment 1 (5 bytes) then segment 2"
+          },
+          {
+            "family": "partial_word_then_next_transaction",
+            "kind": "pass",
+            "start_cycle": 60,
+            "end_cycle": 171,
+            "evidence": "csid_change: segment 2 (1 bytes) then segment 3"
+          },
+          {
+            "family": "rx_backpressure_resume",
+            "kind": "pass",
+            "start_cycle": 104,
+            "end_cycle": 171,
+            "evidence": "segment 3 RX word held (rx_valid & !rx_ready) mid-segment from 107; selected SCK edge overdue while held at 115"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "blocked",
+        "counts": {
+          "rows": 216,
+          "tx_words_accepted": 3,
+          "rx_words_observed": 5,
+          "commands_accepted": 5,
+          "segments_completed": 5,
+          "failures": 0,
+          "assumption_violations": 1,
+          "unresolved": 0,
+          "events_pass": 3,
+          "events_fail": 0,
+          "events_pending": 0
+        }
+      },
+      "failure_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "groups": [
+        {
+          "eclass": 38,
+          "nontrivial": true,
+          "raw_source_hits": [
+            15,
+            15
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 42,
+          "nontrivial": true,
+          "raw_source_hits": [
+            69,
+            69
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 51,
+          "nontrivial": true,
+          "raw_source_hits": [
+            352,
+            352
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 54,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1301,
+            163
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 56,
+          "nontrivial": false,
+          "raw_source_hits": [
+            173,
+            22
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 58,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1128,
+            141
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 60,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1128,
+            141
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 68,
+          "nontrivial": false,
+          "raw_source_hits": [
+            112,
+            112
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 239,
+          "nontrivial": true,
+          "raw_source_hits": [
+            232,
+            232
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 94,
+          "nontrivial": true,
+          "raw_source_hits": [
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 102,
+          "nontrivial": false,
+          "raw_source_hits": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 122,
+          "nontrivial": false,
+          "raw_source_hits": [
+            64,
+            64
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 137,
+          "nontrivial": true,
+          "raw_source_hits": [
+            1514,
+            1514,
+            1514,
+            1514
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 265,
+          "nontrivial": true,
+          "raw_source_hits": [
+            32,
+            32
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 315,
+          "nontrivial": true,
+          "raw_source_hits": [
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 243,
+          "nontrivial": false,
+          "raw_source_hits": [
+            1478,
+            1478
+          ],
+          "all_hit": true
+        },
+        {
+          "eclass": 276,
+          "nontrivial": false,
+          "raw_source_hits": [
+            151,
+            151
+          ],
+          "all_hit": true
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 150385,
+        "output_tokens": 21914,
+        "unknown_usage_attempts": 0
+      },
+      "api_tokens": 172299,
+      "token_roi_new_branch_points_per_1000": 0.6326211991944236,
+      "new_branch_points": 109,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 758,
+      "unique_generated_cycles": 208,
+      "simulation_seconds": 0.2881881673820317,
+      "round_wall_seconds": 21.077312333043665,
+      "repetition_wall_seconds": 202.84627041686326,
+      "elapsed_run_seconds": 658.3438892080449
+    }
+  ]
+}

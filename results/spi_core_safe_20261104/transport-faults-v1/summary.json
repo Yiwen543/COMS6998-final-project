@@ -1,0 +1,423 @@
+{
+  "status": "pass",
+  "new_api_calls": 0,
+  "actual_faulty_driver_simulations": 4,
+  "actual_faulty_driver_cycles": 672,
+  "faults": [
+    {
+      "name": "dropped_offer",
+      "source_case": "calibration_partial_then_csid_switch",
+      "source_sha256": "1e2052f10de287571da4a840ebb25e151fafbc9939c4e8738a1db660114588fc",
+      "patches": [
+        [
+          "if(v_cmd_offer) begin",
+          "if(v_cmd_offer && cycle!=8) begin"
+        ]
+      ],
+      "compile": {
+        "simulator": "verilator",
+        "command": [
+          "verilator",
+          "--binary",
+          "--timing",
+          "--coverage-line",
+          "--coverage-toggle",
+          "--coverage-expr",
+          "-Wno-fatal",
+          "--top-module",
+          "tb_spi_core",
+          "--Mdir",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/dropped_offer/compiled/obj",
+          "-j",
+          "2",
+          "-DSYNTHESIS",
+          "-Ithird_party/opentitan_candidate/hw/ip/prim/rtl",
+          "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+          "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+          "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/dropped_offer.sv"
+        ],
+        "seconds": 14.39277487481013
+      },
+      "rejection": {
+        "stage": "transport",
+        "detail": "Incorrect driven transport at cycle 8"
+      },
+      "executed_cycles": 184,
+      "duplicate_accept_ids": [],
+      "pre_post_ready_differ_cycles": [
+        88,
+        121
+      ],
+      "execution": {
+        "simulator": "verilator",
+        "command": [
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/dropped_offer/compiled/obj/Vtb_spi_core",
+          "+VECTORS=/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/dropped_offer/execution/vectors.txt",
+          "+verilator+coverage+file+/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/dropped_offer/execution/coverage.dat"
+        ],
+        "simulation_seconds": 0.24212750000879169,
+        "requested_cycles": 184,
+        "executed_cycles": 184,
+        "driver_complete": true
+      },
+      "actual_trace_sha256": "73d1baab2fae7c3917bdfec3093536057c0b9043a2b00cf098bf312d9eb4e7d6"
+    },
+    {
+      "name": "duplicate_acceptance",
+      "source_case": "calibration_partial_then_csid_switch",
+      "source_sha256": "1ac0c7361297bd0710ac424263052c17bbd9e5afee6c35bb0a4472204193af78",
+      "patches": [
+        [
+          "cmd_taken=cmd_ids[ch];ch=ch+1;cmd_accepted=cmd_accepted+1;",
+          "cmd_taken=cmd_ids[ch];if(cycle!=8) ch=ch+1;cmd_accepted=cmd_accepted+1;"
+        ],
+        [
+          "if(cmd_offered!=cmd_accepted+cmd_cancelled+ct-ch) $fatal(1,\"Command conservation\");",
+          "// Deliberately disabled in this duplicate fault only."
+        ]
+      ],
+      "compile": {
+        "simulator": "verilator",
+        "command": [
+          "verilator",
+          "--binary",
+          "--timing",
+          "--coverage-line",
+          "--coverage-toggle",
+          "--coverage-expr",
+          "-Wno-fatal",
+          "--top-module",
+          "tb_spi_core",
+          "--Mdir",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/duplicate_acceptance/compiled/obj",
+          "-j",
+          "2",
+          "-DSYNTHESIS",
+          "-Ithird_party/opentitan_candidate/hw/ip/prim/rtl",
+          "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+          "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+          "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/duplicate_acceptance.sv"
+        ],
+        "seconds": 14.66037516715005
+      },
+      "rejection": {
+        "stage": "transport",
+        "detail": "Incorrect acceptance/conservation at cycle 8"
+      },
+      "executed_cycles": 184,
+      "duplicate_accept_ids": [
+        8
+      ],
+      "pre_post_ready_differ_cycles": [
+        8,
+        55,
+        56,
+        105,
+        106,
+        139
+      ],
+      "execution": {
+        "simulator": "verilator",
+        "command": [
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/duplicate_acceptance/compiled/obj/Vtb_spi_core",
+          "+VECTORS=/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/duplicate_acceptance/execution/vectors.txt",
+          "+verilator+coverage+file+/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/duplicate_acceptance/execution/coverage.dat"
+        ],
+        "simulation_seconds": 0.23496762476861477,
+        "requested_cycles": 184,
+        "executed_cycles": 184,
+        "driver_complete": true
+      },
+      "actual_trace_sha256": "9d84d9f80f3c363e3c7ab1804d53a74eafe8d3d853b5fb84b8b7a2131a25a81e"
+    },
+    {
+      "name": "reordered_head",
+      "source_case": "pending_queues_hardware_abort_restart",
+      "source_sha256": "7e1800a07b555a729d50fbb7c4ffd8a3db8d9bb1a6c2fc7eed997eeba9c6d0e8",
+      "patches": [
+        [
+          "command_i=cmd_mem[ch];command_csid_i=csid_mem[ch];",
+          "command_i=cmd_mem[ct-1];command_csid_i=csid_mem[ct-1];"
+        ]
+      ],
+      "compile": {
+        "simulator": "verilator",
+        "command": [
+          "verilator",
+          "--binary",
+          "--timing",
+          "--coverage-line",
+          "--coverage-toggle",
+          "--coverage-expr",
+          "-Wno-fatal",
+          "--top-module",
+          "tb_spi_core",
+          "--Mdir",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/reordered_head/compiled/obj",
+          "-j",
+          "2",
+          "-DSYNTHESIS",
+          "-Ithird_party/opentitan_candidate/hw/ip/prim/rtl",
+          "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+          "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+          "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/reordered_head.sv"
+        ],
+        "seconds": 14.792510291095823
+      },
+      "rejection": {
+        "stage": "transport",
+        "detail": "Incorrect driven transport at cycle 10"
+      },
+      "executed_cycles": 120,
+      "duplicate_accept_ids": [],
+      "pre_post_ready_differ_cycles": [
+        8,
+        49,
+        66
+      ],
+      "execution": {
+        "simulator": "verilator",
+        "command": [
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/reordered_head/compiled/obj/Vtb_spi_core",
+          "+VECTORS=/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/reordered_head/execution/vectors.txt",
+          "+verilator+coverage+file+/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/reordered_head/execution/coverage.dat"
+        ],
+        "simulation_seconds": 0.23078287485986948,
+        "requested_cycles": 120,
+        "executed_cycles": 120,
+        "driver_complete": true
+      },
+      "actual_trace_sha256": "4b85f92302abead15c19046ba4a5b25c1549806e060c87a2f6c9ea1310091c53"
+    },
+    {
+      "name": "post_edge_acceptance",
+      "source_case": "calibration_partial_then_csid_switch",
+      "source_sha256": "74f4332849daee263ae7245583ac137decf7328d34c218e8c95b155b49ab3dc3",
+      "patches": [
+        [
+          "cmd_fire=command_valid_i && command_ready_o;",
+          "cmd_fire=0; // Deliberate wrong sampling phase"
+        ],
+        [
+          "if(cmd_fire) begin cmd_taken",
+          "cmd_fire=command_valid_i && command_ready_o;\nif(cmd_fire) begin cmd_taken"
+        ]
+      ],
+      "compile": {
+        "simulator": "verilator",
+        "command": [
+          "verilator",
+          "--binary",
+          "--timing",
+          "--coverage-line",
+          "--coverage-toggle",
+          "--coverage-expr",
+          "-Wno-fatal",
+          "--top-module",
+          "tb_spi_core",
+          "--Mdir",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/post_edge_acceptance/compiled/obj",
+          "-j",
+          "2",
+          "-DSYNTHESIS",
+          "-Ithird_party/opentitan_candidate/hw/ip/prim/rtl",
+          "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+          "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv",
+          "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/post_edge_acceptance.sv"
+        ],
+        "seconds": 13.878450749907643
+      },
+      "rejection": {
+        "stage": "transport",
+        "detail": "Incorrect acceptance/conservation at cycle 8"
+      },
+      "executed_cycles": 184,
+      "duplicate_accept_ids": [],
+      "pre_post_ready_differ_cycles": [
+        8,
+        55,
+        89
+      ],
+      "execution": {
+        "simulator": "verilator",
+        "command": [
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/post_edge_acceptance/compiled/obj/Vtb_spi_core",
+          "+VECTORS=/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/post_edge_acceptance/execution/vectors.txt",
+          "+verilator+coverage+file+/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/transport-faults-v1/post_edge_acceptance/execution/coverage.dat"
+        ],
+        "simulation_seconds": 0.24240416707471013,
+        "requested_cycles": 184,
+        "executed_cycles": 184,
+        "driver_complete": true
+      },
+      "actual_trace_sha256": "2f6207d159603b29a808c76fb17e43f89f0e029e1b8d07d0f3af38be2994009f"
+    }
+  ],
+  "pending_prefix_replay": {
+    "trace.json": {
+      "short_sha256": "3ca030db9f32f5e0a122b987826925f2d0f0a2dc142fc31acffd1d65f445ba88",
+      "full_sha256": "0d6523e4788ec21e54d5852d1800a86ece661e6f81892eb83861b2d556e79d2c",
+      "prefix_rows": 89,
+      "equal": true
+    },
+    "transport.json": {
+      "short_sha256": "ae2c3cd5070ab3363843cae3985b661c41383e9a92a8e7df23ea08da9fc1642b",
+      "full_sha256": "2b19ce5bbfcc6017bb609562555193662d1e0a6c743cc0e17609eb9324357bf3",
+      "prefix_rows": 89,
+      "equal": true
+    }
+  },
+  "prefix_last_queue": {
+    "cycle": 88,
+    "cmd_offer_id": 88,
+    "tx_offer_id": -1,
+    "cmd_accept_id": -1,
+    "tx_accept_id": -1,
+    "cmd_pending": 1,
+    "tx_pending": 0,
+    "cmd_offered": 2,
+    "tx_offered": 0,
+    "cmd_accepted": 1,
+    "tx_accepted": 0,
+    "cmd_cancelled": 0,
+    "tx_cancelled": 0
+  },
+  "boundary_queue_excerpt": [
+    {
+      "cycle": 86,
+      "cmd_offer_id": -1,
+      "tx_offer_id": -1,
+      "cmd_accept_id": -1,
+      "tx_accept_id": -1,
+      "cmd_pending": 0,
+      "tx_pending": 0,
+      "cmd_offered": 1,
+      "tx_offered": 0,
+      "cmd_accepted": 1,
+      "tx_accepted": 0,
+      "cmd_cancelled": 0,
+      "tx_cancelled": 0
+    },
+    {
+      "cycle": 87,
+      "cmd_offer_id": -1,
+      "tx_offer_id": -1,
+      "cmd_accept_id": -1,
+      "tx_accept_id": -1,
+      "cmd_pending": 0,
+      "tx_pending": 0,
+      "cmd_offered": 1,
+      "tx_offered": 0,
+      "cmd_accepted": 1,
+      "tx_accepted": 0,
+      "cmd_cancelled": 0,
+      "tx_cancelled": 0
+    },
+    {
+      "cycle": 88,
+      "cmd_offer_id": 88,
+      "tx_offer_id": -1,
+      "cmd_accept_id": -1,
+      "tx_accept_id": -1,
+      "cmd_pending": 1,
+      "tx_pending": 0,
+      "cmd_offered": 2,
+      "tx_offered": 0,
+      "cmd_accepted": 1,
+      "tx_accepted": 0,
+      "cmd_cancelled": 0,
+      "tx_cancelled": 0
+    },
+    {
+      "cycle": 89,
+      "cmd_offer_id": -1,
+      "tx_offer_id": -1,
+      "cmd_accept_id": -1,
+      "tx_accept_id": -1,
+      "cmd_pending": 1,
+      "tx_pending": 0,
+      "cmd_offered": 2,
+      "tx_offered": 0,
+      "cmd_accepted": 1,
+      "tx_accepted": 0,
+      "cmd_cancelled": 0,
+      "tx_cancelled": 0
+    },
+    {
+      "cycle": 90,
+      "cmd_offer_id": -1,
+      "tx_offer_id": -1,
+      "cmd_accept_id": 88,
+      "tx_accept_id": -1,
+      "cmd_pending": 0,
+      "tx_pending": 0,
+      "cmd_offered": 2,
+      "tx_offered": 0,
+      "cmd_accepted": 2,
+      "tx_accepted": 0,
+      "cmd_cancelled": 0,
+      "tx_cancelled": 0
+    },
+    {
+      "cycle": 91,
+      "cmd_offer_id": -1,
+      "tx_offer_id": -1,
+      "cmd_accept_id": -1,
+      "tx_accept_id": -1,
+      "cmd_pending": 0,
+      "tx_pending": 0,
+      "cmd_offered": 2,
+      "tx_offered": 0,
+      "cmd_accepted": 2,
+      "tx_accepted": 0,
+      "cmd_cancelled": 0,
+      "tx_cancelled": 0
+    },
+    {
+      "cycle": 92,
+      "cmd_offer_id": -1,
+      "tx_offer_id": -1,
+      "cmd_accept_id": -1,
+      "tx_accept_id": -1,
+      "cmd_pending": 0,
+      "tx_pending": 0,
+      "cmd_offered": 2,
+      "tx_offered": 0,
+      "cmd_accepted": 2,
+      "tx_accepted": 0,
+      "cmd_cancelled": 0,
+      "tx_cancelled": 0
+    }
+  ],
+  "production_driver_sha256": "66bbc3fdbe3ecc45b0821833492c99463a4d97fa10a10c63b089006fc2411bbc",
+  "script_sha256": "8c112233779dbb0448c19f4e8d68eaad93f8f9e2b74616e47c30d1ce9f449545",
+  "scope": "Protocol delivery oracle rejects actual faulty SV drivers. Original DUT/checker and live driver unchanged. Not a DUT bug test."
+}

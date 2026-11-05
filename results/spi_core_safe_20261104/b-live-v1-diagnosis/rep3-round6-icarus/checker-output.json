@@ -1,0 +1,240 @@
+{
+  "selftests": [
+    {
+      "name": "std_tx_good_passes",
+      "pass": true
+    },
+    {
+      "name": "std_tx_bitflip_fails",
+      "pass": true
+    },
+    {
+      "name": "cs_rise_midsegment_fails",
+      "pass": true
+    },
+    {
+      "name": "csnlead_violation_fails",
+      "pass": true
+    },
+    {
+      "name": "withdrawn_command_is_assumption_violation",
+      "pass": true
+    },
+    {
+      "name": "std_rx_partial_word_passes",
+      "pass": true
+    },
+    {
+      "name": "rx_nonzero_padding_fails",
+      "pass": true
+    },
+    {
+      "name": "rx_wrong_byte_fails",
+      "pass": true
+    },
+    {
+      "name": "dummy_segment_scope_unresolved",
+      "pass": true
+    },
+    {
+      "name": "csaat_rise_without_change_fails",
+      "pass": true
+    },
+    {
+      "name": "csaat_rise_pending_csid_change_ok",
+      "pass": true
+    },
+    {
+      "name": "csaat_rise_invalid_offer_fails",
+      "pass": true
+    },
+    {
+      "name": "truncated_trace_inconclusive",
+      "pass": true
+    },
+    {
+      "name": "cpol1_idle_setup_good_passes",
+      "pass": true
+    },
+    {
+      "name": "cpol1_idle_setup_bad_payload_fails",
+      "pass": true
+    },
+    {
+      "name": "starvation_exhausted_be_postponed_trailing_early_refill_passes",
+      "pass": true
+    },
+    {
+      "name": "starvation_truncated_pending",
+      "pass": true
+    },
+    {
+      "name": "starvation_dirty_resume_fails",
+      "pass": true
+    },
+    {
+      "name": "spurious_sck_fails",
+      "pass": true
+    },
+    {
+      "name": "late_nonstalling_refill_div2_no_starvation_event",
+      "pass": true
+    },
+    {
+      "name": "brief_rx_hold_no_pause_no_event",
+      "pass": true
+    },
+    {
+      "name": "flag_only_fake_recovery_no_event",
+      "pass": true
+    },
+    {
+      "name": "true_rx_backpressure_pause_resume_passes",
+      "pass": true
+    },
+    {
+      "name": "true_rx_backpressure_truncated_pending",
+      "pass": true
+    }
+  ],
+  "cases": {
+    "batch": {
+      "failures": [
+        {
+          "cycle": 198,
+          "category": "cs_framing",
+          "detail": "segment 7 started without a CSB assertion after the previous segment"
+        },
+        {
+          "cycle": 198,
+          "category": "cpol",
+          "detail": "SCK not at CPOL idle level before first edge of segment 7"
+        },
+        {
+          "cycle": 198,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 200,
+          "category": "cs_rise_midsegment",
+          "detail": "CSB[0] deasserted inside segment 7"
+        },
+        {
+          "cycle": 203,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 204,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 205,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 206,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 207,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 208,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 209,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 210,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 211,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 212,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 213,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 214,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        },
+        {
+          "cycle": 215,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 7 is mid-transfer"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "pass",
+          "start_cycle": 21,
+          "end_cycle": 52,
+          "evidence": "csid_change: segment 1 (3 bytes) then segment 2"
+        },
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "pass",
+          "start_cycle": 35,
+          "end_cycle": 128,
+          "evidence": "csid_change: segment 2 (1 bytes) then segment 3"
+        },
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "pass",
+          "start_cycle": 54,
+          "end_cycle": 155,
+          "evidence": "csid_change: segment 3 (1 bytes) then segment 4"
+        },
+        {
+          "family": "rx_backpressure_resume",
+          "kind": "pass",
+          "start_cycle": 100,
+          "end_cycle": 155,
+          "evidence": "segment 4 RX word held (rx_valid & !rx_ready) mid-segment from 103; selected SCK edge overdue while held at 111"
+        }
+      ],
+      "unresolved": [
+        "segment 7 incomplete at end of trace"
+      ],
+      "verdict": "fail",
+      "counts": {
+        "rows": 216,
+        "tx_words_accepted": 4,
+        "rx_words_observed": 6,
+        "commands_accepted": 8,
+        "segments_completed": 7,
+        "failures": 17,
+        "assumption_violations": 0,
+        "unresolved": 1,
+        "events_pass": 4,
+        "events_fail": 0,
+        "events_pending": 0
+      }
+    }
+  },
+  "errors": []
+}

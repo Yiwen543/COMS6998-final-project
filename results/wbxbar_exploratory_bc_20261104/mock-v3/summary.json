@@ -1,0 +1,6028 @@
+{
+  "metadata": {
+    "mode": "mock",
+    "scope": "wbxbar_exploratory_bc_freeze_v1",
+    "freeze_sha256": "1e9d97fc766937dba1f76f2baf3327f4a2950134274325c3084b15e0a4d705b2",
+    "versions": {
+      "python": "3.13.9",
+      "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+      "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+      "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+      "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+      "openai_sdk": "2.54.0",
+      "matplotlib": "3.11.2"
+    },
+    "model_settings": {
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "low",
+      "input_tokens": 32000,
+      "output_tokens": 16384,
+      "timeout_seconds": 120,
+      "max_retries": 1,
+      "max_output_tokens": 16384
+    },
+    "status": "completed",
+    "compilations": 2,
+    "compile_seconds": 15.870088832918555,
+    "simulation_executions": 42,
+    "executed_cycles": 8400,
+    "requested_cycles": 8400,
+    "simulation_seconds": 1.9289611680433154,
+    "api_generation_calls": 0,
+    "api_count_requests": 0,
+    "egraph_preprocessing_seconds_this_run": 0,
+    "egraph_preprocessing": "Reused frozen offline artifacts; historical preprocessing reported separately.",
+    "simulation_policy": "Fresh cumulative seed+actions replay; all physical cycles counted; no extra drain.",
+    "independent_sessions": "Responses calls have no conversation or previous_response_id; only own-arm history is rendered.",
+    "compile_commands": [
+      {
+        "simulator": "verilator",
+        "seconds": 15.834597166627645,
+        "command": [
+          "verilator",
+          "--binary",
+          "--timing",
+          "--coverage-line",
+          "--coverage-toggle",
+          "--coverage-expr",
+          "-Wno-fatal",
+          "--top-module",
+          "tb_natural_inventory",
+          "--Mdir",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/mock-v3/shared/verilator/obj",
+          "-j",
+          "2",
+          "third_party/wb2axip_candidate/rtl/skidbuffer.v",
+          "third_party/wb2axip_candidate/rtl/addrdecode.v",
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/mock-v3/shared/tb_natural_inventory.sv"
+        ]
+      },
+      {
+        "simulator": "iverilog",
+        "seconds": 0.020314999856054783,
+        "command": [
+          "iverilog",
+          "-g2012",
+          "-s",
+          "tb_natural_inventory",
+          "-o",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/mock-v3/shared/iverilog/tb.vvp",
+          "third_party/wb2axip_candidate/rtl/skidbuffer.v",
+          "third_party/wb2axip_candidate/rtl/addrdecode.v",
+          "third_party/wb2axip_candidate/rtl/wbxbar.v",
+          "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/mock-v3/shared/tb_natural_inventory.sv"
+        ]
+      }
+    ],
+    "elapsed_seconds": 21.15991024998948,
+    "api_usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "unknown_usage_attempts": 36
+    }
+  },
+  "rows": [
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 1,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.3860714575275779,
+      "active_wall_seconds": 0.5290295421145856,
+      "elapsed_run_seconds": 16.683090124744922
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 1,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.0714565827511251,
+      "active_wall_seconds": 0.1994997076690197,
+      "elapsed_run_seconds": 16.885705582797527
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 1,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.426552374381572,
+      "active_wall_seconds": 0.6519280839711428,
+      "elapsed_run_seconds": 17.012523875106126
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 1,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.1090143327601254,
+      "active_wall_seconds": 0.3089897078461945,
+      "elapsed_run_seconds": 17.123178207781166
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 1,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.46707254042848945,
+      "active_wall_seconds": 0.7621812499128282,
+      "elapsed_run_seconds": 17.234595874790102
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 1,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.1470375000499189,
+      "active_wall_seconds": 0.41705945786088705,
+      "elapsed_run_seconds": 17.343797749839723
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 1,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.5053437072783709,
+      "active_wall_seconds": 0.8717609168961644,
+      "elapsed_run_seconds": 17.45449012517929
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 1,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.18421958340331912,
+      "active_wall_seconds": 0.5273182918317616,
+      "elapsed_run_seconds": 17.565885916817933
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 1,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.5454673320055008,
+      "active_wall_seconds": 0.9862754167988896,
+      "elapsed_run_seconds": 17.681546417064965
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 1,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.22357733314856887,
+      "active_wall_seconds": 0.645556375849992,
+      "elapsed_run_seconds": 17.800950624980032
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 1,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.5856229569762945,
+      "active_wall_seconds": 1.106269916985184,
+      "elapsed_run_seconds": 17.922020458150655
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 1,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.2630776255391538,
+      "active_wall_seconds": 0.7614019177854061,
+      "elapsed_run_seconds": 18.038989208173007
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 2,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.07944804197177291,
+      "active_wall_seconds": 0.20698300004005432,
+      "elapsed_run_seconds": 18.24708233308047
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 2,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.07822358282282948,
+      "active_wall_seconds": 0.2053982918150723,
+      "elapsed_run_seconds": 18.4536130419001
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 2,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.11510816728696227,
+      "active_wall_seconds": 0.31187641620635986,
+      "elapsed_run_seconds": 18.559688583016396
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 2,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.1172973751090467,
+      "active_wall_seconds": 0.3113814168609679,
+      "elapsed_run_seconds": 18.666925250086933
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 2,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.15209262631833553,
+      "active_wall_seconds": 0.42293995851650834,
+      "elapsed_run_seconds": 18.77910300018266
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 2,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.1548086660914123,
+      "active_wall_seconds": 0.42525245901197195,
+      "elapsed_run_seconds": 18.894226832780987
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 2,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.19053671043366194,
+      "active_wall_seconds": 0.5480431243777275,
+      "elapsed_run_seconds": 19.021404416766018
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 2,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.19173233211040497,
+      "active_wall_seconds": 0.5346951670944691,
+      "elapsed_run_seconds": 19.132049624808133
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 2,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.23001479310914874,
+      "active_wall_seconds": 0.6624909164384007,
+      "elapsed_run_seconds": 19.247684166766703
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 2,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.23173137428238988,
+      "active_wall_seconds": 0.650091459043324,
+      "elapsed_run_seconds": 19.36422162503004
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 2,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.270177043043077,
+      "active_wall_seconds": 0.780953916721046,
+      "elapsed_run_seconds": 19.483826791867614
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 2,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.2695423746481538,
+      "active_wall_seconds": 0.7627906249836087,
+      "elapsed_run_seconds": 19.59768941719085
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 3,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.07578420825302601,
+      "active_wall_seconds": 0.20278491685166955,
+      "elapsed_run_seconds": 19.801636666990817
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 3,
+      "round": 1,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 1,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 72
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 1
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 1,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 2,
+      "executed_cycles_including_replays": 80,
+      "unique_generated_cycles": 64,
+      "simulation_seconds": 0.08109258348122239,
+      "active_wall_seconds": 0.20964337512850761,
+      "elapsed_run_seconds": 20.01243908284232
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 3,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.11499358341097832,
+      "active_wall_seconds": 0.32102058408781886,
+      "elapsed_run_seconds": 20.131937541998923
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 3,
+      "round": 2,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 2,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 136
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 2
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 2,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 3,
+      "executed_cycles_including_replays": 216,
+      "unique_generated_cycles": 128,
+      "simulation_seconds": 0.11982233356684446,
+      "active_wall_seconds": 0.31867925031110644,
+      "elapsed_run_seconds": 20.242228417191654
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 3,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.1550362086854875,
+      "active_wall_seconds": 0.43112758407369256,
+      "elapsed_run_seconds": 20.353471791837364
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 3,
+      "round": 3,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 3,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 200
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 3
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 3,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 4,
+      "executed_cycles_including_replays": 416,
+      "unique_generated_cycles": 192,
+      "simulation_seconds": 0.15975558338686824,
+      "active_wall_seconds": 0.43040975043550134,
+      "elapsed_run_seconds": 20.46645904192701
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 3,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.1954633337445557,
+      "active_wall_seconds": 0.5429430841468275,
+      "elapsed_run_seconds": 20.579411666840315
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 3,
+      "round": 4,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 4,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 264
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 4
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 4,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 5,
+      "executed_cycles_including_replays": 680,
+      "unique_generated_cycles": 256,
+      "simulation_seconds": 0.1974071254953742,
+      "active_wall_seconds": 0.5410218755714595,
+      "elapsed_run_seconds": 20.691211082972586
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 3,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.2344938339665532,
+      "active_wall_seconds": 0.6552296262234449,
+      "elapsed_run_seconds": 20.80466837482527
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 3,
+      "round": 5,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 5,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 328
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 5
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 5,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 6,
+      "executed_cycles_including_replays": 1008,
+      "unique_generated_cycles": 320,
+      "simulation_seconds": 0.2331614587455988,
+      "active_wall_seconds": 0.6591343758627772,
+      "elapsed_run_seconds": 20.925812707748264
+    },
+    {
+      "mode": "mock",
+      "arm": "B",
+      "repetition": 3,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.2715463759377599,
+      "active_wall_seconds": 0.7726260842755437,
+      "elapsed_run_seconds": 21.044473708141595
+    },
+    {
+      "mode": "mock",
+      "arm": "C",
+      "repetition": 3,
+      "round": 6,
+      "status": "simulated",
+      "measurement_fresh": true,
+      "measurement_round": 6,
+      "coverage": {
+        "branch": {
+          "covered": 36,
+          "total": 88,
+          "percent": 40.909
+        },
+        "expr": {
+          "covered": 118,
+          "total": 321,
+          "percent": 36.76
+        },
+        "line": {
+          "covered": 71,
+          "total": 86,
+          "percent": 82.558
+        },
+        "toggle": {
+          "covered": 60,
+          "total": 2350,
+          "percent": 2.553
+        }
+      },
+      "checker": {
+        "failures": [],
+        "assumption_violations": [],
+        "events": [
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 0,
+            "end_cycle": 0,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          },
+          {
+            "family": "reset",
+            "kind": "reset_edge",
+            "start_cycle": 1,
+            "end_cycle": 1,
+            "evidence": "i_reset high at rising edge (synchronous)"
+          }
+        ],
+        "unresolved": [],
+        "verdict": "scoped_pass",
+        "counts": {
+          "discarded_by_reset": 0,
+          "pending_master": 0,
+          "pending_slave": 0
+        }
+      },
+      "transport": {
+        "offers": 0,
+        "accepted": 0,
+        "responses": 0,
+        "reset_discarded_queued": 0,
+        "reset_discarded_accepted": 0,
+        "error_aborted_accepted": 0,
+        "queued": 0,
+        "outstanding": 0,
+        "diagnostics": [],
+        "delivery_complete": true,
+        "cycles": 392
+      },
+      "verification_complete": true,
+      "groups": [
+        {
+          "eclass": 184,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 190,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 238,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 272,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 286,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 289,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 320,
+          "nontrivial": true,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        },
+        {
+          "eclass": 453,
+          "nontrivial": false,
+          "raw_source_hits": [
+            0,
+            0
+          ],
+          "all_hit": false
+        }
+      ],
+      "api_usage_cumulative": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unknown_usage_attempts": 6
+      },
+      "api_tokens": null,
+      "token_roi_new_branch_points_per_1000": null,
+      "new_branch_points": 0,
+      "attempts": 6,
+      "failed_attempts": 0,
+      "functional_diagnostic_count": 0,
+      "distinct_failure_categories": [],
+      "simulator_executions": 7,
+      "executed_cycles_including_replays": 1400,
+      "unique_generated_cycles": 384,
+      "simulation_seconds": 0.26899479189887643,
+      "active_wall_seconds": 0.77318200096488,
+      "elapsed_run_seconds": 21.159766582772136
+    }
+  ]
+}

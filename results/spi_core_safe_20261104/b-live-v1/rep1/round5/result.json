@@ -1,0 +1,328 @@
+{
+  "simulator": "verilator",
+  "command": [
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/b-live-v1/shared/obj/Vtb_spi_core",
+    "+VECTORS=/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/b-live-v1/rep1/round5/vectors.txt",
+    "+verilator+coverage+file+/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/b-live-v1/rep1/round5/coverage.dat"
+  ],
+  "simulation_seconds": 0.037690666038542986,
+  "requested_cycles": 176,
+  "executed_cycles": 176,
+  "driver_complete": true,
+  "checker": {
+    "failures": [],
+    "assumption_violations": [],
+    "events": [
+      {
+        "family": "partial_word_then_next_transaction",
+        "kind": "pass",
+        "start_cycle": 26,
+        "end_cycle": 53,
+        "evidence": "csid_change: segment 1 (2 bytes) then segment 2"
+      },
+      {
+        "family": "partial_word_then_next_transaction",
+        "kind": "pass",
+        "start_cycle": 52,
+        "end_cycle": 143,
+        "evidence": "csid_change: segment 3 (1 bytes) then segment 4"
+      },
+      {
+        "family": "rx_backpressure_resume",
+        "kind": "pass",
+        "start_cycle": 98,
+        "end_cycle": 143,
+        "evidence": "segment 4 RX word held (rx_valid & !rx_ready) mid-segment from 101; selected SCK edge overdue while held at 109"
+      },
+      {
+        "family": "partial_word_then_next_transaction",
+        "kind": "pending",
+        "start_cycle": 148,
+        "end_cycle": null,
+        "evidence": "csid_change: segment 5 (1 bytes) then segment 6"
+      }
+    ],
+    "unresolved": [
+      "segment 6: RX word for bytes 0..0 not yet delivered"
+    ],
+    "verdict": "inconclusive",
+    "counts": {
+      "rows": 176,
+      "tx_words_accepted": 3,
+      "rx_words_observed": 6,
+      "commands_accepted": 7,
+      "segments_completed": 6,
+      "failures": 0,
+      "assumption_violations": 0,
+      "unresolved": 1,
+      "events_pass": 3,
+      "events_fail": 0,
+      "events_pending": 1
+    }
+  },
+  "transport": {
+    "last": {
+      "cycle": 175,
+      "cmd_offer_id": -1,
+      "tx_offer_id": -1,
+      "cmd_accept_id": -1,
+      "tx_accept_id": -1,
+      "cmd_pending": 0,
+      "tx_pending": 0,
+      "cmd_offered": 7,
+      "tx_offered": 3,
+      "cmd_accepted": 7,
+      "tx_accepted": 3,
+      "cmd_cancelled": 0,
+      "tx_cancelled": 0
+    },
+    "cmd_max_pending": 3,
+    "tx_max_pending": 1,
+    "pending": false,
+    "command_accept_ids": [
+      8,
+      9,
+      10,
+      40,
+      72,
+      148,
+      149
+    ],
+    "tx_accept_ids": [
+      11,
+      12,
+      40
+    ],
+    "cmd_pending_ids": [],
+    "cmd_cancelled_ids": [],
+    "cmd_accepted_ids": [
+      8,
+      9,
+      10,
+      40,
+      72,
+      148,
+      149
+    ],
+    "tx_pending_ids": [],
+    "tx_cancelled_ids": [],
+    "tx_accepted_ids": [
+      11,
+      12,
+      40
+    ]
+  },
+  "coverage": {
+    "branch": {
+      "covered": 223,
+      "total": 234,
+      "percent": 95.299
+    },
+    "expr": {
+      "covered": 330,
+      "total": 349,
+      "percent": 94.556
+    },
+    "line": {
+      "covered": 59,
+      "total": 64,
+      "percent": 92.188
+    },
+    "toggle": {
+      "covered": 1659,
+      "total": 2460,
+      "percent": 67.439
+    }
+  },
+  "groups": [
+    {
+      "eclass": 38,
+      "nontrivial": true,
+      "raw_source_hits": [
+        18,
+        18
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 42,
+      "nontrivial": true,
+      "raw_source_hits": [
+        56,
+        56
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 51,
+      "nontrivial": true,
+      "raw_source_hits": [
+        368,
+        368
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 54,
+      "nontrivial": false,
+      "raw_source_hits": [
+        720,
+        90
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 56,
+      "nontrivial": false,
+      "raw_source_hits": [
+        128,
+        16
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 58,
+      "nontrivial": false,
+      "raw_source_hits": [
+        592,
+        74
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 60,
+      "nontrivial": false,
+      "raw_source_hits": [
+        592,
+        74
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 68,
+      "nontrivial": false,
+      "raw_source_hits": [
+        112,
+        112
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 239,
+      "nontrivial": true,
+      "raw_source_hits": [
+        240,
+        240
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 94,
+      "nontrivial": true,
+      "raw_source_hits": [
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 102,
+      "nontrivial": false,
+      "raw_source_hits": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 122,
+      "nontrivial": false,
+      "raw_source_hits": [
+        608,
+        608
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 137,
+      "nontrivial": true,
+      "raw_source_hits": [
+        1162,
+        1162,
+        1162,
+        1162
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 265,
+      "nontrivial": true,
+      "raw_source_hits": [
+        40,
+        40
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 315,
+      "nontrivial": true,
+      "raw_source_hits": [
+        19,
+        19,
+        19,
+        19,
+        19,
+        19,
+        19,
+        19
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 243,
+      "nontrivial": false,
+      "raw_source_hits": [
+        1032,
+        1032
+      ],
+      "all_hit": true
+    },
+    {
+      "eclass": 276,
+      "nontrivial": false,
+      "raw_source_hits": [
+        126,
+        126
+      ],
+      "all_hit": true
+    }
+  ],
+  "delivery_complete": true,
+  "verification_complete": false,
+  "checker_author": "unchanged claude-opus-5-5 v4; no GPT expected-output logic"
+}

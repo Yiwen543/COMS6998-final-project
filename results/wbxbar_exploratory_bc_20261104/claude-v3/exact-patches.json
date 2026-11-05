@@ -1,0 +1,30 @@
+{
+  "patches": [
+    {
+      "file": "checker.py",
+      "before": "    mq=[[],[]]\n    sq=[[],[]]\n    amb=False\n    prev=None\n    seen_reset=False",
+      "after": "    mq=[[],[]]\n    sq=[[],[]]\n    ab=[[],[]]\n    amb=False\n    prev=None\n    seen_reset=False"
+    },
+    {
+      "file": "checker.py",
+      "before": "            mq=[[],[]]\n            sq=[[],[]]\n            amb=False\n            prev=None\n            for k in ('o_scyc','o_sstb'):",
+      "after": "            mq=[[],[]]\n            sq=[[],[]]\n            ab=[[],[]]\n            amb=False\n            prev=None\n            for k in ('o_scyc','o_sstb'):"
+    },
+    {
+      "file": "checker.py",
+      "before": "                if mq[m]:\n                    for e in mq[m]:\n                        e['st']='aborted'",
+      "after": "                if mq[m]:\n                    ab[m].extend([e for e in mq[m] if e['st']=='new' and e['sl'] is not None])\n                    for e in mq[m]:\n                        e['st']='aborted'"
+    },
+    {
+      "file": "checker.py",
+      "before": "                if not cands:\n                    fail(c,'routing_payload',",
+      "after": "                tc=[]\n                for m in (0,1):\n                    h=None\n                    for e in ab[m]:\n                        if e['sl']==s:\n                            h=e\n                            break\n                    if h is not None and h['we']==we and h['a']==a and h['sel']==sel and ((not we) or _weq(h['d'],d,sel)):\n                        tc.append((m,h))\n                if len(cands)+len(tc)>1:\n                    amb=True\n                    unresolved.append({'cycle':c,'item':'ownership_ambiguous','detail':'slave %d request matches multiple live/aborted owners; ownership/data checks suspended until reset'%s})\n                    sq[s].append({'own':None})\n                elif not cands and tc:\n                    m,h=tc[0]\n                    ab[m].remove(h)\n                    cnt['post_abort_forward']+=1\n                    unresolved.append({'cycle':c,'item':'post_abort_forward','detail':'slave %d accepted m%d request accepted@%d, aborted (CYC withdrawn) before forwarding, forwarded@%d; abort-propagation status not established by public spec; return discarded, never counted as completion; persists for batch'%(s,m,h['acc'],c)})\n                    sq[s].append({'own':None})\n                elif not cands:\n                    fail(c,'routing_payload',"
+    }
+  ],
+  "rationale": [
+    "Unforwarded mapped requests withdrawn by master CYC drop are retained per master as abort tombstones; reset clears them, while emitted unresolved findings persist in the cumulative batch.",
+    "A slave acceptance matching no live work but exactly the oldest same-slave tombstone of one master (WE/addr/SEL exact, write data on SEL-enabled lanes) is unresolved post_abort_forward with acceptance and forward cycles; the identity is consumed once and its slave return is discarded as orphan (own=None), never counted as completion.",
+    "No cycle cutoff is applied: late matching forwards are likewise unresolved. Corrupted payload, duplicate forwards and post-reset forwards match nothing and remain routing_payload failures. Multiple live/aborted candidate owners become ownership_ambiguous unresolved rather than guessed.",
+    "Prior ERR, byte-mask, hold, and response checks are unchanged. Selftests and docs are left as before in this patch set to keep the edit narrow; the integration role should add the requested synthetic cases (matching, corrupted, late, reset-separated, duplicate) \u2014 disclosed limitation."
+  ]
+}

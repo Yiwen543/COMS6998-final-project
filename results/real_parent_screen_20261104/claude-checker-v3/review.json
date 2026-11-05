@@ -1,0 +1,74 @@
+{
+  "ready_for_offline_gate": false,
+  "summary": "Not ready. Payload, byte-order, CPOL idle-setup, CSID pending-offer and hardware-reset handling look sound for the supplied traces. However, the TX starvation and RX backpressure event detectors can credit episodes in which no stall occurred. Several declared capabilities also lack trace-level negative controls. This is finite offline review only, not formal proof. B is not authorized by this review.",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "area": "tx_starvation_resume event false positive",
+      "detail": "A starvation episode opens on any row where all fetched bytes are fully sampled and peek() finds no enabled byte. It resolves as soon as a refill word supplies the next byte. Nothing requires evidence that the operation actually stalled: no tx_stall assertion, no SCK gap longer than the configured half period, and no postponed edge. Suppose a word arrives in the normal inter-byte gap before the next sampling edge would be due. The checker still records a tx_starvation_resume pass even though nothing stalled. That does not meet the requested definition ('missing input word stalls an in-flight TX operation'). The calibration (cycles 74->128) and hand (cycles 143->156) episodes may well be real, but the detector cannot distinguish them from benign gaps."
+    },
+    {
+      "id": "F2",
+      "severity": "blocker",
+      "area": "rx_backpressure_resume event false positive",
+      "detail": "bpt is set by a single row with rx_valid & !rx_ready while an RX segment is in flight. A one-cycle delayed drain therefore qualifies, even when the byte-merge/shift path never filled and SCK never paused. The requested event requires 'real in-flight RX backpressure'. The trigger should require observable consequence, such as rx_stall or an SCK pause beyond the half period while rx_valid is held, or a word held across at least one further completed byte."
+    },
+    {
+      "id": "F3",
+      "severity": "blocker",
+      "area": "controls for event detectors",
+      "detail": "There is no negative or vacuity control for the event detectors themselves. No trace shows a late-but-not-stalling TX word that must NOT produce a starvation event. No trace shows a one-cycle rx_ready gap that must NOT produce a backpressure event. The exhausted-byte-enable starvation case exists only as a selftest, not as a resimulated DUT trace. Event pass counts therefore have no measured false-positive rate."
+    },
+    {
+      "id": "F4",
+      "severity": "major",
+      "area": "driver/checker field-width isolation",
+      "detail": "The driver silently truncates fields: csid[0], speed[1:0], length[19:0], clkdiv[15:0], idle/lead/trail[3:0], tx_be[3:0] and the 1-bit flags. The checker uses the raw integers. An out-of-range vector, such as csid=2, length>=2^20 or speed=7, would make the checker model a different command from the one the DUT received. Neither side rejects out-of-range values. One side, or both, should validate ranges, or the checker should apply identical masking."
+    },
+    {
+      "id": "F5",
+      "severity": "major",
+      "area": "software reset",
+      "detail": "The software-reset abort/restart is labelled only pass_unresolved, and the checker notes that disposition of partially shifted data is unspecified. The requested reset_abort_restart event asks to distinguish hardware from software reset. Only the hardware variant has a supported positive control (followup/hardware_abort_restart) and a negative control (hardware_reset_select). No software-reset negative exists, such as stale TX bytes or a stale RX word after SW_RST release. During SW_RST, transitions are processed as 'quiet', so CSB/SCK misbehaviour inside the reset window is never judged."
+    },
+    {
+      "id": "F6",
+      "severity": "major",
+      "area": "partial_word_then_next_transaction coverage",
+      "detail": "Only the csid_change variant has a real trace (calibration/partial_then_csid_switch). The held_cs variant (CSAAT, same CSID and config) has no DUT trace. CSAAT-related checks exist only as selftests: illegal release without a change, permitted release on a pending CSID offer, and rejection of a valid=0 offer. There is no resimulated negative for a premature CSB rise after CSAAT, or for CSNTRAIL/CSNIDLE violations on a CSID switch."
+    },
+    {
+      "id": "F7",
+      "severity": "minor",
+      "area": "CPOL idle handling",
+      "detail": "The idle-setup filter accepts an SCK change only toward the queue-head segment's CPOL level while all CSB lines are idle. A change away from that level, or a change with an empty queue, fails as spurious_sck. That is reasonable. hand/wrong_cpol1_payload confirms that payload checks are not suppressed. However, no trace-level negative exists for SCK resting at the wrong idle level at CSB assertion (the 'cpol' failure path). There is also no case where a stably offered but not-yet-accepted command with a different CPOL precedes the toggle, which the checker would currently flag as spurious. That disposition is unverified against the specification."
+    },
+    {
+      "id": "F8",
+      "severity": "minor",
+      "area": "byte/bit counts and byte order",
+      "detail": "The edge total 2*n*8/w, the lane-ascending fetch with byte-enable skipping, the end-of-segment flush, RX packing with low lanes first and high-lane zero padding, and the Standard SD[0]/SD[1] mapping all match the registered amendment's examples (212,195,178,161 / 212,178 / 0x003C5AA5). reversed_rx_lanes, high_padding_nonzero and write_sparse exercise them. Two items are unspecified and untested: a word accepted with tx_be=0 (silently skipped), and the Dual/Quad lane-significance assumption. The superseded text in paragraphs 698-702 and 735-740 is correctly retained as historical only."
+    },
+    {
+      "id": "F9",
+      "severity": "minor",
+      "area": "RX sampling ambiguity",
+      "detail": "probe/read_asymmetric_full0 resolves conservatively as unresolved, and the corrected probe/read_full0_aligned passes. This is acceptable as an ambiguity control, not a false alarm. The window row..row+1 is conservative for FULLCYC=0 and may hide marginal sampling-time faults."
+    },
+    {
+      "id": "F10",
+      "severity": "info",
+      "area": "driver",
+      "detail": "Timing matches the stated protocol: inputs change at the start of the cycle, pre is sampled 4 ns later, the rising clock edge follows 1 ns after that, post is sampled 4 ns later, then the falling edge. The driver contains no expected values and no hierarchical drives. An initial 1 ns settle precedes the first reset row, with no extra clock edge."
+    }
+  ],
+  "limitations": [
+    "Finite offline trace review of the supplied packet only; no formal proof, no four-state analysis and no TLUL/top-level verification.",
+    "The DUT RTL was not inspected. Observed traces were not presumed correct, and the selftests were not treated as checker validation.",
+    "The byte-order contract rests on a registered project interpretation, not an upstream erratum.",
+    "Only minimum timing bounds are checked; there are no exact-cycle or liveness deadlines.",
+    "Dummy segments, speed 3 and Dual/Quad bidirectional segments are out of checked scope.",
+    "Event results are not coverage or equivalence evidence. B/C effectiveness was not assessed and B is not authorized by this review."
+  ]
+}

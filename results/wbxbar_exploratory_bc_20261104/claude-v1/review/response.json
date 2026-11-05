@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 64400,
+  "stop_reason": "end_turn",
+  "session_id": "0bf1ec91-2f5e-45eb-958c-af23f78a174f",
+  "total_cost_usd": 0.441046,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 64510,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 5924,
+    "output_tokens_details": {
+      "thinking_tokens": 2971
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 64510
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 5924,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 64510,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 64510,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 5924,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 64510,
+      "webSearchRequests": 0,
+      "costUSD": 0.441046,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 2971,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\n  \"ready_for_offline_gate\": false,\n  \"summary\": \"The checker is structurally sound for routing, payload and SEL preservation, per-master ordering, read data, slave-ERR propagation and pending accounting. Its pin-level controls are mostly legal and isolate real requirements. One blocking gap remains. Timeout/starvation ERR is accepted unconditionally for any mapped request without a slave ACK, and the trace still gets a scoped_pass. A DUT that answers every mapped request with an immediate ERR, never forwarding, would therefore pass. This verdict covers checker adequacy only. It is not a live-run freeze, does not cover the pending driver, and is not a formal proof.\",\n  \"findings\": [\n    {\n      \"id\": \"F1\",\n      \"severity\": \"blocking\",\n      \"topic\": \"Permissive timeout/starvation ERR yields scoped_pass\",\n      \"detail\": \"The control negative/early_unexplained_error returns scoped_pass. It is a mapped request on an idle fabric with a single master, so there is no contention. ERR arrives one cycle after acceptance, with no slave ERR. The response branch labels any non-sacked entry 'timeout_or_starvation_err' with no eligibility condition. The wbxbar.v header (lines 32-39) ties the bus error to OPT_TIMEOUT: a slave failing to respond within a number of clock periods (16 here), or a master waiting for arbitration that long under OPT_STARVATION_TIMEOUT. The crossbar article ties ERR to nonexistent addresses. No documented mechanism explains a mapped-address ERR after one cycle with no slave ERR and no competing master. The control is therefore justified. Enforcing it does not require an exact implementation counter. Contract.md and P9 do disclose the exclusion. However, the scoped_pass label overstates coverage of the 'no invented response' and 'unmapped/slave-error/timeout scope justified' obligations.\",\n      \"recommended_disposition\": \"Pick one of two minimal changes and re-run the controls. (a) Downgrade any timeout_or_starvation_err retirement to an unresolved item, so the trace can never reach scoped_pass. (b) Fail ERR on a mapped request with no slave ERR when two conditions hold: the request has waited well under OPT_TIMEOUT cycles since acceptance, and the other master held no CYC during that time. Option (b) is a conservative lower bound, not an exact counter. Do not alter the control.\"\n    },\n    {\n      \"id\": \"F2\",\n      \"severity\": \"non-blocking (control mislabeled)\",\n      \"topic\": \"Stale ACK while master CYC=0\",\n      \"detail\": \"negative/stale_after_reset injects o_mack while i_mcyc=0, and the checker ignores it per the contract. Under WB B4 3.1.2 (rules 3.25/3.30), CYC qualifies bus activity, so an unqualified response while CYC is low is not attributable to any transaction. Ignoring it is an acceptable declared exclusion, and the control should not be counted as an expected detection. The harmful case is a stale ACK landing on a new accepted transaction. That case is detected by negative/stale_into_new_epoch, which reports a 'response' failure at cycle 16 and an invented_response at cycle 20.\",\n      \"recommended_disposition\": \"Reclassify the control as a declared-exclusion or informational case. Optionally emit a descriptive note for responses while CYC is low. No change to the checker's functional verdict is required.\"\n    },\n    {\n      \"id\": \"F3\",\n      \"severity\": \"ok\",\n      \"topic\": \"Ambiguity escape\",\n      \"detail\": \"Identical concurrent heads set amb=True and append an unresolved entry before anything else. While amb is set, invented, unsolicited and retirement checks are skipped, and completion events are suppressed. The unresolved entry persists, so the verdict cannot reach scoped_pass. Assumption violations still dominate. One residual path remains: a decode or timeout ERR before ambiguity arises still passes, because of F1.\"\n    },\n    {\n      \"id\": \"F4\",\n      \"severity\": \"ok/minor\",\n      \"topic\": \"Reset and abort epochs\",\n      \"detail\": \"A reset row clears both queues and checks post-edge o_scyc/o_sstb. A stale slave ACK after reset is classified as an environment violation, which matches the contract's cancellation rule. When a master drops CYC, its entries are marked aborted. A later slave response to aborted work is discarded as an orphan and cannot retire new work. Gaps: o_mack/o_merr are not checked inactive after the reset edge. The 'reset held for at least one full cycle' rule is not checked. The checker does not require the DUT to eventually withdraw o_scyc after a master abort or timeout. These are acceptable only as documented exclusions.\"\n    },\n    {\n      \"id\": \"F5\",\n      \"severity\": \"minor\",\n      \"topic\": \"Same-edge ordering\",\n      \"detail\": \"Accepts are appended before responses are popped, so an accept and an earlier response on the same edge retire the correct oldest entry; positive/accept_and_return confirms this. A slave ACK on its own acceptance edge, or a master ACK on the acceptance edge with an empty queue, is attributed to the brand-new entry. On the master side this correctly fails, because the entry state is 'new'. On the slave side a zero-latency slave would be credited rather than flagged. That is an environment-side looseness, not a DUT false negative.\"\n    },\n    {\n      \"id\": \"F6\",\n      \"severity\": \"minor (false-positive risk)\",\n      \"topic\": \"Write data compared under masked bytes\",\n      \"detail\": \"Full 32-bit write data is compared even when SEL bytes are deasserted. WB B4 does not require masked byte lanes to be preserved. This is low risk for this DUT configuration, but it could produce a spec-unsupported failure.\",\n      \"recommended_disposition\": \"Document this as a stricter-than-spec choice, or compare only the SEL-enabled lanes.\"\n    },\n    {\n      \"id\": \"F7\",\n      \"severity\": \"ok\",\n      \"topic\": \"Event false positives\",\n      \"detail\": \"Events inside any failure or assumption window are dropped, and all events are dropped if a failure has no cycle. Completion events require a slave ACK attributed to the same entry. Remaining concern: the 'timeout_or_starvation_err' events label unexplained errors as legitimate mechanisms (see F1). Reset events are purely descriptive.\"\n    },\n    {\n      \"id\": \"F8\",\n      \"severity\": \"advisory\",\n      \"topic\": \"Control legality and isolation\",\n      \"detail\": \"The positive traces respect pipelined acceptance and response-order assumptions. Each single-fault negative changes one public-pin aspect relative to a clean baseline. Some negatives produce two failures (for example routing_payload plus a cascaded response failure), which is acceptable. invalid/master_changes_stalled_payload correctly yields input_or_scope_invalid. The 44 clean DUT traces are observations, not golden references.\"\n    },\n    {\n      \"id\": \"F9\",\n      \"severity\": \"advisory\",\n      \"topic\": \"Additional independent controls needed\",\n      \"detail\": \"Controls still needed: (1) A master CYC abort with forwarded work outstanding, followed by a late slave ACK and then a new transaction on the same master, checking the orphan is not credited. (2) A DUT-side stalled slave request that changes payload or drops STB (P8 negative). (3) o_mack and o_merr coinciding. (4) An identical-request ambiguity case, expecting unresolved. (5) A decode-error request interleaved between mapped requests on one master, checking ordering. (6) A slave ERR mid-burst followed by further accepted requests and restart. (7) Contention from two masters to one slave, including a starvation-window case. (8) A master ACK/ERR asserted during or immediately after reset. (9) A partial-SEL write with differing masked bytes (F6). (10) Pending items at batch end with both master-side and slave-side obligations.\"\n    }\n  ],\n  \"limitations\": [\n    \"This is a read-only review of the supplied packet; no code was executed and no artifacts were modified.\",\n    \"This is not a formal proof. Ten clean hand positives and 44 clean DUT traces do not establish whole-IP correctness, target reachability, or live B/C comparability.\",\n    \"Exact arbitration, pipeline and timeout latencies are not established by the cited authority. Any timing bound proposed in F1 is a conservative lower bound, not an implementation counter.\",\n    \"The final experimental driver is pending and is out of scope. Readiness here concerns the checker only.\",\n    \"Only 8 of the 44 DUT traces were shown in full. The others were assessed through their reported diagnostics.\"\n  ]\n}\n```",
+  "ttft_ms": 35932,
+  "type": "result",
+  "duration_ms": 64472,
+  "uuid": "cf1470d7-71f7-4844-afe0-3c3c1328da36",
+  "ttft_stream_ms": 3079,
+  "time_to_request_ms": 67,
+  "first_content_frame_ms": 3079,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 5924,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 64510,
+      "webSearchRequests": 0,
+      "costUSD": 0.441046,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 2971,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

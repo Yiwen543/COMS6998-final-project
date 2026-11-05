@@ -1,0 +1,147 @@
+{
+  "selftests": [
+    {
+      "name": "std_tx_good_passes",
+      "pass": true
+    },
+    {
+      "name": "std_tx_bitflip_fails",
+      "pass": true
+    },
+    {
+      "name": "cs_rise_midsegment_fails",
+      "pass": true
+    },
+    {
+      "name": "csnlead_violation_fails",
+      "pass": true
+    },
+    {
+      "name": "withdrawn_command_is_assumption_violation",
+      "pass": true
+    },
+    {
+      "name": "std_rx_partial_word_passes",
+      "pass": true
+    },
+    {
+      "name": "rx_nonzero_padding_fails",
+      "pass": true
+    },
+    {
+      "name": "rx_wrong_byte_fails",
+      "pass": true
+    },
+    {
+      "name": "dummy_segment_scope_unresolved",
+      "pass": true
+    },
+    {
+      "name": "csaat_rise_without_change_fails",
+      "pass": true
+    },
+    {
+      "name": "csaat_rise_pending_csid_change_ok",
+      "pass": true
+    },
+    {
+      "name": "csaat_rise_invalid_offer_fails",
+      "pass": true
+    },
+    {
+      "name": "truncated_trace_inconclusive",
+      "pass": true
+    },
+    {
+      "name": "cpol1_idle_setup_good_passes",
+      "pass": true
+    },
+    {
+      "name": "cpol1_idle_setup_bad_payload_fails",
+      "pass": true
+    },
+    {
+      "name": "starvation_exhausted_be_postponed_trailing_early_refill_passes",
+      "pass": true
+    },
+    {
+      "name": "starvation_truncated_pending",
+      "pass": true
+    },
+    {
+      "name": "starvation_dirty_resume_fails",
+      "pass": true
+    },
+    {
+      "name": "spurious_sck_fails",
+      "pass": true
+    },
+    {
+      "name": "late_nonstalling_refill_div2_no_starvation_event",
+      "pass": true
+    },
+    {
+      "name": "brief_rx_hold_no_pause_no_event",
+      "pass": true
+    },
+    {
+      "name": "flag_only_fake_recovery_no_event",
+      "pass": true
+    },
+    {
+      "name": "true_rx_backpressure_pause_resume_passes",
+      "pass": true
+    },
+    {
+      "name": "true_rx_backpressure_truncated_pending",
+      "pass": true
+    }
+  ],
+  "cases": {
+    "batch": {
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "pass",
+          "start_cycle": 26,
+          "end_cycle": 144,
+          "evidence": "csid_change: segment 1 (5 bytes) then segment 2"
+        },
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "pass",
+          "start_cycle": 60,
+          "end_cycle": 171,
+          "evidence": "csid_change: segment 2 (1 bytes) then segment 3"
+        },
+        {
+          "family": "rx_backpressure_resume",
+          "kind": "pass",
+          "start_cycle": 104,
+          "end_cycle": 171,
+          "evidence": "segment 3 RX word held (rx_valid & !rx_ready) mid-segment from 107; selected SCK edge overdue while held at 115"
+        }
+      ],
+      "unresolved": [
+        "segment 5 accepted but not started at end of trace"
+      ],
+      "verdict": "inconclusive",
+      "counts": {
+        "rows": 216,
+        "tx_words_accepted": 3,
+        "rx_words_observed": 5,
+        "commands_accepted": 6,
+        "segments_completed": 5,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 1,
+        "events_pass": 3,
+        "events_fail": 0,
+        "events_pending": 0
+      }
+    }
+  },
+  "errors": []
+}

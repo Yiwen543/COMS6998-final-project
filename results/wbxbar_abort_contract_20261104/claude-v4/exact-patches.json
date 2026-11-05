@@ -1,0 +1,52 @@
+{
+  "patches": [
+    {
+      "file": "checker.py",
+      "before": "                        e['st']='aborted'\n",
+      "after": "                        e['st']='aborted'\n                        e['abc']=c\n"
+    },
+    {
+      "file": "checker.py",
+      "before": "                tc=[]\n                for m in (0,1):\n                    h=None\n                    for e in ab[m]:\n                        if e['sl']==s:\n                            h=e\n                            break\n                    if h is not None and h['we']==we and h['a']==a and h['sel']==sel and ((not we) or _weq(h['d'],d,sel)):\n                        tc.append((m,h))",
+      "after": "                tc=[]\n                for m in (0,1):\n                    # Any unconsumed aborted entry of this master for this slave may explain the forward:\n                    # public sources do not define which buffered entries survive partial cancellation.\n                    # Identity = slave, WE, full address, full SEL, write data on SEL-enabled lanes.\n                    hs=[e for e in ab[m] if e['sl']==s and e['we']==we and e['a']==a and e['sel']==sel and ((not we) or _weq(e['d'],d,sel))]\n                    if hs:\n                        older=0\n                        for e in ab[m]:\n                            if e is hs[0]:\n                                break\n                            if e['sl']==s:\n                                older+=1\n                        tc.append((m,hs[0],len(hs),older))"
+    },
+    {
+      "file": "checker.py",
+      "before": "                    m,h=tc[0]\n                    ab[m].remove(h)\n                    cnt['post_abort_forward']+=1\n                    unresolved.append({'cycle':c,'item':'post_abort_forward','detail':'slave %d accepted m%d request accepted@%d, aborted (CYC withdrawn) before forwarding, forwarded@%d; abort-propagation status not established by public spec; return discarded, never counted as completion; persists for batch'%(s,m,h['acc'],c)})",
+      "after": "                    m,h,nm,older=tc[0]\n                    ab[m].remove(h)\n                    cnt['post_abort_forward']+=1\n                    unresolved.append({'cycle':c,'item':'post_abort_forward','detail':'slave %d accepted m%d request accepted@%d, aborted@%d (CYC withdrawn) before forwarding, forwarded@%d; %d older aborted entries for this slave not (yet) seen downstream; %d identical aborted candidates (one consumed, each aborted entry explains at most one forward); abort-propagation status not established by public spec; return discarded, never counted as completion or recovery; persists for batch'%(s,m,h['acc'],h.get('abc',-1),c,older,nm)})"
+    },
+    {
+      "file": "selftest.py",
+      "before": "def run(check_rows):",
+      "after": "def _abort_fwd(fwd,bad=None):\n    rows=_base()\n    rows.append(_row(2,i_mcyc=1,i_mstb=1,i_mwe=1,i_maddr=0x05,i_mdata=0x10,i_msel=0xF))\n    rows.append(_row(3,i_mcyc=1,i_mstb=1,i_mwe=1,i_maddr=0x06,i_mdata=0x11,i_msel=0xF))\n    rows.append(_row(4))\n    c=5\n    for a in fwd:\n        d=0x10+(a-5)\n        if bad is not None and a==bad:\n            d^=0x01\n        rows.append(_row(c,o_scyc=1,o_sstb=1,o_swe=1,o_saddr=a,o_sdata=d,o_ssel=0xF))\n        rows.append(_row(c+1,o_scyc=1,i_sack=1))\n        c+=2\n    rows.append(_row(c))\n    return rows\n\ndef run(check_rows):"
+    },
+    {
+      "file": "selftest.py",
+      "before": "        ('unsolicited_slave_ack_env',",
+      "after": "        ('abort_nonoldest_forward_unresolved',_abort_fwd([6]),'unresolved'),\n        ('abort_both_forward_unresolved',_abort_fwd([5,6]),'unresolved'),\n        ('abort_reverse_forward_unresolved',_abort_fwd([6,5]),'unresolved'),\n        ('abort_none_forwarded_pass',_abort_fwd([]),'scoped_pass'),\n        ('abort_enabled_byte_corrupt_fault',_abort_fwd([6],bad=6),'dut_violation'),\n        ('abort_double_consumption_fault',_abort_fwd([6,6]),'dut_violation'),\n        ('abort_then_reset_forward_fault',_abort_fwd([])[:5]+[_row(5,i_reset=1),_row(6,o_scyc=1,o_sstb=1,o_swe=1,o_saddr=6,o_sdata=0x11,o_ssel=0xF),_row(7,o_scyc=1,i_sack=1),_row(8)],'dut_violation'),\n        ('unsolicited_slave_ack_env',"
+    },
+    {
+      "file": "properties.json",
+      "before": "    \"requirement\": \"Master CYC drop or synchronous reset discards outstanding work; later slave responses to discarded work must not reach masters as completions.\",",
+      "after": "    \"requirement\": \"Master CYC drop or synchronous reset discards outstanding work; later slave responses to discarded work must not reach masters as completions, nor be counted as completion/recovery. Reset clears request identities (aborted candidates included), so a post-reset forward matching only pre-reset work is a violation; cumulative unresolved items persist across reset.\","
+    },
+    {
+      "file": "properties.json",
+      "before": "  {\n    \"id\": \"P11_exclusions\",",
+      "after": "  {\n    \"id\": \"P12_cancellation_attribution\",\n    \"requirement\": \"A slave-side request after master CYC withdrawal that matches (slave, WE, full address, full SEL, enabled-lane write data) ANY unconsumed aborted, never-forwarded request of the current reset epoch is unresolved (post_abort_forward) with accept/abort/forward cycles; it is not required to be the oldest aborted entry and its order among aborted entries is not judged. Each aborted entry explains at most one forward. A forward matching no live head and no aborted entry is a violation. Aborted work never seen downstream is legal. Matches to both a live head and an aborted entry, or to both masters, are ownership_ambiguous (unresolved; checks suspended until reset).\",\n    \"source\": \"WB B4 3.1.2, 3.1.3.2, rule 3.60; crossbar article abort prose (supplementary)\",\n    \"assumptions\": [\n      \"No public cancellation latency or survivor set; no grace period invented\"\n    ],\n    \"support_status\": \"checked for impossibility; matching residual forwards unresolved\"\n  },\n  {\n    \"id\": \"P11_exclusions\","
+    },
+    {
+      "file": "contract.md",
+      "before": "**Limitations:**",
+      "after": "**Normative scope (resolved):**\n- Authoritative (WB B4): synchronous reset and CYC/STB negation (3.1.1, rules 3.00/3.20); CYC qualifies activity, slaves ignore signals without CYC (3.1.2, rules 3.25/3.30); pipelined acceptance = CYC&STB&!STALL, WE selects direction (rules 3.57/3.58); ACK any time after initiation, read data valid with ACK (rule 3.59, 3.1.3.2, obs 3.10); ACK/ERR exclusive (rule 3.45); payload qualified by STB (rule 3.60); master reaction to ERR unspecified (perm 3.20).\n- Declared environment assumptions (packet environment_contract): master hold through stall, in-order non-unsolicited slaves, slave work canceled by CYC withdrawal/reset.\n- Inferred: decode ERR and per-master non-crossed ordering of live work (README 188-196, crossbar article); no attribution of completions across abort/reset epochs (article, supplementary).\n- Unknown: pipeline/cancellation latency, which buffered requests survive a partial cancellation, order of residual forwards, timeout/starvation edge counts.\n\n**Cancellation attribution:** after CYC withdrawal, a downstream request matching any unconsumed aborted request of that master (full identity, enabled-lane data) is unresolved post_abort_forward with accept/abort/forward cycles. The old 'oldest aborted entry only' rule had no normative basis and is withdrawn. Each aborted entry may explain one forward (multiplicity checked). Unmatched forwards remain violations; aborted work never forwarded is legal; canceled work is never counted as completion. Reset clears identities but not cumulative unresolved records. Live traffic ordering, payload, response and read-data checks are unchanged.\n\n**Limitations:**"
+    }
+  ],
+  "rationale": [
+    "Normative scope separated into authoritative WB B4 rules, packet environment assumptions, inferences from README/article, and unknowns (cancellation latency, survivor set, residual order).",
+    "Old oldest-aborted-entry requirement had no cited authority; partial cancellation can drop older buffered entries while a younger one is forwarded. Now any unconsumed aborted entry with full identity match yields unresolved, not pass and not violation. This makes the multi_abort/m0_s0_later_identity and accept_same_edge_err labels (unresolved) consistent with the spec; previously the checker flagged them as violations.",
+    "Provably illegal observations are kept: a forward matching neither a live head nor any aborted entry (fault/aborted_enabled_byte differs on enabled lane 0), double consumption of one aborted entry, and a post-reset forward matching only pre-reset work.",
+    "Evidence trail records accept, abort and forward cycles, older unseen aborted entries, and identical candidate count. Within-master identical aborted entries are not ambiguity, since no verdict depends on which one is consumed; cross-master or live/aborted ties remain ownership_ambiguous.",
+    "Live ordering (fault/live_order_swap), enabled-byte SEL comparison, read data, and unexplained mapped ERR handling are untouched. ab is cleared on reset while unresolved records persist.",
+    "Selftests added for non-oldest, reverse, and none-forwarded cancellation, enabled-byte corruption, double consumption, and reset epoch. Properties P6 and P12 and the contract were updated to match executable semantics."
+  ]
+}

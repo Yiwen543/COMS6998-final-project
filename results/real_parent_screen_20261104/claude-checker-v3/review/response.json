@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 67412,
+  "stop_reason": "end_turn",
+  "session_id": "26fdd729-8cd6-47a7-ac15-476576b5e29e",
+  "total_cost_usd": 0.49203600000000003,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 73372,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 6258,
+    "output_tokens_details": {
+      "thinking_tokens": 3601
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 73372
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 6258,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 73372,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 73372,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 6258,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 73372,
+      "webSearchRequests": 0,
+      "costUSD": 0.49203600000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 3601,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\n  \"ready_for_offline_gate\": false,\n  \"summary\": \"Not ready. Payload, byte-order, CPOL idle-setup, CSID pending-offer and hardware-reset handling look sound for the supplied traces. However, the TX starvation and RX backpressure event detectors can credit episodes in which no stall occurred. Several declared capabilities also lack trace-level negative controls. This is finite offline review only, not formal proof. B is not authorized by this review.\",\n  \"findings\": [\n    {\n      \"id\": \"F1\",\n      \"severity\": \"blocker\",\n      \"area\": \"tx_starvation_resume event false positive\",\n      \"detail\": \"A starvation episode opens on any row where all fetched bytes are fully sampled and peek() finds no enabled byte. It resolves as soon as a refill word supplies the next byte. Nothing requires evidence that the operation actually stalled: no tx_stall assertion, no SCK gap longer than the configured half period, and no postponed edge. Suppose a word arrives in the normal inter-byte gap before the next sampling edge would be due. The checker still records a tx_starvation_resume pass even though nothing stalled. That does not meet the requested definition ('missing input word stalls an in-flight TX operation'). The calibration (cycles 74->128) and hand (cycles 143->156) episodes may well be real, but the detector cannot distinguish them from benign gaps.\"\n    },\n    {\n      \"id\": \"F2\",\n      \"severity\": \"blocker\",\n      \"area\": \"rx_backpressure_resume event false positive\",\n      \"detail\": \"bpt is set by a single row with rx_valid & !rx_ready while an RX segment is in flight. A one-cycle delayed drain therefore qualifies, even when the byte-merge/shift path never filled and SCK never paused. The requested event requires 'real in-flight RX backpressure'. The trigger should require observable consequence, such as rx_stall or an SCK pause beyond the half period while rx_valid is held, or a word held across at least one further completed byte.\"\n    },\n    {\n      \"id\": \"F3\",\n      \"severity\": \"blocker\",\n      \"area\": \"controls for event detectors\",\n      \"detail\": \"There is no negative or vacuity control for the event detectors themselves. No trace shows a late-but-not-stalling TX word that must NOT produce a starvation event. No trace shows a one-cycle rx_ready gap that must NOT produce a backpressure event. The exhausted-byte-enable starvation case exists only as a selftest, not as a resimulated DUT trace. Event pass counts therefore have no measured false-positive rate.\"\n    },\n    {\n      \"id\": \"F4\",\n      \"severity\": \"major\",\n      \"area\": \"driver/checker field-width isolation\",\n      \"detail\": \"The driver silently truncates fields: csid[0], speed[1:0], length[19:0], clkdiv[15:0], idle/lead/trail[3:0], tx_be[3:0] and the 1-bit flags. The checker uses the raw integers. An out-of-range vector, such as csid=2, length>=2^20 or speed=7, would make the checker model a different command from the one the DUT received. Neither side rejects out-of-range values. One side, or both, should validate ranges, or the checker should apply identical masking.\"\n    },\n    {\n      \"id\": \"F5\",\n      \"severity\": \"major\",\n      \"area\": \"software reset\",\n      \"detail\": \"The software-reset abort/restart is labelled only pass_unresolved, and the checker notes that disposition of partially shifted data is unspecified. The requested reset_abort_restart event asks to distinguish hardware from software reset. Only the hardware variant has a supported positive control (followup/hardware_abort_restart) and a negative control (hardware_reset_select). No software-reset negative exists, such as stale TX bytes or a stale RX word after SW_RST release. During SW_RST, transitions are processed as 'quiet', so CSB/SCK misbehaviour inside the reset window is never judged.\"\n    },\n    {\n      \"id\": \"F6\",\n      \"severity\": \"major\",\n      \"area\": \"partial_word_then_next_transaction coverage\",\n      \"detail\": \"Only the csid_change variant has a real trace (calibration/partial_then_csid_switch). The held_cs variant (CSAAT, same CSID and config) has no DUT trace. CSAAT-related checks exist only as selftests: illegal release without a change, permitted release on a pending CSID offer, and rejection of a valid=0 offer. There is no resimulated negative for a premature CSB rise after CSAAT, or for CSNTRAIL/CSNIDLE violations on a CSID switch.\"\n    },\n    {\n      \"id\": \"F7\",\n      \"severity\": \"minor\",\n      \"area\": \"CPOL idle handling\",\n      \"detail\": \"The idle-setup filter accepts an SCK change only toward the queue-head segment's CPOL level while all CSB lines are idle. A change away from that level, or a change with an empty queue, fails as spurious_sck. That is reasonable. hand/wrong_cpol1_payload confirms that payload checks are not suppressed. However, no trace-level negative exists for SCK resting at the wrong idle level at CSB assertion (the 'cpol' failure path). There is also no case where a stably offered but not-yet-accepted command with a different CPOL precedes the toggle, which the checker would currently flag as spurious. That disposition is unverified against the specification.\"\n    },\n    {\n      \"id\": \"F8\",\n      \"severity\": \"minor\",\n      \"area\": \"byte/bit counts and byte order\",\n      \"detail\": \"The edge total 2*n*8/w, the lane-ascending fetch with byte-enable skipping, the end-of-segment flush, RX packing with low lanes first and high-lane zero padding, and the Standard SD[0]/SD[1] mapping all match the registered amendment's examples (212,195,178,161 / 212,178 / 0x003C5AA5). reversed_rx_lanes, high_padding_nonzero and write_sparse exercise them. Two items are unspecified and untested: a word accepted with tx_be=0 (silently skipped), and the Dual/Quad lane-significance assumption. The superseded text in paragraphs 698-702 and 735-740 is correctly retained as historical only.\"\n    },\n    {\n      \"id\": \"F9\",\n      \"severity\": \"minor\",\n      \"area\": \"RX sampling ambiguity\",\n      \"detail\": \"probe/read_asymmetric_full0 resolves conservatively as unresolved, and the corrected probe/read_full0_aligned passes. This is acceptable as an ambiguity control, not a false alarm. The window row..row+1 is conservative for FULLCYC=0 and may hide marginal sampling-time faults.\"\n    },\n    {\n      \"id\": \"F10\",\n      \"severity\": \"info\",\n      \"area\": \"driver\",\n      \"detail\": \"Timing matches the stated protocol: inputs change at the start of the cycle, pre is sampled 4 ns later, the rising clock edge follows 1 ns after that, post is sampled 4 ns later, then the falling edge. The driver contains no expected values and no hierarchical drives. An initial 1 ns settle precedes the first reset row, with no extra clock edge.\"\n    }\n  ],\n  \"limitations\": [\n    \"Finite offline trace review of the supplied packet only; no formal proof, no four-state analysis and no TLUL/top-level verification.\",\n    \"The DUT RTL was not inspected. Observed traces were not presumed correct, and the selftests were not treated as checker validation.\",\n    \"The byte-order contract rests on a registered project interpretation, not an upstream erratum.\",\n    \"Only minimum timing bounds are checked; there are no exact-cycle or liveness deadlines.\",\n    \"Dummy segments, speed 3 and Dual/Quad bidirectional segments are out of checked scope.\",\n    \"Event results are not coverage or equivalence evidence. B/C effectiveness was not assessed and B is not authorized by this review.\"\n  ]\n}\n```",
+  "ttft_ms": 42791,
+  "type": "result",
+  "duration_ms": 67510,
+  "uuid": "16a5375b-a96c-498e-8f68-c01e70056930",
+  "ttft_stream_ms": 3133,
+  "time_to_request_ms": 91,
+  "first_content_frame_ms": 3133,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 6258,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 73372,
+      "webSearchRequests": 0,
+      "costUSD": 0.49203600000000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 3601,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

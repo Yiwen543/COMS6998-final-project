@@ -1,0 +1,1638 @@
+{
+  "status": "evaluated_not_frozen",
+  "checker_author": "claude-opus-5-5",
+  "controls_author": "GPT/Codex",
+  "B_allowed": false,
+  "selftests": [
+    {
+      "name": "std_tx_good_passes",
+      "pass": true
+    },
+    {
+      "name": "std_tx_bitflip_fails",
+      "pass": true
+    },
+    {
+      "name": "cs_rise_midsegment_fails",
+      "pass": true
+    },
+    {
+      "name": "csnlead_violation_fails",
+      "pass": true
+    },
+    {
+      "name": "withdrawn_command_is_assumption_violation",
+      "pass": true
+    },
+    {
+      "name": "std_rx_partial_word_passes",
+      "pass": true
+    },
+    {
+      "name": "rx_nonzero_padding_fails",
+      "pass": true
+    },
+    {
+      "name": "rx_wrong_byte_fails",
+      "pass": true
+    },
+    {
+      "name": "dummy_segment_blocked",
+      "pass": true
+    },
+    {
+      "name": "truncated_trace_inconclusive",
+      "pass": true
+    },
+    {
+      "name": "spurious_sck_fails",
+      "pass": true
+    }
+  ],
+  "worker_errors": [],
+  "controls": [
+    {
+      "name": "reference/write_one",
+      "kind": "independent_positive",
+      "expected": "no failures/assumption violations; pending or unresolved disclosed separately",
+      "authority": "Public theory_of_operation.md mode0 lines 24-42; timing 249-277; byte order/packing 685-740",
+      "verdict": "pass",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "no_false_alarm": true,
+      "scoped_pass": true
+    },
+    {
+      "name": "reference/write_two",
+      "kind": "independent_positive",
+      "expected": "no failures/assumption violations; pending or unresolved disclosed separately",
+      "authority": "Public theory_of_operation.md mode0 lines 24-42; timing 249-277; byte order/packing 685-740",
+      "verdict": "pass",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "no_false_alarm": true,
+      "scoped_pass": true
+    },
+    {
+      "name": "reference/read_one",
+      "kind": "independent_positive",
+      "expected": "no failures/assumption violations; pending or unresolved disclosed separately",
+      "authority": "Public theory_of_operation.md mode0 lines 24-42; timing 249-277; byte order/packing 685-740",
+      "verdict": "pass",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "no_false_alarm": true,
+      "scoped_pass": true
+    },
+    {
+      "name": "reference/read_partial_three",
+      "kind": "independent_positive",
+      "expected": "no failures/assumption violations; pending or unresolved disclosed separately",
+      "authority": "Public theory_of_operation.md mode0 lines 24-42; timing 249-277; byte order/packing 685-740",
+      "verdict": "pass",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "no_false_alarm": true,
+      "scoped_pass": true
+    },
+    {
+      "name": "negative/wrong_tx_sampled_bit",
+      "kind": "single_fault",
+      "baseline": "reference/write_one",
+      "expected": "DUT violation",
+      "changes": [
+        {
+          "cycle": 11,
+          "side": "post",
+          "field": "sd",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "cycle": 12,
+          "side": "pre",
+          "field": "sd",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "cycle": 12,
+          "side": "post",
+          "field": "sd",
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim.",
+      "verdict": "fail",
+      "failure_count": 1,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": true,
+      "credited_detection": true
+    },
+    {
+      "name": "negative/wrong_rx_byte",
+      "kind": "single_fault",
+      "baseline": "reference/read_one",
+      "expected": "DUT violation",
+      "changes": [
+        {
+          "cycle": 29,
+          "side": "pre",
+          "field": "rx_data",
+          "before": 2768240640,
+          "after": 2751463424
+        }
+      ],
+      "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim.",
+      "verdict": "fail",
+      "failure_count": 1,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": true,
+      "credited_detection": true
+    },
+    {
+      "name": "negative/wrong_partial_padding",
+      "kind": "single_fault",
+      "baseline": "reference/read_partial_three",
+      "expected": "DUT violation",
+      "changes": [
+        {
+          "cycle": 61,
+          "side": "pre",
+          "field": "rx_data",
+          "before": 2774200320,
+          "after": 2774200321
+        }
+      ],
+      "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim.",
+      "verdict": "fail",
+      "failure_count": 1,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": true,
+      "credited_detection": true
+    },
+    {
+      "name": "negative/missing_rx_word",
+      "kind": "single_fault",
+      "baseline": "reference/read_one",
+      "expected": "DUT violation",
+      "changes": [
+        {
+          "cycle": 28,
+          "side": "post",
+          "field": "rx_valid",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "cycle": 29,
+          "side": "pre",
+          "field": "rx_valid",
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim.",
+      "verdict": "inconclusive",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [
+        "segment 0: RX word for bytes 0..0 not yet delivered"
+      ],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": false,
+      "credited_detection": false
+    },
+    {
+      "name": "negative/duplicate_rx_word",
+      "kind": "single_fault",
+      "baseline": "reference/read_one",
+      "expected": "DUT violation",
+      "changes": [
+        {
+          "cycle": 30,
+          "fault": "Repeated already-consumed RX word at next pre handshake"
+        }
+      ],
+      "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim.",
+      "verdict": "fail",
+      "failure_count": 1,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": true,
+      "credited_detection": true
+    },
+    {
+      "name": "negative/multiple_chip_selects",
+      "kind": "single_fault",
+      "baseline": "reference/write_one",
+      "expected": "DUT violation",
+      "changes": [
+        {
+          "cycle": 10,
+          "side": "post",
+          "field": "csb",
+          "before": 2,
+          "after": 0
+        }
+      ],
+      "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim.",
+      "verdict": "fail",
+      "failure_count": 4,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": true,
+      "credited_detection": true
+    },
+    {
+      "name": "negative/premature_deselect",
+      "kind": "single_fault",
+      "baseline": "reference/write_one",
+      "expected": "DUT violation",
+      "changes": [
+        {
+          "cycle": 20,
+          "fault": "Deselect after only four payload bits, remain idle"
+        }
+      ],
+      "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim.",
+      "verdict": "fail",
+      "failure_count": 14,
+      "assumption_count": 0,
+      "unresolved": [
+        "segment 0 incomplete at end of trace"
+      ],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": true,
+      "credited_detection": true
+    },
+    {
+      "name": "negative/clock_during_tx_stall",
+      "kind": "single_fault",
+      "baseline": "calibration/tx_starvation_resume",
+      "expected": "DUT violation",
+      "changes": [
+        {
+          "cycle": 74,
+          "side": "post",
+          "field": "sck",
+          "before": 1,
+          "after": 0
+        }
+      ],
+      "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim.",
+      "verdict": "fail",
+      "failure_count": 11,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "baseline_clean": false,
+      "baseline_scoped_pass": false,
+      "raw_failure_flag": true,
+      "credited_detection": false
+    },
+    {
+      "name": "negative/select_during_rx_stall",
+      "kind": "single_fault",
+      "baseline": "calibration/rx_backpressure_resume",
+      "expected": "DUT violation",
+      "changes": [
+        {
+          "cycle": 104,
+          "side": "post",
+          "field": "csb",
+          "before": 2,
+          "after": 3
+        }
+      ],
+      "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim.",
+      "verdict": "fail",
+      "failure_count": 3,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": true,
+      "credited_detection": true
+    },
+    {
+      "name": "negative/wrong_reset_select",
+      "kind": "single_fault",
+      "baseline": "calibration/software_reset_restart",
+      "expected": "DUT violation",
+      "changes": [
+        {
+          "cycle": 48,
+          "side": "post",
+          "field": "csb",
+          "before": 3,
+          "after": 0
+        }
+      ],
+      "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim.",
+      "verdict": "fail",
+      "failure_count": 4,
+      "assumption_count": 0,
+      "unresolved": [
+        "software reset hit in-flight segment 0: spec only requires ACTIVE/TXQD/RXQD to clear before release; TXQD/RXQD not visible at core pins; disposition of partially shifted or stalled data unspecified"
+      ],
+      "infrastructure_error": null,
+      "baseline_clean": false,
+      "baseline_scoped_pass": false,
+      "raw_failure_flag": true,
+      "credited_detection": false
+    },
+    {
+      "name": "negative/wrong_recovered_rx_word",
+      "kind": "single_fault",
+      "baseline": "calibration/rx_backpressure_resume",
+      "expected": "DUT violation",
+      "changes": [
+        {
+          "cycle": 228,
+          "side": "pre",
+          "field": "rx_data",
+          "before": 4294967295,
+          "after": 4278190079
+        }
+      ],
+      "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim.",
+      "verdict": "fail",
+      "failure_count": 1,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": true,
+      "credited_detection": true
+    },
+    {
+      "name": "truncated/tx_starvation_resume",
+      "kind": "incomplete",
+      "expected": "No successful recovery event",
+      "baseline": "calibration/tx_starvation_resume",
+      "cutoff": 75,
+      "verdict": "fail",
+      "failure_count": 4,
+      "assumption_count": 0,
+      "unresolved": [
+        "segment 0 incomplete at end of trace"
+      ],
+      "infrastructure_error": null,
+      "success_events_emitted": [],
+      "all_events": []
+    },
+    {
+      "name": "truncated/rx_backpressure_resume",
+      "kind": "incomplete",
+      "expected": "No successful recovery event",
+      "baseline": "calibration/rx_backpressure_resume",
+      "cutoff": 105,
+      "verdict": "inconclusive",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [
+        "segment 0 incomplete at end of trace",
+        "segment 0: RX word for bytes 0..3 not yet delivered"
+      ],
+      "infrastructure_error": null,
+      "success_events_emitted": [],
+      "all_events": [
+        {
+          "family": "rx_backpressure_resume",
+          "kind": "pending",
+          "start_cycle": 74,
+          "end_cycle": null,
+          "evidence": "segment 0 RX word held (rx_valid & !rx_ready) mid-segment at 74"
+        }
+      ]
+    },
+    {
+      "name": "truncated/partial_then_csid_switch",
+      "kind": "incomplete",
+      "expected": "No completed switch/restart event",
+      "baseline": "calibration/partial_then_csid_switch",
+      "cutoff": 91,
+      "verdict": "fail",
+      "failure_count": 3,
+      "assumption_count": 0,
+      "unresolved": [
+        "segment 1 accepted but not started at end of trace"
+      ],
+      "infrastructure_error": null,
+      "success_events_emitted": [],
+      "all_events": [
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "fail",
+          "start_cycle": 8,
+          "end_cycle": null,
+          "evidence": "csid_change: segment 0 (3 bytes) then segment 1"
+        }
+      ]
+    },
+    {
+      "name": "truncated/software_reset_restart",
+      "kind": "incomplete",
+      "expected": "No completed switch/restart event",
+      "baseline": "calibration/software_reset_restart",
+      "cutoff": 53,
+      "verdict": "inconclusive",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [
+        "software reset hit in-flight segment 0: spec only requires ACTIVE/TXQD/RXQD to clear before release; TXQD/RXQD not visible at core pins; disposition of partially shifted or stalled data unspecified"
+      ],
+      "infrastructure_error": null,
+      "success_events_emitted": [],
+      "all_events": [
+        {
+          "family": "reset_abort_restart",
+          "kind": "pending",
+          "start_cycle": 48,
+          "end_cycle": null,
+          "evidence": "software reset at 48 aborted segment 0; release 52; fresh segment None"
+        }
+      ]
+    },
+    {
+      "name": "invalid_input/drop_pending_command",
+      "kind": "input_protocol",
+      "expected": "assumption violation; not credited as a DUT defect",
+      "verdict": "fail",
+      "failure_count": 7,
+      "assumption_count": 1,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "correct_input_classification": false
+    }
+  ],
+  "cases": {
+    "reference/write_one": {
+      "verdict": "pass",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 33,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "reference/write_two": {
+      "verdict": "pass",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 49,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "reference/read_one": {
+      "verdict": "pass",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 34,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 1,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "reference/read_partial_three": {
+      "verdict": "pass",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 66,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 1,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "calibration/ordinary_fullcycle_read": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 60,
+          "category": "rx_payload",
+          "detail": "segment 0 word byte 0 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 60,
+          "category": "rx_padding",
+          "detail": "segment 0 word byte 3 got 0xff expected 0x00"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 120,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 1,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 2,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "calibration/ordinary_standard_write": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 25,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 0 sent 0xd4 expected 0xa1"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 64,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 1,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "calibration/ordinary_three_speeds": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 25,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 0 sent 0xd4 expected 0xa1"
+        },
+        {
+          "cycle": 73,
+          "category": "tx_payload",
+          "detail": "segment 1 byte 0 sent 0xd4 expected 0xa1"
+        },
+        {
+          "cycle": 125,
+          "category": "tx_payload",
+          "detail": "segment 2 byte 0 sent 0xd4 expected 0xa1"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 3,
+        "rx_words_observed": 0,
+        "commands_accepted": 3,
+        "segments_completed": 3,
+        "failures": 3,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "calibration/partial_then_csid_switch": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 89,
+          "category": "csaat",
+          "detail": "CSB deasserted after CSAAT segment without CSID/config change"
+        },
+        {
+          "cycle": 59,
+          "category": "rx_payload",
+          "detail": "segment 0 word byte 0 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 59,
+          "category": "rx_padding",
+          "detail": "segment 0 word byte 3 got 0xff expected 0x00"
+        },
+        {
+          "cycle": 126,
+          "category": "rx_payload",
+          "detail": "segment 1 word byte 0 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 126,
+          "category": "rx_payload",
+          "detail": "segment 1 word byte 1 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 126,
+          "category": "rx_padding",
+          "detail": "segment 1 word byte 2 got 0xff expected 0x00"
+        },
+        {
+          "cycle": 126,
+          "category": "rx_padding",
+          "detail": "segment 1 word byte 3 got 0xff expected 0x00"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "fail",
+          "start_cycle": 8,
+          "end_cycle": 126,
+          "evidence": "csid_change: segment 0 (3 bytes) then segment 1"
+        }
+      ],
+      "unresolved": [],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 2,
+        "commands_accepted": 2,
+        "segments_completed": 2,
+        "failures": 7,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 1,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "calibration/rx_backpressure_resume": {
+      "verdict": "pass",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "rx_backpressure_resume",
+          "kind": "pass",
+          "start_cycle": 74,
+          "end_cycle": 327,
+          "evidence": "segment 0 RX word held (rx_valid & !rx_ready) mid-segment at 74"
+        }
+      ],
+      "unresolved": [],
+      "counts": {
+        "rows": 392,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 3,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 1,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "calibration/seed": {
+      "verdict": "pass",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 8,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 0,
+        "commands_accepted": 0,
+        "segments_completed": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "calibration/software_reset_restart": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 94,
+          "category": "rx_payload",
+          "detail": "segment 1 word byte 0 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 94,
+          "category": "rx_payload",
+          "detail": "segment 1 word byte 1 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 94,
+          "category": "rx_padding",
+          "detail": "segment 1 word byte 2 got 0xff expected 0x00"
+        },
+        {
+          "cycle": 94,
+          "category": "rx_padding",
+          "detail": "segment 1 word byte 3 got 0xff expected 0x00"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset_abort_restart",
+          "kind": "fail",
+          "start_cycle": 48,
+          "end_cycle": 94,
+          "evidence": "software reset at 48 aborted segment 0; release 52; fresh segment 1"
+        }
+      ],
+      "unresolved": [
+        "software reset hit in-flight segment 0: spec only requires ACTIVE/TXQD/RXQD to clear before release; TXQD/RXQD not visible at core pins; disposition of partially shifted or stalled data unspecified"
+      ],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 1,
+        "commands_accepted": 2,
+        "segments_completed": 1,
+        "failures": 4,
+        "assumption_violations": 0,
+        "unresolved": 1,
+        "events_pass": 0,
+        "events_fail": 1,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "calibration/tx_starvation_resume": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 25,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 0 sent 0xd4 expected 0xa1"
+        },
+        {
+          "cycle": 41,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 1 sent 0xc3 expected 0xb2"
+        },
+        {
+          "cycle": 57,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 2 sent 0xb2 expected 0xc3"
+        },
+        {
+          "cycle": 73,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 3 sent 0xa1 expected 0xd4"
+        },
+        {
+          "cycle": 144,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 4 sent 0x44 expected 0x11"
+        },
+        {
+          "cycle": 160,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 5 sent 0x33 expected 0x22"
+        },
+        {
+          "cycle": 176,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 6 sent 0x22 expected 0x33"
+        },
+        {
+          "cycle": 192,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 7 sent 0x11 expected 0x44"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 264,
+        "tx_words_accepted": 2,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 8,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/wrong_tx_sampled_bit": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 26,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 0 sent 0x21 expected 0xa1"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 33,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 1,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/wrong_rx_byte": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 29,
+          "category": "rx_payload",
+          "detail": "segment 0 word byte 0 got 0xa4 expected 0xa5"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 34,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 1,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 1,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/wrong_partial_padding": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 61,
+          "category": "rx_padding",
+          "detail": "segment 0 word byte 3 got 0x01 expected 0x00"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 66,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 1,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 1,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/missing_rx_word": {
+      "verdict": "inconclusive",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        "segment 0: RX word for bytes 0..0 not yet delivered"
+      ],
+      "counts": {
+        "rows": 34,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 1,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/duplicate_rx_word": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 30,
+          "category": "rx_unexpected_word",
+          "detail": "RX word 0xa5000000 with no corresponding received bytes"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 34,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 2,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 1,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/multiple_chip_selects": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 10,
+          "category": "cs_wrong_line",
+          "detail": "CSB[1] asserted for segment targeting CSID 0"
+        },
+        {
+          "cycle": 10,
+          "category": "multi_cs",
+          "detail": "both CSB lines asserted"
+        },
+        {
+          "cycle": 11,
+          "category": "multi_cs",
+          "detail": "both CSB lines asserted"
+        },
+        {
+          "cycle": 11,
+          "category": "cs_rise_without_transfer",
+          "detail": "CSB[1] deasserted without a completed segment"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 33,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 4,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/premature_deselect": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 20,
+          "category": "cs_rise_midsegment",
+          "detail": "CSB[0] deasserted inside segment 0"
+        },
+        {
+          "cycle": 20,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 21,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 22,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 23,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 24,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 25,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 26,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 27,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 28,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 29,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 30,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 31,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        },
+        {
+          "cycle": 32,
+          "category": "active_low_inflight",
+          "detail": "ACTIVE low while segment 0 is mid-transfer"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        "segment 0 incomplete at end of trace"
+      ],
+      "counts": {
+        "rows": 33,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 0,
+        "failures": 14,
+        "assumption_violations": 0,
+        "unresolved": 1,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/clock_during_tx_stall": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 25,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 0 sent 0xd4 expected 0xa1"
+        },
+        {
+          "cycle": 41,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 1 sent 0xc3 expected 0xb2"
+        },
+        {
+          "cycle": 57,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 2 sent 0xb2 expected 0xc3"
+        },
+        {
+          "cycle": 73,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 3 sent 0xa1 expected 0xd4"
+        },
+        {
+          "cycle": 75,
+          "category": "sck_halfperiod",
+          "detail": "SCK half period 0.5 < CLKDIV+1"
+        },
+        {
+          "cycle": 75,
+          "category": "tx_underflow",
+          "detail": "SCK ticked for TX byte 4 of segment 0 with no accepted TX data"
+        },
+        {
+          "cycle": 158,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 5 sent 0x19 expected 0x11"
+        },
+        {
+          "cycle": 174,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 6 sent 0x91 expected 0x22"
+        },
+        {
+          "cycle": 190,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 7 sent 0x08 expected 0x33"
+        },
+        {
+          "cycle": 192,
+          "category": "spurious_sck",
+          "detail": "SCK toggled with no accepted pending segment"
+        },
+        {
+          "cycle": 193,
+          "category": "spurious_sck",
+          "detail": "SCK toggled with no accepted pending segment"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 264,
+        "tx_words_accepted": 2,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 0,
+        "failures": 11,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/select_during_rx_stall": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 104,
+          "category": "cs_rise_midsegment",
+          "detail": "CSB[0] deasserted inside segment 0"
+        },
+        {
+          "cycle": 105,
+          "category": "csnidle",
+          "detail": "CSB idle 0.5 < (CSNIDLE+1)*(CLKDIV+1)"
+        },
+        {
+          "cycle": 105,
+          "category": "cpol",
+          "detail": "SCK not at CPOL level at CSB assertion"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "rx_backpressure_resume",
+          "kind": "fail",
+          "start_cycle": 74,
+          "end_cycle": 327,
+          "evidence": "segment 0 RX word held (rx_valid & !rx_ready) mid-segment at 74"
+        }
+      ],
+      "unresolved": [],
+      "counts": {
+        "rows": 392,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 3,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 3,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 1,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/wrong_reset_select": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 94,
+          "category": "rx_payload",
+          "detail": "segment 1 word byte 0 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 94,
+          "category": "rx_payload",
+          "detail": "segment 1 word byte 1 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 94,
+          "category": "rx_padding",
+          "detail": "segment 1 word byte 2 got 0xff expected 0x00"
+        },
+        {
+          "cycle": 94,
+          "category": "rx_padding",
+          "detail": "segment 1 word byte 3 got 0xff expected 0x00"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset_abort_restart",
+          "kind": "fail",
+          "start_cycle": 48,
+          "end_cycle": 94,
+          "evidence": "software reset at 48 aborted segment 0; release 52; fresh segment 1"
+        }
+      ],
+      "unresolved": [
+        "software reset hit in-flight segment 0: spec only requires ACTIVE/TXQD/RXQD to clear before release; TXQD/RXQD not visible at core pins; disposition of partially shifted or stalled data unspecified"
+      ],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 1,
+        "commands_accepted": 2,
+        "segments_completed": 1,
+        "failures": 4,
+        "assumption_violations": 0,
+        "unresolved": 1,
+        "events_pass": 0,
+        "events_fail": 1,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/wrong_recovered_rx_word": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 228,
+          "category": "rx_payload",
+          "detail": "segment 0 word byte 0 got 0xfe expected 0xff"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "rx_backpressure_resume",
+          "kind": "fail",
+          "start_cycle": 74,
+          "end_cycle": 327,
+          "evidence": "segment 0 RX word held (rx_valid & !rx_ready) mid-segment at 74"
+        }
+      ],
+      "unresolved": [],
+      "counts": {
+        "rows": 392,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 3,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 1,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 1,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "truncated/tx_starvation_resume": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 25,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 0 sent 0xd4 expected 0xa1"
+        },
+        {
+          "cycle": 41,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 1 sent 0xc3 expected 0xb2"
+        },
+        {
+          "cycle": 57,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 2 sent 0xb2 expected 0xc3"
+        },
+        {
+          "cycle": 73,
+          "category": "tx_payload",
+          "detail": "segment 0 byte 3 sent 0xa1 expected 0xd4"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [
+        "segment 0 incomplete at end of trace"
+      ],
+      "counts": {
+        "rows": 75,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 0,
+        "failures": 4,
+        "assumption_violations": 0,
+        "unresolved": 1,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "truncated/rx_backpressure_resume": {
+      "verdict": "inconclusive",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "rx_backpressure_resume",
+          "kind": "pending",
+          "start_cycle": 74,
+          "end_cycle": null,
+          "evidence": "segment 0 RX word held (rx_valid & !rx_ready) mid-segment at 74"
+        }
+      ],
+      "unresolved": [
+        "segment 0 incomplete at end of trace",
+        "segment 0: RX word for bytes 0..3 not yet delivered"
+      ],
+      "counts": {
+        "rows": 105,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 2,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 1
+      },
+      "infrastructure_error": null
+    },
+    "truncated/partial_then_csid_switch": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 89,
+          "category": "csaat",
+          "detail": "CSB deasserted after CSAAT segment without CSID/config change"
+        },
+        {
+          "cycle": 59,
+          "category": "rx_payload",
+          "detail": "segment 0 word byte 0 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 59,
+          "category": "rx_padding",
+          "detail": "segment 0 word byte 3 got 0xff expected 0x00"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "fail",
+          "start_cycle": 8,
+          "end_cycle": null,
+          "evidence": "csid_change: segment 0 (3 bytes) then segment 1"
+        }
+      ],
+      "unresolved": [
+        "segment 1 accepted but not started at end of trace"
+      ],
+      "counts": {
+        "rows": 91,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 1,
+        "commands_accepted": 2,
+        "segments_completed": 1,
+        "failures": 3,
+        "assumption_violations": 0,
+        "unresolved": 1,
+        "events_pass": 0,
+        "events_fail": 1,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "truncated/software_reset_restart": {
+      "verdict": "inconclusive",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset_abort_restart",
+          "kind": "pending",
+          "start_cycle": 48,
+          "end_cycle": null,
+          "evidence": "software reset at 48 aborted segment 0; release 52; fresh segment None"
+        }
+      ],
+      "unresolved": [
+        "software reset hit in-flight segment 0: spec only requires ACTIVE/TXQD/RXQD to clear before release; TXQD/RXQD not visible at core pins; disposition of partially shifted or stalled data unspecified"
+      ],
+      "counts": {
+        "rows": 53,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 1,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 1
+      },
+      "infrastructure_error": null
+    },
+    "invalid_input/drop_pending_command": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 89,
+          "category": "csaat",
+          "detail": "CSB deasserted after CSAAT segment without CSID/config change"
+        },
+        {
+          "cycle": 59,
+          "category": "rx_payload",
+          "detail": "segment 0 word byte 0 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 59,
+          "category": "rx_padding",
+          "detail": "segment 0 word byte 3 got 0xff expected 0x00"
+        },
+        {
+          "cycle": 126,
+          "category": "rx_payload",
+          "detail": "segment 1 word byte 0 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 126,
+          "category": "rx_payload",
+          "detail": "segment 1 word byte 1 got 0x00 expected 0xff"
+        },
+        {
+          "cycle": 126,
+          "category": "rx_padding",
+          "detail": "segment 1 word byte 2 got 0xff expected 0x00"
+        },
+        {
+          "cycle": 126,
+          "category": "rx_padding",
+          "detail": "segment 1 word byte 3 got 0xff expected 0x00"
+        }
+      ],
+      "assumption_violations": [
+        {
+          "cycle": 89,
+          "category": "cmd_transport",
+          "detail": "offered command withdrawn or changed before pre ready&valid handshake"
+        }
+      ],
+      "events": [
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "fail",
+          "start_cycle": 8,
+          "end_cycle": 126,
+          "evidence": "csid_change: segment 0 (3 bytes) then segment 1"
+        }
+      ],
+      "unresolved": [],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 2,
+        "commands_accepted": 2,
+        "segments_completed": 2,
+        "failures": 7,
+        "assumption_violations": 1,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 1,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    }
+  },
+  "event_integrity_errors": [],
+  "successful_events_on_unresolved_cases": {},
+  "control_counts": {
+    "independent_positive": 4,
+    "no_false_alarm": 4,
+    "baseline_scoped_pass_negatives": 9,
+    "negative_total": 11,
+    "credited_detections": 8,
+    "raw_negative_flags": 10
+  },
+  "limits": [
+    "No calibration trace presumed correct because it came from the DUT.",
+    "Raw failure flags on a failing baseline are not detection credit.",
+    "Selftests do not independently validate the checker.",
+    "Pending/unresolved is not pass. No new simulation or API call in evaluation."
+  ],
+  "hashes": {
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/claude-checker-v1/candidate/checker.py": "541c442c7e127f31c1af7b7ac501d77b242cc68344c997a3653af736fde2b06c",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/claude-checker-v1/candidate/selftest.py": "cc42af26ab6132db3e89f988ee7ff795bc4a6a8abb3358f8100890fff3d3a114",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/spi-checker-controls-v2/inputs.json": "ef8b5e5694c8ae7bf2fc1b756863274d1a1928dd760e9a15cef0de604b17a216",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/spi-checker-controls-v2/controls.json": "7954bf76bb26259330d33fcbebabb395f72e7c7dfcc45f0c8c4a2fae298e09dc",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/evaluate_spi_core_checker.py": "376a5ba7b688df48b4609e280346dd47bc4b7370f8f41f08a893faf7962808c2"
+  }
+}

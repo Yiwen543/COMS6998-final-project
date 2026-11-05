@@ -1,0 +1,191 @@
+{
+  "id": "spi_host_core_public_contract_v2_lsb",
+  "revision": "0ea5236fe749e70ba18f56ba19c4be982ef46da7",
+  "status": "registered project interpretation supported by pinned upstream intent and boundary wiring; not an upstream maintainer erratum",
+  "supersedes_only": "Byte ordering clauses in original spec packet; original MSB-first results remain historical contract-disagreement evidence.",
+  "scope": "Unchanged original spi_host_core NumCS=2. No ByteOrder parameter on this core. ByteOrder=1 is used only to relate its pins to documented parent register semantics.",
+  "requirements": {
+    "tx": "Within each accepted 32-bit word, visit enabled byte lanes in increasing lane index 0,1,2,3. Lane i is bits 8*i+7:8*i and enabled by tx_be[i]. Within each byte transmit most-significant bit/group first. Existing segment discard rules are unchanged.",
+    "rx": "Pack successive received bytes b0,b1,b2,b3 into bits 7:0,15:8,23:16,31:24. Short final words have zero padding in unused HIGH lanes. FIFO word order is preserved.",
+    "examples": {
+      "tx_0xa1b2c3d4_be15": [
+        212,
+        195,
+        178,
+        161
+      ],
+      "tx_0xa1b2c3d4_be5": [
+        212,
+        178
+      ],
+      "rx_bytes_a5_5a_3c": "0x003C5AA5"
+    },
+    "bit_order": "Byte order is not bit order: each SPI byte remains MSB-first; Standard RX is SD[1], Standard TX SD[0]."
+  },
+  "derivation": [
+    "Pinned public theory lines 412-419,483, programmer guide and registers independently require LSB-first words / high padding for ByteOrder=1.",
+    "Pinned parent instantiates external data FIFOs with SwapBytes=~ByteOrder and explicitly documents natural low-byte-first core behavior. At ByteOrder=1 the FIFOs preserve byte lanes and order in both directions; these are boundary aliases, not an expected-output model.",
+    "Therefore the documented LE register semantics transport unchanged to the core word pins. Parent ByteOrder=0 reverses data/BE outside the core and does not change the core contract.",
+    "The older component paragraphs 698-702 and735-740 contradict this combination. Mark those ordering statements superseded locally; retain their text and original failed checker. No DUT payload trace is used as normative authority."
+  ],
+  "limits": [
+    "No claim that upstream maintainers accepted an erratum. Commit history is shallow; no causal history claim.",
+    "No full top-level TLUL verification, four-state proof, formal checker proof or B/C effectiveness claim.",
+    "Software reset and timing gaps remain separate obligations; this correction does not waive them."
+  ],
+  "evidence": [
+    {
+      "source": "third_party/opentitan_candidate/hw/ip/spi_host/doc/theory_of_operation.md",
+      "sha256": "2db47bf4eaff25bfd618221d1e926a37072cde4aefdca7eca74994b672bbbfdb",
+      "excerpts": [
+        {
+          "start_line": 395,
+          "end_line": 419,
+          "text": "395: ### Input and Output Byte Ordering\n396: \n397: The SPI transactions must be issued with correct bit ordering to properly communicate with a remote device.\n398: Based on the requirements for our chosen flash devices, this IP follows these conventions:\n399: - The relative significance of lines on the SD bus: `SD[0] `is always the least significant, followed by `SD[1]` though `SD[3]` with increasing significance.\n400: - The relative significance of a sequence of bits on the same SD bus: more significant bits are always transmitted before (or at the same time as) less significant bits.\n401:     - For instance, when transferring a single byte in Quad-mode, all four bits of the upper nibble (bits 7 through 3) are transferred in the first clock cycle and the entire lower nibble (bits 3 through 0) is transferred in the second cycle.\n402: \n403: The programming model for the IP should meanwhile make it easy to quickly program the peripheral device, with a minimum amount of byte shuffling.\n404: It should be intuitive to program the specific flash devices we are targeting, while following the conventions above:\n405: - When transferring data in from the [`RXDATA`](registers.md#rxdata) memory window or out to the [`TXDATA`](registers.md#txdata) window, the IP should fully utilize the TL-UL bus, using 32-bit I/O instructions.\n406: - The SPI_HOST IP should make it easy to arrange transaction data in processor memory, meaning that bytes should be sequentially transmitted in order of ascending memory address.\n407:   - When using 32-bit I/O instructions, this requires some knowledge of the processor byte-order.\n408: \n409: Based on these requirements, data read from [`RXDATA`](registers.md#rxdata) or placed in [`TXDATA`](registers.md#txdata) are handled as follows:\n410: - 32-bit words placed in [`TXDATA`](registers.md#txdata) are transmitted in first-in-first-out order.\n411: Likewise, words received from the SPI data lines are made available for reading from [`RXDATA`](registers.md#rxdata) in first-in-first-out order.\n412: - Within a 32-bit word, the `ByteOrder` parameter controls the order in which bytes are transmitted, and also the manner in which received bytes are eventually arranged in the 32-bit [`RXDATA`](registers.md#rxdata) register.\n413: By default (`ByteOrder = 1`, for Little-Endian processors), the LSB of [`TXDATA`](registers.md#txdata) (i.e bits 7 though 0) is transmitted first, and the other bytes follow in order of increasing significance.\n414: Similarly, the first byte received is packed into the LSB of [`RXDATA`](registers.md#rxdata), and the subsequent bytes of each [`RXDATA`](registers.md#rxdata) word are packed in order of increasing significance.\n415: \n416: On the other hand, if `ByteOrder` is set to 0 (for Big-Endian processors), the MSB is transmitted first from [`TXDATA`](registers.md#txdata), and received data is loaded first into the MSB of [`RXDATA`](registers.md#rxdata).\n417:    - The default choice of Little-Endian reflects native byte-order of the Ibex processor.\n418: - Finally *within a given byte*, the most significant bits are transmitted and received first.\n419: For Dual and Quad transactions the least significant bit in any instantaneous pair or nibble is transmitted or received on `SD[0]`, and the remaining SD bits (1 though 3) are populated in order of increasing significance."
+        },
+        {
+          "start_line": 478,
+          "end_line": 483,
+          "text": "478: \n479: Even though the [`TXDATA`](registers.md#txdata) memory window typically accepts 32-bit words, command segments do not need to use all the bytes from every word.\n480: \n481: For TX (or Bidirectional) segments, unused bytes from the latest TX FIFO word are simply ignored at the end of a segment.\n482: For RX (or Bidirectional) segments, if the last few bytes received do not fill an entire DATA word, the partial word will be zero-padded and inserted into the RX FIFO once the segment is completed.\n483: If ByteOrder=1 (the default, Little-Endian case), this padding will fill the unused most-significant bytes of the final RX DATA word, otherwise the padding will fill the unused least-significant bytes."
+        },
+        {
+          "start_line": 685,
+          "end_line": 702,
+          "text": "685: ## Byte Select\n686: \n687: The Byte Select unit is responsible for loading words from the TX FIFO and feeding individual bytes into the shift register.\n688: This unit takes two data inputs: a data word `word_i[31:0]` and a byte enable signal `word_be_i[3:0]`.\n689: There is a single output `byte_o[7:0]` which feeds the following shift register.\n690: This block is built on the `prim_packer_fifo` primative to create the interface between the word-width and byte-width datapaths.\n691: \n692: There are ready/valid signals for managing flow control on both the word-input and the byte-output.\n693: The shift register asserts ready to request new bytes based on control inputs from the SPI_HOST FSM.\n694: \n695: When the SPI_HOST FSM indicates the final byte for a segment, the shift register asserts the `flush_i` signal with `byte_ready_i` as it requests the last byte from the Byte Select.\n696: This instructs the Byte Select block to send one more byte from current word, and then discard any remaining unused bytes, before immediately loading the next available word from the TX FIFO.\n697: \n698: It is assumed that the input data-words and byte enables have already been byte-swapped at the IP top level, as needed.\n699: The bytes are transmitted to the shift register in decreasing significance, starting with `word_i[31:24]`, followed by `word_i[23:16]`, `word_i[15:8]`, and finally `word_i[7:0]`.\n700: \n701: Some bytes from the input word may be dropped however if the corresponding value of `word_be_i[3:0]` is zero.\n702: For example if `word_be_i[3:0]` equals `4'b0011`, then the first two input bytes will be skipped, and only `word_i[15:8]` and `word_i[7:0]` will be forwarded in that order to the shift register."
+        },
+        {
+          "start_line": 729,
+          "end_line": 740,
+          "text": "729: The Byte Merge block has a data byte input and a data word output, which are both flow-controlled by their corresponding ready/valid signals.\n730: An additional input `byte_last_i` is used to indicate the final byte in a word.\n731: When `byte_last_i` is asserted alongside an input byte, the new byte will be added to the output word, and any remaining bytes will be set to zero before the word is immediately loaded into the RX FIFO.\n732: There are no byte-enable outputs for the byte merge, as it is assumed that software can infer which bytes in the RXFIFO are valid.\n733: The first byte for each read segment is always word-aligned in the RXFIFO, so the [`COMMAND.LEN`](registers.md#command) byte-count from the segment can be used to determine the effective byte-enables for the final word.\n734: \n735: Input bytes are packed into the output word in decreasing significance.\n736: The first byte in each segment is loaded into `word_o[31:24]`.\n737: The following bytes are packed into `word_o[23:16]`, `word_o[15:8]`, and then `word_o[7:0]`.\n738: For partially filled words, the zero padding goes into the least significant byte positions.\n739: \n740: Any ByteOrder swapping is performed at the other end of the RX FIFO."
+        }
+      ],
+      "upstream_path": "hw/ip/spi_host/doc/theory_of_operation.md",
+      "git_blob": "e6c8f71512c71c626f1bc9ec7743844ac9159a07",
+      "url": "https://github.com/lowRISC/opentitan/blob/0ea5236fe749e70ba18f56ba19c4be982ef46da7/hw/ip/spi_host/doc/theory_of_operation.md",
+      "role": "normative with explicit internal contradiction"
+    },
+    {
+      "source": "third_party/opentitan_candidate/hw/ip/spi_host/doc/programmers_guide.md",
+      "sha256": "1d509c8ce4f953248664d01ed1437f5efe117aae2377b73553e0bc3514e95613",
+      "excerpts": [
+        {
+          "start_line": 65,
+          "end_line": 90,
+          "text": "65: Data can be written to the window using 8-, 16- or 32-bit instructions.\n66: \n67: Some attention, however, should be paid to byte-ordering and segmenting conventions.\n68: \n69: #### Byte-ordering Conventions\n70: \n71: For SPI flash applications, it is generally assumed that most of the *payload* data will be directly copied from embedded SRAM to the flash device.\n72: \n73: If this data is to copied to the [`TXDATA`](registers.md#txdata) window using 32-bit instructions, the SPI_HOST should be parameterized such that the `ByteOrder` parameter matches the byte order of the embedded CPU (i.e., for Ibex, `ByteOrder` should be left set to `1` to indicate a Little-Endian CPU).\n74: This will ensure that data is transmitted to the flash (and thus also stored in flash) in address-ascending order.\n75: For example, consider the transfer of four bytes, `D[3:0][7:0]`, to SPI via the [`TXDATA`](registers.md#txdata) window.\n76: - It is assumed for this example that all four bytes are contiguously stored in SRAM at a word-aligned address, with `D[0]` at the lowest byte-address.\n77: - When these bytes are loaded into the Ibex CPU they are arranged as the 32-bit word: `W[31:0] = {D[3][7:0], D[2][7:0], D[1][7:0], D[0][7:0]}`.\n78: - After this word are loaded into the [`TXDATA`](registers.md#txdata) window, the LSB (i.e., `W[7:0] = D[0][7:0]`) is transmitted first, by virtue of the `ByteOrder == 1` configuration.\n79: \n80: In this way, configuring `ByteOrder` to match the CPU ensures that data is transmitted in memory-address order.\n81: \n82: The value of the `ByteOrder` parameter can be confirmed by firmware by reading the [`STATUS.BYTEORDER`](registers.md#status) register field.\n83: \n84: Not all data to the SPI device will come from memory however.\n85: In many cases the transaction command codes or headers will be constructed or packed on the fly in CPU registers.\n86: The order these register bytes are transmitted on the bus will depend on the value of the `ByteOrder` parameter, as discussed in the Theory of Operation section, and for multi-bit values, such as flash addresses, some byte-swapping may be required to ensure that data is transmitted in the proper order expected by the target device.\n87: \n88: For example, SPI flash devices generally expect flash addresses (or any other multi-byte values) to be transmitted MSB-first.\n89: This is illustrated in the following figure, which depicts a Fast Quad Read I/O command.\n90: Assuming that `ByteOrder` is set to `1` for Little-Endian devices such as Ibex, byte-swapping will be required for these addresses, otherwise the device will receive the addresses LSB first."
+        },
+        {
+          "start_line": 114,
+          "end_line": 121,
+          "text": "114: Byte ordering on the bus can also be managed by writing [`TXDATA`](registers.md#txdata) as a sequence of discrete bytes using 8-bit transactions, since partially-filled data-words are always sent in the order they are received.\n115: \n116: A few examples related to using SPI flash devices on a Little-Endian platform:\n117: - A 4-byte address can be loaded into the TX FIFO as four individual bytes using 8-bit I/O instructions.\n118: - The above read command (with 4-byte address) can be loaded into the FIFO by first loading the command code into [`TXDATA`](registers.md#txdata) as a single byte, and the address can be loaded into [`TXDATA`](registers.md#txdata) using 32-bit instructions, provided the byte order is swapped before loading.\n119: - Flash transactions with 3-byte addressing require some care, as there are no 24-bit I/O instructions, though there are a several options:\n120:     - After the 8-bit command code is sent, the address can either be sent in several I/O operations (e.g., the MSB is sent as an 8-bit command, and the remaining 16-bits can be sent after swapping)\n121:     - If bandwidth efficiency is a priority, the address, `A[23:0]`, and command code, `C[7:0]`, can all be packed together into a single 4-byte quantity `W[31:0] = {A[7:0], A[15:8], A[23:16], C[7:0]}`, which when loaded into [`TXDATA`](registers.md#txdata) will ensure that the command code is sent first, followed by the address in MSB-first order."
+        }
+      ],
+      "upstream_path": "hw/ip/spi_host/doc/programmers_guide.md",
+      "git_blob": "156b6bc3d4c705391d8ddc3e35d250c8ab562b61",
+      "url": "https://github.com/lowRISC/opentitan/blob/0ea5236fe749e70ba18f56ba19c4be982ef46da7/hw/ip/spi_host/doc/programmers_guide.md",
+      "role": "software-visible intended byte order"
+    },
+    {
+      "source": "third_party/opentitan_candidate/hw/ip/spi_host/doc/registers.md",
+      "sha256": "ce105dc81ba7cfb5e6265c10ea3ae04dc0b5e17055014cd59804dbe1dbd95252",
+      "excerpts": [
+        {
+          "start_line": 323,
+          "end_line": 365,
+          "text": "323: \n324: ## RXDATA\n325: SPI Receive Data.\n326: \n327:    Reads from this window pull data from the RXFIFO.\n328: \n329:    The serial order of bit transmission\n330:    is chosen to match SPI flash devices. Individual bytes\n331:    are always transmitted with the most significant bit first.\n332:    Only four-byte reads are supported. If ByteOrder = 0,\n333:    the first byte received is packed in the MSB of [`RXDATA.`](#rxdata)\n334:    For some processor architectures, this could lead to shuffling\n335:    of flash data as compared to how it is written in memory.\n336:    In which case, choosing ByteOrder = 1 can reverse the\n337:    byte-order of each data read, causing the first byte\n338:    received to be packed into the LSB of [`RXDATA.`](#rxdata) (Though within\n339:    each byte the most significant bit is always pulled\n340:    from the bus first.)\n341: \n342: - Word Aligned Offset Range: `0x24`to`0x24`\n343: - Size (words): `1`\n344: - Access: `ro`\n345: - Byte writes are *not* supported.\n346: \n347: ## TXDATA\n348: SPI Transmit Data.\n349: \n350:    Data written to this window is placed into the TXFIFO.\n351:    Byte-enables are supported for writes.\n352: \n353:    The serial order of bit transmission\n354:    is chosen to match SPI flash devices. Individual bytes\n355:    are always transmitted with the most significant bit first.\n356:    Multi-byte writes are also supported, and if ByteOrder = 0,\n357:    the bits of [`TXDATA`](#txdata) are transmitted strictly in order of\n358:    decreasing significance (i.e. most significant bit first).\n359:    For some processor architectures, this could lead to shuffling\n360:    of flash data as compared to how it is written in memory.\n361:    In which case, choosing ByteOrder = 1 can reverse the\n362:    byte-order of multi-byte data writes.  (Though within\n363:    each byte the most significant bit is always sent first.)\n364: \n365: - Word Aligned Offset Range: `0x28`to`0x28`"
+        }
+      ],
+      "upstream_path": "hw/ip/spi_host/doc/registers.md",
+      "git_blob": "dffd0955e07e0248a9638fe98633c8344d883ceb",
+      "url": "https://github.com/lowRISC/opentitan/blob/0ea5236fe749e70ba18f56ba19c4be982ef46da7/hw/ip/spi_host/doc/registers.md",
+      "role": "register-interface intended byte order"
+    },
+    {
+      "source": "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host.sv",
+      "sha256": "cf138a8b69249c303cc704a89a3391b021b639b80c5a4788be9bcd910e8e77ac",
+      "excerpts": [
+        {
+          "start_line": 427,
+          "end_line": 460,
+          "text": "427:   // Note on ByteOrder and ByteSwapping.\n428:   // ByteOrder == 1 is for Little-Endian transmission (i.e. LSB first), which is achieved by\n429:   // default with the prim_packer_fifo implementation.  Thus we have to swap if Big-Endian\n430:   // transmission is required (i.e. if ByteOrder == 0).\n431:   spi_host_data_fifos #(\n432:     .TxDepth(TxDepth),\n433:     .RxDepth(RxDepth),\n434:     .SwapBytes(~ByteOrder)\n435:   ) u_data_fifos (\n436:     .clk_i,\n437:     .rst_ni,\n438: \n439:     .tx_data_i                  (tx_data),\n440:     .tx_be_i                    (tx_be),\n441:     .tx_valid_i                 (tx_valid_checked),\n442:     .tx_ready_o                 (tx_ready),\n443:     .tx_watermark_i             (tx_watermark),\n444: \n445:     .core_tx_data_o             (core_tx_data),\n446:     .core_tx_be_o               (core_tx_be),\n447:     .core_tx_valid_o            (core_tx_valid),\n448:     .core_tx_ready_i            (core_tx_ready),\n449:     .core_tx_byte_select_full_i (core_tx_byte_select_full),\n450: \n451:     .core_rx_data_i             (core_rx_data),\n452:     .core_rx_valid_i            (core_rx_valid),\n453:     .core_rx_ready_o            (core_rx_ready),\n454: \n455:     .rx_data_o                  (rx_data),\n456:     .rx_valid_o                 (rx_valid),\n457:     .rx_ready_i                 (rx_ready),\n458:     .rx_watermark_i             (rx_watermark),\n459: \n460:     .tx_empty_o                 (tx_empty),"
+        },
+        {
+          "start_line": 484,
+          "end_line": 520,
+          "text": "484:     .rst_ni,\n485: \n486:     .command_i             (core_command),\n487:     .command_csid_i        (core_command_csid),\n488:     .command_valid_i       (core_command_valid),\n489:     .command_ready_o       (core_command_ready),\n490:     .en_i                  (en),\n491:     .tx_data_i             (core_tx_data),\n492:     .tx_be_i               (core_tx_be),\n493:     .tx_valid_i            (core_tx_valid),\n494:     .tx_ready_o            (core_tx_ready),\n495:     .tx_byte_select_full_o (core_tx_byte_select_full),\n496:     .rx_data_o             (core_rx_data),\n497:     .rx_valid_o            (core_rx_valid),\n498:     .rx_ready_i            (core_rx_ready),\n499:     .sck_o                 (sck),\n500:     .csb_o                 (csb),\n501:     .sd_o                  (sd_out),\n502:     .sd_en_o               (sd_en_core),\n503:     .sd_i,\n504:     .rx_stall_o            (rx_stall),\n505:     .tx_stall_o            (tx_stall),\n506:     .sw_rst_i              (sw_rst),\n507:     .active_o              (active)\n508:   );\n509: \n510:   logic event_error;\n511: \n512:   logic [5:0] error_vec;\n513:   logic [5:0] error_mask;\n514:   logic [5:0] sw_error_status;\n515: \n516:   assign error_vec  = {\n517:       error_access_inval,\n518:       error_csid_inval,\n519:       error_cmd_inval,\n520:       error_underflow,"
+        }
+      ],
+      "upstream_path": "hw/ip/spi_host/rtl/spi_host.sv",
+      "git_blob": "6ceaabee9f3ca0c6fa20a2502e4e11cb4b528cd1",
+      "url": "https://github.com/lowRISC/opentitan/blob/0ea5236fe749e70ba18f56ba19c4be982ef46da7/hw/ip/spi_host/rtl/spi_host.sv",
+      "role": "integration boundary only, not a golden functional model"
+    },
+    {
+      "source": "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_data_fifos.sv",
+      "sha256": "9dacf4e1bcb48c85aefc5e858a146974e88ee1a04599e1792bd456dfc9cb6860",
+      "excerpts": [
+        {
+          "start_line": 54,
+          "end_line": 99,
+          "text": "54:   logic [31:0] tx_data_ordered;\n55:   logic [3:0]  tx_be_ordered;\n56:   logic [31:0] rx_data_unordered;\n57: \n58:   if (SwapBytes) begin : gen_swap\n59:     assign tx_data_ordered = { << 8 {tx_data_i} };\n60:     assign tx_be_ordered   = { << { tx_be_i} };\n61:     assign rx_data_o       = { << 8 { rx_data_unordered } };\n62:   end else begin : gen_do_not_swap\n63:     assign tx_data_ordered = tx_data_i;\n64:     assign tx_be_ordered   = tx_be_i;\n65:     assign rx_data_o       = rx_data_unordered;\n66:   end : gen_do_not_swap\n67: \n68:   logic [35:0]         tx_data_be;\n69:   logic [35:0]         core_tx_data_be;\n70: \n71:   logic [TxDepthW-1:0] tx_depth;\n72: \n73:   // The byte_select module greedily pops data from the TX FIFO, so\n74:   // the FIFO should be observed as having an effective depth of N+1.\n75:   assign tx_qd_o = 8'(tx_depth) + {7'b0, core_tx_byte_select_full_i};\n76: \n77:   assign tx_data_be = { tx_data_ordered, tx_be_ordered };\n78:   assign { core_tx_data_o, core_tx_be_o } = core_tx_data_be;\n79: \n80:   prim_fifo_sync #(\n81:     .Width(36),\n82:     .Pass(1),\n83:     .Depth(TxDepth)\n84:   ) u_tx_fifo (\n85:     .clk_i,\n86:     .rst_ni,\n87:     .clr_i    (sw_rst_i),\n88:     .wvalid_i (tx_valid_i),\n89:     .wready_o (tx_ready_o),\n90:     .wdata_i  (tx_data_be),\n91:     .rvalid_o (core_tx_valid_o),\n92:     .rready_i (core_tx_ready_i),\n93:     .rdata_o  (core_tx_data_be),\n94:     .full_o   (),\n95:     .depth_o  (tx_depth),\n96:     .err_o    ()\n97:   );\n98: \n99:   logic [RxDepthW-1:0] rx_depth;"
+        },
+        {
+          "start_line": 104,
+          "end_line": 124,
+          "text": "104:     .Width(32),\n105:     .Pass(1),\n106:     .Depth(RxDepth)\n107:   ) u_rx_fifo (\n108:     .clk_i,\n109:     .rst_ni,\n110:     .clr_i    (sw_rst_i),\n111:     .wvalid_i (core_rx_valid_i),\n112:     .wready_o (core_rx_ready_o),\n113:     .wdata_i  (core_rx_data_i),\n114:     .rvalid_o (rx_valid_o),\n115:     .rready_i (rx_ready_i),\n116:     .rdata_o  (rx_data_unordered),\n117:     .full_o   (),\n118:     .depth_o  (rx_depth),\n119:     .err_o    ()\n120:   );\n121: \n122:   // Create the status outputs\n123:   // - Include the 1-word storage in byte_select for the TX datapath\n124:   assign tx_empty_o = (tx_qd_o == 0);"
+        }
+      ],
+      "upstream_path": "hw/ip/spi_host/rtl/spi_host_data_fifos.sv",
+      "git_blob": "e0ccdc1fb68b2e240de1fafb606ee4c541f6ceab",
+      "url": "https://github.com/lowRISC/opentitan/blob/0ea5236fe749e70ba18f56ba19c4be982ef46da7/hw/ip/spi_host/rtl/spi_host_data_fifos.sv",
+      "role": "identity/permutation wiring outside selected core"
+    }
+  ],
+  "upstream_dv_corroboration": [
+    {
+      "path": "results/real_parent_screen_20261104/byte-order-authority/upstream/dv_README.md",
+      "sha256": "b6b29f26639bbbcb12f0a9847be9ba1c4177367b04da5a1d1459245776be5b12",
+      "git_blob": "9b42fea4520d4523be37fd7a20b26796ce663fb6",
+      "url": "https://github.com/lowRISC/opentitan/blob/0ea5236fe749e70ba18f56ba19c4be982ef46da7/hw/ip/spi_host/dv/README.md",
+      "role": "Upstream DV corroboration only; not supplied as checker implementation or treated as formal proof"
+    },
+    {
+      "path": "results/real_parent_screen_20261104/byte-order-authority/upstream/spi_host_scoreboard.sv",
+      "sha256": "26939e18fa2112fba3ee703fe3595806996a39a79937c6aacb74e8abb64460e9",
+      "git_blob": "4341a3d4b6a5102172550b103ff641ed37462bab",
+      "url": "https://github.com/lowRISC/opentitan/blob/0ea5236fe749e70ba18f56ba19c4be982ef46da7/hw/ip/spi_host/dv/env/spi_host_scoreboard.sv",
+      "role": "Upstream DV corroboration only; not supplied as checker implementation or treated as formal proof"
+    }
+  ],
+  "unchanged": {
+    "registration_sha256": "51ea749f617f3eb8cdd036b2a3929acf245e3e93daf0a324e4e99b7425fabea4",
+    "driver_sha256": "971cda2c21546e54305a659cfe58ee7332f6ea73c4eb13665898eb357e5f7b09",
+    "interface_sha256": "4ce243f2d9f6dc4fd3e6a35abc382a7cada42bd418db1330b78a79d69d2cb5cf",
+    "DUT_hashes": {
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_util_pkg.sv": "12ec73502dc8115cf1e6051f10cba6fc73259f066581722d9d895d1e634676b2",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_cmd_pkg.sv": "a9a44c9cc067c6b0904cfff2f3056b9312a475518be32e36efe0c8a951e1af8d",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv": "99aeb7564474111dc6662488c9f4ca6b788723e449b128d08ac54f8fc2da5cd2",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv": "68b2c02faa5893399cfa5c48151c67a1d251da1bfe553d2c09674dce8ecf2431",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv": "8fe85d2fb05aaa0abbc7742c3e136ab5e7af9143ddfdb902beaf67f6f3121b97",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv": "8521227fb238f1962e34d671ffc274b5d43d7c4b5582549c00d6093fe5b0d2ce",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv": "5324b93183a0475c5e955b76a7b1e9c1c9739e810a70d213491c5657837ee47c",
+      "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv": "dc89b9b63ba31a219eef38999e77ae01b8e361007ef1eaf99306d5e50c72cd7b",
+      "third_party/opentitan_candidate/hw/ip/spi_host/doc/theory_of_operation.md": "2db47bf4eaff25bfd618221d1e926a37072cde4aefdca7eca74994b672bbbfdb",
+      "third_party/opentitan_candidate/hw/ip/spi_host/doc/programmers_guide.md": "1d509c8ce4f953248664d01ed1437f5efe117aae2377b73553e0bc3514e95613",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert.sv": "d717d5dbcba3b5aa8a731ef9f8af18b036b49edef282f0a43a51f5ad2dd9bb40",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert_dummy_macros.svh": "cac4a930105da662547de873f0b80246074fb22df9a398663e1c8ac3e7998218",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert_standard_macros.svh": "4835706249e017eae999256ea807c526a39a49729196fc0aa18bb8818de86ab6",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert_yosys_macros.svh": "d1fd8c350785a7c6d8cccc0b0c385392b71575397e7dc58c70f07716c8f9f3a3",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_assert_sec_cm.svh": "25db89fe5f250c1bcbd808d0b4808206b9e85ac337b26e4ebb23f2ad569e1a13",
+      "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_flop_macros.sv": "2e8e6c2ee484899ae5d0020eaf0c9732c31537c60c30cb2a0a0acd2e92baee03",
+      "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv": "68854581eaa23a57f00c4b49ee0ce972147ffca9f2800da2859d1fe38cc5b476"
+    },
+    "budgets_and_gates": {
+      "repetitions": 3,
+      "rounds": 6,
+      "max_new_cycles": 64,
+      "seed_cycles": 8
+    }
+  },
+  "B_allowed": false,
+  "checker_frozen": false
+}

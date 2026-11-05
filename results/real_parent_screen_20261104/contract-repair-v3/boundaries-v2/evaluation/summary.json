@@ -1,0 +1,538 @@
+{
+  "status": "evaluated_not_frozen",
+  "checker_author": "claude-opus-5-5",
+  "controls_author": "GPT/Codex",
+  "B_allowed": false,
+  "selftests": [
+    {
+      "name": "std_tx_good_passes",
+      "pass": true
+    },
+    {
+      "name": "std_tx_bitflip_fails",
+      "pass": true
+    },
+    {
+      "name": "cs_rise_midsegment_fails",
+      "pass": true
+    },
+    {
+      "name": "csnlead_violation_fails",
+      "pass": true
+    },
+    {
+      "name": "withdrawn_command_is_assumption_violation",
+      "pass": true
+    },
+    {
+      "name": "std_rx_partial_word_passes",
+      "pass": true
+    },
+    {
+      "name": "rx_nonzero_padding_fails",
+      "pass": true
+    },
+    {
+      "name": "rx_wrong_byte_fails",
+      "pass": true
+    },
+    {
+      "name": "dummy_segment_scope_unresolved",
+      "pass": true
+    },
+    {
+      "name": "csaat_rise_without_change_fails",
+      "pass": true
+    },
+    {
+      "name": "csaat_rise_pending_csid_change_ok",
+      "pass": true
+    },
+    {
+      "name": "csaat_rise_invalid_offer_fails",
+      "pass": true
+    },
+    {
+      "name": "truncated_trace_inconclusive",
+      "pass": true
+    },
+    {
+      "name": "cpol1_idle_setup_good_passes",
+      "pass": true
+    },
+    {
+      "name": "cpol1_idle_setup_bad_payload_fails",
+      "pass": true
+    },
+    {
+      "name": "starvation_exhausted_be_postponed_trailing_early_refill_passes",
+      "pass": true
+    },
+    {
+      "name": "starvation_truncated_pending",
+      "pass": true
+    },
+    {
+      "name": "starvation_dirty_resume_fails",
+      "pass": true
+    },
+    {
+      "name": "spurious_sck_fails",
+      "pass": true
+    }
+  ],
+  "worker_errors": [],
+  "controls": [
+    {
+      "name": "held_cs_continuation",
+      "kind": "observational_positive",
+      "expected": "Judge complete public protocol trace; do not assume DUT correct",
+      "verdict": "pass",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null
+    },
+    {
+      "name": "same_csid_config_change",
+      "kind": "observational_positive",
+      "expected": "Judge complete public protocol trace; do not assume DUT correct",
+      "verdict": "fail",
+      "failure_count": 35,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null
+    },
+    {
+      "name": "pending_cpol_csid_change",
+      "kind": "observational_positive",
+      "expected": "Judge complete public protocol trace; do not assume DUT correct",
+      "verdict": "pass",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null
+    },
+    {
+      "name": "zero_be_then_payload",
+      "kind": "observational_positive",
+      "expected": "Judge complete public protocol trace; do not assume DUT correct",
+      "verdict": "pass",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null
+    },
+    {
+      "name": "negative/premature_held_cs_release",
+      "kind": "single_fault",
+      "baseline": "held_cs_continuation",
+      "expected": "CSAAT release without valid changed offer must fail; trace mutation, not RTL mutant",
+      "verdict": "fail",
+      "failure_count": 2,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": true,
+      "credited_detection": true
+    },
+    {
+      "name": "negative/wrong_cpol_at_select",
+      "kind": "single_fault",
+      "baseline": "pending_cpol_csid_change",
+      "expected": "CPOL violation at a real new select assertion",
+      "verdict": "fail",
+      "failure_count": 2,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": true,
+      "credited_detection": true
+    }
+  ],
+  "cases": {
+    "held_cs_continuation": {
+      "verdict": "pass",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "pass",
+          "start_cycle": 8,
+          "end_cycle": 124,
+          "evidence": "held_cs: segment 0 (3 bytes) then segment 1"
+        }
+      ],
+      "unresolved": [],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 2,
+        "commands_accepted": 2,
+        "segments_completed": 2,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 1,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "same_csid_config_change": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 88,
+          "category": "cs_framing",
+          "detail": "segment 1 started without a CSB assertion after the previous segment"
+        },
+        {
+          "cycle": 88,
+          "category": "cpol",
+          "detail": "SCK not at CPOL idle level before first edge of segment 1"
+        },
+        {
+          "cycle": 88,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 89,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 90,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 91,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 92,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 93,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 94,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 95,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 96,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 97,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 98,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 99,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 100,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 101,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 102,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 103,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 104,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 105,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 106,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 107,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 108,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 109,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 110,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 111,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 112,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 113,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 114,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 115,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 116,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 117,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 118,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 119,
+          "category": "sck_phase",
+          "detail": "SCK edge direction inconsistent with CPOL"
+        },
+        {
+          "cycle": 120,
+          "category": "spurious_sck",
+          "detail": "SCK toggled with no accepted pending segment"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 2,
+        "commands_accepted": 2,
+        "segments_completed": 2,
+        "failures": 35,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "pending_cpol_csid_change": {
+      "verdict": "pass",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "pass",
+          "start_cycle": 8,
+          "end_cycle": 127,
+          "evidence": "csid_change: segment 0 (3 bytes) then segment 1"
+        }
+      ],
+      "unresolved": [],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 2,
+        "commands_accepted": 2,
+        "segments_completed": 2,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 1,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "zero_be_then_payload": {
+      "verdict": "pass",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 2,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/premature_held_cs_release": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 70,
+          "category": "csaat",
+          "detail": "CSB deasserted after CSAAT segment without CSID/config change"
+        },
+        {
+          "cycle": 72,
+          "category": "cs_without_command",
+          "detail": "CSB[0] asserted with no accepted segment"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "fail",
+          "start_cycle": 8,
+          "end_cycle": 124,
+          "evidence": "held_cs: segment 0 (3 bytes) then segment 1"
+        }
+      ],
+      "unresolved": [],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 2,
+        "commands_accepted": 2,
+        "segments_completed": 2,
+        "failures": 2,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 1,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/wrong_cpol_at_select": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 91,
+          "category": "cpol",
+          "detail": "SCK not at CPOL level at CSB assertion"
+        },
+        {
+          "cycle": 91,
+          "category": "csnlead",
+          "detail": "CSB fall to first SCK edge 0.0 < (CSNLEAD+1)*(CLKDIV+1)"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "partial_word_then_next_transaction",
+          "kind": "fail",
+          "start_cycle": 8,
+          "end_cycle": 127,
+          "evidence": "csid_change: segment 0 (3 bytes) then segment 1"
+        }
+      ],
+      "unresolved": [],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 2,
+        "commands_accepted": 2,
+        "segments_completed": 2,
+        "failures": 2,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 1,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    }
+  },
+  "event_integrity_errors": [],
+  "successful_events_on_unresolved_cases": {},
+  "control_counts": {
+    "independent_positive": 0,
+    "no_false_alarm": 0,
+    "baseline_scoped_pass_negatives": 2,
+    "negative_total": 2,
+    "credited_detections": 2,
+    "raw_negative_flags": 2
+  },
+  "limits": [
+    "No calibration trace presumed correct because it came from the DUT.",
+    "Raw failure flags on a failing baseline are not detection credit.",
+    "Selftests do not independently validate the checker.",
+    "Pending/unresolved is not pass. No new simulation or API call in evaluation."
+  ],
+  "hashes": {
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/claude-checker-v3/candidate/checker.py": "1914aa2b15fb1a7e1bf6e8866bb84a75f64d4f21b34f89a5c69851c18ff9ed7b",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/claude-checker-v3/candidate/selftest.py": "c979856edd450bb62db6be0a8c258fe708f24275962ef76b54149256705344dc",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/contract-repair-v3/boundaries-v2/controls/inputs.json": "090e70068a576485efb9ae44f968834c92acee1e4feab7af19cb10c053244f5d",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/contract-repair-v3/boundaries-v2/controls/controls.json": "96c6e8c0b7675900e58f9bc6952b561abd83ec2db752e0325af70f1415561b18",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/evaluate_spi_core_checker.py": "23ba19276a2a7bef3d9a6beb41b65e3212b2774b11582895023bd6682582d6f9"
+  }
+}

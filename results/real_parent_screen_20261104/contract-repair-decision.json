@@ -1,0 +1,118 @@
+{
+  "status": "contract_resolved_checker_not_frozen_waiting_author_repair",
+  "B_allowed": false,
+  "C_allowed": false,
+  "contract_id": "spi_host_core_public_contract_v2_lsb",
+  "authority_sha256": "8035a800571994de2d0b7f037e55a3dff1ca6b35d4e05036d4965a16990a7842",
+  "authority_limit": "Project interpretation of conflicting pinned upstream documentation and unchanged parent boundary mapping, not a maintainer erratum.",
+  "checker_version": "claude-checker-v2",
+  "checker_sha256": "31890549ab2f221984ade7fdb2133ae890b88136ff6dd0da68c33b49ddfab6c1",
+  "review_ready": false,
+  "model_calls": [
+    {
+      "role": "author",
+      "requested_model": "claude-opus-5-5",
+      "returned_models": [
+        "claude-opus-5-5"
+      ],
+      "status": "complete",
+      "input_tokens": 36790,
+      "output_tokens": 8218,
+      "thinking_tokens_subset_of_output": 3849,
+      "cost_usd": 0.348306,
+      "wall_seconds": 72.103835250251,
+      "metadata_sha256": "d412223976edf6b8fcc2753fa5bc74ca2c740867de20a19909b1ccd22cc9b8f0"
+    },
+    {
+      "role": "review",
+      "requested_model": "claude-opus-5-5",
+      "returned_models": [
+        "claude-opus-5-5"
+      ],
+      "status": "complete",
+      "input_tokens": 73832,
+      "output_tokens": 4529,
+      "thinking_tokens_subset_of_output": 1645,
+      "cost_usd": 0.45973600000000003,
+      "wall_seconds": 51.786041957791895,
+      "metadata_sha256": "5f9457d144e1054c91a3791cbc96eafc0b1921fd8b47b5df75fb79717f0e5425"
+    }
+  ],
+  "API_total_tokens": 123369,
+  "reported_cost_usd": 0.808042,
+  "OpenAI_calls": 0,
+  "initial_control_counts": {
+    "independent_positive": 9,
+    "no_false_alarm": 9,
+    "baseline_scoped_pass_negatives": 10,
+    "negative_total": 10,
+    "credited_detections": 9,
+    "raw_negative_flags": 9
+  },
+  "initial_evaluated_cases": 47,
+  "expanded_controls": {
+    "cases": 68,
+    "independent_positive": 26,
+    "no_false_alarm": 18,
+    "missing_events": [
+      {
+        "case": "calibration/tx_starvation_resume",
+        "required_event_family": "tx_starvation_resume",
+        "reason": "Required triggered event missing; an empty event list is not a passing integrity check"
+      },
+      {
+        "case": "truncated/tx_starvation_resume",
+        "required_event_family": "tx_starvation_resume",
+        "reason": "Required triggered event missing; an empty event list is not a passing integrity check"
+      },
+      {
+        "case": "hand/tx_starvation",
+        "required_event_family": "tx_starvation_resume",
+        "reason": "Required triggered event missing; an empty event list is not a passing integrity check"
+      },
+      {
+        "case": "hand/truncated_starvation",
+        "required_event_family": "tx_starvation_resume",
+        "reason": "Required triggered event missing; an empty event list is not a passing integrity check"
+      },
+      {
+        "case": "hand/dirty_starvation",
+        "required_event_family": "tx_starvation_resume",
+        "reason": "Required triggered event missing; an empty event list is not a passing integrity check"
+      }
+    ],
+    "aligned_rx_full0": "pass"
+  },
+  "blocking_distinct_issues": [
+    "checker CPOL1 idle setup misattributed as selected serial edge",
+    "checker TX starvation trigger/event omission"
+  ],
+  "fixed_infrastructure_issue": "Evaluator now rejects missing required_event_family; 5 expanded controls flag omission. Earlier empty event_integrity_errors retained as historical measurement limitation.",
+  "controls_correction": "Old FULLCYC0 private input used FULLCYC1 clock schedule and is retained as sampling-ambiguous. New resimulated aligned input passes existing v2 checker without checker changes.",
+  "review_corrections": [
+    "F4/F7 claim no real pending CSID control beyond selftests is too strong: calibration/partial_then_csid_switch was included in full, with valid newCSID before acceptance and checker pass.",
+    "F5 first diagnostic is a half-period glitch, but full ledger ALSO has tx_underflow. The one-row output glitch still does not establish fault coverage for timing-clean illegal stall pulses.",
+    "Review supplies useful hypotheses; full local evidence remains authoritative. CPOL and missing-event blockers independently reproduced using hand controls."
+  ],
+  "simulation_accounting": {
+    "compilations": 4,
+    "executions": 30,
+    "actual_cycles_all_simulators": 5136,
+    "compile_seconds": 26.757265584077686,
+    "simulate_seconds": 1.1100003710016608,
+    "trace_agreement": true,
+    "raw_DUT_denominator": 3107,
+    "reference_counter_identity_verified": true,
+    "hand_trace_mutations_execute_zero_DUT_cycles": true
+  },
+  "unchanged_registration_sha256": "51ea749f617f3eb8cdd036b2a3929acf245e3e93daf0a324e4e99b7425fabea4",
+  "next_patch_packet_sha256": "44a34cbb7bb4ed2c2743b6f17fc1bc0b8ed53005c15079a663de02afe2c638ec",
+  "staged_anthropic_key_present": false,
+  "limits": [
+    "Software reset remains unresolved; pass_unresolved is not counted as successful recovery.",
+    "Independent checker controls are finite and not formal proof. No RTL mutant claim.",
+    "Only41 of47 initial traces supplied losslessly to reviewer; omitted6 successful CPOL0 supplemental traces named in preflight. All47 evaluations supplied with disclosed diagnostic truncation.",
+    "No development or formal A/B/C/placebo model calls. Original budget/gates and20 source groups unchanged.",
+    "Ordinary traffic already hits16/20 groups; nothing here establishes a C advantage or held-out independence."
+  ]
+}

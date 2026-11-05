@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 181406,
+  "stop_reason": "end_turn",
+  "session_id": "e1e12713-1913-4f7b-9e14-c36728dba0fb",
+  "total_cost_usd": 0.439711,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 4219,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 20930,
+    "output_tokens_details": {
+      "thinking_tokens": 12917
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 4219
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 20930,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 4219,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 4219,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 20930,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 4219,
+      "webSearchRequests": 0,
+      "costUSD": 0.439711,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 12917,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\"checker_source\":\"import collections\\n\\nW={'i_reset':1,'i_mcyc':1,'i_mstb':1,'i_mwe':1,'i_maddr':8,'i_mdata':32,'i_msel':4,'i_sstall':1,'i_sack':1,'i_sdata':32,'i_serr':1,'o_mstall':1,'o_mack':1,'o_mdata':32,'o_merr':1,'o_scyc':1,'o_sstb':1,'o_swe':1,'o_saddr':8,'o_sdata':32,'o_ssel':4}\\nCTRL_IN=['i_reset','i_mcyc','i_mstb','i_sstall','i_sack','i_serr']\\nCTRL_OUT=['o_mstall','o_mack','o_merr','o_scyc','o_sstb']\\n\\ndef _f(pre,k,i):\\n    v=pre.get(k)\\n    if v is None:\\n        return None\\n    w=W[k]\\n    return (v>>(i*w))&((1<<w)-1)\\n\\ndef _dec(a):\\n    if a is None:\\n        return None\\n    if (a&0xf0)==0x00:\\n        return 0\\n    if (a&0xf0)==0x10:\\n        return 1\\n    return None\\n\\ndef check_rows(rows):\\n    failures=[]\\n    av=[]\\n    events=[]\\n    unresolved=[]\\n    cnt=collections.Counter()\\n    def fail(c,cat,d):\\n        failures.append({'cycle':c,'category':cat,'detail':d})\\n    def asm(c,cat,d):\\n        av.append({'cycle':c,'category':cat,'detail':d})\\n    mq=[[],[]]\\n    sq=[[],[]]\\n    amb=False\\n    prev=None\\n    seen_reset=False\\n    lastc=None\\n    if not isinstance(rows,list) or not rows:\\n        asm(None,'scope','empty or non-list trace')\\n        rows=[]\\n    for r in rows:\\n        if not isinstance(r,dict) or not isinstance(r.get('pre'),dict) or not isinstance(r.get('post'),dict) or not isinstance(r.get('cycle'),int):\\n            asm(None,'scope','malformed row')\\n            break\\n        c=r['cycle']\\n        pre=r['pre']\\n        post=r['post']\\n        if lastc is not None and c!=lastc+1:\\n            asm(c,'scope','non-contiguous cycle numbering')\\n            break\\n        lastc=c\\n        bad=False\\n        for k in W:\\n            if k not in pre:\\n                asm(c,'scope','missing pre field '+k)\\n                bad=True\\n                continue\\n            v=pre[k]\\n            n=1 if k=='i_reset' else 2\\n            if v is not None and (not isinstance(v,int) or v<0 or v>=(1<<(W[k]*n))):\\n                asm(c,'scope','out-of-range pre field '+k)\\n                bad=True\\n        for k in CTRL_IN+CTRL_OUT:\\n            if k in pre and pre.get(k) is None:\\n                if k in CTRL_IN:\\n                    asm(c,'scope','undefined control input '+k)\\n                else:\\n                    fail(c,'control','undefined control output '+k)\\n                bad=True\\n        if bad:\\n            break\\n        if pre['i_reset']&1:\\n            seen_reset=True\\n            for m in (0,1):\\n                if _f(pre,'i_mcyc',m) or _f(pre,'i_mstb',m):\\n                    asm(c,'reset','master %d CYC/STB active during reset'%m)\\n                cnt['discarded_by_reset']+=len(mq[m])\\n            mq=[[],[]]\\n            sq=[[],[]]\\n            amb=False\\n            prev=None\\n            for k in ('o_scyc','o_sstb'):\\n                v=post.get(k)\\n                if v is None or v!=0:\\n                    fail(c,'reset','post-reset-edge %s not inactive: %r'%(k,v))\\n            events.append({'family':'reset','kind':'reset_edge','start_cycle':c,'end_cycle':c,'evidence':'i_reset high at rising edge (synchronous)'})\\n            continue\\n        if not seen_reset:\\n            asm(c,'scope','trace does not begin with reset')\\n            seen_reset=True\\n        def g(k,i):\\n            return _f(pre,k,i)\\n        if prev is not None:\\n            def p(k,i):\\n                return _f(prev,k,i)\\n            for m in (0,1):\\n                if p('i_mcyc',m) and p('i_mstb',m) and p('o_mstall',m) and g('i_mcyc',m):\\n                    if (not g('i_mstb',m)) or any(p(k,m)!=g(k,m) for k in ('i_mwe','i_maddr','i_msel')) or (p('i_mwe',m) and p('i_mdata',m)!=g('i_mdata',m)):\\n                        asm(c,'hold','master %d changed/withdrew stalled request without dropping CYC'%m)\\n            for s in (0,1):\\n                if p('o_scyc',s) and p('o_sstb',s) and p('i_sstall',s) and g('o_scyc',s):\\n                    if (not g('o_sstb',s)) or any(p(k,s)!=g(k,s) for k in ('o_swe','o_saddr','o_ssel')) or (p('o_swe',s) and p('o_sdata',s)!=g('o_sdata',s)):\\n                        fail(c,'hold','slave %d stalled request changed/withdrawn without dropping CYC'%s)\\n        for m in (0,1):\\n            if g('i_mstb',m) and not g('i_mcyc',m):\\n                asm(c,'protocol','master %d STB without CYC'%m)\\n            if g('o_mack',m) and g('o_merr',m):\\n                fail(c,'protocol','master %d ACK and ERR coincide'%m)\\n        for s in (0,1):\\n            if g('o_sstb',s) and not g('o_scyc',s):\\n                fail(c,'protocol','slave %d STB without CYC'%s)\\n            if g('i_sack',s) and g('i_serr',s) and g('o_scyc',s):\\n                asm(c,'protocol','slave %d ACK and ERR coincide'%s)\\n        for m in (0,1):\\n            if not g('i_mcyc',m):\\n                if mq[m]:\\n                    for e in mq[m]:\\n                        e['st']='aborted'\\n                    cnt['aborted']+=len(mq[m])\\n                    events.append({'family':'abort','kind':'master_cycle_withdrawn','start_cycle':mq[m][0]['acc'],'end_cycle':c,'evidence':'master %d dropped CYC with %d outstanding'%(m,len(mq[m]))})\\n                mq[m]=[]\\n            elif g('i_mstb',m) and not g('o_mstall',m):\\n                we=g('i_mwe',m)\\n                a=g('i_maddr',m)\\n                sel=g('i_msel',m)\\n                d=g('i_mdata',m)\\n                if we is None or a is None or sel is None or (we and d is None):\\n                    asm(c,'payload','master %d accepted request with undefined payload'%m)\\n                mq[m].append({'m':m,'we':we,'a':a,'sel':sel,'d':d,'acc':c,'st':'new','sl':_dec(a),'rd':None,'fc':None,'sc':None})\\n                cnt['master_accepted']+=1\\n        for s in (0,1):\\n            if not g('o_scyc',s):\\n                for se in sq[s]:\\n                    for e in (se['own'] or []):\\n                        if e['st']=='fwd':\\n                            e['st']='dropped'\\n                sq[s]=[]\\n                continue\\n            if g('o_sstb',s) and not g('i_sstall',s):\\n                we=g('o_swe',s)\\n                a=g('o_saddr',s)\\n                sel=g('o_ssel',s)\\n                d=g('o_sdata',s)\\n                if we is None or a is None or sel is None or (we and d is None):\\n                    fail(c,'payload','slave %d request with undefined payload'%s)\\n                if _dec(a)!=s:\\n                    fail(c,'routing','address %r presented to slave %d'%(a,s))\\n                cnt['slave_accepted']+=1\\n                if amb:\\n                    sq[s].append({'own':None})\\n                    continue\\n                cands=[]\\n                for m in (0,1):\\n                    h=None\\n                    for e in mq[m]:\\n                        if e['st']=='new' and e['sl'] is not None:\\n                            h=e\\n                            break\\n                    if h is not None and h['sl']==s and h['we']==we and h['a']==a and h['sel']==sel and ((not we) or h['d']==d):\\n                        cands.append(h)\\n                if not cands:\\n                    fail(c,'routing_payload','slave %d accepted request (we=%r,a=%r,sel=%r,d=%r) matching no oldest unforwarded master request: invented, duplicated, reordered or corrupted'%(s,we,a,sel,d))\\n                    sq[s].append({'own':None})\\n                elif len(cands)==1:\\n                    cands[0]['st']='fwd'\\n                    cands[0]['fc']=c\\n                    cands[0]['fs']=s\\n                    sq[s].append({'own':cands})\\n                    cnt['forwarded']+=1\\n                else:\\n                    amb=True\\n                    unresolved.append({'cycle':c,'item':'ownership_ambiguous','detail':'identical requests from both masters; ownership/data checks suspended until reset'})\\n                    sq[s].append({'own':None})\\n        for s in (0,1):\\n            if not g('o_scyc',s):\\n                continue\\n            ack=g('i_sack',s)\\n            er=g('i_serr',s)\\n            if ack or er:\\n                if not sq[s]:\\n                    if not amb:\\n                        asm(c,'unsolicited','slave %d response with no outstanding accepted request'%s)\\n                    continue\\n                se=sq[s].pop(0)\\n                if se['own'] is None:\\n                    continue\\n                e=se['own'][0]\\n                if e['st']!='fwd':\\n                    cnt['orphan_slave_responses_discarded']+=1\\n                    continue\\n                e['sc']=c\\n                if ack and not er:\\n                    e['st']='sacked'\\n                    if not e['we']:\\n                        e['rd']=g('i_sdata',s)\\n                        if e['rd'] is None:\\n                            asm(c,'payload','slave %d read ACK with undefined data'%s)\\n                else:\\n                    e['st']='serr'\\n        for m in (0,1):\\n            if not g('i_mcyc',m):\\n                continue\\n            ack=g('o_mack',m)\\n            er=g('o_merr',m)\\n            if not (ack or er):\\n                continue\\n            if not mq[m]:\\n                if not amb:\\n                    fail(c,'invented_response','master %d %s with no outstanding request'%(m,'ACK' if ack else 'ERR'))\\n                continue\\n            e=mq[m].pop(0)\\n            st=e['st']\\n            e['st']='retired'\\n            if amb:\\n                continue\\n            if ack and not er:\\n                if st=='sacked':\\n                    if not e['we']:\\n                        md=g('o_mdata',m)\\n                        if md is None or md!=e['rd']:\\n                            fail(c,'read_data','master %d got %r, slave returned %r'%(m,md,e['rd']))\\n                    cnt['completed_ok']+=1\\n                    events.append({'family':'transaction','kind':'write_ok' if e['we'] else 'read_ok','start_cycle':e['acc'],'end_cycle':c,'evidence':'m%d accept@%d slave%d accept@%d slaveACK@%d masterACK@%d'%(m,e['acc'],e.get('fs',-1),e['fc'],e['sc'],c)})\\n                else:\\n                    fail(c,'response','master %d ACK but oldest request state is %s (decode error, slave error, dropped, or no slave ACK)'%(m,st))\\n            else:\\n                if st=='sacked':\\n                    fail(c,'response','master %d ERR although slave ACKed oldest request'%m)\\n                else:\\n                    kind='decode_err' if e['sl'] is None else ('slave_err' if st=='serr' else 'timeout_or_starvation_err')\\n                    cnt[kind]+=1\\n                    events.append({'family':'error','kind':kind,'start_cycle':e['acc'],'end_cycle':c,'evidence':'m%d accept@%d state %s ERR@%d'%(m,e['acc'],st,c)})\\n        prev=pre\\n    pm=sum(len(q) for q in mq)\\n    ps=sum(1 for q in sq for se in q if se['own'] and se['own'][0]['st']=='fwd')\\n    cnt['pending_master']=pm\\n    cnt['pending_slave']=ps\\n    if pm or ps:\\n        unresolved.append({'cycle':lastc,'item':'pending_at_batch_end','detail':'%d master-side and %d slave-side obligations outstanding; inconclusive, not a liveness violation'%(pm,ps)})\\n    fc=[f['cycle'] for f in failures+av if f['cycle'] is not None]\\n    if any(f['cycle'] is None for f in failures+av):\\n        events=[]\\n    events=[e for e in events if not any(e['start_cycle']<=x<=e['end_cycle'] for x in fc)]\\n    if av:\\n        verdict='input_or_scope_invalid'\\n    elif failures:\\n        verdict='dut_violation'\\n    elif unresolved:\\n        verdict='unresolved'\\n    else:\\n        verdict='scoped_pass'\\n    return {'failures':failures,'assumption_violations':av,'events':events,'unresolved':unresolved,'verdict':verdict,'counts':dict(cnt)}\\n\",\"selftest_source\":\"KEYS=['i_reset','i_mcyc','i_mstb','i_mwe','i_maddr','i_mdata','i_msel','i_sstall','i_sack','i_sdata','i_serr','o_mstall','o_mack','o_mdata','o_merr','o_scyc','o_sstb','o_swe','o_saddr','o_sdata','o_ssel']\\n\\ndef _row(c,**kw):\\n    pre={k:0 for k in KEYS}\\n    pre.update(kw)\\n    post={k:0 for k in KEYS if k.startswith('o_')}\\n    return {'cycle':c,'pre':pre,'post':post}\\n\\ndef _base():\\n    return [_row(0,i_reset=1),_row(1,i_reset=1)]\\n\\ndef _wr(sd=0xAB,sa=0x05,ss=0):\\n    rows=_base()\\n    rows.append(_row(2,i_mcyc=1,i_mstb=1,i_mwe=1,i_maddr=0x05,i_mdata=0xAB,i_msel=0xF))\\n    rows.append(_row(3,i_mcyc=1,o_scyc=1<<ss,o_sstb=1<<ss,o_swe=1<<ss,o_saddr=sa<<(8*ss),o_sdata=sd<<(32*ss),o_ssel=0xF<<(4*ss)))\\n    rows.append(_row(4,i_mcyc=1,o_scyc=1<<ss,i_sack=1<<ss))\\n    rows.append(_row(5,i_mcyc=1,o_mack=1))\\n    rows.append(_row(6))\\n    return rows\\n\\ndef _rd(md=0x55):\\n    rows=_base()\\n    rows.append(_row(2,i_mcyc=2,i_mstb=2,i_maddr=0x12<<8,i_msel=0xF<<4))\\n    rows.append(_row(3,i_mcyc=2,o_scyc=2,o_sstb=2,o_saddr=0x12<<8,o_ssel=0xF<<4))\\n    rows.append(_row(4,i_mcyc=2,o_scyc=2,i_sack=2,i_sdata=0x55<<32))\\n    rows.append(_row(5,i_mcyc=2,o_mack=2,o_mdata=md<<32))\\n    rows.append(_row(6))\\n    return rows\\n\\ndef _unm(ack=False):\\n    rows=_base()\\n    rows.append(_row(2,i_mcyc=1,i_mstb=1,i_maddr=0x40,i_msel=0xF))\\n    rows.append(_row(3,i_mcyc=1))\\n    if ack:\\n        rows.append(_row(4,i_mcyc=1,o_mack=1))\\n    else:\\n        rows.append(_row(4,i_mcyc=1,o_merr=1))\\n    rows.append(_row(5))\\n    return rows\\n\\ndef run(check_rows):\\n    tests=[\\n        ('write_positive',_wr(),'scoped_pass'),\\n        ('write_payload_fault',_wr(sd=0xAC),'dut_violation'),\\n        ('write_misroute_fault',_wr(ss=1),'dut_violation'),\\n        ('read_positive',_rd(),'scoped_pass'),\\n        ('read_data_fault',_rd(md=0x56),'dut_violation'),\\n        ('unmapped_err_positive',_unm(),'scoped_pass'),\\n        ('unmapped_ack_fault',_unm(ack=True),'dut_violation'),\\n        ('invented_ack_fault',_base()+[_row(2,i_mcyc=1,o_mack=1),_row(3)],'dut_violation'),\\n        ('incomplete_unresolved',_wr()[:4],'unresolved'),\\n        ('unsolicited_slave_ack_env',_base()+[_row(2,o_scyc=1,i_sack=1),_row(3)],'input_or_scope_invalid'),\\n    ]\\n    out=[]\\n    for n,r,exp in tests:\\n        try:\\n            ok=check_rows(r)['verdict']==exp\\n        except Exception:\\n            ok=False\\n        out.append({'name':n,'pass':ok})\\n    return out\\n\",\"properties\":[{\"id\":\"P1_routing\",\"requirement\":\"Every slave-side accepted request (o_scyc&o_sstb&!i_sstall pre-edge) targets the slave decoded from its address ((a&0xf0)==0x00 -> slave0, 0x10 -> slave1).\",\"source\":\"Packet address_configuration; README 188-196\",\"assumptions\":[\"Public parameter decode\"],\"support_status\":\"checked\"},{\"id\":\"P2_payload\",\"requirement\":\"Each forwarded request equals the oldest unforwarded mapped request of exactly one master in WE, address, SEL, and write data; no request is forwarded twice or invented.\",\"source\":\"WB B4 3.1.3.2, rule 3.60; crossbar article\",\"assumptions\":[\"Per-master forwarding order preserved\"],\"support_status\":\"checked\"},{\"id\":\"P3_response_order\",\"requirement\":\"Master ACK/ERR retire that master's oldest outstanding request; ACK only after the corresponding slave ACK; slave ERR maps to ERR.\",\"source\":\"WB B4 3.1.3.2; README 'ACK responses won't get crossed'\",\"assumptions\":[\"Slaves respond in acceptance order\"],\"support_status\":\"checked\"},{\"id\":\"P4_read_data\",\"requirement\":\"Read data on master ACK equals data the slave returned with its ACK for the same transaction.\",\"source\":\"WB B4 observation 3.10\",\"assumptions\":[],\"support_status\":\"checked\"},{\"id\":\"P5_decode_error\",\"requirement\":\"Requests to unmapped addresses are never forwarded and must be answered with ERR, not ACK.\",\"source\":\"Crossbar article (nonexistent addresses)\",\"assumptions\":[],\"support_status\":\"checked (no latency bound)\"},{\"id\":\"P6_abort_reset_epoch\",\"requirement\":\"Master CYC drop or synchronous reset discards outstanding work; later slave responses to discarded work must not reach masters as completions.\",\"source\":\"WB B4 3.1.1, 3.1.2; crossbar article abort\",\"assumptions\":[\"Reset synchronous\"],\"support_status\":\"checked\"},{\"id\":\"P7_reset_outputs\",\"requirement\":\"After a reset edge, o_scyc and o_sstb are inactive.\",\"source\":\"WB B4 rule 3.20\",\"assumptions\":[],\"support_status\":\"checked\"},{\"id\":\"P8_handshake\",\"requirement\":\"DUT holds stalled slave requests, never STB without CYC, never ACK with ERR on a master port.\",\"source\":\"WB B4 3.1.3.2, rule 3.45\",\"assumptions\":[],\"support_status\":\"checked\"},{\"id\":\"P9_timeout\",\"requirement\":\"OPT_TIMEOUT=16 / starvation ERR: ERR on unforwarded or unanswered forwarded requests is accepted; exact cycle count not checked.\",\"source\":\"wbxbar.v header 32-39\",\"assumptions\":[\"Latency prose insufficient for an exact bound\"],\"support_status\":\"unproved (permissive)\"},{\"id\":\"P10_liveness\",\"requirement\":\"Outstanding obligations at trace end are reported as pending, not as failures.\",\"source\":\"Packet instructions\",\"assumptions\":[],\"support_status\":\"reported only\"}],\"contract_markdown\":\"# WBXBAR spec checker contract\\n\\n**Scope:** public pins of wbxbar rev 2e8d3bc2, NM=2, NS=2, AW=8, DW=32, with the packet's decode. Only pre-edge values define transfers; post values are used only for post-reset output checks. Reset is synchronous. The trace must start with reset and have contiguous cycles.\\n\\n**Checked:**\\n- routing\\n- payload and SEL preservation (write data only)\\n- per-master in-order retirement\\n- ACK only after the matching slave ACK\\n- read-data equality with slave-returned data\\n- decode ERR for unmapped addresses\\n- slave ERR propagation\\n- abort/reset/CYC-drop epoch separation\\n- stalled-request hold and basic handshake legality\\n\\n**Environment violations:** these are reported separately and yield input_or_scope_invalid. They include:\\n- master hold or STB-without-CYC\\n- unsolicited slave responses\\n- undefined active payload\\n- CYC/STB high during reset\\n\\n**Limitations:**\\n- Exact arbitration, pipeline and timeout latencies are not checked. Timeout/starvation ERR is accepted for any request that has no slave ACK.\\n- Responses while master CYC is low are ignored.\\n- Identical concurrent requests from both masters make ownership ambiguous. Functional checks are then suspended until reset and reported as unresolved.\\n- Pending work at trace end yields unresolved.\\n- Events are descriptive and are dropped if any failure falls in their window.\\n- The per-master forwarding order assumption is derived from the no-crossed-ACK claim.\\n- The selftests are minimal and are not certification.\"}\n```",
+  "ttft_ms": 126307,
+  "type": "result",
+  "duration_ms": 181591,
+  "uuid": "c421d25c-affc-4628-b557-faf921aad76e",
+  "ttft_stream_ms": 2320,
+  "time_to_request_ms": 177,
+  "first_content_frame_ms": 2321,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 20930,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 4219,
+      "webSearchRequests": 0,
+      "costUSD": 0.439711,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 12917,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

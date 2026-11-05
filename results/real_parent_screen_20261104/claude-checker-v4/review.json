@@ -1,0 +1,69 @@
+{
+  "ready_for_offline_gate": true,
+  "gate_scope": "LIMITED supported event checker only: stable-window sampling, Standard/Dual/Quad data segments (no Dual/Quad bidirectional), hardware reset. Dummy segments and software-reset completion are still unresolved; they do not pass. This is not a certification of spi_host_core. B/C is not authorized. Finite controls are not formal proof.",
+  "findings": [
+    {
+      "id": "F1_cpol_idle",
+      "severity": "info",
+      "result": "acceptable",
+      "detail": "With all CSB lines high, an SCK change is accepted only if it moves to the CPOL of the head of the accepted queue. A second idle toggle, or a toggle with no pending segment, still raises spurious_sck. Payload and phase checks are not skipped. hand/wrong_cpol1_payload fails at a real sample, and boundary/negative/wrong_cpol_at_select fails CPOL at CSB assertion. Residual gap: an idle-level change driven by an offered but not-yet-accepted command (cmd_off) would be flagged. No control exercises this, so the possible false alarm is unvalidated."
+    },
+    {
+      "id": "F2_byte_bit_counts_order",
+      "severity": "info",
+      "result": "acceptable",
+      "detail": "The expected edge count is 2*n*8/width. TX visits enabled lanes in order 0..3, MSB-first per byte, and flushes the partial word at segment end. RX packs into lanes 7:0 upward with zero HIGH padding. All of this matches the registered amendment and the examples. It is justified by theory 412-419 and 483. Superseded lines 698-702 and 735-740 are retained as history. The Dual/Quad lane significance matches line 419. Negative controls cover: reversed lanes, nonzero padding, wrong low byte, wrong TX bit, zero_be_then_payload and sparse BE."
+    },
+    {
+      "id": "F3_event_false_success",
+      "severity": "info",
+      "result": "acceptable",
+      "detail": "An event is confirmed only by an overdue selected SCK edge, never by flags. Both flag_only controls produce no event. Benign-delay controls behave correctly: tx_refill_260 to 268 and rx_one_cycle_hold produce no event, and tx_refill_300 produces one. The ev() window starts at segment acceptance (or at the reset trigger), so earlier payload faults make it dirty. Confirmed results: dirty_tx, dirty_rx and dirty_starvation are fail; clock_during_tx_stall is fail. Truncated runs give pending or no event, never pass. done() requires sdone, a CSB rise when CSAAT=0, every RX word observed, and resolved RX bits."
+    },
+    {
+      "id": "F4_prefix_expectation_change",
+      "severity": "info",
+      "result": "justified",
+      "detail": "At the old cutoffs, the elapsed time equals exactly CLKDIV+1. An edge at that moment is still legal, so there is no witnessed pause. Requiring an event there would have to rely on flag evidence. The obligation is preserved, not weakened:\n- The original traces now forbid success.\n- New prefixes one cycle later require pending, and they are pending.\n- The original failures are archived."
+    },
+    {
+      "id": "F5_csid_config_changes",
+      "severity": "info",
+      "result": "acceptable",
+      "detail": "CSAAT release is permitted only by an accepted, or stably offered, next segment with a different CSID or configuration. Offers with valid=0 never permit release (self-test plus the premature_held_cs_release fault). partial_then_csid_switch and pending_cpol_csid_change pass. boundary/same_csid_config_change keeps a failure as a DUT-versus-theory 241-249 conflict. It is correctly not waived, and it is not claimed as a production bug. Its sck_phase failures are cascade noise, not separate defects."
+    },
+    {
+      "id": "F6_reset",
+      "severity": "minor",
+      "result": "limited evidence",
+      "detail": "Hardware reset clears the queue, words and rxexp, so stale TX data would surface as underflow or mismatch, and stale RX data as rx_unexpected_word. The supporting controls are one positive (hardware_abort_restart), one CSB fault and one truncation. There is no injected stale-payload-after-hardware-reset negative control, so stale-data detection is argued from code, not demonstrated. An abort is recorded only if the segment had already started edges; a reset that hits a queued but unstarted segment yields no event. Software reset is correctly labelled pass_unresolved, giving an inconclusive verdict."
+    },
+    {
+      "id": "F7_rx_backpressure_vs_natural_gaps",
+      "severity": "minor",
+      "result": "residual risk",
+      "detail": "An event is declared if any selected edge exceeds last+half while rx_valid&!rx_ready is held. An implementation-dependent transient inter-byte gap (theory 584) that coincides with a multi-cycle benign hold could be labelled backpressure. That would be a mislabelled event, not a false failure. Only a one-cycle hold is controlled."
+    },
+    {
+      "id": "F8_negative_accounting",
+      "severity": "info",
+      "result": "consistent",
+      "detail": "There are 14 negatives and 13 credited detections. The uncredited one is negative/missing_rx_word, which by design gives inconclusive with no invented timeout. Unsupported speed or bidirectional segments are blocked. After a dummy segment, later segments never complete, so the outcome is inconclusive with no false pass."
+    },
+    {
+      "id": "F9_isolation_driver",
+      "severity": "info",
+      "result": "acceptable",
+      "detail": "The driver replays inputs only and contains no expected values. Timing is pre at +4, edge at +5, post at +9. The validator rejects illegal or out-of-width inputs and transfers during reset. The checker and controls are hash-pinned. No DUT internals are used. Eighteen omitted raw traces were not inspected; only their diagnostics were reviewed."
+    }
+  ],
+  "limitations": [
+    "Read-only review of the supplied packet. Nothing was executed, and there is no proof of checker correctness or completeness.",
+    "Dummy-segment semantics and software-reset completion or data disposition remain unresolved obligations.",
+    "The same-CSID config-change-after-CSAAT conflict stays open pending upstream interpretation.",
+    "There is no negative control for stale data after hardware reset, for an unaccepted-offer CPOL idle change, or for a long benign RX hold coinciding with a transient gap.",
+    "The 18 omitted traces were not inspected.",
+    "Only two-state signals and the core boundary are covered: no TLUL, FIFOs or four-state behaviour.",
+    "This review grants no B/C authorization and makes no coverage, equivalence or formal claim."
+  ]
+}

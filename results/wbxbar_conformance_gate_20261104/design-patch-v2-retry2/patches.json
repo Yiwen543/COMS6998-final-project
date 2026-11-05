@@ -1,0 +1,65 @@
+{
+  "patches": [
+    {
+      "path": [
+        "clause_matrix",
+        5,
+        "acceptance",
+        "no_entry"
+      ],
+      "before": "If no such entry exists, the response is invented and the hypothesis dies, with ONE exception. If the response is an ERR (never an ACK) in row c on master m, and row c shows m holding an unaccepted strobed request (pre i_mcyc[m]&i_mstb[m]&o_mstall[m]), the ERR is tagged possible_starvation_err (unknown). Basis: wbxbar.v header 37-39 says a starved master receives a bus error, but gives no phase, timing or precedence. The tagged ERR retires nothing and creates no entry. The held request stays unaccepted, and a later acceptance of it is a normal new entry. The tag does not claim starvation occurred and carries no timing inference. An ACK in the same situation still has no basis: K6 (inferred) invention applies and the hypothesis dies.",
+      "after": "Held-request condition HR(m,c) holds in either of two cases. (i) Held: row c has pre i_mcyc[m]&i_mstb[m]&o_mstall[m]. (ii) Acceptance edge: row c has a master acceptance on m, and row c-1 had m held under o_mstall with an identical K2 projection. An ERR (never an ACK) on m in row c with HR(m,c) branches; no branch is preferred. Branch A (ordinary): retire m's oldest live entry from rows < c under the K8 tags. If no such entry exists, branch A dies. Branch B (possible_starvation_err, unknown): retire nothing and keep every live entry. In case (ii), branch B splits further. B1 leaves the row-c entry live. B2 removes the row-c entry from the retirable FIFO, makes it a canceled-pool member tagged starvation_attributed (a later forward of it is tagged like post_abort_forward), and creates no pending obligation for it. Basis: wbxbar.v header 37-39 says a starved master gets a bus error, but states no phase, timing or precedence against outstanding retirements. The tag never claims starvation occurred and carries no latency inference. Withdrawal edge: if pre i_mcyc[m]=0 in row c after a held request in row c-1, K13 already records same_edge_response_after_abort (unresolved) and retires nothing, so no extra rule is needed. Without HR(m,c), a response with no retirable entry is invented and the hypothesis dies. An ACK never uses branch B: an ACK with no entry is invented (K6, inferred) in every case. Earlier deaths and violations are unaffected."
+    },
+    {
+      "path": [
+        "ownership_algorithm",
+        "verdict_semantics",
+        "clause_level"
+      ],
+      "before": "With H nonempty, a judged clause is pass only if no surviving hypothesis carries an unknown tag (post_abort_forward, unexplained_mapped_err, same_edge_response_after_abort) and none has pending work. Otherwise it is unresolved(clause), listing the alternatives and their downstream consequences.",
+      "after": "With H nonempty, a judged clause is pass only if no surviving hypothesis carries ANY tag of class unknown, and none has pending work. The tag class is generic. Current members are post_abort_forward, unexplained_mapped_err, same_edge_response_after_abort, possible_starvation_err, starvation_attributed and unresolved_owner_alternative. Any future tag defaults to class unknown unless the design explicitly classifies it otherwise. Failing that test, the clause is unresolved(clause), listing the alternatives and their downstream consequences."
+    },
+    {
+      "path": [
+        "ownership_algorithm",
+        "resource_limits",
+        "still_valid_after_exhaustion",
+        8
+      ],
+      "before": "Per-master ACKs in current CYC <= acceptances in current CYC. ERRs in the same CYC are counted against acceptances, except an ERR that meets the K6 possible_starvation_err condition. Such an ERR is counted separately and tagged unknown.",
+      "after": "Per-master ACKs in the current CYC <= acceptances in the current CYC. This holds regardless of ERR attribution. ERRs not meeting HR(m,c) are added to that bound: ACKs + non-HR ERRs <= acceptances. ERRs meeting HR(m,c) are counted separately, tagged unknown, and added to neither side, so the bound can neither falsely fail nor certify attribution. All counters are arbitrary-precision; a bounded counter that would overflow yields unresolved_on_counter_limit, never a wrap or saturation verdict."
+    }
+  ],
+  "control_assessments_additions": [
+    {
+      "name": "err_boundary/old_live_and_held_request",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K6 (inferred) HR branch",
+        "K7",
+        "K8",
+        "K9"
+      ],
+      "unresolved_scope": "The read accepted at 6 is forwarded at 8. At 10 m0 holds a stalled write 0x05, and pre o_merr is high. Branch A retires the read (unexplained_mapped_err); the ACK at 13 then has no entry and the branch dies. Branch B (possible_starvation_err) survives: the ACK at 13 retires the read with slave data 0xABCDEF12. The held write is withdrawn by a CYC drop, which is a permitted abort, so there is no env violation. The result is unresolved by the unknown tag, not proven starvation. K5 is excluded."
+    },
+    {
+      "name": "err_boundary/acceptance_edge",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K6 (inferred) HR case ii",
+        "K9"
+      ],
+      "unresolved_scope": "The request is held under stall and accepted at 8 with o_merr in the same row. The row-8 entry is not retirable in row 8, so branch A dies. Branches B1 and B2 survive. CYC drops at 9: B1's entry becomes canceled, and B2's is already starvation_attributed. No pending work remains. This is unresolved, not invention."
+    },
+    {
+      "name": "err_boundary/cyc_withdrawal_edge",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K13 same-edge"
+      ],
+      "unresolved_scope": "The request is held through 8 and pre i_mcyc[0]=0 at 9 together with o_merr. CYC fell exactly in row 9, so the existing K13 rule records same_edge_response_after_abort (unresolved) and retires nothing. No new rule is needed."
+    }
+  ],
+  "rationale": "R1: when the held-request condition holds, an ERR now branches over ordinary retirement and possible_starvation_err (retire nothing). The checker therefore never forces an owner, and a genuine later ACK cannot falsely empty H. ACK is never given this alternative. R2: an acceptance-edge case is added, with sub-branches B1/B2 so that a starvation ERR attributed to the just-accepted request cannot create a false pending obligation or invention. The withdrawal edge is already covered by K13, verified against the fixture's pre CYC at row 9, so it is not changed. Unknown tags are now a generic class, so a newly named tag cannot produce scoped_pass. The post-exhaustion ERR counter excludes HR ERRs from both sides, which keeps it sound. Precedence of earlier violations, matched budgets, K5 exclusion and all other rules are unchanged. No latency is inferred from option names, and no source requires CYC to drop after an ERR (permission 3.20).",
+  "ready_for_review": true
+}

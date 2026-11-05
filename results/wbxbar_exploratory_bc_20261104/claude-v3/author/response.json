@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 36000,
+  "stop_reason": "end_turn",
+  "session_id": "9708aa38-e25a-4164-a92d-bebcdc01420b",
+  "total_cost_usd": 0.337611,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 53239,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 3570,
+    "output_tokens_details": {
+      "thinking_tokens": 2270
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 53239
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 3570,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 53239,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 53239,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 3570,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 53239,
+      "webSearchRequests": 0,
+      "costUSD": 0.337611,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 2270,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "{\"patches\":[{\"file\":\"checker.py\",\"before\":\"    mq=[[],[]]\\n    sq=[[],[]]\\n    amb=False\\n    prev=None\\n    seen_reset=False\",\"after\":\"    mq=[[],[]]\\n    sq=[[],[]]\\n    ab=[[],[]]\\n    amb=False\\n    prev=None\\n    seen_reset=False\"},{\"file\":\"checker.py\",\"before\":\"            mq=[[],[]]\\n            sq=[[],[]]\\n            amb=False\\n            prev=None\\n            for k in ('o_scyc','o_sstb'):\",\"after\":\"            mq=[[],[]]\\n            sq=[[],[]]\\n            ab=[[],[]]\\n            amb=False\\n            prev=None\\n            for k in ('o_scyc','o_sstb'):\"},{\"file\":\"checker.py\",\"before\":\"                if mq[m]:\\n                    for e in mq[m]:\\n                        e['st']='aborted'\",\"after\":\"                if mq[m]:\\n                    ab[m].extend([e for e in mq[m] if e['st']=='new' and e['sl'] is not None])\\n                    for e in mq[m]:\\n                        e['st']='aborted'\"},{\"file\":\"checker.py\",\"before\":\"                if not cands:\\n                    fail(c,'routing_payload',\",\"after\":\"                tc=[]\\n                for m in (0,1):\\n                    h=None\\n                    for e in ab[m]:\\n                        if e['sl']==s:\\n                            h=e\\n                            break\\n                    if h is not None and h['we']==we and h['a']==a and h['sel']==sel and ((not we) or _weq(h['d'],d,sel)):\\n                        tc.append((m,h))\\n                if len(cands)+len(tc)>1:\\n                    amb=True\\n                    unresolved.append({'cycle':c,'item':'ownership_ambiguous','detail':'slave %d request matches multiple live/aborted owners; ownership/data checks suspended until reset'%s})\\n                    sq[s].append({'own':None})\\n                elif not cands and tc:\\n                    m,h=tc[0]\\n                    ab[m].remove(h)\\n                    cnt['post_abort_forward']+=1\\n                    unresolved.append({'cycle':c,'item':'post_abort_forward','detail':'slave %d accepted m%d request accepted@%d, aborted (CYC withdrawn) before forwarding, forwarded@%d; abort-propagation status not established by public spec; return discarded, never counted as completion; persists for batch'%(s,m,h['acc'],c)})\\n                    sq[s].append({'own':None})\\n                elif not cands:\\n                    fail(c,'routing_payload',\"}],\"rationale\":[\"Unforwarded mapped requests withdrawn by master CYC drop are retained per master as abort tombstones; reset clears them, while emitted unresolved findings persist in the cumulative batch.\",\"A slave acceptance matching no live work but exactly the oldest same-slave tombstone of one master (WE/addr/SEL exact, write data on SEL-enabled lanes) is unresolved post_abort_forward with acceptance and forward cycles; the identity is consumed once and its slave return is discarded as orphan (own=None), never counted as completion.\",\"No cycle cutoff is applied: late matching forwards are likewise unresolved. Corrupted payload, duplicate forwards and post-reset forwards match nothing and remain routing_payload failures. Multiple live/aborted candidate owners become ownership_ambiguous unresolved rather than guessed.\",\"Prior ERR, byte-mask, hold, and response checks are unchanged. Selftests and docs are left as before in this patch set to keep the edit narrow; the integration role should add the requested synthetic cases (matching, corrupted, late, reset-separated, duplicate) \u2014 disclosed limitation.\"]}",
+  "ttft_ms": 25636,
+  "type": "result",
+  "duration_ms": 36146,
+  "uuid": "1c22b6f4-330e-4ec7-819b-3addf28ccf8d",
+  "ttft_stream_ms": 3286,
+  "time_to_request_ms": 140,
+  "first_content_frame_ms": 3287,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 3570,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 53239,
+      "webSearchRequests": 0,
+      "costUSD": 0.337611,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 2270,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

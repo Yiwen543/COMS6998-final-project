@@ -1,0 +1,71 @@
+{
+  "status": "confirmed mismatch between supplied pinned core documentation and pinned core behavior; root authority classification unresolved",
+  "source_revision": "0ea5236fe749e70ba18f56ba19c4be982ef46da7",
+  "role": "Post-review integration diagnosis, NOT a checker rewrite; not supplied to checker author or first reviewer",
+  "tx": {
+    "accepted_word_cycle": 8,
+    "accepted_word": "0xa1b2c3d4",
+    "byte_enable": 15,
+    "first_eight_rising_edge_cycles": [
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25
+    ],
+    "pre_MOSI_bits": [
+      1,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    "observed_first_byte": "0xd4",
+    "supplied_spec_first_byte": "0xa1 (bits31:24)",
+    "spec_lines": [
+      698,
+      699,
+      700,
+      701,
+      702
+    ]
+  },
+  "rx": {
+    "case": "ordinary_fullcycle_read",
+    "read_bytes": 3,
+    "constant_input_SD": 10,
+    "standard_lane1_bit": 1,
+    "observed_word_cycle": 60,
+    "observed_word": "0xffffff",
+    "supplied_spec_word": "0xffffff00",
+    "spec_lines": [
+      735,
+      736,
+      737,
+      738
+    ]
+  },
+  "source_mechanism": {
+    "byte_select": "Original wdata_be[9*ii+:9] maps input word[8*ii+:8]. Packer begins ptr_q=0 and selects low OutW bits of data_q >> ptr_q*OutW. This outputs low byte first.",
+    "byte_merge": "Original pack mode inserts wdata_i at depth_q*InW, beginning with depth=0; first byte therefore occupies low byte; do_fill adds high zero bytes.",
+    "driver": "Direct word-to-tx_data_i assignment; no implicit byteswap. Both original-SV simulator traces agreed in canonical calibration."
+  },
+  "limitations": [
+    "Do not relabel the original RTL as fixed or silently reverse checker expectations.",
+    "This diagnoses documentation versus implementation at the registered core boundary; it is not a full-IP or production bug attribution.",
+    "Uniform-byte RX words can hide this discrepancy; the only initial passing recovery trace had all bytes 0xff."
+  ],
+  "hashes": {
+    "third_party/opentitan_candidate/hw/ip/spi_host/doc/theory_of_operation.md": "2db47bf4eaff25bfd618221d1e926a37072cde4aefdca7eca74994b672bbbfdb",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv": "8fe85d2fb05aaa0abbc7742c3e136ab5e7af9143ddfdb902beaf67f6f3121b97",
+    "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv": "68b2c02faa5893399cfa5c48151c67a1d251da1bfe553d2c09674dce8ecf2431",
+    "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv": "99aeb7564474111dc6662488c9f4ca6b788723e449b128d08ac54f8fc2da5cd2",
+    "examples/spi_core_integration/verif/tb_spi_core.sv": "971cda2c21546e54305a659cfe58ee7332f6ea73c4eb13665898eb357e5f7b09"
+  }
+}

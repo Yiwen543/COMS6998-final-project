@@ -1,0 +1,596 @@
+{
+  "scope_sha256": "51ea749f617f3eb8cdd036b2a3929acf245e3e93daf0a324e4e99b7425fabea4",
+  "repository_commit": "50d7ee83d61989017e28e981420cd58f4c5f0787",
+  "status": "SPI static/driver gate passed; independent checker construction is next; B remains blocked",
+  "candidate_decisions": {
+    "axi_dma": {
+      "status": "static_target_gate_rejected",
+      "raw_targets": 195,
+      "typed_supported": 189,
+      "mapped": 180,
+      "unresolved": 9,
+      "raw_dut_denominator": 8598,
+      "static_candidate_groups": 0,
+      "nontrivial_static_candidates": 0,
+      "static_count_gate_pass": false,
+      "pair_counts": {
+        "sat": 12713,
+        "unsat": 193,
+        "unknown": 0
+      }
+    },
+    "spi_host_core": {
+      "status": "eligible_for_independent_checker_construction_only",
+      "raw_targets": 289,
+      "typed_supported": 283,
+      "mapped": 269,
+      "unresolved": 14,
+      "raw_dut_denominator": 3107,
+      "static_candidate_groups": 20,
+      "nontrivial_static_candidates": 9,
+      "static_count_gate_pass": true,
+      "pair_counts": {
+        "sat": 22747,
+        "unsat": 780,
+        "unknown": 0
+      }
+    },
+    "i2c_master_axil": {
+      "status": "adapter_blocked",
+      "evidence": "i2c_master_axil/adapter-gate.json"
+    },
+    "flash_ctrl": {
+      "status": "multiclock_dependency_scope_deferred_before_execution"
+    }
+  },
+  "ordinary_control_union_groups": [
+    38,
+    42,
+    51,
+    54,
+    56,
+    58,
+    60,
+    68,
+    94,
+    102,
+    122,
+    137,
+    239,
+    243,
+    265,
+    276
+  ],
+  "calibration_observations": [
+    {
+      "case": "seed",
+      "cycles_including_seed": 8,
+      "transport_violations": [],
+      "simulator_trace_agreement": true,
+      "accepted_commands": [],
+      "tx_stall_cycles": 0,
+      "rx_stall_cycles": 0,
+      "fully_hit_groups": [],
+      "additional_groups_over_ordinary_union": [],
+      "functional_status": "unjudged_pending_independent_checker"
+    },
+    {
+      "case": "ordinary_standard_write",
+      "cycles_including_seed": 64,
+      "transport_violations": [],
+      "simulator_trace_agreement": true,
+      "accepted_commands": [
+        10
+      ],
+      "tx_stall_cycles": 0,
+      "rx_stall_cycles": 0,
+      "fully_hit_groups": [
+        38,
+        42,
+        94,
+        102,
+        122,
+        137,
+        239,
+        243,
+        265,
+        276
+      ],
+      "additional_groups_over_ordinary_union": [],
+      "functional_status": "unjudged_pending_independent_checker"
+    },
+    {
+      "case": "ordinary_three_speeds",
+      "cycles_including_seed": 184,
+      "transport_violations": [],
+      "simulator_trace_agreement": true,
+      "accepted_commands": [
+        10,
+        66,
+        122
+      ],
+      "tx_stall_cycles": 0,
+      "rx_stall_cycles": 0,
+      "fully_hit_groups": [
+        38,
+        42,
+        54,
+        56,
+        58,
+        60,
+        94,
+        102,
+        122,
+        137,
+        239,
+        243,
+        265,
+        276
+      ],
+      "additional_groups_over_ordinary_union": [],
+      "functional_status": "unjudged_pending_independent_checker"
+    },
+    {
+      "case": "tx_starvation_resume",
+      "cycles_including_seed": 264,
+      "transport_violations": [],
+      "simulator_trace_agreement": true,
+      "accepted_commands": [
+        10
+      ],
+      "tx_stall_cycles": 55,
+      "rx_stall_cycles": 0,
+      "fully_hit_groups": [
+        38,
+        42,
+        94,
+        102,
+        122,
+        137,
+        239,
+        243,
+        265,
+        276,
+        315
+      ],
+      "additional_groups_over_ordinary_union": [
+        315
+      ],
+      "functional_status": "unjudged_pending_independent_checker"
+    },
+    {
+      "case": "rx_backpressure_resume",
+      "cycles_including_seed": 392,
+      "transport_violations": [],
+      "simulator_trace_agreement": true,
+      "accepted_commands": [
+        8
+      ],
+      "tx_stall_cycles": 0,
+      "rx_stall_cycles": 125,
+      "fully_hit_groups": [
+        68,
+        94,
+        102,
+        122,
+        137,
+        239,
+        243,
+        265,
+        276,
+        315
+      ],
+      "additional_groups_over_ordinary_union": [
+        315
+      ],
+      "functional_status": "unjudged_pending_independent_checker"
+    },
+    {
+      "case": "partial_then_csid_switch",
+      "cycles_including_seed": 184,
+      "transport_violations": [],
+      "simulator_trace_agreement": true,
+      "accepted_commands": [
+        8,
+        90
+      ],
+      "tx_stall_cycles": 0,
+      "rx_stall_cycles": 0,
+      "fully_hit_groups": [
+        68,
+        94,
+        102,
+        122,
+        137,
+        239,
+        243,
+        265,
+        276
+      ],
+      "additional_groups_over_ordinary_union": [],
+      "functional_status": "unjudged_pending_independent_checker"
+    },
+    {
+      "case": "software_reset_restart",
+      "cycles_including_seed": 184,
+      "transport_violations": [],
+      "simulator_trace_agreement": true,
+      "accepted_commands": [
+        8,
+        58
+      ],
+      "tx_stall_cycles": 0,
+      "rx_stall_cycles": 0,
+      "fully_hit_groups": [
+        0,
+        68,
+        94,
+        102,
+        122,
+        137,
+        239,
+        243,
+        265,
+        276
+      ],
+      "additional_groups_over_ordinary_union": [
+        0
+      ],
+      "functional_status": "unjudged_pending_independent_checker"
+    },
+    {
+      "case": "ordinary_fullcycle_read",
+      "cycles_including_seed": 120,
+      "transport_violations": [],
+      "simulator_trace_agreement": true,
+      "accepted_commands": [
+        8
+      ],
+      "tx_stall_cycles": 0,
+      "rx_stall_cycles": 0,
+      "fully_hit_groups": [
+        51,
+        68,
+        94,
+        102,
+        122,
+        137,
+        239,
+        243,
+        265,
+        276
+      ],
+      "additional_groups_over_ordinary_union": [],
+      "functional_status": "unjudged_pending_independent_checker"
+    }
+  ],
+  "limits": [
+    "Observed recovery is not specification-validated recovery.",
+    "TX and RX stalls share one equivalent guard group; do not count them as two distinct semantic groups.",
+    "A software-reset predicate is not proof of abort/restart correctness or a necessarily difficult target.",
+    "SPI was already explored as a standalone FSM; this is a new integration scope of the same IP family, not an independent held-out design.",
+    "Independent checker controls, event-to-source specificity, and B development acceptance remain outstanding. Static gate alone never enables B.",
+    "No evidence here establishes C over B. Most groups are reached by ordinary transfers."
+  ],
+  "reset_policy": {
+    "fresh_process": true,
+    "seed_cycles": 8,
+    "initial_settle_ns": 1,
+    "extra_clock_cycles": 0,
+    "denominator_identical": true,
+    "initial_reset_toggle_differences": [
+      {
+        "identity": [
+          "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+          54,
+          15,
+          "toggle",
+          "rst_ni:1->0",
+          ".u_select.u_packer"
+        ],
+        "inventory_hits": 0,
+        "driver_hits": 1
+      },
+      {
+        "identity": [
+          "third_party/opentitan_candidate/hw/ip/prim/rtl/prim_packer_fifo.sv",
+          54,
+          15,
+          "toggle",
+          "rst_ni:1->0",
+          ".u_merge.u_packer"
+        ],
+        "inventory_hits": 0,
+        "driver_hits": 1
+      },
+      {
+        "identity": [
+          "third_party/opentitan_candidate/hw/ip/prim_generic/rtl/prim_flop_en.sv",
+          13,
+          28,
+          "toggle",
+          "rst_ni:1->0",
+          ".u_fsm.u_sck_flop"
+        ],
+        "inventory_hits": 0,
+        "driver_hits": 1
+      },
+      {
+        "identity": [
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_merge.sv",
+          10,
+          23,
+          "toggle",
+          "rst_ni:1->0",
+          ".u_merge"
+        ],
+        "inventory_hits": 0,
+        "driver_hits": 1
+      },
+      {
+        "identity": [
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_byte_select.sv",
+          9,
+          23,
+          "toggle",
+          "rst_ni:1->0",
+          ".u_select"
+        ],
+        "inventory_hits": 0,
+        "driver_hits": 1
+      },
+      {
+        "identity": [
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_core.sv",
+          13,
+          37,
+          "toggle",
+          "rst_ni:1->0",
+          ""
+        ],
+        "inventory_hits": 0,
+        "driver_hits": 1
+      },
+      {
+        "identity": [
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_fsm.sv",
+          15,
+          38,
+          "toggle",
+          "rst_ni:1->0",
+          ".u_fsm"
+        ],
+        "inventory_hits": 0,
+        "driver_hits": 1
+      },
+      {
+        "identity": [
+          "third_party/opentitan_candidate/hw/ip/spi_host/rtl/spi_host_shift_register.sv",
+          12,
+          22,
+          "toggle",
+          "rst_ni:1->0",
+          ".u_shift_reg"
+        ],
+        "inventory_hits": 0,
+        "driver_hits": 1
+      }
+    ],
+    "qualification_groups_remain_seed_zero": true
+  },
+  "accounting": {
+    "live_model_calls": 0,
+    "API_tokens": 0,
+    "final_calibration_compilations": 2,
+    "final_calibration_executions": 16,
+    "final_calibration_cycles_all_simulators": 2800,
+    "all_calibration_attempts_compilations": 6,
+    "all_calibration_attempts_executions": 34,
+    "all_calibration_attempts_cycles_all_simulators": 5616,
+    "attempts": [
+      {
+        "directory": "spi_core_events-v1",
+        "compilation_attempts": 2,
+        "simulations": [
+          {
+            "log": "spi_core_events-v1/seed/iverilog.log",
+            "executed_cycles": 8,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v1/seed/verilator.log",
+            "executed_cycles": 8,
+            "completed": true
+          }
+        ]
+      },
+      {
+        "directory": "spi_core_events-v2",
+        "compilation_attempts": 2,
+        "simulations": [
+          {
+            "log": "spi_core_events-v2/ordinary_fullcycle_read/iverilog.log",
+            "executed_cycles": 120,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/ordinary_fullcycle_read/verilator.log",
+            "executed_cycles": 120,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/ordinary_standard_write/iverilog.log",
+            "executed_cycles": 64,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/ordinary_standard_write/verilator.log",
+            "executed_cycles": 64,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/ordinary_three_speeds/iverilog.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/ordinary_three_speeds/verilator.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/partial_then_csid_switch/iverilog.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/partial_then_csid_switch/verilator.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/rx_backpressure_resume/iverilog.log",
+            "executed_cycles": 392,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/rx_backpressure_resume/verilator.log",
+            "executed_cycles": 392,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/seed/iverilog.log",
+            "executed_cycles": 8,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/seed/verilator.log",
+            "executed_cycles": 8,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/software_reset_restart/iverilog.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/software_reset_restart/verilator.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/tx_starvation_resume/iverilog.log",
+            "executed_cycles": 264,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v2/tx_starvation_resume/verilator.log",
+            "executed_cycles": 264,
+            "completed": true
+          }
+        ]
+      },
+      {
+        "directory": "spi_core_events-v3",
+        "compilation_attempts": 2,
+        "simulations": [
+          {
+            "log": "spi_core_events-v3/ordinary_fullcycle_read/iverilog.log",
+            "executed_cycles": 120,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/ordinary_fullcycle_read/verilator.log",
+            "executed_cycles": 120,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/ordinary_standard_write/iverilog.log",
+            "executed_cycles": 64,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/ordinary_standard_write/verilator.log",
+            "executed_cycles": 64,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/ordinary_three_speeds/iverilog.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/ordinary_three_speeds/verilator.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/partial_then_csid_switch/iverilog.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/partial_then_csid_switch/verilator.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/rx_backpressure_resume/iverilog.log",
+            "executed_cycles": 392,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/rx_backpressure_resume/verilator.log",
+            "executed_cycles": 392,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/seed/iverilog.log",
+            "executed_cycles": 8,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/seed/verilator.log",
+            "executed_cycles": 8,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/software_reset_restart/iverilog.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/software_reset_restart/verilator.log",
+            "executed_cycles": 184,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/tx_starvation_resume/iverilog.log",
+            "executed_cycles": 264,
+            "completed": true
+          },
+          {
+            "log": "spi_core_events-v3/tx_starvation_resume/verilator.log",
+            "executed_cycles": 264,
+            "completed": true
+          }
+        ]
+      }
+    ],
+    "failed_first_attempt": "v1 reset assertion at time zero produced pre-edge simulator mismatch; retained; fixed 1 ns inactive-reset settle without adding a clock cycle",
+    "rejected_case_in_v2": "Single-cycle CSID-switch offer withdrew valid while not ready; v3 holds through acceptance."
+  },
+  "B_allowed": false,
+  "checker_started": false,
+  "OpenAI_key_requested": false,
+  "checker_packet": "spi-core-spec-packet-v2",
+  "checker_request_ready": true,
+  "next_gate": "Claude authors from isolated public spec/interface; independent controls and fresh review. Do not run B if selected events lack correct checker support or required distinct reachable source targets.",
+  "hashes": {
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/summarize_real_parent_screen.py": "26707022a3ce2e005a1e6e3f3f1f2a0a9672825774b2218ae1b3cf7d08879e9a",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/spi_host_core_v2/screen-v2/screen.json": "220476df1cb1104c24b66e1d8ee214ffd4d2837942fce9a50b0662c2586f120f",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/axi_dma/screen-v1/screen.json": "1babe798474e3a1ff96738b116793e9ec0b265928cafa57023edf2dd1422d167",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/spi_core_events-v3/observations.json": "eed8866d30c169bbf6bca2a2f324cd3726eca162b57767fcf9fda7010ad9d679",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/spi-core-spec-packet-v2/packet.json": "ed45683cdbbbdd785114837d7fbe2cae84695d7edc9ad05cffdd8d0b644ac32c"
+  }
+}

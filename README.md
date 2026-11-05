@@ -18,6 +18,79 @@ minimal-C live ablation also tied at round 5 in all twelve sessions: it reduced
 C's target token cost by 15.3%, but still cost 2.95% more than B-compact.
 Final toggle counts differ; see the [minimal-C result](docs/minimal_c_result_2026-11-03.md)
 and [IP diagnosis](docs/ip_selection_diagnosis_2026-11-03.md).
+
+The [fresh WBXBAR B/C trial with the frozen reference checker](docs/wbxbar_reference_bc_2026-11-04.md)
+has completed 36 live rounds and both evidence/accounting audits. All six sessions
+hit 17/17 targets in round 1 and finish unresolved. C costs 43.34% more tokens to
+target and 8.03% more in total, with tied final line/branch counts and a slightly
+lower final toggle mean. C briefly leads mean toggle in rounds 2–3; this is retained
+without claiming significance or an isolated semantic benefit. The run used 773,454
+API tokens, 42 simulations/8,400 cycles and zero retries. Original budgets, roles
+and historical results remain unchanged; the staged key was deleted.
+
+The preceding [WBXBAR reference-checker replay](docs/wbxbar_reference_replay_2026-11-04.md)
+has a separate registration and freeze. All 42 saved batches reproduce the original
+pins and all 2,845 raw DUT counters, also matching the prior cancellation replay;
+895 historical files remain hash-identical. The reviewed Claude checker reports
+six scoped seed passes and 36 unresolved generated rounds; all six final sessions
+remain unresolved. All 59 repeated original alarms have same-cycle/same-slave
+post-abort unknown counterparts. More explicit unknown records do not imply more
+defects. All 17 targets still occur in round 1, so this adds no C-over-B benefit.
+Replay adds 42 executions/8,360 cycles, zero compilation/model calls. The original
+budget and role separation remain; no fresh B/C run was launched.
+
+The preceding [WBXBAR conformance follow-up](docs/wbxbar_conformance_gate_2026-11-04.md)
+established the scoped checker gate with 58 author selftests, 127+6 control
+classifications, 158 evaluated cases and fresh independent code/documentation
+reviews. Cancellation timing, excluded forwarding order and other declared
+unknowns are not certified. Two nonblocking documentation edge cases remain.
+
+The [WBXBAR cancellation-checker revision](docs/wbxbar_cancel_contract_2026-11-04.md)
+now has a separate Claude-authored freeze and audited replay of all 42 saved batches.
+Pins and coverage are unchanged; all 18 final alarms have explicit unresolved
+post-abort counterparts. The six final sessions remain unresolved, not functional
+passes. Original results are preserved; no new stimulus generation was performed.
+
+The user-authorized [exploratory WBXBAR B/C pilot](docs/wbxbar_exploratory_bc_result_2026-11-04.md)
+has completed all 36 live rounds. B/C both hit all 17 original targets in round 1;
+final line/branch coverage ties at 82/86 and 79/88. C used 43.30% more mean tokens
+to the target. Its initial toggle coverage was higher, but final medians tied.
+The run used 770,531 tokens, 42 simulations and 8,360 physical cycles, with no
+retries. Independent Claude review plus unchanged-checker state tracing localizes
+all 18 final routing alarms to non-head aborted-request matching; post-abort
+conformance remains unresolved, with no confirmed new DUT defect. This preserves
+the old screen rejection and is a known-easy control, without placebo. A separately
+reviewed checker is now frozen for retrospective replay; a fresh experiment would
+require its own registration. The historical records stay frozen.
+
+The earlier [WBXBAR conditional-domain follow-up](docs/wbxbar_conditional_index_2026-11-04.md)
+proves the original state-index range under its actual activation condition,
+with base/induction and negative controls. All 109 definition checks pass;
+8 mapped seed-zero groups (6 nontrivial) qualify statically. However, isolated
+mapped/unmapped reads already hit all 17 member source counters. Forty-four
+ordinary cases agree across both simulators; the unchanged ordinary gate rejects
+this scope before checker/B/C. Forty-two tests and provenance checks pass; API
+cost is zero. This fixes the semantic blocker without demonstrating C benefit.
+
+The preceding [transaction/recovery screen](docs/transaction_recovery_screen_2026-11-04.md)
+preregisters original Wishbone firewall/crossbar and an AXIS RAM packet switch.
+Source-preserving array/instance/memory adaptations and precise Verilator shared
+counter membership pass 13 new checks plus 18 regressions. Firewall has no
+eligible groups; RAM switch has two trivial groups. Crossbar was blocked
+by an unproved state-index bound at that stage. None qualified for checker/B/C investment;
+no API calls were made, and the original budgets and SPI freezes are unchanged.
+
+The prior [SPI failure attribution](docs/spi_failure_attribution_2026-11-04.md)
+uses an independent read-only Claude review and dual-simulator single-variable
+controls. It supports one probable held-CS configuration-change DUT discrepancy
+with cascaded checker diagnostics; reviewer cycle errors are explicitly corrected.
+The [new multistep-event screen](docs/multistep_event_screen_2026-11-04.md)
+keeps the original budget and roles. AXI FIFO has no eligible static groups;
+frame-length adjustment plus FIFOs has six proven groups, all hit by ordinary
+single frames. Both are rejected before checker/model investment. No new B/C
+run follows, and no positive C-over-B result is inferred. Eighteen focused
+checks pass; all previous failures and freezes are retained.
+
 The [SPI_HOST semantic repair and B trial](docs/spi_semantic_repair_2026-11-04.md)
 extends the original preflight with typed combinational SSA, independent
 Yosys-cell checks and Z3-certified ground rules saturated by egg. Two
@@ -41,6 +114,66 @@ already reached by ordinary read/write; B remains disabled. AXI DMA and flash
 controller follow-up probes are retained as unqualified candidates, with explicit
 expression/mapping and dependency blockers. Checker limitations and the rejected
 first version are preserved.
+The [natural-IP integration follow-up](docs/natural_ip_integration_2026-11-04.md)
+closes the Flash source dependency set and adds statement-position SSA, typed
+shifts/slices and independent Yosys checks for both read submodules. It maps
+64/68 DMA and 25/29 Flash guards while retaining every original DUT counter.
+Neither fixed read configuration supplies a seed-zero dynamic equivalent group;
+no checker/model trial follows. Original Flash SV still exceeds Icarus support;
+the separately labeled lowered-netlist reset smoke agrees with Verilator.
+The [fixed write-scope follow-up](docs/natural_write_scope_preflight_2026-11-04.md)
+adds instance-qualified port aliases, complete supported activation guards,
+bounded loop expansion and independent memory-read address checks. Original
+AXI write / Flash program / Flash arbiter yield 0 / 1 / 0 eligible dynamic
+equivalent groups, below the unchanged gate. All 35 relevant checks pass and a
+fresh reproduction preserves every raw counter identity and hit. No new checker
+or live-model trial has started; the two Flash units count as one IP family.
+The [real-parent integration screen](docs/real_parent_screen_2026-11-04.md)
+preregisters original AXI DMA, SPI core and AXI-Lite I2C parents. AXI still has
+zero qualifying groups; I2C has explicit adapter blockers. SPI core has 20
+seed-zero source groups (9 nontrivial), a fixed public-pin JSON driver and
+matching Verilator/Icarus calibration traces. Ordinary controls already reach
+16 groups; TX/RX recovery shares one stall group. This admits independent
+checker construction only, not B; 45 relevant preflight checks pass.
+The subsequent [independent SPI core checker audit](docs/spi_core_checker_audit_2026-11-04.md)
+completed one Claude author call and one fresh review ($1.580242 total). Four
+independent positives pass, but pinned core documentation and actual RTL disagree
+on byte order; pending-CSID handling and TX-stall event accounting also block
+checker freezing. Post-review causal input and hardware-reset controls pass.
+A reviewer underflow claim was contradicted by full raw traces and is explicitly
+corrected. Seven new control/packing checks pass; B remains disabled.
+The [contract repair follow-up](docs/spi_core_contract_repair_2026-11-04.md)
+resolves the byte-order boundary using pinned upstream interface intent and
+register-to-core mapping. Claude's second checker fixes byte order and pending
+CSID, but independent mode controls and a fresh review still find CPOL idle-edge
+and TX-starvation event errors. Missing required events now fail the measurement
+gate. Thirty new simulator executions preserve all 3,107 DUT counters; the next
+Claude repair packet was then prepared; B/C remained disabled at that stage.
+The latest [checker v4 and limited freeze](docs/spi_core_checker_freeze_2026-11-04.md)
+repairs CPOL and recovery-event accounting through Claude-only patches and
+independent GPT controls. Three multistep event families and 17 reachable source
+groups (8 nontrivial) now qualify under the original budget. Full mock/replay
+agree exactly, with no live evidence inferred from either. The independent
+integrated-core [B trial](docs/spi_core_b_development_2026-11-04.md) completed
+18 live calls: two repetitions legally reached all targets in rounds 4/3, but
+the third withdrew a pending command. Its raw hits remain in the report; the
+all-repetitions-valid gate fails and no C/A/B/P trial follows. Input transport
+reliability is now an explicit blocker; no budget was shortened or failure dropped.
+Unsupported software-reset/dummy completion, the same-CSID specification
+disagreement and limited checker evidence are retained.
+The separate [safe-offer driver registration](docs/spi_core_safe_driver_2026-11-04.md)
+now holds command/TX valid and payload until public-pin handshakes, with all
+waiting charged to the original budget. Thirteen dual-simulator controls,
+four actual faulty-SV controls, ten focused tests and full mock/replay pass.
+Claude accepted the limited B freeze after two read-only audits ($0.909992).
+The fresh [3×6×64 B run](docs/spi_core_safe_b_development_2026-11-04.md) completed
+18 calls with no input violations: all three repetitions had only FULLCYC group
+51 left after round 1 and hit all targets in round 2. It fails the unchanged
+discrimination gate, so C remains disabled. Final checker verdicts are pass/fail/fail;
+two extra Icarus replays reproduce the failures without resolving DUT versus
+checker/spec attribution. Ordinary calibration covers 16/17 groups, and the
+remaining stall group does not establish recovery completion. The old direct-pin
+trial is preserved separately. No C benefit is inferred.
 Start with [project status and repository map](docs/PROJECT_STATUS.md), the
 [November review and next experiment](docs/project_review_2026-11-03.md), and the
 [prompt-ablation result](docs/sfifo_prompt_ablation_result_2026-11-03.md).

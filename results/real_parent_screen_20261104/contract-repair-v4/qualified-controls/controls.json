@@ -1,0 +1,529 @@
+[
+  {
+    "name": "reference/write1",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/read1",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/write2",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/read2",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/write3",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/read3",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/write4",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/read4",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/write_sparse",
+    "kind": "independent_positive",
+    "expected": "Only enabled lanes0,2 in increasing index"
+  },
+  {
+    "name": "calibration/ordinary_fullcycle_read",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/ordinary_standard_write",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/ordinary_three_speeds",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/partial_then_csid_switch",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/rx_backpressure_resume",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/seed",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/software_reset_restart",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/tx_starvation_resume",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct",
+    "required_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "followup/uniform_write_baseline",
+    "kind": "observational_positive",
+    "expected": "Scoped pass; repeating bytes intentionally avoid unresolved byte-order convention; no new endian validation"
+  },
+  {
+    "name": "followup/withdraw_pending_command",
+    "kind": "input_protocol",
+    "baseline": "followup/uniform_write_baseline",
+    "expected": "Assumption violation at cycle29; outputs re-simulated rather than copied"
+  },
+  {
+    "name": "followup/hardware_abort_restart",
+    "kind": "observational_positive",
+    "expected": "Hardware reset during active RX, fresh TX completes; event checked offline, not formal proof"
+  },
+  {
+    "name": "followup/negative/hardware_reset_select",
+    "kind": "single_fault",
+    "baseline": "followup/hardware_abort_restart",
+    "expected": "Reset CS violation; credit only on clean baseline",
+    "changes": [
+      {
+        "cycle": 48,
+        "side": "post",
+        "field": "csb",
+        "after": 0
+      }
+    ]
+  },
+  {
+    "name": "followup/truncated/hardware_abort",
+    "kind": "incomplete",
+    "baseline": "followup/hardware_abort_restart",
+    "expected": "No successful restart before reset release/new command"
+  },
+  {
+    "name": "probe/write_speed0_mode0",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed0_mode1",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed0_mode2",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed0_mode3",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed1_mode0",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed1_mode1",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed1_mode2",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed1_mode3",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed2_mode0",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed2_mode1",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed2_mode2",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed2_mode3",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/read_asymmetric_full0",
+    "kind": "sampling_ambiguous_control",
+    "expected": "Legacy private stimulus used FULLCYC1 launch schedule for FULLCYC0; conservative unresolved is correct. Preserve as ambiguity control, not a checker false positive or DUT defect."
+  },
+  {
+    "name": "probe/read_asymmetric_full1",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "negative/reversed_rx_lanes",
+    "kind": "single_fault",
+    "baseline": "reference/read3",
+    "expected": "rx_payload/rx_padding failure; old contradictory ordering is not accepted"
+  },
+  {
+    "name": "negative/high_padding_nonzero",
+    "kind": "single_fault",
+    "baseline": "reference/read3",
+    "expected": "rx_padding failure"
+  },
+  {
+    "name": "negative/wrong_low_rx_byte",
+    "kind": "single_fault",
+    "baseline": "reference/read3",
+    "expected": "rx_payload failure"
+  },
+  {
+    "name": "negative/wrong_tx_bit",
+    "kind": "single_fault",
+    "baseline": "reference/write3",
+    "expected": "tx_payload failure at sampling; wrong value stable across edge"
+  },
+  {
+    "name": "negative/missing_rx_word",
+    "kind": "single_fault",
+    "baseline": "reference/read3",
+    "expected": "inconclusive pending, not pass; no invented timeout"
+  },
+  {
+    "name": "negative/multiple_selects",
+    "kind": "single_fault",
+    "baseline": "reference/write3",
+    "expected": "CS failure"
+  },
+  {
+    "name": "truncated/tx_starvation_resume",
+    "kind": "incomplete",
+    "baseline": "calibration/tx_starvation_resume",
+    "expected": "Early incomplete cutoff at exactly one nominal half-period since last edge. Generic inconclusive or pending is valid; successful recovery is forbidden. Original mandatory-presence assertion retained in prior immutable controls and audit.",
+    "superseded_required_event_family": "tx_starvation_resume",
+    "forbidden_success_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "negative/dirty_tx_recovery",
+    "kind": "single_fault",
+    "baseline": "calibration/tx_starvation_resume",
+    "expected": "Payload error before starvation must prevent success for transaction-wide recovery"
+  },
+  {
+    "name": "truncated/rx_backpressure_resume",
+    "kind": "incomplete",
+    "baseline": "calibration/rx_backpressure_resume",
+    "expected": "Early incomplete cutoff at exactly one nominal half-period since last edge. Generic inconclusive or pending is valid; successful recovery is forbidden. Original mandatory-presence assertion retained in prior immutable controls and audit.",
+    "superseded_required_event_family": "rx_backpressure_resume",
+    "forbidden_success_event_family": "rx_backpressure_resume"
+  },
+  {
+    "name": "negative/dirty_rx_recovery",
+    "kind": "single_fault",
+    "baseline": "calibration/rx_backpressure_resume",
+    "expected": "RX mismatch prevents recovery success"
+  },
+  {
+    "name": "negative/clock_during_tx_stall",
+    "kind": "single_fault",
+    "baseline": "calibration/tx_starvation_resume",
+    "expected": "Detect SCK change with no TX data; never success"
+  },
+  {
+    "name": "hand/write_mode0_speed0",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/write_mode0_speed1",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/write_mode0_speed2",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/write_mode1_speed0",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/write_mode1_speed1",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/write_mode1_speed2",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/write_mode2_speed0",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/write_mode2_speed1",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/write_mode2_speed2",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/write_mode3_speed0",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/write_mode3_speed1",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/write_mode3_speed2",
+    "kind": "independent_positive",
+    "expected": "Public SPI mode/width, nonzero divider/lead/trail; all-CS-high CPOL setup is not payload"
+  },
+  {
+    "name": "hand/read_mode0_full0",
+    "kind": "independent_positive",
+    "expected": "Nonuniform RX, stable sample window, high-lane padding"
+  },
+  {
+    "name": "hand/read_mode0_full1",
+    "kind": "independent_positive",
+    "expected": "Nonuniform RX, stable sample window, high-lane padding"
+  },
+  {
+    "name": "hand/read_mode2_full0",
+    "kind": "independent_positive",
+    "expected": "Nonuniform RX, stable sample window, high-lane padding"
+  },
+  {
+    "name": "hand/read_mode2_full1",
+    "kind": "independent_positive",
+    "expected": "Nonuniform RX, stable sample window, high-lane padding"
+  },
+  {
+    "name": "hand/tx_starvation",
+    "kind": "independent_positive",
+    "expected": "Complete correct recovery; new TX word accepted before postponed trailing edge",
+    "required_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "hand/truncated_starvation",
+    "kind": "incomplete",
+    "baseline": "hand/tx_starvation",
+    "expected": "Early incomplete cutoff at exactly one nominal half-period since last edge. Generic inconclusive or pending is valid; successful recovery is forbidden. Original mandatory-presence assertion retained in prior immutable controls and audit.",
+    "superseded_required_event_family": "tx_starvation_resume",
+    "forbidden_success_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "hand/dirty_starvation",
+    "kind": "single_fault",
+    "baseline": "hand/tx_starvation",
+    "expected": "Payload failure prevents successful recovery",
+    "required_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "hand/wrong_cpol1_payload",
+    "kind": "single_fault",
+    "baseline": "hand/write_mode2_speed0",
+    "expected": "Real selected sample mismatch; idle-polarity filtering must not suppress payload checks"
+  },
+  {
+    "name": "probe/read_full0_aligned",
+    "kind": "observational_positive",
+    "expected": "Nonuniform RX using own FULLCYC0 clock schedule, not FULLCYC1; no expected-output patch"
+  },
+  {
+    "name": "vacuity/tx_refill_260",
+    "kind": "observational_positive",
+    "expected": "Report checker outcome; independently measured no-stall cases must not emit a recovery event",
+    "forbidden_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "vacuity/tx_refill_264",
+    "kind": "observational_positive",
+    "expected": "Report checker outcome; independently measured no-stall cases must not emit a recovery event",
+    "forbidden_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "vacuity/tx_refill_265",
+    "kind": "observational_positive",
+    "expected": "Report checker outcome; independently measured no-stall cases must not emit a recovery event",
+    "forbidden_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "vacuity/tx_refill_266",
+    "kind": "observational_positive",
+    "expected": "Report checker outcome; independently measured no-stall cases must not emit a recovery event",
+    "forbidden_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "vacuity/tx_refill_267",
+    "kind": "observational_positive",
+    "expected": "Report checker outcome; independently measured no-stall cases must not emit a recovery event",
+    "forbidden_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "vacuity/tx_refill_268",
+    "kind": "observational_positive",
+    "expected": "Report checker outcome; independently measured no-stall cases must not emit a recovery event",
+    "forbidden_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "vacuity/tx_refill_300",
+    "kind": "observational_positive",
+    "expected": "Report checker outcome; independently measured no-stall cases must not emit a recovery event"
+  },
+  {
+    "name": "vacuity/rx_regular",
+    "kind": "observational_positive",
+    "expected": "Report checker outcome; independently measured no-stall cases must not emit a recovery event",
+    "forbidden_event_family": "rx_backpressure_resume"
+  },
+  {
+    "name": "vacuity/rx_one_cycle_hold",
+    "kind": "observational_positive",
+    "expected": "Report checker outcome; independently measured no-stall cases must not emit a recovery event",
+    "forbidden_event_family": "rx_backpressure_resume"
+  },
+  {
+    "name": "boundary/held_cs_continuation",
+    "kind": "observational_positive",
+    "expected": "Judge complete public protocol trace; do not assume DUT correct"
+  },
+  {
+    "name": "boundary/same_csid_config_change",
+    "kind": "spec_conflict_observation",
+    "expected": "Retain DUT-vs-pinned-document disagreement, not checker false-alarm credit: public theory241-249 requires idle gap before config change after CSAAT; actual valid-input trace has no gap. Do not weaken checker or overwrite DUT; upstream interpretation remains to be confirmed."
+  },
+  {
+    "name": "boundary/pending_cpol_csid_change",
+    "kind": "observational_positive",
+    "expected": "Judge complete public protocol trace; do not assume DUT correct"
+  },
+  {
+    "name": "boundary/zero_be_then_payload",
+    "kind": "observational_positive",
+    "expected": "Judge complete public protocol trace; do not assume DUT correct"
+  },
+  {
+    "name": "boundary/negative/premature_held_cs_release",
+    "kind": "single_fault",
+    "baseline": "boundary/held_cs_continuation",
+    "expected": "CSAAT release without valid changed offer must fail; trace mutation, not RTL mutant"
+  },
+  {
+    "name": "boundary/negative/wrong_cpol_at_select",
+    "kind": "single_fault",
+    "baseline": "boundary/pending_cpol_csid_change",
+    "expected": "CPOL violation at a real new select assertion"
+  },
+  {
+    "name": "flag_only/tx_starvation_resume",
+    "kind": "event_false_success_control",
+    "baseline": "vacuity/tx_refill_268",
+    "forbidden_success_event_family": "tx_starvation_resume",
+    "expected": "One contradictory output flag without any paused SCK. A stall flag alone cannot justify a successful recovery; diagnostic failure/pending is not a DUT-mutant coverage claim.",
+    "changes": [
+      {
+        "cycle": 267,
+        "sides": [
+          "pre",
+          "post"
+        ],
+        "field": "tx_stall",
+        "after": 1
+      }
+    ]
+  },
+  {
+    "name": "flag_only/rx_backpressure_resume",
+    "kind": "event_false_success_control",
+    "baseline": "vacuity/rx_one_cycle_hold",
+    "forbidden_success_event_family": "rx_backpressure_resume",
+    "expected": "One contradictory output flag without any paused SCK. A stall flag alone cannot justify a successful recovery; diagnostic failure/pending is not a DUT-mutant coverage claim.",
+    "changes": [
+      {
+        "cycle": 74,
+        "sides": [
+          "pre",
+          "post"
+        ],
+        "field": "rx_stall",
+        "after": 1
+      }
+    ]
+  },
+  {
+    "name": "confirmed_prefix/truncated_tx_starvation_resume",
+    "kind": "incomplete",
+    "baseline": "calibration/tx_starvation_resume",
+    "required_event_family": "tx_starvation_resume",
+    "forbidden_success_event_family": "tx_starvation_resume",
+    "expected": "Strictly overdue selected edge while operation unfinished; explicit pending/failed episode, never success"
+  },
+  {
+    "name": "confirmed_prefix/truncated_rx_backpressure_resume",
+    "kind": "incomplete",
+    "baseline": "calibration/rx_backpressure_resume",
+    "required_event_family": "rx_backpressure_resume",
+    "forbidden_success_event_family": "rx_backpressure_resume",
+    "expected": "Strictly overdue selected edge while operation unfinished; explicit pending/failed episode, never success"
+  },
+  {
+    "name": "confirmed_prefix/hand_truncated_starvation",
+    "kind": "incomplete",
+    "baseline": "hand/tx_starvation",
+    "required_event_family": "tx_starvation_resume",
+    "forbidden_success_event_family": "tx_starvation_resume",
+    "expected": "Strictly overdue selected edge while operation unfinished; explicit pending/failed episode, never success"
+  }
+]

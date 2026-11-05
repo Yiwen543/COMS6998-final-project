@@ -1,0 +1,85 @@
+{
+  "mode": "mock",
+  "scope": "wbxbar_exploratory_bc_freeze_v1",
+  "freeze_sha256": "c30ed079daec9c4eb29eadf23280f44f30b7611a39bf557fa2921ef90c49767e",
+  "versions": {
+    "python": "3.13.9",
+    "verilator": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+    "yosys": "Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27) (Homebrew)",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28) (Homebrew)",
+    "openai_sdk": "2.54.0",
+    "matplotlib": "3.11.2"
+  },
+  "model_settings": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "input_tokens": 32000,
+    "output_tokens": 16384,
+    "timeout_seconds": 120,
+    "max_retries": 1,
+    "max_output_tokens": 16384
+  },
+  "status": "failed",
+  "compilations": 2,
+  "compile_seconds": 15.603421542327851,
+  "simulation_executions": 3,
+  "executed_cycles": 88,
+  "requested_cycles": 88,
+  "simulation_seconds": 0.4157732492312789,
+  "api_generation_calls": 0,
+  "api_count_requests": 0,
+  "egraph_preprocessing_seconds_this_run": 0,
+  "egraph_preprocessing": "Reused frozen offline artifacts; historical preprocessing reported separately.",
+  "simulation_policy": "Fresh cumulative seed+actions replay; all physical cycles counted; no extra drain.",
+  "independent_sessions": "Responses calls have no conversation or previous_response_id; only own-arm history is rendered.",
+  "compile_commands": [
+    {
+      "simulator": "verilator",
+      "seconds": 15.571324833668768,
+      "command": [
+        "verilator",
+        "--binary",
+        "--timing",
+        "--coverage-line",
+        "--coverage-toggle",
+        "--coverage-expr",
+        "-Wno-fatal",
+        "--top-module",
+        "tb_natural_inventory",
+        "--Mdir",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/mock-v2/shared/verilator/obj",
+        "-j",
+        "2",
+        "third_party/wb2axip_candidate/rtl/skidbuffer.v",
+        "third_party/wb2axip_candidate/rtl/addrdecode.v",
+        "third_party/wb2axip_candidate/rtl/wbxbar.v",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/mock-v2/shared/tb_natural_inventory.sv"
+      ]
+    },
+    {
+      "simulator": "iverilog",
+      "seconds": 0.01834250008687377,
+      "command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "tb_natural_inventory",
+        "-o",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/mock-v2/shared/iverilog/tb.vvp",
+        "third_party/wb2axip_candidate/rtl/skidbuffer.v",
+        "third_party/wb2axip_candidate/rtl/addrdecode.v",
+        "third_party/wb2axip_candidate/rtl/wbxbar.v",
+        "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_exploratory_bc_20261104/mock-v2/shared/tb_natural_inventory.sv"
+      ]
+    }
+  ],
+  "error_type": "KeyError",
+  "elapsed_seconds": 16.50250583421439,
+  "api_usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "unknown_usage_attempts": 1
+  }
+}

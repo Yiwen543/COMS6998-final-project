@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 32453,
+  "stop_reason": "end_turn",
+  "session_id": "de1e5e87-0081-4826-8ff2-1686ca0351cc",
+  "total_cost_usd": 0.445611,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 75983,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 3284,
+    "output_tokens_details": {
+      "thinking_tokens": 1781
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 75983
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 3284,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 75983,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 75983,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 3284,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 75983,
+      "webSearchRequests": 0,
+      "costUSD": 0.445611,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1781,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\"findings\":[{\"id\":\"F1\",\"severity\":\"info\",\"topic\":\"starvation ERR vs invented ACK\",\"text\":\"Verified new_starvation/unaccepted_err from the full rows. Cycles 0-1 are reset rows. From cycle 6, m0 holds write 0x05/SEL5 with pre o_mstall=1. At cycle 8, pre o_merr=1 while pre o_mstall is still 1. At cycle 9, CYC drops. This matches the ledger, and HR case (i) holds. The paired unaccepted_ack fixture has the same rows with o_mack instead. Treating that ACK as invented is consistent with K6, because ACK never uses branch B. The asymmetry rests only on header lines 37-39, which mention a bus error and not an ACK. It is properly labelled inferred.\"},{\"id\":\"F2\",\"severity\":\"info\",\"topic\":\"acceptance-edge ERR\",\"text\":\"Verified err_boundary/acceptance_edge. The request is held at cycles 6-7 under pre o_mstall=1. At cycle 8, pre o_mstall=0 and pre o_merr=1, so a master acceptance and an ERR occur in the same row. Row 7 was held with an identical projection, so HR case (ii) holds. Branch A has no entry from rows <8 and dies. B1 and B2 survive. The CYC drop at cycle 9 cancels the B1 entry. No pending work remains, so unresolved is correct.\"},{\"id\":\"F3\",\"severity\":\"info\",\"topic\":\"same-edge CYC withdrawal\",\"text\":\"Verified err_boundary/cyc_withdrawal_edge. Pre i_mcyc[0] is 1 at cycle 8 and 0 at cycle 9, with pre o_merr=1 at cycle 9. The K13 same-edge rule applies, and it is not overlapped by the HR rule, because CYC is low. Post o_merr at cycle 8 is correctly not treated as a transfer.\"},{\"id\":\"F4\",\"severity\":\"info\",\"topic\":\"old live vs held request\",\"text\":\"Verified err_boundary/old_live_and_held_request. Events: accept at 6, slave accept at 8, held write with pre o_mstall=1 at cycles 9-14, pre o_merr at 10, slave ACK at 12, master ACK at 13 with 0xABCDEF12, CYC drop at 15. Branch A retires the read as unexplained_mapped_err, then dies at the cycle-13 ACK because no entry remains. Branch B survives. No owner is chosen by convenience. The CYC-drop withdrawal of the held write is not a K11 violation.\"},{\"id\":\"F5\",\"severity\":\"minor\",\"topic\":\"repeated HR ERR\",\"text\":\"Under HR case (i), branch B allows an unbounded number of ERRs during a single held request without any refutation. All of them carry the unknown tag, so this is sound. Reports should note that repeated ERRs during one hold are never judged.\"},{\"id\":\"F6\",\"severity\":\"info\",\"topic\":\"valid prefix\",\"text\":\"Verified new_prefix/clean_before_invalid_input. The held address changes 5->7 at cycle 16, while pre o_mstall=1 and CYC is high, so e=16. The prefix accepts at 6, forwards at 8, and ACKs at 10 with correct data, so prefix_scoped_pass is consistent. In earlier_data_change, the bad data at cycle 10 lies before e, so dut_violation is retained per rule (1).\"},{\"id\":\"F7\",\"severity\":\"info\",\"topic\":\"transport correction\",\"text\":\"parent_list_before has 10 items. The exact before-text occurs only at index 9, so it uniquely selects index 9. The per-slave invariant at index 8 survives. The after-text is identical to the model patch. Scope is unchanged.\"},{\"id\":\"F8\",\"severity\":\"info\",\"topic\":\"masks, limits, exclusions\",\"text\":\"The K2 and K10 identity projections handle read data and SEL-disabled lanes consistently, as the new_payload fixtures show. On exhaustion, association judgments are suspended without pruning, and the count projections remain exact with explicit overflow handling. Unknown-tag classification is generic and defaults new tags to unknown. K5 and C1-C4 are explicitly excluded.\"}],\"required_changes\":[{\"id\":\"RC1\",\"priority\":\"non-blocking\",\"text\":\"In reports, document that multiple HR ERRs within one held request are all absorbed by branch B and never judged.\"}],\"ready_for_implementation\":true}\n```",
+  "ttft_ms": 19580,
+  "type": "result",
+  "duration_ms": 32717,
+  "uuid": "f534650f-d6bd-40af-a6fc-6cdf3682eaba",
+  "ttft_stream_ms": 1513,
+  "time_to_request_ms": 254,
+  "first_content_frame_ms": 1514,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 3284,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 75983,
+      "webSearchRequests": 0,
+      "costUSD": 0.445611,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1781,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

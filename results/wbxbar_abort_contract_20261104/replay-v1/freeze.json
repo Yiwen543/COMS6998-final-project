@@ -1,0 +1,102 @@
+{
+  "status": "frozen_for_retrospective_replay_only",
+  "candidate": "results/wbxbar_abort_contract_20261104/claude-v4/candidate",
+  "original_run": "results/wbxbar_exploratory_bc_20261104/live-v1",
+  "binary": "results/wbxbar_exploratory_bc_20261104/live-v1/shared/verilator/obj/Vtb_natural_inventory",
+  "new_model_stimulus_calls": 0,
+  "new_live_experiment_allowed": false,
+  "independent_review_findings": [
+    {
+      "id": "F1",
+      "severity": "info",
+      "area": "cancellation vs live ordering vs reset",
+      "assessment": "The three regimes are kept separate in the code. CYC withdrawal moves only never-forwarded mapped entries (st=='new', sl!=None) into the per-master `ab` pool. Those entries can explain at most one later downstream forward, which is classified as unresolved `post_abort_forward` and given no completion credit; the slave response is discarded through `own=None`. Live traffic still uses the strict oldest-unforwarded-head match. Reset clears `mq`, `sq`, `ab` and `amb`, but not `unresolved`. The controls fault/live_order_swap and fault/stale_ack_into_fresh confirm that live ordering checks were not weakened. Withdrawing the earlier 'oldest aborted entry only' rule is justified: neither WB B4 nor the article defines a survivor set or a propagation order."
+    },
+    {
+      "id": "F2",
+      "severity": "info",
+      "area": "event false positives",
+      "assessment": "On the supplied traces, no matching residual forward is classified as a dut_violation. This holds for the non-head identity (multi_abort/third_identity), the late identity (no grace period is invented), disabled-lane differences and SEL=0. Successful-transaction and error events are emitted only on fully matched retirement. Events overlapping any failure or assumption-violation cycle are removed, and all events are removed if a failure or assumption violation has no cycle. A post-abort forward never creates an event or increments completed_ok."
+    },
+    {
+      "id": "F3",
+      "severity": "info",
+      "area": "fault classification under an unresolved baseline",
+      "assessment": "These faults are still detected against the unresolved baseline: changed address, direction, SEL or enabled byte; double consumption of one aborted identity; reuse of an identity that was already forwarded and ERR-retired (fault/retired_error_identity_reused); and pre-reset identities used after reset. In each case the forward matches no live head and no unconsumed aborted entry, so it is impossible under the declared environment. The evaluation reports these 11 detections separately from the 16 clean-baseline mutation detections. This separation is correct."
+    },
+    {
+      "id": "F4",
+      "severity": "info",
+      "area": "same-edge acceptance and ERR",
+      "assessment": "In multi_abort/accept_same_edge_err, the request accepted on the same edge as an ERR is queued behind the head being retired, so the ERR retires the forwarded head. When CYC later drops, the remaining unforwarded entries become aborted candidates. A later matching forward is correctly classified as unresolved."
+    },
+    {
+      "id": "F5",
+      "severity": "info",
+      "area": "indistinguishable owners",
+      "assessment": "An identical live and aborted identity, or identical identities from both masters, sets `amb`. Checks are then suspended until reset and an `ownership_ambiguous` unresolved record is emitted. Ownership is not guessed. This is sound, but it is coarse: any later fault in the same reset epoch is masked. The masking only ever moves the verdict away from scoped_pass, never toward it, and contract.md documents it."
+    },
+    {
+      "id": "F6",
+      "severity": "medium",
+      "area": "inferred rule with violation-level consequence (pre-existing, not cancellation-specific)",
+      "assessment": "P2 requires that each forwarded request be the oldest unforwarded mapped request of its master, across all slaves. Public text supports in-order response retirement per master. It does not clearly forbid forwarding a later request to a different slave before an earlier one, provided responses are still retired in order. A DUT that reorders forwarding across slaves would therefore be classified as a dut_violation based on an inference. contract.md lists this rule as 'Inferred' and as a limitation, and no supplied control exercises it, so no false positive is observed. Recommendation: explicitly accept this inference at the gate, or downgrade cross-slave reordering to unresolved. This is not a blocker for the cancellation revision."
+    },
+    {
+      "id": "F7",
+      "severity": "low",
+      "area": "control labelling",
+      "assessment": "negative/stale_after_reset expects scoped_pass. It is passed only because the declared exclusion ignores master ACK/ERR while master CYC is low (WB B4 3.1.2). The checker also does not check o_mack/o_merr after reset. The control is therefore not a detection, and it is correctly not credited as one (`credited_mutation_detection=false`). Its 'negative/' name is misleading; it should be renamed or annotated as an exclusion witness."
+    },
+    {
+      "id": "F8",
+      "severity": "info",
+      "area": "complete vs unresolved status and evidence persistence",
+      "assessment": "The verdict follows a strict precedence: input_or_scope_invalid, then dut_violation, then unresolved, then scoped_pass. scoped_pass requires an empty unresolved list. The following produce unresolved, never pass: work pending at trace end on either interface, `unexplained_mapped_err`, `post_abort_forward` and `ownership_ambiguous`. Unresolved records survive reset, as shown by unresolved/post_abort_then_reset, multi_abort/reset_preserves_prior_uncertainty and the selftest unexplained_err_persists_after_reset. Timeout and starvation are never credited."
+    },
+    {
+      "id": "F9",
+      "severity": "info",
+      "area": "contract and properties consistency",
+      "assessment": "contract.md, P6, P9, P11 and P12 match the executable behaviour as read: any-unconsumed-aborted matching, multiplicity of one forward per aborted entry, reset clearing identities, unresolved records persisting, and the stated exclusions. The listed unknowns are cancellation and timeout latency, the survivor set and residual order. They are declared as unknowns rather than asserted as rules. Environment assumptions are labelled as packet environment_contract, not WB B4."
+    },
+    {
+      "id": "F10",
+      "severity": "info",
+      "area": "isolation",
+      "assessment": "Within the packet, no DUT RTL expressions, internal signals, real DUT traces or model outcomes are used. The excerpts come from the README and the wbxbar.v header comments only. All controls are marked synthetic and not DUT-derived. All 69 controls and 22 selftests match their proposed labels in the supplied evaluation."
+    }
+  ],
+  "independent_review_limitations": [
+    "This is a manual read-only review of the supplied source and decoded control intent. Nothing was executed and no formal proof is claimed. Agreement between controls and labels relies on the supplied evaluation record.",
+    "Proposed control labels were judged against public prose only. WB B4 and the article do not settle cancellation survivors, propagation latency or timeout and starvation timing, so the unresolved labels reflect that gap rather than establishing correctness.",
+    "Not checked by this review or by the checker: exact arbitration, pipeline and timeout latency; o_mack/o_merr after reset; minimum reset duration; eventual slave CYC withdrawal; liveness.",
+    "Once ownership becomes ambiguous, all checks are suspended for the rest of that reset epoch. Faults in that window are reported only as unresolved.",
+    "The cross-slave per-master forwarding-order inference (F6) is untested by any control.",
+    "This review does not authorize new stimulus generation, DUT simulation or any change to the artifacts."
+  ],
+  "attribution_scope": "Accept limited cancellation-repair replay only. Preserve every raw checker verdict. Inherited cross-slave forwarding-order inference is not a normative DUT-defect oracle; any such alarm requires separate source-based attribution. Ownership ambiguity remains unresolved; no whole-IP correctness claim.",
+  "hashes": {
+    "configs/wbxbar_cancel_contract_v1.json": "ed3e6213e2f4c4155895f780b7f926cd7adc85ac1f92d1c3d78f38546083b5f8",
+    "scripts/replay_wbxbar_cancel.py": "8509a2cb529bf2effe8525cb4e42aaa31205f3e0372c89c69d12e50222f89f34",
+    "scripts/wbxbar_cancel_validation.py": "023d1b72f20d9005338002424684536bb5e0d98f4d2088bf56d70ea54cdf050c",
+    "scripts/evaluate_spi_checker_candidate.py": "7eeb0617581c384465ad156035c2da5c4a602ac20557c2a1953493f9086a8a5f",
+    "scripts/run_spi_checker_author.py": "037a65cece13458ff2349fcd3a2ad166d7fe9a7454e924ce65b63d2bd77d37c5",
+    "results/wbxbar_abort_contract_20261104/claude-v4/candidate/authorship.json": "05e7da0c2ebdbc68869789be396560c88586a198f5adba926724aaa9e311b628",
+    "results/wbxbar_abort_contract_20261104/claude-v4/candidate/checker.py": "64a5b7ab5da5fb46fa610e040589f8063b20ddbe806349ccc1a29e026f6a3468",
+    "results/wbxbar_abort_contract_20261104/claude-v4/candidate/selftest.py": "6a677ef0bca410c75b7fd19ee501e90f617f30d0f85e5fd5b6a8c4b95e71b898",
+    "results/wbxbar_abort_contract_20261104/claude-v4/candidate/properties.json": "34882499758f26a4186554b3295fcbff67d0b11d72187f21531468e7720b24c8",
+    "results/wbxbar_abort_contract_20261104/claude-v4/candidate/contract.md": "857a1dbf3f90c2e9eacfb3726b1b22fcc1894b5267f09a0f3cf908a246a5e8d0",
+    "results/wbxbar_abort_contract_20261104/evaluation-v1/summary.json": "c7c4f3e25356f2500d8325a23d5a4fc8c071116cbfed523fcfb3599649c5cd97",
+    "results/wbxbar_abort_contract_20261104/evaluation-v1/evaluations.json": "b597a3d9444f0b41b2983e0e37babeeb3de526710c6f84a2b14005569b6c9693",
+    "results/wbxbar_abort_contract_20261104/evaluation-v1/inputs.json": "73cc90a6aea7864a4b160093f1ad34efae72e4a6c92a537a9f15bfb401a0ff9b",
+    "results/wbxbar_abort_contract_20261104/claude-v4/review.json": "0412ba9bff306e029270676f627bf9ea51a93a4ca3d7e0767c2a2a9025565f72",
+    "results/wbxbar_abort_contract_20261104/claude-v4/review-packet.json": "74bd87a8a9d692ae66de5506c2a185a0e7ef62387f0e0f2e1a36a672b76a1d46",
+    "results/wbxbar_abort_contract_20261104/claude-v4/review/metadata.json": "cf54e1d54c17428c898768c59381529276461bac94efc9ca32c6c5d2db28a06c",
+    "results/wbxbar_abort_contract_20261104/claude-v4/review/prompt.txt": "c8b995f662c0b6a85932125c20a752f9f42066e54fcd24f58cf611ca14661428",
+    "results/wbxbar_abort_contract_20261104/claude-v4/review/response.json": "ef0368a88742f314c2d672a60c923bfb92a49cc56fc1050a6aa5d7e964102acb",
+    "results/wbxbar_exploratory_bc_20261104/live-v1/shared/verilator/obj/Vtb_natural_inventory": "5720db4797f9f372ac76f2478ed963ffeb3bf947d9385ed70f11b43a710d35c6",
+    "results/wbxbar_exploratory_bc_20261104/live-v1/shared/manifest.json": "82c8843887d5b5ac42a7ce96b11b729fda581f6f2ff200b9b7e230c15383a12f"
+  },
+  "limits": "Original generated trajectories reflect old checker feedback. Reclassification is not a new independently generated B/C result."
+}

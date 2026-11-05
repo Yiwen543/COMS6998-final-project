@@ -1,0 +1,224 @@
+{
+  "patches": [
+    {
+      "path": [
+        "clause_matrix",
+        1,
+        "acceptance",
+        "undefined_payload"
+      ],
+      "before": "None in an active payload is an env violation on a master port and a DUT violation on a slave port.",
+      "after": "The None check covers only the K2 identity projection of an accepted or held strobed request. That projection is WE, address and SEL, plus SEL-enabled data lanes when WE=1. None in the projection is an env violation on a master port and a DUT violation on a slave port. Read data lanes and SEL-disabled write lanes carry no identity and are never judged (rule 3.60 qualifies payload, but does not make non-identity lanes meaningful)."
+    },
+    {
+      "path": [
+        "clause_matrix",
+        4,
+        "acceptance"
+      ],
+      "before": "NOT judged: neither forward order nor side-effect order, within one slave or across slaves.",
+      "after": "NOT judged: neither forward order nor side-effect order, within one slave or across slaves. Every scoped_pass report must list K5 as an explicit exclusion. A pass never asserts order preservation. This applies in particular to fault/live_order_swap and new_aba/younger_equal_first."
+    },
+    {
+      "path": [
+        "clause_matrix",
+        5,
+        "acceptance",
+        "no_entry"
+      ],
+      "before": "If no such entry exists, the response is invented and the hypothesis dies.",
+      "after": "If no such entry exists, the response is invented and the hypothesis dies, with ONE exception. If the response is an ERR (never an ACK) in row c on master m, and row c shows m holding an unaccepted strobed request (pre i_mcyc[m]&i_mstb[m]&o_mstall[m]), the ERR is tagged possible_starvation_err (unknown). Basis: wbxbar.v header 37-39 says a starved master receives a bus error, but gives no phase, timing or precedence. The tagged ERR retires nothing and creates no entry. The held request stays unaccepted, and a later acceptance of it is a normal new entry. The tag does not claim starvation occurred and carries no timing inference. An ACK in the same situation still has no basis: K6 (inferred) invention applies and the hypothesis dies."
+    },
+    {
+      "path": [
+        "clause_matrix",
+        7,
+        "status"
+      ],
+      "before": "normative: exclusivity; inferred: decode ERR and slave-ERR propagation; unknown: timeout/starvation conditions and precedence",
+      "after": "normative: exclusivity; inferred: decode ERR and slave-ERR propagation; unknown: timeout/starvation conditions and precedence, including ERR on an unaccepted held request (possible_starvation_err, see K6)"
+    },
+    {
+      "path": [
+        "clause_matrix",
+        9,
+        "acceptance",
+        0
+      ],
+      "before": "If pre o_scyc&o_sstb&i_sstall in row c with no reset, row c+1 must have either o_scyc=0, or o_sstb=1 with an identical payload.",
+      "after": "If pre o_scyc&o_sstb&i_sstall holds in row c with no reset, row c+1 must have either o_scyc=0, or o_sstb=1 with an identical K2 identity projection. The projection is WE, address and SEL, plus SEL-enabled data lanes when WE=1. Read data and SEL-disabled write lanes may change."
+    },
+    {
+      "path": [
+        "clause_matrix",
+        12,
+        "status"
+      ],
+      "before": "normative",
+      "after": "inferred (reading of WB 3.1.2 and rule 3.30 applied to the DUT's slave role toward each master; the rule text constrains response to slave signals while CYC is negated, and this design reads that as forbidding ACK/ERR emission)"
+    },
+    {
+      "path": [
+        "clause_matrix",
+        12,
+        "acceptance",
+        0
+      ],
+      "before": "o_mack/o_merr[m] in row c with pre i_mcyc[m]=0 in both rows c-1 and c is a dut_violation.",
+      "after": "o_mack/o_merr[m] in row c with pre i_mcyc[m]=0 in both rows c-1 and c is a dut_violation (inferred, K13). No DUT response latency is derived from OPT_DBLBUFFER or any other option name; the one-row allowance follows only from the same-edge observability argument below. A response with CYC low is not an active-cycle retirement, so K6 is not cited as an independent basis for it."
+    },
+    {
+      "path": [
+        "ownership_algorithm",
+        "counters"
+      ],
+      "before": "master_epoch[m] increments on every CYC 1->0. reset_epoch increments per reset. Both are arbitrary-precision in the checker. If a bounded implementation is used, overflow triggers the resource-exhaustion path.",
+      "after": "master_epoch[m] increments on every CYC 1->0, and reset_epoch increments per reset. The association-free projection counters are also arbitrary-precision in the checker: per-identity master and slave counts, per-slave forwards and responses, and per-master acceptances and responses in the current CYC. None of them is ever pruned or truncated when hypothesis resources are exhausted, so the projections stay exact and sound. If a bounded implementation is used and any counter would overflow, that counter's projection becomes unresolved_on_counter_limit(row) for the rest of the reset epoch. It never wraps or saturates into a verdict."
+    },
+    {
+      "path": [
+        "ownership_algorithm",
+        "verdict_semantics",
+        "aggregate_precedence"
+      ],
+      "before": "env > violation > unresolved > pass",
+      "after": "Time-bounded. Let e be the first row with an env violation. (1) A DUT violation whose complete evidence lies in rows < e stays dut_violation; a later invalid input cannot erase it. (2) A DUT violation evidenced in row e itself, as a same-edge mixed fault, is reported as mixed_same_edge(dut_candidate, env) with the explicit note that no public ordering exists. It is unresolved for the DUT, unless the DUT check depends only on pins and on inputs from rows < e. (3) Every judgment needing rows >= e is input_or_scope_invalid. A clause whose evidence lies wholly before e may still be reported as prefix_scoped_pass, bounded to rows < e. (4) Trace aggregate: dut_violation if (1) applies, else input_or_scope_invalid if e exists, else violation > unresolved > pass. Both the env record and any prefix verdict are always listed."
+    },
+    {
+      "path": [
+        "ownership_algorithm",
+        "resource_limits",
+        "on_exhaustion"
+      ],
+      "before": "No pruning and no branch selection. For the remainder of the current reset epoch, record unresolved_on_limit(row, sizes) and suspend all association-dependent judgments for all masters: K4 per-candidate consumption, K6, K7, K8 attribution, K9 tags and K12.",
+      "after": "No pruning and no branch selection. For the remainder of the current reset epoch, record unresolved_on_limit(row, sizes) and suspend all association-dependent judgments for all masters: K4 per-candidate consumption, K6, K7, K8 attribution, K9 tags and K12. Violations recorded before the exhaustion row stay final. Mandatory metric for each run and each clause: suspended_rows, total_rows, the suspended fraction, and the exhaustion rows and sizes. A clause suspended in any row may never be reported scoped_pass; the best it can be is unresolved(suspended). The report also states the effective checked scope in rows."
+    },
+    {
+      "path": [
+        "ownership_algorithm",
+        "resource_limits",
+        "still_valid_after_exhaustion",
+        9
+      ],
+      "before": "Per-master responses in current CYC <= acceptances in current CYC",
+      "after": "Per-master ACKs in current CYC <= acceptances in current CYC. ERRs in the same CYC are counted against acceptances, except an ERR that meets the K6 possible_starvation_err condition. Such an ERR is counted separately and tagged unknown."
+    },
+    {
+      "path": [
+        "formal_obligations",
+        "items",
+        1,
+        "false_control"
+      ],
+      "before": "strict < must fail",
+      "after": "Trace/RTL mutation control, not a property edit. Use a reachable stimulus in which X is accepted once and the mutated DUT forwards X twice (the fault/duplicate_consumed_identity pattern). It must fail, and a cover must reach the second forward. A property-harness sanity mutation, such as the trivial strict-< form, may be logged only as a harness check; it is never evidence of transaction sensitivity."
+    },
+    {
+      "path": [
+        "formal_obligations",
+        "items",
+        2,
+        "false_control"
+      ],
+      "before": "A monitor mutated to bind the younger read's data must report empty H on a reachable cover.",
+      "after": "DUT/trace mutation: retirement data swapped across cross-slave reads (the cross_slave/wrong_retirement_data pattern) must drive the unmutated monitor to empty H, on a reachable cover with both forwards and both slave ACKs. A monitor-mutation run is labeled harness-only."
+    },
+    {
+      "path": [
+        "control_assessments",
+        19
+      ],
+      "before": {
+        "name": "negative/stale_after_reset",
+        "expected_status": "dut_violation",
+        "justified_clauses": [
+          "K13",
+          "K6"
+        ],
+        "unresolved_scope": "ACK at cycle 14 with m0 CYC low since cycle 11 and an empty epoch.",
+        "note": "Basis changed to K13."
+      },
+      "after": {
+        "name": "negative/stale_after_reset",
+        "expected_status": "dut_violation",
+        "justified_clauses": [
+          "K13 (inferred)"
+        ],
+        "unresolved_scope": "Pre o_mack[0] is high at cycle 14. m0 CYC has been low since cycle 11, across the reset. K6 is not an independent basis, because no active cycle exists. The verdict rests solely on the inferred K13 reading.",
+        "note": "Basis is K13 (inferred) only."
+      }
+    }
+  ],
+  "control_assessments_additions": [
+    {
+      "name": "new_starvation/unaccepted_err",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K6 possible_starvation_err",
+        "K8"
+      ],
+      "unresolved_scope": "m0 holds write 0x05/SEL5 from cycle 6 with o_mstall=1 through cycle 8 and is never accepted. o_merr is seen at cycle 8 while the request is held. Tagged possible_starvation_err (unknown); this is neither invention nor proven starvation. No entry exists and nothing is pending."
+    },
+    {
+      "name": "new_starvation/unaccepted_ack",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K6 (inferred)"
+      ],
+      "unresolved_scope": "o_mack at cycle 8 while m0's request is held under stall and never accepted. No entry exists, and no source permits a success response for unaccepted work, so it is invented."
+    },
+    {
+      "name": "new_prefix/clean_before_invalid_input",
+      "expected_status": "input_or_scope_invalid",
+      "justified_clauses": [
+        "K11",
+        "K2",
+        "K3",
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "Prefix cycles <16 give prefix_scoped_pass: read 0x03 accepted at 6, forwarded at 8, retires 0xABCDEF12 at 10. At cycle 16 the stalled held request changes address 5->7 with CYC high, an env violation. Judgments from row 16 onward are invalid. K5 excluded."
+    },
+    {
+      "name": "new_prefix/earlier_data_change",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K7",
+        "K11"
+      ],
+      "unresolved_scope": "Cycle 10 delivers 0xABCDEF13 against slave data 0xABCDEF12. That evidence lies wholly before the cycle-16 env violation, so the violation stands. The env record is also listed."
+    },
+    {
+      "name": "new_payload/read_data_changes",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K2",
+        "K10",
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "o_sdata of the read changes under stall at cycle 9. Read data is outside the identity projection. Acceptance at 10 and retirement at 12 are consistent. K5 excluded."
+    },
+    {
+      "name": "new_payload/write_disabled_changes",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K2",
+        "K10",
+        "K4",
+        "K7"
+      ],
+      "unresolved_scope": "Under stall the data changes only in SEL-disabled lane 1 (0x1234A978). The identity is unchanged. K5 excluded."
+    },
+    {
+      "name": "new_payload/write_enabled_changes",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K10"
+      ],
+      "unresolved_scope": "The row after stall at cycle 8 (cycle 9) changes enabled lane 0, 0x78 to 0x79, with o_sstb high. The final accepted identity at cycle 10 matches, so K4 alone would pass. K10 fails on the identity projection."
+    }
+  ],
+  "rationale": "Unaccepted held-request ERR vs ACK: the header documents a starvation bus error but gives no phase or timing. An ERR during a held, stalled request is therefore tagged unknown and not proven starvation. An ACK there has no source and remains invention. The post-exhaustion invariant is revised to match.\n\nPrecedence is time-bounded: earlier DUT violations persist, later judgments are invalid, and same-edge mixed faults are explicitly unordered.\n\nNone checks and stall-hold checks are restricted to the identity projection.\n\nK13 is reclassified as inferred, with no latency inferred from OPT_DBLBUFFER. stale_after_reset no longer cites K6 for a CYC-low response.\n\nProjection counters are exact and never pruned, so they stay sound after hypothesis exhaustion; counter overflow becomes unresolved, never a verdict. Suspended scope is measured, and scoped_pass is forbidden on any suspended clause.\n\nK5 is excluded in every pass.\n\nFalse controls are now DUT/trace mutations with covers; harness edits are labeled harness-only.\n\nReview F6 is rejected: the exact rows and ledger give accepts at 6, 10 and 14, the forward at 16, the slave ACK at 17 and the master ACK at 18. The existing cycle-18 citation stands unchanged.\n\nNo results, RTL or experiments are claimed, and budgets are unchanged.",
+  "ready_for_review": true
+}

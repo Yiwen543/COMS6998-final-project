@@ -1,0 +1,250 @@
+[
+  {
+    "name": "reference/write_one",
+    "kind": "independent_positive",
+    "expected": "no failures/assumption violations; pending or unresolved disclosed separately",
+    "authority": "Public theory_of_operation.md mode0 lines 24-42; timing 249-277; byte order/packing 685-740"
+  },
+  {
+    "name": "reference/write_two",
+    "kind": "independent_positive",
+    "expected": "no failures/assumption violations; pending or unresolved disclosed separately",
+    "authority": "Public theory_of_operation.md mode0 lines 24-42; timing 249-277; byte order/packing 685-740"
+  },
+  {
+    "name": "reference/read_one",
+    "kind": "independent_positive",
+    "expected": "no failures/assumption violations; pending or unresolved disclosed separately",
+    "authority": "Public theory_of_operation.md mode0 lines 24-42; timing 249-277; byte order/packing 685-740"
+  },
+  {
+    "name": "reference/read_partial_three",
+    "kind": "independent_positive",
+    "expected": "no failures/assumption violations; pending or unresolved disclosed separately",
+    "authority": "Public theory_of_operation.md mode0 lines 24-42; timing 249-277; byte order/packing 685-740"
+  },
+  {
+    "name": "negative/wrong_tx_sampled_bit",
+    "kind": "single_fault",
+    "baseline": "reference/write_one",
+    "expected": "DUT violation",
+    "changes": [
+      {
+        "cycle": 11,
+        "side": "post",
+        "field": "sd",
+        "before": 1,
+        "after": 0
+      },
+      {
+        "cycle": 12,
+        "side": "pre",
+        "field": "sd",
+        "before": 1,
+        "after": 0
+      },
+      {
+        "cycle": 12,
+        "side": "post",
+        "field": "sd",
+        "before": 1,
+        "after": 0
+      }
+    ],
+    "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim."
+  },
+  {
+    "name": "negative/wrong_rx_byte",
+    "kind": "single_fault",
+    "baseline": "reference/read_one",
+    "expected": "DUT violation",
+    "changes": [
+      {
+        "cycle": 29,
+        "side": "pre",
+        "field": "rx_data",
+        "before": 2768240640,
+        "after": 2751463424
+      }
+    ],
+    "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim."
+  },
+  {
+    "name": "negative/wrong_partial_padding",
+    "kind": "single_fault",
+    "baseline": "reference/read_partial_three",
+    "expected": "DUT violation",
+    "changes": [
+      {
+        "cycle": 61,
+        "side": "pre",
+        "field": "rx_data",
+        "before": 2774200320,
+        "after": 2774200321
+      }
+    ],
+    "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim."
+  },
+  {
+    "name": "negative/missing_rx_word",
+    "kind": "single_fault",
+    "baseline": "reference/read_one",
+    "expected": "DUT violation",
+    "changes": [
+      {
+        "cycle": 28,
+        "side": "post",
+        "field": "rx_valid",
+        "before": 1,
+        "after": 0
+      },
+      {
+        "cycle": 29,
+        "side": "pre",
+        "field": "rx_valid",
+        "before": 1,
+        "after": 0
+      }
+    ],
+    "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim."
+  },
+  {
+    "name": "negative/duplicate_rx_word",
+    "kind": "single_fault",
+    "baseline": "reference/read_one",
+    "expected": "DUT violation",
+    "changes": [
+      {
+        "cycle": 30,
+        "fault": "Repeated already-consumed RX word at next pre handshake"
+      }
+    ],
+    "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim."
+  },
+  {
+    "name": "negative/multiple_chip_selects",
+    "kind": "single_fault",
+    "baseline": "reference/write_one",
+    "expected": "DUT violation",
+    "changes": [
+      {
+        "cycle": 10,
+        "side": "post",
+        "field": "csb",
+        "before": 2,
+        "after": 0
+      }
+    ],
+    "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim."
+  },
+  {
+    "name": "negative/premature_deselect",
+    "kind": "single_fault",
+    "baseline": "reference/write_one",
+    "expected": "DUT violation",
+    "changes": [
+      {
+        "cycle": 20,
+        "fault": "Deselect after only four payload bits, remain idle"
+      }
+    ],
+    "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim."
+  },
+  {
+    "name": "negative/clock_during_tx_stall",
+    "kind": "single_fault",
+    "baseline": "calibration/tx_starvation_resume",
+    "expected": "DUT violation",
+    "changes": [
+      {
+        "cycle": 74,
+        "side": "post",
+        "field": "sck",
+        "before": 1,
+        "after": 0
+      }
+    ],
+    "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim."
+  },
+  {
+    "name": "negative/select_during_rx_stall",
+    "kind": "single_fault",
+    "baseline": "calibration/rx_backpressure_resume",
+    "expected": "DUT violation",
+    "changes": [
+      {
+        "cycle": 104,
+        "side": "post",
+        "field": "csb",
+        "before": 2,
+        "after": 3
+      }
+    ],
+    "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim."
+  },
+  {
+    "name": "negative/wrong_reset_select",
+    "kind": "single_fault",
+    "baseline": "calibration/software_reset_restart",
+    "expected": "DUT violation",
+    "changes": [
+      {
+        "cycle": 48,
+        "side": "post",
+        "field": "csb",
+        "before": 3,
+        "after": 0
+      }
+    ],
+    "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim."
+  },
+  {
+    "name": "negative/wrong_recovered_rx_word",
+    "kind": "single_fault",
+    "baseline": "calibration/rx_backpressure_resume",
+    "expected": "DUT violation",
+    "changes": [
+      {
+        "cycle": 228,
+        "side": "pre",
+        "field": "rx_data",
+        "before": 4294967295,
+        "after": 4278190079
+      }
+    ],
+    "credit_policy": "Only credit with clean baseline and no assumption violations; not a formal fault coverage claim."
+  },
+  {
+    "name": "truncated/tx_starvation_resume",
+    "kind": "incomplete",
+    "expected": "No successful recovery event",
+    "baseline": "calibration/tx_starvation_resume",
+    "cutoff": 75
+  },
+  {
+    "name": "truncated/rx_backpressure_resume",
+    "kind": "incomplete",
+    "expected": "No successful recovery event",
+    "baseline": "calibration/rx_backpressure_resume",
+    "cutoff": 105
+  },
+  {
+    "name": "truncated/partial_then_csid_switch",
+    "kind": "incomplete",
+    "expected": "No completed switch/restart event",
+    "baseline": "calibration/partial_then_csid_switch",
+    "cutoff": 91
+  },
+  {
+    "name": "truncated/software_reset_restart",
+    "kind": "incomplete",
+    "expected": "No completed switch/restart event",
+    "baseline": "calibration/software_reset_restart",
+    "cutoff": 53
+  },
+  {
+    "name": "invalid_input/drop_pending_command",
+    "kind": "input_protocol",
+    "expected": "assumption violation; not credited as a DUT defect"
+  }
+]

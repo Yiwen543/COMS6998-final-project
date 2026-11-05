@@ -1,0 +1,38 @@
+[
+  {
+    "name": "uniform_write_baseline",
+    "kind": "independent_positive",
+    "expected": "Scoped pass; repeating bytes intentionally avoid unresolved byte-order convention; no new endian validation"
+  },
+  {
+    "name": "withdraw_pending_command",
+    "kind": "input_protocol",
+    "baseline": "uniform_write_baseline",
+    "expected": "Assumption violation at cycle29; outputs re-simulated rather than copied"
+  },
+  {
+    "name": "hardware_abort_restart",
+    "kind": "observational_positive",
+    "expected": "Hardware reset during active RX, fresh TX completes; event checked offline, not formal proof"
+  },
+  {
+    "name": "negative/hardware_reset_select",
+    "kind": "single_fault",
+    "baseline": "hardware_abort_restart",
+    "expected": "Reset CS violation; credit only on clean baseline",
+    "changes": [
+      {
+        "cycle": 48,
+        "side": "post",
+        "field": "csb",
+        "after": 0
+      }
+    ]
+  },
+  {
+    "name": "truncated/hardware_abort",
+    "kind": "incomplete",
+    "baseline": "hardware_abort_restart",
+    "expected": "No successful restart before reset release/new command"
+  }
+]

@@ -1,0 +1,1037 @@
+{
+  "clause_matrix": [
+    {
+      "id": "K1_reset",
+      "source": "WB B4 3.1.1 rules 3.00, 3.05, 3.15 and 3.20, pp31-32",
+      "status": "normative",
+      "observables": [
+        "pre.i_reset",
+        "post.o_scyc and post.o_sstb in every row with pre.i_reset=1",
+        "pre.i_mcyc and pre.i_mstb in every reset row that follows a reset row"
+      ],
+      "acceptance": {
+        "dut_violation": "post o_scyc!=0 or post o_sstb!=0 in any row with pre.i_reset=1.",
+        "env_violation": [
+          "Master CYC/STB high in a reset row whose previous row was also a reset row (rule 3.20).",
+          "A reset pulse that is shorter than rule 3.05 requires."
+        ],
+        "reset_row_events": "In a reset row, no acceptance or response is recorded. Rule 3.00: interfaces initialize at that edge.",
+        "end_of_row": [
+          "Discard all live entries, orphans, canceled identities and hypotheses.",
+          "Increment reset_epoch.",
+          "Cumulative unresolved records persist for the batch."
+        ],
+        "first_non_reset_row": "A slave acceptance in the first non-reset row must match work accepted after the reset (R11). Post of the reset row is judged by the post check above."
+      },
+      "exclusions": "DUT o_mack/o_merr inside reset rows are not judged beyond K13 and rule 3.45."
+    },
+    {
+      "id": "K2_accept_identity",
+      "source": "WB B4 rules 3.57, 3.58 and 3.60",
+      "status": "normative",
+      "observables": [
+        "Master acceptance: pre i_mcyc&i_mstb&!o_mstall",
+        "Slave acceptance: pre o_scyc&o_sstb&!i_sstall"
+      ],
+      "acceptance": {
+        "write_identity": "(WE=1, addr, SEL, data restricted to SEL-enabled byte lanes). SEL=0 compares no data lanes.",
+        "read_identity": "(WE=0, addr, SEL). Data is ignored.",
+        "multiplicity": [
+          "Each row with STB high and STALL low is one request, even if its payload equals the previous row's.",
+          "A request held through stall is counted once, at the row of acceptance.",
+          "Per row: at most one acceptance per master port and one per slave port."
+        ],
+        "undefined_payload": "None in an active payload is an env violation on a master port and a DUT violation on a slave port."
+      },
+      "exclusions": "Payload while STB is low."
+    },
+    {
+      "id": "K3_routing",
+      "source": "Packet address_configuration (public parameters)",
+      "status": "normative (parameter-defined)",
+      "acceptance": [
+        "A slave acceptance on port s requires decode(addr)==s.",
+        "An unmapped address (decode none) must never be forwarded."
+      ],
+      "association_free": true
+    },
+    {
+      "id": "K4_no_invention_multiplicity",
+      "source": "WB B4 3.1.3.2; README 188-196; crossbar article",
+      "status": "inferred",
+      "acceptance": {
+        "consumption": "Each slave acceptance consumes exactly one identity-equal candidate. Eligible candidates are a live unforwarded entry of any master (accepted in this or an earlier row of the reset epoch), or a canceled-pool member.",
+        "consumption_limit": "Each candidate is consumed at most once.",
+        "failure": "If no candidate exists in a hypothesis, that hypothesis dies.",
+        "association_free_projection": "For every identity X: count(slave acceptances of X) <= count(master acceptances of X) in the reset epoch."
+      }
+    },
+    {
+      "id": "K5_forward_order",
+      "source": "none public",
+      "status": "unknown",
+      "acceptance": "NOT judged: neither forward order nor side-effect order, within one slave or across slaves.",
+      "note": "README covers only ACK non-crossing."
+    },
+    {
+      "id": "K6_response_order",
+      "source": "README 188-196 ('ACK responses won't get crossed'); WB B4 3.1.3.2 ('N ACKs for N transactions', no tag)",
+      "status": "inferred",
+      "acceptance": {
+        "retirement": "A master response in row c retires that master's oldest live entry accepted in a row < c.",
+        "no_entry": "If no such entry exists, the response is invented and the hypothesis dies.",
+        "non_retirable": "Canceled and orphan entries are never retirable."
+      }
+    },
+    {
+      "id": "K7_ack_basis_read_data",
+      "source": "WB B4 obs 3.10; 3.1.3.2 ('read data valid with ACK'); README",
+      "status": "normative for data validity; inferred for end-to-end preservation",
+      "acceptance": [
+        "A master ACK in row c requires the retired entry to be forwarded and bound to a slave ACK in a row <= c, in the same hypothesis.",
+        "A same-row slave-to-master path is allowed (permission 3.30).",
+        "For a read, the full 32-bit o_mdata must equal that slave ACK's i_sdata slice."
+      ],
+      "exclusions": "Write ACK data."
+    },
+    {
+      "id": "K8_errors",
+      "source": "WB B4 perm 3.20, rule 3.45; crossbar article (unmapped -> ERR); wbxbar.v header 32-39 (timeout/starvation)",
+      "status": "normative: exclusivity; inferred: decode ERR and slave-ERR propagation; unknown: timeout/starvation conditions and precedence",
+      "acceptance": [
+        "A master ACK retiring an unmapped entry kills the hypothesis.",
+        "A master ACK retiring a slave-ERRed entry kills the hypothesis.",
+        "ERR retiring an unmapped or slave-ERRed entry is consistent.",
+        "ERR retiring a mapped entry that has no slave ERR is tagged unexplained_mapped_err (unknown). This covers unforwarded entries, entries forwarded but not yet answered, and entries already slave-ACKed. Timeout precedence against a slave ACK is undocumented, so no unconditional no-ERR rule applies.",
+        "Neither 'unmapped implies eventual ERR' nor any deadline is asserted. Those would be liveness claims, and no public bound exists."
+      ]
+    },
+    {
+      "id": "K9_cancellation_orphans",
+      "source": "WB B4 3.1.2, rule 3.30; crossbar article abort prose (supplementary)",
+      "status": "inferred: no cross-epoch attribution; unknown: survivor set, residual forwarding, latency",
+      "acceptance": {
+        "cyc_drop": "In a row where pre i_mcyc[m]=0, every live entry of m changes state at the start of the row. Unforwarded entries become canceled-pool members, tagged with (master, master_epoch, reset_epoch, accept_row). Forwarded entries become orphans.",
+        "residual_forward": "A slave acceptance that consumes a canceled-pool member is tagged post_abort_forward (unknown). This includes the same row as the CYC drop: no public source orders the forward against the abort.",
+        "orphan_fate": [
+          "An orphan stays bound in its slave FIFO.",
+          "While pre o_scyc[s]=1, a slave response binds to it positionally and is never routed to a master.",
+          "Any master response retiring new work using it kills the hypothesis."
+        ],
+        "persistence": "Canceled identities persist until reset. Idle outputs never discard them."
+      }
+    },
+    {
+      "id": "K10_dut_master_handshake",
+      "source": "WB B4 3.1.3.2 ('waits while STALL'), rules 3.25 and 3.45",
+      "status": "normative",
+      "acceptance": [
+        "If pre o_scyc&o_sstb&i_sstall in row c with no reset, row c+1 must have either o_scyc=0, or o_sstb=1 with an identical payload.",
+        "o_sstb without o_scyc is a violation.",
+        "o_mack&o_merr together is a violation."
+      ],
+      "association_free": true
+    },
+    {
+      "id": "K11_env",
+      "source": "Packet environment_contract; WB rules 3.30, 3.45",
+      "status": "assumption",
+      "acceptance": {
+        "env_violations": [
+          "A master changes or withdraws a stalled request while CYC stays high.",
+          "A slave asserts ACK and ERR together.",
+          "A slave response arrives with an empty FIFO.",
+          "A slave response arrives while pre o_scyc[s]=0."
+        ],
+        "result": "input_or_scope_invalid. Never reported as a DUT fault.",
+        "slave_cyc_withdrawal": "If pre o_scyc[s]=0, all forwards in slave FIFO s are slave_canceled."
+      }
+    },
+    {
+      "id": "K12_batch_end",
+      "source": "Packet requested obligations",
+      "status": "reporting assumption",
+      "acceptance": "A live entry not retired at trace end, in any surviving hypothesis, gives pending_at_batch_end (unresolved). It is never a liveness failure.",
+      "non_obligations": [
+        "A live entry whose slave forward was slave_canceled can only be ERRed (unknown) or remain pending; a master ACK on it kills the hypothesis.",
+        "Canceled-pool members.",
+        "Orphans of aborted cycles."
+      ]
+    },
+    {
+      "id": "K13_response_without_cyc",
+      "source": "WB B4 3.1.2 and rule 3.30 (slave role of DUT toward master)",
+      "status": "normative",
+      "acceptance": [
+        "o_mack/o_merr[m] in row c with pre i_mcyc[m]=0 in both rows c-1 and c is a dut_violation.",
+        "If i_mcyc[m] fell exactly in row c, the response is recorded unresolved same_edge_response_after_abort, because a registered output cannot observe that edge. It is never retired into work."
+      ],
+      "association_free": true
+    }
+  ],
+  "ownership_algorithm": {
+    "model": "Exact-history nondeterministic reference. The first implementation has no symmetry quotient and no partitioning (both withdrawn per R2/R3). State is a set H of explicit hypotheses for the current reset epoch.",
+    "hypothesis_state": [
+      "Per master: FIFO of live entries.",
+      "Each entry carries: identity, accept_row, master_epoch, reset_epoch.",
+      "Entry state is one of: unforwarded, forwarded(s,k), slave_acked(data,row), slave_erred(row), slave_canceled.",
+      "Canceled pool: a list of distinct member records, not merged even when equal.",
+      "Orphan list.",
+      "Per slave: FIFO of forward records bound to a live entry ref, canceled member ref, or orphan.",
+      "Tag set per hypothesis."
+    ],
+    "counters": "master_epoch[m] increments on every CYC 1->0. reset_epoch increments per reset. Both are arbitrary-precision in the checker. If a bounded implementation is used, overflow triggers the resource-exhaustion path.",
+    "row_order": [
+      "0 Reset row: apply K1 and stop processing the row.",
+      "1 CYC drop: for each m with pre i_mcyc[m]=0, apply K9 transitions. If 1->0, increment master_epoch[m].",
+      "2 Master acceptances: append new live entries (accept_row=c).",
+      "3 Slave CYC: for each s with pre o_scyc[s]=0, mark all FIFO-s forwards slave_canceled and empty the FIFO.",
+      "4 Slave responses: apply K11 env checks, then bind each to its FIFO-s head among forwards from rows < c.",
+      "5 Slave acceptances: branch over every identity-equal candidate (live unforwarded from rows <= c, or canceled member), and append to FIFO s.",
+      "6 Master responses: apply K13, then K6/K7/K8 retirement against entries from rows < c, using slave responses from rows <= c.",
+      "7 Association-free checks: K3, K10 and env hold, independent of H."
+    ],
+    "same_edge_dependencies": [
+      "Slave response row c can retire only forwards from rows < c.",
+      "A forward in row c may consume a master acceptance from row c. This is permissive and adds branches only.",
+      "A master response in row c may use a slave response from row c, but never a master acceptance from row c.",
+      "A forward in the same row as a CYC drop is tagged post_abort_forward."
+    ],
+    "verdict_semantics": {
+      "trace_membership": "Exists a surviving hypothesis. If H becomes empty, the result is dut_violation. Cite the dying row, the per-branch witnesses and every inferred clause that was used.",
+      "clause_level": "With H nonempty, a judged clause is pass only if no surviving hypothesis carries an unknown tag (post_abort_forward, unexplained_mapped_err, same_edge_response_after_abort) and none has pending work. Otherwise it is unresolved(clause), listing the alternatives and their downstream consequences.",
+      "aggregate_precedence": "env > violation > unresolved > pass",
+      "ownership": "unique-by-elimination only if all survivors agree; otherwise indistinguishable(k). Never a hidden-state claim.",
+      "non_circularity": [
+        "A hypothesis is removed only when a specific observed pin value contradicts an independently cited clause applied to that branch's bindings.",
+        "A pass is therefore 'not refuted by the reference', a membership statement. It is not universal evidence that the DUT satisfies the clause on other traces, and not proof of internal ownership.",
+        "Universality is evaluated only over the unknown-tag and pending dimensions, never over clauses used for filtering."
+      ]
+    },
+    "resource_limits": {
+      "constants": "MAX_HYP=4096, MAX_LIVE_PER_MASTER=64, MAX_CANCELED_POOL=256. Declared, test-lowerable, never silently changed.",
+      "on_exhaustion": "No pruning and no branch selection. For the remainder of the current reset epoch, record unresolved_on_limit(row, sizes) and suspend all association-dependent judgments for all masters: K4 per-candidate consumption, K6, K7, K8 attribution, K9 tags and K12.",
+      "still_valid_after_exhaustion": [
+        "K1",
+        "K2 env hold",
+        "K3",
+        "K10",
+        "K13",
+        "Rule 3.45 on o_mack&o_merr",
+        "K11 slave env checks",
+        "K4 association-free count projection per identity",
+        "Per-slave response count <= forwards",
+        "Per-master responses in current CYC <= acceptances in current CYC"
+      ],
+      "resume": "Only at reset. This removes the R4 contradiction: there is no mid-epoch closure."
+    },
+    "label_change_log_before_replay": [
+      "unresolved/identical_heads -> scoped_pass. The m1-first branch dies by K7 at the m0 ACK (cycle 12); clauses hold.",
+      "negative/early_unexplained_error -> unresolved. The ERR on mapped unforwarded work is K8-unknown and no deadline exists.",
+      "fault/live_order_swap -> scoped_pass. Only forward order differs, and K5 is not judged.",
+      "new_aba/younger_equal_first -> scoped_pass. Same-address forward order is not judged and data retire consistently via the A2-first binding.",
+      "negative/stale_after_reset keeps dut_violation, but its basis is now K13 plus K6 invention, not epoch inference."
+    ]
+  },
+  "formal_obligations": {
+    "status": "Targets only. Nothing implemented or proved. No certificate is supplied.",
+    "quantifier_note": [
+      "Trace membership is an existential property: there exists a history explaining the trace. Standard safety tools check universal properties over all paths and free inputs. A free ghost association variable therefore asserts over ALL associations, and a failing arbitrary association is not a DUT failure.",
+      "Membership is expressible only via a determinized monitor. That monitor is the H set, with explicit finite bounds as assumptions, and the claim is bounded.",
+      "No harness may assign associations from internal state or assumed order, and the property under proof must not appear in assume form."
+    ],
+    "items": [
+      {
+        "id": "F1_route",
+        "prop": "For all rows: slave acceptance on s implies decode(addr)==s, and an unmapped address is never forwarded.",
+        "quantifier": "universal; association-free",
+        "false_control": "decode==1-s must fail"
+      },
+      {
+        "id": "F2_count",
+        "prop": "For a free constant identity X: cnt_s(X) <= cnt_m(X) since reset.",
+        "requirements": [
+          "Declared counter width W.",
+          "Overflow assertion.",
+          "Reset clear.",
+          "If induction fails, report BMC depth only."
+        ],
+        "cover": "two forwards of X",
+        "false_control": "strict < must fail"
+      },
+      {
+        "id": "F3_monitor_membership",
+        "prop": "A synthesizable bounded determinization of the reference never reaches an empty H.",
+        "assumptions": [
+          "K11 environment",
+          "Explicit bounds on outstanding entries, canceled-pool size and epoch width, each disclosed"
+        ],
+        "claim_scope": "Bounded; no hidden-ownership claim.",
+        "false_control": "A monitor mutated to bind the younger read's data must report empty H on a reachable cover."
+      },
+      {
+        "id": "F4_epoch",
+        "prop": "No master response is retired using a slave response bound to a forward whose epoch tuple predates the entry's.",
+        "notes": "Monotone counters; repeated-abort cover required. Embedded in the F3 monitor, not a free ghost tag."
+      },
+      {
+        "id": "F5_reset_out",
+        "prop": "post o_scyc=o_sstb=0 in reset rows."
+      },
+      {
+        "id": "F6_handshake",
+        "prop": "K10 and rule 3.45."
+      },
+      {
+        "id": "F7_cyc_low_response",
+        "prop": "K13."
+      },
+      {
+        "id": "F8_err",
+        "prop": "ACK never retires an unmapped or slave-ERRed entry, evaluated inside the monitor.",
+        "notes": "Mapped ERR is unconstrained, and no deadline is asserted."
+      }
+    ],
+    "characterization_only": [
+      {
+        "id": "C1",
+        "question": "Restart-safe noninterference: after an abort, does no old-identity forward follow any new acceptance or repeated abort?",
+        "use": "Certificate required before canceled identities may be discarded."
+      },
+      {
+        "id": "C2",
+        "question": "Survivor set of buffered work."
+      },
+      {
+        "id": "C3",
+        "question": "Forward order."
+      },
+      {
+        "id": "C4",
+        "question": "Timeout and starvation ERR conditions and their precedence."
+      }
+    ],
+    "vacuity": "Every assert needs a reached cover; otherwise its evidence is void."
+  },
+  "control_assessments": [
+    {
+      "name": "positive/read",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K2",
+        "K3",
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "Read 0x03 forwarded; slave data 0xABCDEF12 retired to m0."
+    },
+    {
+      "name": "positive/write_mask",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K2",
+        "K3",
+        "K4",
+        "K7"
+      ],
+      "unresolved_scope": "Write 0x03, SEL 5, forwarded identically."
+    },
+    {
+      "name": "positive/slave_error",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K8"
+      ],
+      "unresolved_scope": "Slave ERR propagated as master ERR."
+    },
+    {
+      "name": "positive/unmapped",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K3",
+        "K8"
+      ],
+      "unresolved_scope": "0x20 is not forwarded; ERR is consistent."
+    },
+    {
+      "name": "positive/concurrent",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K3",
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "m0 0x03 receives 0xABCDEF12; m1 0x14 receives 0x55AA55AA."
+    },
+    {
+      "name": "positive/pipeline",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "Two reads retire 0xABCDEF12 then 0x55667788."
+    },
+    {
+      "name": "positive/accept_and_return",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": ""
+    },
+    {
+      "name": "positive/master1",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K3",
+        "K7"
+      ],
+      "unresolved_scope": "m1 0x12 on slave1 receives 0xABCDEF12."
+    },
+    {
+      "name": "positive/reset_then_new",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K1",
+        "K7"
+      ],
+      "unresolved_scope": ""
+    },
+    {
+      "name": "positive/reset_inflight",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K1",
+        "K7"
+      ],
+      "unresolved_scope": "Reset-row post o_scyc=0; the orphan is discarded at reset; new read 0x10203040 is correct."
+    },
+    {
+      "name": "negative/read_data",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K7"
+      ],
+      "unresolved_scope": "0xABCDEF13 delivered against slave data 0xABCDEF12."
+    },
+    {
+      "name": "negative/write_data",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "Enabled lane 0 changed 0x78 to 0x79."
+    },
+    {
+      "name": "negative/write_mask",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "SEL 5 forwarded as SEL 15."
+    },
+    {
+      "name": "negative/address",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "Address 3 forwarded as 4."
+    },
+    {
+      "name": "negative/direction",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "Read forwarded as a write."
+    },
+    {
+      "name": "negative/missing_forward",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K7"
+      ],
+      "unresolved_scope": "o_sstb never raised; master ACK with no slave ACK."
+    },
+    {
+      "name": "negative/wrong_owner",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K6",
+        "K7",
+        "K4"
+      ],
+      "unresolved_scope": "m1 ACK at cycle 12 carries 0xABCDEF12 (slave0 data); a second m1 ACK at cycle 13 is invented."
+    },
+    {
+      "name": "negative/duplicate_response",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K6"
+      ],
+      "unresolved_scope": "Second m0 ACK at cycle 13 with CYC high and no outstanding entry."
+    },
+    {
+      "name": "negative/error_as_success",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K8"
+      ],
+      "unresolved_scope": "ACK on a slave-ERRed entry."
+    },
+    {
+      "name": "negative/stale_after_reset",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K13",
+        "K6"
+      ],
+      "unresolved_scope": "ACK at cycle 14 with m0 CYC low since cycle 11 and an empty epoch.",
+      "note": "Basis changed to K13."
+    },
+    {
+      "name": "negative/stale_into_new_epoch",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K6",
+        "K1"
+      ],
+      "unresolved_scope": "ACK at cycle 16 in the same row as the new acceptance; no entry from an earlier row exists."
+    },
+    {
+      "name": "negative/early_unexplained_error",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K8"
+      ],
+      "unresolved_scope": "unexplained_mapped_err: mapped read 0x03 is ERRed at cycle 9 with no forward and no slave ERR. Timeout/starvation conditions are unknown, so no deadline applies.",
+      "note": "Label changed from violation."
+    },
+    {
+      "name": "incomplete/missing_return",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K12"
+      ],
+      "unresolved_scope": "Slave-ACKed read still pending at batch end."
+    },
+    {
+      "name": "incomplete/truncated",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K12"
+      ],
+      "unresolved_scope": "Pending at trace end."
+    },
+    {
+      "name": "invalid/master_changes_stalled_payload",
+      "expected_status": "input_or_scope_invalid",
+      "justified_clauses": [
+        "K11"
+      ],
+      "unresolved_scope": "Stalled at cycle 8 with addr 3; addr 7 and data 0 at cycle 9 while CYC is high."
+    },
+    {
+      "name": "positive/masked_write_bytes",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K2",
+        "K4"
+      ],
+      "unresolved_scope": "0x12345678 forwarded as 0x1234A978; only disabled lane 1 differs."
+    },
+    {
+      "name": "positive/slave_stall",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K10",
+        "K7"
+      ],
+      "unresolved_scope": ""
+    },
+    {
+      "name": "negative/slave_stalled_payload",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K10"
+      ],
+      "unresolved_scope": "Address changed to 7 under stall at cycle 11."
+    },
+    {
+      "name": "negative/slave_stalled_strobe",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K10"
+      ],
+      "unresolved_scope": "STB withdrawn under stall with CYC still high."
+    },
+    {
+      "name": "negative/ack_and_err",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K10"
+      ],
+      "unresolved_scope": "o_mack&o_merr at cycle 12 (rule 3.45)."
+    },
+    {
+      "name": "negative/reset_slave_cycle",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K1"
+      ],
+      "unresolved_scope": "post o_scyc=1 in reset row 0."
+    },
+    {
+      "name": "unresolved/identical_heads",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K4",
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "Ownership unique by elimination. The m1-first binding dies at the m0 ACK in cycle 12, because m0's entry would not yet be forwarded.",
+      "note": "Label changed from unresolved."
+    },
+    {
+      "name": "positive/contention",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K4",
+        "K7"
+      ],
+      "unresolved_scope": "Distinct write data 0x11111111 and 0x22222222."
+    },
+    {
+      "name": "positive/mapped_decode_restart",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K3",
+        "K6",
+        "K8"
+      ],
+      "unresolved_scope": ""
+    },
+    {
+      "name": "positive/slave_error_burst_restart",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K8",
+        "K9",
+        "K6"
+      ],
+      "unresolved_scope": "The slave ACK for 0x04 binds to the entry that becomes an orphan at the cycle-13 abort; it is never retired."
+    },
+    {
+      "name": "positive/abort_late_slave_restart",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K9",
+        "K7"
+      ],
+      "unresolved_scope": "Slave ACK at cycle 12 with o_scyc still high is consumed by the orphan."
+    },
+    {
+      "name": "unresolved/unclassified_late_error",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K8"
+      ],
+      "unresolved_scope": "Mapped forwarded read is ERRed at cycle 28 with no slave response; unexplained_mapped_err."
+    },
+    {
+      "name": "incomplete/both_interfaces_pending",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K12",
+        "K11"
+      ],
+      "unresolved_scope": "Forward at cycle 10, then post o_scyc=0, so the forward is slave_canceled. Pending at end; the eventual master response is unknown."
+    },
+    {
+      "name": "unresolved/post_abort_forward",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K9",
+        "K8",
+        "K7"
+      ],
+      "unresolved_scope": "Write 0x04 is forwarded in cycle 13, the same row as the m0 CYC drop: post_abort_forward (same-edge). The new read correctly receives 0x99AABBCC."
+    },
+    {
+      "name": "unresolved/late_post_abort_forward",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K9"
+      ],
+      "unresolved_scope": "Canceled 0x04 is forwarded at cycle 16."
+    },
+    {
+      "name": "negative/post_abort_corrupt_data",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "Enabled lane 0 is 0x45 instead of 0x44."
+    },
+    {
+      "name": "negative/post_abort_unaccepted_address",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "Address 0x07 was never accepted."
+    },
+    {
+      "name": "negative/duplicate_aborted_forward",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "Second forward of 0x04 at cycle 16."
+    },
+    {
+      "name": "unresolved/post_abort_then_reset",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K9",
+        "K1"
+      ],
+      "unresolved_scope": "The cycle-13 same-edge record persists across the reset."
+    },
+    {
+      "name": "negative/reset_clears_aborted_identity",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K1",
+        "K4"
+      ],
+      "unresolved_scope": "Forward at cycle 17 with no acceptance since the reset."
+    },
+    {
+      "name": "unresolved/live_aborted_ambiguity",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K9",
+        "K12"
+      ],
+      "unresolved_scope": "m1 write 0x04/0x11223344/SEL5 accepted at cycle 13 equals m0's canceled entry; the forward at cycle 13 may consume either. m1 is never ACKed, so it is pending in both branches. unresolved_owner_alternative."
+    },
+    {
+      "name": "multi_abort/m0_s0_later_identity",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K9"
+      ],
+      "unresolved_scope": "Residual 0x06 forward at cycle 14."
+    },
+    {
+      "name": "multi_abort/m0_s1_later_identity",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K9"
+      ],
+      "unresolved_scope": "Slave1 0x16 / 0x23456781 / SEL5."
+    },
+    {
+      "name": "multi_abort/m1_s0_later_identity",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K9"
+      ],
+      "unresolved_scope": "m1 canceled 0x06."
+    },
+    {
+      "name": "multi_abort/m1_s1_later_identity",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K9"
+      ],
+      "unresolved_scope": ""
+    },
+    {
+      "name": "multi_abort/third_identity",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K9"
+      ],
+      "unresolved_scope": "Any position is eligible; K5 is not judged."
+    },
+    {
+      "name": "multi_abort/late_identity",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K9"
+      ],
+      "unresolved_scope": "No deadline."
+    },
+    {
+      "name": "multi_abort/disabled_byte_change",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K2",
+        "K9"
+      ],
+      "unresolved_scope": "0x23459881 differs only in disabled lane 1."
+    },
+    {
+      "name": "multi_abort/sel_zero",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K2",
+        "K9"
+      ],
+      "unresolved_scope": "SEL=0 identity matches."
+    },
+    {
+      "name": "fault/aborted_address",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "0x0C"
+    },
+    {
+      "name": "fault/aborted_enabled_byte",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "Lane 0 is 0x90 instead of 0x81."
+    },
+    {
+      "name": "fault/aborted_direction",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "Forwarded as a read."
+    },
+    {
+      "name": "fault/aborted_select",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "SEL 7"
+    },
+    {
+      "name": "fault/duplicate_consumed_identity",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "0x06 consumed twice."
+    },
+    {
+      "name": "fault/reset_then_old_forward",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K1",
+        "K4"
+      ],
+      "unresolved_scope": ""
+    },
+    {
+      "name": "multi_abort/reset_preserves_prior_uncertainty",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K9",
+        "K1"
+      ],
+      "unresolved_scope": "The residual forward record persists."
+    },
+    {
+      "name": "multi_abort/live_aborted_same_identity",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K2",
+        "K9"
+      ],
+      "unresolved_scope": "Per the exact facts, m1 at cycle 12 equals m0 cycle-7 0x06/0x23456781/SEL5 on enabled lanes. The cycle-14 forward is either m1 live or m0 residual. m1 withdraws at cycle 18 without an ACK, so neither branch has a pending obligation. No pass or violation is derivable."
+    },
+    {
+      "name": "multi_abort/identical_aborted_requests",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K2",
+        "K9"
+      ],
+      "unresolved_scope": "Two identical canceled 0x05 requests; ownership indistinguishable(2)."
+    },
+    {
+      "name": "positive/cancel_all_then_fresh",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K4",
+        "K7",
+        "K9"
+      ],
+      "unresolved_scope": "Canceled identities persist and are not pending."
+    },
+    {
+      "name": "fault/stale_ack_into_fresh",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K6"
+      ],
+      "unresolved_scope": "ACK at cycle 18 in the same row as the new acceptance."
+    },
+    {
+      "name": "positive/live_fifo_order",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K4",
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": ""
+    },
+    {
+      "name": "fault/live_order_swap",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K4",
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "Forward order 0x06 before 0x05 is not judged (K5). Retirement is consistent.",
+      "note": "Label changed from fault."
+    },
+    {
+      "name": "multi_abort/accept_same_edge_err",
+      "expected_status": "unresolved",
+      "justified_clauses": [
+        "K8",
+        "K9"
+      ],
+      "unresolved_scope": "Residual 0x07 forward at cycle 14."
+    },
+    {
+      "name": "fault/retired_error_identity_reused",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "0x05, already consumed at cycle 8, is forwarded again at cycle 18. The unresolved 0x07 residual is also recorded."
+    },
+    {
+      "name": "cross_slave/early_forward_ordered_retirement",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K6 (inferred)",
+        "K7"
+      ],
+      "unresolved_scope": "0x1234ABCD then 0x9876FEDC; no forward-order claim."
+    },
+    {
+      "name": "cross_slave/wrong_retirement_data",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K6 (inferred)",
+        "K7"
+      ],
+      "unresolved_scope": "The first ACK carries the younger request's 0x9876FEDC."
+    },
+    {
+      "name": "ambiguity/identical_requests_later_responses",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "Unique by elimination: the m1-first branch would need m0 to receive 0x9876FEDC."
+    },
+    {
+      "name": "ambiguity/followed_by_distinct_work",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K7"
+      ],
+      "unresolved_scope": "0x88887777"
+    },
+    {
+      "name": "ambiguity/later_data_corruption",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K7"
+      ],
+      "unresolved_scope": "0x88887776 delivered against 0x88887777."
+    },
+    {
+      "name": "ambiguity/later_unaccepted_address",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K4"
+      ],
+      "unresolved_scope": "Read 0x0C was never accepted."
+    },
+    {
+      "name": "ambiguity/inherently_indistinguishable",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "Both slave ACKs carry 0x1234ABCD; ownership indistinguishable(2)."
+    },
+    {
+      "name": "new_aba/fifo_order",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "A,B,A with data 0x11110000, 0x11110001, 0x11110002. Unique by elimination."
+    },
+    {
+      "name": "new_aba/younger_equal_first",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "The binding of the first forward to A2 survives. A sorted-symmetry quotient would wrongly lose it.",
+      "note": "Label changed from inferred fault."
+    },
+    {
+      "name": "new_dependency/overlapping_distinct",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K6",
+        "K7"
+      ],
+      "unresolved_scope": "m0 receives 0xAAAA0001 then 0xCCCC0001; m1 receives 0xBBBB0001. Same-master coupling is handled by the exact state."
+    },
+    {
+      "name": "new_dependency/overlapping_data_change",
+      "expected_status": "dut_violation",
+      "justified_clauses": [
+        "K7"
+      ],
+      "unresolved_scope": "0xCCCC0002 delivered against 0xCCCC0001 in every branch."
+    },
+    {
+      "name": "new_epoch/two_aborts_then_identical_restart",
+      "expected_status": "scoped_pass",
+      "justified_clauses": [
+        "K7",
+        "K9"
+      ],
+      "unresolved_scope": "Branches consuming either canceled copy die by K7 at the cycle-18 ACK, since the live entry would be unforwarded. The two canceled identities persist."
+    }
+  ],
+  "unresolved": [
+    "Forward and side-effect order (K5), the cancellation survivor set and residual latency (K9), and timeout/starvation ERR conditions and precedence (K8) are not public.",
+    "The same-edge order of a forward against a CYC drop is not public; it is tagged unknown.",
+    "No sound mid-epoch release of canceled identities exists without a C1 restart-safe certificate.",
+    "The meaning of a slave-CYC withdrawal with live forwards (both_interfaces_pending) is unknown.",
+    "K6 is inferred from README prose. Violations that depend on it cite it as inferred.",
+    "K13 reads rule 3.30 'MAY NOT' as a prohibition.",
+    "All formal items are unimplemented targets. Membership monitors are bounded only.",
+    "This design does not authorize implementation, freeze or B/C."
+  ],
+  "ready_for_independent_review": true
+}

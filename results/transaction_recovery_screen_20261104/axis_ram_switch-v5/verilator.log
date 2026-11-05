@@ -1,0 +1,107 @@
+- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701
+- Verilator: Built from 0.197 MB sources in 5 modules, into 0.409 MB in 3 C++ files needing 0.000 MB
+- Verilator: Walltime 0.053 s (elab=0.014, cvt=0.028, bld=0.000); cpu 0.039 s on 1 threads; allocated 19.812 MB
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/arbiter.v:109:63: Logical operator LOGNOT expects 1 bit on the LHS, but LHS's AND generates 2 bits.
+                                                                            : ... note: In instance 'axis_ram_switch.m_ifaces[1].cmd_arb_inst'
+  109 |     end else if (ARB_BLOCK && ARB_BLOCK_ACK && grant_valid && !(grant_reg & acknowledge)) begin
+      |                                                               ^
+                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.050
+                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/arbiter.v:104:37: Logical operator LOGAND expects 1 bit on the RHS, but RHS's AND generates 2 bits.
+                                                                            : ... note: In instance 'axis_ram_switch.m_ifaces[1].cmd_arb_inst'
+  104 |     if (ARB_BLOCK && !ARB_BLOCK_ACK && grant_reg & request) begin
+      |                                     ^~
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:467:45: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'k' generates 32 bits.
+                                                                                    : ... note: In instance 'axis_ram_switch'
+  467 |                                 select_next = k;
+      |                                             ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:466:88: Operator EQ expects 32 bits on the LHS, but LHS's SEL generates 1 bits.
+                                                                                     : ... note: In instance 'axis_ram_switch'
+  466 |                             if (port_axis_tdest[S_DEST_WIDTH-CL_M_COUNT +: CL_M_COUNT] == k && (M_CONNECT & (1 << (m+k*S_COUNT)))) begin
+      |                                                                                        ^~
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.050
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:466:93: Logical operator LOGAND expects 1 bit on the RHS, but RHS's AND generates 32 or 4 bits.
+                                                                                    : ... note: In instance 'axis_ram_switch'
+  466 |                             if (port_axis_tdest[S_DEST_WIDTH-CL_M_COUNT +: CL_M_COUNT] == k && (M_CONNECT & (1 << (m+k*S_COUNT)))) begin
+      |                                                                                             ^~
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:475:41: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'k' generates 32 bits.
+                                                                                    : ... note: In instance 'axis_ram_switch'
+  475 |                             select_next = k;
+      |                                         ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:474:87: Logical operator LOGAND expects 1 bit on the RHS, but RHS's AND generates 32 or 4 bits.
+                                                                                    : ... note: In instance 'axis_ram_switch'
+  474 |                         if (port_axis_tdest == M_BASE[k*S_DEST_WIDTH +: S_DEST_WIDTH] && (M_CONNECT & (1 << (m+k*S_COUNT)))) begin
+      |                                                                                       ^~
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:481:41: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's VARREF 'k' generates 32 bits.
+                                                                                    : ... note: In instance 'axis_ram_switch'
+  481 |                             select_next = k;
+      |                                         ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:480:147: Logical operator LOGAND expects 1 bit on the RHS, but RHS's AND generates 32 or 4 bits.
+                                                                                     : ... note: In instance 'axis_ram_switch'
+  480 |                         if (port_axis_tdest >= M_BASE[k*S_DEST_WIDTH +: S_DEST_WIDTH] && port_axis_tdest <= M_TOP[k*S_DEST_WIDTH +: S_DEST_WIDTH] && (M_CONNECT & (1 << (m+k*S_COUNT)))) begin
+      |                                                                                                                                                   ^~
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:529:99: Operator SHIFTL expects 2 bits on the LHS, but LHS's LOGAND generates 1 bits.
+                                                                                     : ... note: In instance 'axis_ram_switch'
+  529 |         assign int_cmd_status_ready[m*M_COUNT +: M_COUNT] = (grant_valid && cmd_status_ready_mux) << grant_encoded;
+      |                                                                                                   ^~
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:606:103: Operator OR expects 32 or 6 bits on the LHS, but LHS's SEL generates 5 bits.
+                                                                                      : ... note: In instance 'axis_ram_switch'
+  606 |         assign port_ram_wr_addr[m*RAM_ADDR_WIDTH +: RAM_ADDR_WIDTH] = ram_wr_addr_reg[ADDR_WIDTH-1:0] | (m << ADDR_WIDTH);
+      |                                                                                                       ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:610:96: Operator OR expects 32 or 6 bits on the LHS, but LHS's SEL generates 5 bits.
+                                                                                     : ... note: In instance 'axis_ram_switch'
+  610 |         assign int_cmd_addr[m*RAM_ADDR_WIDTH +: RAM_ADDR_WIDTH] = cmd_addr_reg[ADDR_WIDTH-1:0] | (m << ADDR_WIDTH);
+      |                                                                                                ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:643:40: Operator ASSIGN expects 7 bits on the Assign RHS, but Assign RHS's VARREF 'wr_ptr_reg' generates 6 bits.
+                                                                                     : ... note: In instance 'axis_ram_switch'
+  643 |             cmd_table_start_addr_start = wr_ptr_reg;
+      |                                        ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:689:38: Operator ASSIGN expects 5 bits on the Assign RHS, but Assign RHS's VARREF 'wr_ptr_cur_reg' generates 6 bits.
+                                                                                    : ... note: In instance 'axis_ram_switch'
+  689 |                     ram_wr_addr_next = wr_ptr_cur_reg;
+      |                                      ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:704:56: Operator ASSIGN expects 7 bits on the Assign RHS, but Assign RHS's VARREF 'wr_ptr_reg' generates 6 bits.
+                                                                                     : ... note: In instance 'axis_ram_switch'
+  704 |                             cmd_table_start_addr_start = wr_ptr_reg;
+      |                                                        ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:722:31: Operator ASSIGN expects 6 bits on the Assign RHS, but Assign RHS's ARRAYSEL generates 7 bits.
+                                                                                    : ... note: In instance 'axis_ram_switch'
+  722 |                 cmd_addr_next = cmd_table_addr_start[cmd_table_read_ptr_reg[CMD_ADDR_WIDTH-1:0]];
+      |                               ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:724:29: Operator ASSIGN expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'cmd_table_read_ptr_reg' generates 3 bits.
+                                                                                    : ... note: In instance 'axis_ram_switch'
+  724 |                 cmd_id_next = cmd_table_read_ptr_reg;
+      |                             ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:720:17: Logical operator LOGNOT expects 1 bit on the LHS, but LHS's VARREF 'cmd_valid_reg' generates 2 bits.
+                                                                                    : ... note: In instance 'axis_ram_switch'
+  720 |             if (!cmd_valid_reg && cmd_table_active[cmd_table_read_ptr_reg[CMD_ADDR_WIDTH-1:0]] && cmd_table_read_ptr_reg != cmd_table_start_ptr_reg && (!ram_wr_en_reg || ram_wr_ack)) begin
+      |                 ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:742:29: Operator ASSIGN expects 6 bits on the Assign RHS, but Assign RHS's ARRAYSEL generates 7 bits.
+                                                                                    : ... note: In instance 'axis_ram_switch'
+  742 |                 rd_ptr_next = cmd_table_addr_end[cmd_table_finish_ptr_reg[CMD_ADDR_WIDTH-1:0]];
+      |                             ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:811:31: Operator ASSIGNDLY expects 2 bits on the Assign RHS, but Assign RHS's CONST '1'h0' generates 1 bits.
+                                                                                     : ... note: In instance 'axis_ram_switch'
+  811 |                 cmd_valid_reg <= 1'b0;
+      |                               ^~
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:862:27: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's SEL generates 2 bits.
+                                                                                     : ... note: In instance 'axis_ram_switch'
+  862 |             cmd_tid_mux   = int_cmd_tid[grant_encoded*S_ID_WIDTH +: S_ID_WIDTH_INT];
+      |                           ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:866:27: Operator ASSIGN expects 1 bits on the Assign RHS, but Assign RHS's SEL generates 2 bits.
+                                                                                    : ... note: In instance 'axis_ram_switch'
+  866 |             cmd_tdest_mux = int_cmd_tdest[grant_encoded*S_DEST_WIDTH +: S_DEST_WIDTH];
+      |                           ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:871:85: Operator SHIFTL expects 2 bits on the LHS, but LHS's LOGAND generates 1 bits.
+                                                                                     : ... note: In instance 'axis_ram_switch'
+  871 |         assign int_cmd_ready[n*S_COUNT +: S_COUNT] = (grant_valid && cmd_ready_mux) << grant_encoded;
+      |                                                                                     ^~
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:878:64: Operator ASSIGN expects 6 bits on the Assign RHS, but Assign RHS's REPLICATE generates 5 bits.
+                                                                                     : ... note: In instance 'axis_ram_switch'
+  878 |         reg [RAM_ADDR_WIDTH-1:0] rd_ptr_reg = {RAM_ADDR_WIDTH-1{1'b0}}, rd_ptr_next;
+      |                                                                ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_ram_switch.v:1006:34: Logical operator LOGNOT expects 1 bit on the LHS, but LHS's VARREF 'cmd_status_valid_next' generates 2 bits.
+                                                                                     : ... note: In instance 'axis_ram_switch'
+ 1006 |             if (cmd_valid_reg && !cmd_status_valid_next && (!ram_rd_en_reg || ram_rd_ack) && ($unsigned(out_fifo_ctrl_wr_ptr_reg - out_fifo_rd_ptr_reg) < 32)) begin
+      |                                  ^

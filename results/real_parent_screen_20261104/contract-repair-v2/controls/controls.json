@@ -1,0 +1,269 @@
+[
+  {
+    "name": "reference/write1",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/read1",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/write2",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/read2",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/write3",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/read3",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/write4",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/read4",
+    "kind": "independent_positive",
+    "expected": "Scoped pass under registered LSB contract; asymmetric bytes and high padding",
+    "authority": "contract-repair-v2/authority/contract.json"
+  },
+  {
+    "name": "reference/write_sparse",
+    "kind": "independent_positive",
+    "expected": "Only enabled lanes0,2 in increasing index"
+  },
+  {
+    "name": "calibration/ordinary_fullcycle_read",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/ordinary_standard_write",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/ordinary_three_speeds",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/partial_then_csid_switch",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/rx_backpressure_resume",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/seed",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/software_reset_restart",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "calibration/tx_starvation_resume",
+    "kind": "observational_positive",
+    "expected": "Report all failures/unresolved; do not presume correct"
+  },
+  {
+    "name": "followup/uniform_write_baseline",
+    "kind": "observational_positive",
+    "expected": "Scoped pass; repeating bytes intentionally avoid unresolved byte-order convention; no new endian validation"
+  },
+  {
+    "name": "followup/withdraw_pending_command",
+    "kind": "input_protocol",
+    "baseline": "followup/uniform_write_baseline",
+    "expected": "Assumption violation at cycle29; outputs re-simulated rather than copied"
+  },
+  {
+    "name": "followup/hardware_abort_restart",
+    "kind": "observational_positive",
+    "expected": "Hardware reset during active RX, fresh TX completes; event checked offline, not formal proof"
+  },
+  {
+    "name": "followup/negative/hardware_reset_select",
+    "kind": "single_fault",
+    "baseline": "followup/hardware_abort_restart",
+    "expected": "Reset CS violation; credit only on clean baseline",
+    "changes": [
+      {
+        "cycle": 48,
+        "side": "post",
+        "field": "csb",
+        "after": 0
+      }
+    ]
+  },
+  {
+    "name": "followup/truncated/hardware_abort",
+    "kind": "incomplete",
+    "baseline": "followup/hardware_abort_restart",
+    "expected": "No successful restart before reset release/new command"
+  },
+  {
+    "name": "probe/write_speed0_mode0",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed0_mode1",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed0_mode2",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed0_mode3",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed1_mode0",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed1_mode1",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed1_mode2",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed1_mode3",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed2_mode0",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed2_mode1",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed2_mode2",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/write_speed2_mode3",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/read_asymmetric_full0",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "probe/read_asymmetric_full1",
+    "kind": "observational_positive",
+    "expected": "Public timing/mode/payload control; report, never assume DUT correctness"
+  },
+  {
+    "name": "negative/reversed_rx_lanes",
+    "kind": "single_fault",
+    "baseline": "reference/read3",
+    "expected": "rx_payload/rx_padding failure; old contradictory ordering is not accepted"
+  },
+  {
+    "name": "negative/high_padding_nonzero",
+    "kind": "single_fault",
+    "baseline": "reference/read3",
+    "expected": "rx_padding failure"
+  },
+  {
+    "name": "negative/wrong_low_rx_byte",
+    "kind": "single_fault",
+    "baseline": "reference/read3",
+    "expected": "rx_payload failure"
+  },
+  {
+    "name": "negative/wrong_tx_bit",
+    "kind": "single_fault",
+    "baseline": "reference/write3",
+    "expected": "tx_payload failure at sampling; wrong value stable across edge"
+  },
+  {
+    "name": "negative/missing_rx_word",
+    "kind": "single_fault",
+    "baseline": "reference/read3",
+    "expected": "inconclusive pending, not pass; no invented timeout"
+  },
+  {
+    "name": "negative/multiple_selects",
+    "kind": "single_fault",
+    "baseline": "reference/write3",
+    "expected": "CS failure"
+  },
+  {
+    "name": "truncated/tx_starvation_resume",
+    "kind": "incomplete",
+    "baseline": "calibration/tx_starvation_resume",
+    "expected": "Explicit pending/failed event, no successful recovery",
+    "required_event_family": "tx_starvation_resume"
+  },
+  {
+    "name": "negative/dirty_tx_recovery",
+    "kind": "single_fault",
+    "baseline": "calibration/tx_starvation_resume",
+    "expected": "Payload error before starvation must prevent success for transaction-wide recovery"
+  },
+  {
+    "name": "truncated/rx_backpressure_resume",
+    "kind": "incomplete",
+    "baseline": "calibration/rx_backpressure_resume",
+    "expected": "Explicit pending/failed event, no successful recovery",
+    "required_event_family": "rx_backpressure_resume"
+  },
+  {
+    "name": "negative/dirty_rx_recovery",
+    "kind": "single_fault",
+    "baseline": "calibration/rx_backpressure_resume",
+    "expected": "RX mismatch prevents recovery success"
+  },
+  {
+    "name": "negative/clock_during_tx_stall",
+    "kind": "single_fault",
+    "baseline": "calibration/tx_starvation_resume",
+    "expected": "Detect SCK change with no TX data; never success"
+  }
+]

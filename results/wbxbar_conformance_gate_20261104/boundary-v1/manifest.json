@@ -1,0 +1,96 @@
+{
+  "scope_sha256": "d957119caa1405b628caf50e7ffd90f81fb890484f04036da9ce5858f925f5f6",
+  "tasks": {
+    "quiet_prove": [
+      "prove",
+      20,
+      [],
+      "pass"
+    ],
+    "instant_negative": [
+      "bmc",
+      20,
+      [
+        "OBS_INSTANT"
+      ],
+      "fail"
+    ],
+    "nonvacuity": [
+      "cover",
+      40,
+      [
+        "OBS_COVER"
+      ],
+      "pass"
+    ]
+  },
+  "configuration": {
+    "top": "wbxbar",
+    "root": "third_party/wb2axip_candidate",
+    "sources": [
+      "rtl/skidbuffer.v",
+      "rtl/addrdecode.v",
+      "rtl/wbxbar.v"
+    ],
+    "include_dirs": [],
+    "defines": [],
+    "parameters": {
+      "NM": 2,
+      "NS": 2,
+      "AW": 8,
+      "DW": 32,
+      "SLAVE_ADDR": 4096,
+      "SLAVE_MASK": 61680,
+      "LGMAXBURST": 3,
+      "OPT_TIMEOUT": 16,
+      "OPT_STARVATION_TIMEOUT": 1,
+      "OPT_DBLBUFFER": 1,
+      "OPT_LOWPOWER": 1
+    },
+    "seed_inputs": {},
+    "event_families": [
+      "contended slave ownership held by outstanding responses then drain and transfer to waiting master",
+      "nonresponding slave times out and aborts then new cycle to same slave succeeds",
+      "master aborts outstanding pipelined cycle and a subsequent owner acquires resource without stale response"
+    ],
+    "ordinary_policy": "Ordinary isolated reads/writes from each master to each mapped slave and unmapped address; direct mapped ranges 0x00-0x0f/0x10-0x1f. Concurrent accesses to different slaves, one-master prompt pipelined bursts 1/2/4/7 and alternating destinations only after replies. Prompt in-order ACK/ERR, no engineered stall/timeouts or competing ownership; byte masks vary. Include normal release/reacquire. Aborted work is separate targeted event, not ordinary.",
+    "proof_keep": [],
+    "clock": "i_clk",
+    "reset": "i_reset",
+    "reset_active": 1,
+    "reset_behavior": "synchronous active-high",
+    "revision": "2e8d3bc2d26ddc33d1881022a2a2b9d3f0c16b9b",
+    "source_hashes": {
+      "third_party/wb2axip_candidate/rtl/skidbuffer.v": "ed1fda9192563fd7fd7033b564e8cf47ad6cb63ba4f578ed2c302037d47a5389",
+      "third_party/wb2axip_candidate/rtl/addrdecode.v": "97b348693a5d266a3fb42a2993f9726dd36912bfc084b05b68b9afacb390eb2d",
+      "third_party/wb2axip_candidate/rtl/wbxbar.v": "d3fd1f2d7fb8909c2c2950c666e04c97d704c501c867201aedab5011ee106d2e",
+      "third_party/wb2axip_candidate/README.md": "e21ffe5300b43bf2c38286ee8f2e201606d0a93f974b67f4c7235bd605904dd3"
+    },
+    "git_blobs": {
+      "third_party/wb2axip_candidate/rtl/skidbuffer.v": "0e567844d98a66fa489930a03bf214308faa8535",
+      "third_party/wb2axip_candidate/rtl/addrdecode.v": "3a1cdc11312316cf7157f1f7ce042febf5057d57",
+      "third_party/wb2axip_candidate/rtl/wbxbar.v": "6468f15942dbe23f077f23599cd8ffa9bcb5abee",
+      "third_party/wb2axip_candidate/README.md": "9de0b2cb826103b55a5e7f91779ad8aca881065e"
+    },
+    "proof_boundary": "Original parent and real original children; no DUT rewrite, replica counters, protocol stubs, source-derived golden model or state-reachability assumptions.",
+    "specification": "https://github.com/ZipCPU/wb2axip/blob/2e8d3bc2d26ddc33d1881022a2a2b9d3f0c16b9b/README.md",
+    "public_contract_addendum": "Public module/interface comments are separate cited intent; checker author must not receive executable RTL or formal implementation-specific properties."
+  },
+  "input_assumptions": [],
+  "claim": "At consecutive sampled rising edges, all master CYC low at the preceding edge implies slave CYC/STB low now. Only this fixed RTL/configuration.",
+  "excluded": [
+    "No claim that decoder/skid buffers are empty",
+    "No stale-work exclusion after restart",
+    "No general Wishbone cancellation bound",
+    "No new functional checker or coverage instrumentation",
+    "No protocol-legality claim for unconstrained cover/negative witnesses"
+  ],
+  "hashes": {
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/probe_wbxbar_cancel_boundary.py": "2fe56b2be687426438b4f14a5975085166b268e52c5bf764c96693c730037e7d",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/configs/wbxbar_conformance_gate_v1.json": "d957119caa1405b628caf50e7ffd90f81fb890484f04036da9ce5858f925f5f6",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/wbxbar_conformance_gate_20261104/boundary-v1/observer.sv": "b1d59592025d106e6786e0740bf00402cfb674f2ac7eb1662f0cf31500ee33e1",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/wb2axip_candidate/rtl/skidbuffer.v": "ed1fda9192563fd7fd7033b564e8cf47ad6cb63ba4f578ed2c302037d47a5389",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/wb2axip_candidate/rtl/addrdecode.v": "97b348693a5d266a3fb42a2993f9726dd36912bfc084b05b68b9afacb390eb2d",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/third_party/wb2axip_candidate/rtl/wbxbar.v": "d3fd1f2d7fb8909c2c2950c666e04c97d704c501c867201aedab5011ee106d2e"
+  }
+}

@@ -1,0 +1,31 @@
+- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701
+- Verilator: Built from 0.162 MB sources in 4 modules, into 0.158 MB in 3 C++ files needing 0.000 MB
+- Verilator: Walltime 0.035 s (elab=0.007, cvt=0.014, bld=0.000); cpu 0.018 s on 1 threads; allocated 13.703 MB
+%Warning-WIDTHEXPAND: third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v:162:9: Operator VAR 'STATE_IDLE' expects 2 bits on the Initial value, but Initial value's CONST '1'h0' generates 1 bits.
+                                                                               : ... note: In instance 'axi_fifo.axi_fifo_rd_inst'
+  162 |         STATE_IDLE = 1'd0,
+      |         ^~~~~~~~~~
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.050
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-WIDTHEXPAND: third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v:163:9: Operator VAR 'STATE_WAIT' expects 2 bits on the Initial value, but Initial value's CONST '1'h1' generates 1 bits.
+                                                                               : ... note: In instance 'axi_fifo.axi_fifo_rd_inst'
+  163 |         STATE_WAIT = 1'd1;
+      |         ^~~~~~~~~~
+%Warning-SELRANGE: third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v:318:48: Selection index out of range: 39:39 outside 38:0
+                                                                             : ... note: In instance 'axi_fifo.axi_fifo_rd_inst'
+  318 | assign s_axi_ruser = RUSER_ENABLE ? s_axi_r_reg[RUSER_OFFSET +: RUSER_WIDTH] : {RUSER_WIDTH{1'b0}};
+      |                                                ^
+                   ... For warning description see https://verilator.org/warn/SELRANGE?v=5.050
+                   ... Use "/* verilator lint_off SELRANGE */" and lint_on around source to disable this message.
+%Warning-SELRANGE: third_party/verilog_axi_candidate/rtl/axi_fifo_wr.v:358:48: Selection index out of range: 37:37 outside 36:0
+                                                                             : ... note: In instance 'axi_fifo.axi_fifo_wr_inst'
+  358 | assign m_axi_wuser = WUSER_ENABLE ? m_axi_w_reg[WUSER_OFFSET +: WUSER_WIDTH] : {WUSER_WIDTH{1'b0}};
+      |                                                ^
+%Warning-CASEINCOMPLETE: third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v:218:9: Case values incompletely covered (example pattern 0x2)
+  218 |         case (state_reg)
+      |         ^~~~
+                         ... For warning description see https://verilator.org/warn/CASEINCOMPLETE?v=5.050
+                         ... Use "/* verilator lint_off CASEINCOMPLETE */" and lint_on around source to disable this message.
+%Warning-CASEINCOMPLETE: third_party/verilog_axi_candidate/rtl/axi_fifo_wr.v:233:9: Case values incompletely covered (example pattern 0x3)
+  233 |         case (state_reg)
+      |         ^~~~

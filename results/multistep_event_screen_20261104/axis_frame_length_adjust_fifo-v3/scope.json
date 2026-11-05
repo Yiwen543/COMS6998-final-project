@@ -1,0 +1,188 @@
+{
+  "id": "multistep_event_screen_v1",
+  "created_utc": "2026-11-04T19:35:39.448698+00:00",
+  "status": "Prospective scope before new elaboration/proof/calibration/model outcomes; not an approved live trial.",
+  "repository_commit": "50d7ee83d61989017e28e981420cd58f4c5f0787",
+  "prior_result": "SPI safe-offer B failed unchanged difficulty gate; preserved separately.",
+  "development_budget": {
+    "repetitions": 3,
+    "rounds": 6,
+    "max_new_cycles": 64,
+    "seed_cycles": 8
+  },
+  "model_limits": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "input_tokens": 32000,
+    "output_tokens": 16384,
+    "timeout_seconds": 120,
+    "max_retries": 1
+  },
+  "development_acceptance": {
+    "min_repetitions_with_two_groups_unhit_after_round_one": 2,
+    "min_repetitions_with_later_group_progress": 2
+  },
+  "all_repetitions_complete_and_protocol_legal": true,
+  "offline_acceptance": {
+    "min_source_distinct_groups": 3,
+    "min_nontrivial_source_groups": 2,
+    "each_group_min_seed_zero_source_counters": 2,
+    "min_distinct_reachable_event_families": 3,
+    "min_event_discriminating_groups": 3,
+    "min_event_families_with_disjoint_group_increment": 3,
+    "max_calibration_cycles_excluding_seed": 384,
+    "checker_author_must_differ_from_stimulus_author": true,
+    "require_no_unresolved_property_blocking_selected_scope": true
+  },
+  "event_discrimination": {
+    "ordinary_union": "Union hits>0 over registered ordinary traces, preserving each raw identity; all target members must remain zero in that baseline. This selection union is not replacement of per-run raw counts.",
+    "positive": "Spec-checker-clean multistep event completed within 384 new physical cycles, each mapped source member actually executed.",
+    "causal_controls": [
+      "Prefix before the registered prerequisite/resolution leaves target sources unhit.",
+      "Same-budget control removing the prerequisite or resolution does not hit those source targets.",
+      "Separate event families cannot be counted from the same shared stall/reset/ready group."
+    ],
+    "claims": "Finite ordinary/control non-hits are evidence for the screening gate, not universal unreachability. Formal claims require separately proved assumptions. Plain mode selection is not a multistep target."
+  },
+  "semantics": {
+    "engine": "typed full activation guards; independent Yosys definitions, bounded egg and Z3; source mapping and edge/reset context retained",
+    "values": "two-state only; no inferred reachable-state invariants",
+    "unsupported": "Explicitly unresolved; no unsupported mapping admitted, no removal from raw denominator",
+    "clock": "single posedge with original synchronous reset; do not merge contexts"
+  },
+  "roles": {
+    "checker_author": "Claude specification-only; no RTL/private calibrated traces/B-C outcomes",
+    "reviewer": "Fresh Claude read-only, may inspect implementation solely for attribution",
+    "driver_and_calibration": "GPT/Codex, fixed public-port JSON driver; no checker expected-output edits",
+    "experimental_stimulus": "gpt-6.1-sol JSON only after offline freeze; no solver/handwritten target witnesses",
+    "measurement": "Fixed simulator counters/hash/schema; no model edits"
+  },
+  "stop_rules": [
+    "Static failures are retained; do not buy checker/model calls for an unqualified scope.",
+    "One three-repetition B development per frozen qualifying scope; no selective replacement or budget tightening.",
+    "C only after the unchanged B gate; fresh matched formal B, A/C and own-trajectory token-matched placebo require separate final freeze."
+  ],
+  "independence": "Two functionally different original IPs and nonoverlapping RTL files, but same upstream author/project ecosystem. AXIS wrapper reuses a previously screened axis_fifo dependency; do not claim unseen lineage or statistical independence.",
+  "selection_order": [
+    "axis_frame_length_adjust_fifo",
+    "axi_fifo"
+  ],
+  "candidates": [
+    {
+      "top": "axis_frame_length_adjust_fifo",
+      "root": "third_party/verilog_axis_candidate",
+      "sources": [
+        "rtl/axis_frame_length_adjust.v",
+        "rtl/axis_fifo.v",
+        "rtl/axis_frame_length_adjust_fifo.v"
+      ],
+      "source_hashes": {
+        "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+        "third_party/verilog_axis_candidate/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+        "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v": "26f1636f5d4f219ca1dcf336b45b636e74a0977826ee51cdcab4e5c2d136b7ce",
+        "third_party/verilog_axis_candidate/README.md": "34b574d6c8a289209346008a8dcf3308c621f4e2f7dfc11a6f8680728b126c9c",
+        "third_party/verilog_axis_candidate/COPYING": "8ea57f95365e9b16a5b516f422b71269183a1ae53bab5878ae6d69039e58fe77"
+      },
+      "git_blobs": {
+        "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v": "6c2188bbcb7cf41417f51da5281e56e6721d450d",
+        "third_party/verilog_axis_candidate/rtl/axis_fifo.v": "dfa465792f052486ac6f8d4c483318d4a338076d",
+        "third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v": "f2bc4a06564dc7014f615af29b7d7370d14f779d",
+        "third_party/verilog_axis_candidate/README.md": "e09d23134d380e276acebbe172c238a6b263496e",
+        "third_party/verilog_axis_candidate/COPYING": "dc298464e7aade999ebfa48632f6af2779439bcb"
+      },
+      "revision": "48ff7a7e2ef782cf778d47910cf85835c64b1bce",
+      "parameters": {
+        "DATA_WIDTH": 8,
+        "KEEP_ENABLE": 0,
+        "KEEP_WIDTH": 1,
+        "ID_ENABLE": 0,
+        "ID_WIDTH": 8,
+        "DEST_ENABLE": 0,
+        "DEST_WIDTH": 8,
+        "USER_ENABLE": 1,
+        "USER_WIDTH": 1,
+        "FRAME_FIFO_DEPTH": 32,
+        "HEADER_FIFO_DEPTH": 8
+      },
+      "family": "packet_length_adjuster",
+      "include_dirs": [],
+      "defines": [],
+      "clock": "clk",
+      "reset": "rst",
+      "reset_active": 1,
+      "reset_behavior": "synchronous active-high",
+      "seed_inputs": {
+        "length_min": 4,
+        "length_max": 16,
+        "m_axis_hdr_ready": 1,
+        "m_axis_tready": 1
+      },
+      "event_families": [
+        "padding followed by completion under independent header/data backpressure",
+        "truncate and drain remaining input then next frame",
+        "header FIFO pressure and data release across frame boundaries"
+      ],
+      "proof_boundary": "Original parent and original children; no RTL rewriting or counter replication.",
+      "specification": "https://github.com/alexforencich/verilog-axis/blob/48ff7a7e2ef782cf778d47910cf85835c64b1bce/README.md",
+      "ordinary_policy": "Isolated legal transactions across supported modes and boundary lengths, prompt response readiness, continuous legal input and inter-frame/burst idle; include normal pass/pad/truncate or short/long bursts. Test all ordinary modes before counting event-only increments. No calibrated solution in LLM prompts."
+    },
+    {
+      "top": "axi_fifo",
+      "root": "third_party/verilog_axi_candidate",
+      "sources": [
+        "rtl/axi_fifo_rd.v",
+        "rtl/axi_fifo_wr.v",
+        "rtl/axi_fifo.v"
+      ],
+      "source_hashes": {
+        "third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v": "ecdb21c322732e8e185c6a1408438565d6990f852a8f271b5442e878174a20aa",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo_wr.v": "e0f06c5c6e3deae0b764e85319e16395c7b2e428b7419853c264129350df67ca",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo.v": "bae5ea55dcd8c145a56d75931c555697d284a5c7972c0914ac12df4a452cc71d",
+        "third_party/verilog_axi_candidate/README.md": "99499ca09430eff2c4aca5ed472759e4090bf51c1dcef5e07b880f9a11fc3a61",
+        "third_party/verilog_axi_candidate/COPYING": "ba81481b2d63a33e0dce336d9e736130709549feeaf6cd424b34beba712baa50"
+      },
+      "git_blobs": {
+        "third_party/verilog_axi_candidate/rtl/axi_fifo_rd.v": "8037faa52dd2e393e586811d9a151ad2fa22db7f",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo_wr.v": "668d45e4ce3619acc910b2cbb95f168a534fd46e",
+        "third_party/verilog_axi_candidate/rtl/axi_fifo.v": "2170efbbf67763d6be06193419940c5af8d0fa3e",
+        "third_party/verilog_axi_candidate/README.md": "4d50b4213d546ddbadf31bb5ad78b22eb02292fa",
+        "third_party/verilog_axi_candidate/COPYING": "6923387c7569f15368fefc084c0f3c46e18e3622"
+      },
+      "revision": "516bd5dadc3365b7f9e225d2af8fe0b8d804fe53",
+      "parameters": {
+        "DATA_WIDTH": 32,
+        "ADDR_WIDTH": 16,
+        "STRB_WIDTH": 4,
+        "ID_WIDTH": 4,
+        "READ_FIFO_DEPTH": 16,
+        "WRITE_FIFO_DEPTH": 16,
+        "READ_FIFO_DELAY": 1,
+        "WRITE_FIFO_DELAY": 1
+      },
+      "family": "axi_burst_fifo_controller",
+      "include_dirs": [],
+      "defines": [],
+      "clock": "clk",
+      "reset": "rst",
+      "reset_active": 1,
+      "reset_behavior": "synchronous active-high",
+      "seed_inputs": {
+        "s_axi_bready": 1,
+        "s_axi_rready": 1,
+        "m_axi_awready": 1,
+        "m_axi_wready": 1,
+        "m_axi_arready": 1
+      },
+      "event_families": [
+        "write address release after complete buffered burst",
+        "long write burst fills FIFO then proceeds under downstream backpressure",
+        "read burst reservation exhausts capacity then returns capacity through response acceptance"
+      ],
+      "proof_boundary": "Original parent and original children; no RTL rewriting or counter replication.",
+      "specification": "https://github.com/alexforencich/verilog-axi/blob/516bd5dadc3365b7f9e225d2af8fe0b8d804fe53/README.md",
+      "ordinary_policy": "Isolated legal transactions across supported modes and boundary lengths, prompt response readiness, continuous legal input and inter-frame/burst idle; include normal pass/pad/truncate or short/long bursts. Test all ordinary modes before counting event-only increments. No calibrated solution in LLM prompts."
+    }
+  ],
+  "B_allowed": false,
+  "C_allowed": false
+}

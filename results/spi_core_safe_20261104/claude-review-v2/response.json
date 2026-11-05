@@ -1,0 +1,115 @@
+{
+  "duration_api_ms": 39640,
+  "stop_reason": "end_turn",
+  "session_id": "dc869759-9ef4-487f-a68d-41754b794d6c",
+  "total_cost_usd": 0.442816,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 72328,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 4058,
+    "output_tokens_details": {
+      "thinking_tokens": 1309
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 72328
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 4,
+        "output_tokens": 4058,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 72328,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 72328,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 4058,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 72328,
+      "webSearchRequests": 0,
+      "costUSD": 0.442816,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1309,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": false,
+  "num_turns": 1,
+  "subtype": "success",
+  "api_error_status": null,
+  "result": "```json\n{\n  \"ready_to_freeze\": true,\n  \"findings\": [\n    {\n      \"id\": \"F1_round1_prompt\",\n      \"severity\": \"minor\",\n      \"prior_blocker\": \"T9_unseen_system_prompt\",\n      \"result\": \"resolved for B, with residual wording risk\",\n      \"detail\": \"The exact round-1 system and user messages are supplied and hash-bound to the runner artifact prompt-1-1.json, with equals_fresh_render=true. The system prompt has no instruction to hold valid. The embedded hardware_pin_contract still says 'Hold all command fields and valid stable until acceptance' and the trace columns are labelled input.valid. Several parts of the prompt override this: the offer_interface text ('enqueue pulses, NOT DUT valid signals', 'Do not repeat an offer merely to keep it valid', 'A 1 in two successive actions means two separate requests') and the explicit 'distinction' field. These pin-level clauses describe the actual pins the driver produces, so the documents are consistent. A model could still misread them and duplicate offers. That would be a behavioral outcome, not a transport defect. Both checker and transport feedback would expose it.\"\n    },\n    {\n      \"id\": \"F2_faulty_sv_controls\",\n      \"severity\": \"info\",\n      \"prior_blocker\": \"T10_negative_controls\",\n      \"result\": \"resolved\",\n      \"detail\": \"Four mutated SV drivers were compiled and simulated: dropped_offer, duplicate_acceptance, reordered_head and post_edge_acceptance. Each patch was checked to apply to a unique location. Each run was rejected with stage='transport'. The duplicate run has a real duplicate accept ID (8), even though SV conservation was disabled. In the post-edge run, pre and post ready differ at cycle 8, so the wrong sampling phase was actually exercised. freeze() now requires all four names, transport-stage rejection, and a production driver hash equal to the frozen driver. Limitations: all four mutations are on the command channel only, and only Verilator was used.\"\n    },\n    {\n      \"id\": \"F3_pending_prefix_replay\",\n      \"severity\": \"minor\",\n      \"prior_blocker\": \"T12_prefix_replay\",\n      \"result\": \"resolved for command channel\",\n      \"detail\": \"The 89-row pending_prefix trace and transport ledger exactly equal the first 89 rows of the full case. At the last prefix row (cycle 88) one command is pending, and the full run accepts it at cycle 90. Cumulative replay therefore reconstructs pending work at the boundary. This is a case-level prefix comparison. Runner round boundaries are covered separately by offline mock/replay equality only. No TX item pending across a boundary is evidenced.\"\n    },\n    {\n      \"id\": \"F4_scripts_in_packet\",\n      \"severity\": \"info\",\n      \"prior_blocker\": \"T14_unreviewed_artifacts\",\n      \"result\": \"resolved\",\n      \"detail\": \"The create, preflight, review, fault and accounting-test sources are supplied in full. The model client excerpt is supplied with a whole-file hash. Preflight and fault summaries are hash-listed, and freeze includes faults/summary.json in the bound paths.\"\n    },\n    {\n      \"id\": \"F5_failure_classification\",\n      \"severity\": \"minor\",\n      \"prior_finding\": \"T7_classification\",\n      \"result\": \"improved\",\n      \"detail\": \"SafeExecutionError carries a stage (simulator, transport, coverage or checker_worker), and failures.jsonl records stage, type and detail. Rows now carry measurement_fresh, measurement_round and a stale-measurement note. Accounting tests inject failures. Residual issues are listed in the next three items.\"\n    },\n    {\n      \"id\": \"F5a_denominator_change_classification\",\n      \"severity\": \"minor\",\n      \"result\": \"residual classification gap\",\n      \"detail\": \"A change in the raw denominator or counter identities is an integrity breach of the experiment. It is currently classified as a per-row 'coverage' simulation failure, so the run continues instead of aborting.\"\n    },\n    {\n      \"id\": \"F5b_failure_json_coverage\",\n      \"severity\": \"minor\",\n      \"result\": \"residual inconsistency\",\n      \"detail\": \"Simulator-stage errors do not write failure.json, while checked_stage errors do.\"\n    },\n    {\n      \"id\": \"F5c_test_mock_signature\",\n      \"severity\": \"minor\",\n      \"result\": \"residual test-fidelity gap\",\n      \"detail\": \"The accounting test mocks compile_driver with a 3-tuple, but the real function returns a 2-tuple. The mock therefore does not match the production signature.\"\n    },\n    {\n      \"id\": \"F6_physical_cap_binding\",\n      \"severity\": \"info\",\n      \"result\": \"resolved\",\n      \"detail\": \"freeze() parses Capacity from the driver. It requires Capacity to equal seed_cycles + rounds*max_new_cycles (8+6*64=392) and both registered queue depths.\"\n    },\n    {\n      \"id\": \"F7_simulator_result_hash_difference\",\n      \"severity\": \"info\",\n      \"result\": \"documented\",\n      \"detail\": \"result.json differs between simulators because of command, path, timing and Verilator-only coverage. Checker, transport, completion flags and cycle counts agree. Trace and ledger files are claimed byte-identical. This is accepted as an explanation only, not as evidence of correctness.\"\n    },\n    {\n      \"id\": \"F8_review_gate_optional\",\n      \"severity\": \"minor\",\n      \"result\": \"unverified\",\n      \"detail\": \"freeze() takes review=None by default. The supplied diff does not show whether an independent review with ready_to_freeze=true is enforced. Enforcement should be confirmed before live B.\"\n    },\n    {\n      \"id\": \"F9_oracle_independence\",\n      \"severity\": \"minor\",\n      \"result\": \"unchanged limitation\",\n      \"detail\": \"The Python transport oracle and the SV driver have the same author. The Claude checker v4 is unchanged (hash matches) and was separately authored. Simulation agreement is not taken as evidence that the checker is correct.\"\n    },\n    {\n      \"id\": \"F10_fairness_BC\",\n      \"severity\": \"minor\",\n      \"result\": \"deferred\",\n      \"detail\": \"No C or P builder exists. The prompt's claim that 'all experimental arms receive the same transport information' is unvalidated for future arms. It does not block B development.\"\n    }\n  ],\n  \"limitations\": [\n    \"Read-only static review of the supplied packet. Nothing was executed and no formal proof is claimed.\",\n    \"Unchanged driver, oracle and checker bodies are hash-bound only and were not re-reviewed here. Only the diffs and newly supplied sources were examined.\",\n    \"Fault controls cover the command channel on Verilator only. Equivalent TX-channel faults are untested.\",\n    \"Pending replay evidence is a case-level prefix comparison with only the command channel pending. Runner-level round splitting is evidenced only by offline mock/replay equality.\",\n    \"Finite controls, cross-simulator agreement and mock/replay equality are not proof of driver or checker correctness.\",\n    \"This decision is not approval for C/P or for full IP correctness.\"\n  ],\n  \"required_followup\": [\n    \"Before live B (light, nonblocking for the freeze artifact): confirm freeze() or the live runner refuses to proceed without an independent review whose ready_to_freeze is true.\",\n    \"Treat a raw denominator or counter identity change as a run-aborting integrity failure, not a per-row 'coverage' simulation failure.\",\n    \"Write failure.json for simulator-stage errors too, for uniform per-round forensics.\",\n    \"Align the accounting-test compile_driver mock with the real 2-tuple return signature.\",\n    \"Add TX-channel faulty-SV controls (dropped, duplicate, reordered and post-edge TX acceptance) and a TX-pending-across-boundary replay check.\",\n    \"Before formal C/P, verify byte-identical transport feedback and prompt framing across arms and add feedback-isolation checks.\",\n    \"Monitor live B for duplicate-offer behavior caused by the pin-contract 'hold valid' wording. Report it as model behavior, not as a transport result.\"\n  ]\n}\n```",
+  "ttft_ms": 16678,
+  "type": "result",
+  "duration_ms": 39764,
+  "uuid": "910359c6-e30a-40c9-a724-e237cb293352",
+  "ttft_stream_ms": 2669,
+  "time_to_request_ms": 119,
+  "first_content_frame_ms": 2670,
+  "queued_turn_count": 0,
+  "result_index": 0,
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "inputTokens": 4,
+      "outputTokens": 4058,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 72328,
+      "webSearchRequests": 0,
+      "costUSD": 0.442816,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1309,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  }
+}

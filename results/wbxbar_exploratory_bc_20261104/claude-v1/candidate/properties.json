@@ -1,0 +1,82 @@
+[
+  {
+    "id": "P1_routing",
+    "requirement": "Every slave-side accepted request (o_scyc&o_sstb&!i_sstall pre-edge) targets the slave decoded from its address ((a&0xf0)==0x00 -> slave0, 0x10 -> slave1).",
+    "source": "Packet address_configuration; README 188-196",
+    "assumptions": [
+      "Public parameter decode"
+    ],
+    "support_status": "checked"
+  },
+  {
+    "id": "P2_payload",
+    "requirement": "Each forwarded request equals the oldest unforwarded mapped request of exactly one master in WE, address, SEL, and write data; no request is forwarded twice or invented.",
+    "source": "WB B4 3.1.3.2, rule 3.60; crossbar article",
+    "assumptions": [
+      "Per-master forwarding order preserved"
+    ],
+    "support_status": "checked"
+  },
+  {
+    "id": "P3_response_order",
+    "requirement": "Master ACK/ERR retire that master's oldest outstanding request; ACK only after the corresponding slave ACK; slave ERR maps to ERR.",
+    "source": "WB B4 3.1.3.2; README 'ACK responses won't get crossed'",
+    "assumptions": [
+      "Slaves respond in acceptance order"
+    ],
+    "support_status": "checked"
+  },
+  {
+    "id": "P4_read_data",
+    "requirement": "Read data on master ACK equals data the slave returned with its ACK for the same transaction.",
+    "source": "WB B4 observation 3.10",
+    "assumptions": [],
+    "support_status": "checked"
+  },
+  {
+    "id": "P5_decode_error",
+    "requirement": "Requests to unmapped addresses are never forwarded and must be answered with ERR, not ACK.",
+    "source": "Crossbar article (nonexistent addresses)",
+    "assumptions": [],
+    "support_status": "checked (no latency bound)"
+  },
+  {
+    "id": "P6_abort_reset_epoch",
+    "requirement": "Master CYC drop or synchronous reset discards outstanding work; later slave responses to discarded work must not reach masters as completions.",
+    "source": "WB B4 3.1.1, 3.1.2; crossbar article abort",
+    "assumptions": [
+      "Reset synchronous"
+    ],
+    "support_status": "checked"
+  },
+  {
+    "id": "P7_reset_outputs",
+    "requirement": "After a reset edge, o_scyc and o_sstb are inactive.",
+    "source": "WB B4 rule 3.20",
+    "assumptions": [],
+    "support_status": "checked"
+  },
+  {
+    "id": "P8_handshake",
+    "requirement": "DUT holds stalled slave requests, never STB without CYC, never ACK with ERR on a master port.",
+    "source": "WB B4 3.1.3.2, rule 3.45",
+    "assumptions": [],
+    "support_status": "checked"
+  },
+  {
+    "id": "P9_timeout",
+    "requirement": "OPT_TIMEOUT=16 / starvation ERR: ERR on unforwarded or unanswered forwarded requests is accepted; exact cycle count not checked.",
+    "source": "wbxbar.v header 32-39",
+    "assumptions": [
+      "Latency prose insufficient for an exact bound"
+    ],
+    "support_status": "unproved (permissive)"
+  },
+  {
+    "id": "P10_liveness",
+    "requirement": "Outstanding obligations at trace end are reported as pending, not as failures.",
+    "source": "Packet instructions",
+    "assumptions": [],
+    "support_status": "reported only"
+  }
+]

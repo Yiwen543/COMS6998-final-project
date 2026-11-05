@@ -1,0 +1,301 @@
+{
+  "status": "evaluated_not_frozen",
+  "checker_author": "claude-opus-5-5",
+  "controls_author": "GPT/Codex",
+  "B_allowed": false,
+  "selftests": [
+    {
+      "name": "std_tx_good_passes",
+      "pass": true
+    },
+    {
+      "name": "std_tx_bitflip_fails",
+      "pass": true
+    },
+    {
+      "name": "cs_rise_midsegment_fails",
+      "pass": true
+    },
+    {
+      "name": "csnlead_violation_fails",
+      "pass": true
+    },
+    {
+      "name": "withdrawn_command_is_assumption_violation",
+      "pass": true
+    },
+    {
+      "name": "std_rx_partial_word_passes",
+      "pass": true
+    },
+    {
+      "name": "rx_nonzero_padding_fails",
+      "pass": true
+    },
+    {
+      "name": "rx_wrong_byte_fails",
+      "pass": true
+    },
+    {
+      "name": "dummy_segment_blocked",
+      "pass": true
+    },
+    {
+      "name": "truncated_trace_inconclusive",
+      "pass": true
+    },
+    {
+      "name": "spurious_sck_fails",
+      "pass": true
+    }
+  ],
+  "worker_errors": [],
+  "controls": [
+    {
+      "name": "uniform_write_baseline",
+      "kind": "observational_positive",
+      "expected": "Scoped pass; repeating bytes intentionally avoid unresolved byte-order convention; no new endian validation",
+      "verdict": "pass",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null
+    },
+    {
+      "name": "withdraw_pending_command",
+      "kind": "input_protocol",
+      "baseline": "uniform_write_baseline",
+      "expected": "Assumption violation at cycle29; outputs re-simulated rather than copied",
+      "verdict": "blocked",
+      "failure_count": 0,
+      "assumption_count": 1,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "correct_input_classification": true
+    },
+    {
+      "name": "hardware_abort_restart",
+      "kind": "observational_positive",
+      "expected": "Hardware reset during active RX, fresh TX completes; event checked offline, not formal proof",
+      "verdict": "pass",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null
+    },
+    {
+      "name": "negative/hardware_reset_select",
+      "kind": "single_fault",
+      "baseline": "hardware_abort_restart",
+      "expected": "Reset CS violation; credit only on clean baseline",
+      "changes": [
+        {
+          "cycle": 48,
+          "side": "post",
+          "field": "csb",
+          "after": 0
+        }
+      ],
+      "verdict": "fail",
+      "failure_count": 1,
+      "assumption_count": 0,
+      "unresolved": [],
+      "infrastructure_error": null,
+      "baseline_clean": true,
+      "baseline_scoped_pass": true,
+      "raw_failure_flag": true,
+      "credited_detection": true
+    },
+    {
+      "name": "truncated/hardware_abort",
+      "kind": "incomplete",
+      "baseline": "hardware_abort_restart",
+      "expected": "No successful restart before reset release/new command",
+      "verdict": "inconclusive",
+      "failure_count": 0,
+      "assumption_count": 0,
+      "unresolved": [
+        "trace ends with reset asserted"
+      ],
+      "infrastructure_error": null,
+      "success_events_emitted": [],
+      "all_events": [
+        {
+          "family": "reset_abort_restart",
+          "kind": "pending",
+          "start_cycle": 48,
+          "end_cycle": null,
+          "evidence": "hardware reset at 48 aborted segment 0; release None; fresh segment None"
+        }
+      ]
+    }
+  ],
+  "cases": {
+    "uniform_write_baseline": {
+      "verdict": "pass",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 136,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "withdraw_pending_command": {
+      "verdict": "blocked",
+      "failures": [],
+      "assumption_violations": [
+        {
+          "cycle": 29,
+          "category": "cmd_transport",
+          "detail": "offered command withdrawn or changed before pre ready&valid handshake"
+        }
+      ],
+      "events": [],
+      "unresolved": [],
+      "counts": {
+        "rows": 136,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 1,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "hardware_abort_restart": {
+      "verdict": "pass",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset_abort_restart",
+          "kind": "pass",
+          "start_cycle": 48,
+          "end_cycle": 125,
+          "evidence": "hardware reset at 48 aborted segment 0; release 50; fresh segment 1"
+        }
+      ],
+      "unresolved": [],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 2,
+        "segments_completed": 1,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 1,
+        "events_fail": 0,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "negative/hardware_reset_select": {
+      "verdict": "fail",
+      "failures": [
+        {
+          "cycle": 48,
+          "category": "reset_csb",
+          "detail": "CSB asserted while rst_n low"
+        }
+      ],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset_abort_restart",
+          "kind": "fail",
+          "start_cycle": 48,
+          "end_cycle": 125,
+          "evidence": "hardware reset at 48 aborted segment 0; release 50; fresh segment 1"
+        }
+      ],
+      "unresolved": [],
+      "counts": {
+        "rows": 184,
+        "tx_words_accepted": 1,
+        "rx_words_observed": 0,
+        "commands_accepted": 2,
+        "segments_completed": 1,
+        "failures": 1,
+        "assumption_violations": 0,
+        "unresolved": 0,
+        "events_pass": 0,
+        "events_fail": 1,
+        "events_pending": 0
+      },
+      "infrastructure_error": null
+    },
+    "truncated/hardware_abort": {
+      "verdict": "inconclusive",
+      "failures": [],
+      "assumption_violations": [],
+      "events": [
+        {
+          "family": "reset_abort_restart",
+          "kind": "pending",
+          "start_cycle": 48,
+          "end_cycle": null,
+          "evidence": "hardware reset at 48 aborted segment 0; release None; fresh segment None"
+        }
+      ],
+      "unresolved": [
+        "trace ends with reset asserted"
+      ],
+      "counts": {
+        "rows": 50,
+        "tx_words_accepted": 0,
+        "rx_words_observed": 0,
+        "commands_accepted": 1,
+        "segments_completed": 0,
+        "failures": 0,
+        "assumption_violations": 0,
+        "unresolved": 1,
+        "events_pass": 0,
+        "events_fail": 0,
+        "events_pending": 1
+      },
+      "infrastructure_error": null
+    }
+  },
+  "event_integrity_errors": [],
+  "successful_events_on_unresolved_cases": {},
+  "control_counts": {
+    "independent_positive": 0,
+    "no_false_alarm": 0,
+    "baseline_scoped_pass_negatives": 1,
+    "negative_total": 1,
+    "credited_detections": 1,
+    "raw_negative_flags": 1
+  },
+  "limits": [
+    "No calibration trace presumed correct because it came from the DUT.",
+    "Raw failure flags on a failing baseline are not detection credit.",
+    "Selftests do not independently validate the checker.",
+    "Pending/unresolved is not pass. No new simulation or API call in evaluation."
+  ],
+  "hashes": {
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/claude-checker-v1/candidate/checker.py": "541c442c7e127f31c1af7b7ac501d77b242cc68344c997a3653af736fde2b06c",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/claude-checker-v1/candidate/selftest.py": "cc42af26ab6132db3e89f988ee7ff795bc4a6a8abb3358f8100890fff3d3a114",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/spi-checker-postreview-v1/controls-v2/inputs.json": "c13044bdff3611c4660ada1fee179fe4f43c7767be21a88e98f65def5e97c11c",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/real_parent_screen_20261104/spi-checker-postreview-v1/controls-v2/controls.json": "29f24bcc70f9d09fab7185840491e99b4f56de098ec7280aa2b2c8855fc01321",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/scripts/evaluate_spi_core_checker.py": "376a5ba7b688df48b4609e280346dd47bc4b7370f8f41f08a893faf7962808c2"
+  }
+}

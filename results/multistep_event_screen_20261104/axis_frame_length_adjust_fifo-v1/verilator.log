@@ -1,0 +1,216 @@
+- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701
+- Verilator: Built from 0.207 MB sources in 4 modules, into 0.145 MB in 3 C++ files needing 0.000 MB
+- Verilator: Walltime 0.035 s (elab=0.007, cvt=0.018, bld=0.000); cpu 0.023 s on 1 threads; allocated 15.359 MB
+%Warning-PINMISSING: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v:175:1: Instance has missing pin: 'pause_req'
+  175 | frame_fifo_inst (
+      | ^~~~~~~~~~~~~~~
+                     third_party/verilog_axis_candidate/rtl/axis_fifo.v:124:35: ... Location of port declaration
+  124 |     input  wire                   pause_req,
+      |                                   ^~~~~~~~~
+                     ... For warning description see https://verilator.org/warn/PINMISSING?v=5.050
+                     ... Use "/* verilator lint_off PINMISSING */" and lint_on around source to disable this message.
+%Warning-PINMISSING: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v:175:1: Instance has missing pin: 'pause_ack'
+  175 | frame_fifo_inst (
+      | ^~~~~~~~~~~~~~~
+                     third_party/verilog_axis_candidate/rtl/axis_fifo.v:125:35: ... Location of port declaration
+  125 |     output wire                   pause_ack,
+      |                                   ^~~~~~~~~
+%Warning-PINMISSING: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v:175:1: Instance has missing pin: 'status_depth'
+  175 | frame_fifo_inst (
+      | ^~~~~~~~~~~~~~~
+                     third_party/verilog_axis_candidate/rtl/axis_fifo.v:130:35: ... Location of port declaration
+  130 |     output wire [$clog2(DEPTH):0] status_depth,
+      |                                   ^~~~~~~~~~~~
+%Warning-PINMISSING: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v:175:1: Instance has missing pin: 'status_depth_commit'
+  175 | frame_fifo_inst (
+      | ^~~~~~~~~~~~~~~
+                     third_party/verilog_axis_candidate/rtl/axis_fifo.v:131:35: ... Location of port declaration
+  131 |     output wire [$clog2(DEPTH):0] status_depth_commit,
+      |                                   ^~~~~~~~~~~~~~~~~~~
+%Warning-PINMISSING: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v:212:1: Instance has missing pin: 'pause_req'
+  212 | header_fifo_inst (
+      | ^~~~~~~~~~~~~~~~
+                     third_party/verilog_axis_candidate/rtl/axis_fifo.v:124:35: ... Location of port declaration
+  124 |     input  wire                   pause_req,
+      |                                   ^~~~~~~~~
+%Warning-PINMISSING: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v:212:1: Instance has missing pin: 'pause_ack'
+  212 | header_fifo_inst (
+      | ^~~~~~~~~~~~~~~~
+                     third_party/verilog_axis_candidate/rtl/axis_fifo.v:125:35: ... Location of port declaration
+  125 |     output wire                   pause_ack,
+      |                                   ^~~~~~~~~
+%Warning-PINMISSING: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v:212:1: Instance has missing pin: 'status_depth'
+  212 | header_fifo_inst (
+      | ^~~~~~~~~~~~~~~~
+                     third_party/verilog_axis_candidate/rtl/axis_fifo.v:130:35: ... Location of port declaration
+  130 |     output wire [$clog2(DEPTH):0] status_depth,
+      |                                   ^~~~~~~~~~~~
+%Warning-PINMISSING: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust_fifo.v:212:1: Instance has missing pin: 'status_depth_commit'
+  212 | header_fifo_inst (
+      | ^~~~~~~~~~~~~~~~
+                     third_party/verilog_axis_candidate/rtl/axis_fifo.v:131:35: ... Location of port declaration
+  131 |     output wire [$clog2(DEPTH):0] status_depth_commit,
+      |                                   ^~~~~~~~~~~~~~~~~~~
+%Warning-SELRANGE: third_party/verilog_axis_candidate/rtl/axis_fifo.v:236:65: Selection index out of range: 38:34 outside 33:0
+                                                                            : ... note: In instance 'axis_frame_length_adjust_fifo.header_fifo_inst'
+  236 | wire [KEEP_WIDTH-1:0]  m_axis_tkeep_pipe  = KEEP_ENABLE ? m_axis[KEEP_OFFSET +: KEEP_WIDTH] : {KEEP_WIDTH{1'b1}};
+      |                                                                 ^
+                   ... For warning description see https://verilator.org/warn/SELRANGE?v=5.050
+                   ... Use "/* verilator lint_off SELRANGE */" and lint_on around source to disable this message.
+%Warning-SELRANGE: third_party/verilog_axis_candidate/rtl/axis_fifo.v:238:65: Selection index out of range: 41:34 outside 33:0
+                                                                            : ... note: In instance 'axis_frame_length_adjust_fifo.header_fifo_inst'
+  238 | wire [ID_WIDTH-1:0]    m_axis_tid_pipe    = ID_ENABLE   ? m_axis[ID_OFFSET +: ID_WIDTH] : {ID_WIDTH{1'b0}};
+      |                                                                 ^
+%Warning-SELRANGE: third_party/verilog_axis_candidate/rtl/axis_fifo.v:239:65: Selection index out of range: 41:34 outside 33:0
+                                                                            : ... note: In instance 'axis_frame_length_adjust_fifo.header_fifo_inst'
+  239 | wire [DEST_WIDTH-1:0]  m_axis_tdest_pipe  = DEST_ENABLE ? m_axis[DEST_OFFSET +: DEST_WIDTH] : {DEST_WIDTH{1'b0}};
+      |                                                                 ^
+%Warning-SELRANGE: third_party/verilog_axis_candidate/rtl/axis_fifo.v:240:65: Selection index out of range: 34:34 outside 33:0
+                                                                            : ... note: In instance 'axis_frame_length_adjust_fifo.header_fifo_inst'
+  240 | wire [USER_WIDTH-1:0]  m_axis_tuser_pipe  = USER_ENABLE ? m_axis[USER_OFFSET +: USER_WIDTH] : {USER_WIDTH{1'b0}};
+      |                                                                 ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_fifo.v:254:55: Operator COND expects 7 bits on the Conditional False, but Conditional False's VARREF 'depth_reg' generates 4 bits.
+                                                                               : ... note: In instance 'axis_frame_length_adjust_fifo.header_fifo_inst'
+  254 | assign status_depth = (KEEP_ENABLE && KEEP_WIDTH > 1) ? {depth_reg, {CL_KEEP_WDITH{1'b0}}} : depth_reg;
+      |                                                       ^
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.050
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_fifo.v:254:21: Operator ASSIGNW expects 4 bits on the Assign RHS, but Assign RHS's COND generates 7 bits.
+                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.header_fifo_inst'
+  254 | assign status_depth = (KEEP_ENABLE && KEEP_WIDTH > 1) ? {depth_reg, {CL_KEEP_WDITH{1'b0}}} : depth_reg;
+      |                     ^
+                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.050
+                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_fifo.v:255:62: Operator COND expects 7 bits on the Conditional False, but Conditional False's VARREF 'depth_commit_reg' generates 4 bits.
+                                                                               : ... note: In instance 'axis_frame_length_adjust_fifo.header_fifo_inst'
+  255 | assign status_depth_commit = (KEEP_ENABLE && KEEP_WIDTH > 1) ? {depth_commit_reg, {CL_KEEP_WDITH{1'b0}}} : depth_commit_reg;
+      |                                                              ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_fifo.v:255:28: Operator ASSIGNW expects 4 bits on the Assign RHS, but Assign RHS's COND generates 7 bits.
+                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.header_fifo_inst'
+  255 | assign status_depth_commit = (KEEP_ENABLE && KEEP_WIDTH > 1) ? {depth_commit_reg, {CL_KEEP_WDITH{1'b0}}} : depth_commit_reg;
+      |                            ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_fifo.v:382:32: Logical operator LOGOR expects 1 bit on the RHS, but RHS's SHIFTR generates 2 bits.
+                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.header_fifo_inst'
+  382 |         if (m_axis_tready_pipe || ((~m_axis_tvalid_pipe_reg) >> j)) begin
+      |                                ^~
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_fifo.v:390:28: Logical operator LOGOR expects 1 bit on the RHS, but RHS's NOT generates 2 bits.
+                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.header_fifo_inst'
+  390 |     if (m_axis_tready_pipe || ~m_axis_tvalid_pipe_reg) begin
+      |                            ^~
+%Warning-SELRANGE: third_party/verilog_axis_candidate/rtl/axis_fifo.v:238:65: Selection index out of range: 16:9 outside 9:0
+                                                                            : ... note: In instance 'axis_frame_length_adjust_fifo.frame_fifo_inst'
+  238 | wire [ID_WIDTH-1:0]    m_axis_tid_pipe    = ID_ENABLE   ? m_axis[ID_OFFSET +: ID_WIDTH] : {ID_WIDTH{1'b0}};
+      |                                                                 ^
+%Warning-SELRANGE: third_party/verilog_axis_candidate/rtl/axis_fifo.v:239:65: Selection index out of range: 16:9 outside 9:0
+                                                                            : ... note: In instance 'axis_frame_length_adjust_fifo.frame_fifo_inst'
+  239 | wire [DEST_WIDTH-1:0]  m_axis_tdest_pipe  = DEST_ENABLE ? m_axis[DEST_OFFSET +: DEST_WIDTH] : {DEST_WIDTH{1'b0}};
+      |                                                                 ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:245:74: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'frame_ptr_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  245 |                         status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                                          ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:245:59: Operator ASSIGN expects 16 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+                                                                                             : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  245 |                         status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                           ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:258:74: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'frame_ptr_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  258 |                         status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                                          ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:258:59: Operator ASSIGN expects 16 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+                                                                                             : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  258 |                         status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                           ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:283:69: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'frame_ptr_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  283 |                             status_frame_length_next = frame_ptr_reg+word_cnt;
+      |                                                                     ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:283:54: Operator ASSIGN expects 16 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+                                                                                             : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  283 |                             status_frame_length_next = frame_ptr_reg+word_cnt;
+      |                                                      ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:284:78: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'frame_ptr_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  284 |                             status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                                              ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:284:63: Operator ASSIGN expects 16 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+                                                                                             : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  284 |                             status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                               ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:259:47: Operator GT expects 32 bits on the LHS, but LHS's VARREF 'short_counter_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  259 |                         if (short_counter_reg > word_cnt) begin
+      |                                               ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:238:38: Operator LTE expects 32 bits on the LHS, but LHS's VARREF 'long_counter_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  238 |                 if (long_counter_reg <= word_cnt) begin
+      |                                      ^~
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:340:74: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'frame_ptr_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  340 |                         status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                                          ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:340:59: Operator ASSIGN expects 16 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+                                                                                             : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  340 |                         status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                           ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:353:74: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'frame_ptr_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  353 |                         status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                                          ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:353:59: Operator ASSIGN expects 16 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+                                                                                             : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  353 |                         status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                           ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:378:69: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'frame_ptr_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  378 |                             status_frame_length_next = frame_ptr_reg+word_cnt;
+      |                                                                     ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:378:54: Operator ASSIGN expects 16 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+                                                                                             : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  378 |                             status_frame_length_next = frame_ptr_reg+word_cnt;
+      |                                                      ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:379:78: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'frame_ptr_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  379 |                             status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                                              ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:379:63: Operator ASSIGN expects 16 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+                                                                                             : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  379 |                             status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                               ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:354:47: Operator GT expects 32 bits on the LHS, but LHS's VARREF 'short_counter_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  354 |                         if (short_counter_reg > word_cnt) begin
+      |                                               ^
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:333:38: Operator LTE expects 32 bits on the LHS, but LHS's VARREF 'long_counter_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  333 |                 if (long_counter_reg <= word_cnt) begin
+      |                                      ^~
+%Warning-WIDTHEXPAND: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:465:70: Operator ADD expects 32 bits on the LHS, but LHS's VARREF 'frame_ptr_reg' generates 16 bits.
+                                                                                              : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  465 |                     status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                                      ^
+%Warning-WIDTHTRUNC: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:465:55: Operator ASSIGN expects 16 bits on the Assign RHS, but Assign RHS's ADD generates 32 bits.
+                                                                                             : ... note: In instance 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst'
+  465 |                     status_frame_original_length_next = frame_ptr_reg+word_cnt;
+      |                                                       ^
+%Warning-CASEINCOMPLETE: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:200:5: Case values incompletely covered (example pattern 0x4)
+  200 |     case (state_reg)
+      |     ^~~~
+                         ... For warning description see https://verilator.org/warn/CASEINCOMPLETE?v=5.050
+                         ... Use "/* verilator lint_off CASEINCOMPLETE */" and lint_on around source to disable this message.
+%Warning-LATCH: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:166:1: Latch inferred for signal 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst.word_cnt' (not all control paths of combinational always assign a value)
+                                                                                       : ... Suggest use of always_latch for intentional latches
+  166 | always @* begin
+      | ^~~~~~
+                ... For warning description see https://verilator.org/warn/LATCH?v=5.050
+                ... Use "/* verilator lint_off LATCH */" and lint_on around source to disable this message.
+%Warning-UNOPTFLAT: third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:147:23: Signal unoptimizable: Circular combinational logic: 'axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst.m_axis_tvalid_int'
+  147 | reg                   m_axis_tvalid_int;
+      |                       ^~~~~~~~~~~~~~~~~
+                    ... For warning description see https://verilator.org/warn/UNOPTFLAT?v=5.050
+                    ... Use "/* verilator lint_off UNOPTFLAT */" and lint_on around source to disable this message.
+                    third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:147:23:      Example path: axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst.m_axis_tvalid_int
+                    third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:547:32:      Example path: ASSIGNW
+                    third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:153:23:      Example path: axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst.m_axis_tready_int_early
+                    third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:166:1:      Example path: ALWAYS
+                    third_party/verilog_axis_candidate/rtl/axis_frame_length_adjust.v:147:23:      Example path: axis_frame_length_adjust_fifo.axis_frame_length_adjust_inst.m_axis_tvalid_int

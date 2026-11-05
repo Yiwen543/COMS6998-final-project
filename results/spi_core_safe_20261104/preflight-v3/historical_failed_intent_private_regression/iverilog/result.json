@@ -1,0 +1,111 @@
+{
+  "simulator": "iverilog",
+  "command": [
+    "vvp",
+    "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/preflight-v3/iverilog/tb.vvp",
+    "+VECTORS=/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/results/spi_core_safe_20261104/preflight-v3/historical_failed_intent_private_regression/iverilog/vectors.txt"
+  ],
+  "simulation_seconds": 0.019240624736994505,
+  "requested_cycles": 216,
+  "executed_cycles": 216,
+  "driver_complete": true,
+  "checker": {
+    "failures": [],
+    "assumption_violations": [],
+    "events": [
+      {
+        "family": "partial_word_then_next_transaction",
+        "kind": "pass",
+        "start_cycle": 26,
+        "end_cycle": 144,
+        "evidence": "csid_change: segment 1 (5 bytes) then segment 2"
+      },
+      {
+        "family": "partial_word_then_next_transaction",
+        "kind": "pass",
+        "start_cycle": 60,
+        "end_cycle": 171,
+        "evidence": "csid_change: segment 2 (1 bytes) then segment 3"
+      },
+      {
+        "family": "rx_backpressure_resume",
+        "kind": "pass",
+        "start_cycle": 104,
+        "end_cycle": 171,
+        "evidence": "segment 3 RX word held (rx_valid & !rx_ready) mid-segment from 107; selected SCK edge overdue while held at 115"
+      }
+    ],
+    "unresolved": [
+      "segment 5 accepted but not started at end of trace"
+    ],
+    "verdict": "inconclusive",
+    "counts": {
+      "rows": 216,
+      "tx_words_accepted": 3,
+      "rx_words_observed": 5,
+      "commands_accepted": 6,
+      "segments_completed": 5,
+      "failures": 0,
+      "assumption_violations": 0,
+      "unresolved": 1,
+      "events_pass": 3,
+      "events_fail": 0,
+      "events_pending": 0
+    }
+  },
+  "transport": {
+    "last": {
+      "cycle": 215,
+      "cmd_offer_id": -1,
+      "tx_offer_id": -1,
+      "cmd_accept_id": -1,
+      "tx_accept_id": -1,
+      "cmd_pending": 0,
+      "tx_pending": 0,
+      "cmd_offered": 6,
+      "tx_offered": 3,
+      "cmd_accepted": 6,
+      "tx_accepted": 3,
+      "cmd_cancelled": 0,
+      "tx_cancelled": 0
+    },
+    "cmd_max_pending": 1,
+    "tx_max_pending": 0,
+    "pending": false,
+    "command_accept_ids": [
+      9,
+      24,
+      60,
+      104,
+      173,
+      194
+    ],
+    "tx_accept_ids": [
+      8,
+      64,
+      172
+    ],
+    "cmd_pending_ids": [],
+    "cmd_cancelled_ids": [],
+    "cmd_accepted_ids": [
+      9,
+      24,
+      60,
+      104,
+      173,
+      194
+    ],
+    "tx_pending_ids": [],
+    "tx_cancelled_ids": [],
+    "tx_accepted_ids": [
+      8,
+      64,
+      172
+    ]
+  },
+  "coverage": null,
+  "groups": [],
+  "delivery_complete": true,
+  "verification_complete": false,
+  "checker_author": "unchanged claude-opus-5-5 v4; no GPT expected-output logic"
+}
