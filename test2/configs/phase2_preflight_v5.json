@@ -1,0 +1,74 @@
+{
+  "experiment_id": "test2_phase2_offline_preflight_v5",
+  "registered_date": "2026-11-04",
+  "status": "registered_offline_calibration_only",
+  "question": "Under fixed stimuli and matched resource budgets, does e-graph feedback improve generated monitor correctness, effective fault detection and cost efficiency?",
+  "scope": "Audit completed v1 evidence and calibrate a property-slot formal harness; not a new B/C effectiveness trial",
+  "live_allowed": false,
+  "api_calls_allowed": 0,
+  "new_dut_simulations_allowed": 0,
+  "historical_evidence": {
+    "test2/configs/live_freeze_v1.json": "7f2be65ac1b8013d614c5391b49e6cde2b821dbaca6f3e8bae609e63ed67b912",
+    "test2/reference/frozen-v1/checker.py": "53cff0d05aa9c48a71aec72cecfba265a13fe4baa2a4d9a72b3cef4d6b201337",
+    "test2/public/sfifo.v": "c46c18eb5f35489ed242d0e21fcea01e997c022356a21fae3ccb4f74a72288d0",
+    "test2/results/live-v1/final-candidates.json": "9d090222ac440c860cdb4f1c0fd16be4d3dc59a2dd93327035c8618cee6056e7",
+    "test2/results/live-final-v1/scores.json": "33003b33a7172d29704f85fa84da10bdbb30aebe78b72d400a4f97b73a2ef338",
+    "test2/results/live-final-v1/release.json": "2a1f7155078344fded773c0e268253e40c462b08e1e1f9340ffba6b8011e7f2f",
+    "test2/results/live-report-v1/audit.json": "2529a859c3988326dc4b3751d5d492449a21616499c532b22bf502173a7cf0c9",
+    "test2/results/live-report-v1/formal.csv": "a9c76fad9189ec589f81467203eb5fdc9958957b2c61cef0624d3bafee4a0942",
+    "test2/results/live-final-v1/B_prime/rep1/formal/correct_stress/bmc/harness.sv": "9343f0c6ac10b71027f80ef52bb70d02c9c150fc64d6b32875551acb24348dae"
+  },
+  "calibration": {
+    "selection": "First final candidate sorted by arm then repetition; chosen before slot outcomes, without using fault scores",
+    "candidate_arm": "B_prime",
+    "candidate_repetition": 1,
+    "candidate_sha256": "500066f209836a98f8a9a75353bea36f7f0a8408af46613c0746c7710ab267b3",
+    "dut": "test2/public/sfifo.v",
+    "baseline_harness": "test2/results/live-final-v1/B_prime/rep1/formal/correct_stress/bmc/harness.sv",
+    "change": "Same per-slot assertions and assumptions as v3; use prep -top formal_top -flatten to remove unobserved hierarchical logic before solving",
+    "slots": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "mode": "bmc",
+    "depth": 48,
+    "solver": "z3",
+    "timeout_seconds_per_slot": 10,
+    "candidate_solver_budget_seconds": 60,
+    "plumbing_controls": [
+      "always_true",
+      "always_false"
+    ],
+    "timeout_seconds_per_control": 5,
+    "process_grace_seconds": 5,
+    "max_jobs": 8,
+    "total_solver_budget_seconds": 70,
+    "stop_policy": "Stop candidate jobs if plumbing controls fail; no retries, solver changes, extra slots or budget increases after outcomes",
+    "control_depth": 3,
+    "flatten": true
+  },
+  "interpretation": {
+    "bmc_pass": "No counterexample within the requested bounded check, not an unbounded proof or independent specification truth",
+    "fail": "Candidate/DUT assertion counterexample requiring independent reference adjudication; no automatic DUT-bug label",
+    "incomplete": "TIMEOUT, UNKNOWN, ERROR and missing jobs remain incomplete",
+    "comparison": "Historical vector TIMEOUT and new split results are infrastructure calibration, not a randomized solver comparison or fresh B/C replication",
+    "source_integrity": "Verify v1 membership before and after; never edit old source, reference, freeze or results"
+  },
+  "next_live_trial_requirements": {
+    "registration": "Separate registration and live freeze required; this file cannot authorize generation",
+    "roles": "Claude authors/revises the independent specification checker; GPT candidates remain evaluated artifacts; GPT/Codex builds infrastructure",
+    "task_gate": "Select one more discriminating monitor task from a predeclared shortlist using specification clarity, semantic relevance and formal tractability, before new B/C outcomes",
+    "fixed_inputs": "Freeze identical development observations and fresh hidden final faults/traces for all arms; v1 final cases are calibration only",
+    "candidate_release": "Freeze every round's candidate snapshot before hidden scoring; final selection by declared round/validity order only; never return hidden feedback",
+    "budget": "Declare equal model, reasoning, repetitions, rounds, token caps, compile/replay and total formal caps across arms before calls; count actual tokens separately",
+    "endpoints": "Fixed-budget correct-control validity, distinct observable fault recall and eligible-pair detection, each gated by independent truth; cost and unresolved rates retained",
+    "semantic_control": "Map certified guards to task-relevant source points and conditions; ordinary raw hits are not monitor quality. Without token-matched placebo, claim only the whole feedback-package effect",
+    "stop": "No live calls until task/specification/reference review, legal controls, observability, semantic mapping, prompt isolation, accounting and candidate-release gates are frozen"
+  },
+  "parent_registration_sha256": "7c04921629412c63f56ede7781a732de655a69dd260f0be1dd788df238f58f31",
+  "revision_reason": "v4 stopped after its first plumbing job because optional memory telemetry read JNY as write_json. Fix and test the telemetry schema; identical flattened formal schedule and all resource caps. Preserve the producer-error record and raw v4 job; no candidate slot was run in v4."
+}

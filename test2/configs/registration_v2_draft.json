@@ -1,0 +1,65 @@
+{
+  "experiment_id": "monitor_generation_v2_draft",
+  "status": "draft_task_and_evidence_not_frozen",
+  "draft_date": "2026-11-04",
+  "live_allowed": false,
+  "execution_entrypoint": null,
+  "question": "Under fixed stimuli and matched resource budgets, does certified e-graph feedback improve LLM assertion/monitor correctness, effective fault detection and cost efficiency?",
+  "task": {
+    "selection_priority": "One bounded multi-cycle request/response controller with backpressure and explicit cancellation/reset semantics",
+    "dut_source": null,
+    "source_sha256": null,
+    "specification": null,
+    "observer_interface": null,
+    "policy": "Select by specification clarity, relevant nontrivial guard mappings and formal tractability before new B/C outcomes. One task first; do not inherit the original stimulus-difficulty gate or claim two independent IPs. Do not construct a task to force C gains."
+  },
+  "arms": ["B2_raw", "C2_semantic"],
+  "shared_budget_draft": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "repetitions_per_arm": 3,
+    "rounds_per_session": 6,
+    "max_input_tokens": 32000,
+    "max_output_tokens": 8192,
+    "request_timeout_seconds": 120,
+    "max_retries": 1,
+    "max_count_requests_per_attempt": 1,
+    "compile_timeout_seconds": 60,
+    "replay_timeout_seconds": 15,
+    "total_formal_solver_seconds_per_candidate": 720,
+    "formal_schedule": null,
+    "note": "Equal caps across arms; actual input/output tokens, retries, compile/replay/formal work and wall time remain measured separately. Final schedule and property/monitor limits must be filled before freeze; no arm-specific retries or resource extensions."
+  },
+  "role_boundary": {
+    "reference": "Claude specification-only checker author plus fresh independent reviewer; no GPT oracle substitution or silent repair",
+    "candidate": "GPT generates the evaluated passive assertions/monitors",
+    "infrastructure": "GPT/Codex builds drivers, isolation, scoring and accounting; no candidate-defined truth"
+  },
+  "feedback_contract": {
+    "shared": "Frozen spec, public RTL/interface, identical fixed development observations and all raw DUT counter identities/counts; identical compile and development feedback policies",
+    "C_only": "Certified, task-relevant equivalent guards with widths, signedness, full activation, source mapping and clock/reset context; no sequential or spec-correctness inference",
+    "allowlist_required": true,
+    "excluded": ["reference code", "hidden fault implementations", "final inputs/observations", "calibration witnesses", "maintainer instructions and skills", "held-out scores"],
+    "raw_coverage": "Fixed measurement, never a candidate-optimized endpoint; never merge source counters",
+    "length_control": "No placebo arm authorized by this draft. Without a separately registered token-matched placebo, interpret C versus B as a whole feedback-package effect."
+  },
+  "release_and_scoring": {
+    "fresh_final_corpus": "Required; v1 final cases and saved candidates are infrastructure calibration only",
+    "snapshot_policy": "Freeze source/metadata for every generated round before hidden scoring; final candidate chosen only by predeclared validity and round order. Score snapshots offline after the full release, with no hidden feedback or post-score repair.",
+    "primary": ["candidate validity and zero-false-alarm/unknown rate on independently validated legal controls", "distinct independently confirmed observable fault recall", "eligible fault/trace pair detection", "valid distinct detections per 1000 actual API input+output tokens"],
+    "secondary": ["per-property activation and fault contribution", "predeclared cost-to-quality endpoint if defined before calls", "formal bounded results and complete proofs separately", "timeouts, unknowns, invalid/missing candidates and all costs"],
+    "truth": "Independent spec reference determines observability and first violation; no credit for an alarm before a reference-confirmed violation. Simulation controls, activation cover, bounded checks and unbounded proof are separate evidence.",
+    "failure_policy": "Retain failures and not-reached results; TIMEOUT/UNKNOWN/ERROR never PASS; all invalid attempts and costs stay in raw denominators"
+  },
+  "gates": {
+    "task_source_spec_interface_frozen": false,
+    "independent_reference_review_and_controls": false,
+    "fresh_hidden_fault_observability_frozen": false,
+    "semantic_task_relevance_and_source_mapping": false,
+    "fixed_development_and_final_input_manifests": false,
+    "matched_total_formal_schedule_tractability": false,
+    "prompt_isolation_and_accounting": false,
+    "all_round_snapshot_and_final_release_tests": false
+  },
+  "stop_policy": "Do not launch reference/candidate calls from this draft. Complete a single-task feasibility packet, then bind all missing fields and gates in a new immutable registration/live freeze. Preserve negative preflights; no task or budget tuning against C outcomes. Stage credentials only through the existing terminal hidden-input helper when a concrete API stage is ready."
+}

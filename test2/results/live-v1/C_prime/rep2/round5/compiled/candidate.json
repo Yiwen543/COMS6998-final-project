@@ -1,0 +1,29 @@
+{
+  "body": "reg seen_reset;\nreg last_reset;\nreg [4:0] expected_fill;\nreg [3:0] head, tail;\nreg [7:0] words [0:15];\nwire take_read = i_rd && (expected_fill != 0);\nwire take_write = i_wr && (expected_fill < 16);\n\ninitial begin\n    seen_reset = 1'b0;\n    last_reset = 1'b0;\n    expected_fill = 0;\n    head = 0;\n    tail = 0;\nend\n\nalways @(posedge i_clk) begin\n    last_reset <= i_reset;\n    if (i_reset) begin\n        seen_reset <= 1'b1;\n        expected_fill <= 0;\n        head <= 0;\n        tail <= 0;\n    end else if (seen_reset) begin\n        if (take_write) begin\n            words[tail] <= i_data;\n            tail <= tail + 4'd1;\n        end\n        if (take_read)\n            head <= head + 4'd1;\n        case ({take_write, take_read})\n            2'b10: expected_fill <= expected_fill + 5'd1;\n            2'b01: expected_fill <= expected_fill - 5'd1;\n            default: expected_fill <= expected_fill;\n        endcase\n    end\nend\n\nassign active[0] = seen_reset;\nassign ok[0] = (o_fill === expected_fill);\nassign active[1] = seen_reset;\nassign ok[1] = (o_full === (expected_fill == 5'd16));\nassign active[2] = seen_reset;\nassign ok[2] = (o_empty === (expected_fill == 5'd0));\nassign active[3] = seen_reset && (expected_fill != 0);\nassign ok[3] = (o_data === words[head]);\nassign active[4] = seen_reset && last_reset;\nassign ok[4] = (o_fill === 5'd0) && (o_full === 1'b0) && (o_empty === 1'b1);\nassign active[5] = seen_reset;\nassign ok[5] = ((o_fill <= 5'd16) === 1'b1)\n             && (o_full === (o_fill == 5'd16))\n             && (o_empty === (o_fill == 5'd0));\n",
+  "properties": [
+    {
+      "description": "At every eligible pre/post observation after reset, occupancy equals an independent queue count. Acceptance depends only on pre-edge model occupancy: full rejects writes and empty rejects reads, including simultaneous requests.",
+      "id": "P0"
+    },
+    {
+      "description": "Full is known and asserted exactly when the independent queue contains 16 words.",
+      "id": "P1"
+    },
+    {
+      "description": "Empty is known and asserted exactly when the independent queue contains zero words.",
+      "id": "P2"
+    },
+    {
+      "description": "Whenever the independent queue is nonempty, output equals its oldest accepted word. Checks data integrity and FIFO order across wraparound, simultaneous transfers, rejected requests, and reset reuse. Empty output data is unconstrained.",
+      "id": "P3"
+    },
+    {
+      "description": "After every synchronous reset edge and until the next edge, occupancy is zero, full is clear, and empty is asserted. Reset discards all previously queued words.",
+      "id": "P4"
+    },
+    {
+      "description": "Public occupancy is known and within 0 through 16, and public full/empty flags exactly match its boundary values. Unknown occupancy or flags raise an alarm.",
+      "id": "P5"
+    }
+  ]
+}

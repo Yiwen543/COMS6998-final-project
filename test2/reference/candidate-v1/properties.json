@@ -1,0 +1,32 @@
+[
+  {
+    "id": "P1_RESET_EMPTY",
+    "scope": "post phase of every reset cycle and pre phase of the following cycle",
+    "supported": "synchronous reset empties the expected queue at the edge; pre phase of a reset cycle still reflects the old queue"
+  },
+  {
+    "id": "P2_FILL",
+    "scope": "every pre (except first row) and post observation",
+    "supported": "o_fill equals expected queue occupancy"
+  },
+  {
+    "id": "P3_FULL",
+    "scope": "every eligible observation",
+    "supported": "o_full is 1 iff expected occupancy is 16"
+  },
+  {
+    "id": "P4_EMPTY",
+    "scope": "every eligible observation",
+    "supported": "o_empty is 1 iff expected occupancy is 0"
+  },
+  {
+    "id": "P5_DATA_ORDER",
+    "scope": "every eligible observation with nonempty expected queue",
+    "supported": "o_data equals oldest expected word (asynchronous front read); empty data unchecked"
+  },
+  {
+    "id": "P6_ACCEPTANCE",
+    "scope": "every non-reset edge, checked indirectly via P2-P5",
+    "supported": "read accepted iff pre-edge expected queue nonempty; write accepted iff pre-edge expected queue not full; both may occur; decided from expected occupancy, never DUT flags"
+  }
+]

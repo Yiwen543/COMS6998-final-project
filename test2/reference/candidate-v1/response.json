@@ -1,0 +1,115 @@
+{
+  "api_error_status": null,
+  "duration_api_ms": 54911,
+  "duration_ms": 55062,
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "fast_mode_state": "off",
+  "first_content_frame_ms": 1482,
+  "is_error": false,
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "cacheCreationInputTokens": 2029,
+      "cacheReadInputTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "contextWindow": 1000000,
+      "costBasis": "list",
+      "costUSD": 0.14804099999999998,
+      "inputTokens": 4,
+      "maxOutputTokens": 128000,
+      "outputTokens": 6894,
+      "provider": "firstParty",
+      "thinkingTokens": 2765,
+      "webSearchRequests": 0
+    }
+  },
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "cacheCreationInputTokens": 2029,
+      "cacheReadInputTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "contextWindow": 1000000,
+      "costBasis": "list",
+      "costUSD": 0.14804099999999998,
+      "inputTokens": 4,
+      "maxOutputTokens": 128000,
+      "outputTokens": 6894,
+      "provider": "firstParty",
+      "thinkingTokens": 2765,
+      "webSearchRequests": 0
+    }
+  },
+  "num_turns": 1,
+  "permission_denials": [],
+  "queued_turn_count": 0,
+  "result": "{\"checker_source\": \"from collections import deque\\n\\nPROPS = ['P1_RESET_EMPTY', 'P2_FILL', 'P3_FULL', 'P4_EMPTY', 'P5_DATA_ORDER', 'P6_ACCEPTANCE']\\n\\n\\ndef _int(v):\\n    return isinstance(v, int) and not isinstance(v, bool)\\n\\n\\ndef _chk(res, c, ph, o, q):\\n    n = len(q)\\n    exp = [('fill', n, 'P2_FILL'), ('full', 1 if n == 16 else 0, 'P3_FULL'), ('empty', 1 if n == 0 else 0, 'P4_EMPTY')]\\n    if n:\\n        exp.append(('data', q[0], 'P5_DATA_ORDER'))\\n    for k, e, p in exp:\\n        res['checks'] += 1\\n        v = o[k]\\n        if v == -1:\\n            res['unresolved'].append({'cycle': c, 'phase': ph, 'category': p, 'field': k, 'actual': -1, 'expected': e})\\n        elif v != e:\\n            res['failures'].append({'cycle': c, 'phase': ph, 'category': p, 'field': k, 'actual': v, 'expected': e})\\n\\n\\ndef check_rows(rows):\\n    res = {'verdict': 'PASS', 'failures': [], 'assumption_violations': [], 'unresolved': [],\\n           'checks': 0, 'rows_processed': 0, 'properties': list(PROPS)}\\n\\n    def inv(msg):\\n        res['assumption_violations'].append(msg)\\n        res['verdict'] = 'INVALID_INPUT'\\n        return res\\n\\n    if not isinstance(rows, list) or not rows:\\n        return inv('rows must be a nonempty list')\\n    q = deque()\\n    start = None\\n    for i, r in enumerate(rows):\\n        if not isinstance(r, dict) or set(r) != {'cycle', 'action', 'pre', 'post'}:\\n            return inv('row %d: illegal or missing fields' % i)\\n        c = r['cycle']\\n        if not _int(c):\\n            return inv('row %d: cycle not integer' % i)\\n        if i == 0:\\n            start = c\\n        elif c != start + i:\\n            return inv('row %d: cycle %r missing or out of order' % (i, c))\\n        a = r['action']\\n        if not isinstance(a, dict) or set(a) != {'reset', 'wr', 'rd', 'data'}:\\n            return inv('cycle %d: illegal action fields' % c)\\n        for k, w in (('reset', 1), ('wr', 1), ('rd', 1), ('data', 8)):\\n            v = a[k]\\n            if not _int(v) or v < 0 or v >= (1 << w):\\n                return inv('cycle %d: action %s illegal value %r' % (c, k, v))\\n        if a['reset'] and (a['wr'] or a['rd']):\\n            return inv('cycle %d: read/write during reset' % c)\\n        if i == 0 and a['reset'] != 1:\\n            return inv('first action must reset')\\n        for ph in ('pre', 'post'):\\n            o = r[ph]\\n            if not isinstance(o, dict) or set(o) != {'fill', 'full', 'empty', 'data'}:\\n                return inv('cycle %d: illegal %s fields' % (c, ph))\\n            for k, w in (('fill', 5), ('full', 1), ('empty', 1), ('data', 8)):\\n                v = o[k]\\n                if not _int(v) or v < -1 or v >= (1 << w):\\n                    return inv('cycle %d: %s.%s illegal value %r' % (c, ph, k, v))\\n        if i > 0:\\n            _chk(res, c, 'pre', r['pre'], q)\\n        if a['reset']:\\n            q.clear()\\n        else:\\n            n = len(q)\\n            do_rd = bool(a['rd']) and n > 0\\n            do_wr = bool(a['wr']) and n < 16\\n            if do_rd:\\n                q.popleft()\\n            if do_wr:\\n                q.append(a['data'])\\n        _chk(res, c, 'post', r['post'], q)\\n        res['rows_processed'] += 1\\n    if res['failures']:\\n        res['verdict'] = 'FAIL'\\n    elif res['unresolved']:\\n        res['verdict'] = 'UNRESOLVED'\\n    else:\\n        res['verdict'] = 'PASS'\\n    return res\\n\", \"properties\": [{\"id\": \"P1_RESET_EMPTY\", \"scope\": \"post phase of every reset cycle and pre phase of the following cycle\", \"supported\": \"synchronous reset empties the expected queue at the edge; pre phase of a reset cycle still reflects the old queue\"}, {\"id\": \"P2_FILL\", \"scope\": \"every pre (except first row) and post observation\", \"supported\": \"o_fill equals expected queue occupancy\"}, {\"id\": \"P3_FULL\", \"scope\": \"every eligible observation\", \"supported\": \"o_full is 1 iff expected occupancy is 16\"}, {\"id\": \"P4_EMPTY\", \"scope\": \"every eligible observation\", \"supported\": \"o_empty is 1 iff expected occupancy is 0\"}, {\"id\": \"P5_DATA_ORDER\", \"scope\": \"every eligible observation with nonempty expected queue\", \"supported\": \"o_data equals oldest expected word (asynchronous front read); empty data unchecked\"}, {\"id\": \"P6_ACCEPTANCE\", \"scope\": \"every non-reset edge, checked indirectly via P2-P5\", \"supported\": \"read accepted iff pre-edge expected queue nonempty; write accepted iff pre-edge expected queue not full; both may occur; decided from expected occupancy, never DUT flags\"}], \"contract_markdown\": \"# Reference checker contract\\n\\n- Model: specification queue (depth 16, 8-bit) driven only by actions and expected occupancy; DUT flags never decide acceptance.\\n- Row 0 must have reset=1; its pre phase is ignored, its post is checked (empty queue).\\n- Every later pre and post is checked: fill, full, empty, and data when expected nonempty. Empty data is unspecified.\\n- Reset is synchronous: pre of a reset cycle reflects the previous queue; post is empty.\\n- Acceptance decided from pre-edge expected occupancy: rd if n>0, wr if n<16; simultaneous ops both accepted when 0<n<16; at full only read, at empty only write.\\n- INVALID_INPUT: non-list/empty input, extra/missing fields, non-integer or out-of-range values (inputs may not be -1), reset with wr/rd, first action not reset, missing/out-of-order cycles (must be consecutive from first). Processing stops.\\n- Observed -1 on a checked field is recorded as unresolved. Verdict: FAIL if any failure (dominates unknown), else UNRESOLVED if any unresolved, else PASS.\\n- Output: verdict, failures (cycle, phase, category, field, actual, expected), assumption_violations, unresolved, checks, rows_processed, properties.\\n- Scope: checks only the listed properties on supplied observations; no claim of complete proof of DUT correctness.\\n\", \"selftest_source\": \"from collections import deque\\nimport copy\\n\\n\\ndef run(check_rows):\\n    def gen(acts):\\n        q = deque()\\n        rows = []\\n\\n        def ob():\\n            n = len(q)\\n            return {'fill': n, 'full': int(n == 16), 'empty': int(n == 0), 'data': q[0] if n else 0}\\n        for i, (rs, w, r, d) in enumerate(acts):\\n            pre = ob()\\n            if rs:\\n                q.clear()\\n            else:\\n                n = len(q)\\n                if r and n:\\n                    q.popleft()\\n                if w and n < 16:\\n                    q.append(d)\\n            rows.append({'cycle': i, 'action': {'reset': rs, 'wr': w, 'rd': r, 'data': d}, 'pre': pre, 'post': ob()})\\n        return rows\\n\\n    acts = [(1, 0, 0, 0)] + [(0, 1, 0, i + 1) for i in range(18)] + [(0, 1, 1, 99)] + [(0, 0, 1, 0)] * 17 + [(0, 1, 1, 5)] + [(0, 1, 0, 7), (0, 0, 0, 0), (1, 0, 0, 0), (0, 0, 0, 0), (0, 0, 0, 0)]\\n    base = gen(acts)\\n    results = {}\\n    allok = [True]\\n\\n    def t(name, rows, want):\\n        try:\\n            got = check_rows(rows)['verdict']\\n        except Exception as e:\\n            got = 'EXC:' + repr(e)\\n        results[name] = (got, want)\\n        if got != want:\\n            allok[0] = False\\n\\n    def m(f):\\n        r = copy.deepcopy(base)\\n        f(r)\\n        return r\\n\\n    t('legal', base, 'PASS')\\n    t('first_pre_garbage', m(lambda r: r[0]['pre'].update({'fill': 31, 'full': 1, 'empty': 1, 'data': -1})), 'PASS')\\n    t('empty_data_unspecified', m(lambda r: r[0]['post'].update({'data': 123})), 'PASS')\\n    t('wrong_fill', m(lambda r: r[5]['post'].update({'fill': 4})), 'FAIL')\\n    t('wrong_data_order', m(lambda r: r[22]['pre'].update({'data': 9})), 'FAIL')\\n    t('full_flag_missing', m(lambda r: r[16]['post'].update({'full': 0})), 'FAIL')\\n    t('write_on_full_accepted', m(lambda r: r[17]['post'].update({'fill': 17})), 'FAIL')\\n    t('empty_flag_wrong', m(lambda r: r[0]['post'].update({'empty': 0})), 'FAIL')\\n    t('reset_pre_timing', m(lambda r: r[40]['pre'].update({'fill': 0, 'empty': 1})), 'FAIL')\\n    t('reset_post_not_empty', m(lambda r: r[40]['post'].update({'fill': 1})), 'FAIL')\\n    t('unknown', m(lambda r: r[3]['post'].update({'data': -1})), 'UNRESOLVED')\\n\\n    def both(r):\\n        r[3]['post']['data'] = -1\\n        r[8]['post']['fill'] = 0\\n    t('fail_dominates_unknown', m(both), 'FAIL')\\n    t('no_initial_reset', m(lambda r: r[0]['action'].update({'reset': 0})), 'INVALID_INPUT')\\n    t('reset_with_write', m(lambda r: r[40]['action'].update({'wr': 1})), 'INVALID_INPUT')\\n    t('missing_row', m(lambda r: r.pop(3)), 'INVALID_INPUT')\\n\\n    def swap(r):\\n        r[3], r[4] = r[4], r[3]\\n    t('out_of_order', m(swap), 'INVALID_INPUT')\\n    t('data_width', m(lambda r: r[2]['action'].update({'data': 256})), 'INVALID_INPUT')\\n    t('extra_field', m(lambda r: r[2]['action'].update({'x': 0})), 'INVALID_INPUT')\\n    t('missing_field', m(lambda r: r[2]['post'].pop('empty')), 'INVALID_INPUT')\\n    t('unknown_input', m(lambda r: r[2]['action'].update({'wr': -1})), 'INVALID_INPUT')\\n    t('empty_rows', [], 'INVALID_INPUT')\\n    return {'passed': allok[0], 'results': results}\\n\"}",
+  "result_index": 0,
+  "safety_stops": 0,
+  "session_id": "4b7ce598-5388-4589-8920-9f5f2143433c",
+  "stop_reason": "end_turn",
+  "subagent_stats": {
+    "by_type": {},
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "system": 0,
+      "user": 0
+    },
+    "max_depth": 0,
+    "refused": {
+      "budget": 0,
+      "concurrency_limit": 0,
+      "depth_limit": 0
+    },
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "spawned": 0,
+    "spawned_by_subagents": 0,
+    "started_in_background": 0
+  },
+  "subtype": "success",
+  "terminal_reason": "completed",
+  "time_to_request_ms": 146,
+  "total_cost_usd": 0.14804099999999998,
+  "ttft_ms": 26345,
+  "ttft_stream_ms": 1481,
+  "type": "result",
+  "usage": {
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 2029
+    },
+    "cache_creation_input_tokens": 2029,
+    "cache_read_input_tokens": 0,
+    "fallback_credit": null,
+    "inference_geo": "global",
+    "input_tokens": 4,
+    "iterations": [
+      {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 2029
+        },
+        "cache_creation_input_tokens": 2029,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 4,
+        "output_tokens": 6894,
+        "type": "message"
+      }
+    ],
+    "output_tokens": 6894,
+    "output_tokens_details": {
+      "thinking_tokens": 2765
+    },
+    "server_tool_use": {
+      "web_fetch_requests": 0,
+      "web_search_requests": 0
+    },
+    "service_tier": "standard",
+    "speed": "standard"
+  },
+  "uuid": "29504327-2280-4914-bef4-3e758270688a"
+}

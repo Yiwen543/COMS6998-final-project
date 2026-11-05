@@ -1,0 +1,29 @@
+{
+  "body": "reg valid = 1'b0;\nreg [4:0] count = 5'd0;\nreg [3:0] head = 4'd0, tail = 4'd0;\nreg [7:0] words [0:15];\nreg reset_result = 1'b0;\nwire take_read = i_rd && (count != 0);\nwire take_write = i_wr && (count < 16);\n\n// Independent specification state; DUT status never controls acceptance.\nalways @(posedge i_clk) begin\n  if (i_reset) begin\n    valid <= 1'b1;\n    count <= 5'd0;\n    head <= 4'd0;\n    tail <= 4'd0;\n    reset_result <= 1'b1;\n  end else if (valid) begin\n    reset_result <= 1'b0;\n    if (take_write) begin\n      words[tail] <= i_data;\n      tail <= tail + 1'b1;\n    end\n    if (take_read)\n      head <= head + 1'b1;\n    case ({take_write, take_read})\n      2'b10: count <= count + 1'b1;\n      2'b01: count <= count - 1'b1;\n      default: count <= count;\n    endcase\n  end\nend\n\nassign active[0] = valid;\nassign ok[0] = (o_fill === count);\nassign active[1] = valid;\nassign ok[1] = (o_full === (count == 16));\nassign active[2] = valid;\nassign ok[2] = (o_empty === (count == 0));\nassign active[3] = valid && (count != 0);\nassign ok[3] = (o_data === words[head]);\nassign active[4] = valid;\nassign ok[4] = ((o_fill <= 5'd16) === 1'b1)\n             && (o_full === (o_fill == 5'd16))\n             && (o_empty === (o_fill == 5'd0));\nassign active[5] = valid && reset_result;\nassign ok[5] = (o_fill === 5'd0) && (o_full === 1'b0)\n             && (o_empty === 1'b1);\n",
+  "properties": [
+    {
+      "description": "At every eligible observation, fill equals independently modeled occupancy. Pre-edge expected occupancy determines acceptance: full rejects writes and empty rejects reads, including simultaneous requests.",
+      "id": "P0"
+    },
+    {
+      "description": "Full is known and asserted exactly when the independently expected queue contains sixteen words.",
+      "id": "P1"
+    },
+    {
+      "description": "Empty is known and asserted exactly when the independently expected queue contains zero words.",
+      "id": "P2"
+    },
+    {
+      "description": "Whenever the expected queue is nonempty, asynchronous front data equals the oldest accepted word. Checks ordering and preservation across simultaneous transfers, rejected operations, pointer wraparound, and reset recovery. Empty data is unconstrained.",
+      "id": "P3"
+    },
+    {
+      "description": "Public status is known and consistent: fill is between zero and sixteen, full is equivalent to fill sixteen, and empty is equivalent to fill zero.",
+      "id": "P4"
+    },
+    {
+      "description": "After each synchronous reset edge and until the next edge, fill is zero, full is low, and empty is high. Reset also discards all previously queued words in the independent model.",
+      "id": "P5"
+    }
+  ]
+}

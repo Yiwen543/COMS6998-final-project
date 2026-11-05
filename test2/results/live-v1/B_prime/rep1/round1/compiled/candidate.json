@@ -1,0 +1,29 @@
+{
+  "body": "reg initialized = 1'b0;\nreg reset_applied = 1'b0;\nreg [4:0] expected_fill = 5'd0;\nreg [7:0] expected_words [0:15];\ninteger k;\nwire take_read = i_rd && (expected_fill != 0);\nwire take_write = i_wr && (expected_fill < 16);\n\n// The model accepts transfers from its own queue occupancy, never DUT flags.\n// Nonblocking updates align the expected queue with the post-edge outputs.\nalways @(posedge i_clk) begin\n    if (i_reset) begin\n        initialized <= 1'b1;\n        expected_fill <= 5'd0;\n        reset_applied <= 1'b1;\n    end else begin\n        reset_applied <= 1'b0;\n        if (initialized) begin\n            case ({take_write, take_read})\n                2'b10: expected_fill <= expected_fill + 5'd1;\n                2'b01: expected_fill <= expected_fill - 5'd1;\n                default: expected_fill <= expected_fill;\n            endcase\n            if (take_read) begin\n                for (k = 0; k < 15; k = k + 1)\n                    expected_words[k] <= expected_words[k+1];\n            end\n            if (take_write) begin\n                if (take_read)\n                    expected_words[expected_fill - 5'd1] <= i_data;\n                else\n                    expected_words[expected_fill] <= i_data;\n            end\n        end\n    end\nend\n\nassign active[0] = initialized;\nassign active[1] = initialized;\nassign active[2] = initialized;\nassign active[3] = initialized && (expected_fill != 0);\nassign active[4] = initialized;\nassign active[5] = initialized && reset_applied;\n\nassign ok[0] = (o_fill === expected_fill);\nassign ok[1] = (o_full === (expected_fill == 5'd16));\nassign ok[2] = (o_empty === (expected_fill == 5'd0));\nassign ok[3] = (expected_fill == 0) ? 1'b1 : (o_data === expected_words[0]);\nassign ok[4] = ((o_fill <= 5'd16) === 1'b1);\nassign ok[5] = (o_fill === 5'd0) && (o_full === 1'b0) && (o_empty === 1'b1);\n",
+  "properties": [
+    {
+      "description": "Occupancy equals an independent depth-16 queue model, including simultaneous operations, rejected boundary transfers, and synchronous reset.",
+      "id": "P0"
+    },
+    {
+      "description": "Full is asserted exactly when the independent expected queue contains 16 words.",
+      "id": "P1"
+    },
+    {
+      "description": "Empty is asserted exactly when the independent expected queue contains zero words.",
+      "id": "P2"
+    },
+    {
+      "description": "Whenever the expected queue is nonempty, the asynchronous front output equals its oldest accepted, unread word; empty data is not checked.",
+      "id": "P3"
+    },
+    {
+      "description": "After initialization, the reported occupancy is known and within the legal range zero through 16.",
+      "id": "P4"
+    },
+    {
+      "description": "After a synchronous reset edge and until the next edge, occupancy is zero, full is deasserted, and empty is asserted.",
+      "id": "P5"
+    }
+  ]
+}

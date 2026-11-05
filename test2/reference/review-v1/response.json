@@ -1,0 +1,115 @@
+{
+  "api_error_status": null,
+  "duration_api_ms": 33225,
+  "duration_ms": 33342,
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "fast_mode_state": "off",
+  "first_content_frame_ms": 1358,
+  "is_error": false,
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "cacheCreationInputTokens": 28208,
+      "cacheReadInputTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "contextWindow": 1000000,
+      "costBasis": "list",
+      "costUSD": 0.20511600000000002,
+      "inputTokens": 4,
+      "maxOutputTokens": 128000,
+      "outputTokens": 3203,
+      "provider": "firstParty",
+      "thinkingTokens": 1330,
+      "webSearchRequests": 0
+    }
+  },
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "cacheCreationInputTokens": 28208,
+      "cacheReadInputTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "contextWindow": 1000000,
+      "costBasis": "list",
+      "costUSD": 0.20511600000000002,
+      "inputTokens": 4,
+      "maxOutputTokens": 128000,
+      "outputTokens": 3203,
+      "provider": "firstParty",
+      "thinkingTokens": 1330,
+      "webSearchRequests": 0
+    }
+  },
+  "num_turns": 1,
+  "permission_denials": [],
+  "queued_turn_count": 0,
+  "result": "```json\n{\"decision\":\"accept_with_scope\",\"findings\":[{\"severity\":\"info\",\"issue\":\"Reset timing matches the specification.\",\"evidence\":\"For i>0, _chk(pre) runs against the queue before q.clear(), so the pre phase of a reset cycle reflects the old queue. The post phase is checked as empty. The following cycle's pre is checked against the empty queue. Controls async_reset_change (pre fill 0 at cycle 8 \u2192 FAIL) and bad_clear (post fill 1 \u2192 FAIL) both catch errors here.\"},{\"severity\":\"info\",\"issue\":\"Admission is derived only from inputs and expected occupancy, independent of DUT flags.\",\"evidence\":\"n=len(q) is taken before any update. do_rd = rd and n>0; do_wr = wr and n<16. This gives both operations accepted at 0<n<16, read-only at full, and write-only at empty. Observed o_full/o_empty are compared but never used to decide acceptance. Controls full_simultaneous_count (cycle 18 at full) and simultaneous_order (cycle 3) cover this, and legal_order_and_reset cycle 7 covers simultaneous read/write at empty.\"},{\"severity\":\"info\",\"issue\":\"Ordering across wrap is pointer-free.\",\"evidence\":\"A deque model has no wrap state of its own. legal_multiple_wraps (40 transfers) and legal_capacity (fill to 16, drain) give PASS. Wrap faults can only be exposed through public data order, which P5 checks.\"},{\"severity\":\"info\",\"issue\":\"Empty data is unspecified and unknown values are handled as specified.\",\"evidence\":\"The data check is appended only when n>0. An observed -1 on a checked field goes to unresolved. FAIL dominates regardless of order (failure_then_unknown and unknown_then_failure both give FAIL). -1 on inputs is rejected as INVALID_INPUT. -1 on empty-queue data is ignored, consistent with 'unspecified'.\"},{\"severity\":\"limitation\",\"issue\":\"P6_ACCEPTANCE is listed in properties but never produces its own finding.\",\"evidence\":\"Every failure is categorized P2\u2013P5. Acceptance faults are only detectable when they perturb fill, flags or data. Reports must not count P6 as an independently checked or activated property, or attribute events to it.\"},{\"severity\":\"limitation\",\"issue\":\"The 'checks' counter includes unresolved comparisons, so it overstates definite checks.\",\"evidence\":\"In _chk, res['checks'] is incremented before the -1 test. Coverage claims should cite checks minus unresolved entries.\"},{\"severity\":\"limitation\",\"issue\":\"Cycle numbering may start at any integer, but the limits say the driver enforces cycle zero.\",\"evidence\":\"start=c is accepted for row 0 without requiring c==0, and negative values are allowed. This is not a blocker for driver-generated fixed traces. It is general interface hardening.\"},{\"severity\":\"limitation\",\"issue\":\"On invalid input, verdict precedence is correct but partial results are retained.\",\"evidence\":\"Validation is interleaved row by row. Failures, unresolved entries and checks from earlier rows remain in the result while the verdict becomes INVALID_INPUT (e.g. wrong_cycle_order shows checks=3). Consumers must treat INVALID_INPUT as overriding and ignore the partial content.\"},{\"severity\":\"limitation\",\"issue\":\"Some fault classes have no dedicated mutation control.\",\"evidence\":\"There is no explicit fault control for read accepted on empty (underflow), reset asserted while full, or a pre-phase-only flag fault at full. They are covered only implicitly by the legal PASS traces.\"},{\"severity\":\"limitation\",\"issue\":\"Fault eligibility differs between simulators for one mutant/trace.\",\"evidence\":\"M02/final_boundary is UNRESOLVED under Icarus and FAIL under two-state simulation, yet it is marked eligible_provisional. Eligibility should be stated per scoring simulator, and an X-masked result must not be counted as a confirmed Icarus detection. M05 is detected only on final_boundary.\"},{\"severity\":\"info\",\"issue\":\"The self-test is authored by the same role as the checker; independence rests on the separate control set.\",\"evidence\":\"The selftest generator mirrors the checker's queue logic. The 20 independent controls all match. Neither set is an exhaustive proof, and only role isolation is claimed, not cross-model independence.\"}],\"accepted_scope\":\"Accepted as the specification reference for registered, driver-generated, valid fixed traces (cycle 0 start, consecutive cycles, legal inputs). It checks P1\u2013P5 on every eligible pre/post public-I/O observation. Acceptance is checked only indirectly through P2\u2013P5. Verdicts PASS/FAIL/UNRESOLVED/INVALID_INPUT follow the stated precedence. These are finite-trace results only: no claim of complete DUT correctness, no direct P6 event attribution, and Icarus-UNRESOLVED fault rows are not confirmed detections.\",\"required_changes\":[\"Report P6 as indirect only; do not count it as activated or credit acceptance events to it.\",\"Report definite checks separately from unresolved comparisons.\",\"Label fault eligibility per simulator, treating M02/final_boundary under Icarus as unresolved.\",\"Optional hardening: require cycle 0 at row 0, and clear partial findings or mark them non-authoritative on INVALID_INPUT.\",\"Optional: add controls for underflow-on-empty, reset while full, and a pre-phase full-flag fault.\"]}\n```",
+  "result_index": 0,
+  "safety_stops": 0,
+  "session_id": "81749a62-ef6b-4b6a-9ac2-3121d4e88a07",
+  "stop_reason": "end_turn",
+  "subagent_stats": {
+    "by_type": {},
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "system": 0,
+      "user": 0
+    },
+    "max_depth": 0,
+    "refused": {
+      "budget": 0,
+      "concurrency_limit": 0,
+      "depth_limit": 0
+    },
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "spawned": 0,
+    "spawned_by_subagents": 0,
+    "started_in_background": 0
+  },
+  "subtype": "success",
+  "terminal_reason": "completed",
+  "time_to_request_ms": 111,
+  "total_cost_usd": 0.20511600000000002,
+  "ttft_ms": 16675,
+  "ttft_stream_ms": 1357,
+  "type": "result",
+  "usage": {
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 28208
+    },
+    "cache_creation_input_tokens": 28208,
+    "cache_read_input_tokens": 0,
+    "fallback_credit": null,
+    "inference_geo": "global",
+    "input_tokens": 4,
+    "iterations": [
+      {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 28208
+        },
+        "cache_creation_input_tokens": 28208,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 4,
+        "output_tokens": 3203,
+        "type": "message"
+      }
+    ],
+    "output_tokens": 3203,
+    "output_tokens_details": {
+      "thinking_tokens": 1330
+    },
+    "server_tool_use": {
+      "web_fetch_requests": 0,
+      "web_search_requests": 0
+    },
+    "service_tier": "standard",
+    "speed": "standard"
+  },
+  "uuid": "fb21d1ec-ec8b-4551-895d-2dfdbf4afc4b"
+}

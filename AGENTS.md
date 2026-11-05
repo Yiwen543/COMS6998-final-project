@@ -1,65 +1,32 @@
-# Project agent workflow
+# Repository agent instructions
 
-These instructions govern repository maintenance, not experimental model prompts.
-User instructions and higher-priority policies take precedence.
+These rules govern maintenance, never experimental prompts. User instructions take precedence.
 
 ## Resume with bounded context
 
-Read `docs/AGENT_HANDOFF.md` first. Check its evidence paths and current Git state.
-Read only the current report and relevant source slices; use `rg` before loading
-large logs. Keep full logs on disk and return decisive fields or error lines.
-The handoff is an index, not a replacement for raw evidence. After a substantive
-phase, incrementally update its intent, changed/read files, decisions, observed
-results, blockers and next action. Keep exact paths, hashes, budgets and negative
-results. Never copy API keys or conversation transcripts into these records.
+1. Read `docs/HANDOFF.md`, then `docs/PROJECT_STATUS.md`.
+2. Read `docs/EXPERIMENT_PROTOCOL.md` before experimental work; consult `docs/DECISIONS.md` for rationale.
+3. Use `rg` and bounded source slices. Read relevant summaries before raw JSONL/logs. Do not print giant freeze manifests.
+4. `docs/AGENT_HANDOFF.md` is the retained historical recovery log, not a required full-context preload.
+5. Update the compact handoff after a substantive phase. Preserve exact paths, hashes, failures and unresolved findings; never copy keys or full conversations.
 
-## Apply installed skills selectively
+## Preserve experimental boundaries
 
-Fixed upstream versions and file hashes: `configs/agent_skills.lock.json`.
-Local copies are under `/Users/yiwenchen/.codex/skills/`:
+- Freeze DUT, specification, checker, driver, source counters, target, inputs, model and resource caps within each registration. Material changes require a new version; never tune against C outcomes.
+- Current role boundary: Claude authors/revises the independent specification reference checker; GPT/Codex builds drivers/infrastructure. Experimental GPT generates stimulus in the original track and candidate SV monitors in `test2`. Candidate code never grades itself. Do not silently patch a Claude oracle as GPT.
+- Keep calibration witnesses, final data, mutants, reference code and maintainer instructions out of candidate prompts. Use explicit allowlists and saved prompt hashes. Never auto-inject skills.
+- Original stimulus qualification requires semantic proof, exact mapping, ordinary-operation exclusion, independent reachability and the registered B development gate before C. WBXBAR has a **local exploratory waiver** in `configs/wbxbar_exploratory_bc_v1.json`; do not generalize it.
+- `test2/AGENTS.md` defines the separately authorized fixed-stimulus property task. Its gates differ from the original stimulus-difficulty gate.
+- Preserve widths, signedness, complete activation guards, provenance and clock/reset context. Two-state combinational equivalence proves neither four-state nor sequential correctness. Keep every source counter separate; unknown/unreachable-unproven points remain in raw denominators.
+- Retain invalid/missing/unresolved/not-reached runs and costs. Separate repeat alarms from distinct defect types, mock/replay from independent live trials, and finite BMC/cover from proof.
+- Existing freezes bind code and evidence: check membership before edits. Add a new report/version instead of silently invalidating frozen inputs.
 
-- `context-compression/SKILL.md`: use at phase boundaries and after compaction;
-  preserve constraints, evidence links and unresolved issues in the handoff.
-- `karpathy-guidelines/SKILL.md`: use for implementation/review; state material
-  assumptions, make the smallest necessary change, define observable success.
-- `verification-before-completion/SKILL.md`: verify the relevant claim with
-  fresh commands before reporting success. Report blocked/untested separately.
-- `caveman/SKILL.md`: concise chat only. Preserve technical detail and uncertainty;
-  do not shorten code, research reports, schemas, raw evidence or prompts.
+## Work and verify
 
-Read the relevant skill when needed; do not load every skill on every turn.
-Missing skills do not justify guessing their contents or installing substitutes.
-These skills do not enlarge the context window or guarantee correct code.
+- Current migration scope is documentation/audit only: no functional edits, paid calls, installation, simulation, long tests, commit or push unless subsequently requested.
+- Use hidden-input scripts only when a new live stage is ready and authorized; credentials stay in ignored `build/private/` with restricted permissions and the agreed cleanup policy. Never reuse keys from chat.
+- Run verification proportional to a change. Historical test evidence is not a fresh run; state dates, scope, commands and failures honestly. Do not rerun costly experiments to edit prose.
+- Preserve unrelated user work and all historical result evidence. Do not equate local `main` with a verified remote push.
+- Installed skill lock: `configs/agent_skills.lock.json`. Use context-compression at phase boundaries, karpathy-guidelines for surgical changes, verification-before-completion before claims, and caveman only for concise chat. Do not preload every skill; none enlarges the context window or guarantees correctness.
 
-## Preserve experimental independence
-
-Keep original DUT/spec/checker/driver/coverage denominator and preregistered
-budgets immutable within a frozen experiment. Changes require a separately
-registered version; never tune budgets or targets to favor C. Retain failed
-attempts and distinguish repeated diagnostics from distinct defect types.
-
-Claude authors specification-based checkers; GPT/Codex authors fixed drivers and
-stimulus. Do not silently repair a Claude checker as GPT. Calibration sequences,
-golden answers, this handoff and maintainer skills must not leak into experimental
-prompts or specification-only checker packets. Do not auto-inject skills into
-either model adapter. Keep role packets and published prompt hashes authoritative.
-
-Require semantic, exact source-mapping, ordinary-operation and independently
-checked multistep-reachability gates before B; C follows the unchanged B gate.
-User-authorized exception: `configs/wbxbar_exploratory_bc_v1.json` separately
-waives ordinary/difficulty admission, three late-event families and the B-before-C
-difficulty gate for its exploratory B/C comparison. Preserve the old rejection;
-never generalize this exception to other scopes. Independent checker validation,
-certified semantics, exact counters, equal budgets and final freeze remain required.
-Two-state combinational equivalence is not sequential correctness or reachability.
-Equivalent predicates retain separate original source counters; unresolved points
-stay in the denominator. Request keys only when the relevant offline gate passes,
-using the existing hidden-input staging scripts and cleanup policy.
-
-## Verify and hand off
-
-Run checks proportional to the change. Distinguish syntax/lint, proof, simulation,
-checker validity and live-model evidence. Do not rerun costly experiments merely
-to edit prose. Inspect diffs; preserve unrelated user work and historical results.
-Record exact commands, exit status, scope and evidence paths. Do not claim a
-commit, push, checker certification or completed experiment without direct evidence.
+Previous instructions are preserved byte-for-byte in `docs/archive/migration_2026-11-04/AGENTS.md`.

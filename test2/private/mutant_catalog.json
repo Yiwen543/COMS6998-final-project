@@ -1,0 +1,62 @@
+[
+  {
+    "changed_sites": 1,
+    "eligibility": "pending_independent_reference",
+    "fault": "read_pointer_step",
+    "id": "M01",
+    "line": 163,
+    "new": "else rd_addr <= rd_addr + 2;",
+    "old": "else rd_addr <= rd_addr + 1;",
+    "sha256": "c2d1bc73844256a08c13a5546a4c5f302e9fa97a04aef58e19957ec5bb21bd82"
+  },
+  {
+    "changed_sites": 1,
+    "eligibility": "pending_independent_reference",
+    "fault": "lost_write",
+    "id": "M02",
+    "line": 141,
+    "new": "if (w_wr && wr_addr != 5'd3)\n",
+    "old": "if (w_wr)\n",
+    "sha256": "d150d1523528ce2bf47b6c07bc40f6d99e3d69d2316f60703c9b19e9e372adac"
+  },
+  {
+    "changed_sites": 1,
+    "eligibility": "pending_independent_reference",
+    "fault": "reset_empty_flag",
+    "id": "M03",
+    "line": 175,
+    "new": "r_empty <= 1'b0;",
+    "old": "r_empty <= 1'b1;",
+    "sha256": "2a9534e69ac206b7ebefe14999ab4dfb844e0db43f32960a11853269fc680143"
+  },
+  {
+    "changed_sites": 1,
+    "eligibility": "pending_independent_reference",
+    "fault": "data_order",
+    "id": "M04",
+    "line": 206,
+    "new": "o_data = mem[rd_addr[LGFLEN-1:0] ^ 4'b0001];",
+    "old": "o_data = mem[rd_addr[LGFLEN-1:0]];",
+    "sha256": "95cbe349d71bd333ad0bda7c401ce6f57772adc7ba0ff107d760386480e496dc"
+  },
+  {
+    "changed_sites": 1,
+    "eligibility": "pending_independent_reference",
+    "fault": "full_write_admission",
+    "id": "M05",
+    "line": 72,
+    "new": "wire\tw_wr = i_wr;",
+    "old": "wire\tw_wr = (i_wr && !o_full);",
+    "sha256": "52a4e1e86029e802fa31a4f7c18b51ea95ed0ead2856cb0479210b999f97cd00"
+  },
+  {
+    "changed_sites": 1,
+    "eligibility": "pending_independent_reference",
+    "fault": "simultaneous_read_step",
+    "id": "M06",
+    "line": 165,
+    "new": "2'b11: rd_addr <= rd_addr;",
+    "old": "2'b11: rd_addr <= rd_addr + 1;",
+    "sha256": "0fe2f68dbc6a0a253fb29c0a4a576587d7e3a78df83d5006d2efb4680fe8cbe9"
+  }
+]

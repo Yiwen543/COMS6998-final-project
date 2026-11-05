@@ -1,0 +1,84 @@
+{
+  "id": "axis_length_controller_qualification_v4",
+  "date": "2026-11-04",
+  "status": "registered_before_new_qualification_tools",
+  "candidate_calls_allowed": false,
+  "reference_calls_allowed": false,
+  "source_repository": "https://github.com/alexforencich/verilog-axis",
+  "revision": "48ff7a7e2ef782cf778d47910cf85835c64b1bce",
+  "source_sha256": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+  "primary_scope": "Original direct frame length adjuster, no FIFO wrapper; per-frame input request and separate data/status responses; reset flush only cancellation",
+  "parameters": {
+    "DATA_WIDTH": 8,
+    "KEEP_ENABLE": 0,
+    "KEEP_WIDTH": 1,
+    "ID_ENABLE": 0,
+    "DEST_ENABLE": 0,
+    "USER_ENABLE": 0
+  },
+  "length_min": 4,
+  "length_max": 8,
+  "input_frame_length_scope": [
+    1,
+    12
+  ],
+  "selection_policy": "Chosen before any new B/C generation; prefer direct core without RAM; if no certified nontrivial relevant group, retain rejection and do not invent redundant RTL. A separate version would be needed for another scope.",
+  "semantic_gate": "At least one nontrivial egg-derived group with source-distinct guards, independent two-state proof, full event/activation context and raw-counter mapping; unsupported points explicit",
+  "qualification_formal": {
+    "local_contract_properties": [
+      "reset flush",
+      "output stable under stall",
+      "status stable under stall"
+    ],
+    "modes": [
+      "bmc",
+      "prove",
+      "cover"
+    ],
+    "depth": 24,
+    "timeout_seconds_each": 10,
+    "max_jobs": 9,
+    "max_solver_seconds": 90,
+    "flatten": true,
+    "solver": "z3",
+    "interpretation": "Infrastructure/public-interface local checks only; not a GPT scoring oracle or whole functional correctness proof"
+  },
+  "stop_policy": "No retries or budget increase within this version. Retain failures/timeouts. New live registration and Claude checker review remain separate gates.",
+  "parent_sha256": "3684b2f91ee72d3182f5766489016efdf22c5efd635e05c0b17e8a1bfeac834c",
+  "revision_reason": "KEEP_ENABLE=1 hit an unsupported variable slice in the existing SSA adapter; definitions remain uncertified. Use the upstream native 8-bit KEEP-disabled mode with byte-valid fixed1; unused keep output remains outside observer. Preserve v3 rejection. No generated model outcomes used.",
+  "candidates": [
+    {
+      "root": "test2/tasks/axis_length_v1/public",
+      "top": "frame_task",
+      "sources": [
+        "rtl/axis_frame_length_adjust.v",
+        "task_top_v3.sv"
+      ],
+      "source_hashes": {
+        "test2/tasks/axis_length_v1/public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+        "test2/tasks/axis_length_v1/public/task_top_v3.sv": "5994b305ae1110b6686839cfd77d98121958b37228ee6bc1415ff1205752376e"
+      },
+      "parameters": {},
+      "include_dirs": [],
+      "defines": [],
+      "proof_keep": [],
+      "clock": "clk",
+      "reset": "rst",
+      "reset_active": 1,
+      "reset_behavior": "synchronous active-high",
+      "seed_inputs": {
+        "rst": 0,
+        "s_valid": 0,
+        "s_data": 0,
+        "s_last": 0,
+        "m_ready": 1,
+        "h_ready": 1
+      },
+      "revision": "48ff7a7e2ef782cf778d47910cf85835c64b1bce"
+    }
+  ],
+  "offline_acceptance": {
+    "min_source_distinct_groups": 1,
+    "min_nontrivial_source_groups": 1
+  }
+}

@@ -1,9 +1,111 @@
-# Working handoff — 2026-11-04, context checkpoint 25
+# Working handoff — 2026-11-04, context checkpoint 28
 
 Maintainer-only recovery index. Never include this file, skills, private controls
 or calibration witnesses in experimental prompts. Never copy or print keys.
 
-Latest active task COMPLETED: fresh WBXBAR B/C under frozen reference checker.
+LATEST COMPLETED: separately registered test2 FIFO monitor-generation experiment.
+Root T2 = test2/. Live B-prime/C-prime generation finished exit0 in
+T2/results/live-v1: 36 calls, no retry, exact gpt-6.1-sol, all compiled,
+744708 input+output tokens, 336.357s. Six final candidates frozen; OpenAI key
+deleted by runner. Both staged credential paths freshly confirmed absent.
+Final scoring session23043 finished exit0, T2/results/live-final-v1, all72 formal
+jobs and six candidates complete. Final wall1983.849s, formal1979.915s,12compile
+tools,288observerreplays/33888cycles,0newDUTsims/0API. No active process.
+Read T2/results/live-report-v1/report.md (Chinese), audit.json, comparison.json,
+costs.json and CSVs/PNG/PDF plots. Report process55482 exited0; plots inspected.
+Do NOT change frozen code/limits or rerun model calls without a new registration.
+
+- User question: fixed development and hidden final stimulus, does certified egg
+  feedback improve generated SV assertions/monitors? New task, not old stimulus
+  difficulty gate. Separate Claude reference oracle and GPT candidate artifacts.
+- T2/AGENTS.md, README, configs/registration_v1.json and phase1_addendum_v1.json.
+  Registration SHA3f0b7f4ac81494849aa50368c52b1c59fd4396fbf7eee47ccb6f68e6a8e06869.
+  BW8/depth16 sync high reset; stressvariant synthetic redundancy disclosed.
+  public/sfifo.v blanks upstream FORMAL preserving lines; SHA
+  c46c18eb5f35489ed242d0e21fcea01e997c022356a21fae3ccb4f74a72288d0.
+  Untouched upstream->cleanvariant equivalence157/157 proved; not spec proof.
+- Fixed dev lengths9/45/42; heldout61/129/163. Six single-site mutants precreated,
+  all final hidden from model. 96offlineDUTsimulations/7184cycles/16compiles.
+  Correct defined pins12/12 cross-tool agree; mutant19X-sensitive pairs, zero
+  binary contradictions. 400raw DUT counters:22line24branch16expr338toggle.
+  Fresh egg5iterations30classes44nodes; sixZ3rulesunsat; two mapped nontrivial
+  groups/five separate sourcecounts91/161 &96/129/179; two unsupported items.
+- Claude author candidate-v1 and fresh review-v1 completed:21selftests,24indep
+  controls,24correcttracepasses. Reviewer accept_with_scope; P6indirect only,
+  checks includeunknown so deriveddefinite=checks-unknown; INVALID_INPUT partial
+  findings nonauthoritative; driver requirescycle0. Python reference unchanged.
+  Frozen at T2/reference/frozen-v1; checker SHA
+  53cff0d05aa9c48a71aec72cecfba265a13fe4baa2a4d9a72b3cef4d6b201337.
+  reference/evaluation-v3 hasall120cases incl24finite+96sim; two-stateeligible
+  16/18, Icarus15/18. M05twofinaltracesnotactivated; M02/final_boundaryIcarusunknown.
+  Claude2calls totalCLIreported$0.353157; keydeleted. Author never sawRTL/faults.
+- Livefreeze T2/configs/live_freeze_v1.json SHA
+  7f2be65ac1b8013d614c5391b49e6cde2b821dbaca6f3e8bae609e63ed67b912 binds3486files.
+  DO NOT EDIT bound scripts/configs/inputs/tests/evidence whilelive or afterwards.
+  New readonly reports may be added. T2/README and this handoff notbound.
+  gpt-6.1-sol low,3reps/arm6rounds,6slots,32000input8192output120s,1retry.
+  Normal36generation calls, <=1provider count perattempt. No modelsubstitution.
+  Fresh sessionUUIDperarmrep, stateless ownhistory; selectedlastcompilevalid.
+- Fixed passiveSVbody: sixactive/ok outputs, readonlypublicpins, no$syscalls/
+  hierarchy/inputwrites/assume. Separate saved-observation replay cannotchangeDUT.
+  ModelB gets spec+RTL+allfixeddevobservations/all400rawcounters; C addsverified
+  typedguardgroups. C countbasis explicitlybasic; not claimingalluncovered.
+  No referencecode/finaldata/mutants/skills in modelpackets. 25tests pass.
+- Mock-v5/mock-replay-v5 currenthashes each36rounds72compiletools108replays3456cyc;
+  mock-final-v2 288replays33888cyc,0kills/0API. Older mocks retained as development,
+  not statisticalrepeats. pipelineaudit in results/pre-live-pipeline-audit.json.
+- Formaltoolsmoke bmc/prove/cover andwrongpropertyFAIL real. formal_witness.py
+  originally misreadterminalVCDstep asnewstate -> fakefault; preserved+superseded.
+  Fixed decoder requirescompletepublicpins;2cycle and18cyclefull-boundaryCEX
+  oraclePASS correctlycandidatefalsealarm. No GPTchecker edits.
+- COMPLETED (historical command, do not start again):
+  .venv/bin/python test2/scripts/final_score.py --run test2/results/live-v1
+    --preflight test2/results/preflight-v2 --output test2/results/live-final-v1 --formal
+  Allcandidatehasheschecked BEFORE hiddenrows. Fixed12formaljobs/validcandidate
+  (two correctx3modes +sixmutantbmc),depth48/60seconds each. Keep allunknowns.
+  FormalFAIL decoded via same frozenreference; bmcPASSnotproof. Currenthelper
+  labelsdecodedoracleFAIL asreference-confirmedtrace violation, not a universal
+  correctnessclaim; unsupported witness unresolved. No moreClaudeAPI needed now.
+- Postrun reporting script T2/scripts/report_live.py was added AFTER live freeze
+  and is not bound. It may be edited for readonly audit/reporting; frozen runner,
+  scoring, reference and candidates may not be edited. Generation audit already
+  passed at results/live-generation-audit-v1.json. All36 development rounds have
+  zero alarms/unknowns. ALL SIX final sim6/6mutants,16/16two-state and15/15Icarus
+  eligible pairs withzero correct alarms/unknown; allsixslotsactivated. No observed
+  C simulation gain; Btotaltokens360593,C384115 (C+6.523%). MeanROI .0499179334/
+  .0468612111. Activegen+devmean55.1045s/53.7887s, overlap; no significance claim.
+  744708tokens=715301input+29407output; cached/reasoning subsets, not doublecounted.
+  36generation+36countcalls,zero retry. All25unitchecks freshly passed.
+  Formal72:12PASS(allcover),29FAIL(allmutantbmc,29decodedreferenceFAIL),31TIMEOUT.
+  B14/C15counterexamples; bothsame5distinctmutants. B1M02timesout,CthreeM02found;
+  M05all6timesout. All24correctbmc/provetimeout,0unboundedproof. Keep uncertain.
+  Correct-control formal tasks have TIMEOUTs, not proof. Mutant formalFAIL
+  witnesses are checked by frozen reference on decoded traces. CoverFAIL (if any)
+  means not all covers reached withinbound, never assertioncounterexample.
+- COMPLETED report_live.py --run test2/results/live-v1
+  --final test2/results/live-final-v1 --output test2/results/live-report-v1.
+  Produced audit/comparison/costs JSON, round/endpoint/formal/fault-pair/property
+  CSVs, fixedcoverage/equivalentsourcecounts and PNG/PDF plots plus Chinese report.
+  Unknown oracle eligibility and candidate unknown outputs are separate columns.
+  IcarusM02/final_boundaryreferenceunknown retained; M05twofinaltracesunactivated.
+  AllfiveCsourcecounts hit in devboundary; cannotclaim C uniquelyrevealedthem.
+  Uniondev22/22line22/24branch14/16expr218/338toggle; finaltoggle331/338.
+  Fixedcoveragecannotchangewithmonitors; not a coverage-optimization experiment.
+  Auditpassed36prompts+rawbits/usage/freezes; scoresSHA
+  33003b33a7172d29704f85fa84da10bdbb30aebe78b72d400a4f97b73a2ef338.
+- Completed fresh accounting/feedback/freeze audit, perround/final CSV, descriptive
+  report and plots; no positive-result forcing. final-verification.json confirms
+  216mutanttrace evaluations:186referenceFAIL/24PASS/6UNRESOLVED, all186eligible
+  pairsdetected; 10095textfiles scanned withzero key-shapedmatches; keysabsent.
+  Reference report already in
+  T2/results/reference-freeze-report.md; phase1-report historicalpreAPI snapshot.
+  New result-report script can be added, but never edit frozenmeasurement scripts.
+  Primarysimulation suite gatedzero correctalarms/unknown; distinctmutantROI per
+  APIinput+outputtokens, no doublecount cached/reasoning. Scorespersimulator16vs15.
+  Invalidsessions remainwith0kills/recall; no heldoutfeedback forrevision.
+  No commit/push requested. Originalreporesults remainunchanged.
+
+Previous active task COMPLETED: fresh WBXBAR B/C under frozen reference checker.
 Live process47235 finishedexit0; no active process, stagedOpenAIkey deleted.
 Current report docs/wbxbar_reference_bc_2026-11-04.md; root
 results/wbxbar_reference_bc_20261104 (NB below). No further key/API call needed.

@@ -1,0 +1,124 @@
+{
+  "experiment_id": "axis_length_fifo_monitor_v2_task_v2",
+  "date": "2026-11-05",
+  "status": "task_contract_registered_reference_pending",
+  "source_registration_sha256": "beea29730bc3e0f578053454d596ea1825c78836fa59cfd5c6a4a8ebd2e89662",
+  "task_root": "test2/tasks/axis_length_fifo_v1",
+  "public_wrapper": "task_top_v3.sv",
+  "source_revision": "48ff7a7e2ef782cf778d47910cf85835c64b1bce",
+  "public_parameters": {
+    "DATA_WIDTH": 8,
+    "KEEP_ENABLE": 0,
+    "KEEP_WIDTH": 1,
+    "ID_ENABLE": 0,
+    "DEST_ENABLE": 0,
+    "USER_ENABLE": 0,
+    "FRAME_FIFO_DEPTH": 32,
+    "HEADER_FIFO_DEPTH": 8
+  },
+  "min_length": 4,
+  "max_length": 8,
+  "input_lengths": [
+    1,
+    12
+  ],
+  "candidate_live_allowed": false,
+  "reference_calls_allowed": false,
+  "candidate_model_budget": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "arms": [
+      "B2_raw",
+      "C2_semantic"
+    ],
+    "repetitions": 3,
+    "rounds": 6,
+    "input_tokens": 64000,
+    "output_tokens": 8192,
+    "request_timeout_seconds": 120,
+    "max_retries": 1,
+    "compile_timeout_seconds": 60,
+    "replay_timeout_seconds": 15,
+    "property_slots": 6,
+    "source_body_bytes": 16000,
+    "state_bits": 8192
+  },
+  "local_formal_qualification": {
+    "properties": [
+      "reset",
+      "output_stall",
+      "status_stall"
+    ],
+    "modes": [
+      "bmc",
+      "prove",
+      "cover"
+    ],
+    "depth": 24,
+    "timeout_each": 10,
+    "plumbing_controls": {
+      "depth": 3,
+      "timeout_each": 5,
+      "expected": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "jobs": 11,
+    "max_solver_seconds": 100,
+    "solver": "z3",
+    "flatten": true,
+    "scope": "No independent functional reference claim"
+  },
+  "formal_candidate_schedule": {
+    "correct_source": {
+      "slots": 6,
+      "modes": [
+        "bmc",
+        "prove",
+        "cover"
+      ],
+      "depth": 24,
+      "timeout_each": 10
+    },
+    "hidden_faults": {
+      "planned_faults": 12,
+      "slots": 6,
+      "modes": [
+        "bmc"
+      ],
+      "depth": 24,
+      "timeout_each": 5
+    },
+    "total_solver_seconds_cap": 540,
+    "overall_cap": 720,
+    "policy": "Fixed schedule before B/C; unknown/timeout retained; no arm-specific retries; cover/bounded/proof separate"
+  },
+  "strata_before_outcomes": [
+    "boundary_guard",
+    "handshake_reset",
+    "payload_status"
+  ],
+  "hypotheses": [
+    "C may help complete activation/acceptance guards under compound data/status stalls and boundary transitions absent from routine observations",
+    "C may improve correct active conditions and reduce false positives on legal backpressure/reset transitions",
+    "Pure data corruption/order remains a negative-control stratum for combinational guard normalization; no guaranteed C benefit"
+  ],
+  "selection_limits": [
+    "No B/C model outcomes used for source or fault selection",
+    "Previously inspected verilog-axis family, not a new unseen repository",
+    "Only whole C feedback-package effect without token-matched placebo; actual tokens measured",
+    "Routine and compound strata both reported even if no C advantage"
+  ],
+  "reference_budget": {
+    "author_calls": 1,
+    "fresh_review_calls": 1,
+    "model": "claude-opus-5-5",
+    "max_usd_per_call": 4,
+    "timeout_seconds_per_call": 600,
+    "stage_key": "build/private/anthropic-crosscheck-key"
+  },
+  "stop_policy": "No experimental generation until independent checker review, controls, hidden observability, fixed input/source/counter manifests, prompt isolation and every-round snapshots pass. Reference stage separately enabled only after its spec/interface packet is frozen.",
+  "scope_change_reason": "Direct core violated status stall stability under legal inputs; counterexample physically reproduced by both simulators. Reject that scope. Qualify the original upstream FIFO wrapper with unchanged independent backpressure contract; no DUT patch or weakened assertion.",
+  "budget_change_reason": "More original RTL/source counters in the FIFO hierarchy; use equal64k input caps for B/C, fixed before any candidate calls, not an observed C outcome."
+}

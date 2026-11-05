@@ -1,0 +1,17 @@
+{
+  "accepted_scope": "Accepted as the specification reference for registered, driver-generated, valid fixed traces (cycle 0 start, consecutive cycles, legal inputs). It checks P1\u2013P5 on every eligible pre/post public-I/O observation. Acceptance is checked only indirectly through P2\u2013P5. Verdicts PASS/FAIL/UNRESOLVED/INVALID_INPUT follow the stated precedence. These are finite-trace results only: no claim of complete DUT correctness, no direct P6 event attribution, and Icarus-UNRESOLVED fault rows are not confirmed detections.",
+  "cycle_label_scope": "Frozen driver/parser requires zero then consecutive cycles; reference alone accepts arbitrary consecutive labels",
+  "invalid_input_policy": "Retain raw partial findings for audit, exclude from authoritative scoring",
+  "limitations": [
+    "Finite-trace reference validation only; no complete specification proof",
+    "Selftests share authorship; independence relies on control fixtures and separate review session",
+    "Review saw full finite controls but summaries of DUT/mutant results",
+    "No changes to Claude checker, selftests, contract or property metadata"
+  ],
+  "optional_controls": "Four new independent controls all passed; fixed model inputs/mutants unchanged",
+  "required_reporting_changes": {
+    "P6": "indirect only; never independent activated property or event",
+    "checks": "author_checks, unknown_comparisons, definite_comparisons separately recorded",
+    "eligibility": "per simulator; M02/final_boundary is not an Icarus confirmed detection"
+  }
+}

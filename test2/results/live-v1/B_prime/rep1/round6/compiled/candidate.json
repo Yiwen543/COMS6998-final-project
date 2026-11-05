@@ -1,0 +1,29 @@
+{
+  "body": "reg initialized = 1'b0;\nreg reset_applied = 1'b0;\nreg [4:0] expected_fill = 5'd0;\nreg [7:0] expected_words [0:15];\ninteger k;\nwire take_read = i_rd && (expected_fill != 5'd0);\nwire take_write = i_wr && (expected_fill < 5'd16);\n\n// Acceptance depends on the specification queue, never DUT flags.\nalways @(posedge i_clk) begin\n    if (i_reset) begin\n        initialized <= 1'b1;\n        expected_fill <= 5'd0;\n        reset_applied <= 1'b1;\n    end else begin\n        reset_applied <= 1'b0;\n        if (initialized) begin\n            case ({take_write, take_read})\n                2'b10: expected_fill <= expected_fill + 5'd1;\n                2'b01: expected_fill <= expected_fill - 5'd1;\n                default: expected_fill <= expected_fill;\n            endcase\n            if (take_read) begin\n                for (k = 0; k < 15; k = k + 1)\n                    expected_words[k] <= expected_words[k+1];\n            end\n            if (take_write) begin\n                if (take_read)\n                    expected_words[expected_fill - 5'd1] <= i_data;\n                else\n                    expected_words[expected_fill] <= i_data;\n            end\n        end\n    end\nend\n\nassign active[0] = initialized;\nassign active[1] = initialized;\nassign active[2] = initialized;\nassign active[3] = initialized && (expected_fill != 5'd0);\nassign active[4] = initialized;\nassign active[5] = initialized && reset_applied;\n\nassign ok[0] = (o_fill === expected_fill);\nassign ok[1] = (o_full === (expected_fill == 5'd16));\nassign ok[2] = (o_empty === (expected_fill == 5'd0));\nassign ok[3] = (expected_fill == 5'd0) ? 1'b1 : (o_data === expected_words[0]);\nassign ok[4] = ((o_fill <= 5'd16) === 1'b1);\nassign ok[5] = (o_fill === 5'd0) && (o_full === 1'b0) && (o_empty === 1'b1);\n",
+  "properties": [
+    {
+      "description": "At every eligible pre- and post-edge observation, occupancy equals the independent specification queue count. Reset synchronously clears it. Acceptance uses pre-edge expected occupancy: full rejects writes and empty rejects reads, including simultaneous requests.",
+      "id": "P0"
+    },
+    {
+      "description": "Full is known and asserted exactly when the independent expected queue contains 16 words, irrespective of current requests.",
+      "id": "P1"
+    },
+    {
+      "description": "Empty is known and asserted exactly when the independent expected queue contains zero words, irrespective of current requests.",
+      "id": "P2"
+    },
+    {
+      "description": "Whenever the expected queue is nonempty, output equals its oldest accepted unread word. Checks data integrity and FIFO ordering through simultaneous transfers, rejected operations, arbitrary transfer counts, and reset recovery. Empty output data is unrestricted.",
+      "id": "P3"
+    },
+    {
+      "description": "At every eligible observation, reported occupancy is known and within the legal range zero through 16.",
+      "id": "P4"
+    },
+    {
+      "description": "After each synchronous reset edge and until the next edge, occupancy is zero, full is deasserted, and empty is asserted. Reset need not act before its rising edge, and empty output data is unrestricted.",
+      "id": "P5"
+    }
+  ]
+}

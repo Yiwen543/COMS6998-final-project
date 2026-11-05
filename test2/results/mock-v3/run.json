@@ -1,0 +1,123 @@
+{
+  "config": {
+    "arms": [
+      "B_prime",
+      "C_prime"
+    ],
+    "causality_limits": [
+      "C has extra semantic tokens; equal caps do not equal actual prompt lengths",
+      "no length placebo in this B-prime/C-prime pilot",
+      "tiny sample descriptive only",
+      "equivalent implementation expressions do not prove specification correctness"
+    ],
+    "compile_timeout_seconds": 60,
+    "coverage_policy": "precompute fixed DUT-only raw counters with original identities and counts; candidate monitor never changes their values or denominator; initialization/reset included consistently and reported",
+    "development": {
+      "feedback": "compile errors, candidate activation/failure/unknown on fixed correct-control traces only; no mutant or held-out outcome",
+      "traces": [
+        "basic",
+        "boundary",
+        "wrap_reset"
+      ]
+    },
+    "eligibility": "fixed final stimulus activates changed RTL behavior and independent reference reports a public-I/O specification violation; empirical divergence alone is insufficient",
+    "experiment_id": "fifo_monitor_generation_v1",
+    "formal": {
+      "assumptions": [
+        "initial sampled edge reset",
+        "reset implies !wr && !rd"
+      ],
+      "depth": 48,
+      "exposure": "final evaluation only",
+      "failure_policy": "UNKNOWN/ERROR/TIMEOUT retained; bounded PASS never reported as unbounded proof",
+      "modes": [
+        "bmc",
+        "prove",
+        "cover"
+      ],
+      "solver": "z3",
+      "timeout_seconds_per_task": 60
+    },
+    "heldout": {
+      "release": "only after all six final candidate hashes frozen; no further candidate revision",
+      "traces": [
+        "final_boundary",
+        "final_wrap_reset",
+        "final_mixed"
+      ]
+    },
+    "invalid_candidate_policy": "retain attempts and costs; no last-minute repair using final outcomes; missing final candidate scores zero valid kills with invalid status",
+    "max_count_requests_per_attempt": 1,
+    "max_input_tokens": 32000,
+    "max_monitor_source_bytes": 16000,
+    "max_monitor_state_bits": 8192,
+    "max_output_tokens": 8192,
+    "max_retries": 1,
+    "model": "gpt-6.1-sol",
+    "monitor_replay_timeout_seconds": 15,
+    "oracle_role": "claude-opus-5-5 specification-only author plus fresh read-only review; isolated from candidate sessions",
+    "primary_metrics": [
+      "suite soundness on independently validated correct controls",
+      "observable mutant recall gated by zero correct-control false alarms",
+      "eligible mutant-trace detection rate",
+      "valid distinct mutant kills per 1000 API input-plus-output tokens"
+    ],
+    "property_slots": 6,
+    "question": "Does certified e-graph feedback improve LLM monitor soundness, observable-fault detection and cost under fixed stimuli?",
+    "reasoning_effort": "low",
+    "reference_call_limits": {
+      "cli_max_budget_usd_per_call": 4,
+      "initial_author_calls": 1,
+      "initial_review_calls": 1,
+      "timeout_seconds_per_call": 600
+    },
+    "registered_date": "2026-11-04",
+    "repetitions": 3,
+    "rounds": 6,
+    "scope": {
+      "BW": 8,
+      "LGFLEN": 4,
+      "OPT_ASYNC_READ": 1,
+      "OPT_READ_ON_EMPTY": 0,
+      "OPT_WRITE_ON_FULL": 0,
+      "depth": 16,
+      "ip": "ZipCPU sfifo disclosed equivalence stress variant",
+      "semantics": "binary/two-state; empty data unspecified; synchronous active-high reset; no read/write during reset"
+    },
+    "secondary_metrics": [
+      "per-property activation and vacuity",
+      "per-property false alarms",
+      "compile validity",
+      "raw ungated mutant alarms",
+      "unresolved rate",
+      "formal soundness, counterexamples and cover reachability",
+      "wall time and compile/replay/formal executions"
+    ],
+    "selection_policy": "use existing FIFO without conditioning on new B/C outcomes; exploratory one-IP synthetic-redundancy study, not independent natural-IP replication",
+    "session_policy": "fresh independent session per arm/repetition; exact same development artifacts; rotate arm order; no provider model substitution",
+    "source_policy": "upstream FORMAL sections blanked while preserving line numbers; no functional RTL change; prove correspondence and retain transformation manifest",
+    "status": "registered_before_model_calls_not_live_frozen",
+    "timeout_seconds": 120
+  },
+  "config_sha256": "3f0b7f4ac81494849aa50368c52b1c59fd4396fbf7eee47ccb6f68e6a8e06869",
+  "mode": "mock",
+  "preflight_summary_sha256": "c6b89b839d25caec5070d9f11851a1d1044f2ca4d8be75f3967a35afd91b06db",
+  "provider_conversation": "none; stateless explicit own-history only",
+  "provider_tools": [],
+  "replay_origin": null,
+  "runner_sha256": "2eaa45bd314465dcf468eb6e9f605c77b0bcccd05dcd23d1d626435c6c6d39a6",
+  "session_ids": {
+    "B_prime/1": "b0dcd2e0-de23-4745-a2e0-f46507e5d92e",
+    "B_prime/2": "5915d6c8-3ea2-453a-8486-b2a13d7a70fc",
+    "B_prime/3": "a90acad7-8ac5-4ac2-a388-6d3609202461",
+    "C_prime/1": "89b25d00-434d-4480-bbea-3b45b78d37f7",
+    "C_prime/2": "e5e23c01-5122-43ff-bec9-297bd247c5fb",
+    "C_prime/3": "60dc2e1d-e346-482e-a248-c2eae5d51ad3"
+  },
+  "shared_preflight": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/results/preflight-v2",
+  "source_sha256": {
+    "scripts/pilot_model.py": "e3d67ac3c6897fe6969e96513e7964af0244b7eb3055e2be26726d35472c8b33",
+    "test2/scripts/feedback.py": "d4644d5a8c50a87a7bac3204421060224ddf64106d244a5a330563571262a5c6",
+    "test2/scripts/monitor.py": "c3bf997e91a9531763f13c07758e1d71aa8dbb20917e52ddc6f56b162f6f8db9"
+  }
+}
