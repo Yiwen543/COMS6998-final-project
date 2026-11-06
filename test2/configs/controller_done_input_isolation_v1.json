@@ -1,0 +1,52 @@
+{
+  "API_calls_allowed": false,
+  "actions": 150,
+  "actual_new_cases": 1,
+  "candidate_replay_cap": 24,
+  "compile_seconds": 60,
+  "expected_scope": "Correct source PASS/zero unknown; blocked control only definite final unaccepted input FAIL plus retained drain_tail_short UNKNOWN, no earlier safety or response debt",
+  "files": {
+    "test2/scripts/controller_done_input_isolation_v1.py": "2fd9eab2229d37e7bbb2f860ee78367917720357fb3409a8075051bd4a364a26",
+    "test2/tasks/axis_length_done_v1/public/driver.sv": "589ade00da15ae6c9383bd4eb6decda7537fa23e13e6ca59edf97c4e2e0ed56c",
+    "test2/tasks/axis_length_done_v1/qualification/input-completion-isolation-v1/physical-control-v1/actions.json": "2be1435fda582b321fe79de9fe5657a4b2c4f283890df926828dad530790a4b5",
+    "test2/tasks/axis_length_done_v1/qualification/input-completion-isolation-v1/physical-control-v1/blocked_input_control.v": "34c046160ecc44d552414e31ebeb71ca98e81e2f2cacdb7baad3899ee720d430",
+    "test2/tasks/axis_length_fifo_v1/public/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+    "test2/tasks/axis_length_fifo_v1/public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+    "test2/tasks/axis_length_fifo_v1/public/rtl/axis_frame_length_adjust_fifo.v": "26f1636f5d4f219ca1dcf336b45b636e74a0977826ee51cdcab4e5c2d136b7ce",
+    "test2/tasks/axis_length_fifo_v1/public/task_top_v3.sv": "db55dbee92a43f461d28f9c02a15d0eaf32c0c1cab2cbcc4ab85f0f3c91aab5e",
+    "test2/tasks/axis_length_fifo_v1/reference/frozen-v2/checker.py": "b44f32b27c11b968d23fd93ecf8b0d714e773460fc0b505d89adf23df3cd7dee"
+  },
+  "independent_new_model_trials": 0,
+  "kind": "Post-hoc diagnostic of already frozen candidates; composite physical RTL obligation control, not a new natural mutation or independent LLM trial",
+  "physical_build_cap": 4,
+  "physical_simulation_cap": 4,
+  "reason": "Original input stratum all overlaps earlier safety and unavoidable quiet-tail unknown; preserve all old outcomes",
+  "release_sha256": "62a6e60adfed962629404d515045ce08fbbf86671c05011a2e874febd67b0017",
+  "seed": 6999401,
+  "simulate_seconds": 15,
+  "source_changes": [
+    {
+      "after": "assign s_axis_tready = 1'b0;",
+      "before": "assign s_axis_tready = s_axis_tready_reg;",
+      "occurrences": 1
+    },
+    {
+      "after": "m_axis_tvalid_int = s_axis_tvalid && s_axis_tready;",
+      "before": "m_axis_tvalid_int = s_axis_tvalid;",
+      "occurrences": 2
+    },
+    {
+      "after": "m_axis_tvalid_int = s_axis_tvalid && s_axis_tlast && s_axis_tready;",
+      "before": "m_axis_tvalid_int = s_axis_tvalid && s_axis_tlast;",
+      "occurrences": 1
+    }
+  ],
+  "status": "REGISTERED_BEFORE_NEW_PHYSICAL_RUNS",
+  "strict_qualification": [
+    "Both simulators physically agree",
+    "No earlier sampled safety failure on blocked source",
+    "No response completion failure on blocked source",
+    "Final offered-valid fail present",
+    "Unavoidable short-tail unknown retained"
+  ]
+}
