@@ -11,8 +11,11 @@ P20 independently returned PASS_WITH_LIMITS (review SHA256
 see `docs/audits/agent_bridge_2026-11-06/P2_P19_v2/acceptance.json`.
 Both pages and the figure were actually inspected by maker, peer and coordinator.
 The official 10pt/two-column/Letter class and four sections are preserved;
-source ZIP and data arithmetic pass. The 349 original P2 files and 15 input
-bindings remain unchanged. No research experiment, model/API call or install
+source ZIP and data arithmetic pass. The 349 original P2 files and 13 immutable
+source bindings remain unchanged. Two authoring-context HANDOFF/PROJECT_STATUS
+snapshots are preserved byte-for-byte under P2_P19_v2/before-*.md; see
+`P2_P19_v2/source-context-preservation.json` for the version mapping.
+No research experiment, model/API call or install
 was performed to update this paper; LaTeX used existing cached resources.
 
 P19's completed 1-session/arm x3-round, 6-call retest is the main figure.
