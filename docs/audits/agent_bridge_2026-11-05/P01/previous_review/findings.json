@@ -1,0 +1,61 @@
+[
+  {
+    "id": "F1",
+    "severity": "P1",
+    "kind": "current formal representation limitation",
+    "source": "test2/results/controller-done-live-v2/C2_semantic/rep1/round6/compiled/candidate.sv",
+    "line": 73,
+    "detail": "X detector eqx maps to setundef 1-bit anyseq. Native correct P4 FAIL not reproduced physically. Witness bridge preserves unresolved.",
+    "evidence": [
+      "test2/results/controller-done-live-formal-v2/C2_semantic/rep1/correct/P4-bmc/work/model/design_smt2.smt2:85",
+      "test2/results/controller-done-live-formal-v2/C2_semantic/rep1/correct/P4-bmc/work/model/design_smt2.smt2:1229",
+      "test2/results/controller-done-live-formal-v2/C2_semantic/rep1/correct/P4-bmc/physical/result.json:4"
+    ],
+    "recommendation": "Disclose concrete frontend limitation; stratify native correct FAIL vs physical mismatch. Preserve all fixed results; qualify any future frontend as new version."
+  },
+  {
+    "id": "F2",
+    "severity": "P2",
+    "kind": "historical incorrect unresolved flag",
+    "source": "test2/scripts/controller_obligations.py",
+    "line": 132,
+    "count": 252,
+    "detail": "7 controls x 36 rounds have reference FAIL plus oracle unknown but unresolved=false. v4 case core already includes oracle unknown.",
+    "recommendation": "Add a versioned audit overlay; never rewrite frozen matrix or scores."
+  },
+  {
+    "id": "F3",
+    "severity": "P2",
+    "kind": "historical audit coverage gap",
+    "source": "test2/scripts/controller_offline_verify.py",
+    "line": 49,
+    "detail": "Acceptance verifies replay hashes/completeness, not matrix classification. No acceptance bindings for matrix, labels, fixtures. F2 still accepted_with_scope.",
+    "recommendation": "Bind all classification inputs/outputs and reclassify saved raw MON bits in new audit."
+  },
+  {
+    "id": "F4",
+    "severity": "P2",
+    "kind": "current audit coverage gap",
+    "source": "test2/scripts/controller_done_live_audit_v2.py",
+    "line": 175,
+    "detail": "Witness JSON equality plus cost/hash collection does not independently rebind raw VCD, literal inputs, two simulator rows, selected alarm, prefix/reference classification. No actual raw inconsistency established.",
+    "recommendation": "New analysis-only audit over saved evidence; no formal/physical rerun."
+  },
+  {
+    "id": "F5",
+    "severity": "P2",
+    "kind": "current ledger audit coverage gap",
+    "source": "test2/scripts/controller_done_live_audit_v2.py",
+    "detail": "Does not require generation_returned event-to-call response_id/usage/model/tier one-to-one correspondence. Independent check of current 36 records matched.",
+    "recommendation": "Add event-to-call bijection checks in new analysis version."
+  },
+  {
+    "id": "F6",
+    "severity": "P3",
+    "kind": "potential budget comparability limitation",
+    "source": "test2/scripts/controller_done_witness_v3.py",
+    "line": 149,
+    "detail": "Shared source/simulator cache charges cold compile only to first triggering final within per-final 720s cap. 26 saved builds total about30.548s. No observed NOT_RUN_TOTAL_CAP at earlier454-job snapshot; no demonstrated outcome impact.",
+    "recommendation": "Future registration should prebuild or use identical cache conditions and separate shared preprocessing cost."
+  }
+]

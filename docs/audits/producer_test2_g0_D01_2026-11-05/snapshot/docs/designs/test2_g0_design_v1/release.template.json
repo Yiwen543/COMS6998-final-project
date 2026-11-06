@@ -1,0 +1,117 @@
+{
+  "document_kind": "NON_EXECUTABLE_FIELD_DESCRIPTOR_TEMPLATE",
+  "status": "TEMPLATE_ONLY_NOT_A_VALID_RELEASE",
+  "scope": "DESIGN_PREPARATION_ONLY",
+  "payload_is_not_a_runtime_instance": true,
+  "permissions": {
+    "implementation_allowed": false,
+    "fixture_execution_allowed": false,
+    "native_allowed": false,
+    "API_allowed": false,
+    "count_allowed": false,
+    "data_generation_allowed": false,
+    "candidate_generation_allowed": false,
+    "paid_allowed": false,
+    "live_allowed": false,
+    "entrypoint": null
+  },
+  "real_run_id": null,
+  "actual_artifacts": null,
+  "usable_grant": null,
+  "actual_result": null,
+  "field_descriptors": [
+    {
+      "field_name": "input_manifest_reference",
+      "proposed_type": "path + SHA256",
+      "required_when": "Future release only",
+      "placeholder": "<PLACEHOLDER:INPUT_MANIFEST_REFERENCE:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "Binds a separately authorized actual immutable input manifest."
+    },
+    {
+      "field_name": "all_round_inventory",
+      "proposed_type": "IDs + immutable prompt/response/candidate/feedback references",
+      "required_when": "Before any future hidden evaluation",
+      "placeholder": "<PLACEHOLDER:ALL_ROUND_INVENTORY:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "NOT_RUN and invalid rounds remain in inventory; no actual candidates here."
+    },
+    {
+      "field_name": "request_and_terminal_inventory",
+      "proposed_type": "request/event IDs + SHA256",
+      "required_when": "Every issued future request",
+      "placeholder": "<PLACEHOLDER:REQUEST_AND_TERMINAL_INVENTORY:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "One-to-one binding; preserve errors and missing terminal evidence."
+    },
+    {
+      "field_name": "persistent_halt_state",
+      "proposed_type": "boolean + halt event/reason references",
+      "required_when": "All future releases",
+      "placeholder": "<PLACEHOLDER:PERSISTENT_HALT_STATE:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "After halt no new retry/round/session requests or orphan dispatch."
+    },
+    {
+      "field_name": "raw_native_physical_monitor_reference_chain",
+      "proposed_type": "native mode + raw artifact links + selected/reference scope",
+      "required_when": "Only where actually executed and permitted",
+      "placeholder": "<PLACEHOLDER:RAW_NATIVE_PHYSICAL_MONITOR_REFERENCE_CHAIN:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "No VCD/transport/log/rows/HEX/MON/reference instance in this template."
+    },
+    {
+      "field_name": "integrity_outcome",
+      "proposed_type": "PASS_WITH_SCOPE/REJECT/UNRESOLVED + scope + evidence",
+      "required_when": "Future implemented validation only",
+      "placeholder": "<PLACEHOLDER:INTEGRITY_OUTCOME:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "Template parsing cannot populate a PASS outcome."
+    },
+    {
+      "field_name": "scientific_attribution",
+      "proposed_type": "NOT_EVALUATED/UNRESOLVED/SCOPED_OBSERVATION + selected/reference boundary",
+      "required_when": "Any science claim",
+      "placeholder": "<PLACEHOLDER:SCIENTIFIC_ATTRIBUTION:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "Not monitor/native/DUT/128-cycle correctness PASS."
+    },
+    {
+      "field_name": "raw_denominators",
+      "proposed_type": "raw fault/pair/coverage counts + unknown/unobserved/overlap inventory",
+      "required_when": "Future comparison/report",
+      "placeholder": "<PLACEHOLDER:RAW_DENOMINATORS:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "Behavioral groups and paper controls are not RTL coverage or real DUT faults."
+    },
+    {
+      "field_name": "token_usage",
+      "proposed_type": "knownness + integer or null + raw provider evidence",
+      "required_when": "Actual future returned usage",
+      "placeholder": "<PLACEHOLDER:TOKEN_USAGE:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "Missing core/subset usage is UNKNOWN, never filled0; subset not added twice."
+    },
+    {
+      "field_name": "calls_counts_retries",
+      "proposed_type": "actual issuance counts + unknown terminal inventory",
+      "required_when": "Future request ledger",
+      "placeholder": "<PLACEHOLDER:CALLS_COUNTS_RETRIES:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "Budget reserve is not actual spend; failed requests retained."
+    },
+    {
+      "field_name": "compile_physical_replay_formal_cost",
+      "proposed_type": "knownness + value or null + source per category",
+      "required_when": "Actual future tool work",
+      "placeholder": "<PLACEHOLDER:COMPILE_PHYSICAL_REPLAY_FORMAL_COST:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "Separate compilations, physical cycles, monitor replay, native modes and wall time."
+    },
+    {
+      "field_name": "count_fee_and_invoice",
+      "proposed_type": "KNOWN/UNKNOWN + value or null + billing provenance",
+      "required_when": "Whenever reporting money",
+      "placeholder": "<PLACEHOLDER:COUNT_FEE_AND_INVOICE:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "No known charge or zero invoice is inferred here."
+    },
+    {
+      "field_name": "independent_acceptance_sidecar",
+      "proposed_type": "review identity + manifest/source/result SHA256 + scope",
+      "required_when": "Only after independent review of actual new artifacts",
+      "placeholder": "<PLACEHOLDER:INDEPENDENT_ACCEPTANCE_SIDECAR:NOT_CREATED_OR_NOT_AUTHORIZED>",
+      "note": "Never changes old snapshots or grants next-stage execution."
+    }
+  ],
+  "runtime_unknown_value_rule": "In a future real record, null requires explicit UNKNOWN/NOT_EVALUATED/NOT_INCURRED evidence status; this descriptor template has no observations or bill.",
+  "immutable_output_rule": "Future output namespace must be unused; no overwrite/delete/merge of prior result directories."
+}

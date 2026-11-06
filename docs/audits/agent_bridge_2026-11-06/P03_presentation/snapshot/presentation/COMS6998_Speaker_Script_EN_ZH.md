@@ -1,0 +1,83 @@
+# COMS6998 Midterm — six-slide rehearsal script
+English is the timed presentation. Chinese paragraphs are preparation notes only. Target 5:30; rehearse below 6:00.
+## Team allocation
+
+| Speaker | Slides | Target | Preparation responsibility |
+|---|---|---|---|
+| Chiyu Chen | 1–2 | 1:40 | Research question and architecture; maintain stimulus/monitor distinction |
+| Mingyuan Zheng | 3–4 | 1:50 | Fair comparison and queue graph; check axes and denominators |
+| Yiwen Chen | 5–6 | 2:00 | Latest test2 evidence, formal limits and P2 feedback |
+
+These are presentation/preparation assignments, not claims of past implementation ownership.
+
+## Slide 1 — Chiyu Chen — 0:00–0:45 (45s)
+
+### English script
+
+Our project asks whether semantic feedback can help large language models verify RTL more efficiently and correctly. Raw coverage tells us which source points remain unhit, but it may not explain their relationship. An E-graph compactly groups expressions that are equivalent within a checked semantic scope. Our proposal is to add those relationships to the feedback loop, then measure coverage efficiency, monitor correctness, and fault detection. We keep two distinctions clear: coverage is not correctness, and a semantic group never replaces the original RTL coverage counters.
+
+### 中文讲解（不计入演讲）
+
+本页讲立意：LLM能生成验证代码，但原始覆盖反馈可能只有“哪里没命中”，缺少语义关系。E-graph提供经检查的等价表达关系。研究问题是它是否真正提高效率或质量，而不是预先认定它有效。三个指标属于研究目标，不能把等价类数量当成RTL覆盖率。
+
+Preparation: Question, motivation and proposal; do not promise a demonstrated general improvement.
+
+## Slide 2 — Chiyu Chen — 0:45–1:40 (55s)
+
+### English script
+
+Here is our implemented prototype. Python coordinates frozen specifications and RTL, GPT generation, compilation, tool checks, and feedback for the next round. A Rust egg pipeline builds restricted E-graph groups; typed guards and Z3 checks protect widths and activation context. We study two different tasks. The original track generates stimulus sequences and measures actual RTL coverage. Test two holds stimuli fixed and generates passive SystemVerilog monitors for hidden faults. Icarus and Verilator supply physical simulation, while Yosys and SMT supply formal diagnostics. Claude's independent reference remains separate from GPT's candidates. Our equivalence checks cover restricted two-state guards, not general sequential or four-state correctness. Mingyuan will explain the comparison.
+
+### 中文讲解（不计入演讲）
+
+本页讲“实际做出来了什么”。区分两条任务：原始track让LLM生成刺激；test2固定刺激，只让LLM生成旁路监视器。Claude是独立参考，GPT是候选生成者，不能互相代替。E-graph重写保留位宽、有符号性及激活guard；两态组合等价不能推出四态或时序正确。交棒给Mingyuan。
+
+Preparation: Prototype and tool chain; distinguish stimulus generation from monitor generation.
+
+## Slide 3 — Mingyuan Zheng — 1:40–2:35 (55s)
+
+### English script
+
+Our baseline B receives raw coverage and common development feedback. C receives everything in B plus verified E-graph guard groups. In the latest test-two cohort, we fixed the DUT, Claude checker, stimuli, and model: gpt-six-point-one-sol with low reasoning. Each arm had three independent sessions and six rounds, with the same input and output caps. We generated and froze all thirty-six candidates before hidden grading. Hidden faults, evaluation traces, and reference code never entered candidate prompts. We also saved actual token usage, compilation failures, and unresolved outcomes. Equal caps do not mean equal spending. Without a token-matched placebo, this cohort compares the complete feedback package, not pure semantic causation.
+
+### 中文讲解（不计入演讲）
+
+本页讲公平性和数据隔离。每组3会话×6轮，不根据C分数临时加预算或改目标；全部逐轮候选先冻结，再隐藏评分。同样的上限不代表实际消耗相同。此前研究有其他基线，但本次最新monitor批次只有B/C，因此不能把差异单独归因于语义信息。
+
+Preparation: Fair comparison, hidden-set isolation and interpretation of equal resource caps.
+
+## Slide 4 — Mingyuan Zheng — 2:35–3:30 (55s)
+
+### English script
+
+Our first result is an exploratory stimulus-generation pilot on one queue IP in two RTL forms, using gpt-six-sol. The graph shows mean input-plus-output tokens to reach all forty-one emitted line or case points. B versus C used about seventy-five versus seventy-four thousand tokens on the original, and seventy versus sixty-six thousand on the syntax variant. C reached the target one round earlier in two of six index-matched comparisons; four tied. All twelve runs ended at the same line, branch, and toggle coverage shown below. This is a small, mixed efficiency signal, not a causal result: the selected guard members were already hit after round one. Yiwen will present test two.
+
+### 中文讲解（不计入演讲）
+
+本页图表不是最终覆盖率对比，而是达到41/41目标的平均实际tokens。两种RTL形式都来自同一个queue IP，并非两个独立IP。C有2次早一轮，4次持平；12个运行的最终覆盖一样。toggle仍有64/408未命中，不能称不可达。guard成员第一轮已经命中，无法证明早到目标是E-graph语义造成。交棒给Yiwen。
+
+Preparation: Queue evidence and its limited attribution; explain axes and denominators.
+
+## Slide 5 — Yiwen Chen — 3:30–4:40 (70s)
+
+### English script
+
+In the latest fixed-stimulus controller study, all six final monitors passed correct-DUT controls and detected all eleven observable fault types. The twelfth type remained unobserved and stays in the raw denominator. Across all rounds, B used about seven hundred forty-one thousand tokens and C about eight hundred fourteen thousand: nine-point-eight-six percent more, with no extra final fixed-trace kills. Formal results need a separate interpretation. Of five hundred forty checks, three hundred sixty-one timed out. The fail modes shown here must not be pooled as detected faults. Ninety-four BMC failures yielded twenty physical alarm reproductions and seventy-four unresolved witnesses. C covered more mutant types in an earlier-prefix diagnostic, seven versus three, but this is not same-sample oracle confirmation or a proof of one-hundred-twenty-eight-cycle completion.
+
+### 中文讲解（不计入演讲）
+
+本页以最新trace_done真实批次为准，不使用旧6/6批次的6.523%代替。B=740643，C=813649，总tokens差9.8571%。最终正确DUT控制通过不等于全域正确。104个native FAIL分为94 BMC、7 prove、3 cover，不能合并当作检出。20个物理报警复现只对应较早前缀参考FAIL；74个未复现全来自C，且未记录oracle verdict，不能说成已确认误报。B3/C7只作次级线索。
+
+Preparation: Latest endpoint, realized cost and formal limits; preserve all unresolved evidence.
+
+## Slide 6 — Yiwen Chen — 4:40–5:30 (50s)
+
+### English script
+
+The main contribution so far is a working, reproducible pipeline with frozen candidates, independent grading, replay, and explicit coverage and cost accounting. The evidence does not yet establish a general E-graph advantage: the queue signal is small, and the latest monitor endpoint is saturated. For the November ninth P-two submission, we propose three steps. First, use unsaturated held-out temporal obligations that separate safety from finite completion. Second, add a token-matched placebo to isolate semantic value. Third, qualify the formal-to-physical mapping, especially four-state behavior, while preserving unknowns. Controlled R-zero, R-one, and R-two recovery comparisons remain planned. Our feedback question is: should we prioritize temporal completion, or the semantics-only ablation?
+
+### 中文讲解（不计入演讲）
+
+本页收束已实现与计划中内容：可运行基础设施已经有证据；“E-graph普遍更好”尚未证实。下一步先解决评分天花板和无法隔离的完成性，再做token匹配placebo及形式/物理语义映射资格。R0无checkpoint、R1有checkpoint全重启、R2选择回滚仍属拟议比较；已有冻结/检查点不等于完成了受控恢复实验。最后向课堂要具体P2方向反馈。
+
+Preparation: Analysis, honest limits, proposed Nov 9 work and explicit classroom feedback request.

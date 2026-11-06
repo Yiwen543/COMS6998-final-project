@@ -1,0 +1,307 @@
+{
+  "phase": "P11_G1_E01_FAILURE_AND_RESOURCE_AUDIT",
+  "status": "CHANGES_REQUIRED",
+  "evidence_integrity_status": "PASS_WITH_LIMITS",
+  "qualification_status": "BLOCKED",
+  "qualification_result": "NOT_QUALIFIED_SETUP_SUPERVISION_ERROR",
+  "conclusion": "E01失败/资源/冻结/停止记录一致且诚实；仅首setup派发后因监控PermissionError halt，16QC实际全NOT_RUN。当前源/环境组合存在后续执行兼容性阻塞，需reviewable新版本或明确权限方案及新的执行决定；失败记录本身不需改写或补跑。",
+  "metadata_closure": "Coordinator may close acceptance of E01 as a preserved failed attempt with limits,without declaring G1 qualification or repairing historical evidence. Overall CHANGES_REQUIRED concerns future execution readiness.",
+  "input_identity": {
+    "phase_packet_sha256": "a3bf1e0685f0a369a9e6e125bee7f5c5bb6c6634e1d7093cbb7423c72a92507b",
+    "producer_phase_sha256": "6fd9815afc1d8ae58cb6764ed3f1f40ec85ca49c2320751b1b6421cad4a3cd14",
+    "producer_manifest_sha256": "61144719d65b06a3feab6fa1abb7f05b065fb136a1993b093912ca15188f1116",
+    "accepted_R02_manifest_sha256": "7c16e5020ab6212fbd66bdd57ecb272bef56e1bfc6ce4362a661960d331fb201",
+    "accepted_P10B_review_sha256": "864e76e168db17878e29bbf1d580b546620497acf269b3dcb34a144775c460dc",
+    "registration_sha256": "85185519c5a6e2a8eaaf843b5b27c9cc312ada2fc8c44af6f915368759d98268",
+    "source_manifest_sha256": "fe972d2863b857ef0deb956df468ad3866301b7349d01d7f08275b6c1e54ffea",
+    "execution_receipt_sha256": "9a6dfd949c54e1a159ff4b3e8e97999edc306c8dcac3cf3b233785a29de0dd95",
+    "user_grant_sha256": "bf3da44d7cda9eadfabebf82b23271854465942a3814f36b90789f7e715575ab",
+    "pool_sha256": "6da4346144d65356f57c5762058675f1acca9f1dad4ee8599c889dc49e1a7400",
+    "external_postexecution_diagnostic_sha256": "5d030419c5c44627f58e74262a636afc7f0bff539403663675b6743dd2400134",
+    "full_manifest": "input-manifest.json",
+    "full_input_manifest_sha256": "c6a67db541407f86201db96ecf2bc0b368b9f7aeae208637ad8f2c24bae36b79"
+  },
+  "evidence_findings": [],
+  "findings": [
+    {
+      "id": "P11-R1",
+      "severity": "P2",
+      "material": true,
+      "blocking_future_execution": true,
+      "historical_evidence_repair_required": false,
+      "category": "OBSERVED_ENVIRONMENT_MONITOR_DEPENDENCY_AND_FATAL_PROPAGATION",
+      "title": "best-effort PID inventory 被当作致命执行依赖",
+      "paths": [
+        "test2/g1_v2/runtime.py:18",
+        "test2/g1_v2/runtime.py:42",
+        "test2/g1_v2/runtime.py:56",
+        "test2/g1_v2/runtime.py:61",
+        "test2/g1_v2/runtime.py:88",
+        "test2/g1_v2/runner.py:107"
+      ],
+      "source_sha256": {
+        "runtime.py": "61689aad92c17045267fcfc0871cc4eae63c1d8aaeb2044bc44834734a9876f8",
+        "runner.py": "f7f2fe8487db284fac4e70724057faf75db0adf07fd365bf6227c0b1568f9a6f"
+      },
+      "raw_receipt": "snapshot/test2/results/g1-qualification-v2/jobs/setup-yosys/receipt.json",
+      "raw_receipt_sha256": "40e0652ab082f08953aaf3dda69c330e501df45f7bd1e535a5e77f0ef384eb5f",
+      "actual": "/bin/ps spawn raises PermissionError before monitor_calls increment. Generic except leaves statusERROR/exitnull;finally groupkill/wait attempted;runtime halts;runner breaks allremaining89. This fail-closed behavior follows current code/stop policy and is honestly recorded,but current environment cannot execute intended G1 while this supposedly best-effort helper is fatal.",
+      "expected_for_declared_best_effort_policy": "An unavailable optional inventory must not be confused with native/physical/SV failure or complete child census. If optional,degrade with explicit unavailable/error evidence while independent PGID/deadline/poll/kill/wait protections remain mandatory;if mandatory,declare this dependency and obtain a properly scoped future execution-permission/resource decision.",
+      "independent_evidence": "permission-probes/three cases;normal available-monitor mocked child returns0;denied-running-child anddenied-exited-child bothERROR/rootreceiptNULL/halt. No real subprocess,ps,signal orsleep; actualYosys exit cannot be inferred from fake child return values.",
+      "impact": "Confirmed functional execution blocker,not fabricated QC scoring or cap bypass. The entire authorized attempt stops before any control;unchanged retry in same environment is not qualified orauthorized.",
+      "minimum_recommendation": "Do not patch E01/R02 in place. Prepare a new small version/proposal separating inventory failure handling at its own try boundary,recording attempt/error/knownness and inventory_complete=false;preserve original absolute deadline,charged counters,process group,mandatorykill/wait/failure behavior. Alternative required-inventory execution needs explicit restricted permission scope;the single-PID diagnostic is not such permission.",
+      "acceptance_condition": "Saved pure regressions forPermissionError/OSError/monitorTimeout must retain unavailable inventory/error andcost attempts;normalchild outcome remains separately observed;pendingchild stilltimesout/kills atoriginaldeadline;PGID/kill/wait failures remainfatal/unresolved,closedpool cannotrestart. Newsource/registration/precheck and explicit resource/permission decision before any actualretry;no realtool needed to prepare this proposal.",
+      "reproduce_command": "PYTHONDONTWRITEBYTECODE=1 python3 <fresh-review-owned-layout>/permission_probes.py",
+      "source_layout": "Exact copied runtime.py+budget.py in runtime-copy and immutable probe-input-caps.json. Existing probe directories must be preserved.",
+      "fixture_script_sha256": "29805c2c4d365ee5013f28550b3d43921f85ef47a12e938db7996a96105668f4",
+      "independent_probe_bindings": [
+        {
+          "case": "baseline-monitor-available",
+          "inputs_before_sha256": "e52362b3f691c2e7deb165e73370f06753fcdf8ea462e4c75d89e442a685800a",
+          "result_sha256": "a881a9228747cfd79d0b0084c5eedc2dfb44f7df04a34874bff3d97810cf9d77"
+        },
+        {
+          "case": "permission-denied-child-exit-race",
+          "inputs_before_sha256": "c128908c0df452000d58bc1fc4ba90d933993bb17e28c26a1ccab12e25fb1773",
+          "result_sha256": "2951ed22da45999ae78ba32065c5f73e646479eb56d169b6f99592bf66d7e92a"
+        },
+        {
+          "case": "permission-denied-running-child",
+          "inputs_before_sha256": "b524ec2fb003cc9f9c5ff8390eba720cfbb3f8f995c678c6d62eb2ed0fa29d17",
+          "result_sha256": "9995ae27f8d34863eed12a0a21de594f8ae5055e348cb21c196607cd8625a767"
+        }
+      ]
+    }
+  ],
+  "raw_result": {
+    "registered_setup_dispatched": 1,
+    "setup_status": "ERROR",
+    "setup_job": "setup-yosys",
+    "argv": [
+      "/opt/homebrew/bin/yosys",
+      "-V"
+    ],
+    "runner_exit_code": 1,
+    "Yosys_root_exit_code": null,
+    "Yosys_actual_version": null,
+    "Yosys_knownness": "UNKNOWN_NOT_CAPTURED",
+    "raw_empty_logs": 4,
+    "empty_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "timeout_flag": false,
+    "monitor_success_calls_recorded": 0,
+    "failed_monitor_attempts_inferred": 1,
+    "monitor_inventory_complete": false,
+    "observed_processes": [],
+    "process_group_recorded": 44006,
+    "group_kill_recorded": true,
+    "complete_child_lifecycle": "UNVERIFIED;noall-descendants-gone claim",
+    "all_job_statuses": {
+      "ERROR": 1,
+      "NOT_RUN": 89
+    },
+    "all_QC_actual_status": "NOT_RUN",
+    "no_inference": "No YosysSV-support failure/no native assertion outcome/no actualversion frombinarypath/nomock result reused asreal execution."
+  },
+  "resources": {
+    "pool_state": "HALTED_AND_COMPLETED_NON_REUSABLE",
+    "reserved": {
+      "setup": 1,
+      "compile": 0,
+      "native": 0,
+      "physical": 0,
+      "physical_cycles": 0
+    },
+    "unused_not_authorization": {
+      "setup": 7,
+      "compile": 32,
+      "native": 32,
+      "physical": 32,
+      "physical_cycles": 1024
+    },
+    "recorded_global_elapsed_seconds": 0.04572445806115866,
+    "recorded_setup_including_cleanup_seconds": 0.0056856251321733,
+    "timing_scope": "Recorded runner monotonic setup/hash/cleanup/parse/output window only,not userturn/sealing/diagnostic duration or generalOSdeadlineguarantee. Outer receipt wait0.022352959hasdifferent scope.",
+    "cap": "Original1200s and32/32/32/1024;planned18logicalcompile roots unchanged,butnone executed. Allfailurescharged,no refunds/resets/retries/newreviewpool.",
+    "memory_peak": null,
+    "memory_knownness": "NOT_MEASURED",
+    "real_reviewer_extra_tool_jobs": 0
+  },
+  "forensic_checks": {
+    "source_chain": "E01 -> actualEXECUTE -> exactP10B -> R02registration/manifest/source ->originalgrant all match;R01/P10 historicalCHANGES_REQUIRED preserved. No post-outcome source/control/flag/profile/cap change.",
+    "inputs": "152E01/138R02members,43sourcebindings,58E01bindingentries,398protectedoldfiles verified. OldscoresandfrozenClaudechecker3leaf hashes separatelymatchedP01baselines.",
+    "artifacts": "Resultmanifest85members=81priorregressionpreparation+3currentsetupemptylogs/receipt+1currentreport;not85newexperiments.",
+    "QC_matrix": "per-qc-review.json includes16separate actualNOT_RUN rows plusunchanged independentP10analytic expectedclasses and declaredscope. Nofresh256truthcheck orold experiment rerun needed.",
+    "shared_docs": "E01metadata insertiononly;oldHANDOFF/STATUS bodies preserved.",
+    "binary_identity": "Reachingfirstsetup inunchangedrunner implies registeredbinaryhash loopcompleted;this iscontrol-flow inference,not independent runtimebinaryattestation orsuccessfulversion result."
+  },
+  "external_diagnostic": {
+    "source": "Separate coordinator permission-error-diagnostic.json bound bypacket,notinE01primaryrun artifacts.",
+    "command": [
+      "/bin/ps",
+      "-p",
+      "44006",
+      "-o",
+      "pid=,pgid=,stat=,lstart="
+    ],
+    "recorded_exit_code": 1,
+    "recorded_stdout": "",
+    "recorded_stderr": "",
+    "interpretation": "ExactrecordedPID absent atthatlaterquery only;notcompleteprocesstree/PGID proof orallorphansgone.",
+    "authorization": "Coordinator record says reviewedread-onlyrequire_escalated diagnostic approved;original canonicaluser message contained no newretry instruction. Not an automaticapprovalreviewrejection andnot permission to expandG1sandbox/ps -ax.",
+    "reviewer_reran_diagnostic": false,
+    "process_args_env_read": false
+  },
+  "next_safe_steps": [
+    {
+      "scope": "Existing saved-evidence/maintenance preparation only",
+      "action": "Freeze E01 failed attempt;record closureof failed-evidence audit separatelyfrom blocked qualification. Prepare minimalmonitorpolicy/source/pure-regression proposal andexactdiffs;P11doesnot implement it."
+    },
+    {
+      "scope": "Requires explicit new execution resource/permission decision",
+      "action": "Ifproceeding,newversion/registration and reviewed environment policy/execution grant must state limits,carryforward1spentsetup andkeepoldclosedpool/receipt. Do not treat unusedcounts asrefresh/new32jobs orsilentlyresetpool."
+    },
+    {
+      "scope": "Permission specificity",
+      "action": "If choosing required-inventory execution,identify helper/command scope and restricted sandbox permissions plus budget/cleanup safeguards. Approvedsingle-PID diagnosticdoesnotauthorizefullinventoryorG1restart."
+    },
+    {
+      "scope": "No API needed",
+      "action": "Do not requestchatkeys orenableClaude/model/API/newdata/candidate/oracle gates for thismonitorfailure."
+    }
+  ],
+  "hallmark": {
+    "considered": true,
+    "read_this_round": false,
+    "source": "/Users/yiwenchen/.codex/skills/hallmark/SKILL.md",
+    "version": "2.0.0",
+    "source_sha256": "25a1ff92d925b2389e8409f42fb8ad7e033fceca8b5d1f07ed4ca4c28da53dc3",
+    "read_evidence": null,
+    "prior_read_reference": {
+      "artifact": "docs/audits/agent_bridge_2026-11-06/P10_g1_registration/review.json",
+      "sha256": "cca7589786545675331ba1daa163d4e5cc757795aa8ac57972404e7463ee73e1",
+      "pointer": "hallmark.read_evidence",
+      "review_finish_sha256": "9d00de59e71ee2516212140b0512d6d2e90a120d4a328eeba9cb12396ff38d64",
+      "current_sha_check": "Bothcurrentinstalledbytesmatchpriorread;notnewsemanticread"
+    },
+    "applied_for": [
+      {
+        "principle": "Fixed-input independent critique,artifactoverintent",
+        "where": "rawresult/loglength/SHA/receipt/pool recomputation;separateevidence_integrityfromqualification"
+      },
+      {
+        "principle": "Ranklocatedconcretefindings,minimalremedy,nottaste",
+        "where": "P11-R1exactsource/rawSHA/fakePermissionErrorcontrast;new-versionrecommendationonlymandatoryfailurepath"
+      },
+      {
+        "principle": "Protectwhatmustnotbediluted",
+        "where": "preserveE01/closedpool/spentsetup/unknownrootexit/16NOT_RUN;readonlyfailureclosurewithoutscientificcredit"
+      }
+    ],
+    "workflow_executed": false,
+    "applicable_generic_principles_applied": true,
+    "scripts_executed": false,
+    "not_applicable_reason": "No webpage/UI target;noHallmarkbuild/audit/scripts/Together/API. ItdoesnotdecideRTL/OS/resourcecorrectness.",
+    "technical_review_methods": [
+      "savedrawJSON/log/SHA/sourcechain analysis",
+      "all90job and16QC statusinventory recomputation",
+      "purefakePermissionErrorpathlocalization",
+      "unchangedprioranalyticclass reuse",
+      "criticaloldscore/checkerbytehashes"
+    ],
+    "limits": "No realtool/processlifecyclequery;noUIworkflow;notgeneral runtime/RTL/128completionproof."
+  },
+  "remaining_limits": [
+    "G1NOT_QUALIFIED/BLOCKED;all16actualBMC/cover/Icarus/VerilatorNOT_RUN. QC07/15vacuity andQC12/13unsupported aredeclaredpaper scopes,not observedresults;QC14notexercised.",
+    "No versions/native/physicalVCDorrowsproduced;prioranalyticVCDregressionsarepreparationonly.",
+    "EmptyPIDinventory/unmeasuredrootexitnotfilled;recordedgroupkillandlaterPIDabsencecannotproveallchildrenended.",
+    "P10/P10Bpreflightandfake testsarelimitedpre-executionevidence;45msfailuredoesnotvalidatebudget/cleanupguarantees.",
+    "P04originalresponsemismatch/causeUNKNOWN,P05/P06cohortlimits,P05-N1,F1/H1/H2/L1,selectedsample/category,generalsoundness,billingUNKNOWN/R0R1R2plannedremain.",
+    "398listedoldfilesand3criticalleaveschecked,notfullall4837/7450membercontentaudit.",
+    "WholeP11readonlyreviewwallnotinstrumented,null/notzero. No0costinferencefromlackofsuccessfulversion.",
+    "No new permission/resource/paid/API/key/oracle/data/model gate authorized."
+  ],
+  "test_accounting": {
+    "new_pure_fake_cases": 3,
+    "real_tool_or_query_calls": 0,
+    "real_sleep_or_signals": 0,
+    "old_suites_rerun": 0,
+    "actual_G1_profiles_started_by_reviewer": 0
+  },
+  "reviewer_harness_incidents": [],
+  "scope": {
+    "writes_only": "P11_g1_execution/**",
+    "producer_contact_or_interrupt": false,
+    "new_agents_or_chats": 0,
+    "source_shared_or_frozen_results_edited": false,
+    "ps_or_OS_queries_performed": false,
+    "compiler_version_native_simulator_or_API_calls": false,
+    "credentials_installation_deletion_commit_push": false
+  },
+  "commands": [
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,subprocess\nO=Path('docs/audits/agent_bridge_2026-11-06/P11_g1_execution');p=O/'phase-packet.json';H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();q=json.loads(p.read_text());print('PACKET_SHA',H(p));print(json.dumps(q,ensure_ascii=False,indent=2));B=Path(q['producer_phase']).parent;print('PHASE',json.dumps(json.loads((B/'phase.json').read_text()),ensure_ascii=False));m=json.loads((B/'snapshot-manifest.json').read_text());print('MANIFEST_KEYS',list(m),'FILE_COUNT',len(m['files']));print('FILES',list(m['files']));g=subprocess.run(['git','rev-parse','HEAD'],capture_output=True,text=True);print('ACTUAL_HEAD',g.returncode,g.stdout.strip())\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g1_E01_2026-11-06/report.md; cat docs/audits/producer_test2_g1_E01_2026-11-06/execution-summary.json; cat docs/audits/producer_test2_g1_E01_2026-11-06/tool-observations.json; cat docs/audits/producer_test2_g1_E01_2026-11-06/execution-command.json; cat docs/audits/producer_test2_g1_E01_2026-11-06/runner-exit.json",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g1_E01_2026-11-06/snapshot/test2/results/g1-qualification-v2/jobs/setup-yosys/receipt.json; cat docs/audits/producer_test2_g1_E01_2026-11-06/snapshot/test2/results/g1-qualification-v1/execution-state.json; cat docs/audits/producer_test2_g1_E01_2026-11-06/per-qc.json",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/agent_bridge_2026-11-06/G1_qualification_v1/permission-error-diagnostic.json; cat docs/audits/producer_test2_g1_E01_2026-11-06/snapshot/docs/audits/agent_bridge_2026-11-06/G1_qualification_v1/execute-receipt-v2.json; python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nB=Path('docs/audits/producer_test2_g1_E01_2026-11-06');q=json.loads(Path('docs/audits/agent_bridge_2026-11-06/P11_g1_execution/phase-packet.json').read_text());H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();m=json.loads((B/'snapshot-manifest.json').read_text());assert H(B/'phase.json')==q['producer_phase_sha256'];assert H(B/'snapshot-manifest.json')==q['producer_manifest_sha256'];assert all(H(B/n)==h for n,h in m['files'].items());print('VERIFIED',len(m['files']));j=json.loads((B/'input-and-output-bindings.json').read_text());print('BINDING_KEYS',list(j));print('BINDINGS_META',json.dumps({k:v for k,v in j.items() if not isinstance(v,(list,dict))},ensure_ascii=False));print('BINDING_COLLECTIONS',[(k,len(v)) for k,v in j.items() if isinstance(v,(list,dict))]);s=Path('/Users/yiwenchen/.codex/skills/hallmark');print('HALLMARK_SHA',{n:H(s/n) for n in ['SKILL.md','references/review-finish.md']})\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,collections,difflib,datetime\nO=Path('docs/audits/agent_bridge_2026-11-06/P11_g1_execution');B=Path('docs/audits/producer_test2_g1_E01_2026-11-06');R=Path('docs/audits/producer_test2_g1_R02_2026-11-05');H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();q=json.loads((O/'phase-packet.json').read_text());m=json.loads((B/'snapshot-manifest.json').read_text());sm=json.loads((B/'snapshot/test2/g1_v2/source-manifest.json').read_text());assert H(B/'phase.json')==q['producer_phase_sha256'];assert H(B/'snapshot-manifest.json')==q['producer_manifest_sha256'];assert len(m['files'])==152 and all(H(B/n)==v for n,v in m['files'].items());rm=json.loads((R/'snapshot-manifest.json').read_text());assert all(H(R/n)==v for n,v in rm['files'].items());protected=json.loads((R/'protected-before.json').read_text())['files'];assert len(protected)==398 and all(H(Path(n))==v for n,v in protected.items())\nfor n,v in sm['files'].items():\n e=B/'snapshot'/n\n if e.exists():assert H(e)==v\n assert H(Path(n))==v\nassert H(B/'snapshot/test2/g1_v2/source-manifest.json')=='fe972d2863b857ef0deb956df468ad3866301b7349d01d7f08275b6c1e54ffea'\nplan=json.loads((B/'snapshot/test2/g1_v2/job-plan.json').read_text());report=json.loads((B/'snapshot/test2/results/g1-qualification-v2/report.json').read_text());pool=json.loads((B/'snapshot/test2/results/g1-qualification-v1/execution-state.json').read_text());raw=B/'snapshot/test2/results/g1-qualification-v2/jobs/setup-yosys';receipt=json.loads((raw/'receipt.json').read_text());assert list(report['jobs'])==[j['id'] for j in plan['jobs']];assert report['jobs']['setup-yosys']==receipt;assert collections.Counter(x['status'] for x in report['jobs'].values())=={'ERROR':1,'NOT_RUN':89};assert pool['halted'] and pool['completed'] and pool['reserved']=={'compile':0,'native':0,'physical':0,'physical_cycles':0,'setup':1};assert len(pool['events'])==1;assert all(pool['events'][0][k]==v for k,v in receipt.items())\nassert receipt['exit_code'] is None and receipt['timed_out'] is False and receipt['cleanup_group_kill'] is True and receipt['monitor_calls']==0 and not receipt['observed_processes'];logs={str(p.relative_to(B)):{'bytes':p.stat().st_size,'sha256':H(p)} for p in [B/'runner.stdout.log',B/'runner.stderr.log',raw/'stdout.log',raw/'stderr.log']};assert all(v['bytes']==0 for v in logs.values())\nresult_manifest=json.loads((B/'snapshot/test2/results/g1-qualification-v2/result-manifest.json').read_text());assert all(H(B/'snapshot/test2/results/g1-qualification-v2'/n)==v for n,v in result_manifest['files'].items());artifact_categories=collections.Counter('prior_preparation_regression' if n.startswith('regression-attempt1/') else 'current_setup_logs_receipt' if n.startswith('jobs/setup-yosys/') else 'current_report' if n=='report.json' else 'other' for n in result_manifest['files']);print('RESULT_MANIFEST_CATEGORIES',dict(artifact_categories))\nqc=json.loads((B/'per-qc.json').read_text());labels=json.loads((B/'snapshot/test2/g1_v2/inputs/controls.json').read_text())['cases'];assert [x['id'] for x in qc]==[f'QC{i:02}' for i in range(16)]\nfor x,l in zip(qc,labels):\n assert x['declared_eligibility']==l['eligibility'] and x['expected_BMC']==l['native_BMC_expected'] and x['expected_cover']==l['activation_cover_expected'];assert all(x[k]=='NOT_RUN' for k in ['execution_status','actual_BMC','actual_cover','actual_icarus','actual_verilator']);assert x['qualified'] is False and x['actual_waveforms'] is None and x['actual_physical_rows'] is None\nsnap_drift=[]\nfor n,v in m['files'].items():\n if n.startswith('snapshot/'):\n  p=Path(n[9:]);actual=H(p) if p.is_file() else None\n  if actual!=v:snap_drift.append({'path':str(p),'expected':v,'actual':actual})\ndocdiff={}\nfor n in ['docs/HANDOFF.md','docs/PROJECT_STATUS.md']:\n a=(B/'before'/n).read_text().splitlines(keepends=True);z=(B/'snapshot'/n).read_text().splitlines(keepends=True);changes=[x for x in difflib.SequenceMatcher(None,a,z,autojunk=False).get_opcodes() if x[0]!='equal'];assert all(x[0]=='insert' for x in changes);docdiff[n]=changes\nassert H(Path(q['diagnostic']))==q['diagnostic_sha256'];assert H(B/'snapshot'/q['exact_pre_execution_review'])==q['pre_execution_review_sha256'];assert H(B/'snapshot'/q['execution_receipt'])==q['execution_receipt_sha256'];diag=json.loads(Path(q['diagnostic']).read_text());assert diag['actual_failed_setup_receipt_sha256']==H(raw/'receipt.json')\nr={'observed_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'E01_members':152,'R02_members':len(rm['files']),'protected_old_hashes_checked':398,'source_manifest_bindings':len(sm['files']),'current_snapshot_drift':snap_drift,'logs':logs,'job_status_counts':dict(collections.Counter(x['status'] for x in report['jobs'].values())),'actual_reserved':pool['reserved'],'pool_halted':pool['halted'],'pool_completed':pool['completed'],'global_elapsed_recorded':pool['total_elapsed_seconds'],'root_elapsed_recorded':receipt['elapsed_seconds_including_cleanup'],'root_exit_known':False,'actual_result_manifest_members':len(result_manifest['files']),'result_manifest_artifact_categories':dict(artifact_categories),'all_QC_actual_NOT_RUN':True,'shared_doc_insertions':docdiff,'diagnostic_sha256':q['diagnostic_sha256'],'diagnostic_scope':'Separate coordinator record,notE01rawtrace orcompleteprocesstree proof','new_reviewer_tool_calls':0}\n(O/'saved-evidence-verification.json').write_text(json.dumps(r,indent=2)+'\\n');(O/'input-manifest.json').write_text(json.dumps({'producer_root':str(B),'phase_packet_sha256':H(O/'phase-packet.json'),'producer_manifest_sha256':H(B/'snapshot-manifest.json'),'files':m['files'],'source_manifest_files':sm['files'],'protected_old_files':protected,'external_diagnostic':{'path':q['diagnostic'],'sha256':q['diagnostic_sha256']}},indent=2)+'\\n');print(json.dumps(r));assert not snap_drift\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g1_E01_2026-11-06/snapshot/test2/g1_v2/runtime.py | sed -n '1,115p'; nl -ba docs/audits/producer_test2_g1_E01_2026-11-06/snapshot/test2/g1_v2/runner.py | sed -n '89,112p'; nl -ba docs/audits/producer_test2_g1_E01_2026-11-06/snapshot/test2/g1_v2/runner.py | sed -n '152,180p'",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nB=Path('docs/audits/producer_test2_g1_E01_2026-11-06');H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();j=json.loads((B/'input-and-output-bindings.json').read_text());print('FIRST_BINDINGS',list(j['files'].items())[:2]);print('TOP_VALUE_TYPES',set(type(v).__name__ for v in j['files'].values()));print('BINDING_PREFIXES',list(j['files'])[:8]);q=json.loads(Path('docs/audits/agent_bridge_2026-11-06/P11_g1_execution/phase-packet.json').read_text());receipt=json.loads((B/'snapshot'/q['execution_receipt']).read_text());p10b=json.loads((B/'snapshot'/q['exact_pre_execution_review']).read_text());reg=json.loads((B/'snapshot/test2/configs/g1_qualification_registration_v2.json').read_text());assert receipt['p10_review_sha256']==q['pre_execution_review_sha256'];assert receipt['registration_sha256']==H(B/'snapshot/test2/configs/g1_qualification_registration_v2.json')==p10b['input_identity']['registration_sha256'];assert receipt['preparation_manifest_sha256']==p10b['input_identity']['producer_manifest_sha256']=='7c16e5020ab6212fbd66bdd57ecb272bef56e1bfc6ce4362a661960d331fb201';assert receipt['source_manifest_sha256']==H(B/'snapshot/test2/g1_v2/source-manifest.json');assert receipt['user_authorization_sha256']==H(B/'snapshot'/reg['user_authorization']);assert p10b['status']=='PASS_WITH_LIMITS';print('CHAIN_VALID_AND_P10B_IS_PREEXECUTION_ONLY')\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport shutil,json,hashlib\nO=Path('docs/audits/agent_bridge_2026-11-06/P11_g1_execution');B=Path('docs/audits/producer_test2_g1_E01_2026-11-06/snapshot');S=O/'runtime-copy';S.mkdir(exist_ok=False)\nfor n in ['runtime.py','budget.py']:\n p=B/'test2/g1_v2'/n;shutil.copy2(p,S/n);assert hashlib.sha256(p.read_bytes()).hexdigest()==hashlib.sha256((S/n).read_bytes()).hexdigest()\ncaps=json.loads((B/'test2/configs/g1_qualification_registration_v2.json').read_text())['caps'];(O/'probe-input-caps.json').write_text(json.dumps(caps,indent=2)+'\\n');print('EXACT_RUNTIME_BUDGET_COPIES_NO_TOOL_ENTRYPOINT')\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P11_g1_execution/permission_probes.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nH=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();B=Path('docs/audits/producer_test2_g1_E01_2026-11-06');j=json.loads((B/'input-and-output-bindings.json').read_text());bad=[n for n,h in j['files'].items() if H(Path(n))!=h];print('58_BINDINGS',len(j['files']),'BAD',bad);assert not bad\np=json.loads(Path('docs/audits/producer_test2_g1_R02_2026-11-05/protected-before.json').read_text())['files'];print('CRITICAL_PROTECTED_NAMES',[n for n in p if any(w in n.lower() for w in ['score','checker','freeze','acceptance','presentation'])])\nold=json.loads(Path('docs/audits/agent_bridge_2026-11-05/P01/review.json').read_text());print('P01_FROZEN_CHECKS',json.dumps(old.get('frozen_checks'),ensure_ascii=False)[:3500]);old2=json.loads(Path('docs/audits/agent_bridge_2026-11-05/P01/previous_review/snapshot.json').read_text());print('EARLY_SOURCE_HASH_KEYS',list(old2.get('files_sha256',{})))\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json\nj=json.loads(Path('docs/audits/agent_bridge_2026-11-05/P01/review.json').read_text());print('SCORE_VERIFICATION_KEYS',list(j.get('score_snapshot_verification',{})));print('SCORE_SNAPSHOT',json.dumps(j.get('score_snapshot_verification'),ensure_ascii=False)[:2700]);print('CHECKER_REFERENCES')\nfor n in ['test2/configs/controller_done_study_v1.json','test2/configs/controller_live_freeze_v1.json','test2/configs/live_freeze_v1.json','test2/tasks/axis_length_fifo_v1/reference/frozen-v2/freeze.json']:\n d=json.loads(Path(n).read_text());m=d.get('files',d.get('artifact_sha256',{}));hits={k:v for k,v in m.items() if v in ['f13161340a46c7360002e54992be0a7aba9c1d47a70fbe6f169bba8952fe2651','33003b33a7172d29704f85fa84da10bdbb30aebe78b72d400a4f97b73a2ef338','b44f32b27c11b968d23fd93ecf8b0d714e773460fc0b505d89adf23df3cd7dee']};print(n,hits)\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "rg --files test2/results -g '*score*.json'",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib,json\nO=Path('docs/audits/agent_bridge_2026-11-06/P11_g1_execution');expected={'test2/results/controller-final-v1/scores.json':'f13161340a46c7360002e54992be0a7aba9c1d47a70fbe6f169bba8952fe2651','test2/results/live-final-v1/scores.json':'33003b33a7172d29704f85fa84da10bdbb30aebe78b72d400a4f97b73a2ef338','test2/tasks/axis_length_fifo_v1/reference/frozen-v2/checker.py':'b44f32b27c11b968d23fd93ecf8b0d714e773460fc0b505d89adf23df3cd7dee'};r={n:{'expected':h,'actual':hashlib.sha256(Path(n).read_bytes()).hexdigest()} for n,h in expected.items()};print(json.dumps(r));assert all(x['expected']==x['actual'] for x in r.values());(O/'critical-historical-hashes.json').write_text(json.dumps({'baseline':'P01review.json frozen_checks;not a score recalculation or checker execution','files':r},indent=2)+'\\n')\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,datetime\nO=Path('docs/audits/agent_bridge_2026-11-06/P11_g1_execution');B=Path('docs/audits/producer_test2_g1_E01_2026-11-06');H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();P10=O.parent/'P10_g1_registration';a=json.loads((P10/'analytic-preflight/summary.json').read_text());S=B/'snapshot/test2/g1_v2'\nfor n,h in a['source_sha256'].items():\n if n in ['sources/common.sv','sources/physical_tb.sv','inputs/controls.json','inputs/stimulus.json']:assert H(S/n)==h\nformal=json.loads((P10/'analytic-preflight/formal-classes.json').read_text());raw=json.loads((B/'per-qc.json').read_text());matrix=[]\nfor x,e in zip(raw,formal):\n assert x['id']==e['case'] and x['expected_BMC']==e['derived_BMC_class'] and x['expected_cover']==e['derived_cover']\n matrix.append({'id':x['id'],'declared_scope':x['declared_eligibility'],'independent_analytic_BMC_expectation':e['derived_BMC_class'],'independent_analytic_cover_expectation':e['derived_cover'],'analytic_evidence':'unchanged P10 saved derivation,reused not freshly executed','actual_BMC':x['actual_BMC'],'actual_cover':x['actual_cover'],'actual_icarus':x['actual_icarus'],'actual_verilator':x['actual_verilator'],'actual_waveforms':None,'qualification':'NOT_QUALIFIED_NOT_RUN','reason':x['reason']})\n(O/'per-qc-review.json').write_text(json.dumps({'matrix':matrix,'no_actual_QC_results':True},indent=2)+'\\n')\nM=json.loads((B/'snapshot-manifest.json').read_text());assert all(H(B/n)==h for n,h in M['files'].items());q=json.loads((O/'phase-packet.json').read_text());assert H(Path(q['diagnostic']))==q['diagnostic_sha256'];assert H(Path('test2/results/g1-qualification-v1/execution-state.json'))=='6da4346144d65356f57c5762058675f1acca9f1dad4ee8599c889dc49e1a7400';assert not [p for p in O.rglob('__pycache__')]\nprint('REUSED16UNCHANGED_ANALYTIC_CLASSES;actual16NOT_RUN;E01andclosedpoolunchanged')\nPY",
+      "exit_code": 0
+    }
+  ],
+  "next_action": "Stopafterthisboundedreview. Coordinator mayrecordfailed-evidenceacceptanceatidle;qualificationandnewexecutionremainblocked. No implementation or retry started.",
+  "reviewed_at_utc": "2026-11-06T05:34:40.240338+00:00",
+  "actual_HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+  "current_drift": [],
+  "saved_verification_sha256": "7953be78f14fabd7ae8b05381c82e7ff9785b705f0bbaa1a91dd484f1e3eb18b",
+  "QC_review_matrix_sha256": "1b09f8b97e46ac483c7ffd7ca36682c6c2d88bf6b40a504c8673e5ea638b46a9",
+  "permission_probe_summary_sha256": "865db7a08f8bb980b763da7f3706fea7d665015a16b5672372b24bd13965bc05",
+  "evidence_manifest_sha256": "87c094065c0624da2261aa1931ea004d62ad0ebb1efa98ca02585c98524f0861",
+  "evidence_file_count": 37
+}

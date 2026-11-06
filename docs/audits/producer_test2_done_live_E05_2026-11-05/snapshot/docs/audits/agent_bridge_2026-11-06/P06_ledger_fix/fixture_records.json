@@ -1,0 +1,655 @@
+{
+  "phase": "P06",
+  "P04_artifact_sha256": "c12eda95b03c76ef2109aab13f68f59488a3e363e505ef681c3443a4d17414d1",
+  "P04_reproductions": [
+    {
+      "case": "exact_saved_P04",
+      "v1": {
+        "status": "REJECT",
+        "reason": "accepted response/snapshot mismatch"
+      },
+      "v2": {
+        "status": "REJECT",
+        "reason": "API request flags after persistent resource_halt"
+      }
+    },
+    {
+      "case": "only_snapshot_response_bound",
+      "v1": {
+        "status": "PASS"
+      },
+      "v2": {
+        "status": "REJECT",
+        "reason": "API request flags after persistent resource_halt"
+      }
+    }
+  ],
+  "serialization_cause": "UNKNOWN",
+  "canonical_probes": [
+    {
+      "name": "no_halt_single_success_baseline",
+      "version": 1,
+      "expected": "PASS",
+      "actual": "PASS",
+      "reason": null,
+      "expectation_met": true,
+      "result": {
+        "status": "PASS",
+        "call_rows": 1,
+        "event_rows": 4,
+        "dispatched_counts": 1,
+        "dispatched_generations": 1,
+        "unique_returned_responses": 1,
+        "known_usage_token_totals": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12
+        },
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "canonical-session",
+            "status": "completed",
+            "usage_status": "KNOWN",
+            "actual_tokens": 12
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    },
+    {
+      "name": "no_halt_single_success_baseline",
+      "version": 2,
+      "expected": "PASS",
+      "actual": "PASS",
+      "reason": null,
+      "expectation_met": true,
+      "result": {
+        "audit_version": 2,
+        "persistent_resource_halt": false,
+        "resource_halt_events": [],
+        "status": "PASS",
+        "call_rows": 1,
+        "event_rows": 4,
+        "dispatched_counts": 1,
+        "dispatched_generations": 1,
+        "unique_returned_responses": 1,
+        "known_usage_token_totals": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12
+        },
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "canonical-session",
+            "status": "completed",
+            "usage_status": "KNOWN",
+            "actual_tokens": 12
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    },
+    {
+      "name": "canonical_halt_same_round_retry",
+      "version": 1,
+      "expected": "PASS",
+      "actual": "PASS",
+      "reason": null,
+      "expectation_met": true,
+      "result": {
+        "status": "PASS",
+        "call_rows": 2,
+        "event_rows": 7,
+        "dispatched_counts": 2,
+        "dispatched_generations": 1,
+        "unique_returned_responses": 1,
+        "known_usage_token_totals": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12
+        },
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "canonical-session",
+            "status": "input_cap_exceeded_no_generation",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null,
+            "resource_halts": [
+              "canonical explicit halt"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "B",
+              1,
+              1,
+              2
+            ],
+            "session_id": "canonical-session",
+            "status": "completed",
+            "usage_status": "KNOWN",
+            "actual_tokens": 12
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    },
+    {
+      "name": "canonical_halt_same_round_retry",
+      "version": 2,
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "reason": "API request flags after persistent resource_halt",
+      "expectation_met": true
+    },
+    {
+      "name": "canonical_global_halt_cross_round",
+      "version": 1,
+      "expected": "PASS",
+      "actual": "PASS",
+      "reason": null,
+      "expectation_met": true,
+      "result": {
+        "status": "PASS",
+        "call_rows": 2,
+        "event_rows": 7,
+        "dispatched_counts": 2,
+        "dispatched_generations": 1,
+        "unique_returned_responses": 1,
+        "known_usage_token_totals": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12
+        },
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "canonical-session",
+            "status": "input_cap_exceeded_no_generation",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null,
+            "resource_halts": [
+              "canonical explicit halt"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "B",
+              1,
+              2,
+              1
+            ],
+            "session_id": "canonical-session",
+            "status": "completed",
+            "usage_status": "KNOWN",
+            "actual_tokens": 12
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    },
+    {
+      "name": "canonical_global_halt_cross_round",
+      "version": 2,
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "reason": "API request flags after persistent resource_halt",
+      "expectation_met": true
+    },
+    {
+      "name": "canonical_global_halt_cross_session",
+      "version": 1,
+      "expected": "PASS",
+      "actual": "PASS",
+      "reason": null,
+      "expectation_met": true,
+      "result": {
+        "status": "PASS",
+        "call_rows": 2,
+        "event_rows": 7,
+        "dispatched_counts": 2,
+        "dispatched_generations": 1,
+        "unique_returned_responses": 1,
+        "known_usage_token_totals": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12
+        },
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "canonical-session",
+            "status": "input_cap_exceeded_no_generation",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null,
+            "resource_halts": [
+              "canonical explicit halt"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "B",
+              2,
+              1,
+              1
+            ],
+            "session_id": "canonical-other-session",
+            "status": "completed",
+            "usage_status": "KNOWN",
+            "actual_tokens": 12
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    },
+    {
+      "name": "canonical_global_halt_cross_session",
+      "version": 2,
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "reason": "API request flags after persistent resource_halt",
+      "expectation_met": true
+    },
+    {
+      "name": "legal_halt_only_NOT_RUN",
+      "version": 2,
+      "expected": "PASS",
+      "actual": "PASS",
+      "reason": null,
+      "expectation_met": true,
+      "result": {
+        "audit_version": 2,
+        "persistent_resource_halt": true,
+        "resource_halt_events": [
+          {
+            "event_index": 2,
+            "call_index": 0,
+            "reason": "canonical explicit halt"
+          }
+        ],
+        "status": "PASS",
+        "call_rows": 2,
+        "event_rows": 3,
+        "dispatched_counts": 1,
+        "dispatched_generations": 0,
+        "unique_returned_responses": 0,
+        "known_usage_token_totals": {},
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "canonical-session",
+            "status": "input_cap_exceeded_no_generation",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null,
+            "resource_halts": [
+              "canonical explicit halt"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "B",
+              1,
+              1,
+              2
+            ],
+            "session_id": "canonical-session",
+            "status": "not_run_resource_halt",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    },
+    {
+      "name": "flags_without_event_count_request_issued",
+      "version": 2,
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "reason": "API request flags after persistent resource_halt",
+      "expectation_met": true
+    },
+    {
+      "name": "flags_without_event_generation_request_issued",
+      "version": 2,
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "reason": "API request flags after persistent resource_halt",
+      "expectation_met": true
+    },
+    {
+      "name": "orphan_dispatch_no_later_call_count_dispatched",
+      "version": 2,
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "reason": "API dispatch after persistent resource_halt",
+      "expectation_met": true
+    },
+    {
+      "name": "orphan_dispatch_no_later_call_generation_dispatched",
+      "version": 2,
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "reason": "API dispatch after persistent resource_halt",
+      "expectation_met": true
+    },
+    {
+      "name": "failed_usage_halt_NULL",
+      "version": 2,
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "reason": null,
+      "expectation_met": true,
+      "result": {
+        "audit_version": 2,
+        "persistent_resource_halt": true,
+        "resource_halt_events": [
+          {
+            "event_index": 4,
+            "call_index": 0,
+            "reason": "canonical transport halt"
+          }
+        ],
+        "status": "UNRESOLVED",
+        "call_rows": 2,
+        "event_rows": 5,
+        "dispatched_counts": 1,
+        "dispatched_generations": 1,
+        "unique_returned_responses": 0,
+        "known_usage_token_totals": {},
+        "missing_generation_usage": 1,
+        "unresolved": [
+          {
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "reason": "generation error or terminal missing; usage UNKNOWN_NOT_ZERO"
+          }
+        ],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "canonical-session",
+            "status": "request_or_infrastructure_error",
+            "usage_status": "UNKNOWN_NOT_ZERO",
+            "actual_tokens": null,
+            "resource_halts": [
+              "canonical transport halt"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "B",
+              1,
+              1,
+              2
+            ],
+            "session_id": "canonical-session",
+            "status": "not_run_resource_halt",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    }
+  ],
+  "canonical_halt_fixture": {
+    "calls": [
+      {
+        "arm": "B",
+        "repetition": 1,
+        "round": 1,
+        "mode": "live",
+        "session_id": "canonical-session",
+        "attempt": 1,
+        "count_request_issued": true,
+        "generation_request_issued": false,
+        "accepted_response": false,
+        "status": "input_cap_exceeded_no_generation",
+        "prompt_sha256": "canonical-file",
+        "input_token_count": 21,
+        "requested_model": "canonical-model",
+        "returned_model": "canonical-model",
+        "response_id": null,
+        "requested_service_tier": "default",
+        "returned_service_tier": "default",
+        "usage": null,
+        "raw_usage": null,
+        "parsed": null
+      },
+      {
+        "arm": "B",
+        "repetition": 1,
+        "round": 1,
+        "mode": "live",
+        "session_id": "canonical-session",
+        "attempt": 2,
+        "count_request_issued": true,
+        "generation_request_issued": true,
+        "accepted_response": true,
+        "status": "completed",
+        "prompt_sha256": "canonical-file",
+        "input_token_count": 10,
+        "requested_model": "canonical-model",
+        "returned_model": "canonical-model",
+        "response_id": "canonical-response",
+        "requested_service_tier": "default",
+        "returned_service_tier": "default",
+        "usage": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12,
+          "cached_input_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "raw_usage": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12,
+          "input_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "cache_write_tokens_details": {
+              "ttl_30m_tokens": 0,
+              "ttl_12h_tokens": 0
+            }
+          },
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "parsed": {
+          "body": "canonical"
+        }
+      }
+    ],
+    "events": [
+      {
+        "event": "count_dispatched",
+        "messages_sha256": "canonical-message",
+        "model": "canonical-model",
+        "schema_sha256": "canonical-schema"
+      },
+      {
+        "event": "count_returned",
+        "input_tokens": 21,
+        "messages_sha256": "canonical-message"
+      },
+      {
+        "event": "resource_halt",
+        "reason": "canonical explicit halt"
+      },
+      {
+        "event": "count_dispatched",
+        "messages_sha256": "canonical-message",
+        "model": "canonical-model",
+        "schema_sha256": "canonical-schema"
+      },
+      {
+        "event": "count_returned",
+        "input_tokens": 10,
+        "messages_sha256": "canonical-message"
+      },
+      {
+        "event": "generation_dispatched",
+        "messages_sha256": "canonical-message",
+        "input_tokens_counted": 10,
+        "max_output_tokens": 8,
+        "requested_service_tier": "default",
+        "reserve_usd": 0.1,
+        "cumulative_reserve_usd": 0.1,
+        "context": {
+          "arm": "B",
+          "repetition": 1,
+          "round": 1,
+          "mode": "live",
+          "session_id": "canonical-session"
+        }
+      },
+      {
+        "event": "generation_returned",
+        "response_id": "canonical-response",
+        "returned_model": "canonical-model",
+        "returned_service_tier": "default",
+        "usage": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12,
+          "cached_input_tokens": 0,
+          "reasoning_output_tokens": 0
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "key": [
+          "B",
+          1,
+          1
+        ],
+        "value": {
+          "arm": "B",
+          "repetition": 1,
+          "round": 1,
+          "mode": "live",
+          "session_id": "canonical-session",
+          "prompt_sha256": "canonical-file",
+          "messages_sha256": "canonical-message",
+          "response": {
+            "body": "canonical"
+          }
+        }
+      }
+    ],
+    "policy": {
+      "model": "canonical-model",
+      "service_tier": "default",
+      "input_tokens": 20,
+      "output_tokens": 8,
+      "max_precounts": 8,
+      "max_generations": 8,
+      "manual_failure_retries_per_round": 1,
+      "per_generation_conservative_reserve_usd": 0.1,
+      "generation_reserve_usd": 0.8,
+      "count_fee_reserve_usd": 0.1,
+      "total_stage_spending_ceiling_usd": 0.9
+    }
+  },
+  "actual_saved_batch": {
+    "status": "PASS",
+    "call_rows": 36,
+    "event_rows": 144,
+    "unique_returned_responses": 36,
+    "known_usage_token_totals": {
+      "input_tokens": 1475813,
+      "output_tokens": 78479,
+      "total_tokens": 1554292
+    },
+    "persistent_resource_halt": false,
+    "resource_halt_events": [],
+    "provider_invoice_usd": null,
+    "count_endpoint_actual_usd": null,
+    "dependency_count": 1614,
+    "same_as_E03a_all_prior_fields": true
+  }
+}

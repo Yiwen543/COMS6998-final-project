@@ -1,0 +1,231 @@
+{
+  "source_sha256": "f1b1124be9f9e088f92d61f682223056f96c6f4ba1ce2accb610b9429bf2f82d",
+  "fixture_scope": "Read-only in-memory overlays of two P01-verified chains; no source/results/files modified. Fresh digest fields intentionally updated for semantic-binding negatives.",
+  "records": [
+    {
+      "name": "known_reproduced_chain",
+      "expected": "CONSISTENT",
+      "actual": "CONSISTENT",
+      "expectation_met": true,
+      "result": {
+        "physical_alarm_reproduced": true,
+        "selected_candidate_unknown": false,
+        "scientific_adjudication": "UNRESOLVED",
+        "reference_verdict": "FAIL",
+        "reference_confirmed_selected_alarm": false
+      },
+      "overlay_hashes": {}
+    },
+    {
+      "name": "known_unreproduced_chain",
+      "expected": "CONSISTENT",
+      "actual": "CONSISTENT",
+      "expectation_met": true,
+      "result": {
+        "physical_alarm_reproduced": false,
+        "selected_candidate_unknown": false,
+        "scientific_adjudication": "UNRESOLVED",
+        "reference_verdict": null,
+        "reference_confirmed_selected_alarm": false
+      },
+      "overlay_hashes": {}
+    },
+    {
+      "name": "physical_literal_input_mutated_fresh_hash",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "expectation_met": true,
+      "result": {
+        "error_type": "ValueError",
+        "reason": "literal input/timing offset"
+      },
+      "overlay_hashes": {
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/iverilog/simulation.log": "55d2e2a7e486b6e8de81a38ac9b1528f5e807554ae5ccae726945af9e9aae3dd",
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/iverilog/execution.json": "cf6ada32453fd9045494f6c60c08679ddf0f0fdd4fd09317b77f2439bd14e0e3"
+      }
+    },
+    {
+      "name": "both_physical_logs_rows_hashes_mutated_VCD_unchanged",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "expectation_met": true,
+      "result": {
+        "error_type": "ValueError",
+        "reason": "VCD/physical retained pre output mismatch"
+      },
+      "overlay_hashes": {
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/iverilog/simulation.log": "a37e452833120a90ceb82c2c4e41d9651695c16f3b255f5dc2edafee4acc0bc6",
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/iverilog/rows.json": "38dc299973b3a43e1eafabb9d24c58b44f140c3dc97b6ff2be768011c8bada43",
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/iverilog/execution.json": "c53ab33e27e0778af5ec087ed8d407ab6e05d885155b14f670c10f8fa208250f",
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/verilator/simulation.log": "89db9a84f5f372a5303e12090b31e5752c33da952b10bf88d174c9043c256f76",
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/verilator/rows.json": "1106ba9f1eb44cf9354bed0fd244cf68bbfd393e5f4ee2f9b6e4188404b0ea96",
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/verilator/execution.json": "db157aee6e82e0f3c2425eb02b2905d228f7a2f1bfd8babfd1c95534d88dcbd5"
+      }
+    },
+    {
+      "name": "wrong_selected_slot",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "expectation_met": true,
+      "result": {
+        "error_type": "ValueError",
+        "reason": "selected slot/phase/category mismatch"
+      },
+      "overlay_hashes": {
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/result.json": "dc388da09dadfa24e9afa0718e98afb7a99ea409429f92c93089dfe390e51f54"
+      }
+    },
+    {
+      "name": "wrong_selected_phase",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "expectation_met": true,
+      "result": {
+        "error_type": "ValueError",
+        "reason": "selected slot/phase/category mismatch"
+      },
+      "overlay_hashes": {
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/result.json": "8e7664ce230a5736fa2f0290230281f5b6e2c91a71bd8a2d758318bb3ede917f"
+      }
+    },
+    {
+      "name": "reference_prefix_includes_selected_edge",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "expectation_met": true,
+      "result": {
+        "error_type": "ValueError",
+        "reason": "reference prefix phase/length mismatch"
+      },
+      "overlay_hashes": {
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/reference-prefix-rows.json": "846a2bf61f320abb3a7ca1959b5510de67f5db74714270e20dc1a7ae76f49e7e"
+      }
+    },
+    {
+      "name": "reproduced_scope_upgrade",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "expectation_met": true,
+      "result": {
+        "error_type": "ValueError",
+        "reason": "reference scope improperly upgraded"
+      },
+      "overlay_hashes": {
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/result.json": "237d55a2d9dc8e30da0015a846ba451d8563d160ca57548891664297e7d3a251"
+      }
+    },
+    {
+      "name": "unreproduced_fabricated_oracle_verdict",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "expectation_met": true,
+      "result": {
+        "error_type": "ValueError",
+        "reason": "unreproduced witness has unexpected reference evidence"
+      },
+      "overlay_hashes": {
+        "test2/results/controller-done-live-formal-v2/C2_semantic/rep1/correct/P4-bmc/physical/result.json": "70c77a42122d8c7becfda2fdbe29f021562ecdc2c2b522aaf313211287f0584b"
+      }
+    },
+    {
+      "name": "selected_MON_unknown_consistent_fresh_hashes",
+      "expected": "CONSISTENT",
+      "actual": "CONSISTENT",
+      "expectation_met": true,
+      "result": {
+        "physical_alarm_reproduced": false,
+        "selected_candidate_unknown": true,
+        "scientific_adjudication": "UNRESOLVED",
+        "reference_verdict": null,
+        "reference_confirmed_selected_alarm": false
+      },
+      "overlay_hashes": {
+        "test2/results/controller-done-live-formal-v2/C2_semantic/rep1/correct/P4-bmc/physical/candidate-replay/replay.log.gz": "4328967dbc0fd0c709a4d3aedc4261b936159db99a08f86dae390ef989dbbdc2",
+        "test2/results/controller-done-live-formal-v2/C2_semantic/rep1/correct/P4-bmc/physical/candidate-replay/result.json": "a75ee182a15cabd40da8bb9191729d06ca96742960bf4c2dbc411dd323f71052"
+      }
+    },
+    {
+      "name": "MON_bad_phase_fresh_hashes",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "expectation_met": true,
+      "result": {
+        "error_type": "ValueError",
+        "reason": "malformed raw MON"
+      },
+      "overlay_hashes": {
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/candidate-replay/replay.log.gz": "1e36140e9d90abb2bbb399675d7dd2f23bbece8bf3c19fb428d53b5c6584a3fd",
+        "test2/results/controller-done-live-formal-v2/B2_raw/rep1/N01/P0-bmc/physical/candidate-replay/result.json": "960bd29150fb4ce10c4829a29b0b3608bce9f75780981dbc81074ed5b47a1572"
+      }
+    },
+    {
+      "name": "other_slot_without_VCD_alarm",
+      "declared_widths": {
+        "active": 6,
+        "ok": 6
+      },
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "expectation_met": true,
+      "scope_correction": "Six-bit declaration exists; rejection here is no selected-slot alarm, not absent declaration. Reclassified reviewer expectation."
+    },
+    {
+      "name": "unreproduced_extra_confirmation_flag",
+      "expected": "REJECT",
+      "actual": "CONSISTENT",
+      "expectation_met": false,
+      "result": {
+        "physical_alarm_reproduced": false,
+        "selected_candidate_unknown": false,
+        "scientific_adjudication": "UNRESOLVED",
+        "reference_verdict": null,
+        "reference_confirmed_selected_alarm": false
+      },
+      "overlay_hashes": {
+        "test2/results/controller-done-live-formal-v2/C2_semantic/rep1/correct/P4-bmc/physical/result.json": "f6c9847d245563f040a2367a697f74eb962a8edb29718dd398c9165a665b8d01"
+      },
+      "material_adjudication": {
+        "material": false,
+        "current_batch_field_present": false,
+        "source_file_P01_hash_anchored": true,
+        "receipt_remains_reference_confirmed_false": true,
+        "receipt_remains_scientific_unresolved": true,
+        "reason": "Exploratory stricter metadata rejection expectation; actual current unrep format has no such field and is independently anchored. Receipt does not promote the injected claim. Low-priority helper hardening, not demonstrated wrong scientific acceptance in this batch."
+      }
+    },
+    {
+      "name": "declared_width_excludes_selected_slot4",
+      "original_declarations": [
+        {
+          "name": "active",
+          "width": 5
+        },
+        {
+          "name": "active",
+          "width": 6
+        },
+        {
+          "name": "ok",
+          "width": 6
+        },
+        {
+          "name": "ok",
+          "width": 5
+        }
+      ],
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "expectation_met": true,
+      "reason": "VCD selected slot/pin width mismatch"
+    },
+    {
+      "name": "independent_three_bit_active_ok_slot2",
+      "expected": "CONSISTENT",
+      "actual": "CONSISTENT",
+      "expectation_met": true,
+      "alarm_cycle": 1,
+      "selected_slot": 2,
+      "width": 3
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+P04独立复核正式结论CHANGES_REQUIRED。此反馈在你的E03b完成/空闲安全点交接，不要求中断正在运行的R2操作。存在一个已独立复现的实质P2缺陷，影响新账本validator，实际保存批次无resource_halt，旧科学结果和实际消费记录没有因此被判为有问题。
+
+权威文件：docs/audits/agent_bridge_2026-11-06/P04_ledger/review.md SHAe15d0f55f124f85aeb7e1a1fefc05f5fd8f1420dff690d955ea698025b5abe08；review.json SHAe2f9fc0a6de737ee1c9d427de5b70dc4c2f5ec59aca4a6d954e9ddc3888d8c77；fixture_records.json SHAc12eda95b03c76ef2109aab13f68f59488a3e363e505ef681c3443a4d17414d1。对应P04 manifest SHA647c2d23b87eb80f4af6af4535d9605926167045b73054fad5b7c3a6ad117187，先核验，再读finding和反例，不打印巨大证据列表。
+
+P04-R1：controller_done_ledger_audit_v1.py:169–172及请求派发分支，源SHAc07cdf35651c6fc90b3585d7ac11ab1041050bc7031964aa78e15ea4b91b9166。独立fixture API_requests_after_resource_halt：第一次count=21超过cap20，generation未派发并记录resource_halt；随后同round attempt2重新count/generation，返回/usage一致，validator却返回PASS、unresolved=[]。冻结model_v2的halt()设置持久self.halted，此后count/generate均拒绝，注册runtime_halt也停止所有后续API。这是新离线validator确实会错误接受协议违规，不是冻结生成器被证实违规；本批36calls/144events/1614依赖独立核对仍一致，actual halt=0。
+
+请以新版本源码/测试/输出修复，保持旧v1/E03a/P04失败记录与22test证据不变。validator必须保持全局停止状态，不能在round/session/retry边界重置；resource_halt后拒绝任何新的count/generation请求标志或dispatch事件，所附反例须REJECT，不能仅一般UNRESOLVED。允许合法halt后只保留没有请求/usage的NOT_RUN记录。失败/缺用量维持null/UNKNOWN，不填0。
+
+验收：保留并新增独立反例为回归；同round retry、跨round、跨session的halt后请求都拒绝；合法halt+只有NOT_RUN正例可表示；原成功/错误/缺返回、usage/model/tier/count/prompt绑定测试继续验证。对本批保存36calls/144events/1614依赖运行新版纯离线审计仍应通过，计数费/实际账单仍UNKNOWN。不要修改冻结generator/model/config去使反例合法，不重发任何请求，不跑DUT/formal/monitor。用独有E04或未占用的新phase名封存source/test/result/commands及SHA，给协调端增量复验；不能自宣P01-R3已经独立关闭。
+
+P03展示审查已PASS_WITH_LIMITS、无实质风险，42展示+8来源与当时快照一致。仅有非阻塞的实际排练时长建议，无需改材料或打断维护工作。其review路径在 docs/audits/agent_bridge_2026-11-06/P03_presentation/，当前优先处理本P04-R1。
+
+本轮仍仅API-free维护和轻量fixture测试，无需API key，不新增付费/native实验、安装、删除结果、commit/push或oracle更改。R2交接继续按独立新manifest；历史所有分数/未知/负结果保留。普通修复版本选择无需再问，完成后回报精确phase路径/哈希，协调端会让同一复核线程窄范围验收。

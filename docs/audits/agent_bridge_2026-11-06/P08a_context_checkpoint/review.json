@@ -1,0 +1,232 @@
+{
+  "phase": "P08a_CONTEXT_CHECKPOINT",
+  "status": "CHECKPOINT_COMPLETE",
+  "material_risk_threshold_met": false,
+  "interrupt_active_producer_recommended": false,
+  "conclusion": "确认同一 active turn 内从 G0 整理交接转向旧 presentation 检查，且异常消息前有 contextCompaction；是否存在新用户 steering 未知。当前未发现 P03 产物或 I01 受保护来源被修改的证据；不足以建议中断 producer。",
+  "facts": [
+    {
+      "id": "C1",
+      "certainty": "OBSERVED",
+      "evidence": "read_thread latest turn 01a1aec2-0195-7311-9264-a1f14da017b9",
+      "detail": "G0 93项通过是 producer 自报，P08a 未运行或独立验收测试。其后同一 turn 存在 contextCompaction，再出现给定 PPT commentary；后续可见消息仍在核对现有 PPT。"
+    },
+    {
+      "id": "C2",
+      "certainty": "UNKNOWN",
+      "detail": "支持的 read_thread/wait_threads 未返回最新用户文本；无法确认新用户任务存在，也不能断言不存在。仅靠同一 turn 不排除中途 steering。"
+    },
+    {
+      "id": "C3",
+      "certainty": "HASH_VERIFIED_AT_OBSERVATION",
+      "detail": "P03 manifest 身份准确；42 presentation snapshots 和42当前产物均匹配；8封存来源snapshot均匹配，当前7/8匹配。唯一当前来源差异为共享HANDOFF，恰匹配D01已封存版本，不是本次PPT改写证据。"
+    },
+    {
+      "id": "C4",
+      "certainty": "HASH_VERIFIED_AT_OBSERVATION",
+      "detail": "I01 scope 的41受保护来源均匹配；P08 review.json/review.md/phase-packet仍匹配既有SHA。未检查所有旧freeze成员内容。"
+    },
+    {
+      "id": "C5",
+      "certainty": "OBSERVED_AT_CHECKPOINT",
+      "detail": "I01授权仅G0离线adapter/轻量合成fixture；phase.json与snapshot-manifest.json尚不存在，当前没有可供P09正式验收的固定release。"
+    }
+  ],
+  "findings": [
+    {
+      "id": "P08a-N1",
+      "severity": "P3",
+      "material": false,
+      "blocking": false,
+      "evidence_ids": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "impact": "可见工作方向已偏移，I01尚未封存；但未证实未经新授权、覆盖受保护产物或不可逆损害。异常消息本身以及无用户文本的接口都不足以证明实质风险。",
+      "minimum_recommendation": "不发消息/不中断active producer；在下一idle或安全点由协调端核对最新真实用户steering。若没有新任务，再恢复I01交接封存；若有合法新任务，保持其新版本输出边界。等I01精确phase/manifest后再P09。",
+      "acceptance_criteria": "安全点明确当前用户目标和I01交接去向；后续P09仅接受精确封存包。若后来实测受保护字节发生未经授权改写，或出现明确将覆盖旧产物的动作，再评估实质风险；本轮不预判。"
+    }
+  ],
+  "files_observation": {
+    "files": {
+      "checked": 42,
+      "snapshot_mismatches": [],
+      "current_mismatches": []
+    },
+    "sources": {
+      "checked": 8,
+      "snapshot_mismatches": [],
+      "current_mismatches": [
+        {
+          "path": "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/docs/HANDOFF.md",
+          "expected": "88dfa12d7334e1b7efb04a0823593ca5dba1f2e9f69f6152b2b910894024dead",
+          "actual": "48aaa652ba5b5a8360bb77150270f2d1d61c163341f55de5aa8b6dbcc5cec34c"
+        }
+      ]
+    },
+    "I01": {
+      "authorization.json": {
+        "sha256": "1a4884c8d7e2f356b5a2a6232726492a361fbef5410feb46f025bbbcc7a930de",
+        "data": {
+          "record_kind": "NEW_BOUNDED_MAINTENANCE_AUTHORIZATION_NOT_LIVE_GRANT",
+          "user_authorization": "User explicitly agreed to G0 adapter implementation and lightweight synthetic fixture tests; willingness to provide a future API key is not paid-call authorization.",
+          "source": "Current coordinator delegation with supplied user transcript;not a modification of D01/E05/oldgrants",
+          "implementation": true,
+          "light_synthetic_fixture_tests": true,
+          "G1": false,
+          "native": false,
+          "simulation": false,
+          "formal": false,
+          "monitor": false,
+          "API": false,
+          "count": false,
+          "candidate_generation": false,
+          "new_scientific_data": false,
+          "network": false,
+          "installation": false,
+          "key_access": false,
+          "delete_old_results": false,
+          "commit": false,
+          "push": false,
+          "independent_review": "P08D01reviewpending;I01willrequireseparateindependentreview",
+          "execution_capability": "Offline saved-metadata validation only;no dispatch client/caller/tool runner"
+        }
+      },
+      "scope.json": {
+        "sha256": "30dd982738342f043c3c049a42e59f9a8841b39bd519815f103fc5c0a7681e98",
+        "data": {
+          "head": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+          "write_allowlist": [
+            "test2/g0_v1/**",
+            "test2/tests/test_g0_adapter_v1.py",
+            "test2/results/g0-adapter-i01-v1/**",
+            "docs/audits/producer_test2_g0_I01_2026-11-05/**",
+            "docs/HANDOFF.md anddocs/PROJECT_STATUS.md currentmetadataonly"
+          ],
+          "protected_sha256": {
+            "AGENTS.md": "5a9b807aeb23300a8510a6a43af9e90dadf61c80d9cf89a350574926820f683e",
+            "docs/EXPERIMENT_PROTOCOL.md": "71bfde3b10474046bf6b10679e88d625e8b9528e4109ee8b22154969d566e423",
+            "docs/DECISIONS.md": "51fc2c4bd9f8d04c4826f11174b91b33ab7bc19605e338fb8b808062cbd5c78f",
+            "docs/test2_next_qualification_plan_v1.md": "d6d8e76e89c900180590b89109b8b3a62831cff9b4b73321f8f169636201450b",
+            "test2/configs/controller_next_qualification_draft_v1.json": "d2ba8cefefe6f9b16c66037e24badfdae3f0a79cfbb41f870ded4b4e315b62a7",
+            "test2/results/controller-done-audit-maintenance-closure-v1/independent-acceptance.json": "a30f8a0ef31374edf7c6d378c949cd1cca543ee92672f3b073a6fc183e9dc874",
+            "test2/results/controller-done-planning-acceptance-p07-v1/independent-acceptance.json": "0ff2b961e5d38f9ebb81b56993c8bd1757d50fa64d57e4f9f13a20c133562648",
+            "docs/audits/agent_bridge_2026-11-06/P05_witness/review.md": "2ef108ceb37a681fd005dad4b591335e0ae838753e1267b2a7c10bb43e6bf775",
+            "docs/audits/agent_bridge_2026-11-06/P05_witness/review.json": "b2f1bac780323a81d63da1dda850911b2dad6cc5fc429d33da4c3bbad7db4319",
+            "docs/audits/agent_bridge_2026-11-06/P05_witness/manifest.json": "e17a5952c588c24014e6b44f34165f79f43fa0204d45bd2b55dc0bb2e5b63536",
+            "docs/audits/agent_bridge_2026-11-06/P06_ledger_fix/review.md": "ecf10fd9eadd9a57eba62a2d905d08220bc348f0f253546a0cb557d78fe73ed7",
+            "docs/audits/agent_bridge_2026-11-06/P06_ledger_fix/review.json": "436b2efaf8ba7f44b31cfd42e06bdab1adf6f1e60497efee2ead55ce61c6436f",
+            "docs/audits/agent_bridge_2026-11-06/P06_ledger_fix/manifest.json": "e8ea9feef15c5d8b8f66ef30c1775bc8cf65a410495d7d057a73f723b379c71b",
+            "docs/audits/agent_bridge_2026-11-06/P07_next_gates/review.md": "cac29c8961ec4160c8e9a97439fa9561d1299ca4eff3c3316fecab07b1ecc2f8",
+            "docs/audits/agent_bridge_2026-11-06/P07_next_gates/review.json": "0a308e3d4b8281a9101a53b0b054e038a63dad4f34d1d2666884e69952926027",
+            "docs/audits/agent_bridge_2026-11-06/P07_next_gates/manifest.json": "284c2f7105652eaf8cb3aa1da95985d4cc00fb4a9ecaa094f000fe2afca821c7",
+            "docs/audits/agent_bridge_2026-11-06/P04_ledger/fixture_records.json": "c12eda95b03c76ef2109aab13f68f59488a3e363e505ef681c3443a4d17414d1",
+            "docs/audits/producer_test2_done_live_E05_2026-11-05/phase.json": "2e30feb9b5754b9baaec773b2b95d5869afb528752f78bdf8a09783b4ed1ec25",
+            "docs/audits/producer_test2_done_live_E05_2026-11-05/snapshot-manifest.json": "579fd75b7201a23573d5f8f533d37b58a896d524f67ee3bfd093a8c03e4ed4f5",
+            "docs/audits/producer_test2_done_live_E05_2026-11-05/closure.json": "68b92625f2b0abd3dab7599aed9e90a01a5eedf567ad1bd964579abdf8606229",
+            "test2/scripts/controller_done_witness_chain_audit_v1.py": "f1b1124be9f9e088f92d61f682223056f96c6f4ba1ce2accb610b9429bf2f82d",
+            "test2/tests/test_controller_done_witness_chain_audit_v1.py": "23d6e6b907cc2887daf3bcbbee5fb46fca1a873a3abddbb4dcf5f179c3b63fdb",
+            "test2/results/controller-done-witness-chain-audit-v5/audit.json": "e12e02ca6721637247bf013eeb0340a9c8198ad3f6c1cfd21bb86aec0833640c",
+            "docs/audits/producer_test2_done_live_E03b_2026-11-05/phase.json": "1f4dc7a88f66e1b75e709ce4e81de3d9e751f92950486542f78d8a290650f8ea",
+            "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot-manifest.json": "ed8d5121acd9cced18c361c29b5cb7856aef53f1664e7e4f890abc79cef5db39",
+            "test2/scripts/controller_done_ledger_audit_v2.py": "2d27c0aac133c002f78a4fe69f505711069b67ef76778d5251fdb774abe7422f",
+            "test2/tests/test_controller_done_ledger_audit_v2.py": "0f845a547afd823071d2a65bf2a73db51ae9301f574e444f6449dc4edbaa1afe",
+            "test2/results/controller-done-ledger-audit-v3/audit.json": "07aedb0eb685b3b46e1e337a7b69f7804be8295f0d0e4bae8bb0a9e6c7c8dcaa",
+            "docs/audits/producer_test2_done_live_E04_2026-11-05/phase.json": "501de0d809fe2933876c6ed2c850113e493a23e6187b4482120f370d7ebc949e",
+            "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot-manifest.json": "afe21297c125850f67c3835feba18fae4ccdae4e35bffd3d84174bac32925aee",
+            "docs/designs/test2_g0_design_v1/manifest.template.json": "b55508bb506fbc5fa1e0f6cf5676105861f35e7ca2e8c7e93d9edd2eaa710d8a",
+            "docs/designs/test2_g0_design_v1/manifest_lifecycle.md": "2f33ba0bae03428c31433c346ca60afc4e87c092df78c1c65a380f11927b063b",
+            "docs/designs/test2_g0_design_v1/README.md": "00591ca5ca224368bfd3ad270964b9f7e6c2740c409a0edd379543c7f844dca6",
+            "docs/designs/test2_g0_design_v1/implementation_permissions.md": "02dfa672618ba3236065eae1abe987b431b1d4e8cfc9bccce68072861c80c624",
+            "docs/designs/test2_g0_design_v1/interface_spec.md": "feaf74795ecc8e4dddef031de8987198a832ff69dbdf3bac6683ad4662dd67cd",
+            "docs/designs/test2_g0_design_v1/public_controls.md": "e92705c1e3237f1b71f6497778351fbc1af5ec4c5c4a90d6d7cd346ce3bbb0a6",
+            "docs/designs/test2_g0_design_v1/public_controls.index.json": "0b3c0467aa2a0b245f86df857d5c83c2de5c148ad28165f5fa7408e1e685d29f",
+            "docs/designs/test2_g0_design_v1/release.template.json": "eb9d3b9e1a07e16b9b28623f1fa1a875072b8f36832029e479dc69935c3cd49b",
+            "docs/designs/test2_g0_design_v1/failure_matrix.md": "7cc4f99b048f7502fc3ac7208bd9e3a4efca93d94b5a6f87e4dcf9ae54a59efc",
+            "docs/audits/producer_test2_g0_D01_2026-11-05/phase.json": "675b772099469ad64603093569e0796aa814d24f73feeadcb24026df8b193ee2",
+            "docs/audits/producer_test2_g0_D01_2026-11-05/snapshot-manifest.json": "be07ee63e34dba49cee48750a6cfe230c61994b71925f8a9a85e406829288983"
+          },
+          "freeze_membership": [
+            {
+              "path": "test2/configs/controller_live_freeze_v1.json",
+              "sha256": "f1c9fcdebb0ede38e5756af947d8dceb985808787353572c98024dffb37ed20c",
+              "member_names": 239
+            },
+            {
+              "path": "test2/configs/live_freeze_v1.json",
+              "sha256": "7f2be65ac1b8013d614c5391b49e6cde2b821dbaca6f3e8bae609e63ed67b912",
+              "member_names": 3486
+            },
+            {
+              "path": "test2/tasks/axis_length_fifo_v1/reference/frozen-v2/freeze.json",
+              "sha256": "bbac094bcf82eecb44e57fd85a3dbdabb27dd07af00559300617753103ed7c67",
+              "member_names": 212
+            },
+            {
+              "path": "test2/configs/controller_done_generation_freeze_v2.json",
+              "sha256": "98393a5d1d7d0665d09bcf4eb09a5462b4179bacd502b1d9b2575ea159064b89",
+              "member_names": 900
+            }
+          ],
+          "schema_dependency": "stdlibonly;researchvenvjsonschemaabsent,noinstallation",
+          "planned_scope": "Explicitnewformat/syntheticmetadatabindings/strictserialledger/pathandreleases/threeoutcomedimensions. Rawparser/scientificoracle/nativequalificationOUT_OF_SCOPE."
+        }
+      },
+      "sealed_phase_present": false,
+      "sealed_manifest_present": false
+    },
+    "P08_unchanged": {
+      "review.json": "f93d6fb191c851a6457318869521a10ac4a987946aeb95dffe098383625ea6ef",
+      "review.md": "3a8274d713c14e30df61141428bb50118e52d9fce85c92175fbd74caa30b88e1"
+    },
+    "HEAD": {
+      "exit": 0,
+      "value": "c25180848ebfe9a1f49da0aa5f579cac913e6428"
+    }
+  },
+  "protected_observation": {
+    "at_utc": "2026-11-06T03:12:39.480307+00:00",
+    "I01_protected_hashes_checked": 41,
+    "mismatches": [],
+    "I01_phase_exists": false,
+    "I01_manifest_exists": false,
+    "D01_HANDOFF_sha256": "48aaa652ba5b5a8360bb77150270f2d1d61c163341f55de5aa8b6dbcc5cec34c",
+    "P08_phase_packet_sha256": "5ea372987d85b83adb1cbab6cab67cebff486efa12bfd32176f006a30ce833cc"
+  },
+  "source_manifest_sha256": "317d47ac20a5c389235b70a1885c4eddc9ebe8c091c9c0e03ed09cfbdf9c38a1",
+  "thread_observation_file": "thread-observation.json",
+  "key_shell_commands": [
+    {
+      "command": "python3 - <<'PY'\nimport pathlib,json,hashlib,subprocess\nh=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();p=pathlib.Path('docs/audits/agent_bridge_2026-11-06/P03_presentation/manifest.json');j=json.loads(p.read_text());assert h(p)=='317d47ac20a5c389235b70a1885c4eddc9ebe8c091c9c0e03ed09cfbdf9c38a1';res={}\nfor key in ['files','sources']:\n snap=[];cur=[]\n for x in j[key]:\n  for name,bag in [('snapshot',snap),('path',cur)]:\n   f=pathlib.Path(x[name]);a=h(f) if f.is_file() else None\n   if a!=x['sha256']:bag.append({'path':str(f),'expected':x['sha256'],'actual':a})\n res[key]={'checked':len(j[key]),'snapshot_mismatches':snap,'current_mismatches':cur}\nb=pathlib.Path('docs/audits/producer_test2_g0_I01_2026-11-05');res['I01']={}\nfor name in ['authorization.json','scope.json']:\n f=b/name;jj=json.loads(f.read_text());res['I01'][name]={'sha256':h(f),'data':jj}\nres['I01']['sealed_phase_present']=(b/'phase.json').exists();res['I01']['sealed_manifest_present']=(b/'snapshot-manifest.json').exists()\np8=pathlib.Path('docs/audits/agent_bridge_2026-11-06/P08_g0_design');res['P08_unchanged']={'review.json':h(p8/'review.json'),'review.md':h(p8/'review.md')};g=subprocess.run(['git','rev-parse','HEAD'],capture_output=True,text=True);res['HEAD']={'exit':g.returncode,'value':g.stdout.strip()};print(json.dumps(res,ensure_ascii=False))\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nimport pathlib,json,hashlib,datetime\nb=pathlib.Path('docs/audits/producer_test2_g0_I01_2026-11-05');s=json.loads((b/'scope.json').read_text());h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();bad=[]\nfor n,v in s['protected_sha256'].items():\n p=pathlib.Path(n);a=h(p) if p.is_file() else None\n if a!=v:bad.append({'path':n,'expected':v,'actual':a})\np=pathlib.Path('docs/audits/agent_bridge_2026-11-06/P08_g0_design');print(json.dumps({'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'I01_protected_hashes_checked':len(s['protected_sha256']),'mismatches':bad,'I01_phase_exists':(b/'phase.json').exists(),'I01_manifest_exists':(b/'snapshot-manifest.json').exists(),'D01_HANDOFF_sha256':h(pathlib.Path('docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/HANDOFF.md')),'P08_phase_packet_sha256':h(p/'phase-packet.json')},ensure_ascii=False))\nPY",
+      "exit_code": 0
+    }
+  ],
+  "scope": {
+    "recent_turns_requested": 2,
+    "new_thread_requests": 0,
+    "messages_sent": 0,
+    "producer_interrupted": false,
+    "tests_or_experiments_run": 0,
+    "producer_code_reviewed": false,
+    "secrets_read": false,
+    "presentation_or_shared_docs_or_historical_reviews_edited": false,
+    "writes_only": "P08a_context_checkpoint/*",
+    "not_proven": [
+      "existence or absence of new human steering",
+      "cause of context compaction/direction change",
+      "all possible filesystem actions behind truncated command previews",
+      "future protection after checkpoint",
+      "I01 correctness or93test independent pass"
+    ]
+  },
+  "stop_condition": "Bounded checkpoint complete; no additional monitoring or implementation review. Await separate sealed I01 handoff.",
+  "recorded_at_utc": "2026-11-06T03:14:02.555652+00:00",
+  "thread_observation_sha256": "4e3e12f2748c9a3ec98abbbc1f4cb5232b251bb77c7731a1ef444352919a0ca7"
+}

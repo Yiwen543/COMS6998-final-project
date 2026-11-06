@@ -1,0 +1,83 @@
+test_candidate_unknown_stays_unresolved_not_physical_alarm (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_candidate_unknown_stays_unresolved_not_physical_alarm) ... ok
+test_hex_rows_transport_tamper (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_hex_rows_transport_tamper) ... ok
+test_independent_anchor_rejects_correlated_file_edit (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_independent_anchor_rejects_correlated_file_edit) ... ok
+test_literal_input_and_cycle_shift_rejected (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_literal_input_and_cycle_shift_rejected) ... ok
+test_missing_and_truncated_vcd (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_missing_and_truncated_vcd) ... ok
+test_missing_physical_phase_and_duplicate_row (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_missing_physical_phase_and_duplicate_row) ... ok
+test_missing_reference_file_and_broken_gzip (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_missing_reference_file_and_broken_gzip) ... ERROR
+test_mon_alteration_with_fresh_log_hashes_still_detected (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_mon_alteration_with_fresh_log_hashes_still_detected) ... ok
+test_prefix_wrong_phase_length_and_slot (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_prefix_wrong_phase_length_and_slot) ... ok
+test_raw_mon_phase_offset (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_raw_mon_phase_offset) ... ok
+test_raw_physical_change_even_if_execution_hash_updated (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_raw_physical_change_even_if_execution_hash_updated) ... ok
+test_reduced_monitor_width_valid_but_selected_bit_required (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_reduced_monitor_width_valid_but_selected_bit_required) ... ok
+test_reference_result_tamper (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_reference_result_tamper) ... ok
+test_reference_unknown_retained (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_reference_unknown_retained) ... ERROR
+test_reproduced_prefix_pass_is_not_selected_alarm_confirmation (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_reproduced_prefix_pass_is_not_selected_alarm_confirmation) ... ERROR
+test_saved_rows_tamper (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_saved_rows_tamper) ... ok
+test_selected_alarm_confirmation_upgrade_rejected (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_selected_alarm_confirmation_upgrade_rejected) ... ok
+test_unreproduced_cannot_claim_oracle_unknown (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_unreproduced_cannot_claim_oracle_unknown) ... ok
+test_unreproduced_has_no_oracle_verdict (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_unreproduced_has_no_oracle_verdict) ... ok
+test_wrong_checker_hash_never_executes (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_wrong_checker_hash_never_executes) ... ok
+
+======================================================================
+ERROR: test_missing_reference_file_and_broken_gzip (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_missing_reference_file_and_broken_gzip)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_controller_done_witness_chain_audit_v1.py", line 159, in test_missing_reference_file_and_broken_gzip
+    self.assertRaises(ValueError,self.run_fixture,broken)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/case.py", line 795, in assertRaises
+    return context.handle('assertRaises', args, kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/case.py", line 238, in handle
+    callable_obj(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_controller_done_witness_chain_audit_v1.py", line 63, in run_fixture
+    return a.inspect_chain(job,0,a.Saved(root),checker)[0]
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/scripts/controller_done_witness_chain_audit_v1.py", line 189, in inspect_chain
+    d=physical/'candidate-replay';m=reader.load(d/'result.json');compressed=reader.raw(d/'replay.log.gz');raw=gzip.decompress(compressed)
+                                                                                                              ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/gzip.py", line 624, in decompress
+    if _read_gzip_header(fp) is None:
+       ~~~~~~~~~~~~~~~~~^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/gzip.py", line 475, in _read_gzip_header
+    raise BadGzipFile('Not a gzipped file (%r)' % magic)
+gzip.BadGzipFile: Not a gzipped file (b'in')
+
+======================================================================
+ERROR: test_reference_unknown_retained (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_reference_unknown_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_controller_done_witness_chain_audit_v1.py", line 69, in test_reference_unknown_retained
+    r=self.run_fixture(verdict='UNRESOLVED');self.assertEqual(r['reference_verdict'],'UNRESOLVED');self.assertTrue(r['reference_unknown'])
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_controller_done_witness_chain_audit_v1.py", line 63, in run_fixture
+    return a.inspect_chain(job,0,a.Saved(root),checker)[0]
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/scripts/controller_done_witness_chain_audit_v1.py", line 209, in inspect_chain
+    need(p['witness_sha256']==reader.files[str(vcd[0].relative_to(reader.root))],'physical VCD digest mismatch')
+                                               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py", line 385, in relative_to
+    raise ValueError(f"{str(self)!r} is not in the subpath of {str(other)!r}")
+ValueError: '/var/folders/l5/6bx7lhn56z1f2kkl41_jc3tm0000gn/T/tmp2olpbkk6/job/work/engine_0/trace.vcd' is not in the subpath of '/private/var/folders/l5/6bx7lhn56z1f2kkl41_jc3tm0000gn/T/tmp2olpbkk6'
+
+======================================================================
+ERROR: test_reproduced_prefix_pass_is_not_selected_alarm_confirmation (test_controller_done_witness_chain_audit_v1.WitnessChainTests.test_reproduced_prefix_pass_is_not_selected_alarm_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_controller_done_witness_chain_audit_v1.py", line 66, in test_reproduced_prefix_pass_is_not_selected_alarm_confirmation
+    r=self.run_fixture();self.assertTrue(r['physical_alarm_reproduced']);self.assertEqual(r['reference_verdict'],'PASS');self.assertFalse(r['reference_confirmed_selected_alarm']);self.assertEqual(r['scientific_adjudication'],'UNRESOLVED')
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_controller_done_witness_chain_audit_v1.py", line 63, in run_fixture
+    return a.inspect_chain(job,0,a.Saved(root),checker)[0]
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/scripts/controller_done_witness_chain_audit_v1.py", line 209, in inspect_chain
+    need(p['witness_sha256']==reader.files[str(vcd[0].relative_to(reader.root))],'physical VCD digest mismatch')
+                                               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py", line 385, in relative_to
+    raise ValueError(f"{str(self)!r} is not in the subpath of {str(other)!r}")
+ValueError: '/var/folders/l5/6bx7lhn56z1f2kkl41_jc3tm0000gn/T/tmprmfjqtd4/job/work/engine_0/trace.vcd' is not in the subpath of '/private/var/folders/l5/6bx7lhn56z1f2kkl41_jc3tm0000gn/T/tmprmfjqtd4'
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.098s
+
+FAILED (errors=3)

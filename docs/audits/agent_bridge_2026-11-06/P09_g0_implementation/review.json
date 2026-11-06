@@ -1,0 +1,1198 @@
+{
+  "phase": "P09_G0_IMPLEMENTATION_REVIEW",
+  "status": "PASS_WITH_LIMITS",
+  "conclusion": "未发现当前可证实的实质风险或可复现的范围内错误接受。仅接受精确 I01 G0 v1 的严格串行、显式身份、合成 JSON/text 元数据验证能力；不是科学、真实运行或未来阶段资格。",
+  "findings": [],
+  "blocking_findings": [],
+  "nonblocking_improvements": [],
+  "interrupt_producer_recommended": false,
+  "input_identity": {
+    "phase_packet_path": "docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/phase-packet.json",
+    "phase_packet_sha256": "9646b4277b7ef942979e332b28e5d19c5fc6986b77d9e9b73b0399f932223eaf",
+    "producer_phase_sha256": "0b6b49b4ca1ae4ea55d172d08e6d8d5f3b90eb26b5ff44ca24a023c4ff5a5bbe",
+    "producer_manifest_sha256": "c49c8c409757322fe49c28142f77cad133fdf9407256e3dcb96ac3ffa2869eb6",
+    "producer_root": "docs/audits/producer_test2_g0_I01_2026-11-05",
+    "source_sha256": {
+      "test2/g0_v1/adapter.py": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918",
+      "test2/g0_v1/schema.json": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "test2/tests/test_g0_adapter_v1.py": "42a4b0987913d30d2a863711c29093fd5baf63f167910fd9d9a830fb6ad62f71"
+    },
+    "P08_review_sha256": "f93d6fb191c851a6457318869521a10ac4a987946aeb95dffe098383625ea6ef",
+    "P08a_review_sha256": "0c772276a50e9858425b6bf2ef706c790bf786469d425d5e99741fc742293d7b"
+  },
+  "test_accounting": {
+    "producer_reported": {
+      "suites": 6,
+      "cases": 469,
+      "final_tests": 93,
+      "attempt1_tests": 60,
+      "attempt1_failures": 8,
+      "independent_acceptance": false
+    },
+    "reviewer_fresh_final_suite": {
+      "tests": 93,
+      "failures": 0,
+      "errors": 0,
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/exec_tree/test2/tests/test_g0_adapter_v1.py --record docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/fresh-suite",
+      "exit_code": 0
+    },
+    "reviewer_saved_byte_replay": {
+      "cases": 469,
+      "purpose": "Parse each exact persisted I01 bundle with the corresponding copied source/schema, without regenerating historical suites.",
+      "status_mismatches": 0,
+      "fixture_binding_mismatches": 0,
+      "expected_vs_actual_failures_preserved": 8,
+      "result_differences": "Only6 FileNotFoundError absolute paths moved to snapshot; after explicit path normalization and removing local timing fields,0 unexplained differences.",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/replay_saved.py",
+      "exit_code": 0
+    },
+    "reviewer_independent_probes": {
+      "count": 28,
+      "expectation_failures": 0,
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/independent_probes.py",
+      "exit_code": 0,
+      "fixture_policy": "Deep disk copies of the saved fresh baseline before each mutation; independent construction/rebinding, not producer mutation/seal helpers. Inputs hashed after final mutation, validated from disk, compared before/after, exact result and fixture-binding persisted."
+    },
+    "reviewer_CLI_output_controls": {
+      "count": 6,
+      "expectation_failures": 0,
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/cli_controls.py",
+      "exit_code": 0,
+      "controls": "PASS0,UNRESOLVED2,REJECT1,overwrite refused1,direct symlink refused1,ancestor escape refused1; exact stdout/stderr/argv/results retained."
+    },
+    "total_new_validation_executions": {
+      "fresh_suite_cases": 93,
+      "saved_byte_parses": 469,
+      "independent_bundle_probes": 28,
+      "CLI_process_controls": 6
+    },
+    "not_executed": "No G1/native/simulator/formal/monitor/checker/API/count/generation/scientific experiment/old pipeline."
+  },
+  "acceptance_checks": [
+    {
+      "id": "P09-C1",
+      "result": "ACCEPTED_WITH_SCOPE",
+      "source_lines": [
+        "test2/g0_v1/adapter.py:28",
+        "test2/g0_v1/adapter.py:41",
+        "test2/g0_v1/adapter.py:89"
+      ],
+      "evidence": "fresh-suite/*; independent-probes/correlated-bool-usage,duplicate-json-key,nonfinite-nan,null-grant,placeholder-source-sha",
+      "reason": "Exact types distinguish bool/int; tested closed fields/version/nullability, duplicate JSON keys, explicit NaN token, placeholder in digest and unrecognized science fields fail closed. No claim of general JSON Schema implementation or exhaustive input validation."
+    },
+    {
+      "id": "P09-C2",
+      "result": "ACCEPTED_WITH_SCOPE",
+      "source_lines": [
+        "test2/g0_v1/adapter.py:123",
+        "test2/g0_v1/adapter.py:145",
+        "test2/g0_v1/adapter.py:185"
+      ],
+      "evidence": "fresh93 identity/orphan/duplicate/model/tier/quota/subset controls; own session-arm-reuse,parent-count-cross-session,source-tamper-rehashed,raw-usage-tamper-rehashed",
+      "reason": "Declared identities/order/source/context/prompt/response/count-generation/request-terminal-call/resource fields bind across representations; correlated outer SHA recomputation does not conceal tested inner contradictions. Not authentication of producer history."
+    },
+    {
+      "id": "P08-N1",
+      "result": "BEHAVIOR_ACCEPTED_FOR_THIS_EXACT_G0_VERSION",
+      "source_lines": [
+        "test2/g0_v1/adapter.py:160",
+        "test2/g0_v1/adapter.py:162",
+        "test2/g0_v1/adapter.py:180"
+      ],
+      "evidence": "12 independent combinations: count/generation × retry/round/session × missing-terminal/error",
+      "expected_actual": "All6 missing-terminal next requests REJECT REQUEST_AFTER_MISSING_TERMINAL; all6 matching-error valid continuations retain first error/UNKNOWN and return UNRESOLVED.",
+      "reason": "Missing terminal keeps global gap barrier; explicit matching error consumes its terminal and permits otherwise valid continuation. D01 unchanged; producer's acknowledged lack of dedicated saved combination tests is supplemented only by this independent evidence."
+    },
+    {
+      "id": "P09-C3-HALT",
+      "result": "ACCEPTED_WITH_SCOPE",
+      "source_lines": [
+        "test2/g0_v1/adapter.py:166",
+        "test2/g0_v1/adapter.py:175",
+        "test2/g0_v1/adapter.py:223"
+      ],
+      "evidence": "fresh-suite tests17-22,79-81; independent-probes/late-usage-after-halt,late-return-cannot-be-accepted,halted-next-session",
+      "reason": "Persistent halt rejects retry/round/session flags/events/orphans, not merely UNRESOLVED. Pending issued request may preserve12 late declared tokens, but remains halted+UNRESOLVED with no accepted response; attempted late acceptance REJECTS ACCEPTED_WITH_HALT."
+    },
+    {
+      "id": "P09-C4-UNKNOWN-COST",
+      "result": "ACCEPTED_WITH_SCOPE",
+      "source_lines": [
+        "test2/g0_v1/adapter.py:117",
+        "test2/g0_v1/adapter.py:209",
+        "test2/g0_v1/adapter.py:261"
+      ],
+      "evidence": "fresh tests06-08,22,23,24,31,32,61-64,78-80,90; own missing-usage-subsets-null and generation-error-valid-next across3scopes",
+      "reason": "Missing generation usage and cached/reasoning subsets remain null, not zero; known subtotal kept distinct from total completeness; fees/invoice UNKNOWN/null; legal NOT_RUN retains null tokens; synthetic declarations never claimed as provider usage."
+    },
+    {
+      "id": "P09-C5-OUTPUT",
+      "result": "ACCEPTED_WITH_SCOPE",
+      "source_lines": [
+        "test2/g0_v1/adapter.py:65",
+        "test2/g0_v1/adapter.py:110",
+        "test2/g0_v1/adapter.py:267"
+      ],
+      "evidence": "fresh tests33-37,54-59,77,87,92-93; cli-controls.json",
+      "reason": "Input SHA/release inventory, traversal/symlink/output existence controls and CLI namespace tested; failed integrity report retained; overwrite and tested symlink escapes leave prior bytes/sentinel unchanged. Stable local filesystem only; no hostile concurrent-race guarantee."
+    },
+    {
+      "id": "P09-C6-SCIENCE-SUPPORT",
+      "result": "ACCEPTED_WITH_SCOPE",
+      "source_lines": [
+        "test2/g0_v1/adapter.py:238",
+        "test2/g0_v1/adapter.py:264"
+      ],
+      "evidence": "support-matrix.json;coverage.md;coverage-map.json44cases/94bindings",
+      "reason": "26 metadata-tested/12partial-metadata/6out-of-scope correctly distinguished; observations only bind declared width/slot/reset/phase/reference-prefix metadata. Raw native/physical/MON parser, independent reference evaluation and scientific truth absent explicitly; output science fixed NOT_EVALUATED. Unknown metadata can integrity-PASS without alarm/correctness credit."
+    },
+    {
+      "id": "P09-C7-HISTORY",
+      "result": "ACCEPTED_EVIDENCE_PRESERVATION",
+      "source_lines": [
+        "test2/g0_v1/adapter.py:45",
+        "test2/tests/test_g0_adapter_v1.py:226"
+      ],
+      "evidence": "I01 drafts/attempt1..5; all469 saved-byte replays; final suite source SHA",
+      "reason": "First60/8fail and malformed-SHA seal-repair artifact retained and reproducible; final nullable-ref ordering corrected and test50 uses reseal=False. Only exact final93 belongs to final3-source acceptance, not every earlier passing suite."
+    }
+  ],
+  "limitations": [
+    "Only origin=SYNTHETIC_FIXTURE, explicit-identity strict serial closed-shapes JSON/text G0 metadata; no real/legacy-run or concurrency acceptance.",
+    "Cryptographic self-consistency is not authenticated human authorization, provider return/invoice, independent historical provenance, opaque-prompt isolation or real own-history renderer correctness.",
+    "Observations/reference descriptors are synthetic declarations and text sentinels, not raw VCD/literal/PRE-POST/rows/HEX/MON parsers or independent semantic labels. No G1 support-profile qualification.",
+    "PASS_WITH_SCOPE integrity can coexist with science NOT_EVALUATED and costs UNKNOWN; current evidence does not establish monitor/DUT/oracle correctness, selected sample/category attribution or128-cycle completion.",
+    "F1, H1/H2/L1,20earlier-prefixFAIL/74unreproduced boundaries, P05 exact94-format/P06 currentserialized-batch limits, P05-N1 backlog and R0/R1/R2 recovery planned remain unchanged.",
+    "P04 original exact fixture v1 REJECT on response/snapshot mismatch despite saved PASS; corrected temporary binding/canonical evidence establishes prior halt flaw, serialization cause UNKNOWN. No P04 replay here.",
+    "Actual invoice/count fees and unmeasured local memory/CLI wall time remain unknown; synthetic token/reserve units are not real spend or live-model results.",
+    "Stable local readonly snapshots required; no hostile concurrent filesystem race proof, exhaustive adversarial security or all-input correctness guarantee.",
+    "8695I01 files/6linktexts and41protected sources checked; four oldfreeze manifest identities/member names reused, not fresh all4837oldmember content audit.",
+    "Producer raw PTY receipts for earlier six suites not archived; saved summary/runner exit logic are historical evidence, supplemented here by fresh93 run and469 saved-byte status reproductions. No G1/future execution authorized."
+  ],
+  "permissions": {
+    "writes_only": "P09_g0_implementation/**",
+    "new_agents_or_chats": 0,
+    "producer_messages_or_interruptions": 0,
+    "source_shared_docs_or_old_results_modified": false,
+    "P08_or_P08a_modified": false,
+    "keys_accessed": false,
+    "network_API_paid_installation": false,
+    "scientific_or_native_execution": false,
+    "deletion_commit_push": false
+  },
+  "commands": [
+    {
+      "command": "python3 - <<'PY'\nimport json,hashlib,pathlib,os\np=pathlib.Path('docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/phase-packet.json');q=json.loads(p.read_text());b=pathlib.Path(q['producer_phase']).parent;h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();assert h(b/'phase.json')==q['producer_phase_sha256'];assert h(b/'snapshot-manifest.json')==q['producer_manifest_sha256'];m=json.loads((b/'snapshot-manifest.json').read_text());bad=[n for n,v in m['files'].items() if not (b/n).is_file() or h(b/n)!=v];links=[n for n,v in m['symlinks'].items() if not (b/n).is_symlink() or os.readlink(b/n)!=v['target'] or hashlib.sha256(os.readlink(b/n).encode()).hexdigest()!=v['target_text_sha256']];current=[]\nfor n,v in m['files'].items():\n if n.startswith('snapshot/'):\n  f=pathlib.Path(n[9:]);a=h(f) if f.is_file() and not f.is_symlink() else None\n  if a!=v:current.append({'path':str(f),'expected':v,'actual':a})\nprint(json.dumps({'regular_files':len(m['files']),'symlinks':len(m['symlinks']),'bad':bad,'bad_links':links,'current_drift':current}));assert not bad and not links\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g0_I01_2026-11-05/snapshot/test2/g0_v1/adapter.py | sed -n '1,185p'",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g0_I01_2026-11-05/snapshot/test2/g0_v1/README.md; cat docs/audits/producer_test2_g0_I01_2026-11-05/snapshot/test2/g0_v1/support-matrix.json",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g0_I01_2026-11-05/snapshot/test2/g0_v1/adapter.py | sed -n '183,350p'",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g0_I01_2026-11-05/snapshot/test2/g0_v1/adapter.py | sed -n '350,530p'",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g0_I01_2026-11-05/snapshot/test2/g0_v1/coverage.md",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nimport json,pathlib\nb=pathlib.Path('docs/audits/producer_test2_g0_I01_2026-11-05/snapshot/test2/g0_v1');s=json.loads((b/'schema.json').read_text());print('TOP',[(k,v) for k,v in s.items() if k!='definitions'])\nfor k,v in s['definitions'].items():print(k,json.dumps(v,separators=(',',':')))\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g0_I01_2026-11-05/snapshot/test2/tests/test_g0_adapter_v1.py | sed -n '120,290p'",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g0_I01_2026-11-05/evidence-checks.json",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,shutil\nb=Path('docs/audits/producer_test2_g0_I01_2026-11-05');out=Path('docs/audits/agent_bridge_2026-11-06/P09_g0_implementation');q=json.loads((out/'phase-packet.json').read_text());tree=out/'exec_tree';assert not tree.exists()\nfor n,v in q['source_sha256'].items():\n src=b/'snapshot'/n;dst=tree/n;dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dst);assert hashlib.sha256(dst.read_bytes()).hexdigest()==v\nfor i in range(1,6):\n for n in ['test2/g0_v1/adapter.py','test2/g0_v1/schema.json','test2/tests/test_g0_adapter_v1.py']:\n  src=b/'drafts'/f'attempt{i}'/n;dst=tree/'drafts'/f'attempt{i}'/n;dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dst)\nprint('COPIED_EXACT_FINAL3_AND_DRAFTS15_TO_REVIEW_OWNED_TREE')\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/exec_tree/test2/tests/test_g0_adapter_v1.py --record docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/fresh-suite",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/replay_saved.py",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/independent_probes.py",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P09_g0_implementation/cli_controls.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,collections\nb=Path('docs/audits/producer_test2_g0_I01_2026-11-05/snapshot/test2/results/g0-adapter-i01-v1');v=json.loads((b/'coverage-map.json').read_text());print('MAP_KEYS',list(v));print('MAP_META',json.dumps({k:x for k,x in v.items() if not isinstance(x,(list,dict))},ensure_ascii=False));print('NESTED',[(k,type(x).__name__,len(x)) for k,x in v.items() if isinstance(x,(list,dict))]);\nr=Path('docs/audits/agent_bridge_2026-11-06/P09_g0_implementation');re=json.loads((r/'saved-byte-replay.json').read_text());sample=next(x for x in re['rows'] if x['attempt']==6 and x['case']=='test_59_missing_artifact');old=json.loads((b/'attempt6/test_59_missing_artifact/result.json').read_text());print('REPLAY_DIFFERENCE_EXAMPLE',{'saved':old['integrity'],'fresh':sample['result']['integrity']})\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,collections,re\nB=Path('docs/audits/producer_test2_g0_I01_2026-11-05');S=B/'snapshot';M=json.loads((S/'test2/results/g0-adapter-i01-v1/coverage-map.json').read_text());h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();print('CASE_KEYS',list(M['cases'][0]));print('FIRST_CASE',json.dumps(M['cases'][0],ensure_ascii=False));print('STATUS_COUNTS',dict(collections.Counter(c['status'] for c in M['cases'])))\nassert [c['id'] for c in M['cases']]==[f'FM{i:02}' for i in range(1,45)]\nprint('INITIAL_TEST50',next(l for l in (B/'drafts/attempt1/test2/tests/test_g0_adapter_v1.py').read_text().splitlines() if 'def test_50' in l))\nprint('FINAL_TEST50',next(l for l in (S/'test2/tests/test_g0_adapter_v1.py').read_text().splitlines() if 'def test_50' in l))\nPY",
+      "exit_code": 1
+    },
+    {
+      "command": "sed -n '105,125p' docs/audits/producer_test2_g0_I01_2026-11-05/snapshot/test2/tests/test_g0_adapter_v1.py; sed -n '168,192p' docs/audits/producer_test2_g0_I01_2026-11-05/snapshot/test2/tests/test_g0_adapter_v1.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,collections\nB=Path('docs/audits/producer_test2_g0_I01_2026-11-05');S=B/'snapshot';M=json.loads((S/'test2/results/g0-adapter-i01-v1/coverage-map.json').read_text());h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();assert [c['case_id'] for c in M['cases']]==[f'FM{i:02}' for i in range(1,45)];count=0\nfor c in M['cases']:\n assert c['scientific_validation']=='NOT_EVALUATED' and c['native_or_independent_oracle_execution'] is False\n for e in c['evidence']:\n  assert h(S/e['result'])==e['result_sha256'];assert h(S/e['fixture_binding'])==e['fixture_binding_sha256'];r=json.loads((S/e['result']).read_text());assert r['integrity']['status']==e['observed_integrity'];assert r['adapter_source_sha256']==M['source_sha256'] and r['schema_sha256']==M['schema_sha256'];count+=1\nprint('MAPPING',len(M['cases']),'evidence',count,'status_counts',dict(collections.Counter(c['coverage_status'] for c in M['cases'])))\nfor label,path in [('INITIAL',B/'drafts/attempt1/test2/tests/test_g0_adapter_v1.py'),('FINAL',S/'test2/tests/test_g0_adapter_v1.py')]:print(label,next(l for l in path.read_text().splitlines() if 'def test_50' in l))\nprint('ALL_MAPPING_BINDINGS_MATCH')\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,os,subprocess,datetime\nO=Path('docs/audits/agent_bridge_2026-11-06/P09_g0_implementation');Q=json.loads((O/'phase-packet.json').read_text());B=Path(Q['producer_phase']).parent;H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();M=json.loads((B/'snapshot-manifest.json').read_text());bad=[n for n,h in M['files'].items() if not (B/n).is_file() or H(B/n)!=h];links=[n for n,v in M['symlinks'].items() if not (B/n).is_symlink() or os.readlink(B/n)!=v['target']];drift=[]\nfor n,h in M['files'].items():\n if n.startswith('snapshot/'):\n  f=Path(n[9:]);a=H(f) if f.is_file() and not f.is_symlink() else None\n  if a!=h:drift.append({'path':str(f),'expected':h,'actual':a})\nsc=json.loads((B/'scope.json').read_text());protected=[n for n,h in sc['protected_sha256'].items() if H(Path(n))!=h];copies={n:H(O/'exec_tree'/n) for n in Q['source_sha256']};assert copies==Q['source_sha256'];assert H(B/'phase.json')==Q['producer_phase_sha256'] and H(B/'snapshot-manifest.json')==Q['producer_manifest_sha256']\n# File paths in the six replay differences are the expected missing-file location only.\nre=json.loads((O/'saved-byte-replay.json').read_text());diffs=[]\ndef norm(x):\n if isinstance(x,dict):return {k:norm(v) for k,v in x.items() if k not in ('parse_seconds','input_bytes_read')}\n if isinstance(x,list):return [norm(v) for v in x]\n if isinstance(x,str):return x.replace(str((B/'snapshot').resolve())+'/',str(Path.cwd())+'/')\n return x\nfor row in re['rows']:\n s=json.loads((B/'snapshot/test2/results/g0-adapter-i01-v1'/('attempt'+str(row['attempt']))/row['case']/'result.json').read_text())\n if norm(s)!=norm(row['result']):diffs.append({'attempt':row['attempt'],'case':row['case']})\ng=subprocess.run(['git','rev-parse','HEAD'],capture_output=True,text=True);status=subprocess.run(['git','status','--porcelain=v1','--untracked-files=normal'],capture_output=True,text=True)\nrecord={'checked_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'HEAD':g.stdout.strip(),'git_HEAD_exit':g.returncode,'git_status_exit':status.returncode,'git_status_entries':len(status.stdout.splitlines()),'regular_files_checked':len(M['files']),'regular_mismatches':bad,'symlink_texts_checked':len(M['symlinks']),'symlink_mismatches':links,'current_copy_drift':drift,'protected_sources_checked':len(sc['protected_sha256']),'protected_source_mismatches':protected,'executed_copy_source_sha256':copies,'producer_or_snapshot_code_cache_paths':[str(p) for base in [B/'snapshot/test2/g0_v1',B/'snapshot/test2/tests',O/'exec_tree'] for p in base.rglob('__pycache__')],'saved_replay_unexplained_result_differences':diffs,'fresh_suite':json.loads((O/'fresh-suite/summary.json').read_text()),'independent_probes':{'count':28,'expectation_failures':json.loads((O/'independent-probes/summary.json').read_text())['expectation_failures']},'CLI_controls':{k:v for k,v in json.loads((O/'cli-controls.json').read_text()).items() if k!='rows'}}\n(O/'verification.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\\n');print(json.dumps(record,ensure_ascii=False));assert not bad and not links and not drift and not protected and not diffs and not record['producer_or_snapshot_code_cache_paths']\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nO=Path('docs/audits/agent_bridge_2026-11-06/P09_g0_implementation');B=Path('docs/audits/producer_test2_g0_I01_2026-11-05');q=json.loads((O/'phase-packet.json').read_text());h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();assert h(Path(q['P08_review']))==q['P08_review_sha256'];assert h(Path(q['P08a_context']))==q['P08a_context_sha256'];s=json.loads((B/'scope.json').read_text());rows=[]\nfor f in s['freeze_membership']:\n p=Path(f['path']);assert h(p)==f['sha256'];v=json.loads(p.read_text());members=v.get('files',v.get('artifact_sha256'));assert len(members)==f['member_names'];rows.append(f)\nr=json.loads((O/'verification.json').read_text());r['old_freeze_manifest_identities_and_member_names_checked']=rows;r['P08_P08a_still_match']=True;(O/'verification.json').write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\\n');print('OLD_FREEZE_MANIFESTS',len(rows),'MEMBER_NAMES',sum(x['member_names'] for x in rows),'CONTENT_AUDIT',False,'P08/P08a unchanged')\nPY",
+      "exit_code": 0
+    }
+  ],
+  "reviewer_harness_incidents": [
+    {
+      "type": "READ_ONLY_MAPPING_KEY_ERROR",
+      "exit_code": 1,
+      "detail": "One mapping inspection used nonexistent status/id keys. Correct keys coverage_status/case_id were subsequently read and all44/94bindings verified exit0. No source/fixture/result modification and no product failure."
+    }
+  ],
+  "handoff": "Coordinator may record scoped G0 acceptance. Future G1/native/scientific/services/data authorization and semantic qualification require their own explicit gates. No material finding warrants interruption; no hidden future work inferred.",
+  "reviewed_at_utc": "2026-11-06T03:30:29.242287+00:00",
+  "verification": {
+    "checked_at_utc": "2026-11-06T03:26:49.994298+00:00",
+    "HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+    "git_HEAD_exit": 0,
+    "git_status_exit": 0,
+    "git_status_entries": 199,
+    "regular_files_checked": 8695,
+    "regular_mismatches": [],
+    "symlink_texts_checked": 6,
+    "symlink_mismatches": [],
+    "current_copy_drift": [],
+    "protected_sources_checked": 41,
+    "protected_source_mismatches": [],
+    "executed_copy_source_sha256": {
+      "test2/g0_v1/adapter.py": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918",
+      "test2/g0_v1/schema.json": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "test2/tests/test_g0_adapter_v1.py": "42a4b0987913d30d2a863711c29093fd5baf63f167910fd9d9a830fb6ad62f71"
+    },
+    "producer_or_snapshot_code_cache_paths": [],
+    "saved_replay_unexplained_result_differences": [],
+    "fresh_suite": {
+      "adapter_source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918",
+      "errors": 0,
+      "failures": 0,
+      "fixture_case_directories": 93,
+      "new_scientific_samples": 0,
+      "passed": true,
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "scope": "ONLY_NEW_G0_LIGHT_SYNTHETIC_FIXTURES_NO_API_NATIVE_OR_SCIENCE",
+      "seconds": 1.03098070807755,
+      "tests": 93,
+      "tests_source_sha256": "42a4b0987913d30d2a863711c29093fd5baf63f167910fd9d9a830fb6ad62f71"
+    },
+    "independent_probes": {
+      "count": 28,
+      "expectation_failures": []
+    },
+    "CLI_controls": {
+      "controls": 6,
+      "all_expected_exits": true,
+      "overwrite_bytes_preserved": true,
+      "symlink_sentinel_preserved": true
+    },
+    "old_freeze_manifest_identities_and_member_names_checked": [
+      {
+        "path": "test2/configs/controller_live_freeze_v1.json",
+        "sha256": "f1c9fcdebb0ede38e5756af947d8dceb985808787353572c98024dffb37ed20c",
+        "member_names": 239
+      },
+      {
+        "path": "test2/configs/live_freeze_v1.json",
+        "sha256": "7f2be65ac1b8013d614c5391b49e6cde2b821dbaca6f3e8bae609e63ed67b912",
+        "member_names": 3486
+      },
+      {
+        "path": "test2/tasks/axis_length_fifo_v1/reference/frozen-v2/freeze.json",
+        "sha256": "bbac094bcf82eecb44e57fd85a3dbdabb27dd07af00559300617753103ed7c67",
+        "member_names": 212
+      },
+      {
+        "path": "test2/configs/controller_done_generation_freeze_v2.json",
+        "sha256": "98393a5d1d7d0665d09bcf4eb09a5462b4179bacd502b1d9b2575ea159064b89",
+        "member_names": 900
+      }
+    ],
+    "P08_P08a_still_match": true
+  },
+  "evidence_manifest_sha256": "01df254c3b1ea5bee0fe56251777a34e5d25583dfd2d698f27ee4e2055df1f4e",
+  "evidence_file_count": 2279,
+  "evidence_symlink_count": 2,
+  "independent_probe_bindings": [
+    {
+      "actual": "PASS_WITH_SCOPE",
+      "case": "baseline",
+      "expectation_met": true,
+      "expected": "PASS_WITH_SCOPE",
+      "expected_reason": null,
+      "fixture_binding_sha256": "9d9ebc60467beb544cd811a86ba197462d85f5f59f4633bd9d038dc56b87499f",
+      "input_sha256": {
+        "attempts.json": "994472ac4d782580c1a21d78c253b142c804fc9662da8ef338111d99fc8be1f0",
+        "calls.json": "7c45c34685f05098fdc37676d927324ff8f2f4c1e7e02b407c9c7d6dbb80f36c",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "6a93673b95a935c1dadf7474a98e64959dce380a0c4de2ea6f7046dad7635bc3",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "9acda017d71ddf7faa2b11af0739fd64fef3176d4b015b8cafdd6e667bd1183e",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "51128cfea63466e33faab104ee587cda9df289171371da18335f37584d1a5488",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "d65f99bbf33e1f7c0dc2cad9377c90e9a693c47748c36a96ddfa094e2a85074e",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "retry-count-missing-next-dispatch",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": "REQUEST_AFTER_MISSING_TERMINAL",
+      "fixture_binding_sha256": "92d4b0517ff56819f08f48f2943a9cca7d8266b0a499334f0e25fbe66691b806",
+      "input_sha256": {
+        "attempts.json": "56252a56a28d164f98dbff56f85284f7c017200dd35983ef9f253dba701b84ab",
+        "calls.json": "2bb87aa8c14b176b4813821ec43185c83a9ab89e042065e91512b5a955a7d37b",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "0cf7e6c27fda03fa228509631d9f21ea808f1d612de012805ab4cde59d56e732",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "ebb286ce5f1fedd0229496cb41b7550cfbc8e98e0bf673325fed587ece270bc1",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "2d66cc4040afa9b37cad21a4d8b54a62a66236d8b8e898afb317ecd0ebf0bfab",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "44fa49587627e9ceadd97f26ce5a31a26e7b8bc028add5ebf287333eff12c252",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "ca400e4b88a806139fee4f9030a4466bb551285c09b2cb9c61701075ea49a887",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "UNRESOLVED",
+      "case": "retry-count-error-valid-next",
+      "expectation_met": true,
+      "expected": "UNRESOLVED",
+      "expected_reason": null,
+      "fixture_binding_sha256": "5591da80c3547f76d7235f18447baf314878be619591dfd1c07f9a2bd47f8687",
+      "input_sha256": {
+        "attempts.json": "56252a56a28d164f98dbff56f85284f7c017200dd35983ef9f253dba701b84ab",
+        "calls.json": "8f2f08b0fe3fa9624b64ad4e95b24141efba24a4373fb8a943706055ff8ea8a1",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "ce570ecdc83a1e4faf669a66c07fef08ea58a7b3a11b77db3fcaf98d0f68921b",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "2a44e162f6a62ffa662aa52efcb435ca93e09f9197671763904cd921a2d8961b",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "761290f9eceb0fc302014ea79cb1ae245e7f59fc2b3808dbaf9fbe6f0bd7a9be",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "44fa49587627e9ceadd97f26ce5a31a26e7b8bc028add5ebf287333eff12c252",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "93af7d2527d46ff25a46072394fce9f2f2323df143926998cb891b855f0e77cd",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "retry-generation-missing-next-dispatch",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": "REQUEST_AFTER_MISSING_TERMINAL",
+      "fixture_binding_sha256": "92d7f3ee0313119deb384d7ff90f317596d48554cb65c8c9c9da6dc6898b8b37",
+      "input_sha256": {
+        "attempts.json": "56252a56a28d164f98dbff56f85284f7c017200dd35983ef9f253dba701b84ab",
+        "calls.json": "da6d8d3ac5096e4ac687ba43127d511547044e98fa7ca1a403b4002c6ba558ae",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "94d43077f72536389ed328a623fc43375e6287456b5bf1f5e7b7d7b8fe138179",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "cf6626ce7b0e238485393c2e975c1b7a34b22708d5cc6209d17d1f8f82b9a351",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "79b243cc738b2ddb3db133ef566ef46130f9a45395a0dea73bc0d6800fa267e0",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "44fa49587627e9ceadd97f26ce5a31a26e7b8bc028add5ebf287333eff12c252",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "d271100f5c30f4640f04b6a0bd1beeef0cba074a6172bab7ea49fca53dc97a0d",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "UNRESOLVED",
+      "case": "retry-generation-error-valid-next",
+      "expectation_met": true,
+      "expected": "UNRESOLVED",
+      "expected_reason": null,
+      "extra_check": true,
+      "fixture_binding_sha256": "69dd60eca8cf2d2c45ae05771c17f9142f80b5069e6bf0944b590ca379971b32",
+      "input_sha256": {
+        "attempts.json": "56252a56a28d164f98dbff56f85284f7c017200dd35983ef9f253dba701b84ab",
+        "calls.json": "f7333843aaf573caed7bb5bc0eb71d1987a1cf53fe922bf04adbe4c25d706ee6",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "21c051603b16655fee5aab637832ac827515d0f18adbf793140cecaab29dc672",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "609e9a798fea1b0c6c7a50ff4a4b75ec665a4f85b957146c9769f38d92c8c62a",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "1b337f44b247bb0b0f19654316c5732c393eb6ab2d08c4b6b95dc96773eec1d1",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "44fa49587627e9ceadd97f26ce5a31a26e7b8bc028add5ebf287333eff12c252",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "4f96cb7ebd6627a6372943e7ea40a0cbdc19dab6185d6e776dffa316eb646dc8",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "round-count-missing-next-dispatch",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": "REQUEST_AFTER_MISSING_TERMINAL",
+      "fixture_binding_sha256": "51819d5156f98958bef6468345ae63bfaa65e4220ff2db4566eb6cc9157de517",
+      "input_sha256": {
+        "attempts.json": "62fe44e06cbf9b68eda6c46cca8da00cb492d29e5b5be931c068e2a8362ecd60",
+        "calls.json": "27f2425a2b44981ee3b9c2b19d900a037a472c1830736d2f59b00f2010e88f50",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "040d1c8eaf22bcde28b6836b485960fd28ab323388a67902b5462d8395eb0f8c",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "8a3f6dfe77d0c02eecb13ac6c00fead2f6f602f8e29609e35974fc699845b644",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "4e2736bec6d32ef82a8891ad4d3291218a0f2563e56280dbc59b6a54fb9dca17",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "1be20033785223cd096df80cb0dd7a4a7149ba5eb5fd1485f37d5852de9bae5d",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "27bf026bf59a9f2cfbbd2f635f981da1871ebe6ad955331abf81b4bb1596c948",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "UNRESOLVED",
+      "case": "round-count-error-valid-next",
+      "expectation_met": true,
+      "expected": "UNRESOLVED",
+      "expected_reason": null,
+      "fixture_binding_sha256": "2c4b2d7aec7d4dc4e42a4a8e667b355dd9f4e06bdbc3d228f0da346deb292b7f",
+      "input_sha256": {
+        "attempts.json": "62fe44e06cbf9b68eda6c46cca8da00cb492d29e5b5be931c068e2a8362ecd60",
+        "calls.json": "c4b28b185788e3e640bfeb0a186e563a0eb8fbf2669aac203acca7ea0d0aebfa",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "d51cd0d51476dab20d4ccfba0304eedc95a1b50a6c4bd5fd5a2a1c7e2c7d9cb0",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "38b56a24069ca30bb7bf74eda4994173d263edb524c3952fe4bd1cee1fcde300",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "1fdd49f42f71bf495352b82ca624fa0a3dcc966fe0300bf89aee8440dc2f506b",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "1be20033785223cd096df80cb0dd7a4a7149ba5eb5fd1485f37d5852de9bae5d",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "d424520eeaac3f7c75d4de32df92e54d8e332649f5e14ad3c36a048cdaddb8fa",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "round-generation-missing-next-dispatch",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": "REQUEST_AFTER_MISSING_TERMINAL",
+      "fixture_binding_sha256": "258f701368e09511215f11bc2ac2a0a64d91f8c13be9513693823e20f3d62285",
+      "input_sha256": {
+        "attempts.json": "62fe44e06cbf9b68eda6c46cca8da00cb492d29e5b5be931c068e2a8362ecd60",
+        "calls.json": "b758bbf638144b0a4f2690d2cf60abb1dcb410f4efa046a4c1f7ce592fb96a6e",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "8ec96c4480394c9e5f4c2c671f2d2658aa7fa9acce3a537c11dbbb062d5a97b5",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "b7cc6496d4466583edf1e8a899672442e227effa636cdd1222cd3b22dd448053",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "0f7deeed7d271a73f8c02daa132d61e8d3d5f4c077c62bcd3289fbad732f3f63",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "1be20033785223cd096df80cb0dd7a4a7149ba5eb5fd1485f37d5852de9bae5d",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "6eb0165bcbfbe3e1c0f058778749ef76dd018a201f3619f359b5723301017a13",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "UNRESOLVED",
+      "case": "round-generation-error-valid-next",
+      "expectation_met": true,
+      "expected": "UNRESOLVED",
+      "expected_reason": null,
+      "extra_check": true,
+      "fixture_binding_sha256": "0ec85bea35b429f175531aed5a0d5cf0afe2f66c2921ff4a3060f5739f74870c",
+      "input_sha256": {
+        "attempts.json": "62fe44e06cbf9b68eda6c46cca8da00cb492d29e5b5be931c068e2a8362ecd60",
+        "calls.json": "145a7740873ccbab865d80a17c689a1fbdd77dfce4499b5aebc0a14712732f9d",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "6ea5102f87c1fdd38485021d0cdfda7290da7480c3f0e9effb101ead24a9eb73",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "96265d9619b058dd1ef09bc62ac40d50aacc2a64017491b49404abc102862011",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "29570e85f30a246663e5579dc17b42d58726f7270fc9c7383b26d80a6f90661f",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "1be20033785223cd096df80cb0dd7a4a7149ba5eb5fd1485f37d5852de9bae5d",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "47cfd4eddd6d907250b6a508f1f3cf55518662477ce576f13f89a08b0dcc585d",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "session-count-missing-next-dispatch",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": "REQUEST_AFTER_MISSING_TERMINAL",
+      "fixture_binding_sha256": "8f415505c3e9d2f780597dad2b2504cf763f34bcf8a4c2c31814ca7c363d2276",
+      "input_sha256": {
+        "attempts.json": "d1619dbb8eb3851d176648aee65b6911f455005fe8abc067644cab7bd3f149b8",
+        "calls.json": "af7f99433ec3707ede5025ec58fd6407473bad03a057dda14ccf9597d36aef04",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "19312bc3a33ec53ef265ff9055a14a1ff0e8f2ecb4b285b3b0d57c5bd1a72a52",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "f646e4a9b19ea0d6433f52ef52bc8f2fede967988e4103c6d417d64a6978f1b7",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "eec8d53f7594fbadb98962e6d19f7c8625823c857a2ff4d92d5f8db6289984bd",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "2e171487ac461b9de0da98e500c833255ffb862d28934ee52147c0726953445c",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "dabc6264873bf23e7e3a1e208f6812b6cc7f963da288f405a677ecc5ce773137",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "UNRESOLVED",
+      "case": "session-count-error-valid-next",
+      "expectation_met": true,
+      "expected": "UNRESOLVED",
+      "expected_reason": null,
+      "fixture_binding_sha256": "496d4a35497a03b985cc0860610cd6f21f1a7bf41faed00ffeb51bcffa4fb2ef",
+      "input_sha256": {
+        "attempts.json": "d1619dbb8eb3851d176648aee65b6911f455005fe8abc067644cab7bd3f149b8",
+        "calls.json": "590abf5fd3a17e0999006bac1d82c276bd8bcaf092803aa94e857f08fa5ce7a4",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "0f3f9b4f3285a5b8e58735f3d798f71aa229488ebb9bd925e1c137d001e6fc80",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "411212f9874db83428b83e8e9d089d9c9f8d03614d8be6c3dd10aecf4af7f163",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "500b08098fe2e89a98b57a681594c3157769ac194a53e732f37bf4b4af0fc5f7",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "2e171487ac461b9de0da98e500c833255ffb862d28934ee52147c0726953445c",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "697ae7c5536e4f33c1381792e5e08f8921fbca2d19419efc6c5ccc4290617a4a",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "session-generation-missing-next-dispatch",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": "REQUEST_AFTER_MISSING_TERMINAL",
+      "fixture_binding_sha256": "ffd6f70ecfb5258fea9e5087b35cc55f827a235e0e6dedc3ab3634cbeee9829c",
+      "input_sha256": {
+        "attempts.json": "d1619dbb8eb3851d176648aee65b6911f455005fe8abc067644cab7bd3f149b8",
+        "calls.json": "b9465cb5fb6a683697297adf30c5654e4462ab54f7671701ed59cd89cb934e37",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "30005889ec960184f68539511efbcb414a718a43bc1da336ab409b9c4a728d9e",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "4762ae1f03f93498af298bebc628aedad11ca18804285aa5620fae088893375b",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "5515a88b679b653d099615e979ad71864b436b26fa952c7cc0901218e41efd23",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "2e171487ac461b9de0da98e500c833255ffb862d28934ee52147c0726953445c",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "bb47bbecccefc26e2c426451a5a00f30871ff688f9ce18078c7103909e14f6cc",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "UNRESOLVED",
+      "case": "session-generation-error-valid-next",
+      "expectation_met": true,
+      "expected": "UNRESOLVED",
+      "expected_reason": null,
+      "extra_check": true,
+      "fixture_binding_sha256": "f190b95bda0a4496a472614423693e320fa67e5ebeeab9b4feb7e3ab9cc0d73b",
+      "input_sha256": {
+        "attempts.json": "d1619dbb8eb3851d176648aee65b6911f455005fe8abc067644cab7bd3f149b8",
+        "calls.json": "8fe391c82a68c86a47fa9d6725adf8c486ae3d8b55965f2c727a12b77459cdce",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "e6fa1dfeca518efbe4fe3eb2674bf7709e5e40484e7b764f0c6891ae667fd179",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "3a2edf9019cb8f47c125725147d7938da6d5fdaa856d026b4b994dba4762da5b",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "66877069c797b8671416ebd9b78bb78ce393fa067e2a08206bb53b35737f04b4",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "2e171487ac461b9de0da98e500c833255ffb862d28934ee52147c0726953445c",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "4d2771f50d4f86ff4705e2a67c7781320a39b7f398f358f388d96e81c0e8ef07",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "UNRESOLVED",
+      "case": "late-usage-after-halt",
+      "expectation_met": true,
+      "expected": "UNRESOLVED",
+      "expected_reason": null,
+      "extra_check": true,
+      "fixture_binding_sha256": "6053290647e29f92ff3a8915da81246ca24bde5f290c9bdf65c69e06c2937cce",
+      "input_sha256": {
+        "attempts.json": "c01fe7e32d73981300e8c5109ba59db3b820bbf4d8c229563ed1092eb950751e",
+        "calls.json": "4c42158d1c7e6f3cd67f57bbadec19779bbec0535c37fc3dcc6990b7bb3b2721",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "ebd52f8783f2ec6098fb380aca8ed73a9b5cd3f7aad503dc5729f06af09b1443",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "1f2c0e2f34c032d01fba9a2cffcc0b35b59c71c6f5aaead55ec4376200bc2fad",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "56b6fce0bed679e31f4334c2888610344d38cabf49f7d0d92d402092c05ce7c7",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "6d7ad4a51b84eb6a0c50c9026993b1699fa7af05807acb3c8b1c14058d62e17d",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "late-return-cannot-be-accepted",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": "ACCEPTED_WITH_HALT",
+      "fixture_binding_sha256": "456746ef5eb4781d0a133fd9560a13103fe80fd1cc4e41dec857b0e71401bd42",
+      "input_sha256": {
+        "attempts.json": "994472ac4d782580c1a21d78c253b142c804fc9662da8ef338111d99fc8be1f0",
+        "calls.json": "7c45c34685f05098fdc37676d927324ff8f2f4c1e7e02b407c9c7d6dbb80f36c",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "ebd52f8783f2ec6098fb380aca8ed73a9b5cd3f7aad503dc5729f06af09b1443",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "18bac238aa14217569847f8b4ef66c6fd4bff78bc259b70618fb8958b9edf1b4",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "b625dfa9c309663167a05e936c66d012e1045a5f4d66aeb8efe8d9ef4c323275",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "8d366cf648ed70f4099c30ea6f1a99a7083606df656c0a42d06569aac22ff9de",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "halted-next-session",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": "REQUEST_FLAGS_AFTER_GLOBAL_HALT",
+      "fixture_binding_sha256": "0cdcf6a12946c04c0c083da443b3ff8ba77fe6a10f6ee2e39ea5bdfc7330fe3c",
+      "input_sha256": {
+        "attempts.json": "d1619dbb8eb3851d176648aee65b6911f455005fe8abc067644cab7bd3f149b8",
+        "calls.json": "51d2e72ac802d5f6b05519b491ebaaaf36ea8548aa7424d5a01e78fad1753ee7",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "de0773ee9b68384f0684363d0b2c0d882726a380dfb373ccd021e8f8796d656e",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "4e4577a85319cb47d90374eaab26fd8423c6f372f1e32bdeb3d4eb6971bf30c4",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "7b4a53892f92674ce52f07e787adcc44b7bc93700abdd64e90064059aee290bf",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "2e171487ac461b9de0da98e500c833255ffb862d28934ee52147c0726953445c",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "412d65238d2085b14316d004d3dde7aa426d038810db4eecb45eddcad063a9c3",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "UNRESOLVED",
+      "case": "missing-usage-subsets-null",
+      "expectation_met": true,
+      "expected": "UNRESOLVED",
+      "expected_reason": null,
+      "extra_check": true,
+      "fixture_binding_sha256": "40f92de35170bf65a2231bb6cd1a623e117f30a1933390da097d82f7a99d3ed0",
+      "input_sha256": {
+        "attempts.json": "c01fe7e32d73981300e8c5109ba59db3b820bbf4d8c229563ed1092eb950751e",
+        "calls.json": "509b82b05ed1670a612a376c7d64d736cbc93f847e460e49dd0f80f71156f5af",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "0e3821ccff713f06429c7f8e83c9df824822bd4765030da4b4c816b148d8e151",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "a1f0bb6dc03815c78e4f233665c835dadd3967c1bac74ac1f7b98cc8e94741cf",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "4eb74453c70ad1b23cd3bd86f6bae779c595d5833f7727bc45afbe6277c18337",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "9df46a6810ec1aace6082ac511fc1b8f101f7ce79b9279123eba9ddb21ed46aa",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "correlated-bool-usage",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": null,
+      "fixture_binding_sha256": "a2e65d962b9b0ad183856780b8e36e42afe5d29ce9f302ddc2c7dd2ebc5ff704",
+      "input_sha256": {
+        "attempts.json": "994472ac4d782580c1a21d78c253b142c804fc9662da8ef338111d99fc8be1f0",
+        "calls.json": "082031d39b725a33fdcea380d8e45bbde70fe3c8c687b483dce45f55adea5c13",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "8fde55303d9a2733f554d6d9e512c5f1396390abd6752822fb9b8c74321c32ea",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "b090e9b2e2e038b7cdcd2582cb476c74ea64314f99c85a34f889fddb8b88ecf5",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "8fc4af6bd71fe37372a1e9adeddb0eca48db7aa4a1fa9bad6c27d81dabfe18c7",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "a1f5df281d8cc4a9795d22df6b3fdd72ad4fe7272cc0a1298ff63d436d9e54db"
+      },
+      "result_sha256": "51899150bb1aa67268ab9e76f8945d51cc2195de4b1d63c148a8bb4d897d7883",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "duplicate-json-key",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": null,
+      "fixture_binding_sha256": "f0c3b46ca82df14a48b476fed3f1e771edb0a74b8f0ecc44b521384fa2c69b5e",
+      "input_sha256": {
+        "attempts.json": "994472ac4d782580c1a21d78c253b142c804fc9662da8ef338111d99fc8be1f0",
+        "calls.json": "7c45c34685f05098fdc37676d927324ff8f2f4c1e7e02b407c9c7d6dbb80f36c",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "6a93673b95a935c1dadf7474a98e64959dce380a0c4de2ea6f7046dad7635bc3",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "cd5f22d828a818b099bb04736408a2af5bbe3fce1eea60b108b03e41d3811c26",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "70f09e61d50f608b090093a666c8f5995ed46fd99d0a96e33169bfa3a616b451",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "21e0e51c92fccd06ab7ca5704697b1c1025e111b2960525324bcc4b28e3e0a53",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "4c6f9db2ac575aa8a2397cc9683d1679fba5af005764e979638c2d88dd934a33",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "nonfinite-nan",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": null,
+      "fixture_binding_sha256": "dca91b059923b045089e8102cfa42c1b68cb4746eaf5464ad7d839221cda704d",
+      "input_sha256": {
+        "attempts.json": "994472ac4d782580c1a21d78c253b142c804fc9662da8ef338111d99fc8be1f0",
+        "calls.json": "7c45c34685f05098fdc37676d927324ff8f2f4c1e7e02b407c9c7d6dbb80f36c",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "6a93673b95a935c1dadf7474a98e64959dce380a0c4de2ea6f7046dad7635bc3",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "e326474cf2e7abbf2e4fefb6af9907116b264b5c64e3fd3cc47e54cb15686ccd",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "304474eea3b34071a927952d6e595c7989d205be9f0b768d97b34bdbd551997d",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "afdc73221667884f49ea3921a2d79dcc12199e2b518f4d4a5f079e44ecd82f4a",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "9f043da4548d6d438b8ea6c50e0b372b7508845f6dee8a187b9840c26229cb48",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "null-grant",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": null,
+      "fixture_binding_sha256": "27935b0f7d5dacd8c404ac7cafe318e8576620e479752ac400edb3bed24fcc99",
+      "input_sha256": {
+        "attempts.json": "994472ac4d782580c1a21d78c253b142c804fc9662da8ef338111d99fc8be1f0",
+        "calls.json": "7c45c34685f05098fdc37676d927324ff8f2f4c1e7e02b407c9c7d6dbb80f36c",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "6a93673b95a935c1dadf7474a98e64959dce380a0c4de2ea6f7046dad7635bc3",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "3d6002a9b44d51d0906854f058312788579cf96202eccb01381ec8741ee09f41",
+        "manifest.json": "e54a43749217fe77b8bd9bc9a0417fc36ac5e858d0a0bf591cd69e0706c8063e",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "ce757c3587dbe551e5f30406c6c333ad110c21f82cd21db608c5cd57d877ef84",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "14804d4af71f4ceb29945c64131957504c9857ac4554ca2d2517f35aab714e82",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "placeholder-source-sha",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": null,
+      "fixture_binding_sha256": "d11942776b3e3808640668ff1426943561f4882b3e603d668b29bc9a35f5b2e4",
+      "input_sha256": {
+        "attempts.json": "994472ac4d782580c1a21d78c253b142c804fc9662da8ef338111d99fc8be1f0",
+        "calls.json": "7c45c34685f05098fdc37676d927324ff8f2f4c1e7e02b407c9c7d6dbb80f36c",
+        "context-1.json": "d80bfe6794f903c171972c46f4550950acb873300c5f4c370472e88fa8edb533",
+        "events.json": "6a93673b95a935c1dadf7474a98e64959dce380a0c4de2ea6f7046dad7635bc3",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "fafdad667c8e9c25d624ca0c1e61334e372c278cc7658f0b9648502e158b3d32",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "5dd2745235e61480310fc800a73ade86a08d9fc87c74ad9758bed17e9930cccb",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "1ea668296aa869143bf060c9342e2bca1458b7209424af30c11f0a94cccc6a1d",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "release-claims-science",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": null,
+      "fixture_binding_sha256": "1b97469cd740a2c866f0d9f572452ce2850ed18fc2e3590f022c289f9eee8d11",
+      "input_sha256": {
+        "attempts.json": "994472ac4d782580c1a21d78c253b142c804fc9662da8ef338111d99fc8be1f0",
+        "calls.json": "7c45c34685f05098fdc37676d927324ff8f2f4c1e7e02b407c9c7d6dbb80f36c",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "6a93673b95a935c1dadf7474a98e64959dce380a0c4de2ea6f7046dad7635bc3",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "9acda017d71ddf7faa2b11af0739fd64fef3176d4b015b8cafdd6e667bd1183e",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "88879a3166e865f084a6c87f290f0c88b709beff8a612828dd68574aa2bd077f",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "ec0ca785e1852596648ac76f5d446717cb1187a6ec46c5fe8a27f0b9495a4e6b",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "UNRESOLVED",
+      "case": "raw-usage-missing",
+      "expectation_met": true,
+      "expected": "UNRESOLVED",
+      "expected_reason": null,
+      "fixture_binding_sha256": "79c0df09d6fd05ab66b90b5196dc7205db561b37a8cd249b400e1b2209996a84",
+      "input_sha256": {
+        "attempts.json": "994472ac4d782580c1a21d78c253b142c804fc9662da8ef338111d99fc8be1f0",
+        "calls.json": "f5084caced9e18adc1b23acf84fe740c9b9afaecf34af2dfd8beaf59bf799112",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "3269f9db2255284bbeec99bdcbf28504089a50c5c718474bc8fb98929b418079",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "b3613754479e0df6cfcaec0eacdbec55c1d4f51267d29c68543c55d0a2584643",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "8cf065412f6baaabb95911f6f759e5b04f8fae0405d63930b18a1124c2b03cd9",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "8150295bc9cddc75fad6b9dc944eebea108f15107d6133d44ae87d74c3195387",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "session-arm-reuse",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": null,
+      "fixture_binding_sha256": "0a9463e00cf55d923a4147546e6a5b0a6fed495a96c5e52e26842fe99edbc680",
+      "input_sha256": {
+        "attempts.json": "c697a2d64559cc02a863f4c04e99fa95a2d9109d856f2babc928c549feaa46a1",
+        "calls.json": "c22e7333c133c36088dc3e4560dba220bec948c851f13920733c9d7442d7876e",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "2f9cdd1590ad0f7fd2ddd89686ab5e5d47c15dbf967a0a62bba8e0a60cc1451b",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "f8620da53d9009ef9704691fe71424dd6e559de0bd09799b6061a98081504a04",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "a8fc7927585b62017d5bbdb0bcd3b37750a2cd0c6385b527a9ff492bab1df7b7",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "2e171487ac461b9de0da98e500c833255ffb862d28934ee52147c0726953445c",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "bbd88b54d68dc2ecf6f53825f27888bcb6478dca0930dd7ecf59382b677913d7",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "raw-usage-tamper-rehashed",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": "RAW_USAGE_BINDING",
+      "fixture_binding_sha256": "08262b6eab5b1cbcb04e13c287f765a0725f648d7258027cf0f7c9cca61ed6a9",
+      "input_sha256": {
+        "attempts.json": "994472ac4d782580c1a21d78c253b142c804fc9662da8ef338111d99fc8be1f0",
+        "calls.json": "7c45c34685f05098fdc37676d927324ff8f2f4c1e7e02b407c9c7d6dbb80f36c",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "6a93673b95a935c1dadf7474a98e64959dce380a0c4de2ea6f7046dad7635bc3",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "7a84dfd08a526e38ee0fc6814733a10ba1cce72eeaa027c8b76b1d2709c4ccc5",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "30a4771335ae67b79eaf54ab69fcc5547dedae1ea2f20f7185e37b3571598ac0",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "adb57d65f9b9cb255e11141422bad3e4de90505f13f8a0cd8b4b4bf1a68b8f37"
+      },
+      "result_sha256": "65ebd120671753e38083cb500aa659eafd833b982323bee22b9945f00d92363c",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "source-tamper-rehashed",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": "CONTEXT_SOURCE_FORMAT_OR_TOOL",
+      "fixture_binding_sha256": "50aa189e06b436f29f8d3e23844373218d09ce80825acc42984554ab20a110f8",
+      "input_sha256": {
+        "attempts.json": "994472ac4d782580c1a21d78c253b142c804fc9662da8ef338111d99fc8be1f0",
+        "calls.json": "7c45c34685f05098fdc37676d927324ff8f2f4c1e7e02b407c9c7d6dbb80f36c",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "6a93673b95a935c1dadf7474a98e64959dce380a0c4de2ea6f7046dad7635bc3",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "bd761ea15a8fbaa84342e5d67580113ee6f4a59119a2a72027998c5117d49953",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "b7415c35f8b3561a4c601ba05e0ade53d99e1abc1672bfa84fe947f8a006c4e5",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "source.txt": "61023f7b7dad94dfff3aab416b9f0737f0a2e67b9e813b9d6bab3fa68f508f89",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "25035abd1d5650632fff6ccb330b16e0bd0da5a5804324e137bcf0b31a876336",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    },
+    {
+      "actual": "REJECT",
+      "case": "parent-count-cross-session",
+      "expectation_met": true,
+      "expected": "REJECT",
+      "expected_reason": "PARENT_COUNT",
+      "fixture_binding_sha256": "46af28cfc5bb9444b469bdedf4c50278d3f4e132d4b38474e6581ed6f74fa60e",
+      "input_sha256": {
+        "attempts.json": "1b54f3c18145d852d28245d56ac55ea816694cbe54bacd253ca45538ecce6e73",
+        "calls.json": "c22e7333c133c36088dc3e4560dba220bec948c851f13920733c9d7442d7876e",
+        "context-1.json": "e55fe3c695354159bbc9a1b6009a5ad516a9c4adc48ba5a387f5704da0aa8ee5",
+        "events.json": "f25c5b0920bf2f5626cabe217cc80a22776e6fd3314076d7a3458382be253db6",
+        "format.json": "15a9077e0713d359e8fac25c0a29a13dd9d72f10e53508250ec22b8d27c5cb48",
+        "grant.json": "aeb702b0e357a6f4c7d151708343b0d0fbdd71cbe3d3652cb42bf6bec2b6c129",
+        "manifest.json": "454d074d146d4236c49c341a4be666f7b7f038eb07d00c9a4a584974f4300a8f",
+        "observations.json": "9a4a7ebf8eee2a10e8cd0cfaa672b3952db44297923806fe34f979c1cabf5734",
+        "pins.json": "2d291dfe6aed719b6f368a3c6e9ed4d06d518817c7b8987942156d64eae90460",
+        "prompt.json": "cea2cda84f1b22863dce123e14a661def05af7a3e78278c3ad343a98014b5611",
+        "registration.json": "77fd2435e7e4bd503a6635d8d831fe7b56a1af3013b44e91613e71c4045a8566",
+        "release.json": "22f5828ad9f1beb15debe12b19cb5da89093c067fba9d8037bcac75e2bd68ed6",
+        "response-1.json": "acc3e8b75cad99585f935ebad69313150a20959a6547eb887ff6cdb064ce879d",
+        "review-context-2.json": "2e171487ac461b9de0da98e500c833255ffb862d28934ee52147c0726953445c",
+        "review-response-2.json": "78c7259c39e860c4e5e2af94fc127c88abf1e426e2bfbd6ba844f415224d1b1c",
+        "source.txt": "29edbfff8776cd1c322052c1939944b5041bc53cc640772c13eb2bb3595ed06b",
+        "toolchain.json": "4054bfd321c645bf23b0576638179858700c0fc600d45f7e9d8f87a286a0eb3b",
+        "usage-1.json": "4755177b8ba9725b7e6e5c236a191acc664fc92f57b0d162df10c66520ba266c"
+      },
+      "result_sha256": "09a8653383fa9adbbf5153b355f577eafac3d0f88a50bd56258c4d24ba7b4e91",
+      "schema_sha256": "fe8d736e6aff38fb200fc6f38c0bb3ad67f2a667d3c3be66bc88e5ac42cbf1cc",
+      "source_sha256": "b19d188e3692e77b7c1dd9513b6d3e83778df5b86533563610eba33dfe279918"
+    }
+  ],
+  "CLI_receipt_sha256": "776cb25b9b7efb00562f72751e191485b4116d9cb5cf54f1ea94ab5ed50947ce",
+  "saved_byte_replay_sha256": "e8be9b1150cb48e61c3f153e0925099181a71a18ff77e618c616d0fd4bf81e8a",
+  "fresh_suite_summary_sha256": "bddbd4994a6b8f1ffef74995d4589317547fba4a704f59864b6099e47c73547f",
+  "actual_HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+  "current_drift": []
+}

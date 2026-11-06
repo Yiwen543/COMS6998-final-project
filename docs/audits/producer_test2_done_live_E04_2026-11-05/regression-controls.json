@@ -1,0 +1,1925 @@
+{
+  "scope": "Synthetic saved-ledger fixtures and pure functions only; no API or scientific experiment.",
+  "status": "PASS",
+  "new_source_sha256": "2d27c0aac133c002f78a4fe69f505711069b67ef76778d5251fdb774abe7422f",
+  "P04_fixture_authority_sha256": "c12eda95b03c76ef2109aab13f68f59488a3e363e505ef681c3443a4d17414d1",
+  "controls": [
+    {
+      "name": "exact_saved_P04_fixture",
+      "expected": "REJECT",
+      "observed": {
+        "status": "REJECT",
+        "reason": "API request flags after persistent resource_halt"
+      },
+      "fixture": {
+        "calls": [
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "input_cap_exceeded_no_generation",
+            "prompt_sha256": "review-file",
+            "input_token_count": 21,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          },
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 2,
+            "count_request_issued": true,
+            "generation_request_issued": true,
+            "accepted_response": true,
+            "status": "completed",
+            "prompt_sha256": "review-file",
+            "input_token_count": 10,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": "review-resp",
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "cached_input_tokens": 0,
+              "reasoning_output_tokens": 0
+            },
+            "raw_usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "input_tokens_details": {
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                }
+              },
+              "output_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "parsed": {
+              "body": "review-only"
+            }
+          }
+        ],
+        "events": [
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "messages_sha256": "review-message",
+            "input_tokens": 21
+          },
+          {
+            "event": "resource_halt",
+            "reason": "input_cap_exceeded_before_generation"
+          },
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "input_tokens": 10,
+            "messages_sha256": "review-message"
+          },
+          {
+            "event": "generation_dispatched",
+            "messages_sha256": "review-message",
+            "input_tokens_counted": 10,
+            "max_output_tokens": 8,
+            "requested_service_tier": "default",
+            "reserve_usd": 0.1,
+            "cumulative_reserve_usd": 0.1,
+            "context": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session"
+            }
+          },
+          {
+            "event": "generation_returned",
+            "response_id": "review-resp",
+            "returned_model": "review-model",
+            "returned_service_tier": "default",
+            "usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "cached_input_tokens": 0,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "key": [
+              "B",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": null
+            }
+          }
+        ],
+        "policy": {
+          "model": "review-model",
+          "service_tier": "default",
+          "input_tokens": 20,
+          "output_tokens": 8,
+          "max_precounts": 4,
+          "max_generations": 4,
+          "manual_failure_retries_per_round": 1,
+          "per_generation_conservative_reserve_usd": 0.1,
+          "generation_reserve_usd": 0.4,
+          "count_fee_reserve_usd": 0.1,
+          "total_stage_spending_ceiling_usd": 0.5
+        },
+        "schema_digest": "review-schema"
+      },
+      "old_v1_observed": {
+        "status": "REJECT",
+        "reason": "accepted response/snapshot mismatch"
+      }
+    },
+    {
+      "name": "same_round_retry_after_halt_binding_corrected_copy",
+      "expected": "REJECT",
+      "observed": {
+        "status": "REJECT",
+        "reason": "API request flags after persistent resource_halt"
+      },
+      "fixture": {
+        "calls": [
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "input_cap_exceeded_no_generation",
+            "prompt_sha256": "review-file",
+            "input_token_count": 21,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          },
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 2,
+            "count_request_issued": true,
+            "generation_request_issued": true,
+            "accepted_response": true,
+            "status": "completed",
+            "prompt_sha256": "review-file",
+            "input_token_count": 10,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": "review-resp",
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "cached_input_tokens": 0,
+              "reasoning_output_tokens": 0
+            },
+            "raw_usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "input_tokens_details": {
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                }
+              },
+              "output_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "parsed": {
+              "body": "review-only"
+            }
+          }
+        ],
+        "events": [
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "messages_sha256": "review-message",
+            "input_tokens": 21
+          },
+          {
+            "event": "resource_halt",
+            "reason": "input_cap_exceeded_before_generation"
+          },
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "input_tokens": 10,
+            "messages_sha256": "review-message"
+          },
+          {
+            "event": "generation_dispatched",
+            "messages_sha256": "review-message",
+            "input_tokens_counted": 10,
+            "max_output_tokens": 8,
+            "requested_service_tier": "default",
+            "reserve_usd": 0.1,
+            "cumulative_reserve_usd": 0.1,
+            "context": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session"
+            }
+          },
+          {
+            "event": "generation_returned",
+            "response_id": "review-resp",
+            "returned_model": "review-model",
+            "returned_service_tier": "default",
+            "usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "cached_input_tokens": 0,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "key": [
+              "B",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": {
+                "body": "review-only"
+              }
+            }
+          }
+        ],
+        "policy": {
+          "model": "review-model",
+          "service_tier": "default",
+          "input_tokens": 20,
+          "output_tokens": 8,
+          "max_precounts": 4,
+          "max_generations": 4,
+          "manual_failure_retries_per_round": 1,
+          "per_generation_conservative_reserve_usd": 0.1,
+          "generation_reserve_usd": 0.4,
+          "count_fee_reserve_usd": 0.1,
+          "total_stage_spending_ceiling_usd": 0.5
+        },
+        "schema_digest": "review-schema"
+      },
+      "old_v1_observed": {
+        "status": "PASS",
+        "call_rows": 2,
+        "event_rows": 7,
+        "dispatched_counts": 2,
+        "dispatched_generations": 1,
+        "unique_returned_responses": 1,
+        "known_usage_token_totals": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12
+        },
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "review-session",
+            "status": "input_cap_exceeded_no_generation",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null,
+            "resource_halts": [
+              "input_cap_exceeded_before_generation"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "B",
+              1,
+              1,
+              2
+            ],
+            "session_id": "review-session",
+            "status": "completed",
+            "usage_status": "KNOWN",
+            "actual_tokens": 12
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    },
+    {
+      "name": "posthalt_cross_round",
+      "expected": "REJECT",
+      "observed": {
+        "status": "REJECT",
+        "reason": "API request flags after persistent resource_halt"
+      },
+      "fixture": {
+        "calls": [
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "input_cap_exceeded_no_generation",
+            "prompt_sha256": "review-file",
+            "input_token_count": 21,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          },
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 2,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": true,
+            "accepted_response": true,
+            "status": "completed",
+            "prompt_sha256": "review-file",
+            "input_token_count": 10,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": "review-resp",
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "cached_input_tokens": 0,
+              "reasoning_output_tokens": 0
+            },
+            "raw_usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "input_tokens_details": {
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                }
+              },
+              "output_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "parsed": {
+              "body": "review-only"
+            }
+          }
+        ],
+        "events": [
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "messages_sha256": "review-message",
+            "input_tokens": 21
+          },
+          {
+            "event": "resource_halt",
+            "reason": "input_cap_exceeded_before_generation"
+          },
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "input_tokens": 10,
+            "messages_sha256": "review-message"
+          },
+          {
+            "event": "generation_dispatched",
+            "messages_sha256": "review-message",
+            "input_tokens_counted": 10,
+            "max_output_tokens": 8,
+            "requested_service_tier": "default",
+            "reserve_usd": 0.1,
+            "cumulative_reserve_usd": 0.1,
+            "context": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 2,
+              "mode": "live",
+              "session_id": "review-session"
+            }
+          },
+          {
+            "event": "generation_returned",
+            "response_id": "review-resp",
+            "returned_model": "review-model",
+            "returned_service_tier": "default",
+            "usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "cached_input_tokens": 0,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "key": [
+              "B",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": null
+            }
+          },
+          {
+            "key": [
+              "B",
+              1,
+              2
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 2,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": {
+                "body": "review-only"
+              }
+            }
+          }
+        ],
+        "policy": {
+          "model": "review-model",
+          "service_tier": "default",
+          "input_tokens": 20,
+          "output_tokens": 8,
+          "max_precounts": 4,
+          "max_generations": 4,
+          "manual_failure_retries_per_round": 1,
+          "per_generation_conservative_reserve_usd": 0.1,
+          "generation_reserve_usd": 0.4,
+          "count_fee_reserve_usd": 0.1,
+          "total_stage_spending_ceiling_usd": 0.5
+        },
+        "schema_digest": "review-schema"
+      },
+      "old_v1_observed": {
+        "status": "PASS",
+        "call_rows": 2,
+        "event_rows": 7,
+        "dispatched_counts": 2,
+        "dispatched_generations": 1,
+        "unique_returned_responses": 1,
+        "known_usage_token_totals": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12
+        },
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "review-session",
+            "status": "input_cap_exceeded_no_generation",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null,
+            "resource_halts": [
+              "input_cap_exceeded_before_generation"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "B",
+              1,
+              2,
+              1
+            ],
+            "session_id": "review-session",
+            "status": "completed",
+            "usage_status": "KNOWN",
+            "actual_tokens": 12
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    },
+    {
+      "name": "posthalt_cross_session_id",
+      "expected": "REJECT",
+      "observed": {
+        "status": "REJECT",
+        "reason": "API request flags after persistent resource_halt"
+      },
+      "fixture": {
+        "calls": [
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "input_cap_exceeded_no_generation",
+            "prompt_sha256": "review-file",
+            "input_token_count": 21,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          },
+          {
+            "arm": "B",
+            "repetition": 2,
+            "round": 1,
+            "mode": "live",
+            "session_id": "another-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": true,
+            "accepted_response": true,
+            "status": "completed",
+            "prompt_sha256": "review-file",
+            "input_token_count": 10,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": "review-resp",
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "cached_input_tokens": 0,
+              "reasoning_output_tokens": 0
+            },
+            "raw_usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "input_tokens_details": {
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                }
+              },
+              "output_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "parsed": {
+              "body": "review-only"
+            }
+          }
+        ],
+        "events": [
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "messages_sha256": "review-message",
+            "input_tokens": 21
+          },
+          {
+            "event": "resource_halt",
+            "reason": "input_cap_exceeded_before_generation"
+          },
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "input_tokens": 10,
+            "messages_sha256": "review-message"
+          },
+          {
+            "event": "generation_dispatched",
+            "messages_sha256": "review-message",
+            "input_tokens_counted": 10,
+            "max_output_tokens": 8,
+            "requested_service_tier": "default",
+            "reserve_usd": 0.1,
+            "cumulative_reserve_usd": 0.1,
+            "context": {
+              "arm": "B",
+              "repetition": 2,
+              "round": 1,
+              "mode": "live",
+              "session_id": "another-session"
+            }
+          },
+          {
+            "event": "generation_returned",
+            "response_id": "review-resp",
+            "returned_model": "review-model",
+            "returned_service_tier": "default",
+            "usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "cached_input_tokens": 0,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "key": [
+              "B",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": null
+            }
+          },
+          {
+            "key": [
+              "B",
+              2,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 2,
+              "round": 1,
+              "mode": "live",
+              "session_id": "another-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": {
+                "body": "review-only"
+              }
+            }
+          }
+        ],
+        "policy": {
+          "model": "review-model",
+          "service_tier": "default",
+          "input_tokens": 20,
+          "output_tokens": 8,
+          "max_precounts": 4,
+          "max_generations": 4,
+          "manual_failure_retries_per_round": 1,
+          "per_generation_conservative_reserve_usd": 0.1,
+          "generation_reserve_usd": 0.4,
+          "count_fee_reserve_usd": 0.1,
+          "total_stage_spending_ceiling_usd": 0.5
+        },
+        "schema_digest": "review-schema"
+      },
+      "old_v1_observed": {
+        "status": "PASS",
+        "call_rows": 2,
+        "event_rows": 7,
+        "dispatched_counts": 2,
+        "dispatched_generations": 1,
+        "unique_returned_responses": 1,
+        "known_usage_token_totals": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12
+        },
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "review-session",
+            "status": "input_cap_exceeded_no_generation",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null,
+            "resource_halts": [
+              "input_cap_exceeded_before_generation"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "B",
+              2,
+              1,
+              1
+            ],
+            "session_id": "another-session",
+            "status": "completed",
+            "usage_status": "KNOWN",
+            "actual_tokens": 12
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    },
+    {
+      "name": "posthalt_cross_arm",
+      "expected": "REJECT",
+      "observed": {
+        "status": "REJECT",
+        "reason": "API request flags after persistent resource_halt"
+      },
+      "fixture": {
+        "calls": [
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "input_cap_exceeded_no_generation",
+            "prompt_sha256": "review-file",
+            "input_token_count": 21,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          },
+          {
+            "arm": "C",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": true,
+            "accepted_response": true,
+            "status": "completed",
+            "prompt_sha256": "review-file",
+            "input_token_count": 10,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": "review-resp",
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "cached_input_tokens": 0,
+              "reasoning_output_tokens": 0
+            },
+            "raw_usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "input_tokens_details": {
+                "cached_tokens": 0,
+                "cache_write_tokens": 0,
+                "cache_write_tokens_details": {
+                  "ttl_30m_tokens": 0,
+                  "ttl_12h_tokens": 0
+                }
+              },
+              "output_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "parsed": {
+              "body": "review-only"
+            }
+          }
+        ],
+        "events": [
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "messages_sha256": "review-message",
+            "input_tokens": 21
+          },
+          {
+            "event": "resource_halt",
+            "reason": "input_cap_exceeded_before_generation"
+          },
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "input_tokens": 10,
+            "messages_sha256": "review-message"
+          },
+          {
+            "event": "generation_dispatched",
+            "messages_sha256": "review-message",
+            "input_tokens_counted": 10,
+            "max_output_tokens": 8,
+            "requested_service_tier": "default",
+            "reserve_usd": 0.1,
+            "cumulative_reserve_usd": 0.1,
+            "context": {
+              "arm": "C",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session"
+            }
+          },
+          {
+            "event": "generation_returned",
+            "response_id": "review-resp",
+            "returned_model": "review-model",
+            "returned_service_tier": "default",
+            "usage": {
+              "input_tokens": 10,
+              "output_tokens": 2,
+              "total_tokens": 12,
+              "cached_input_tokens": 0,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "snapshots": [
+          {
+            "key": [
+              "B",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": null
+            }
+          },
+          {
+            "key": [
+              "C",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "C",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": {
+                "body": "review-only"
+              }
+            }
+          }
+        ],
+        "policy": {
+          "model": "review-model",
+          "service_tier": "default",
+          "input_tokens": 20,
+          "output_tokens": 8,
+          "max_precounts": 4,
+          "max_generations": 4,
+          "manual_failure_retries_per_round": 1,
+          "per_generation_conservative_reserve_usd": 0.1,
+          "generation_reserve_usd": 0.4,
+          "count_fee_reserve_usd": 0.1,
+          "total_stage_spending_ceiling_usd": 0.5
+        },
+        "schema_digest": "review-schema"
+      },
+      "old_v1_observed": {
+        "status": "PASS",
+        "call_rows": 2,
+        "event_rows": 7,
+        "dispatched_counts": 2,
+        "dispatched_generations": 1,
+        "unique_returned_responses": 1,
+        "known_usage_token_totals": {
+          "input_tokens": 10,
+          "output_tokens": 2,
+          "total_tokens": 12
+        },
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "review-session",
+            "status": "input_cap_exceeded_no_generation",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null,
+            "resource_halts": [
+              "input_cap_exceeded_before_generation"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "C",
+              1,
+              1,
+              1
+            ],
+            "session_id": "review-session",
+            "status": "completed",
+            "usage_status": "KNOWN",
+            "actual_tokens": 12
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    },
+    {
+      "name": "posthalt_flag_count_request_issued",
+      "expected": "REJECT",
+      "observed": {
+        "status": "REJECT",
+        "reason": "API request flags after persistent resource_halt"
+      },
+      "fixture": {
+        "calls": [
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "input_cap_exceeded_no_generation",
+            "prompt_sha256": "review-file",
+            "input_token_count": 21,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          },
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 2,
+            "count_request_issued": true,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "not_run_resource_halt",
+            "prompt_sha256": "review-file",
+            "input_token_count": 10,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          }
+        ],
+        "events": [
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "messages_sha256": "review-message",
+            "input_tokens": 21
+          },
+          {
+            "event": "resource_halt",
+            "reason": "input_cap_exceeded_before_generation"
+          }
+        ],
+        "snapshots": [
+          {
+            "key": [
+              "B",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": null
+            }
+          }
+        ],
+        "policy": {
+          "model": "review-model",
+          "service_tier": "default",
+          "input_tokens": 20,
+          "output_tokens": 8,
+          "max_precounts": 4,
+          "max_generations": 4,
+          "manual_failure_retries_per_round": 1,
+          "per_generation_conservative_reserve_usd": 0.1,
+          "generation_reserve_usd": 0.4,
+          "count_fee_reserve_usd": 0.1,
+          "total_stage_spending_ceiling_usd": 0.5
+        },
+        "schema_digest": "review-schema"
+      }
+    },
+    {
+      "name": "posthalt_flag_generation_request_issued",
+      "expected": "REJECT",
+      "observed": {
+        "status": "REJECT",
+        "reason": "API request flags after persistent resource_halt"
+      },
+      "fixture": {
+        "calls": [
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "input_cap_exceeded_no_generation",
+            "prompt_sha256": "review-file",
+            "input_token_count": 21,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          },
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 2,
+            "count_request_issued": false,
+            "generation_request_issued": true,
+            "accepted_response": false,
+            "status": "not_run_resource_halt",
+            "prompt_sha256": "review-file",
+            "input_token_count": 10,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          }
+        ],
+        "events": [
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "messages_sha256": "review-message",
+            "input_tokens": 21
+          },
+          {
+            "event": "resource_halt",
+            "reason": "input_cap_exceeded_before_generation"
+          }
+        ],
+        "snapshots": [
+          {
+            "key": [
+              "B",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": null
+            }
+          }
+        ],
+        "policy": {
+          "model": "review-model",
+          "service_tier": "default",
+          "input_tokens": 20,
+          "output_tokens": 8,
+          "max_precounts": 4,
+          "max_generations": 4,
+          "manual_failure_retries_per_round": 1,
+          "per_generation_conservative_reserve_usd": 0.1,
+          "generation_reserve_usd": 0.4,
+          "count_fee_reserve_usd": 0.1,
+          "total_stage_spending_ceiling_usd": 0.5
+        },
+        "schema_digest": "review-schema"
+      }
+    },
+    {
+      "name": "posthalt_event_count_dispatched",
+      "expected": "REJECT",
+      "observed": {
+        "status": "REJECT",
+        "reason": "API dispatch after persistent resource_halt"
+      },
+      "fixture": {
+        "calls": [
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "input_cap_exceeded_no_generation",
+            "prompt_sha256": "review-file",
+            "input_token_count": 21,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          },
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 2,
+            "count_request_issued": false,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "not_run_resource_halt",
+            "prompt_sha256": "review-file",
+            "input_token_count": 10,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          }
+        ],
+        "events": [
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "messages_sha256": "review-message",
+            "input_tokens": 21
+          },
+          {
+            "event": "resource_halt",
+            "reason": "input_cap_exceeded_before_generation"
+          },
+          {
+            "event": "count_dispatched"
+          }
+        ],
+        "snapshots": [
+          {
+            "key": [
+              "B",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": null
+            }
+          }
+        ],
+        "policy": {
+          "model": "review-model",
+          "service_tier": "default",
+          "input_tokens": 20,
+          "output_tokens": 8,
+          "max_precounts": 4,
+          "max_generations": 4,
+          "manual_failure_retries_per_round": 1,
+          "per_generation_conservative_reserve_usd": 0.1,
+          "generation_reserve_usd": 0.4,
+          "count_fee_reserve_usd": 0.1,
+          "total_stage_spending_ceiling_usd": 0.5
+        },
+        "schema_digest": "review-schema"
+      }
+    },
+    {
+      "name": "posthalt_event_generation_dispatched",
+      "expected": "REJECT",
+      "observed": {
+        "status": "REJECT",
+        "reason": "API dispatch after persistent resource_halt"
+      },
+      "fixture": {
+        "calls": [
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "input_cap_exceeded_no_generation",
+            "prompt_sha256": "review-file",
+            "input_token_count": 21,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          },
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 2,
+            "count_request_issued": false,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "not_run_resource_halt",
+            "prompt_sha256": "review-file",
+            "input_token_count": 10,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          }
+        ],
+        "events": [
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "messages_sha256": "review-message",
+            "input_tokens": 21
+          },
+          {
+            "event": "resource_halt",
+            "reason": "input_cap_exceeded_before_generation"
+          },
+          {
+            "event": "generation_dispatched"
+          }
+        ],
+        "snapshots": [
+          {
+            "key": [
+              "B",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": null
+            }
+          }
+        ],
+        "policy": {
+          "model": "review-model",
+          "service_tier": "default",
+          "input_tokens": 20,
+          "output_tokens": 8,
+          "max_precounts": 4,
+          "max_generations": 4,
+          "manual_failure_retries_per_round": 1,
+          "per_generation_conservative_reserve_usd": 0.1,
+          "generation_reserve_usd": 0.4,
+          "count_fee_reserve_usd": 0.1,
+          "total_stage_spending_ceiling_usd": 0.5
+        },
+        "schema_digest": "review-schema"
+      }
+    },
+    {
+      "name": "legal_halt_then_only_NOT_RUN",
+      "expected": "PASS",
+      "observed": {
+        "audit_version": 2,
+        "persistent_resource_halt": true,
+        "resource_halt_events": [
+          {
+            "event_index": 2,
+            "call_index": 0,
+            "reason": "input_cap_exceeded_before_generation"
+          }
+        ],
+        "status": "PASS",
+        "call_rows": 2,
+        "event_rows": 3,
+        "dispatched_counts": 1,
+        "dispatched_generations": 0,
+        "unique_returned_responses": 0,
+        "known_usage_token_totals": {},
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "review-session",
+            "status": "input_cap_exceeded_no_generation",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null,
+            "resource_halts": [
+              "input_cap_exceeded_before_generation"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "B",
+              1,
+              1,
+              2
+            ],
+            "session_id": "review-session",
+            "status": "not_run_resource_halt",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      },
+      "fixture": {
+        "calls": [
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "input_cap_exceeded_no_generation",
+            "prompt_sha256": "review-file",
+            "input_token_count": 21,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          },
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "review-session",
+            "attempt": 2,
+            "count_request_issued": false,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "status": "not_run_resource_halt",
+            "prompt_sha256": "review-file",
+            "input_token_count": 10,
+            "requested_model": "review-model",
+            "returned_model": "review-model",
+            "response_id": null,
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "usage": null,
+            "raw_usage": null,
+            "parsed": null
+          }
+        ],
+        "events": [
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "review-message",
+            "model": "review-model",
+            "schema_sha256": "review-schema"
+          },
+          {
+            "event": "count_returned",
+            "messages_sha256": "review-message",
+            "input_tokens": 21
+          },
+          {
+            "event": "resource_halt",
+            "reason": "input_cap_exceeded_before_generation"
+          }
+        ],
+        "snapshots": [
+          {
+            "key": [
+              "B",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "review-session",
+              "prompt_sha256": "review-file",
+              "messages_sha256": "review-message",
+              "response": null
+            }
+          }
+        ],
+        "policy": {
+          "model": "review-model",
+          "service_tier": "default",
+          "input_tokens": 20,
+          "output_tokens": 8,
+          "max_precounts": 4,
+          "max_generations": 4,
+          "manual_failure_retries_per_round": 1,
+          "per_generation_conservative_reserve_usd": 0.1,
+          "generation_reserve_usd": 0.4,
+          "count_fee_reserve_usd": 0.1,
+          "total_stage_spending_ceiling_usd": 0.5
+        },
+        "schema_digest": "review-schema"
+      },
+      "old_v1_observed": {
+        "status": "PASS",
+        "call_rows": 2,
+        "event_rows": 3,
+        "dispatched_counts": 1,
+        "dispatched_generations": 0,
+        "unique_returned_responses": 0,
+        "known_usage_token_totals": {},
+        "missing_generation_usage": 0,
+        "unresolved": [],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "review-session",
+            "status": "input_cap_exceeded_no_generation",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null,
+            "resource_halts": [
+              "input_cap_exceeded_before_generation"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "B",
+              1,
+              1,
+              2
+            ],
+            "session_id": "review-session",
+            "status": "not_run_resource_halt",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      }
+    },
+    {
+      "name": "missing_usage_halt_then_NOT_RUN",
+      "expected": "UNRESOLVED",
+      "observed": {
+        "audit_version": 2,
+        "persistent_resource_halt": true,
+        "resource_halt_events": [
+          {
+            "event_index": 4,
+            "call_index": 0,
+            "reason": "explicit halt after transport error"
+          }
+        ],
+        "status": "UNRESOLVED",
+        "call_rows": 2,
+        "event_rows": 5,
+        "dispatched_counts": 1,
+        "dispatched_generations": 1,
+        "unique_returned_responses": 0,
+        "known_usage_token_totals": {},
+        "missing_generation_usage": 1,
+        "unresolved": [
+          {
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "reason": "generation error or terminal missing; usage UNKNOWN_NOT_ZERO"
+          }
+        ],
+        "attempts": [
+          {
+            "call_index": 0,
+            "identity": [
+              "B",
+              1,
+              1,
+              1
+            ],
+            "session_id": "own",
+            "status": "request_or_infrastructure_error",
+            "usage_status": "UNKNOWN_NOT_ZERO",
+            "actual_tokens": null,
+            "resource_halts": [
+              "explicit halt after transport error"
+            ]
+          },
+          {
+            "call_index": 1,
+            "identity": [
+              "B",
+              1,
+              1,
+              2
+            ],
+            "session_id": "own",
+            "status": "not_run_resource_halt",
+            "usage_status": "NOT_DISPATCHED",
+            "actual_tokens": null
+          }
+        ],
+        "provider_invoice_usd": null,
+        "count_endpoint_actual_usd": null,
+        "claim_scope": "Serialized saved-ledger consistency only; no provider invoice or scientific result validation."
+      },
+      "fixture": {
+        "calls": [
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "own",
+            "attempt": 1,
+            "count_request_issued": true,
+            "generation_request_issued": true,
+            "accepted_response": false,
+            "prompt_sha256": "file-sha",
+            "status": "request_or_infrastructure_error",
+            "input_token_count": 10,
+            "requested_model": "model",
+            "returned_model": "model",
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "error_type": "TimeoutError"
+          },
+          {
+            "arm": "B",
+            "repetition": 1,
+            "round": 1,
+            "mode": "live",
+            "session_id": "own",
+            "attempt": 2,
+            "count_request_issued": false,
+            "generation_request_issued": false,
+            "accepted_response": false,
+            "prompt_sha256": "file-sha",
+            "status": "not_run_resource_halt",
+            "input_token_count": 10,
+            "requested_model": "model",
+            "returned_model": "model",
+            "requested_service_tier": "default",
+            "returned_service_tier": "default",
+            "error_type": "TimeoutError"
+          }
+        ],
+        "events": [
+          {
+            "event": "count_dispatched",
+            "messages_sha256": "message-sha",
+            "model": "model",
+            "schema_sha256": "schema"
+          },
+          {
+            "event": "count_returned",
+            "messages_sha256": "message-sha",
+            "input_tokens": 10
+          },
+          {
+            "event": "generation_dispatched",
+            "messages_sha256": "message-sha",
+            "input_tokens_counted": 10,
+            "max_output_tokens": 8,
+            "requested_service_tier": "default",
+            "reserve_usd": 0.1,
+            "cumulative_reserve_usd": 0.1,
+            "context": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "own"
+            }
+          },
+          {
+            "event": "generation_error",
+            "error_type": "TimeoutError",
+            "usage_status": "UNKNOWN_NOT_ZERO"
+          },
+          {
+            "event": "resource_halt",
+            "reason": "explicit halt after transport error"
+          }
+        ],
+        "snapshots": [
+          {
+            "key": [
+              "B",
+              1,
+              1
+            ],
+            "value": {
+              "arm": "B",
+              "repetition": 1,
+              "round": 1,
+              "mode": "live",
+              "session_id": "own",
+              "prompt_sha256": "file-sha",
+              "messages_sha256": "message-sha",
+              "response": null
+            }
+          }
+        ],
+        "policy": {
+          "model": "model",
+          "service_tier": "default",
+          "input_tokens": 20,
+          "output_tokens": 8,
+          "max_precounts": 4,
+          "max_generations": 4,
+          "manual_failure_retries_per_round": 1,
+          "per_generation_conservative_reserve_usd": 0.1,
+          "generation_reserve_usd": 0.4,
+          "count_fee_reserve_usd": 0.1,
+          "total_stage_spending_ceiling_usd": 0.5
+        },
+        "schema_digest": "schema"
+      }
+    }
+  ],
+  "reviewer_fixture_discrepancy": "Exact saved original rejects in v1 on response binding; only a copied snapshot response is repaired to demonstrate genuine v1 halt false PASS. No original evidence changed."
+}

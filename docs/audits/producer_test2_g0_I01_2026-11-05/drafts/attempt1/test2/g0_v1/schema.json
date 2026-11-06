@@ -1,0 +1,1152 @@
+{
+  "format": "G0_CLOSED_SHAPES_V1_NOT_JSON_SCHEMA_STANDARD",
+  "version": 1,
+  "scope": "Explicitstrictsyntheticmetadataformat;notanexperimentorgrant",
+  "definitions": {
+    "Artifact": {
+      "type": "object",
+      "properties": {
+        "artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "path": {
+          "type": "string",
+          "min_length": 1,
+          "max_length": 4096
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "JSON",
+            "TEXT"
+          ]
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "registration",
+            "grant",
+            "events",
+            "calls",
+            "attempts",
+            "observations",
+            "source",
+            "toolchain",
+            "pins",
+            "format",
+            "prompt",
+            "context",
+            "response",
+            "usage",
+            "reference_descriptor",
+            "raw_metadata"
+          ]
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "PUBLIC_DEV",
+            "MAINTAINER",
+            "REFERENCE_ONLY",
+            "PRIVATE_FINAL"
+          ]
+        }
+      }
+    },
+    "Manifest": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.bundle"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "origin": {
+          "type": "string",
+          "const": "SYNTHETIC_FIXTURE"
+        },
+        "identity_origin": {
+          "type": "string",
+          "const": "EXPLICIT"
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "registration_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "stream_format": {
+          "type": "string",
+          "const": "strict_serial"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "ref": "Artifact"
+          },
+          "max_items": 2048
+        },
+        "bindings": {
+          "type": "object",
+          "properties": {
+            "registration": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+            },
+            "grant": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+            },
+            "events": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+            },
+            "calls": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+            },
+            "attempts": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+            },
+            "observations": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+            },
+            "source": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+            },
+            "toolchain": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+            },
+            "pins": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+            },
+            "format": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+            }
+          }
+        }
+      }
+    },
+    "Policy": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.registration"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "registration_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "model": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "tier": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "input_cap": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "output_cap": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "count_quota": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "generation_quota": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "retry_cap": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "reserve_per_generation_units": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "generation_reserve_units": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "count_reserve_units": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "total_reserve_units": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "stream_format": {
+          "type": "string",
+          "const": "strict_serial"
+        },
+        "cache_policy": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        }
+      }
+    },
+    "Grant": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.offline_grant"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "grant_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "registration_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "registration_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "scope": {
+          "type": "string",
+          "const": "OFFLINE_SYNTHETIC_RECORD_VALIDATION_ONLY"
+        },
+        "execution_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "API_allowed": {
+          "type": "boolean",
+          "const": false
+        }
+      }
+    },
+    "Pins": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.pins"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "clock_domain": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "edge": {
+          "type": "string",
+          "enum": [
+            "posedge",
+            "negedge"
+          ]
+        },
+        "reset_polarity": {
+          "type": "string",
+          "enum": [
+            "high",
+            "low"
+          ]
+        },
+        "reset_kind": {
+          "type": "string",
+          "enum": [
+            "synchronous",
+            "asynchronous"
+          ]
+        },
+        "phase_contract": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "slot_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "pins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4096
+              },
+              "signedness": {
+                "type": "string",
+                "enum": [
+                  "signed",
+                  "unsigned"
+                ]
+              }
+            }
+          },
+          "max_items": 2048
+        }
+      }
+    },
+    "Usage": {
+      "type": "object",
+      "properties": {
+        "input_tokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "output_tokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "total_tokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "cached_input_tokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "nullable": true
+        },
+        "reasoning_output_tokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "nullable": true
+        }
+      }
+    },
+    "RawUsage": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.usage"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "usage": {
+          "ref": "Usage",
+          "nullable": true
+        }
+      }
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.response"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "response_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "payload": {
+          "type": "string",
+          "min_length": 1,
+          "max_length": 4096
+        }
+      }
+    },
+    "Context": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.context"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "context_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "registration_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "arm_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "session_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "round_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "attempt_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "prompt_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "prompt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "messages_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "format_schema_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "toolchain_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "pin_contract_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "candidate_input_artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+          },
+          "max_items": 2048
+        }
+      }
+    },
+    "Attempt": {
+      "type": "object",
+      "properties": {
+        "attempt_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "arm_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "session_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "round_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "attempt_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "context_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "context_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "prompt_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "messages_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "accepted_response_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        }
+      }
+    },
+    "Attempts": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.attempts"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "attempts": {
+          "type": "array",
+          "items": {
+            "ref": "Attempt"
+          },
+          "max_items": 2048
+        }
+      }
+    },
+    "Event": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "event_sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "attempt_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "context_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "event_type": {
+          "type": "string",
+          "enum": [
+            "count_dispatched",
+            "count_returned",
+            "count_error",
+            "generation_dispatched",
+            "generation_returned",
+            "generation_error",
+            "resource_halt"
+          ]
+        },
+        "payload": {
+          "type": "object",
+          "properties": {},
+          "allow_extra": true
+        }
+      }
+    },
+    "Events": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.events"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "ref": "Event"
+          },
+          "max_items": 2048
+        }
+      }
+    },
+    "count_dispatched": {
+      "type": "object",
+      "properties": {
+        "requested_model": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "format_schema_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "messages_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "count_returned": {
+      "type": "object",
+      "properties": {
+        "input_tokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "count_error": {
+      "type": "object",
+      "properties": {
+        "error_type": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        }
+      }
+    },
+    "generation_dispatched": {
+      "type": "object",
+      "properties": {
+        "requested_model": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "requested_tier": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "parent_count_request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "input_tokens_counted": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "max_output_tokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "messages_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "format_schema_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "reserve_units": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "cumulative_reserve_units": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "generation_returned": {
+      "type": "object",
+      "properties": {
+        "response_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "returned_model": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "returned_tier": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "usage": {
+          "ref": "Usage",
+          "nullable": true
+        },
+        "raw_usage_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "response_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        }
+      }
+    },
+    "generation_error": {
+      "type": "object",
+      "properties": {
+        "error_type": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "usage_status": {
+          "type": "string",
+          "const": "UNKNOWN_NOT_ZERO"
+        }
+      }
+    },
+    "resource_halt": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string",
+          "min_length": 1,
+          "max_length": 4096
+        }
+      }
+    },
+    "Call": {
+      "type": "object",
+      "properties": {
+        "call_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "attempt_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "context_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "count_request_issued": {
+          "type": "boolean"
+        },
+        "generation_request_issued": {
+          "type": "boolean"
+        },
+        "count_request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "generation_request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "count_terminal_event_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "generation_terminal_event_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "COMPLETED",
+            "TRANSPORT_ERROR",
+            "REJECTED_RESPONSE",
+            "INPUT_CAP_NO_GENERATION",
+            "NOT_RUN",
+            "INVALID",
+            "NOT_REACHED"
+          ]
+        },
+        "accepted_response": {
+          "type": "boolean"
+        },
+        "input_token_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "nullable": true
+        },
+        "response_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "response_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "returned_model": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "returned_tier": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "usage": {
+          "ref": "Usage",
+          "nullable": true
+        },
+        "raw_usage_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "status_reason": {
+          "type": "string",
+          "min_length": 1,
+          "max_length": 4096,
+          "nullable": true
+        }
+      }
+    },
+    "Calls": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.calls"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "calls": {
+          "type": "array",
+          "items": {
+            "ref": "Call"
+          },
+          "max_items": 2048
+        }
+      }
+    },
+    "Observation": {
+      "type": "object",
+      "properties": {
+        "observation_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "source_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "raw_metadata_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "raw_metadata_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "checker_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$",
+          "nullable": true
+        },
+        "checker_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "nullable": true
+        },
+        "pin_contract_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "clock_domain": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "edge": {
+          "type": "string",
+          "enum": [
+            "posedge",
+            "negedge"
+          ]
+        },
+        "reset_polarity": {
+          "type": "string",
+          "enum": [
+            "high",
+            "low"
+          ]
+        },
+        "reset_kind": {
+          "type": "string",
+          "enum": [
+            "synchronous",
+            "asynchronous"
+          ]
+        },
+        "phase_contract": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "cycle": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "phase": {
+          "type": "string",
+          "enum": [
+            "pre",
+            "post"
+          ]
+        },
+        "slot": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "declared_vector_width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "selected_knownness": {
+          "type": "string",
+          "enum": [
+            "KNOWN",
+            "UNKNOWN"
+          ]
+        },
+        "reference_last_cycle": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "nullable": true
+        },
+        "reference_last_phase": {
+          "type": "string",
+          "enum": [
+            "pre",
+            "post"
+          ],
+          "nullable": true
+        },
+        "reference_verdict": {
+          "type": "null"
+        },
+        "reference_origin": {
+          "type": "string",
+          "const": "NOT_EVALUATED"
+        },
+        "selected_alarm_confirmed": {
+          "type": "boolean",
+          "const": false
+        },
+        "monitor_correctness_proved": {
+          "type": "boolean",
+          "const": false
+        },
+        "completion128_proved": {
+          "type": "boolean",
+          "const": false
+        },
+        "native_mode": {
+          "type": "string",
+          "enum": [
+            "NOT_EVALUATED"
+          ]
+        },
+        "scientific_claim": {
+          "type": "string",
+          "const": "NOT_EVALUATED"
+        },
+        "metadata_anchor": {
+          "type": "string",
+          "enum": [
+            "LOCAL_CONTENT_ONLY"
+          ]
+        }
+      }
+    },
+    "Observations": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.observations"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "ref": "Observation"
+          },
+          "max_items": 2048
+        }
+      }
+    },
+    "ReleaseFile": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "min_length": 1,
+          "max_length": 4096
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "Release": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "type": "string",
+          "const": "g0.release"
+        },
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "origin": {
+          "type": "string",
+          "const": "SYNTHETIC_FIXTURE"
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "all_attempts_frozen": {
+          "type": "boolean",
+          "const": true
+        },
+        "hidden_evaluation_started": {
+          "type": "boolean",
+          "const": false
+        },
+        "execution_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "allow_overwrite": {
+          "type": "boolean",
+          "const": false
+        },
+        "scientific_claim": {
+          "type": "string",
+          "const": "NOT_EVALUATED"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "ref": "ReleaseFile"
+          },
+          "max_items": 2048
+        }
+      }
+    }
+  }
+}

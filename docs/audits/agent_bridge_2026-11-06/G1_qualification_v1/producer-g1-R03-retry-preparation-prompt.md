@@ -1,0 +1,17 @@
+当前两边均idle。继续用户已批准的同一G1任务，先修P11已证实的进程监控兼容问题，继而在原批准累计上限内合理重试。上级最新协调指令明确：原授权覆盖同一任务合理重试，不得仅因“又一次尝试”重复向用户索取确认；只有确实扩大累计预算或改变权限时才报告具体差异。请不要再把旧P11/旧HANDOFF的一次性stop条款当成用户永不允许重试；旧记录保留为当时历史，使用这份新的受限续行决定，不回改原件。
+
+新协调决定 docs/audits/agent_bridge_2026-11-06/G1_qualification_v1/continuation-decision-r03.json，SHA 1f1e0214e69da41acee8974f2421df375c3c4cb8a499c2d148675bc741acde71。它没有新增预算或权限，只把原单任务额度扣除E01消耗后分配给R03。E01旧pool已经halt/completed，保持字节不变，绝不清空/reset/reopen；新attempt必须以旧pool/P11/原usergrant的SHA为前驱，累计计数和时间从已耗基数继续，不得伪装全新满额。
+
+现状：P11 review SHA6588231c1ddd0e71b8879e32ea944b40a8d6fe7a871fcf3ed918c669b13723db，失败记录完整性PASS_WITH_LIMITS、G1未资格、后续实现CHANGES_REQUIRED。R02只修过P10截止时间/VCD跨度；ps PermissionError尚未修。只派发首个yosys -V后，runtime.py:42的/bin/ps被拒使主try异常、清理/halt。版本/root退出码UNKNOWN，原ERROR/89NOT_RUN/16QCNOT_RUN保持，不能补造。source R02/P10/P10B/P11/所有old成绩和freeze均保留。
+
+最小R03修订（全新test2/g1_v3或唯一后续namespace/registration/result/phase，不改v1/v2）：
+1. 把可选PID清单与强制的执行保护拆开。真实受限环境中不要再次调用/bin/ps，不尝试全进程扫描，不要求/使用新权限或unsandboxed fullrunner。可在新profile显式登记owned_process_group_only：由Popen pid/已建立PGID/poll/wait及os.killpg维护已有根进程与组截止时间；external inventory已知不可用，receipt保留PermissionError前驱依据、unavailable/error knownness、inventory_complete=false，不虚构无子进程。只降级可选清单能力，不能吞掉PGID/kill/wait/poll的强制失败，也不能取消deadline/组清理。若这些必要API也被拒，failclosed并报告具体权限差异，不绕过。
+2. 按P11给纯fake PermissionError/OSError/monitorTimeout与可用monitor、已退出/正在运行child回归。注册真实路径不派发ps；纯mock可以验证可选inventory错误如何被单独记录。normal/root真实返回值必须独立观察，pendingchild仍按原绝对deadline timeout/kill/wait；强制kill/wait失败保持fatal或UNRESOLVED。不因monitor不可用就假定全组已退出。保留P10R1/R2的有效拒绝回归，16QC的SV/输入/数学标签与所有native/physical flags/顺序内容保持不变（仅路径、必要metadata差异）。
+3. 累计预算必须落地，而不是只在报告相加：原usergrant SHA bf3da44d7cda9eadfabebf82b23271854465942a3814f36b90789f7e715575ab；累计max32compile*20s、32BMC+cover*10s/depth8、32physical*2s/1024cycles(32perrun)、1200s受控实验执行窗口。E01已耗setup1、其他0，记录window0.045724458s；续行先保守charge2s（不是声称实际花2s），此次window最多1198s，两次实际/charged累计不得超1200。原E01绝对时间/记录不改；新的续行窗口是当前授权范围内已扣除前驱耗用的剩余额度，不能在同一attempt内再base/延时。准备及只读审查elapsed照旧单列。
+4. 连原先更严格的内部setup8上限也保持：旧setup1 +新计划最多7。建议省略非语义的setup-make版本探针（明确NOT_REPROBED_TO_PRESERVE_CUMULATIVE_SETUP_CAP，make路径/二进制hash与原先环境记录可只读保存，不能称本轮新版本已探测），其余yosys/smtbmc/z3/Icarus/vvp/Verilator/clang++共7；无额外外置version/smoke调用。保持18编译/32native/32physical/128cycles计划在剩余范围。新pool需绑定旧pool完整hash和终结状态，继承reserved.setup=1和prior charge，而不是计数0或1200新额度；只用新结果/attempt锁，旧pool不碰。source contract、gate及summary要拒绝缺前驱/假prior0/扩大remaining/旧receipt/哈希漂移/重复启动，体现全任务累计计数/当前attempt计数/真实与保守时间分别保存。
+
+当前只做R03源码/registration/累计budget实现和必要纯Python回归，不实际运行任何compiler/native/simulator/tool-version/ps/子进程诊断，不调用API/count/generation/Claude/key/network/install/gitadd/commit/push/删除。不要触碰用户已经暂存的9996项旧文件。当前HEAD依然c25180848ebfe9a1f49da0aa5f579cac913e6428；维护仅新代码和共享HANDOFF/STATUS新增紧凑当前入口，旧正文逐字保留。
+
+封存唯一 docs/audits/producer_test2_g1_R03_2026-11-06/phase.json与snapshot-manifest，绑定P11/续行decision/前驱pool与phase/source/tests/final-mutated fixtures/结果/原grant/累计caps及remaining，以及未改24语义材料的SHA。状态PREPARED_PENDING_P12_INCREMENTAL_REVIEW。新版gate接纳精确P12独立接受（不能硬编码只认旧P10）且input_identity绑定新manifest/registration/continuation。协调端将送既有reviewer P12增量审查，实际读/如实引用Hallmark同版证据并应用固定输入/定位/最小修订，同时做RTL/OS保护/累计budget技术审查。接受后会自动按同一授权给精确R03 EXECUTE，不再因合理重试问用户。只有明确不能在原累计帽内完成或必要权限确需改变，才报告差额/范围，其他安全准备继续。
+
+本次不改变G2/G3/G4/G5/API授权，当前无需key。旧540 formal75/104/361和原11/11分数/unknown等所有历史不修改。只修已确认的monitor依赖和必要累计续行元数据，不加固无关backlog、不重做PPT、不创建新chat/agent。

@@ -1,0 +1,1 @@
+P08 D01 独立纸面复核 PASS_WITH_LIMITS，review.json SHA f93d6fb191c851a6457318869521a10ac4a987946aeb95dffe098383625ea6ef；仅限纸面一致性，不代替 G0 实现验收。非阻塞 P08-N1：匹配 error 的关闭与缺 terminal 的 EVIDENCE_GAP 分开，缺 terminal 不得解除 outstanding 屏障，后续 dispatch 应拒绝；若已在实现/测试中符合，只需给出精确路径/测试，不为此改冻结 D01。现在在空闲安全点告知，不要求重跑旧实验。

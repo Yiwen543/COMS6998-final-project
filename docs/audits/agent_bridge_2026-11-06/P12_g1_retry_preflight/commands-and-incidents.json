@@ -1,0 +1,72 @@
+{
+  "commands": [
+    {
+      "command": "git rev-parse HEAD / git --no-optional-locks ls-files --stage -z (read-only, digest only)",
+      "exit_code": 0,
+      "note": "Git temp-dir confstr warning retained;no index mutation"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 .../P12_g1_retry_preflight/verify_inputs.py before",
+      "exit_code": 1,
+      "note": "Reviewer path-layout error;full result retained in input-verification-before.json,not a producer mismatch"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 .../P12_g1_retry_preflight/verify_inputs.py before-corrected",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 .../P12_g1_retry_preflight/prepare_review_copy.py",
+      "exit_code": 0,
+      "files": 51
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 .../P12_g1_retry_preflight/run_fresh_suites.py",
+      "exit_code": 0,
+      "internal_suite_exits": [
+        0,
+        0
+      ],
+      "tests": 42
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 .../P12_g1_retry_preflight/independent_probes.py",
+      "exit_code": 1,
+      "probes": 31,
+      "note": "29 non-finalization probes valid;two initial finalization cases invalid due missing labels;one misleading crossing PASS excluded"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 .../P12_g1_retry_preflight/finalization_probes_v2.py",
+      "exit_code": 0,
+      "probes": 2
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 .../P12_g1_retry_preflight/verify_inputs.py after",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 .../P12_g1_retry_preflight/finalize_review.py",
+      "exit_code": 0,
+      "note": "Exit confirmed by caller;checks all exact saved fixture/outcome bytes and evidence manifest"
+    }
+  ],
+  "reviewer_incidents": [
+    {
+      "id": "P12-HARNESS-1",
+      "product_defect": false,
+      "evidence": "input-verification-before.json",
+      "description": "Review checker assumed every source binding lived under snapshot/. Producer checklist is at sealed package root;initial mismatch was review mapping error.",
+      "resolution": "Special-case direct sealed metadata after verifying its SHA;before-corrected and after both0 mismatches. Failed first result retained."
+    },
+    {
+      "id": "P12-HARNESS-2",
+      "product_defect": false,
+      "evidence": [
+        "independent-probes/runner_normal_final_save/result.json",
+        "independent-probes/runner_final_save_crosses_cap/result.json"
+      ],
+      "description": "Reviewer empty-plan runner harness omitted labels.json. Baseline failed before reaching intended path;crossing case also had that independent error and its apparent PASS is not accepted evidence.",
+      "resolution": "No edits to those fixtures/results. New finalization_probes_v2.py saves all required synthetic files before validation. Normal exit0/nohalt;crossing exit1/durablehalt with specific FINAL_PERSISTENCE_EXCEEDED_CUMULATIVE_WALL_CAP and no execution_error."
+    }
+  ],
+  "read_output_limits": "Some initial batched source/doc outputs were truncated. Exact requested packet and core source were separately read;conclusions tied to frozen bytes and saved probes,not truncated summary alone."
+}

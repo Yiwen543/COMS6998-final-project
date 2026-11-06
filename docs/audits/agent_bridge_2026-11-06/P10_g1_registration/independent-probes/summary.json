@@ -1,0 +1,133 @@
+{
+  "mismatches": [
+    "deadline-crossed-during-reservation",
+    "truncated-vcd-before-final-observation"
+  ],
+  "records": [
+    {
+      "actual_OS_processes_spawned": 0,
+      "actual_mock_launches": 1,
+      "case": "normal-dispatch",
+      "clock_before_reserve": 100,
+      "error": null,
+      "expected_launches": 1,
+      "halted": false,
+      "mock_calls": [
+        {
+          "argv": [
+            "SYNTHETIC_NEVER_EXECUTED"
+          ],
+          "virtual_dispatch_elapsed": 100
+        }
+      ],
+      "receipt": {
+        "argv": [
+          "SYNTHETIC_NEVER_EXECUTED"
+        ],
+        "child_cost_policy": "All descendants belong to this logical batch job and its wall/cleanup deadline; verbose compiler/build commands retained. PID sampling is best effort, not an exhaustive spawn count.",
+        "child_pid_inventory_complete": false,
+        "cleanup_group_kill": false,
+        "elapsed_seconds_including_cleanup": 0,
+        "exit_code": 0,
+        "job_id": "normal-dispatch",
+        "job_timeout_cap_seconds": 2,
+        "kind": "setup",
+        "monitor_calls": 0,
+        "observed_processes": [],
+        "process_group": 999999,
+        "status": "RETURNED",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "simulated_reservation_persistence_delay": 0,
+      "source_sha256": {
+        "budget.py": "bd1da562b6f11d69ee1f4768aa5c9bda52d0a46b636c5fd0d94454689c5ea395",
+        "runtime.py": "294636c620b88c40e04ef5e8a7c118950e261eaa25ba77489d6063f1d1fe028c"
+      }
+    },
+    {
+      "actual_OS_processes_spawned": 0,
+      "actual_mock_launches": 0,
+      "case": "already-expired-refused",
+      "clock_before_reserve": 1196,
+      "error": "Refuse:GLOBAL_WORK_DEADLINE",
+      "expected_launches": 0,
+      "halted": true,
+      "mock_calls": [],
+      "receipt": null,
+      "simulated_reservation_persistence_delay": 0,
+      "source_sha256": {
+        "budget.py": "bd1da562b6f11d69ee1f4768aa5c9bda52d0a46b636c5fd0d94454689c5ea395",
+        "runtime.py": "294636c620b88c40e04ef5e8a7c118950e261eaa25ba77489d6063f1d1fe028c"
+      }
+    },
+    {
+      "actual_OS_processes_spawned": 0,
+      "actual_mock_launches": 1,
+      "case": "deadline-crossed-during-reservation",
+      "clock_before_reserve": 1194,
+      "error": null,
+      "expected_launches": 0,
+      "halted": true,
+      "mock_calls": [
+        {
+          "argv": [
+            "SYNTHETIC_NEVER_EXECUTED"
+          ],
+          "virtual_dispatch_elapsed": 1201
+        }
+      ],
+      "receipt": {
+        "argv": [
+          "SYNTHETIC_NEVER_EXECUTED"
+        ],
+        "child_cost_policy": "All descendants belong to this logical batch job and its wall/cleanup deadline; verbose compiler/build commands retained. PID sampling is best effort, not an exhaustive spawn count.",
+        "child_pid_inventory_complete": false,
+        "cleanup_group_kill": false,
+        "elapsed_seconds_including_cleanup": 7,
+        "exit_code": 0,
+        "job_id": "deadline-crossed-during-reservation",
+        "job_timeout_cap_seconds": -6,
+        "kind": "setup",
+        "monitor_calls": 0,
+        "observed_processes": [],
+        "process_group": 999999,
+        "status": "JOB_WALL_CAP_EXCEEDED",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "simulated_reservation_persistence_delay": 7,
+      "source_sha256": {
+        "budget.py": "bd1da562b6f11d69ee1f4768aa5c9bda52d0a46b636c5fd0d94454689c5ea395",
+        "runtime.py": "294636c620b88c40e04ef5e8a7c118950e261eaa25ba77489d6063f1d1fe028c"
+      }
+    },
+    {
+      "actual": "ACCEPT",
+      "actual_tool_calls": 0,
+      "case": "complete-vcd",
+      "error": null,
+      "expected": "ACCEPT",
+      "fixture_sha256": "a8fb35949471e751ccee3f5572702f39498446ef964f3af149d9c5dc8500231c",
+      "last_required_observation_tick": 15000,
+      "last_vcd_tick": 16000,
+      "rows_sha256": "8f2b2337398571117cb3f9d9371703833ad68072bbf61909e4bd030400e91ae1",
+      "source_sha256": "8b7d95a3d94a2f39bab703d7b01086b4641dc4de73efaa71a674c4e18f633091"
+    },
+    {
+      "actual": "ACCEPT",
+      "actual_tool_calls": 0,
+      "case": "truncated-vcd-before-final-observation",
+      "error": null,
+      "expected": "REJECT",
+      "fixture_sha256": "d50baa6837db8a91ed819210b9555d4e45eadc09d6edb162f409e071fc7f3d26",
+      "last_required_observation_tick": 15000,
+      "last_vcd_tick": 14000,
+      "rows_sha256": "8f2b2337398571117cb3f9d9371703833ad68072bbf61909e4bd030400e91ae1",
+      "source_sha256": "8b7d95a3d94a2f39bab703d7b01086b4641dc4de73efaa71a674c4e18f633091"
+    }
+  ],
+  "scope": "Pure mock timer and synthetic VCD parser preflight,not toolchain qualification"
+}

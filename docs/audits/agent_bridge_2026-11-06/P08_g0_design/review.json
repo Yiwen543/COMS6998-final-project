@@ -1,0 +1,230 @@
+{
+  "phase": "P08_G0_DESIGN_REVIEW",
+  "status": "PASS_WITH_LIMITS",
+  "conclusion": "未发现当前可证实的实质风险。仅接受 D01 纸面设计的一致性和边界；不证明实现、公开控制或科学资格正确，也不产生执行授权。",
+  "reviewer": "Existing independent test2 review thread",
+  "blocking_findings": [],
+  "findings": [
+    {
+      "id": "P08-N1",
+      "severity": "P3",
+      "material": false,
+      "blocking": false,
+      "title": "缺 terminal 与明确 error 的状态分支可在后续版本拆开",
+      "paths": [
+        "docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/interface_spec.md:74",
+        "docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/interface_spec.md:77"
+      ],
+      "evidence_sha256": "feaf74795ecc8e4dddef031de8987198a832ff69dbdf3bac6683ad4662dd67cd",
+      "evidence": "两行把 matching error／缺 terminal 合写为 RUN_OPEN 或 EVIDENCE_GAP；同文件严格串行总则明确必须先绑定 terminal/error 才可下一次 dispatch，FM06/FM07 则拒绝交错。",
+      "impact": "若未来只照表格局部实现，可能误把无 terminal 当已关闭请求。当前是非可执行设计，严格串行总则已禁止该路径，未证实存在错误接受，因此不阻塞本次纸面审查。",
+      "recommendation": "在后续设计/实现安全点区分已绑定 error 与缺 terminal：后者保留 EVIDENCE_GAP 且不得解除 outstanding 请求屏障；若引入终止/取消语义，另行显式登记和验收。无需改写 D01 封存文件。",
+      "acceptance_criteria": "后续封存版本明确缺 terminal 不产生可派发 RUN_OPEN；未来获准的合成测试分别验证匹配 error 的登记 retry 与缺 terminal 后第二 dispatch 的拒绝。P08 不构造或执行该测试。",
+      "routing": "ordinary idle/safe checkpoint; no interruption or cross-thread message"
+    }
+  ],
+  "checked_requirements": [
+    {
+      "id": "D01-IDENTITY",
+      "result": "ACCEPTED_DESIGN_ONLY",
+      "evidence": "interface_spec.md:15-38;failure_matrix.md:9-19",
+      "reason": "显式 run/arm/session/attempt/request/event/context/response 身份；prompt bytes/messages/schema 分开；历史缺字段不补造；单 outstanding、交错拒绝。"
+    },
+    {
+      "id": "D01-HALT",
+      "result": "ACCEPTED_DESIGN_ONLY",
+      "evidence": "interface_spec.md:72-84;FM12-FM18",
+      "reason": "全 run 持久 halt、flags 与孤立派发均拒绝；合法 NOT_RUN 不造 usage；pending-halt 迟到返回仅原始成本证据、未资格 UNRESOLVED，不恢复候选信用。"
+    },
+    {
+      "id": "D01-RESOURCE-UNKNOWN",
+      "result": "ACCEPTED_DESIGN_ONLY",
+      "evidence": "interface_spec.md:57-66;FM19-FM23;release.template.json",
+      "reason": "完整性/科学归因/成本已知性分离；缺用量 null、真实失败保留；subset 不双计、超帽 REJECT；invoice/count fees UNKNOWN 保留。"
+    },
+    {
+      "id": "D01-IMMUTABILITY",
+      "result": "ACCEPTED_DESIGN_ONLY",
+      "evidence": "manifest_lifecycle.md;FM24-FM26;FM38;FM43-FM44",
+      "reason": "新 output namespace、路径/符号链接边界、输入只读、追加证据、不覆盖旧目录；全轮冻结后 hidden 评分，sidecar 不回写冻结证据；哈希一致不冒称历史独立真实性。"
+    },
+    {
+      "id": "D01-REPRESENTATION",
+      "result": "ACCEPTED_DESIGN_ONLY",
+      "evidence": "interface_spec.md:40-55;FM27-FM34;FM40-FM41;QC02-QC15",
+      "reason": "width/signedness/guard/reset/phase、VCD/literal/dual raw/rows/HEX/MON 语义绑定；缩宽允许但 selected bit 必须存在；未知位不算报警；X/anyseq 不认等价、mode/depth 不外推完成性。"
+    },
+    {
+      "id": "D01-REFERENCE",
+      "result": "ACCEPTED_DESIGN_ONLY",
+      "evidence": "interface_spec.md:13,50-54;FM35-FM37;README.md",
+      "reason": "selected pre(S) 与 reference post(S-1) 分开；20 较早 prefix FAIL 不升为同样本/类别；74 无 reference verdict；Claude 独立作者和 fresh reviewer 权责保留，GPT 不改 oracle。"
+    },
+    {
+      "id": "D01-VISIBILITY",
+      "result": "ACCEPTED_DESIGN_ONLY",
+      "evidence": "interface_spec.md:11,36;manifest_lifecycle.md;FM42;manifest.template.json:107-111",
+      "reason": "候选显式 allowlist，不见 reference/hidden/calibration/maintainer 或其他组历史；不按 C outcomes 选支持 profile。"
+    },
+    {
+      "id": "D01-PAPER-CONTROLS",
+      "result": "ACCEPTED_DESIGN_ONLY",
+      "evidence": "public_controls.md;public_controls.index.json;failure_matrix.md",
+      "reason": "44 连续 FM 编号、16 连续 QC 编号；逐类目的/前提/拟议类别/独立确认/停止/不支持范围已读；208 个 Markdown/JSON 字段文本匹配；16 actual_result=null，三类资格状态全部未创建/未资格。不是执行通过。"
+    },
+    {
+      "id": "D01-PERMISSIONS-HISTORY",
+      "result": "ACCEPTED_DESIGN_ONLY",
+      "evidence": "README.md;implementation_permissions.md;both templates;phase-packet.json",
+      "reason": "两个模板不可执行，所有 D01 权限 false/entrypoint null；P05/P06/P07 范围和 P04 原件 mismatch 订正准确；后续单独批准 G0 adapter/轻量 fixture 不回写历史，也不授权 G1/native/API/paid。"
+    }
+  ],
+  "remaining_limits": [
+    "Paper design acceptance only. No implementation/schema runtime, adapter, fixture, source/waveform/independent-label or public-control qualification has been reviewed or executed in P08.",
+    "P05 accepts current saved format/exact94chains only; P06 accepts ledger v2 strict serialized format/current36calls144events only. Old audit_v3 is not a general new-run gate.",
+    "Original P04 exact v1 fixture REJECTS response/snapshot mismatch despite stored PASS; only response-bound temporary copy and canonical probes establish old halt flaw/new fix. Serialization cause UNKNOWN; original historical CHANGES_REQUIRED unchanged.",
+    "P05-N1 remains nonblocking backlog; P08 FM39 is a future design requirement, not an implemented fix.",
+    "F1 representation, selected-sample/category attribution, 128completion/general correctness, H1/H2/L1, countfees/actualinvoice UNKNOWN and R0/R1/R2 recovery planned remain open. 20 earlier-prefixFAIL and74 unreproduced retain original boundaries.",
+    "All16 controls await concrete independently fixed widths/types/guards/reset/phase, sources/waveforms/labels and separately authorized future qualification. Proposed native caps are not execution/feasibility evidence.",
+    "No new grants, scientific results, candidate inputs, oracle revision, API readiness or general soundness follows from this review."
+  ],
+  "scope": {
+    "writes_only": [
+      "docs/audits/agent_bridge_2026-11-06/P08_g0_design/review.json",
+      "docs/audits/agent_bridge_2026-11-06/P08_g0_design/review.md"
+    ],
+    "not_checked": [
+      "unsealed producer adapter/fixture implementation",
+      "runtime behavior or attack resistance",
+      "new native/formal/physical/monitor/API work",
+      "full historical raw logs or all4837 frozen member contents",
+      "resource feasibility or billing"
+    ],
+    "implementation_or_fixture_files_written": 0,
+    "fixture_execution": 0,
+    "unit_tests": 0,
+    "prior_audits_rerun": 0,
+    "native_or_DUT_or_monitor_runs": 0,
+    "API_or_count_calls": 0,
+    "keys_accessed": false,
+    "shared_docs_source_or_real_results_edited": false,
+    "installation_deletion_commit_push": false,
+    "new_agents_or_chats": 0,
+    "cross_thread_messages": 0
+  },
+  "handoff": {
+    "next": "Coordinator may record the bounded document acceptance and pass N1 at an ordinary safe checkpoint. Independently review later adapter/fixtures only through their new sealed manifest; do not infer G1/scientific authority.",
+    "producer_interruption_warranted": false
+  },
+  "substantive_read_and_validation_commands": [
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,subprocess\nB=Path('docs/audits/agent_bridge_2026-11-06/P08_g0_design');p=B/'phase-packet.json';print('PACKET_SHA',hashlib.sha256(p.read_bytes()).hexdigest());print(p.read_text());print('HEAD',subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip());print('FILES',[str(x) for x in B.iterdir()])\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nR=Path.cwd();b=R/'docs/audits/agent_bridge_2026-11-06/P08_g0_design';p=json.loads((b/'phase-packet.json').read_text())\nfor key in ('producer_phase','producer_manifest'):assert hashlib.sha256((R/p[key]).read_bytes()).hexdigest()==p[key+'_sha256']\nm=json.loads((R/p['producer_manifest']).read_text());print('MANIFEST',json.dumps(m,indent=2)[:14000]);print('PHASE',(R/p['producer_phase']).read_text()[:4500])\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/interface_spec.md && cat docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/manifest_lifecycle.md",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nimport json,hashlib,pathlib\np=pathlib.Path('docs/audits/agent_bridge_2026-11-06/P08_g0_design/phase-packet.json');q=json.loads(p.read_text()); b=pathlib.Path('docs/audits/producer_test2_g0_D01_2026-11-05');m=json.loads((b/'snapshot-manifest.json').read_text()); bad=[]\nfor name,h in m['files'].items():\n h=h if isinstance(h,str) else h['sha256']; f=b/name\n if not f.is_file() or hashlib.sha256(f.read_bytes()).hexdigest()!=h:bad.append(name)\nprint(json.dumps({'packet_sha':hashlib.sha256(p.read_bytes()).hexdigest(),'members':len(m['files']),'mismatches':bad}));assert len(m['files'])==18 and not bad\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/manifest_lifecycle.md",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/README.md docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/implementation_permissions.md",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/failure_matrix.md",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/public_controls.md",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/manifest.template.json",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/release.template.json",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nimport json,pathlib\nb=pathlib.Path('docs/audits/producer_test2_g0_D01_2026-11-05');j=json.loads((b/'snapshot/docs/designs/test2_g0_design_v1/public_controls.index.json').read_text());print('INDEX_HEADER',json.dumps({k:v for k,v in j.items() if k!='controls'},ensure_ascii=False));cs=j['controls'];print('COUNT',len(cs));\nfor c in cs: print(json.dumps(c,ensure_ascii=False))\nfor f in ['scope-and-inputs.json','input-provenance.json','document-checks.json']:\n j=json.loads((b/f).read_text());print(f,'TOP_KEYS',list(j));print(json.dumps(j,ensure_ascii=False)[:5200])\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nimport pathlib,json,hashlib,re,subprocess\nroot=pathlib.Path('.'); b=root/'docs/audits/producer_test2_g0_D01_2026-11-05'; d=b/'snapshot/docs/designs/test2_g0_design_v1'\nh=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\np=json.loads((root/'docs/audits/agent_bridge_2026-11-06/P08_g0_design/phase-packet.json').read_text());print('PACKET',json.dumps(p,ensure_ascii=False))\ns=json.loads((b/'scope-and-inputs.json').read_text());print('PROTECTED_PATHS',list(s['protected_sha256']))\nbad=[{'path':f,'expected':sha,'actual':h(root/f) if (root/f).is_file() else None} for f,sha in s['protected_sha256'].items() if not (root/f).is_file() or h(root/f)!=sha];print('PROTECTED',len(s['protected_sha256']),'MISMATCHES',json.dumps(bad))\nidx=json.loads((d/'public_controls.index.json').read_text());md=(d/'public_controls.md').read_text();fm=(d/'failure_matrix.md').read_text();assert re.findall(r'^\\| (FM\\d+) \\|',fm,re.M)==[f'FM{i:02}' for i in range(1,45)];assert [x['id'] for x in idx['controls']]==[f'QC{i:02}' for i in range(16)];assert len(list(d.iterdir()))==9\nchecks=0\nfor c in idx['controls']:\n block=md.split('## '+c['id']+' · ')[1].split('\\n## ')[0]\n for k in ['title','purpose','proposed_class','human_expectation','independent_label_confirmation_needed','acceptance_and_stop','unsupported_scope']:\n  assert str(c[k]) in block,(c['id'],k); checks+=1\n for v in c['preconditions'].values():assert v in block;checks+=1\n assert c['actual_result'] is None\n for k in ['source_status','waveform_status','independent_label_status']:assert c[k]=='NOT_CREATED_OR_NOT_QUALIFIED'\nfor name in ['manifest.template.json','release.template.json']:\n t=json.loads((d/name).read_text());assert t['status']=='TEMPLATE_ONLY_NOT_A_VALID_RELEASE' and t['payload_is_not_a_runtime_instance'] is True\n assert t['permissions']['entrypoint'] is None and all(v is False for k,v in t['permissions'].items() if k!='entrypoint')\n assert t['real_run_id'] is None and t['actual_artifacts'] is None and t['usable_grant'] is None\n for x in t['field_descriptors']:assert x['placeholder'].startswith('<PLACEHOLDER:')\nprint('DOCUMENT_ASSERTIONS',{'files':9,'failure_cases':44,'controls':16,'markdown_index_text_field_matches':checks,'control_results_null':16,'nonexecutable_templates':2})\nm=json.loads((b/'snapshot-manifest.json').read_text());diff=[]\nfor name,sha in m['files'].items():\n if name.startswith('snapshot/'):\n  f=name[len('snapshot/'):]; actual=h(root/f) if (root/f).is_file() else None\n  if actual!=sha:diff.append({'path':f,'snapshot_sha256':sha,'current_sha256':actual})\nprint('CURRENT_SNAPSHOT_FILE_COUNT',sum(n.startswith('snapshot/') for n in m['files']));print('DRIFT',json.dumps(diff))\nr=subprocess.run(['git','status','--porcelain=v1','--untracked-files=normal'],capture_output=True,text=True);print('GIT_STATUS',{'exit_code':r.returncode,'entries':len(r.stdout.splitlines()),'tracked_entries':sum(not x.startswith('??') for x in r.stdout.splitlines()),'untracked_entries':sum(x.startswith('??') for x in r.stdout.splitlines())});assert r.returncode==0\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g0_D01_2026-11-05/snapshot/docs/designs/test2_g0_design_v1/interface_spec.md | sed -n '65,110p'",
+      "exit_code": 0
+    },
+    {
+      "command": "sed -n '1,110p' AGENTS.md",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nimport json,pathlib\nb=pathlib.Path('docs/audits/producer_test2_g0_D01_2026-11-05')\nfor f in ['git-status-before.json','git-status-after.json']:\n j=json.loads((b/f).read_text());print(f,'keys',list(j) if isinstance(j,dict) else 'array')\nfor f in ['docs/audits/agent_bridge_2026-11-06/P05_witness/review.json','docs/audits/agent_bridge_2026-11-06/P06_ledger_fix/review.json','docs/audits/agent_bridge_2026-11-06/P07_next_gates/review.json']:\n j=json.loads(pathlib.Path(f).read_text());print(f, {k:v for k,v in j.items() if k in ['status','conclusion','scope','verdict','remaining_limits','not_authorized']})\nPY",
+      "exit_code": 0
+    }
+  ],
+  "verified_at_utc": "2026-11-06T02:53:38.865454+00:00",
+  "actual_HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+  "head_matches_packet": true,
+  "input_identity": {
+    "phase_packet_sha256": "5ea372987d85b83adb1cbab6cab67cebff486efa12bfd32176f006a30ce833cc",
+    "producer_phase_path": "docs/audits/producer_test2_g0_D01_2026-11-05/phase.json",
+    "producer_phase_sha256": "675b772099469ad64603093569e0796aa814d24f73feeadcb24026df8b193ee2",
+    "producer_manifest_path": "docs/audits/producer_test2_g0_D01_2026-11-05/snapshot-manifest.json",
+    "producer_manifest_sha256": "be07ee63e34dba49cee48750a6cfe230c61994b71925f8a9a85e406829288983",
+    "snapshot_member_sha256": {
+      "git-status-before.json": "8d076ad05d527475fc9b7aeb2375b3a779d4b28a681a030eea1d186946bef249",
+      "git-status-after.json": "2b22d812a3421ee4e8b4f5d7c4805a36fc68709753329e1fe11b5d9f63b4e888",
+      "scope-and-inputs.json": "a560708c18a5bffd714008e9de45a22096085a2911f432a2d8d274c0f278692e",
+      "document-checks.json": "0898c2f93a8d7bc141b28c229ac411e9679f8a13378f22739b756c1237d5e258",
+      "commands.json": "2af781b543e4a1da6137c344547a39ffaa6d797e533940faa7e4d3d55f4d3143",
+      "input-provenance.json": "25ef471da47f9b5b9a01075a353d8ae69ad470d995250f67af64aa103ec951e5",
+      "phase.json": "675b772099469ad64603093569e0796aa814d24f73feeadcb24026df8b193ee2",
+      "snapshot/docs/PROJECT_STATUS.md": "4da5b1a76a0d15c8d530b1a30250452fd0d89a2d1126f6af6b73b83fc01583ad",
+      "snapshot/docs/HANDOFF.md": "48aaa652ba5b5a8360bb77150270f2d1d61c163341f55de5aa8b6dbcc5cec34c",
+      "snapshot/docs/designs/test2_g0_design_v1/manifest.template.json": "b55508bb506fbc5fa1e0f6cf5676105861f35e7ca2e8c7e93d9edd2eaa710d8a",
+      "snapshot/docs/designs/test2_g0_design_v1/manifest_lifecycle.md": "2f33ba0bae03428c31433c346ca60afc4e87c092df78c1c65a380f11927b063b",
+      "snapshot/docs/designs/test2_g0_design_v1/README.md": "00591ca5ca224368bfd3ad270964b9f7e6c2740c409a0edd379543c7f844dca6",
+      "snapshot/docs/designs/test2_g0_design_v1/implementation_permissions.md": "02dfa672618ba3236065eae1abe987b431b1d4e8cfc9bccce68072861c80c624",
+      "snapshot/docs/designs/test2_g0_design_v1/interface_spec.md": "feaf74795ecc8e4dddef031de8987198a832ff69dbdf3bac6683ad4662dd67cd",
+      "snapshot/docs/designs/test2_g0_design_v1/public_controls.md": "e92705c1e3237f1b71f6497778351fbc1af5ec4c5c4a90d6d7cd346ce3bbb0a6",
+      "snapshot/docs/designs/test2_g0_design_v1/public_controls.index.json": "0b3c0467aa2a0b245f86df857d5c83c2de5c148ad28165f5fa7408e1e685d29f",
+      "snapshot/docs/designs/test2_g0_design_v1/release.template.json": "eb9d3b9e1a07e16b9b28623f1fa1a875072b8f36832029e479dc69935c3cd49b",
+      "snapshot/docs/designs/test2_g0_design_v1/failure_matrix.md": "7cc4f99b048f7502fc3ac7208bd9e3a4efca93d94b5a6f87e4dcf9ae54a59efc"
+    }
+  },
+  "verification": {
+    "snapshot_members_checked": 18,
+    "snapshot_mismatches": [],
+    "protected_source_hashes_checked": 30,
+    "protected_mismatches": [],
+    "current_snapshot_files_checked": 11,
+    "current_drift": [],
+    "stale": false,
+    "design_files_reviewed": 9,
+    "paper_failure_cases_reviewed": 44,
+    "public_controls_reviewed": 16,
+    "markdown_index_text_matches": 208,
+    "null_control_results": 16,
+    "nonexecutable_templates": 2,
+    "initial_git_status_entries": 195,
+    "initial_tracked_entries": 4,
+    "initial_untracked_entries": 191,
+    "all_logged_read_validation_exit_codes_zero": true
+  }
+}

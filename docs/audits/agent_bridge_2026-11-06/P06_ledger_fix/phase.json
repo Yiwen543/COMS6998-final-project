@@ -1,0 +1,96 @@
+{
+  "phase": "E04",
+  "status": "PRODUCER_CHECKS_PASS_AWAITING_INDEPENDENT_REVIEW",
+  "independent_acceptance": false,
+  "head": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+  "scope": "Narrow P04-R1 persistent resource_halt fix in a new API-free ledger validator version; not scientific rescoring or a generator change",
+  "source": "test2/scripts/controller_done_ledger_audit_v2.py",
+  "source_sha256": "2d27c0aac133c002f78a4fe69f505711069b67ef76778d5251fdb774abe7422f",
+  "parent_source": "test2/scripts/controller_done_ledger_audit_v1.py",
+  "parent_source_sha256": "c07cdf35651c6fc90b3585d7ac11ab1041050bc7031964aa78e15ea4b91b9166",
+  "tests": "test2/tests/test_controller_done_ledger_audit_v2.py",
+  "tests_sha256": "0f845a547afd823071d2a65bf2a73db51ae9301f574e444f6449dc4edbaa1afe",
+  "unit_tests": 32,
+  "unit_tests_exit_code": 0,
+  "unit_test_scope": "22 inherited binding/failure tests againstv2 plus10 halt/discrepancy tests; v1 files and22-test historical evidence unchanged",
+  "regression_controls": "regression-controls.json",
+  "regression_controls_sha256": "8e99f0171a01e23872bee83fd9299e34ce0e6ffb04ba8f59c21302003755882d",
+  "regression_controls_summary": {
+    "total": 11,
+    "rejected_illegal": 9,
+    "legal_NOT_RUN_PASS": 1,
+    "missing_usage_UNRESOLVED_null": 1
+  },
+  "result": "test2/results/controller-done-ledger-audit-v3/audit.json",
+  "result_sha256": "07aedb0eb685b3b46e1e337a7b69f7804be8295f0d0e4bae8bb0a9e6c7c8dcaa",
+  "actual_saved_batch": {
+    "status": "PASS",
+    "calls": 36,
+    "events": 144,
+    "dependencies": 1614,
+    "dependency_hashes_identical_to_E03a": true,
+    "usage": {
+      "input_tokens": 1475813,
+      "output_tokens": 78479,
+      "total_tokens": 1554292
+    },
+    "persistent_halt": false,
+    "halt_events": [],
+    "provider_invoice_usd": null,
+    "count_endpoint_actual_usd": null,
+    "parse_wall_seconds": 0.5267668748274446
+  },
+  "commands": [
+    {
+      "command": ".venv/bin/python -m unittest discover -s test2/tests -p test_controller_done_ledger_audit_v2.py -v",
+      "exit_code": 0,
+      "log": "tests-final.log"
+    },
+    {
+      "command": ".venv/bin/python test2/scripts/controller_done_ledger_audit_v2.py --out test2/results/controller-done-ledger-audit-v3",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/python docs/audits/producer_test2_done_live_E04_2026-11-05/run-regression-controls.py",
+      "exit_code": 0
+    },
+    {
+      "command": "Repeat CLI at existingv3 output negative control",
+      "exit_code": 1,
+      "result_hash_unchanged": true
+    }
+  ],
+  "P04_authority_sha256": {
+    "review.md": "e15d0f55f124f85aeb7e1a1fefc05f5fd8f1420dff690d955ea698025b5abe08",
+    "review.json": "e2f9fc0a6de737ee1c9d427de5b70dc4c2f5ec59aca4a6d954e9ddc3888d8c77",
+    "fixture_records.json": "c12eda95b03c76ef2109aab13f68f59488a3e363e505ef681c3443a4d17414d1",
+    "manifest.json": "647c2d23b87eb80f4af6af4535d9605926167045b73054fad5b7c3a6ad117187"
+  },
+  "P04_bound_inputs_after": 21,
+  "P04_metadata_after": 3,
+  "freeze_members_after": 4837,
+  "prior_E03a_E03b_seals_intact": true,
+  "counterexample_evidence_discrepancy": {
+    "file": "counterexample-baseline.json",
+    "exact_saved_v1": "REJECT: accepted response/snapshot mismatch",
+    "P04_recorded_result": "PASS",
+    "copy_change": "Only set temporary snapshot.response to the already recorded accepted parsed response; original evidence unchanged",
+    "bound_copy_v1": "PASS",
+    "exact_and_bound_copy_v2": "REJECT: request flags after persistent resource_halt",
+    "serialization_cause": "UNKNOWN; do not silently repair P04 evidence or claim exact originalv1 replayPASS"
+  },
+  "open_limits": [
+    "P04 CHANGES_REQUIRED remains historical; E04 not independently accepted; P01-R3 not independently closed",
+    "Strict serialized historical-event binding, no authentication of absent requestID/context fields",
+    "Actual count fees/provider bill remain UNKNOWN",
+    "R2 E03b independent acceptance pending; H1/H2/L1 and scientific/formal limits unchanged"
+  ],
+  "new_paid_API_calls": 0,
+  "new_count_calls": 0,
+  "new_DUT_simulations": 0,
+  "new_formal_jobs": 0,
+  "new_monitor_replays": 0,
+  "installs": 0,
+  "commits": 0,
+  "pushes": 0
+}

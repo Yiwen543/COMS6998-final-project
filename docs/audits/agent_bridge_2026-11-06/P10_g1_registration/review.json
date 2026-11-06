@@ -1,0 +1,357 @@
+{
+  "phase": "P10_G1_REGISTRATION_LABEL_RESOURCE_PREFLIGHT",
+  "status": "CHANGES_REQUIRED",
+  "execute_routing": "BLOCKED_DO_NOT_ISSUE_EXECUTE_FOR_THIS_R01",
+  "conclusion": "公开toy标签经独立解析/手算无失配；14项新鲜纯Python mocks通过。但确认两项执行前实质缺陷：截止时间跨越后仍可派发，以及VCD尾部缺失仍可通过采样绑定。精确R01不能进入EXECUTE，需最小修订封存并增量复验；不是新增用户许可请求。",
+  "input_identity": {
+    "phase_packet_sha256": "b3af387386847f5eaeddacf7cdf94d90d42aafebc7c0e0cb7e60a44442fcac14",
+    "producer_phase_sha256": "f01830b520c5e2f87906a0770df6c67bc59f58178a69dd18d801f50750acb749",
+    "producer_manifest_sha256": "ba96cf663df3a7aa7cef9ca43d660e80bdefe09a9482178bd8fe6a198f5c12c7",
+    "registration_sha256": "8feb9918911177827b53bc9669d1faaad68bfb75af3380ce019df4a80ca174ba",
+    "user_authorization_sha256": "bf3da44d7cda9eadfabebf82b23271854465942a3814f36b90789f7e715575ab",
+    "source_manifest_sha256": "33028055c5b2cbba0b633017790c20124127363a0684030235b344cdfda63c91",
+    "full_manifest_file": "input-manifest.json",
+    "sources": "Exact R01 snapshot;current copies only SHA drift comparison",
+    "full_input_manifest_sha256": "908817a2c4f7b51f1ae5337d19210ea0bdc2c424447ef84d60fa7b9aadb822f3"
+  },
+  "findings": [
+    {
+      "id": "P10-R1",
+      "severity": "P1",
+      "material": true,
+      "blocking": true,
+      "title": "持久化耗时跨过公共deadline后仍调用派发",
+      "paths": [
+        "test2/g1_v1/budget.py:49",
+        "test2/g1_v1/budget.py:72",
+        "test2/g1_v1/budget.py:73",
+        "test2/g1_v1/runtime.py:13",
+        "test2/g1_v1/runtime.py:23",
+        "test2/g1_v1/runtime.py:26"
+      ],
+      "source_sha256": {
+        "budget.py": "bd1da562b6f11d69ee1f4768aa5c9bda52d0a46b636c5fd0d94454689c5ea395",
+        "runtime.py": "294636c620b88c40e04ef5e8a7c118950e261eaa25ba77489d6063f1d1fe028c"
+      },
+      "evidence_path": "independent-probes/deadline-crossed-during-reservation/result.json",
+      "fixture_source": "independent_probes.py (clock1194, synthetic reservation-save delay7; no actual sleep or child process)",
+      "expected": "After persistence returns at elapsed1201 with deadline1200/work cutoff1195,do not call Popen;preserve consumed reservation and terminal refusal/halt.",
+      "actual": "Budget returns limit=-6;runtime calls mocked Popen once at elapsed1201, then labels JOB_WALL_CAP_EXCEEDED and halts. Already-expired1196 baseline makes0calls;normal100 baseline1call.",
+      "impact": "Declared hard shared deadline is detected only after a knowingly expired dispatch. A slow fsync/directory/log creation can consume the interval between initial reserve check and Popen. Eventual halt does not undo an unauthorized late tool launch.",
+      "minimum_correction": "New frozen source version: preserve reservation accounting, refuse nonpositive/insufficient remaining time after persistence, recompute absolute root/global deadline and check immediately before Popen after output preparation; do not extend original clock. Record charged-but-not-dispatched outcome. Keep R01 and all failures.",
+      "acceptance_condition": "Pure fake-clock test crossing work/global deadline during reserve/save or directory/log preparation observes zero Popen calls, charged reservation preserved, persistent halt/NOT_RUN and no new pool. Positive and ordinary timeout paths still bind original deadline. No compiler/tool job needed.",
+      "reproduce_command": "PYTHONDONTWRITEBYTECODE=1 python3 <fresh-review-owned-copy>/independent_probes.py",
+      "reproduction_layout": "Copy exact exec_tree and independent_probes.py into an unused directory under P10;script refuses existing independent-probes. Current original executed command is in commands.",
+      "actual_tool_or_OS_processes": 0,
+      "fixture_source_sha256": "fe49f16e25ba76bb3cb8c9c965b656afcc265568f9c97b7aed462dce8fd29bfa",
+      "evidence_sha256": "ef50821e5732a77b9cdc70744c9dff256db7e7b04a28dba5b014cacf0c838b18"
+    },
+    {
+      "id": "P10-R2",
+      "severity": "P2",
+      "material": true,
+      "blocking": true,
+      "title": "VCD终点不足仍被外推成后续采样证据",
+      "paths": [
+        "test2/g1_v1/observations.py:81",
+        "test2/g1_v1/observations.py:97",
+        "test2/g1_v1/observations.py:101",
+        "test2/g1_v1/runner.py:116",
+        "test2/g1_v1/runner.py:146"
+      ],
+      "source_sha256": {
+        "observations.py": "8b7d95a3d94a2f39bab703d7b01086b4641dc4de73efaa71a674c4e18f633091",
+        "runner.py": "838e45c9905a7a56cffd83d4d4c7a886c09a796ae0edf4fa4ce97337c13b1d46"
+      },
+      "fixture_path": "analytic-preflight/full-observer-vcd-truncated-before-post15.vcd",
+      "fixture_sha256": "25a20fc0821203d747744f9c6dad3b762bb299c1be13baa19a926b13ece8b0da",
+      "control_fixture_path": "analytic-preflight/full-observer-vcd.vcd",
+      "control_fixture_sha256": "235ef77a66cff18146ac261bde9a3abedc1fdaa253d609c984f92270c0226c0e",
+      "rows_path": "analytic-preflight/rows.json",
+      "rows_sha256": "5181cc4468d4334265fef0144202180b6df1fdb6aa4839e4b924bd8127e84fa0",
+      "expected": "Complete16ns control ACCEPT;prefix ending14ns must be Unqualified/REJECT for required post15ns observation.",
+      "actual": "Both ACCEPT. binder chooses last tick<=row tick without checking row tick<=recorded trace end, so state at14ns is silently extended beyond EOF to15ns.",
+      "impact": "A truncated/missing-tail waveform can be counted as fully bound public-control evidence;runner can report EXPECTED_CONTROL_OBSERVATIONS_MATCHED despite absent final observation interval. This is within G1's newly declared VCD binding scope, not a request for general legacy parser engineering.",
+      "minimum_correction": "New source version: require every required observation timestamp lie within the recorded VCD span, explicitly preserve missing/truncated-tail reason as unqualified and halt/remainder NOT_RUN;do not fabricate continuation or resample. Keep complete profile control accepted.",
+      "acceptance_condition": "Saved complete observer-phase fixture ACCEPT, exact truncated counterpart rejected specifically for trace coverage; include unknown/other existing refusal mocks. No actual simulator/native job to repair this parser before execution.",
+      "reproduce_command": "PYTHONDONTWRITEBYTECODE=1 python3 <fresh-review-owned-copy>/analytic_preflight.py",
+      "actual_tool_calls": 0,
+      "analytic_script_sha256": "b21fcc1519e5ce407bb485815b146e3c7028f232cff87e2949e58f008c4be8c8"
+    }
+  ],
+  "nonblocking_notes": [
+    {
+      "id": "P10-N1",
+      "severity": "P3",
+      "material": false,
+      "title": "批次计数与PID观察的接受边界",
+      "reason": "18是逻辑编译根任务，不是18个OS编译进程。此固定计划的16Yosys+Icarus共享编译+Verilator共享编译可作为32-job上限下的任务计数；所有内部make/C++/ivl子流程必须属于对应根任务的20s/公共1200s，不额外免费或以剩余名额新开profile。该定义在结果中必须继续保留。",
+      "evidence": "registration.compilation_unit;job-plan first2shared compile roots and16QC frontend roots;runtime.py:18-20,35-42",
+      "condition": "R1需先修复。PID采样不穷尽，不能用空列表证明无子进程。源码发送组kill并在已检测linger/cleanup异常时halt；真实OS组生命周期尚未经本轮验证，不宣称完整清理保证或供应链认证。",
+      "not_a_blocker_reason": "批次单位预先冻结且对子进程并未声称额外免费额度；没有证实其在正常受限根任务外新开编译。未执行实际生命周期是本轮预检范围边界，不是伪造资格通过。"
+    }
+  ],
+  "acceptance_checks": {
+    "analytic_labels": {
+      "result": "MATCH_ANALYTIC_ONLY_NOT_TOOL_QUALIFICATION",
+      "controls": 16,
+      "physical_icarus_rows": 128,
+      "known_verilator_rows": 112,
+      "arithmetic_pairs": 256,
+      "signed_values": 16,
+      "formal_harnesses_same_except_ID": true,
+      "scope": "All inputs scheduled cycle0..3 then idle through7;initialq0/single posedge model. No universal unconstrained input or unbounded proof.",
+      "contrasts": "QC01/03/05/09 first definite active-negative atpre1;QC11 atpre2. QC07/QC15 never active. QC12Icarus logical equality X,QC13case-X test1;native/Verilator four-state equivalence unsupported. QC14observer marker finalpost only,no extra edge/input."
+    },
+    "source_and_authority": {
+      "registration_origin": "NEW_G1_PUBLIC_QUALIFICATION_REGISTRATION",
+      "grant": "New user authority,not SYNTHETIC_FIXTURE/G0/oldUSD20",
+      "protected_sources": 73,
+      "source_manifest_bindings": 37,
+      "source_members": 101,
+      "current_drift": [],
+      "actual_execution_pool_exists": false
+    },
+    "plan_counts": {
+      "setup": 8,
+      "compile_roots": 18,
+      "native_total": 32,
+      "bmc": 16,
+      "cover": 16,
+      "physical": 32,
+      "physical_cycles_reserved": 128,
+      "profile_count": 1,
+      "order_frozen": true,
+      "no_retries": true,
+      "post_review_new_jobs": 0
+    },
+    "scope_exclusions": "No G2/oracle/API/data/candidate/key/paid/newDUT or oldcohort work. Toy analytic labels are not FIFO oracle. No extra32-job pool is available after review.",
+    "QC08_QC09": "Direct sampled-pre vs registered delayed native report distinguished. QC09source actually checks q againstpost and metadata intentionally claims post;rawphysicalpre/post retained and rejection is expected control,not DUT fault. Native actual report/ABI remains untested."
+  },
+  "test_accounting": {
+    "producer_saved_mocks": [
+      {
+        "tests": 12,
+        "failures": 0,
+        "source_bindings": 5,
+        "first_source_provenance": "Reconstructed from recorded edits,not originally copied at execution;5hashes match;not rerun."
+      },
+      {
+        "tests": 14,
+        "failures": 0,
+        "source_bindings": 6
+      }
+    ],
+    "reviewer_fresh_mocks": {
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "actual_setup_compile_native_physical_calls": 0
+    },
+    "independent_probes": {
+      "evaluations": 7,
+      "unique_timer_scenarios": 3,
+      "synthetic_VCD_bindings": 4,
+      "confirmed_defects": 2,
+      "notes": "Initial minimal signal-subset VCD pair retained;second refined pair includes all3/7/11/15nsobserver phase transitions. Both pairs exhibit same tail defect. No OS subprocess/sleep;runtime Popen/run/killpg/time replaced by isolated fake objects."
+    },
+    "analytic_preflight": {
+      "scope": "Public finite math/state computation only",
+      "label_mismatches": 0,
+      "tool_calls": 0
+    },
+    "reviewer_execution_pool_started": false,
+    "real_tool_jobs_consumed": 0
+  },
+  "hallmark": {
+    "considered": true,
+    "read_this_round": true,
+    "source": "/Users/yiwenchen/.codex/skills/hallmark/SKILL.md",
+    "version": "2.0.0",
+    "source_sha256": "25a1ff92d925b2389e8409f42fb8ad7e033fceca8b5d1f07ed4ca4c28da53dc3",
+    "read_evidence": [
+      {
+        "tool": "functions.exec -> tools.skills__read",
+        "args": {
+          "package": "e0/hallmark"
+        },
+        "result_resource": "skill://codex-home-skills/Users/yiwenchen/.codex/skills/hallmark/SKILL.md"
+      },
+      {
+        "tool": "exec_command",
+        "command": "cat /Users/yiwenchen/.codex/skills/hallmark/references/review-finish.md",
+        "exit_code": 0,
+        "source_sha256": "9d00de59e71ee2516212140b0512d6d2e90a120d4a328eeba9cb12396ff38d64"
+      }
+    ],
+    "prior_read_reference": "hallmark_usage_check/reviewer-findings.json#/hallmark (same SKILL hash;fresh reading also performed this round)",
+    "applied_for": [
+      {
+        "principle": "Fixed-input independent critique;read artifact not producer intent",
+        "where": "input_identity/input-manifest.json;analytic-preflight independent256/16truth tables and fixed state derivation"
+      },
+      {
+        "principle": "Locate concrete defects and rank by impact;do not substitute taste",
+        "where": "P10-R1/P10-R2 with exact source lines,source/fixture hashes and expected-vs-actual pure probes;N1 separated nonblocking"
+      },
+      {
+        "principle": "Minimal revision,do not edit reviewed source;preserve settled material",
+        "where": "Each finding.minimum_correction/acceptance_condition;R01/publiclabels/oldscientificevidence preserved;changes require new seal"
+      },
+      {
+        "principle": "Name what must remain undiluted",
+        "where": "Remaining limits and single unspent user resource pool;no revised scientific credit or authority expansion"
+      }
+    ],
+    "workflow_executed": false,
+    "applicable_generic_principles_executed": true,
+    "scripts_executed": false,
+    "not_applicable_reason": "RTL/resource analytic preflight has no webpage/UI/screenshot target. No full Hallmark page workflow,UI scripts,Together/API ordesign pass. Technical conclusions come from separate source/math/pure mock checks.",
+    "technical_review_methods": [
+      "snapshot+source+protected SHA checks",
+      "independent finite public arithmetic and sequential scheduled-state derivation",
+      "static runner/resource/process/VCD review",
+      "fresh14pure mocks",
+      "isolated fake-clock/runtime and saved synthetic VCD counterexamples"
+    ],
+    "limits": "Generic critique principles do not decide RTL truth,toolchain ABI/formal equivalence or OS resource enforcement."
+  },
+  "remaining_limits": [
+    "No tool version/compiler/native/solver/simulator/monitor executed;syntax/frontends/ABI/actual waveform and OS lifecycle remain unqualified.",
+    "All16analytic labels agree but actual native statuses/physical observations remain null/pending;depth8 does not establish128completion orunbounded/liveness.",
+    "QC12/QC13X/anyseq/case equality remain unsupported for2state equivalence;not a uniform explanation for74historical unreproduced.",
+    "QC07/QC15vacuous,QC14transport-only;no realDUT/oracle/candidate/B-C claim orfutureClaudecontract.",
+    "P04original mismatch/causeUNKNOWN, P05/P06 bounded cohorts, P05-N1 backlog, F1/H1/H2/L1/selected-sample/general soundness/billingUNKNOWN/recovery planned unchanged.",
+    "73protected sources checked;not full all4837or7450oldmember content audit.",
+    "Complete readonly-review wall duration not instrumented at turn entry,reported null/notzero. Producer preparation recorded interval973.327s is not execution timer; reviewer mock0.0201s is separate and not native budget consumption.",
+    "Local source/grant hashes bind coordination but are not general human authentication or complete OS/compiler dependency attestation."
+  ],
+  "reviewer_harness_incidents": [
+    {
+      "command_exit_code": 1,
+      "description": "A compact label-print helper attempted to iterate physical_expected_verilator=None atQC12. Read-only helper error;corrected inspection/independent derivation treats QC12/QC13 unsupportedNone honestly. No input/result rewritten to hide error."
+    }
+  ],
+  "permissions": {
+    "writes_only": "P10_g1_registration/**",
+    "producer_contact_or_interrupt": false,
+    "source_shared_historical_edits": false,
+    "credentials_API_network_installation": false,
+    "new_agents_or_chats": 0,
+    "actual_compiler_native_physical_version_calls": 0
+  },
+  "commands": [
+    {
+      "command": "cat /Users/yiwenchen/.codex/skills/hallmark/references/review-finish.md",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nB=Path('docs/audits/producer_test2_g1_R01_2026-11-05');H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();Q=json.loads(Path('docs/audits/agent_bridge_2026-11-06/P10_g1_registration/phase-packet.json').read_text());assert H(B/'phase.json')==Q['producer_phase_sha256'];assert H(B/'snapshot-manifest.json')==Q['producer_manifest_sha256'];M=json.loads((B/'snapshot-manifest.json').read_text());print('MANIFEST_KEYS',list(M));print('FILES',list(M['files']));bad=[n for n,h in M['files'].items() if H(B/n)!=h];print('BINDINGS',len(M['files']),bad);print('PHASE',json.dumps(json.loads((B/'phase.json').read_text()),ensure_ascii=False));assert not bad\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g1_R01_2026-11-05/P10-review-checklist.md; cat docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/README.md; cat docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/configs/g1_qualification_registration_v1.json",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/inputs/controls.json",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/inputs/stimulus.json; cat docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/inputs/expected-waveform-contract.json; cat docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/docs/audits/agent_bridge_2026-11-06/G1_qualification_v1/user-authorization.json",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/sources/common.sv; nl -ba docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/sources/physical_tb.sv; cat docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/sources/QC08_formal.sv",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/budget.py; nl -ba docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/runtime.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json\nB=Path('docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1');j=json.loads((B/'inputs/controls.json').read_text())\nfor c in j['cases']:\n print(c['id'],{k:v for k,v in c.items() if k not in ['physical_rows_expected_icarus','physical_expected_verilator','widths','signedness','clock_reset','native_sample','guard_source']});print('ROWS',[(r['cycle'],r['phase'],r['q'],r['active'],r['ok'],r['marker']) for r in c['physical_rows_expected_icarus']]);print('VERILATOR_OK',[r['ok'] for r in c['physical_expected_verilator']])\nPY",
+      "exit_code": 1
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/runner.py | sed -n '1,190p'",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/runner.py | sed -n '190,390p'",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/observations.py | sed -n '1,250p'",
+      "exit_code": 0
+    },
+    {
+      "command": "cat docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/contracts.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json\nB=Path('docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1');j=json.loads((B/'job-plan.json').read_text());print('PLAN_KEYS',list(j))\nfor x in j['jobs']:\n if x['kind']!='native' or x.get('qc') in ('QC00','QC12'):print(x)\nprint('FINAL_CASES')\nfor c in json.loads((B/'inputs/controls.json').read_text())['cases'][12:]:print(c['id'],{k:v for k,v in c.items() if k not in ['physical_rows_expected_icarus','physical_expected_verilator','widths','signedness','clock_reset','native_sample','guard_source']},'ROWS',[(r['cycle'],r['phase'],r['q'],r['active'],r['ok'],r['marker']) for r in c['physical_rows_expected_icarus']])\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/mock_tests.py | sed -n '1,250p'; cat docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/source-manifest.json",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,shutil,hashlib\nB=Path('docs/audits/producer_test2_g1_R01_2026-11-05');O=Path('docs/audits/agent_bridge_2026-11-06/P10_g1_registration');C=O/'exec_tree';assert not C.exists();shutil.copytree(B/'snapshot',C,symlinks=True);m=json.loads((B/'snapshot-manifest.json').read_text());assert all(hashlib.sha256((C/n[9:]).read_bytes()).hexdigest()==s for n,s in m['files'].items() if n.startswith('snapshot/'));print('COPIED_VERIFIED_SNAPSHOT_TO_REVIEW_OWNED_TREE')\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P10_g1_registration/exec_tree/test2/g1_v1/mock_tests.py --record docs/audits/agent_bridge_2026-11-06/P10_g1_registration/fresh-mocks",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P10_g1_registration/independent_probes.py",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P10_g1_registration/analytic_preflight.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,datetime,subprocess\nO=Path('docs/audits/agent_bridge_2026-11-06/P10_g1_registration');B=Path('docs/audits/producer_test2_g1_R01_2026-11-05');H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();Q=json.loads((O/'phase-packet.json').read_text());M=json.loads((B/'snapshot-manifest.json').read_text());SM=json.loads((B/'snapshot/test2/g1_v1/source-manifest.json').read_text());bad=[n for n,h in M['files'].items() if H(B/n)!=h];drift=[]\nfor n,h in M['files'].items():\n if n.startswith('snapshot/'):\n  p=Path(n[9:]);a=H(p) if p.is_file() else None\n  if a!=h:drift.append({'path':str(p),'expected':h,'actual':a})\nsm_bad=[n for n,h in SM['files'].items() if H(Path(n))!=h]\nsc=json.loads((B/'scope-and-preservation.json').read_text());print('SCOPE_KEYS',list(sc));protected=sc.get('protected_sha256',sc.get('protected',{}));print('PROTECTED_TYPE',type(protected).__name__,'COUNT',len(protected));pb=[]\nif isinstance(protected,dict):\n for n,h in protected.items():\n  if isinstance(h,str) and len(h)==64 and (not Path(n).is_file() or H(Path(n))!=h):pb.append(n)\ng=subprocess.run(['git','rev-parse','HEAD'],capture_output=True,text=True);reg=json.loads((B/'snapshot/test2/configs/g1_qualification_registration_v1.json').read_text());checks={'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'actual_HEAD':g.stdout.strip(),'git_HEAD_exit':g.returncode,'snapshot_members':len(M['files']),'snapshot_mismatches':bad,'current_drift':drift,'source_manifest_bindings':len(SM['files']),'source_manifest_current_mismatches':sm_bad,'protected_count':len(protected),'protected_mismatches':pb,'actual_execution_state_exists':Path(reg['pool_state']).exists(),'actual_result_root_children':[p.name for p in Path(reg['result_root']).iterdir()],'reviewer_code_cache_paths':[str(p) for p in (O/'exec_tree').rglob('__pycache__')],'toolchain_calls_by_reviewer':0,'overall_readonly_review_wall_seconds':None,'overall_review_wall_knownness':'NOT_INSTRUMENTED_FROM_TURN_ENTRY_NOT_ZERO','fresh_mock_seconds':json.loads((O/'fresh-mocks/summary.json').read_text())['seconds']};(O/'verification.json').write_text(json.dumps(checks,indent=2)+'\\n');(O/'input-manifest.json').write_text(json.dumps({'producer_root':str(B),'phase_packet_sha256':H(O/'phase-packet.json'),'producer_phase_sha256':H(B/'phase.json'),'producer_manifest_sha256':H(B/'snapshot-manifest.json'),'files':M['files'],'symlinks':M['symlinks'],'source_manifest_files':SM['files']},indent=2)+'\\n');print(json.dumps(checks));assert not bad and not drift and not sm_bad and not pb and not checks['actual_execution_state_exists'] and not checks['reviewer_code_cache_paths']\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nB=Path('docs/audits/producer_test2_g1_R01_2026-11-05');H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();j=json.loads((B/'mock-source-revisions/provenance.json').read_text());print('PROVENANCE',json.dumps(j,ensure_ascii=False))\nfor n in [1,2]:\n s=json.loads((B/f'snapshot/test2/results/g1-qualification-v1/mock-attempt{n}/summary.json').read_text());bad=[]\n for name,v in s['source_sha256'].items():\n  p=(B/'mock-source-revisions/attempt1'/name) if n==1 else (B/'snapshot/test2/g1_v1'/name)\n  if H(p)!=v:bad.append(name)\n print('SAVED_MOCK',n,'tests',s['tests'],'failures',s['failures'],'source_bindings',len(s['source_sha256']),'mismatches',bad);assert not bad\np=Path('/Users/yiwenchen/.codex/skills/hallmark');print('HALLMARK_SHA',{n:H(p/n) for n in ['SKILL.md','references/review-finish.md']})\nPY",
+      "exit_code": 0
+    }
+  ],
+  "next_action": "STOP EXECUTE routing for exact R01. Producer may fix only the two gates in a new sealed revision while idle,keep source/labels/profile/resource caps and allR01evidence;incremental independent verification before any actual setup. No new grant/pool orextra jobs requested.",
+  "reviewed_at_utc": "2026-11-06T04:36:46.716973+00:00",
+  "verification": {
+    "at_utc": "2026-11-06T04:31:00.452952+00:00",
+    "actual_HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+    "git_HEAD_exit": 0,
+    "snapshot_members": 101,
+    "snapshot_mismatches": [],
+    "current_drift": [],
+    "source_manifest_bindings": 37,
+    "source_manifest_current_mismatches": [],
+    "protected_count": 73,
+    "protected_mismatches": [],
+    "actual_execution_state_exists": false,
+    "actual_result_root_children": [
+      "mock-attempt1",
+      "mock-attempt2"
+    ],
+    "reviewer_code_cache_paths": [],
+    "toolchain_calls_by_reviewer": 0,
+    "overall_readonly_review_wall_seconds": null,
+    "overall_review_wall_knownness": "NOT_INSTRUMENTED_FROM_TURN_ENTRY_NOT_ZERO",
+    "fresh_mock_seconds": 0.020136917009949684
+  },
+  "actual_HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+  "current_drift": [],
+  "fresh_mock_summary_sha256": "6816fee2fb97c8a20d09a490d411a3705bb0deb7d39aebb6f211a8edc839d7fa",
+  "analytic_summary_sha256": "2df132c66e5eb2408a9e097a1af1da573771bb03526f63b97344dd66d6b462e3",
+  "pure_probe_summary_sha256": "b54f6e04d6f93995fcca152a671930138f35d52eb5415a3d27649a34aaa06ce2",
+  "evidence_manifest_sha256": "0bc7925ce58d31d2d341a4349cdbb41a47fd16ef59dfc99173a5fdabf8a5eb5f",
+  "evidence_files": 139
+}

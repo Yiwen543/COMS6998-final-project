@@ -1,0 +1,11 @@
+用户新指令，当前优先级发生变化。请在完成当前原子文件写入/命令的安全检查点应用，不中断已在运行的实验；目前可见本轮为R04纯准备，无新真实实验。当前目标不是完整通用G1工具资格或后续G2–G5，而是只达成 Milestone2/P2。用户原话：‘不需要把验证工具的准确性做的太复杂，可以把重点放在尝试不同ip对于test2的结果，而非在一个地方钻牛角尖！’；‘不要把某些问题想的太复杂或者无限延伸非重点内容，重点还是要着重于对齐project proposal上的提议，可以稍微偏移。’；最新‘推进到milestone2的内容达成就够了…先把不需要api key的内容做好，需要连agent在线测试的等我明天起来了一并做就好！’
+
+请保留当前R04最小首拍修复和已有源码/失败/费用；完成当前原子变更后，停止新增非核心G1门禁/泛化/整套mock审计，不为做完工具而无限延伸。先用简短状态说明哪些代码已写、未验证、哪些可停为限制；需要可信的最低检查只有实际将用路径的输入/复位/采样基本一致、正负对照、独立参考和公平隔离，不能篡改已知X或丢第一行。现有G1可以停在可恢复检查点，不作为所有跨IP finite-simulation研究的无限前置。当前不启动新的真实G1入口，先将P2方案对齐。
+
+正式proposal在 project_background_reading/E_Graph_Augmented_Tool_in_the_Loop_Agent_for_High_Coverage_RTL_Verification.pdf；project_proposal_cn.md是多个早期选题，不要当最终proposal。docs/workflow.md、docs/milestone_2026-10-26.md和DECISIONS提供已登记解释；test2是后来用户授权的fixedstimulus monitor任务，不混用stimulus ROI/不套原track难度门槛。主线是同DUT/spec/reference/stimulus/budgets下B raw feedback vs C additional validated egraph，在不同实际IP比较有效检错/误报/失败unknown和实际token/compile/sim/cycles/wall成本；固定输入原DUT覆盖只作背景，不把换monitor说成新增DUT覆盖。
+
+现在转为P2离线准备：核对正式proposal的P2及仓库现状；列短的P2完成矩阵(已完成、离线可做、明天在线待做、真正阻塞)，筛2–3个不同IP的现成代码/规格/参考/driver/input/Egraph/ABI情况，并给最省准备成本的下一IP和固定B/C比较计划。独立复核线程正在做同一研究方向只读检查，稍后汇合，勿新建chat/agent。P2截图细则父线程仍在核读，稍后会补；不要在未见细则时编造验收项或声称P2完成。优先做已授权离线材料/接口和对齐，暂停超出P2工作。新IP如缺Claude独立参考只准备隔离作者包，不能GPT补oracle；API/在线generation/count/Claude/keys/network/付费调用都等明天用户新的具体执行决定，今晚不索密钥。不要为了接续恢复重跑旧实验。
+
+另外真实用户已批准physical累计32->33(其他帽不变)，root已记录user-authorization-physical33.json SHA91837999f0b24424ed5ca3f89a3744a6358453e669568f68ba4b68794c68d24e、physical-budget-amendment-r04.json SHA449692ff3a154f5b697a8c80f7e6795a269b488bb5efbfd0f0ab0384539ebc67、continuation-decision-r04.json SHA80f69ec8d1ee0a0076dac1daa4a009b1b2e4868c5b2cd41327088a0c7fca889e，位于docs/audits/agent_bridge_2026-11-06/G1_qualification_v1。先前pending描述保留为历史；这个批准不覆盖付费API/超P2扩展，也不要求立刻跑G1，不要在新优先级下自行EXECUTE。
+
+保留所有旧freeze/score/raw未知与用户Git index，不add/reset/commit/push/delete/install/PPT。请完成当前安全写入后按以上优先级推进，简短回报实际接收及下一步。

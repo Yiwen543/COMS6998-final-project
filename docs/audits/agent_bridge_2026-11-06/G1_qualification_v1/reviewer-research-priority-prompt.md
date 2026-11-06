@@ -1,0 +1,11 @@
+用户刚明确调整优先级，请应用于后续复核：不把验证工具准确性做得过度复杂，重点回到 project proposal 研究目标，允许有理由的小幅偏移，优先跨不同IP比较test2，避免无限延伸非核心问题。请只读做一轮短的研究路线检查，不新增任何工具/实验/源码，不再扩展G1门禁。现在producer正在R04纯准备，暂无实际实验；不要发消息打断它。
+
+实际状态：P13已确认首拍X，保留所有raw/成本/未决。用户已明确批准physical累计32->33，其他帽不变；真实授权文件 docs/audits/agent_bridge_2026-11-06/G1_qualification_v1/user-authorization-physical33.json SHA91837999f0b24424ed5ca3f89a3744a6358453e669568f68ba4b68794c68d24e，派生amendment449692ff3a154f5b697a8c80f7e6795a269b488bb5efbfd0f0ab0384539ebc67、decision80f69ec8d1ee0a0076dac1daa4a009b1b2e4868c5b2cd41327088a0c7fca889e。尚无R04真实执行/P14。新优先级不意味着跳过已知首拍X、篡改标签、丢失失败或放松B/C公平性。
+
+请先找本地project proposal原文及现有研究目标摘要，用它检查test2问题。给2–3个实际可用的不同IP候选(不是同一FIFO的源码改写)，指出代码/规格/独立Claude检查器/固定输入/observer ABI/E-graph支持/历史结果各自是否存在与路径，选最省准备成本且有研究区分度的下一IP。区分原stimulus track既有oracle和可直接用于test2的oracle，不能GPT静默补Claude参考，旧oracle能复用须具体条件。不要仅凭熟悉名称假装现成。
+
+提出精简的下一阶段：固定同版本DUT/spec/reference/输入、B/C共同包与C-only语义增量、相同资源上限/会话与轮次，隐藏最终评分、预冻结；主要指标distinct valid observable defect types/false alarms/未达与unknown/actual token+compile+sim+cycles/wall成本。固定stimulus下换monitor不会改变DUT原覆盖，覆盖主要作输入充分性/可观测性背景，不能把相同轨迹coverage当C监视器独立收益。先小范围可解释试验，再决定更多重复，不继承原track不适用的B难度gate。
+
+G1只保留必要最小完成标准：建议现有R04哪些内容需做到以保护可用路径、哪些可停止并作为限制记录；跨IP有限simulation对照若不使用native formal，不应被迫先完成整个通用formal工具资格。knownX路径若仍用于后续必须先有正确首拍/基本正负对照，不以减门禁伪造可信。不要运行G1/版本/编译/solver/sim/API/key/network/install/旧实验，也不再添加长audit/大manifest。
+
+输出一个短研究建议文件 docs/audits/agent_bridge_2026-11-06/research-priority-review.md，必要时小JSON记录现成/缺口和预算，不做新门禁系统。Hallmark按用户要求实际使用适用原则并如实记简短用途/是否本轮读，不执行UI流程；核心为proposal对齐、方法和代码证据。报告需新增的API/独立参考作者/资源批准具体事项，安全可做的准备直接列清楚。目标是让producer回到跨IP研究结果，次要工具问题限界保留。

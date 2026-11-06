@@ -1,0 +1,172 @@
+{
+  "phase": "P04_LEDGER_VALIDATOR_REVIEW",
+  "status": "CHANGES_REQUIRED",
+  "reviewed_at_utc": "2026-11-06T01:41:59.239581+00:00",
+  "reviewed_manifest_sha256": "647c2d23b87eb80f4af6af4535d9605926167045b73054fad5b7c3a6ad117187",
+  "HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+  "decision": "One independently demonstrated false-PASS protocol path blocks acceptance of the new validator; current saved batch remains consistent. Deliver at safe checkpoint, not active interruption.",
+  "findings": [
+    {
+      "id": "P04-R1",
+      "severity": "P2",
+      "material": true,
+      "blocking": true,
+      "title": "resource_halt 后的新请求仍可被账本 validator 判为 PASS",
+      "location": "test2/scripts/controller_done_ledger_audit_v1.py:169–172;validate_ledger request-dispatch branches",
+      "source_sha256": "c07cdf35651c6fc90b3585d7ac11ab1041050bc7031964aa78e15ea4b91b9166",
+      "evidence": "独立内存fixture API_requests_after_resource_halt：首attempt count=21超过input cap20，generation未派发且记录resource_halt；随后同一round attempt2重新count并generation，所有返回/用量均一致。validator返回PASS、unresolved=[]，而冻结模型halt后拒绝所有count/generate。完整输入与实际返回保存在fixture_records.json。",
+      "material_reason": "这是已复现的错误证据接受路径，而非风格或潜在担忧：validator消费停止事件却不持久记录halt状态，能把违反已登记停止规则的后续API派发认证为一致PASS。",
+      "impact": "影响新validator对资源/停止协议一致性的验证能力；不证明真实批次违规。当前36calls/144events没有任何resource_halt，真实账目独立重算仍PASS，旧科学结果不受该反例影响。validator只读，此缺陷本身不会发API。",
+      "recommendation": "另建修订版validator/测试/输出，持久记录已发生resource_halt；之后禁止任何count/generation请求标志或派发事件。允许后续仅not_run_resource_halt且无请求/usage的保留记录。保留旧v1源、22tests证据、v1/v2结果和本反例，不改冻结生成器或重发请求。",
+      "acceptance_criteria": [
+        "所附halt后重派发反例必须REJECT，不得PASS或仅以一般UNRESOLVED接受协议违规。",
+        "增加同round重试及跨session/round在halt后派发均拒绝的轻量fixture。",
+        "合法halt＋只保留NOT_RUN、无后续API事件的正例继续可表示；失败/缺用量保持null/UNKNOWN_NOT_ZERO。",
+        "修订版对保存真实36calls/144events/1614依赖继续通过并绑定来源；不重跑任何科学实验。"
+      ],
+      "interrupt_recommendation": false,
+      "delivery_timing": "下一个空闲或明确安全checkpoint转交。当前真实批次无halt，离线validator不执行API，无需打断正在进行的R2开发。"
+    }
+  ],
+  "snapshot_integrity": {
+    "files": 21,
+    "errors": []
+  },
+  "current_workspace": {
+    "matches": 21,
+    "total": 21,
+    "stale": false,
+    "differences": []
+  },
+  "evidence_sha256": {
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/git-status-before.txt": "e11c93b45fa644cd5e09b32fae581e219b7f87fce59531328e4f342b9fb0f45e",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/input-summary.json": "fa20ec9ef7c7368df727f8a04c4a2d033be892f7ec8a81f247e9163fa4a08f3e",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/plan.json": "79d6a2ddada61ef4745a0fc5fc011dd34cfbb001046edb6bbe1ae6ce04d24b85",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/tests-first.log": "c9e95f21fb4038582826183c2c51aba01c786f26d8c6ca2fbf8153d04f0ca81e",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/overwrite-refused.log": "919f544121855fcdf5749749bb3dd8410cf53c0c0214668dac4ded34124c1010",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/git-status-after.txt": "c6e81f5e0f14b6b173041e983859bbb318f4190ff7675ce31e06dd4da6acc751",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/tests-final.log": "e5c8dfa8fd25c4553c44a1813aaf6389243a2a35fd063cbab35981d49d838fdc",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/phase.json": "9b0f16384e1a822c11065dec701538770fe3e6fc1bb91068dec69d8c7b767c6d",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/drafts/controller_done_ledger_audit_v1.first.py": "765a5bce6215f657ce928dac21bcf58a7f2f04331d66c8450750ad35cd48b0d2",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/docs/PROJECT_STATUS.md": "d1e80b3b5a73bc029270655e0fd898b91a7d52433a5f56ac514fc220616a9526",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/docs/HANDOFF.md": "2940799428dc3b8d965b24b3b7912da298a07fdd4ec1b8a3f20a216c32d902b1",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/test2/tests/test_controller_done_ledger_audit_v1.py": "01e569280f4007beba95d7d2e6595ec4d2f1ed0c401dc3639486e9c972d28835",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/test2/configs/controller_done_generation_authorization_v2.json": "eb884f2c6a15e6087f06780a5f42d4eb77f3cf9c611ecbd946bbced49e89eb58",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/test2/configs/controller_done_generation_v2.json": "7797eaa01175c524c80669babb105698c46d5e435f4029eae2fd2710a666183c",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/test2/scripts/controller_done_ledger_audit_v1.py": "c07cdf35651c6fc90b3585d7ac11ab1041050bc7031964aa78e15ea4b91b9166",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/test2/results/controller-done-live-v2/api-dispatch.jsonl": "193d3723450ef2e7127e00313db475e02d59f8b5a5879a6dfbe387d73b7056a5",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/test2/results/controller-done-live-v2/release.json": "62a6e60adfed962629404d515045ce08fbbf86671c05011a2e874febd67b0017",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/test2/results/controller-done-live-v2/resource-release.json": "eec0b2f1fbbf0708a2b12b0d44b8bfce6a3e380563afaafd4b59b9e892ae46f5",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/test2/results/controller-done-live-v2/calls.jsonl": "66a6357d255713cdb5d3ef6895fc7969328171360fa64f54b32f3ff8d51403ff",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/test2/results/controller-done-ledger-audit-v2/audit.json": "4231aec317701956d6e48ab00ad114b9aa145a50fc543a0a68cd3244b5b50e0a",
+    "docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot/test2/results/controller-done-ledger-audit-v1/audit.json": "4be8892eda6afa758c9c3f33ef087f32118163d8147d50e8675297a90eb93210"
+  },
+  "fixture_records_sha256": "c12eda95b03c76ef2109aab13f68f59488a3e363e505ef681c3443a4d17414d1",
+  "independent_fixture_summary": {
+    "total": 20,
+    "expectation_met": 19,
+    "unexpected_acceptance": [
+      "API_requests_after_resource_halt"
+    ],
+    "actual_batch": {
+      "status": "PASS",
+      "calls": 36,
+      "events": 144,
+      "response_ids": 36,
+      "evidence_bound_files": 1614,
+      "independent_usage_totals": {
+        "input_tokens": 1475813,
+        "output_tokens": 78479,
+        "total_tokens": 1554292
+      },
+      "saved_output_matches_validator": true,
+      "actual_resource_halts": 0,
+      "independent_raw_usage_and_subsets_checked": 36
+    }
+  },
+  "acceptance": [
+    {
+      "id": "A1",
+      "status": "PASS",
+      "location": "validate_ledger: calls/event state machine",
+      "result": "Saved36calls/144events,unique response IDs,context/prompt/count/model/tier/usage/rawsubsets independently checked;actual audit_saved result and1614 dependencies match saved producer result."
+    },
+    {
+      "id": "A2",
+      "status": "PASS",
+      "location": "validate_ledger returned/error/usage paths",
+      "result": "Independent success baseline PASS;missing/duplicate returned,wrong context/prompt/count/model/tier conflicts rejected. Generation transport error UNRESOLVED with actual_tokens null; no missing usage converted to0."
+    },
+    {
+      "id": "A3",
+      "status": "PASS_WITH_LIMITS",
+      "location": "validate_ledger docstring and serialized event consumption",
+      "result": "Historical count/returned/error events lackrequestIDs/context. Validator only provides strict serialized positional binding, rejects interleaved/orphan count fixture; cannot authenticate absent fields. This limit is explicitly documented and not treated as a new defect."
+    },
+    {
+      "id": "A4",
+      "status": "PASS",
+      "location": "Evidence.path/bind and audit_saved",
+      "result": "1614 actual hashes verified by pure saved audit;independent digest mutation rejected without editing evidence;escape/private paths rejected."
+    },
+    {
+      "id": "A5",
+      "status": "PASS_STATIC_AND_SAVED_NEGATIVE_EVIDENCE",
+      "location": "main output mkdir(exist_ok=False),E03a/overwrite-refused.log",
+      "result": "Output refusal checked statically and via hash-bound producer negative log/phase;reviewer did not attempt a real output overwrite. Original result hashes remain intact."
+    },
+    {
+      "id": "A6",
+      "status": "CHANGES_REQUIRED",
+      "location": "validate_ledger:169–172",
+      "result": "resource_halt is consumed without persistent halt state;new count/generation accepted asPASS. Full independently authored counterexample saved."
+    }
+  ],
+  "limits": [
+    "No actual batch resource_halt exists;not an accusation of historical cap violation or scientific-score corruption.",
+    "Invoice/count endpoint charges remainnull/UNKNOWN even when saved ledger consistencyPASS.",
+    "P01-R2,newR2maintenance outputs,formal representation/selected-sample scope,H1/H2,L1 are outside this review and remain as previously disclosed.",
+    "Producer22-test suite source inspected and saved PASS noted;not rerun wholesale. Independent20fixtures do not prove allpossibleledger correctness."
+  ],
+  "commands": [
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\np=Path('docs/audits/agent_bridge_2026-11-06/P04_ledger/manifest.json');m=json.loads(p.read_text());print('SHA',hashlib.sha256(p.read_bytes()).hexdigest());print('KEYS',list(m));print(json.dumps({k:v for k,v in m.items() if k not in ['files','freeze_checks']},indent=2)[:5000]);print('FILES',[(x['path'],x.get('snapshot'),x['sha256']) for x in m['files']])\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nR=Path.cwd();B=R/'docs/audits/agent_bridge_2026-11-06/P04_ledger';m=json.loads((B/'manifest.json').read_text());bad=[];drift=[]\nfor f in m['files']:\n if hashlib.sha256((R/f['snapshot']).read_bytes()).hexdigest()!=f['sha256']:bad.append(f['path'])\n if hashlib.sha256((R/f['path']).read_bytes()).hexdigest()!=f['sha256']:drift.append(f['path'])\nfor n,h in m['metadata_sha256'].items():assert hashlib.sha256((R/n).read_bytes()).hexdigest()==h\nprint({'snapshots':len(m['files']),'snapshot_errors':bad,'current_drift':drift})\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,copy,hashlib\nR=Path.cwd();B=R/'docs/audits/agent_bridge_2026-11-06/P04_ledger';S=R/'docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot';source=S/'test2/scripts/controller_done_ledger_audit_v1.py'\nns={'__file__':str(source),'__name__':'p04_review_module'};exec(compile(source.read_text(),str(source),'exec'),ns)\npolicy=dict(model='review-model',service_tier='default',input_tokens=20,output_tokens=8,max_precounts=4,max_generations=4,manual_failure_retries_per_round=1,per_generation_conservative_reserve_usd=.1,generation_reserve_usd=.4,count_fee_reserve_usd=.1,total_stage_spending_ceiling_usd=.5)\nctx=dict(arm='B',repetition=1,round=1,mode='live',session_id='review-session')\nusage=dict(input_tokens=10,output_tokens=2,total_tokens=12,cached_input_tokens=0,reasoning_output_tokens=0)\ncall=dict(ctx,attempt=1,count_request_issued=True,generation_request_issued=True,accepted_response=True,status='completed',prompt_sha256='review-file',input_token_count=10,requested_model='review-model',returned_model='review-model',response_id='review-resp',requested_service_tier='default',returned_service_tier='default',usage=usage,raw_usage=dict(input_tokens=10,output_tokens=2,total_tokens=12,input_tokens_details=dict(cached_tokens=0,cache_write_tokens=0,cache_write_tokens_details=dict(ttl_30m_tokens=0,ttl_12h_tokens=0)),output_tokens_details=dict(reasoning_tokens=0)),parsed={'body':'review-only'})\nevents=[dict(event='count_dispatched',messages_sha256='review-message',model='review-model',schema_sha256='review-schema'),dict(event='count_returned',input_tokens=10,messages_sha256='review-message'),dict(event='generation_dispatched',messages_sha256='review-message',input_tokens_counted=10,max_output_tokens=8,requested_service_tier='default',reserve_usd=.1,cumulative_reserve_usd=.1,context=ctx.copy()),dict(event='generation_returned',response_id='review-resp',returned_model='review-model',returned_service_tier='default',usage=copy.deepcopy(usage))]\nsnap={('B',1,1):dict(ctx,prompt_sha256='review-file',messages_sha256='review-message',response={'body':'review-only'})}\nrecords=[]\ndef check(name,c,e,s,expected):\n try:\n  result=ns['validate_ledger'](copy.deepcopy(c),copy.deepcopy(e),copy.deepcopy(s),policy,'review-schema');status=result['status']\n except Exception as error:result={'error_type':type(error).__name__,'reason':str(error)};status='REJECT'\n row={'name':name,'expected':expected,'actual':status,'expectation_met':status==expected,'result':result};records.append(row);return row\ncheck('independent_minimal_success',[call],events,snap,'PASS')\nfor name,mutate in [\n ('missing_success_terminal',lambda c,e,s:e.pop()),\n ('duplicate_terminal',lambda c,e,s:e.append(copy.deepcopy(e[-1]))),\n ('dispatch_wrong_session',lambda c,e,s:e[2]['context'].update(session_id='different')),\n ('count_wrong_prompt',lambda c,e,s:e[1].update(messages_sha256='different')),\n ('returned_model_conflict',lambda c,e,s:e[3].update(returned_model='different')),\n ('returned_usage_conflict',lambda c,e,s:e[3]['usage'].update(total_tokens=99)),\n ('orphan_interleaved_count',lambda c,e,s:e.insert(1,copy.deepcopy(e[0]))),\n ('count_mismatch',lambda c,e,s:e[1].update(input_tokens=11)),\n ('returned_tier_conflict',lambda c,e,s:e[3].update(returned_service_tier='priority'))]:\n c=copy.deepcopy([call]);e=copy.deepcopy(events);s=copy.deepcopy(snap);mutate(c,e,s);check(name,c,e,s,'REJECT')\nc=copy.deepcopy(call);c.update(accepted_response=False,status='request_or_infrastructure_error',error_type='TimeoutError')\nfor k in ['usage','raw_usage','response_id','parsed']:c.pop(k)\ne=copy.deepcopy(events);e[-1]=dict(event='generation_error',error_type='TimeoutError',usage_status='UNKNOWN_NOT_ZERO');s=copy.deepcopy(snap);s['B',1,1]['response']=None\ncheck('generation_error_unknown',[c],e,s,'UNRESOLVED')\nassert records[-1]['result']['attempts'][0]['actual_tokens'] is None\n# Independent challenge: a resource halt must prohibit any further API requests.\nfirst=copy.deepcopy(call);first.update(accepted_response=False,status='input_cap_exceeded_no_generation',generation_request_issued=False,input_token_count=21,usage=None,raw_usage=None,response_id=None,parsed=None)\nsecond=copy.deepcopy(call);second['attempt']=2\nbad_events=[copy.deepcopy(events[0]),dict(event='count_returned',messages_sha256='review-message',input_tokens=21),dict(event='resource_halt',reason='input_cap_exceeded_before_generation')]+copy.deepcopy(events)\nout=check('API_requests_after_resource_halt',[first,second],bad_events,snap,'REJECT')\nout['fixture']={'calls':[first,second],'events':bad_events,'snapshots':[{'key':['B',1,1],'value':snap['B',1,1]}],'policy':policy,'schema_digest':'review-schema'}\n# Current actual data: pure read-only validator plus separate raw-ledger arithmetic.\nactual=ns['audit_saved'](R,R/'test2/results/controller-done-live-v2')\nsaved=json.loads((S/'test2/results/controller-done-ledger-audit-v2/audit.json').read_text())\nassert actual['status']==saved['status']=='PASS'\nassert actual['evidence_sha256']==saved['evidence_sha256']\ncalls=[json.loads(x) for x in (S/'test2/results/controller-done-live-v2/calls.jsonl').read_text().splitlines()]\nev=[json.loads(x) for x in (S/'test2/results/controller-done-live-v2/api-dispatch.jsonl').read_text().splitlines()]\nassert len(calls)==36 and len(ev)==144\ntotals={'input_tokens':0,'output_tokens':0,'total_tokens':0};ids=set()\nfor i,c in enumerate(calls):\n cd,cr,gd,gr=ev[i*4:i*4+4]\n assert [v['event'] for v in (cd,cr,gd,gr)]==['count_dispatched','count_returned','generation_dispatched','generation_returned']\n assert gr['response_id']==c['response_id'] and c['response_id'] not in ids;ids.add(c['response_id'])\n assert gr['usage']==c['usage'] and gr['returned_model']==c['returned_model'] and gr['returned_service_tier']==c['returned_service_tier']\n assert all(gd['context'][k]==c[k] for k in ('arm','repetition','round','session_id','mode'))\n assert cr['input_tokens']==gd['input_tokens_counted']==c['usage']['input_tokens']\n assert c['usage']['total_tokens']==c['usage']['input_tokens']+c['usage']['output_tokens']\n for k in totals:totals[k]+=c['usage'][k]\nassert totals==actual['known_usage_token_totals']\npayload={'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'fixtures':records,'actual_saved_batch':{'status':actual['status'],'calls':36,'events':144,'response_ids':36,'evidence_bound_files':len(actual['evidence_sha256']),'independent_usage_totals':totals,'saved_output_matches_validator':True,'actual_resource_halts':sum(e['event']=='resource_halt' for e in ev)},'scope':'Only pure functions on saved JSON and in-memory synthetic fixtures; no main/CLI,API,native or real evidence mutations.'}\n(B/'fixture_records.json').write_text(json.dumps(payload,indent=2)+'\\n')\nprint(json.dumps({'fixtures':[{k:x[k] for k in ('name','expected','actual','expectation_met')} for x in records],'actual':payload['actual_saved_batch']},indent=2))\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,copy,hashlib\nR=Path.cwd();B=R/'docs/audits/agent_bridge_2026-11-06/P04_ledger';p=B/'fixture_records.json';data=json.loads(p.read_text());S=R/'docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot';source=S/'test2/scripts/controller_done_ledger_audit_v1.py'\nns={'__file__':str(source),'__name__':'p04_review_module'};exec(compile(source.read_text(),str(source),'exec'),ns)\nbad=next(x for x in data['fixtures'] if x['name']=='API_requests_after_resource_halt')['fixture'];calls=copy.deepcopy(bad['calls']);events=copy.deepcopy(bad['events']);snap={tuple(x['key']):x['value'] for x in bad['snapshots']};policy=bad['policy']\n# Positive control: a halt followed only by NOT_RUN records must remain representable.\ncalls[1].update(status='not_run_resource_halt',accepted_response=False,count_request_issued=False,generation_request_issued=False,usage=None,raw_usage=None,response_id=None,parsed=None)\nsnap['B',1,1]['response']=None\nr=ns['validate_ledger'](calls,events[:3],snap,policy,'review-schema')\ndata['fixtures'].append(dict(name='halt_then_only_not_run_positive_control',expected='PASS',actual=r['status'],expectation_met=r['status']=='PASS',result=r))\n# Challenge read-boundary checks without editing a single real evidence byte.\nexpected=hashlib.sha256(source.read_bytes()).hexdigest();e=ns['Evidence'](R)\nreal_digest=ns['digest'];ns['digest']=lambda q:'0'*64\ntry:e.bind(R,{str(source.relative_to(R)):expected});out='ACCEPTED'\nexcept ValueError as error:out='REJECT';reason=str(error)\nfinally:ns['digest']=real_digest\ndata['fixtures'].append(dict(name='dependency_digest_mutation_without_file_edit',expected='REJECT',actual=out,expectation_met=out=='REJECT',reason=reason))\nfor name,path in [('path_escape','../outside'),('private_path','build/private/not-a-real-key')]:\n try:e.path(R,path);out='ACCEPTED'\n except ValueError as error:out='REJECT';reason=str(error)\n data['fixtures'].append(dict(name=name,expected='REJECT',actual=out,expectation_met=out=='REJECT',reason=reason))\n# Trace exact frozen generator halt enforcement supporting the rejected expectation.\ndata['halt_contract_sources']={}\nfor name in ['test2/scripts/controller_done_model_v2.py','test2/configs/controller_done_generation_v2.json']:\n data['halt_contract_sources'][name]=hashlib.sha256((R/name).read_bytes()).hexdigest()\np.write_text(json.dumps(data,indent=2)+'\\n')\nprint(json.dumps({'fixtures':len(data['fixtures']),'unexpected_acceptance':[x['name'] for x in data['fixtures'] if not x['expectation_met']],'positive_halted_notrun_status':r['status'],'real_evidence_edited':False},indent=2))\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,copy\nR=Path.cwd();B=R/'docs/audits/agent_bridge_2026-11-06/P04_ledger';S=R/'docs/audits/producer_test2_done_live_E03a_2026-11-05/snapshot';p=B/'fixture_records.json';d=json.loads(p.read_text());f=next(x for x in d['fixtures'] if x['name']=='API_requests_after_resource_halt')['fixture']\nsource=S/'test2/scripts/controller_done_ledger_audit_v1.py';ns={'__file__':str(source),'__name__':'p04_review_module'};exec(compile(source.read_text(),str(source),'exec'),ns)\nfor name in ['both_sides_wrong_model','both_sides_wrong_tier','subset_over_input','count_quota_exceeded']:\n c=copy.deepcopy(f['calls'][1]);c['attempt']=1;e=copy.deepcopy(f['events'][3:]);policy=copy.deepcopy(f['policy']);snap={tuple(x['key']):x['value'] for x in f['snapshots']}\n if name=='both_sides_wrong_model':c['returned_model']=e[3]['returned_model']='wrong-model'\n if name=='both_sides_wrong_tier':c['returned_service_tier']=e[3]['returned_service_tier']='priority'\n if name=='subset_over_input':c['usage']['cached_input_tokens']=e[3]['usage']['cached_input_tokens']=11\n if name=='count_quota_exceeded':policy['max_precounts']=0\n try:ns['validate_ledger']([c],e,snap,policy,'review-schema');out='ACCEPTED';reason=''\n except ValueError as err:out='REJECT';reason=str(err)\n d['fixtures'].append(dict(name=name,expected='REJECT',actual=out,expectation_met=out=='REJECT',reason=reason))\ncalls=[json.loads(x) for x in (S/'test2/results/controller-done-live-v2/calls.jsonl').read_text().splitlines()]\nfor c in calls:\n u=c['usage'];raw=c['raw_usage'];i=raw['input_tokens_details'];o=raw['output_tokens_details']\n assert all(raw[k]==u[k] for k in ('input_tokens','output_tokens','total_tokens'))\n assert 0<=u['cached_input_tokens']==i['cached_tokens']<=u['input_tokens']\n assert 0<=u['reasoning_output_tokens']==o['reasoning_tokens']<=u['output_tokens']\n assert 0<=i['cache_write_tokens']<=u['input_tokens']-i['cached_tokens']\n assert i['cache_write_tokens_details'].get('ttl_12h_tokens',0)==0\nd['actual_saved_batch']['independent_raw_usage_and_subsets_checked']=36\np.write_text(json.dumps(d,indent=2)+'\\n');print({'fixtures':len(d['fixtures']),'unexpected':[x['name'] for x in d['fixtures'] if not x['expectation_met']],'raw_usage_subsets':36})\nPY",
+      "exit_code": 0
+    }
+  ],
+  "scope": {
+    "writes_only": [
+      "P04_ledger/review.json",
+      "P04_ledger/review.md",
+      "P04_ledger/fixture_records.json"
+    ],
+    "pure_execution": "Executed exact snapshot module with non-main name;called onlyvalidate_ledger,audit_saved andEvidence functions;noCLI/main/API/native calls. Source/test files not modified.",
+    "fixtures": "Small in-memorysyntheticrecords;one dependencydigest function temporarily replaced in reviewer namespace,restored;realfilebytes untouched.",
+    "new_API_calls": 0,
+    "new_native_runs": 0,
+    "real_ledger_edits": 0,
+    "cross_thread_messages": 0,
+    "key_operations": 0,
+    "install_or_delete_results": false
+  },
+  "handoff_policy": {
+    "interrupt_active_producer": false,
+    "timing": "Queue ordinary feedback for next safe/idle checkpoint. Confirmed validator correctness defect, but actual batchclean and offline validator cannot dispatch requests."
+  }
+}

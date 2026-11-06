@@ -1,0 +1,197 @@
+{
+  "phase": "P05_WITNESS_CHAIN_VALIDATOR_REVIEW",
+  "status": "PASS_WITH_LIMITS",
+  "decision": "P01-R2 saved witness-chain validation can close for the exact current serialized saved format and frozen94-chain batch via the new companion validator. No general soundness,semantic equivalence or R3 acceptance implied.",
+  "material_findings": [],
+  "blocking_findings": [],
+  "findings": [
+    {
+      "id": "P05-N1",
+      "severity": "P3",
+      "material": false,
+      "blocking": false,
+      "title": "未复现格式的额外确认标志可增加一致性拒绝检查",
+      "path": "test2/scripts/controller_done_witness_chain_audit_v1.py",
+      "lines": "200,213–216",
+      "source_sha256": "f1b1124be9f9e088f92d61f682223056f96c6f4ba1ce2accb610b9429bf2f82d",
+      "evidence": "独立无锚overlay给unreproduced physical/result.json额外加入reference_confirmed_selected_alarm=true时，inspect_chain仍返回chain_consistency PASS，但receipt明确输出reference_confirmed_selected_alarm=false、reference_verdict=null、scientific_adjudication UNRESOLVED。",
+      "material_reason": "不属于当前unreproduced保存格式；当前74份文件没有该true标志且受P01独立SHA锚约束，实际修改会在Saved.raw拒绝。没有发生科学确认升级或本批错误接受。只是辅助函数对额外矛盾metadata的严格性加固。",
+      "impact": "若将inspect_chain脱离当前锚和格式独立复用，其consistency标签未逐项验证该额外字段。当前限定验收不受影响。",
+      "recommendation": "未来安全checkpoint可把reference_confirmed_selected_alarm不得为true的检查移至分支外；保留当前保守receipt。无需打断R3修复，也不要求本轮重做validator。",
+      "acceptance_criteria": "若实施加固，独立额外字段probe应明确拒绝；当前74格式和candidate unknown仍保留UNRESOLVED，真实94链结果不变。",
+      "interrupt_recommended": false
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "A1",
+      "status": "PASS",
+      "path": "test2/scripts/controller_done_witness_chain_audit_v1.py:220–279",
+      "evidence": "native summary/job/status/log/source copies/harness slot and expected mutant source,physical compile/binary paths,candidate replay binary and snapshot artifacts are checked;real94-chain execution matches savedv5 all fields."
+    },
+    {
+      "id": "A2",
+      "status": "PASS",
+      "path": "decode_vcd:46–91",
+      "evidence": "Declared top pin widths and selected bit existence bound. Does not assume6-bit formal active/ok. Independent3-bit active/ok withslot2/alarm1 passes; declaration excludingselectedslot4 rejects;no synthetic padding of missing slot."
+    },
+    {
+      "id": "A3",
+      "status": "PASS",
+      "path": "inspect_chain:169–197",
+      "evidence": "VCD→formal-inputs→literalinputs→dual orderedPRE/POST→rows→retainedVCDoutputs→HEX→MON scopes/digests/properties checked. Independent correlatedfresh-hash mutations reject at semantic binding, not merely fileSHA."
+    },
+    {
+      "id": "A4",
+      "status": "PASS_WITH_LIMITS",
+      "path": "inspect_chain:198–218",
+      "evidence": "20reproducedalarms re-evaluate exactfrozen purechecker on earlierprefix only. All94scientific_adjudication remainsUNRESOLVED;20referenceprefixFAIL,74no referenceverdict,allC7correct/67mutant. Unknown selected MON bit remains noalarm/UNRESOLVED;phase/slot/prefix/same-sample upgrade negativesreject."
+    },
+    {
+      "id": "A5",
+      "status": "PASS_WITH_LIMITS",
+      "path": "Saved:31–43;audit_saved:240–282",
+      "evidence": "2797contentdependencies,1545P01anchor matches,1252additionalhashedwithoutindependent historicalanchor explicitlyreported. No claim ofSMTequivalence or immutable independenthistoryfor everydependency."
+    },
+    {
+      "id": "A6",
+      "status": "PASS",
+      "path": "load_checker:161–166;25targeted final tests",
+      "evidence": "ExactcheckerSHAb44f… before in-memorycompile;no importcache write. Freshsnapshot-only25unit tests exit0 in0.082s;noEDA/API/monitor execution."
+    },
+    {
+      "id": "A7",
+      "status": "PASS_WITH_LIMITS",
+      "path": "E03bdrafts/v1..v5/fixture-controls.json",
+      "evidence": "v1REJECT91/94 retained withfirstsourceSHA;v2..v4 sourcebindings retained. Fourth→final AST differences onlyload_checker;old11negative/2unknown controls remain fourthsource evidence,not calledfreshfinaltests. Final25tests plus independent15probes are separately recorded."
+    },
+    {
+      "id": "A8",
+      "status": "PASS_STATIC_AND_SAVED_NEGATIVE_EVIDENCE",
+      "path": "main:286–294;E03b/overwrite-refused.log",
+      "evidence": "exist_ok=False precedes audit;producer refusalexit1/hashunchanged preserved. Reviewer did not attempt a real resultoverwrite."
+    }
+  ],
+  "verification": {
+    "actual_status": "PASS_CHAIN_CONSISTENCY_WITH_SCIENTIFIC_UNRESOLVED",
+    "chains_consistent": 94,
+    "reproduced": 20,
+    "unreproduced": 74,
+    "pure_reference_calls": 20,
+    "dependencies": 2797,
+    "P01_anchors": 1545,
+    "additional_unanchored": 1252,
+    "saved_v5_all_function_result_fields_match": true,
+    "fresh_targeted_tests": 25,
+    "tests_exit_code": 0,
+    "unit_seconds": 0.082,
+    "independent_probes": 15,
+    "strict_expectations_met": 14,
+    "exploratory_nonblocking_metadata_case": 1
+  },
+  "limits": [
+    "Only current saved format/cohort R2 capability accepted; historicalaudit_v3 itself remains unchanged.",
+    "P04CHANGES_REQUIRED and newR3repair requireseparateP06;not inspectedhere.",
+    "F1representationlimitations/selectedpre-vs-earlierprefix attribution/wholemonitorcorrectness/128completion remainunresolved.",
+    "H1/H2history andL1cache/order fairness are notclosed.",
+    "1252dependencies are currently content/identitybound but lack P01independenthistorical anchors;no semantic equivalence or proof of execution beyond saved evidence."
+  ],
+  "scope": {
+    "new_paid_calls": 0,
+    "new_DUT_or_formal_or_monitor_runs": 0,
+    "real_evidence_edits": 0,
+    "cross_thread_messages": 0,
+    "keys_accessed": false,
+    "installation_or_result_deletion": false,
+    "writes_only": [
+      "P05_witness/review.md",
+      "P05_witness/review.json",
+      "P05_witness/fixture_records.json"
+    ],
+    "pure_execution": "Exact snapshot non-main module audit_saved plus isolatedin-memory overlays and snapshot-only25unittests;frozenchecker purefunction. NoCLI ornativeprocess.",
+    "not_checked": "NoP06/R3unsealedcode,fullhistoricalexperimentre-audit,newscientifictrial,generalcorrectnessorsemanticproof."
+  },
+  "handoff_policy": "No proven material risk requiring interruption;nonblockingN1 canwaitforidle/safecheckpoint. Deliver boundedP05acceptance;P04 remainsunchanged.",
+  "reviewed_at_utc": "2026-11-06T01:54:01.796120+00:00",
+  "reviewed_manifest_sha256": "e17a5952c588c24014e6b44f34165f79f43fa0204d45bd2b55dc0bb2e5b63536",
+  "HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+  "snapshot_integrity": {
+    "files": 27,
+    "metadata": 3,
+    "errors": []
+  },
+  "current_workspace": {
+    "matches": 25,
+    "total": 27,
+    "stale": true,
+    "differences": [
+      {
+        "path": "docs/PROJECT_STATUS.md",
+        "snapshot_sha256": "3e0fa965f7e338f27b2c66833911b96f18661a2a86501e0f65a765a37b793550",
+        "current_sha256": "0ee06988ae2f3caff67c0533bc367262871b97f685cc94850958eaf0462a66ea"
+      },
+      {
+        "path": "docs/HANDOFF.md",
+        "snapshot_sha256": "4872a8c1ad0c1a2229043644d0649c1f20bcdbd2de1b3e2160fc44a8253e515c",
+        "current_sha256": "d9d976133c3f01de4169c18fc47c0e38022cd7bb6db4c2ac74cdd17c416ba6b9"
+      }
+    ]
+  },
+  "evidence_sha256": {
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/git-status-before.txt": "8293865aefe8910d8507a5aa462b5a3500895dbfda2a89044579b3695d2135e5",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/run-fixture-controls.py": "b4b32d247ddbe9b8fba24bc2d35f9829a2416b132aea08d5dc8ed1973b7f8366",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/input-summary.json": "93b8907f5d7b05bb75f0b8117eed6c05e83eaa9c181b4e367509d40c056d1c10",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/plan.json": "d7eaf9ea6d62b860c6ca7558751a300da5707a8a747e027977d975e798b209f4",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/tests-first.log": "b27b645c8ee2dfa6b0161336daa1e6876fbe1776317260504d7430ee270656a8",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/overwrite-refused.log": "1d4ea62c63e49a506836abb8cf24ba4e05c672a5457120f6da42c236445f3d78",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/git-status-after.txt": "f860556905a2c245349225730120917260cb18ef1ae779989a5e5f1e9bff79fa",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/fixture-controls.json": "c2a4c738fc20bfe9357049adbe0634ea7f0fb79c2e22a37fa43ea8ef16bfbe8c",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/tests-final.log": "374da8f74abdb1bbf959e6df14c7f18b2fb2df7bc44b8d09576486a1ed8ff6b7",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/tests-second.log": "8c3318b78b8e59587094cf1ce815c91769ec66f8eebbfe127534280da2172fc8",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/phase.json": "1f4dc7a88f66e1b75e709ce4e81de3d9e751f92950486542f78d8a290650f8ea",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/drafts/controller_done_witness_chain_audit_v1.third.py": "456d316ff8935c2056e65b6fe01d4c0917edaea9f58d7375bb5729c1aba1eae4",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/drafts/controller_done_witness_chain_audit_v1.first.py": "ce4f82737a9259c72075a8e8e67506ce0950e56d5b214dbbeec6e26e95b8503c",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/drafts/controller_done_witness_chain_audit_v1.second.py": "aff20adc926072c921b5cd65f68b71719c20ca5b8ac7e103ecd0f8330df5cc80",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/drafts/controller_done_witness_chain_audit_v1.fourth.py": "f2b1c60e5470483fde807bdf00d3bc50f6ad1cbb06a1b924799167fbae0bbe9b",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/docs/PROJECT_STATUS.md": "3e0fa965f7e338f27b2c66833911b96f18661a2a86501e0f65a765a37b793550",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/docs/HANDOFF.md": "4872a8c1ad0c1a2229043644d0649c1f20bcdbd2de1b3e2160fc44a8253e515c",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/test2/tests/test_controller_done_witness_chain_audit_v1.py": "23d6e6b907cc2887daf3bcbbee5fb46fca1a873a3abddbb4dcf5f179c3b63fdb",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/test2/scripts/controller_done_witness_chain_audit_v1.py": "f1b1124be9f9e088f92d61f682223056f96c6f4ba1ce2accb610b9429bf2f82d",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/test2/results/controller-done-witness-chain-audit-v3/audit.json": "a22b44c33f961e46ae4f1db5470e528c9c2efe6308d0a70c2b52ebf5c15a875f",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/test2/results/controller-done-witness-chain-audit-v4/audit.json": "5798b7d3cb3908141f1b544fa499d43f3b515c5297044c00d97971b80cbad863",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/test2/results/controller-done-witness-chain-audit-v5/audit.json": "e12e02ca6721637247bf013eeb0340a9c8198ad3f6c1cfd21bb86aec0833640c",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/test2/results/controller-done-witness-chain-audit-v2/audit.json": "3ed4aeecd43c287ab6913b6c61150423803489273f3eed121b50465ee74fe547",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/test2/results/controller-done-witness-chain-audit-v1/audit.json": "0fd6705d2e48e28730b30e63fcda39a0d35d50d0f08f7131c4c401a2f8318e92",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/test2/tasks/axis_length_fifo_v1/reference/frozen-v2/checker.py": "b44f32b27c11b968d23fd93ecf8b0d714e773460fc0b505d89adf23df3cd7dee",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/test2/tasks/axis_length_fifo_v1/reference/frozen-v2/freeze.json": "bbac094bcf82eecb44e57fd85a3dbdabb27dd07af00559300617753103ed7c67",
+    "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/docs/audits/agent_bridge_2026-11-05/P01/review.json": "79d5bdb4f86bb82fa94c273afb7ec07cec695f05077a6e05621ac11df7bf1cbf"
+  },
+  "fixture_records_sha256": "bdd575f6e118b2202fbfea8714bf2bbd6faeb0fa8b09c09c52a06362896e1bd2",
+  "commands": [
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\np=Path('docs/audits/agent_bridge_2026-11-06/P05_witness/manifest.json');m=json.loads(p.read_text());print('SHA',hashlib.sha256(p.read_bytes()).hexdigest());print('KEYS',list(m));print('META',{k:v for k,v in m.items() if k not in ['files']});print('FILES',[(x['path'],x['snapshot'],x['sha256']) for x in m['files']])\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,ast\nR=Path.cwd();B=R/'docs/audits/agent_bridge_2026-11-06/P05_witness';m=json.loads((B/'manifest.json').read_text());bad=[];drift=[]\nfor x in m['files']:\n if hashlib.sha256((R/x['snapshot']).read_bytes()).hexdigest()!=x['sha256']:bad.append(x['path'])\n if hashlib.sha256((R/x['path']).read_bytes()).hexdigest()!=x['sha256']:drift.append(x['path'])\nfor n,h in m['metadata_sha256'].items():assert hashlib.sha256((R/n).read_bytes()).hexdigest()==h\nS=R/'docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot';source=S/'test2/scripts/controller_done_witness_chain_audit_v1.py';ns={'__file__':str(source),'__name__':'p05_readonly_validator'};exec(compile(source.read_text(),str(source),'exec'),ns)\nr=ns['audit_saved'](R,R/'test2/results/controller-done-live-formal-v2',R/'test2/results/controller-done-live-v2');saved=json.loads((S/'test2/results/controller-done-witness-chain-audit-v5/audit.json').read_text())\nfor k in r:assert r[k]==saved[k],k\nparent=json.loads((R/'docs/audits/agent_bridge_2026-11-05/P01/review.json').read_text());f=json.loads((R/'test2/results/controller-done-live-formal-v2/summary.json').read_text());bmc=[j for j in f['jobs'] if j['mode']=='bmc' and j['status']=='FAIL'];good=[j for j in bmc if j.get('witness',{}).get('formal_alarm_reproduced')];badw=[j for j in bmc if j not in good]\nassert len(good)==r['physical_alarm_reproduced']==20 and len(badw)==r['unreproduced_unresolved']==74\nassert sum(j['source']=='correct' for j in badw)==7\nassert all(x['scientific_adjudication']=='UNRESOLVED' and not x['reference_confirmed_selected_alarm'] for x in r['chains'])\nassert all(c['reference_verdict'] is None for c in r['chains'] if not c['physical_alarm_reproduced'])\nprint(json.dumps({'snapshot_count':len(m['files']),'snapshot_errors':bad,'current_drift':drift,'actual_status':r['status'],'chains':len(r['chains']),'reproduced':len(good),'unreproduced':len(badw),'pure_reference_calls':r['pure_reference_calls'],'dependencies':len(r['evidence_sha256']),'P01_anchors':r['independent_anchor_matches'],'unanchored':len(r['additional_hashed_dependencies_without_P01_anchor']),'result_matches_saved_v5':True},indent=2))\na=ast.parse((R/'docs/audits/producer_test2_done_live_E03b_2026-11-05/drafts/controller_done_witness_chain_audit_v1.fourth.py').read_text());z=ast.parse(source.read_text());fa={n.name:ast.dump(n,include_attributes=False) for n in a.body if isinstance(n,(ast.FunctionDef,ast.ClassDef))};fz={n.name:ast.dump(n,include_attributes=False) for n in z.body if isinstance(n,(ast.FunctionDef,ast.ClassDef))};print('FOURTH_FINAL_CHANGED_DEFINITIONS',[n for n in set(fa)|set(fz) if fa.get(n)!=fz.get(n)])\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,copy,gzip,hashlib,re\nR=Path.cwd();B=R/'docs/audits/agent_bridge_2026-11-06/P05_witness';S=R/'docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot';src=S/'test2/scripts/controller_done_witness_chain_audit_v1.py';ns={'__file__':str(src),'__name__':'p05_mutations'};exec(compile(src.read_text(),str(src),'exec'),ns)\nchecker=ns['load_checker'](S/'test2/tasks/axis_length_fifo_v1/reference/frozen-v2/checker.py')\nbase=R/'test2/results/controller-done-live-formal-v2';good=base/'B2_raw/rep1/N01/P0-bmc';unrep=base/'C2_semantic/rep1/correct/P4-bmc';records=[]\nclass Overlay(ns['Saved']):\n def __init__(self,data):super().__init__(R);self.data=data\n def raw(self,p):\n  p=self.path(p);key=str(p.relative_to(R));data=self.data.get(str(p),p.read_bytes());self.files[key]=ns['sha'](data);self.unanchored.add(key);return data\ndef J(p):return json.loads(p.read_text())\ndef put(o,p,v):o[str(p)]=json.dumps(v,sort_keys=True).encode()\ndef run(name,job,slot,overlay,expected):\n try:\n  result,_=ns['inspect_chain'](job,slot,Overlay(overlay),checker);actual='CONSISTENT';summary={k:result.get(k) for k in ['physical_alarm_reproduced','selected_candidate_unknown','scientific_adjudication','reference_verdict','reference_confirmed_selected_alarm']}\n except Exception as e:actual='REJECT';summary={'error_type':type(e).__name__,'reason':str(e)}\n row=dict(name=name,expected=expected,actual=actual,expectation_met=actual==expected,result=summary,overlay_hashes={str(Path(p).relative_to(R)):hashlib.sha256(v).hexdigest() for p,v in overlay.items()});records.append(row)\nrun('known_reproduced_chain',good,0,{},'CONSISTENT');run('known_unreproduced_chain',unrep,4,{},'CONSISTENT')\n# Physical input mutation with refreshed execution digest: should fail cross-VCD binding.\no={};p=good/'physical/iverilog/simulation.log';raw=p.read_text().splitlines();line=next(i for i,x in enumerate(raw) if x.startswith('PRE 1 '));w=raw[line].split();w[4]='1';raw[line]=' '.join(w);data=('\\n'.join(raw)+'\\n').encode();o[str(p)]=data;v=J(p.parent/'execution.json');v['log_sha256']=ns['sha'](data);put(o,p.parent/'execution.json',v);run('physical_literal_input_mutated_fresh_hash',good,0,o,'REJECT')\n# Correlated mutation to BOTH simulator rows/logs and hashes, retaining VCD: must fail retained output agreement.\no={}\nfor sim in ['iverilog','verilator']:\n d=good/'physical'/sim;p=d/'simulation.log';lines=p.read_text().splitlines();i=next(i for i,x in enumerate(lines) if x.startswith('PRE 1 '));w=lines[i].split();w[8]=str(1-int(w[8]));lines[i]=' '.join(w);data=('\\n'.join(lines)+'\\n').encode();o[str(p)]=data\n rows=J(d/'rows.json');rows[1]['pre']['s_ready']=1-rows[1]['pre']['s_ready'];put(o,d/'rows.json',rows);v=J(d/'execution.json');v['log_sha256']=ns['sha'](data);put(o,d/'execution.json',v)\nrun('both_physical_logs_rows_hashes_mutated_VCD_unchanged',good,0,o,'REJECT')\nfor name,field,val in [('wrong_selected_slot','slot',1),('wrong_selected_phase','phase','post')]:\n o={};p=good/'physical/result.json';v=J(p);v['selected_alarm'][field]=val;put(o,p,v);run(name,good,0,o,'REJECT')\no={};p=good/'physical/reference-prefix-rows.json';put(o,p,J(good/'physical/iverilog/rows.json'));run('reference_prefix_includes_selected_edge',good,0,o,'REJECT')\no={};p=good/'physical/result.json';v=J(p);v['reference_confirmed_selected_alarm']=True;put(o,p,v);run('reproduced_scope_upgrade',good,0,o,'REJECT')\no={};p=unrep/'physical/result.json';v=J(p);v['reference_verdict']='UNKNOWN';put(o,p,v);run('unreproduced_fabricated_oracle_verdict',unrep,4,o,'REJECT')\n# Unknown selected MON bit with all corresponding log/summary hashes refreshed.\no={};d=unrep/'physical/candidate-replay';raw=gzip.decompress((d/'replay.log.gz').read_bytes());lines=raw.decode().splitlines();inp,outs,alarm=ns['decode_vcd']((unrep/'work/engine_0/trace.vcd').read_text(),4)\nfor i,l in enumerate(lines):\n w=l.split()\n if len(w)==5 and w[:3]==['MON',str(alarm),'pre']:\n  k=list(w[4]);k[1]='x';w[4]=''.join(k);lines[i]=' '.join(w)\nraw=('\\n'.join(lines)+'\\n').encode();comp=gzip.compress(raw,mtime=0);o[str(d/'replay.log.gz')]=comp;m=J(d/'result.json');m['raw_log_sha256']=m['execution']['log_sha256']=ns['sha'](raw);m['compressed_log_sha256']=ns['sha'](comp);m['properties']=ns['parse_mon'](raw,len(inp))[1];put(o,d/'result.json',m);run('selected_MON_unknown_consistent_fresh_hashes',unrep,4,o,'CONSISTENT')\nassert records[-1]['result']['selected_candidate_unknown'] and not records[-1]['result']['physical_alarm_reproduced']\n# Raw phase is malformed even after recomputing gzip/log digests.\no={};d=good/'physical/candidate-replay';raw=gzip.decompress((d/'replay.log.gz').read_bytes()).replace(b'MON 1 pre ',b'MON 1 wrong ',1);comp=gzip.compress(raw,mtime=0);o[str(d/'replay.log.gz')]=comp;m=J(d/'result.json');m['raw_log_sha256']=m['execution']['log_sha256']=ns['sha'](raw);m['compressed_log_sha256']=ns['sha'](comp);put(o,d/'result.json',m);run('MON_bad_phase_fresh_hashes',good,0,o,'REJECT')\n# Actual narrowed declaration accepted; selected bit beyond declaration rejected.\ntext=(good/'work/engine_0/trace.vcd').read_text();widths={}\nfor l in text.splitlines():\n w=l.split()\n if len(w)>4 and w[0]=='$var' and w[4] in ['active','ok']:widths[w[4]]=int(w[2])\ntry:ns['decode_vcd'](text,5);absent='ACCEPTED'\nexcept ValueError:absent='REJECT'\nrecords.append(dict(name='selected_slot_not_present_in_narrow_declaration',declared_widths=widths,expected='REJECT',actual=absent,expectation_met=absent=='REJECT'))\n# Detect explicit same-sample metadata injection even for old unreproduced format.\no={};p=unrep/'physical/result.json';v=J(p);v['reference_confirmed_selected_alarm']=True;put(o,p,v);run('unreproduced_extra_confirmation_flag',unrep,4,o,'REJECT')\npayload={'source_sha256':ns['sha'](src.read_bytes()),'fixture_scope':'Read-only in-memory overlays of two P01-verified chains; no source/results/files modified. Fresh digest fields intentionally updated for semantic-binding negatives.','records':records}\n(B/'fixture_records.json').write_text(json.dumps(payload,indent=2)+'\\n')\nprint(json.dumps({'records':[{k:x.get(k) for k in ['name','actual','expected','expectation_met','result','declared_widths']} for x in records]},indent=2))\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json\nB=Path('docs/audits/agent_bridge_2026-11-06/P05_witness');p=B/'fixture_records.json';d=json.loads(p.read_text());r=next(x for x in d['records'] if x['name']=='selected_slot_not_present_in_narrow_declaration');r['name']='other_slot_without_VCD_alarm';r['scope_correction']='Six-bit declaration exists; rejection here is no selected-slot alarm, not absent declaration. Reclassified reviewer expectation.'\nroot=Path.cwd();src=root/'docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/test2/scripts/controller_done_witness_chain_audit_v1.py';ns={'__file__':str(src),'__name__':'p05_narrow'};exec(compile(src.read_text(),str(src),'exec'),ns)\npath=root/'test2/results/controller-done-live-formal-v2/C2_semantic/rep1/correct/P4-bmc/work/engine_0/trace.vcd';text=path.read_text();decl=[]\nfor l in text.splitlines():\n w=l.split()\n if len(w)>4 and w[0]=='$var' and w[4] in ['active','ok']:decl.append({'name':w[4],'width':int(w[2])})\nassert all(x['width']>=5 for x in decl)\nlines=text.splitlines()\nfor i,l in enumerate(lines):\n w=l.split()\n if len(w)>4 and w[0]=='$var' and w[4]=='active':w[2]='4';lines[i]=' '.join(w)\ntry:ns['decode_vcd']('\\n'.join(lines),4);out='ACCEPTED';reason=''\nexcept ValueError as e:out='REJECT';reason=str(e)\nassert out=='REJECT' and 'width' in reason\nd['records'].append({'name':'declared_width_excludes_selected_slot4','original_declarations':decl,'expected':'REJECT','actual':out,'expectation_met':True,'reason':reason})\n# Exercise actual reduced-width output and correct bit offset with independently constructed VCD.\npins=list(ns['INPUTS'])+list(ns['OUTPUTS'])+['active','ok'];ids={n:'p'+str(i) for i,n in enumerate(pins)}\nheader=['$var integer 32 t smt_step $end','$scope module formal_top $end']+[f'$var wire {3 if n in (\"active\",\"ok\") else ns[\"WIDTHS\"][n]} {ids[n]} {n} $end' for n in pins]+['$upscope $end','$enddefinitions $end']\nbody=[]\nfor i in [0,1]:\n body += [f'#{i*10}',f'b{i:b} t']\n for n in pins:\n  v=(1 if i==0 else 0) if n=='rst' else 4 if n=='active' else (7 if i==0 else 3) if n=='ok' else 0\n  body.append(f'b{v:b} {ids[n]}')\ninp,outputs,alarm=ns['decode_vcd']('\\n'.join(header+body)+'\\n',2);assert alarm==1 and len(inp)==2\nd['records'].append({'name':'independent_three_bit_active_ok_slot2','expected':'CONSISTENT','actual':'CONSISTENT','expectation_met':True,'alarm_cycle':alarm,'selected_slot':2,'width':3})\np.write_text(json.dumps(d,indent=2)+'\\n');print({'records':len(d['records']),'unexpected':[x['name'] for x in d['records'] if not x['expectation_met']],'declared_width_test':reason})\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -B -m unittest discover -s docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot/test2/tests -p test_controller_done_witness_chain_audit_v1.py -v",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nR=Path.cwd();B=R/'docs/audits/agent_bridge_2026-11-06/P05_witness';S=R/'docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot'\nfor i in range(1,6):\n d=json.loads((S/f'test2/results/controller-done-witness-chain-audit-v{i}/audit.json').read_text());print('VERSION',i,{k:d.get(k) for k in ['status','source_sha256','native_bmc_fail_chains','chains_consistent','physical_alarm_reproduced','unreproduced_unresolved']},'errors',len(d.get('errors',[])))\nc=json.loads((R/'docs/audits/producer_test2_done_live_E03b_2026-11-05/fixture-controls.json').read_text());print('CONTROLS_SUMMARY',json.dumps(c)[:1600])\np=B/'fixture_records.json';d=json.loads(p.read_text());key='test2/results/controller-done-live-formal-v2/C2_semantic/rep1/correct/P4-bmc/physical/result.json';anchors=json.loads((R/'docs/audits/agent_bridge_2026-11-05/P01/review.json').read_text())['formal_raw_verification']['evidence']\nassert key in anchors and anchors[key]==hashlib.sha256((R/key).read_bytes()).hexdigest()\nx=next(x for x in d['records'] if x['name']=='unreproduced_extra_confirmation_flag');x['material_adjudication']={'material':False,'current_batch_field_present':False,'source_file_P01_hash_anchored':True,'receipt_remains_reference_confirmed_false':x['result']['reference_confirmed_selected_alarm'] is False,'receipt_remains_scientific_unresolved':x['result']['scientific_adjudication']=='UNRESOLVED','reason':'Exploratory stricter metadata rejection expectation; actual current unrep format has no such field and is independently anchored. Receipt does not promote the injected claim. Low-priority helper hardening, not demonstrated wrong scientific acceptance in this batch.'}\np.write_text(json.dumps(d,indent=2)+'\\n')\nprint('ADVISORY',x['material_adjudication'])\nPY",
+      "exit_code": 0
+    }
+  ],
+  "reviewer_helper_correction": "One probe originally described absence ofselectedslot but actuallytested absence ofalarm;reclassifiedandadded real declaration-exclusion and independent3-bit selectedslot2probes."
+}

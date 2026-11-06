@@ -1,0 +1,193 @@
+{
+  "schema": "test2.audit-maintenance-acceptance.v1",
+  "status": "INDEPENDENT_MAINTENANCE_ACCEPTANCE_RECORDED_WITH_LIMITS",
+  "observed_head": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+  "independent_authorities": {
+    "P05_witness": {
+      "status": "PASS_WITH_LIMITS",
+      "review": {
+        "path": "docs/audits/agent_bridge_2026-11-06/P05_witness/review.json",
+        "sha256": "b2f1bac780323a81d63da1dda850911b2dad6cc5fc429d33da4c3bbad7db4319"
+      },
+      "review_markdown": {
+        "path": "docs/audits/agent_bridge_2026-11-06/P05_witness/review.md",
+        "sha256": "2ef108ceb37a681fd005dad4b591335e0ae838753e1267b2a7c10bb43e6bf775"
+      },
+      "manifest": {
+        "path": "docs/audits/agent_bridge_2026-11-06/P05_witness/manifest.json",
+        "sha256": "e17a5952c588c24014e6b44f34165f79f43fa0204d45bd2b55dc0bb2e5b63536"
+      },
+      "fixture_records": {
+        "path": "docs/audits/agent_bridge_2026-11-06/P05_witness/fixture_records.json",
+        "sha256": "bdd575f6e118b2202fbfea8714bf2bbd6faeb0fa8b09c09c52a06362896e1bd2"
+      }
+    },
+    "P06_ledger_fix": {
+      "status": "PASS_WITH_LIMITS",
+      "review": {
+        "path": "docs/audits/agent_bridge_2026-11-06/P06_ledger_fix/review.json",
+        "sha256": "436b2efaf8ba7f44b31cfd42e06bdab1adf6f1e60497efee2ead55ce61c6436f"
+      },
+      "review_markdown": {
+        "path": "docs/audits/agent_bridge_2026-11-06/P06_ledger_fix/review.md",
+        "sha256": "ecf10fd9eadd9a57eba62a2d905d08220bc348f0f253546a0cb557d78fe73ed7"
+      },
+      "manifest": {
+        "path": "docs/audits/agent_bridge_2026-11-06/P06_ledger_fix/manifest.json",
+        "sha256": "e8ea9feef15c5d8b8f66ef30c1775bc8cf65a410495d7d057a73f723b379c71b"
+      },
+      "fixture_records": {
+        "path": "docs/audits/agent_bridge_2026-11-06/P06_ledger_fix/fixture_records.json",
+        "sha256": "1326a98bee0587169de3c28eeaa13d0436bf5719b1283541568f34093dc243ac"
+      }
+    }
+  },
+  "accepted_companions": {
+    "witness_chain": {
+      "accepted_by": "P05_witness",
+      "finding": "P01-R2",
+      "scope": "Current saved format and exact94BMC-failure cohort only; independent raw chain capability, not general formal/monitor correctness",
+      "source": {
+        "path": "test2/scripts/controller_done_witness_chain_audit_v1.py",
+        "sha256": "f1b1124be9f9e088f92d61f682223056f96c6f4ba1ce2accb610b9429bf2f82d"
+      },
+      "tests": {
+        "path": "test2/tests/test_controller_done_witness_chain_audit_v1.py",
+        "sha256": "23d6e6b907cc2887daf3bcbbee5fb46fca1a873a3abddbb4dcf5f179c3b63fdb"
+      },
+      "audit": {
+        "path": "test2/results/controller-done-witness-chain-audit-v5/audit.json",
+        "sha256": "e12e02ca6721637247bf013eeb0340a9c8198ad3f6c1cfd21bb86aec0833640c"
+      },
+      "producer_phase": {
+        "path": "docs/audits/producer_test2_done_live_E03b_2026-11-05/phase.json",
+        "sha256": "1f4dc7a88f66e1b75e709ce4e81de3d9e751f92950486542f78d8a290650f8ea"
+      },
+      "producer_manifest": {
+        "path": "docs/audits/producer_test2_done_live_E03b_2026-11-05/snapshot-manifest.json",
+        "sha256": "ed8d5121acd9cced18c361c29b5cb7856aef53f1664e7e4f890abc79cef5db39"
+      },
+      "entrypoint": "test2/scripts/controller_done_witness_chain_audit_v1.py",
+      "supported_run": "test2/results/controller-done-live-v2",
+      "supported_formal": "test2/results/controller-done-live-formal-v2",
+      "independent_evidence": {
+        "targeted_tests": 25,
+        "independent_probes": 15,
+        "counts": {
+          "chains": 94,
+          "physical_alarm_reproduced": 20,
+          "unreproduced_unresolved": 74
+        },
+        "content_dependencies": 2797,
+        "P01_independent_anchor_matches": 1545,
+        "additional_hashed_without_independent_historical_anchor": 1252
+      },
+      "remaining_limits": [
+        "All94scientific adjudications remainUNRESOLVED",
+        "20earlier-prefixFAIL != selectedpre(S)/category confirmation",
+        "74no recorded oracle verdict;notoracleUNKNOWN/notconfirmed false alarms",
+        "No128cycle completion or wholemonitor/SMTequivalence proof",
+        "FixedP01anchor/paths/checker/currentformat; futuredata require newadapter and independent qualification"
+      ]
+    },
+    "ledger": {
+      "accepted_by": "P06_ledger_fix",
+      "findings": [
+        "P04-R1 fixed in v2",
+        "P01-R3 strict serialized current-batch companion capability"
+      ],
+      "scope": "Strict serialized historical event format and current36calls/144events only; not billing authentication or concurrentrequest validation",
+      "source": {
+        "path": "test2/scripts/controller_done_ledger_audit_v2.py",
+        "sha256": "2d27c0aac133c002f78a4fe69f505711069b67ef76778d5251fdb774abe7422f"
+      },
+      "tests": {
+        "path": "test2/tests/test_controller_done_ledger_audit_v2.py",
+        "sha256": "0f845a547afd823071d2a65bf2a73db51ae9301f574e444f6449dc4edbaa1afe"
+      },
+      "audit": {
+        "path": "test2/results/controller-done-ledger-audit-v3/audit.json",
+        "sha256": "07aedb0eb685b3b46e1e337a7b69f7804be8295f0d0e4bae8bb0a9e6c7c8dcaa"
+      },
+      "producer_phase": {
+        "path": "docs/audits/producer_test2_done_live_E04_2026-11-05/phase.json",
+        "sha256": "501de0d809fe2933876c6ed2c850113e493a23e6187b4482120f370d7ebc949e"
+      },
+      "producer_manifest": {
+        "path": "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot-manifest.json",
+        "sha256": "afe21297c125850f67c3835feba18fae4ccdae4e35bffd3d84174bac32925aee"
+      },
+      "entrypoint": "test2/scripts/controller_done_ledger_audit_v2.py",
+      "supported_run": "test2/results/controller-done-live-v2",
+      "independent_evidence": {
+        "targeted_tests": 32,
+        "independent_canonical_probes": 14,
+        "calls": 36,
+        "events": 144,
+        "unique_response_ids": 36,
+        "dependencies": 1614,
+        "actual_halt_events": 0,
+        "input_tokens": 1475813,
+        "output_tokens": 78479,
+        "total_tokens": 1554292
+      },
+      "remaining_limits": [
+        "Historical count/returned/error events omit requestID/context; only strict serialized positional binding",
+        "Missing usage retainedUNKNOWN_NOT_ZERO/null;invoice/countfeesUNKNOWN",
+        "Fixed registration/authorization/run/checker/history; no generic future-run certification"
+      ]
+    }
+  },
+  "supersedes_only_pending_metadata": true,
+  "preserved_historical_reviews": [
+    "P01_CHANGES_REQUIRED",
+    "P04_CHANGES_REQUIRED"
+  ],
+  "historical_producer_audit_v3_upgraded": false,
+  "old_scientific_results_changed": false,
+  "E05_plan_independent_review": "PENDING_NOT_SELF_ACCEPTED",
+  "fresh_executions_in_E05": {
+    "unit_tests": 0,
+    "saved_companion_audits": 0,
+    "API": 0,
+    "native": 0,
+    "simulation": 0,
+    "monitor_replay": 0
+  },
+  "verification_scope_in_E05": "Read-only authority/manifest/input hash checks and document/draft schema checks; cited tests/probes were run in their recorded producer/reviewer stages, not rerun here.",
+  "P04_evidence_correction": {
+    "authority": "P06_ledger_fix",
+    "original_fixture": {
+      "path": "docs/audits/agent_bridge_2026-11-06/P04_ledger/fixture_records.json",
+      "sha256": "c12eda95b03c76ef2109aab13f68f59488a3e363e505ef681c3443a4d17414d1"
+    },
+    "original_v1_exact": "REJECT: accepted response/snapshot mismatch",
+    "original_recorded_result": "PASS",
+    "temporary_copy_change": "Only bind snapshot.response to the already recorded accepted parsed response;no halt/event/usage change",
+    "bound_copy_v1": "PASS",
+    "bound_copy_v2": "REJECT: persistent resource_halt",
+    "independent_canonical_counterexamples": "Also establish genuine halt code defect and repair independent of the mismatched archived field",
+    "serialization_cause": "UNKNOWN",
+    "original_P04_files_edited": false
+  },
+  "backlog": [
+    {
+      "id": "P05-N1",
+      "severity": "P3",
+      "material": false,
+      "status": "DEFERRED_NO_CODE_CHANGE",
+      "description": "Unanchored isolated helper may ignore extra reference_confirmed_selected_alarm=true on unreproduced metadata; receipt stillfalse/noverdict/scientificUNRESOLVED. Current74files lack thisfield andhaveP01anchors. Futureversion may require explicit rejection, with newtests/qualification."
+    }
+  ],
+  "open_scientific_and_historical_limits": [
+    "F1 formal/four-state representation including one concreteX-to-anyseq instance;not established cause ofall74",
+    "Selectedpre(S)vsreferencepost(S-1) attribution",
+    "128cycle finite completion and generalmonitor soundness",
+    "H1/H2 historical limitations",
+    "L1 futurecache/order/resource fairness",
+    "Actual provider invoice and count feesUNKNOWN",
+    "11/11 fixedtrace ceiling;no tokenmatchedplacebo/puresemanticcausalclaim",
+    "R0/R1/R2 controlled recovery study remainsplanned"
+  ],
+  "paid_or_scientific_authorization_granted": false
+}

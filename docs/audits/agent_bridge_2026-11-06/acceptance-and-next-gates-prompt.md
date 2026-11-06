@@ -1,0 +1,13 @@
+P05/P06独立验收均已正式PASS_WITH_LIMITS。请在这个空闲/安全检查点完成当前维护阶段收尾，并按此前授权只准备最合理的下一研究资格方案，不启动科学实验或付费调用。当前本轮无需API key，也不需要再次确认普通文档/版本选择。
+
+独立权威：P05_witness/review.json SHAb2f1bac780323a81d63da1dda850911b2dad6cc5fc429d33da4c3bbad7db4319，review.md SHA2ef108ceb37a681fd005dad4b591335e0ae838753e1267b2a7c10bb43e6bf775；P06_ledger_fix/review.json SHA436b2efaf8ba7f44b31cfd42e06bdab1adf6f1e60497efee2ead55ce61c6436f，review.md SHAecf10fd9eadd9a57eba62a2d905d08220bc348f0f253546a0cb557d78fe73ed7，均在 docs/audits/agent_bridge_2026-11-06/。先核验SHA和对应manifest。P05接受P01-R2 companion validator在当前保存格式/精确94条批次的能力；P06关闭P04-R1新版v2 halt修复，P01-R3限严格串行保存格式/本批。旧audit_v3本身未改、不能升级成通用验收证明。32/25离线测试与独立探针记录有精确源/范围，不能扩为全套历史新跑或monitor正确性。
+
+P06必须入当前说明的证据纠正：P04存档fixture原样在v1因response/snapshot mismatch REJECT，不可再引用为“原样PASS”。仅在临时副本补齐已有accepted parsed response的绑定后，v1 PASS/v2因persistent halt REJECT；另有独立canonical基线和跨retry/round/session反例确认真实代码缺陷成立。原因仍UNKNOWN。保留P04原文件和历史CHANGES_REQUIRED，引用P06限定，不悄悄修复原反例。当前36calls/144events/1614依赖和全部科学分数/未知/成本不变，本批无halt。
+
+当前收尾：只更新HANDOFF/STATUS必要当前元数据，新增独有closure/independent-acceptance sidecar绑定P05/P06、实际source/tests/audit/manifest与范围；不编辑已验收source、audit.json、固定snapshot和旧报告。当前命令入口应明确使用ledger_audit_v2及已验收witness_chain_audit_v1，但不要patch任何已冻结旧runner。P05-N1是非阻塞metadata加固建议，记backlog即可，本轮不扩展成新工程。P03展示已PASS_WITH_LIMITS，无实质风险，不改展示。H1/H2/L1、F1表示与selected-sample归因、128completion、费用/invoice等限制仍开放。
+
+下一步仅形成一个有边界的资格计划与门禁表，可用新的docs方案和non-live config draft（live_allowed=false，无可执行实验入口）。不要直接重复已饱和11/11的旧cohort。按以下依赖排序：①未来新pipeline如何使用已验收companion validators/失败门禁，明确格式/历史锚限制；②先资格验证formal前端/表示支持范围与width/phase/reset上下文，用预先声明的公共正/负/unknown控制，处理X→anyseq等问题，不能靠本轮C outcomes选择有利转换；③selected pre(S)与reference prefix post(S-1)范围如需扩展，先准备独立Claude作者+新会话复核角色包，GPT不写oracle；④才提出新的可区分、未饱和时间义务与独立可达性/对照设计，token-matched placebo若用于纯语义因果需另登记；仍一IP须披露，不把新seed当独立IP，保留raw/unknown分母与正确控制。未来cache条件/资源帽需在新outcomes前统一登记。
+
+计划每行写：现有证据、待解决问题、最小产物、客观验收/停止条件、角色、预算/资源状态、是否需要新的授权/服务。此阶段只写计划、角色包清单和allowlist，不执行native/Yosys/simulation/formal/monitor/新候选或数据重生。所有新科学合同/material改动要新版本，未来paid/live必须另有具体proposal/授权；用户表示可提供key不等于付费授权。若未来真需服务，只在方案列服务/目的/为何离线不足及安全隐藏输入需求，由主聊天协调，绝不在聊天收key。当前key不需要、不读取。
+
+封存独有收尾/计划交接（E05或未占用phase名）和精确source/结果/文档快照，回报实际HEAD、变更路径/SHA、命令退出码、freeze/旧score/checker保持、0新API/native实验。协调端会让现有复核线程仅对收尾范围/下一门禁方案作有界复核；勿自己宣布全部项目正确，不创建重复chat，不设unsupported后台任务。普通阶段无需问“继续”，完成上述有边界计划即可；若下一动作需新科学/付费权限，在具体方案ready后准确列出，继续独立的已授权维护即可。

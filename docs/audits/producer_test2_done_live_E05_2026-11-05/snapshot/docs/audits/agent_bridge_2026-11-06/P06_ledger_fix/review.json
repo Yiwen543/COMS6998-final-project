@@ -1,0 +1,164 @@
+{
+  "phase": "P06_LEDGER_HALT_FIX_REVIEW",
+  "status": "PASS_WITH_LIMITS",
+  "decision": "P04-R1 persistent halt fix accepted; P01-R3 can close only for the strict serialized saved-event format and exact batch. P04 saved-original reproducibility assertion is corrected here; original historical files remain unchanged.",
+  "new_blocking_findings": [],
+  "evidence_corrections": [
+    {
+      "id": "P06-E1",
+      "severity": "P2",
+      "material": true,
+      "blocking": false,
+      "status": "CORRECTED_AND_QUALIFIED_IN_P06",
+      "location": "P04_ledger/fixture_records.json:fixtures[name=API_requests_after_resource_halt].fixture.snapshots[0].value.response and result.status",
+      "authority_sha256": "c12eda95b03c76ef2109aab13f68f59488a3e363e505ef681c3443a4d17414d1",
+      "evidence": "Exact saved P04 fixture has response=null while accepted call.parsed is nonnull. Independent exact v1 replay REJECTS accepted response/snapshot mismatch, despite recorded result PASS. A temporary copy with only snapshot.response bound to the accepted parsed response reproduces v1 PASS; v2 rejects both with API request flags after persistent resource_halt.",
+      "impact": "P04 assertion that its saved artifact reproduces PASS unchanged was inaccurate and must not be cited as such. This is an evidence-reproducibility correction, not a historical scientific ledger error. The actual code defect remains independently proven by well-bound copies and separately authored canonical fixtures.",
+      "recommendation": "Preserve P04/E03a originals and recorded mismatch; cite this P06 qualification plus well-bound canonical inputs going forward. Do not silently repair historical evidence or speculate on serialization cause.",
+      "acceptance_criteria": "Exact original and one-field bound copy reproduced separately under exact v1/v2 source hashes; independent canonical no-halt baseline PASS and halt v1PASS/v2specificREJECT; cause staysUNKNOWN unless separately established.",
+      "serialization_cause": "UNKNOWN",
+      "interrupt_recommended": false
+    }
+  ],
+  "checks": [
+    {
+      "id": "A1",
+      "status": "PASS",
+      "path": "test2/scripts/controller_done_ledger_audit_v2.py:45–55,89–95,181–196",
+      "check": "halted is defined outside call loop, set on resource_halt and never cleared;dispatch take guards and post-halt call/event guards reject requests across retries/rounds/sessions and orphan requests."
+    },
+    {
+      "id": "A2",
+      "status": "PASS",
+      "path": "P06 fixture_records.json:canonical_probes",
+      "check": "14 independently authored probes all meet expectations:both versions no-haltbaselinePASS;canonicalhalt oldv1PASS/v2REJECT;crossround/session same;requestflagswithout event and orphan dispatchwithout call REJECT for persistent halt;legalNOT_RUNPASS;failureusageUNRESOLVED/null."
+    },
+    {
+      "id": "A3",
+      "status": "PASS",
+      "path": "test2/tests/test_controller_done_ledger_audit_v2.py and inherited v1 tests",
+      "check": "32 exact snapshot offline tests freshly pass(exit0,0.004s),22 inherited binding checks plus10halt/evidence cases. Source/test hashes match requested versions;no native/API invoked."
+    },
+    {
+      "id": "A4",
+      "status": "PASS_WITH_LIMITS",
+      "path": "test2/results/controller-done-ledger-audit-v3/audit.json",
+      "check": "Independent pure saved audit matches every v3 function-result field;all oldv1 fields also match.36calls/144events/36responseIDs/1614dependency bindings/1554292tokens unchanged;haltfalse/events[];provider invoice/countfees null."
+    },
+    {
+      "id": "A5",
+      "status": "PASS_WITH_LIMITS",
+      "path": "counterexample-baseline.json;P04 exact snapshot;P06 fixture_records.json",
+      "check": "Evidence discrepancy independently confirmed;P04 unchanged-original reproducibility claim corrected and qualified. Root defect still holds for correctly bound evidence. Serialization cause UNKNOWN."
+    },
+    {
+      "id": "A6",
+      "status": "PASS_STATIC_AND_SAVED_NEGATIVE_EVIDENCE",
+      "path": "main output mkdir(exist_ok=False);E04 overwrite-refused.log",
+      "check": "Output refusal inspected statically and via sealed negative record;no real output write attempt. v1/E03a/P04/scientific results retained."
+    }
+  ],
+  "closure_scope": {
+    "P04_R1": "CLOSED_BY_P06_FOR_V2_PERSISTENT_HALT_FIX",
+    "P01_R3": "ACCEPTED_WITH_LIMITS_STRICT_SERIALIZED_SAVED_FORMAT_BATCH_ONLY",
+    "P04_historical_status": "CHANGES_REQUIRED retained unchanged; superseded only by P06 fix acceptance, with explicit saved-artifact qualification.",
+    "P05_R2": "Not re-reviewed or modified; prior bounded acceptance retained.",
+    "not_closed": [
+      "P05-N1 optional metadata hardening",
+      "F1 formal representation and selected-sample attribution",
+      "H1/H2 historical limits",
+      "L1 cache/order fairness",
+      "general monitor soundness/128-cycle completion",
+      "provider invoice/countfees correctness",
+      "missing request/context fields in historical format; no interleaved ledger support"
+    ]
+  },
+  "verification": {
+    "canonical_probes": 14,
+    "canonical_expectation_failures": 0,
+    "source_v2_sha256": "2d27c0aac133c002f78a4fe69f505711069b67ef76778d5251fdb774abe7422f",
+    "tests_v2_sha256": "0f845a547afd823071d2a65bf2a73db51ae9301f574e444f6449dc4edbaa1afe",
+    "old_source_sha256": "c07cdf35651c6fc90b3585d7ac11ab1041050bc7031964aa78e15ea4b91b9166",
+    "saved_v3_sha256": "07aedb0eb685b3b46e1e337a7b69f7804be8295f0d0e4bae8bb0a9e6c7c8dcaa",
+    "fresh_targeted_tests": 32,
+    "tests_exit_code": 0,
+    "unit_seconds": 0.004
+  },
+  "scope": {
+    "writes_only": [
+      "P06_ledger_fix/review.json",
+      "P06_ledger_fix/review.md",
+      "P06_ledger_fix/fixture_records.json"
+    ],
+    "pure_execution": "Exact snapshot v1/v2 validate_ledger and audit_saved;in-memory canonical fixtures;exact snapshot32offlineunit tests. NoCLI/main/native/API or real resultwrites.",
+    "not_checked": "NoP05/R2expansion,unsealedsource,allhistoricalexperiments,generalcorrectnessorproviderbillingaudit.",
+    "new_API_or_count_calls": 0,
+    "new_native_or_monitor_runs": 0,
+    "historical_files_edited": 0,
+    "keys_accessed": false,
+    "installation_or_result_deletion": false,
+    "cross_thread_messages": 0
+  },
+  "handoff": "Ordinary bounded acceptance and evidence correction;no new urgent interruption. Future changes require a new manifest.",
+  "reviewed_at_utc": "2026-11-06T01:59:00.982461+00:00",
+  "reviewed_manifest_sha256": "e8ea9feef15c5d8b8f66ef30c1775bc8cf65a410495d7d057a73f723b379c71b",
+  "HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+  "snapshot_integrity": {
+    "files": 26,
+    "metadata": 4,
+    "errors": []
+  },
+  "current_workspace": {
+    "matches": 26,
+    "total": 26,
+    "stale": false,
+    "differences": []
+  },
+  "evidence_sha256": {
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/git-status-before.txt": "24b21644839f0bab718dc17423bda27038b915fb4075d6169b9ed79d9d3c6bae",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/input-summary.json": "993bb0c407927a623db5ffbdca7f22133835d0d315ee91ef9286be80016e2e36",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/plan.json": "5f05f45a689526abe29acf4a67e65aa9224d5ddb8df89b47291781c8b164c51a",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/tests-first.log": "787467a942728edb71d3bdc73d4f9372ba14d42c45fa97d9740d3ed88dda203b",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/overwrite-refused.log": "4a8a2d897fd47a9ed3cfa4236c6417296ca57f87fa76b05814a17a9c7dc47cbe",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/git-status-after.txt": "25ba24143f7b6eec0380bdf78a6fb585935c110f124354e1687f6b675db44646",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/counterexample-baseline.json": "f320baabe5cb20d0a2585413a478cf2d36eb78e54b45efa2288fa15af106bff1",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/tests-final.log": "787467a942728edb71d3bdc73d4f9372ba14d42c45fa97d9740d3ed88dda203b",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/run-regression-controls.py": "c6668f6157428622547be84736ca88bc702ea1a3945c37737e6e548c50e2020f",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/regression-controls.json": "8e99f0171a01e23872bee83fd9299e34ce0e6ffb04ba8f59c21302003755882d",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/phase.json": "501de0d809fe2933876c6ed2c850113e493a23e6187b4482120f370d7ebc949e",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/docs/PROJECT_STATUS.md": "0ee06988ae2f3caff67c0533bc367262871b97f685cc94850958eaf0462a66ea",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/docs/HANDOFF.md": "d9d976133c3f01de4169c18fc47c0e38022cd7bb6db4c2ac74cdd17c416ba6b9",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/test2/tests/test_controller_done_ledger_audit_v2.py": "0f845a547afd823071d2a65bf2a73db51ae9301f574e444f6449dc4edbaa1afe",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/test2/tests/test_controller_done_ledger_audit_v1.py": "01e569280f4007beba95d7d2e6595ec4d2f1ed0c401dc3639486e9c972d28835",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/test2/scripts/controller_done_ledger_audit_v2.py": "2d27c0aac133c002f78a4fe69f505711069b67ef76778d5251fdb774abe7422f",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/test2/scripts/controller_done_ledger_audit_v1.py": "c07cdf35651c6fc90b3585d7ac11ab1041050bc7031964aa78e15ea4b91b9166",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/test2/results/controller-done-live-v2/api-dispatch.jsonl": "193d3723450ef2e7127e00313db475e02d59f8b5a5879a6dfbe387d73b7056a5",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/test2/results/controller-done-live-v2/release.json": "62a6e60adfed962629404d515045ce08fbbf86671c05011a2e874febd67b0017",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/test2/results/controller-done-live-v2/resource-release.json": "eec0b2f1fbbf0708a2b12b0d44b8bfce6a3e380563afaafd4b59b9e892ae46f5",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/test2/results/controller-done-live-v2/calls.jsonl": "66a6357d255713cdb5d3ef6895fc7969328171360fa64f54b32f3ff8d51403ff",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/test2/results/controller-done-ledger-audit-v3/audit.json": "07aedb0eb685b3b46e1e337a7b69f7804be8295f0d0e4bae8bb0a9e6c7c8dcaa",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/docs/audits/agent_bridge_2026-11-06/P04_ledger/fixture_records.json": "c12eda95b03c76ef2109aab13f68f59488a3e363e505ef681c3443a4d17414d1",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/docs/audits/agent_bridge_2026-11-06/P04_ledger/manifest.json": "647c2d23b87eb80f4af6af4535d9605926167045b73054fad5b7c3a6ad117187",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/docs/audits/agent_bridge_2026-11-06/P04_ledger/review.md": "e15d0f55f124f85aeb7e1a1fefc05f5fd8f1420dff690d955ea698025b5abe08",
+    "docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/docs/audits/agent_bridge_2026-11-06/P04_ledger/review.json": "e2f9fc0a6de737ee1c9d427de5b70dc4c2f5ec59aca4a6d954e9ddc3888d8c77"
+  },
+  "fixture_records_sha256": "1326a98bee0587169de3c28eeaa13d0436bf5719b1283541568f34093dc243ac",
+  "commands": [
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nB=Path('docs/audits/agent_bridge_2026-11-06/P06_ledger_fix');m=json.loads((B/'manifest.json').read_text());print('SHA',hashlib.sha256((B/'manifest.json').read_bytes()).hexdigest());print('META',{k:v for k,v in m.items() if k!='files'});print('FILES',[(x['path'],x['snapshot']) for x in m['files']])\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nR=Path.cwd();B=R/'docs/audits/agent_bridge_2026-11-06/P06_ledger_fix';m=json.loads((B/'manifest.json').read_text());bad=[];drift=[]\nfor x in m['files']:\n if hashlib.sha256((R/x['snapshot']).read_bytes()).hexdigest()!=x['sha256']:bad.append(x['path'])\n if hashlib.sha256((R/x['path']).read_bytes()).hexdigest()!=x['sha256']:drift.append(x['path'])\nfor n,h in m['metadata_sha256'].items():assert hashlib.sha256((R/n).read_bytes()).hexdigest()==h\nS=R/'docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot'\nmodules={}\nfor v in (1,2):\n p=S/f'test2/scripts/controller_done_ledger_audit_v{v}.py';ns={'__file__':str(p),'__name__':f'p06_v{v}'};exec(compile(p.read_text(),str(p),'exec'),ns);modules[v]=ns\np=S/'docs/audits/agent_bridge_2026-11-06/P04_ledger/fixture_records.json';original=json.loads(p.read_text());fixture=next(x['fixture'] for x in original['fixtures'] if x['name']=='API_requests_after_resource_halt')\ndef invoke(v,f):\n snap={tuple(x['key']):x['value'] for x in f['snapshots']}\n try:return {'status':modules[v]['validate_ledger'](f['calls'],f['events'],snap,f['policy'],f['schema_digest'])['status']}\n except ValueError as e:return {'status':'REJECT','reason':str(e)}\ncases=[]\nfor name,fix in [('exact_saved_P04',False),('only_snapshot_response_bound',True)]:\n f=json.loads(json.dumps(fixture))\n if fix:f['snapshots'][0]['value']['response']=json.loads(json.dumps(f['calls'][-1]['parsed']))\n cases.append({'case':name,'v1':invoke(1,json.loads(json.dumps(f))),'v2':invoke(2,json.loads(json.dumps(f)))})\nprint(json.dumps({'snapshots':26,'snapshot_errors':bad,'current_drift':drift,'P04_stored_result':next(x['result']['status'] for x in original['fixtures'] if x['name']=='API_requests_after_resource_halt'),'snapshot_original_response':fixture['snapshots'][0]['value']['response'],'reproductions':cases,'serialization_cause':'UNKNOWN'},indent=2))\n(B/'fixture_records.json').write_text(json.dumps({'phase':'P06','P04_artifact_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'P04_reproductions':cases,'serialization_cause':'UNKNOWN'},indent=2)+'\\n')\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,copy,hashlib\nR=Path.cwd();B=R/'docs/audits/agent_bridge_2026-11-06/P06_ledger_fix';S=R/'docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot';mods={}\nfor v in (1,2):\n p=S/f'test2/scripts/controller_done_ledger_audit_v{v}.py';ns={'__file__':str(p),'__name__':f'p06_canonical{v}'};exec(compile(p.read_text(),str(p),'exec'),ns);mods[v]=ns\ndef fixture():\n policy=dict(model='canonical-model',service_tier='default',input_tokens=20,output_tokens=8,max_precounts=8,max_generations=8,manual_failure_retries_per_round=1,per_generation_conservative_reserve_usd=.1,generation_reserve_usd=.8,count_fee_reserve_usd=.1,total_stage_spending_ceiling_usd=.9)\n ctx=dict(arm='B',repetition=1,round=1,mode='live',session_id='canonical-session')\n usage=dict(input_tokens=10,output_tokens=2,total_tokens=12,cached_input_tokens=0,reasoning_output_tokens=0)\n good=dict(ctx,attempt=2,count_request_issued=True,generation_request_issued=True,accepted_response=True,status='completed',prompt_sha256='canonical-file',input_token_count=10,requested_model='canonical-model',returned_model='canonical-model',response_id='canonical-response',requested_service_tier='default',returned_service_tier='default',usage=copy.deepcopy(usage),raw_usage=dict(input_tokens=10,output_tokens=2,total_tokens=12,input_tokens_details=dict(cached_tokens=0,cache_write_tokens=0,cache_write_tokens_details=dict(ttl_30m_tokens=0,ttl_12h_tokens=0)),output_tokens_details=dict(reasoning_tokens=0)),parsed={'body':'canonical'})\n first=copy.deepcopy(good);first.update(attempt=1,generation_request_issued=False,accepted_response=False,status='input_cap_exceeded_no_generation',input_token_count=21,usage=None,raw_usage=None,response_id=None,parsed=None)\n count=lambda n:[dict(event='count_dispatched',messages_sha256='canonical-message',model='canonical-model',schema_sha256='canonical-schema'),dict(event='count_returned',input_tokens=n,messages_sha256='canonical-message')]\n events=count(21)+[dict(event='resource_halt',reason='canonical explicit halt')]+count(10)+[dict(event='generation_dispatched',messages_sha256='canonical-message',input_tokens_counted=10,max_output_tokens=8,requested_service_tier='default',reserve_usd=.1,cumulative_reserve_usd=.1,context=copy.deepcopy(ctx)),dict(event='generation_returned',response_id='canonical-response',returned_model='canonical-model',returned_service_tier='default',usage=copy.deepcopy(usage))]\n snap={('B',1,1):dict(ctx,prompt_sha256='canonical-file',messages_sha256='canonical-message',response=copy.deepcopy(good['parsed']))}\n return [first,good],events,snap,policy\nrecords=[]\ndef run(name,f,v,expected):\n try:r=mods[v]['validate_ledger'](*copy.deepcopy(f),'canonical-schema');status=r['status'];reason=None\n except ValueError as e:r=None;status='REJECT';reason=str(e)\n row=dict(name=name,version=v,expected=expected,actual=status,reason=reason,expectation_met=status==expected)\n if r is not None:row['result']=r\n records.append(row);return row\nf=fixture();baseline=copy.deepcopy(f);baseline[0][:]=[baseline[0][1]];baseline[0][0]['attempt']=1;baseline[1][:]=baseline[1][3:]\nfor v in (1,2):run('no_halt_single_success_baseline',baseline,v,'PASS')\nfor v,status in [(1,'PASS'),(2,'REJECT')]:run('canonical_halt_same_round_retry',fixture(),v,status)\nfor boundary in ['round','session']:\n f=fixture();first,second=f[0];key=('B',1,1);f[2][key]['response']=None;second['attempt']=1\n if boundary=='round':second['round']=2\n else:second.update(repetition=2,session_id='canonical-other-session')\n f[1][5]['context'].update({k:second[k] for k in ('arm','repetition','round','mode','session_id')})\n newkey=(second['arm'],second['repetition'],second['round']);f[2][newkey]=dict(f[2][key],**{k:second[k] for k in ('arm','repetition','round','mode','session_id')});f[2][newkey]['response']=copy.deepcopy(second['parsed'])\n for v,status in [(1,'PASS'),(2,'REJECT')]:run('canonical_global_halt_cross_'+boundary,f,v,status)\ndef stopped():\n f=fixture();f[1][:]=f[1][:3];f[2]['B',1,1]['response']=None\n f[0][1].update(status='not_run_resource_halt',count_request_issued=False,generation_request_issued=False,accepted_response=False,usage=None,raw_usage=None,response_id=None,parsed=None)\n return f\nrun('legal_halt_only_NOT_RUN',stopped(),2,'PASS')\nfor flag in ['count_request_issued','generation_request_issued']:\n f=stopped();f[0][1][flag]=True;run('flags_without_event_'+flag,f,2,'REJECT')\nfor event in ['count_dispatched','generation_dispatched']:\n f=stopped();f[0].pop();f[1].append({'event':event});run('orphan_dispatch_no_later_call_'+event,f,2,'REJECT')\n# Unknown generation usage must survive halt/NOT_RUN without fabricated zeros.\nf=fixture();first=f[0][0];first.update(status='request_or_infrastructure_error',input_token_count=10,generation_request_issued=True,error_type='TimeoutError')\nf[1][:]=copy.deepcopy(f[1][3:6])+[dict(event='generation_error',error_type='TimeoutError',usage_status='UNKNOWN_NOT_ZERO'),dict(event='resource_halt',reason='canonical transport halt')]\nf[0][1].update(status='not_run_resource_halt',count_request_issued=False,generation_request_issued=False,accepted_response=False,usage=None,raw_usage=None,response_id=None,parsed=None);f[2]['B',1,1]['response']=None\nrow=run('failed_usage_halt_NULL',f,2,'UNRESOLVED');assert row['result']['attempts'][0]['actual_tokens'] is None and row['result']['known_usage_token_totals']=={}\nassert all(r['expectation_met'] for r in records)\nassert all('persistent resource_halt' in r['reason'] for r in records if r['version']==2 and r['expected']=='REJECT')\nresult=mods[2]['audit_saved'](R,R/'test2/results/controller-done-live-v2');saved=json.loads((S/'test2/results/controller-done-ledger-audit-v3/audit.json').read_text())\nfor k in result:assert result[k]==saved[k],k\nold=mods[1]['audit_saved'](R,R/'test2/results/controller-done-live-v2')\nassert all(result[k]==v for k,v in old.items()) and not result['persistent_resource_halt'] and result['resource_halt_events']==[]\np=B/'fixture_records.json';d=json.loads(p.read_text());d['canonical_probes']=records;d['canonical_halt_fixture']={'calls':fixture()[0],'events':fixture()[1],'snapshots':[{'key':list(k),'value':v} for k,v in fixture()[2].items()],'policy':fixture()[3]}\nd['actual_saved_batch']={k:result[k] for k in ['status','call_rows','event_rows','unique_returned_responses','known_usage_token_totals','persistent_resource_halt','resource_halt_events','provider_invoice_usd','count_endpoint_actual_usd']};d['actual_saved_batch']['dependency_count']=len(result['evidence_sha256']);d['actual_saved_batch']['same_as_E03a_all_prior_fields']=True\np.write_text(json.dumps(d,indent=2)+'\\n')\nprint(json.dumps({'canonical_probes':len(records),'expectation_failures':[r['name'] for r in records if not r['expectation_met']],'actual_saved_batch':d['actual_saved_batch']},indent=2))\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -B -m unittest discover -s docs/audits/producer_test2_done_live_E04_2026-11-05/snapshot/test2/tests -p test_controller_done_ledger_audit_v2.py -v",
+      "exit_code": 0
+    }
+  ]
+}

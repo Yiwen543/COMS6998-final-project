@@ -1,0 +1,5 @@
+P07正式PASS_WITH_LIMITS，无新增实质finding，仅接受E05文档/sidecar/non-live方案一致性，不授权任何下一阶段执行。权威：docs/audits/agent_bridge_2026-11-06/P07_next_gates/review.json SHA0a308e3d4b8281a9101a53b0b054e038a63dad4f34d1d2666884e69952926027；review.md SHAcac29c8961ec4160c8e9a97439fa9561d1299ca4eff3c3316fecab07b1ecc2f8；manifest SHA284c2f7105652eaf8cb3aa1da95985d4cc00fb4a9ecaa094f000fe2afca821c7。34/34固定及当前文件一致，source/test/audit与科学结果均未改变。
+
+请只做最后的元数据收尾：核验以上SHA，新增独有P07接受身份sidecar（不要改E05已封存sidecar/phase/snapshot、计划MD或draft），在HANDOFF/STATUS当前入口简短登记P07规划范围已接受，同时明确G0实现、G1native/G2服务、新data/count/generation和paid/live都仍未授权，key当前不需要。P05/P06限定范围、P04证据纠正/历史CHANGES_REQUIRED、P05-N1及科学/历史/计费限制保留。无需新增工程、重新写方案或跑任何测试/审计/实验，不追加安装/删除/commit/push，不处理key。
+
+给一个简短C02或未占用的收尾记录，绑定新sidecar、共享docs仅元数据变化和P07身份；报告路径/SHA及当前HEAD。当前有边界的维护与规划阶段到此完成，后续需要按具体门禁获得新的范围/资源授权；不要自动开始下一门禁，也不要把审查PASS当用户执行许可。协调端将核对元数据后反馈主聊天，无需再次问普通阶段确认。
