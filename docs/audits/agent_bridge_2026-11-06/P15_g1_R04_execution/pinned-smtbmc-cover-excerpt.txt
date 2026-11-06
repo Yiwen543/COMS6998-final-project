@@ -1,0 +1,118 @@
+1869: elif covermode:
+1870:     cover_expr, cover_desc = get_cover_list(topmod, "state")
+1871:     cover_mask = "1" * len(cover_desc)
+1872: 
+1873:     if len(cover_expr) > 1:
+1874:         cover_expr = "(concat %s)" % " ".join(cover_expr)
+1875:     elif len(cover_expr) == 1:
+1876:         cover_expr = cover_expr[0]
+1877:     else:
+1878:         cover_expr = "#b0"
+1879: 
+1880:     coveridx = 0
+1881:     smt.write("(define-fun covers_0 ((state |%s_s|)) (_ BitVec %d) %s)" % (topmod, len(cover_desc), cover_expr))
+1882: 
+1883:     step = 0
+1884:     retstatus = "FAILED"
+1885:     found_failed_assert = False
+1886: 
+1887:     assert step_size == 1
+1888: 
+1889:     while step < num_steps:
+1890:         smt_state(step)
+1891:         smt_assert_design_assumes(step)
+1892:         smt_assert_antecedent("(|%s_h| s%d)" % (topmod, step))
+1893:         smt_assert_consequent(get_constr_expr(constr_assumes, step))
+1894: 
+1895:         if step == 0:
+1896:             if noinit:
+1897:                 smt_assert_antecedent("(not (|%s_is| s%d))" % (topmod, step))
+1898:             else:
+1899:                 smt_assert_antecedent("(|%s_i| s0)" % (topmod))
+1900:                 smt_assert_antecedent("(|%s_is| s0)" % (topmod))
+1901: 
+1902:         else:
+1903:             smt_assert_antecedent("(|%s_t| s%d s%d)" % (topmod, step-1, step))
+1904:             smt_assert_antecedent("(not (|%s_is| s%d))" % (topmod, step))
+1905: 
+1906:         if step < skip_steps:
+1907:             print_msg("Skipping step %d.." % (step))
+1908:             step += 1
+1909:             continue
+1910: 
+1911:         while "1" in cover_mask:
+1912:             print_msg("Checking cover reachability in step %d.." % (step))
+1913:             smt_push()
+1914:             smt_assert("(distinct (covers_%d s%d) #b%s)" % (coveridx, step, "0" * len(cover_desc)))
+1915: 
+1916:             if smt_check_sat() == "unsat":
+1917:                 report_tracked_assumptions("Used assumptions:")
+1918:                 smt_pop()
+1919:                 break
+1920: 
+1921:             if append_steps > 0:
+1922:                 for i in range(step+1, step+1+append_steps):
+1923:                     print_msg("Appending additional step %d." % i)
+1924:                     smt_state(i)
+1925:                     smt_assert_antecedent("(not (|%s_is| s%d))" % (topmod, i))
+1926:                     smt_assert_design_assumes(i)
+1927:                     smt_assert_antecedent("(|%s_h| s%d)" % (topmod, i))
+1928:                     smt_assert_antecedent("(|%s_t| s%d s%d)" % (topmod, i-1, i))
+1929:                     smt_assert_consequent(get_constr_expr(constr_assumes, i))
+1930:                 print_msg("Re-solving with appended steps..")
+1931:                 if smt_check_sat() == "unsat":
+1932:                     print("%s Cannot appended steps without violating assumptions!" % smt.timestamp())
+1933:                     report_tracked_assumptions("Conflicting assumptions:")
+1934:                     found_failed_assert = True
+1935:                     retstatus = "FAILED"
+1936:                     break
+1937: 
+1938:             reached_covers = smt.bv2bin(smt.get("(covers_%d s%d)" % (coveridx, step)))
+1939:             assert len(reached_covers) == len(cover_desc)
+1940: 
+1941:             new_cover_mask = []
+1942: 
+1943:             for i in range(len(reached_covers)):
+1944:                 if reached_covers[i] == "0":
+1945:                     new_cover_mask.append(cover_mask[i])
+1946:                     continue
+1947: 
+1948:                 path = cover_desc[i][0]
+1949:                 name = cover_desc[i][1]
+1950:                 print_msg("Reached cover statement in step %d at %s: %s" % (step, path, name))
+1951:                 new_cover_mask.append("0")
+1952: 
+1953:             cover_mask = "".join(new_cover_mask)
+1954: 
+1955:             for i in range(step+1+append_steps):
+1956:                 if print_failed_asserts(i, extrainfo=" (step %d)" % i):
+1957:                     found_failed_assert = True
+1958: 
+1959:             write_trace(0, step+1+append_steps, "%d" % coveridx)
+1960: 
+1961:             if found_failed_assert:
+1962:                 break
+1963: 
+1964:             coveridx += 1
+1965:             smt_pop()
+1966:             smt.write("(define-fun covers_%d ((state |%s_s|)) (_ BitVec %d) (bvand (covers_%d state) #b%s))" % (coveridx, topmod, len(cover_desc), coveridx-1, cover_mask))
+1967: 
+1968:         if found_failed_assert and not keep_going:
+1969:             break
+1970: 
+1971:         if "1" not in cover_mask:
+1972:             retstatus = "PASSED"
+1973:             break
+1974: 
+1975:         step += 1
+1976: 
+1977:     if "1" in cover_mask:
+1978:         for i in range(len(cover_mask)):
+1979:             if cover_mask[i] == "1":
+1980:                 print_msg("Unreached cover statement at %s: %s" % (cover_desc[i][0], cover_desc[i][1]))
+1981: 
+2181: smt.wait()
+2182: 
+2183: if not incremental:
+2184:     print_msg("Status: %s" % retstatus)
+2185:     sys.exit(0 if retstatus == "PASSED" else 1)

@@ -1,0 +1,84 @@
+{
+  "schema_name": "G1_CONTINUATION_PROFILE_SPECIFIC_CONTRACT_V2",
+  "schema_version": 2,
+  "format": "Finite executable policy/row contracts;not a general JSON Schema engine",
+  "implementation": [
+    "allocation.py:load_allocation/Allocation.validate",
+    "continuation_contracts.py:registration_contract/gate_contract",
+    "observations.py:parse_rows/parse_vcd/signal/phase_binding (unchanged R02)",
+    "budget.py:Budget",
+    "runtime.py:execute (owned process group only)"
+  ],
+  "required_run_header": {
+    "schema_name": "g1.public_run_report",
+    "schema_version": 2,
+    "profile": "G1_PUBLIC_SINGLE_PROFILE_V1",
+    "completion128_credit": false,
+    "continuation_decision_sha256": "exact frozen decision",
+    "predecessor_pool_sha256": "exact immutable E01 pool",
+    "cumulative_count_scope": "INCLUDES_E01_AND_E02_SETUP8_COMPILE3_NATIVE2_PHYSICAL1",
+    "prior_actual_seconds": 5.197697583120316,
+    "prior_conservative_charge_seconds": 8,
+    "current_attempt_maximum_seconds": 1192,
+    "process_supervision": "owned_process_group_only",
+    "native_prefix_reuse": "explicit REUSED_FROM_E02,not new roots",
+    "budget_amendment_sha256": "required exact actual user-sourced physical33 amendment"
+  },
+  "row_fields": {
+    "qc": "QC00..QC15",
+    "cycle": "integer0..3",
+    "phase": [
+      "pre",
+      "post"
+    ],
+    "tick": "fixed1ps:pre1000+4000*c,post3000+4000*c",
+    "q": "four01xzbits",
+    "active": "one01xzbit",
+    "ok": "one01xzbit",
+    "marker": "oneknownbit",
+    "a": "fourknownbits",
+    "b": "fourknownbits",
+    "rst": "oneknownbit",
+    "en": "oneknownbit",
+    "valid": "oneknownbit"
+  },
+  "VCD_subset": {
+    "max_bytes": 2000000,
+    "width_max": 4096,
+    "physical_timescale": "1ps",
+    "names_widths": "Exact registered suffixes/widths;unrecognized structures fail closed",
+    "X_Z": "Preserved/padded using leadingx/z,never filled0",
+    "time_horizon": "Every required row/selected sample must lie within recorded_first_tick..recorded_last_tick; never extend EOF state to future"
+  },
+  "unsupported": [
+    "G0/real/legacybundle gate",
+    "concurrentdispatch",
+    "generalVCD/allSVfrontends",
+    "DUToracle/provider/grant authentication",
+    "128cycle/unboundedcompletion"
+  ],
+  "null_policy": "R04 real observations/version/native/physical results NOT_RUN;startup repair NOT_MEASURED;actual authority files absent/pending. Existing E02 rejection remains.",
+  "repair_revision": "R04_CONDITIONAL_PHYSICAL_STARTUP_AND_PREFIX_REUSE",
+  "continuation_ledger": {
+    "reserved": "cumulative E01+E02 setup8/compile3/native2/physical1/cycles4",
+    "attempt_reserved": "current attempt only,initial0",
+    "prior_actual_window_seconds": 5.197697583120316,
+    "prior_conservative_charge_seconds": 8,
+    "charge_is_not_actual_spend": true,
+    "current_attempt_window_seconds": 1192,
+    "work_cutoff_seconds": 1187,
+    "cumulative_actual_window_seconds": "prior measured window + current elapsed checkpoint",
+    "cumulative_charged_window_seconds": "2 + current elapsed checkpoint",
+    "late_final_persistence": "post-write crossing persists halt;ledger authoritative over earlier report status",
+    "timing_limit": "Checkpoint observations and fail-closed known overruns,not an OS hard realtime guarantee"
+  },
+  "inventory_contract": {
+    "registered_external_attempts": 0,
+    "availability": "UNAVAILABLE_KNOWN_FROM_PREDECESSOR",
+    "complete": false,
+    "predecessor_error": "retained PermissionError and poolSHA",
+    "required": "owned PGID probe/kill/wait/poll and absolute deadlines;mandatory errors not swallowed",
+    "mock_only": "Optional inventory callback injected only by pure tests"
+  },
+  "physical_startup": "step7 at time0;step0 after1ps;first wait999ps;expected observation/edge times unchanged;real simulator behavior untested."
+}

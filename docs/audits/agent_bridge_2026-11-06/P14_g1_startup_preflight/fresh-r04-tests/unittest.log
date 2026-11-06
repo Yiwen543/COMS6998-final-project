@@ -1,0 +1,58 @@
+test_01_positive_startup_schedule_arithmetic_only (__main__.R04Tests.test_01_positive_startup_schedule_arithmetic_only) ... ok
+test_02_twenty_three_dependencies_unchanged (__main__.R04Tests.test_02_twenty_three_dependencies_unchanged) ... ERROR
+test_03_saved_QC00_native_prefix_binds (__main__.R04Tests.test_03_saved_QC00_native_prefix_binds) ... ok
+test_04_changed_common_refuses_reuse (__main__.R04Tests.test_04_changed_common_refuses_reuse) ... ok
+test_05_changed_saved_SMT_refuses_reuse (__main__.R04Tests.test_05_changed_saved_SMT_refuses_reuse) ... ok
+test_06_changed_native_depth_refuses (__main__.R04Tests.test_06_changed_native_depth_refuses) ... ok
+test_07_changed_tool_pin_refuses (__main__.R04Tests.test_07_changed_tool_pin_refuses) ... ok
+test_08_plan_and_resource_lower_bound (__main__.R04Tests.test_08_plan_and_resource_lower_bound) ... ok
+test_09_missing_approval_hash_refuses (__main__.R04Tests.test_09_missing_approval_hash_refuses) ... ok
+test_10_missing_approval_files_refuse (__main__.R04Tests.test_10_missing_approval_files_refuse) ... ok
+test_11_pending_user_physical33_refuses (__main__.R04Tests.test_11_pending_user_physical33_refuses) ... ok
+test_12_missing_P14_refuses (__main__.R04Tests.test_12_missing_P14_refuses) ... ok
+test_13_old_P12_receipt_refuses (__main__.R04Tests.test_13_old_P12_receipt_refuses) ... ok
+test_14_actual_entry_pending_approval_has_no_claim (__main__.R04Tests.test_14_actual_entry_pending_approval_has_no_claim) ... FAIL
+test_15_no_allocation_no_ledger (__main__.R04Tests.test_15_no_allocation_no_ledger) ... ok
+test_16_synthetic_X_first_row_still_rejects (__main__.R04Tests.test_16_synthetic_X_first_row_still_rejects) ... ok
+test_17_real_approved_allocation_no_claim_or_ledger (__main__.R04Tests.test_17_real_approved_allocation_no_claim_or_ledger) ... FAIL
+
+======================================================================
+ERROR: test_02_twenty_three_dependencies_unchanged (__main__.R04Tests.test_02_twenty_three_dependencies_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/docs/audits/agent_bridge_2026-11-06/P14_g1_startup_preflight/review-copy/test2/g1_v4/r04_tests.py", line 43, in test_02_twenty_three_dependencies_unchanged
+    self.assertEqual(sha(HERE/'observations.py'),sha(ROOT/'test2/g1_v3/observations.py'))
+                                                 ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/docs/audits/agent_bridge_2026-11-06/P14_g1_startup_preflight/review-copy/test2/g1_v4/r04_tests.py", line 17, in <lambda>
+    sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+                                ~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_abc.py", line 625, in read_bytes
+    with self.open(mode='rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/docs/audits/agent_bridge_2026-11-06/P14_g1_startup_preflight/review-copy/test2/g1_v3/observations.py'
+
+======================================================================
+FAIL: test_14_actual_entry_pending_approval_has_no_claim (__main__.R04Tests.test_14_actual_entry_pending_approval_has_no_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/docs/audits/agent_bridge_2026-11-06/P14_g1_startup_preflight/review-copy/test2/g1_v4/r04_tests.py", line 103, in test_14_actual_entry_pending_approval_has_no_claim
+    self.assertFalse((ROOT/REG['pool_state']).exists());self.assertFalse((ROOT/REG['attempt_lock']).exists())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_17_real_approved_allocation_no_claim_or_ledger (__main__.R04Tests.test_17_real_approved_allocation_no_claim_or_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/docs/audits/agent_bridge_2026-11-06/P14_g1_startup_preflight/review-copy/test2/g1_v4/r04_tests.py", line 126, in test_17_real_approved_allocation_no_claim_or_ledger
+    self.assertFalse((ROOT/REG['pool_state']).exists())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.072s
+
+FAILED (failures=2, errors=1)

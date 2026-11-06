@@ -73,7 +73,7 @@ class R04Tests(unittest.TestCase):
         self.assertEqual(REG['prior_reserved']['physical']+counts['physical'],33)
         self.assertGreater(33,REG['original_caps']['physical_jobs'])
         self.result.update(new_jobs=counts,cumulative_compile=20,cumulative_native=32,cumulative_physical=33,
-                           proposal_only=True,without_native_reuse_cumulative_native=34)
+                           allocation_authority_recorded=True,EXECUTE_granted=False,without_native_reuse_cumulative_native=34)
     def test_09_missing_approval_hash_refuses(self):
         with self.assertRaisesRegex(AllocationError,'MISSING_APPROVED_CONTINUATION_DECISION_HASH'):load_allocation(ROOT,REG,{})
     def test_10_missing_approval_files_refuse(self):
@@ -114,6 +114,20 @@ class R04Tests(unittest.TestCase):
         text='\n'.join(lines)+'\nEND qc=0 cycles=4 posedges=4\n';(self.inputs/'SYNTHETIC_OBS.txt').write_text(text)
         with self.assertRaisesRegex(Unqualified,'PHYSICAL_EXPECTED_MISMATCH:a'):parse_rows(text,case,'icarus')
         self.result['synthetic_only']=True
+
+    def test_17_real_approved_allocation_no_claim_or_ledger(self):
+        gate={k+'_sha256':REG[k+'_sha256'] for k in ['continuation_decision','budget_amendment']}
+        self.note_input('actual-authority-bindings.json',gate)
+        allocation=load_allocation(ROOT,REG,gate)
+        allocation.validate()
+        self.assertEqual(dict(allocation.prior_reserved),REG['prior_reserved'])
+        self.assertEqual(allocation.prior_charge_seconds,8)
+        self.assertEqual(allocation.attempt_window_seconds,1192)
+        self.assertFalse((ROOT/REG['pool_state']).exists())
+        self.assertFalse((ROOT/REG['attempt_lock']).exists())
+        with self.assertRaisesRegex(Unqualified,'P14_ACCEPTANCE_REQUIRED'):
+            gate_contract({'record_kind':'G1_EXECUTE_R04_AFTER_P14_AND_PHYSICAL33_APPROVAL','stage':'EXECUTE'}, {}, {})
+        self.result.update(real_authority_verified=True,claimed=False,ledger_created=False,P14_still_required=True)
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--record',required=True,type=Path);args=p.parse_args()

@@ -1,0 +1,98 @@
+{
+  "reuse": {
+    "already_reused_E02": [
+      "compile-QC00",
+      "QC00-bmc",
+      "QC00-cover"
+    ],
+    "E03_reusable_after_explicit_binding": [
+      "compile-icarus-shared",
+      "compile-verilator-shared",
+      "QC00-icarus",
+      "QC00-verilator",
+      "compile-QC01",
+      "QC01-bmc",
+      "QC01-cover"
+    ],
+    "QC01_cover_interpretation": {
+      "raw_tool_status": "FAILED",
+      "process_exit_code": 1,
+      "cover_reachability": "REACHED",
+      "cover_steps": [
+        2
+      ],
+      "assertion": "FAILED",
+      "assertion_steps": [
+        2
+      ],
+      "overall_control": "PARTIAL_PENDING_PHYSICAL",
+      "old_runner_label": "NOT_REACHED_RETAINED_AS_HISTORY"
+    },
+    "requirements": [
+      "hardware/common/formal/physicalTB/input/labels/assumptions/depth8/frontend/solver/flags/tool pins unchanged;new source/manifest explicitly documents parser/report interpretation version",
+      "Bind complete original logs/receipts/VCD/SMT and dependency/build/executable SHAs;shared executable reuse must read old artifacts and write only new result paths,not mutate old pools/builds",
+      "Mark every reused job REUSED_FROM_E02 or REUSED_FROM_E03/new_execution=false,retain all original spent compilation/native/physical/time charges;old bad E02physical never becomes valid",
+      "QC00 original native PASS+cover andnew dualphysical support that limited known-input control only;QC01 rawcover FAILED does not become a clean native PASS",
+      "New continuation includes E01/E02/E03 closed pool identities and all cumulative use,exclusive new namespace/gate;existing R04 pool/lock cannot resume/reset",
+      "No new version queries;reuse version text/knownness with runtime filepins,smtbmc help-only/make unknowns retained"
+    ]
+  },
+  "budget": {
+    "status": "CONDITIONALLY_FEASIBLE_WITHIN_EXISTING_CAPS_NOT_AUTHORIZATION",
+    "remaining": {
+      "compile": 26,
+      "native": 28,
+      "physical": 30,
+      "setup": 0,
+      "physical_cycles": 1012
+    },
+    "new_jobs_if_exact_reuse": {
+      "setup": 0,
+      "compile": 14,
+      "native": 28,
+      "physical": 30,
+      "physical_cycles": 120
+    },
+    "cumulative_after": {
+      "setup": 8,
+      "compile": 20,
+      "native": 32,
+      "physical": 33,
+      "physical_cycles": 132
+    },
+    "physical_breakdown": "QC01 two physical +QC02..QC15 fourteen dual pairs=30;QC00 actual pair reused",
+    "native_breakdown": "QC02..QC15 fourteen BMC+cover pairs=28;QC00 E02 andQC01 E03 preserved/reused",
+    "conservative_time_example": {
+      "prior_cumulative_actual_checkpoint_seconds": 11.770645541138947,
+      "prior_cumulative_charged_checkpoint_seconds": 14.572948167100549,
+      "new_prior_charge_seconds": 15,
+      "new_attempt_max_seconds": 1185,
+      "new_work_cutoff_seconds": 1180,
+      "original_cumulative_cap_seconds": 1200,
+      "note": "Example to register;charge15 conservatively covers charged14.572948...;not measured spend or fresh1200s."
+    },
+    "if_reuse_not_possible": {
+      "rebuild_both_shared_physical_binaries": {
+        "new_compiles": 16,
+        "cumulative_compiles": 22,
+        "extra_count_quota_needed": 0,
+        "time_and_failures_still_charge": true
+      },
+      "lose_one_saved_native_job": "Each otherwise unnecessary native reexecution adds1 above exact28 remaining;request explicit native cap+1 per lost reusable native result if full coverage still required.",
+      "lose_QC00_E02_native_pair": {
+        "extra_native_cap_needed": 2,
+        "cumulative_native": 34
+      },
+      "lose_QC01_E03_native_pair": {
+        "extra_native_cap_needed": 2,
+        "cumulative_native": 34
+      },
+      "lose_QC00_physical_pair": {
+        "extra_physical_cap_needed": 2,
+        "cumulative_physical": 35
+      },
+      "require_new_setup_query": "setup8 already exhausted;any new query requires explicit additional setup allocation rather than silent re-probe"
+    },
+    "limits": "Count feasibility is not a guarantee of outcome or OS timing. Any new failures remain charged. No automatic quota/refund/retry;no extra quota presently needed if all stated reuse conditions hold."
+  }
+}

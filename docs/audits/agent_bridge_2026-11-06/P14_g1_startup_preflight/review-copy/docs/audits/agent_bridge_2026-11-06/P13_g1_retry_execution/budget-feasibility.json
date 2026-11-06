@@ -1,0 +1,80 @@
+{
+  "scope": "READ_ONLY_LOWER_BOUND_NOT_AUTHORIZATION_OR_EXECUTED_PLAN",
+  "full_profile": {
+    "controls": 16,
+    "physical_simulators_per_control": 2,
+    "old_qualified_physical_runs": 0,
+    "new_physical_runs_needed_at_least": 32,
+    "current_physical_remaining": 31,
+    "minimum_extra_physical_runs": 1,
+    "minimum_cumulative_physical_cap": 33,
+    "new_physical_cycles_at_four_per_run": 128,
+    "cumulative_physical_cycles": 132,
+    "conditional_new_native_if_reuse_QC00": 30,
+    "cumulative_native": 32,
+    "conditional_new_compiles": 17,
+    "conditional_compile_reason": "15 remaining formal builds+2changed shared physical builds",
+    "conditional_cumulative_compiles": 20,
+    "additional_setup_if_exact_saved_versions_and_pins_reused": 0,
+    "setup_remaining": 0,
+    "cumulative_wall_cap_unchanged": 1200,
+    "example_prior_total_conservative_charge_seconds": 8,
+    "example_remaining_wall_seconds": 1192,
+    "example_charge_not_a_fresh_measured_spend": true
+  },
+  "partial_path": {
+    "available_without_increasing_original_counts": true,
+    "condition": "新显式受限登记/累计ledger/gate，最多31新physical；保留至少1缺失合法dual-control结果及总体NOT_QUALIFIED，不放宽首行/X/双sim规则。闭合池不能直接resume。",
+    "existing_result_only": "可只接受E02失败记录与QC00 native局部结果并停止，不需任何新执行。"
+  },
+  "QC00_native_reuse": {
+    "possible_only_conditionally": true,
+    "already_supported_automatically": false,
+    "current_runner_limitation": "R03固定job-plan/Allocation祖先为E01，attempt.lock和pool已闭合；没有REUSED job语义/跳过已完成QC00的登记。不得改旧receipt/清零/直接重开。",
+    "frozen_dependencies": [
+      {
+        "path": "test2/g1_v3/sources/common.sv",
+        "sha256": "f5e448f2e32ef2c26322e198ca7dff72618818572a4a02ce85728b5377dd2c12"
+      },
+      {
+        "path": "test2/g1_v3/sources/QC00_formal.sv",
+        "sha256": "a50271697575389afdd2badce70086e5f55eb2be5680de901409866fb7fef4a6"
+      },
+      {
+        "path": "test2/g1_v3/inputs/stimulus.json",
+        "sha256": "93018b94b98024138eb52e841fedcd657a1ebf6b6e96a4b0d1ed7d66e7786fad"
+      },
+      {
+        "path": "test2/g1_v3/inputs/controls.json",
+        "sha256": "62f8b470656574d13bd8303a1132517140f9b9bf22302f485bf9b4964093e98f"
+      },
+      {
+        "path": "test2/g1_v3/job-plan.json",
+        "sha256": "1cf8b9fc22c62f269715e4098b5ff70b8a1e3a2b8116acfd0b21e5ecb483a6ae"
+      },
+      {
+        "path": "test2/results/g1-qualification-v3/build/QC00/model.smt2",
+        "sha256": "0d31e016299e8841d685c8f528a20345819aff378c268b089d4033f5b1953636"
+      }
+    ],
+    "requirements": [
+      "只改physical_tb，不改common.sv/QC00_formal/native stimulus/profile/assumptions/width/reset/selected pre/depth8/solver及frontend转换。若触及common或native依赖，必须重新评估复用。",
+      "绑定旧编译argv/flags、SMT内容、tool pin、stdout/stderr/receipt、BMC PASS与cover step2结果、P12/E02 identity和原累计成本。",
+      "新manifest显式标记2项native结果REUSED_FROM_E02/非新执行，保留原费用/时间/用量，并将QC00旧不合格physical永远保留为拒绝。",
+      "新版本需独立检查新physical0..3已知输入/复位/时钟/选定pre映射符合原公开标签；不把native PASS当作dual-physical已通过。",
+      "继承E01和E02两闭合池的累计计数/保守时间，显式分配余量并独立预检；旧setup版本只标复用，make仍NOT_REPROBED。"
+    ]
+  },
+  "if_reuse_disallowed": {
+    "new_native_full_profile": 32,
+    "cumulative_native": 34,
+    "additional_native_cap_at_least": 2,
+    "physical_extra_cap_still": 1
+  },
+  "authority": {
+    "retry_permission": "同任务合理retry本身无需重复确认；当前review不触发任何执行。",
+    "new_budget_decision": "完整16xdual至少需明确physical累计32→33的数值修订；不能由reasonable-retry推断增帽。无增帽则仅部分路径。",
+    "new_OS_permissions": "未发现新增ps/escalation/API/key需要；正常owned-group保护权限未来若失败仍halt，不能预先保证。",
+    "setup_and_time": "0新setup的完整下界仅在显式复用现有版本/pin且无额外真实验证运行时成立。若需新query/额外诊断sim，也应单独计入，不能许诺无条件仅+1足够。"
+  }
+}

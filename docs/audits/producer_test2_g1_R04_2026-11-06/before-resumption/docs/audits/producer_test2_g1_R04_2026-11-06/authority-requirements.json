@@ -1,0 +1,31 @@
+{
+  "record_kind": "R04_AUTHORITY_INTERFACE_REQUIREMENTS_NOT_AUTHORIZATION",
+  "status": "MISSING_PENDING_USER_AND_COORDINATOR",
+  "do_not_execute": true,
+  "actual_files_created": false,
+  "budget_amendment_required": {
+    "path": "docs/audits/agent_bridge_2026-11-06/G1_qualification_v1/physical-budget-amendment-r04.json",
+    "required_fields": {
+      "record_kind": "must equal G1_CUMULATIVE_PHYSICAL_CAP_AMENDMENT",
+      "user_approved": "must be actual user-sourced true,not inferred from this proposal",
+      "original_user_authorization_sha256": "bf3da44d7cda9eadfabebf82b23271854465942a3814f36b90789f7e715575ab",
+      "original_physical_jobs": 32,
+      "cumulative_physical_jobs": 33,
+      "other_caps_unchanged": "must be true",
+      "permission_change_authorized": "must be false",
+      "user_approval_evidence": "required nonempty coordinator record of actual user approval"
+    }
+  },
+  "continuation_required": {
+    "path": "docs/audits/agent_bridge_2026-11-06/G1_qualification_v1/continuation-decision-r04.json",
+    "record_kind_requirement": "G1_AUTHORIZED_R04_CUMULATIVE_CONTINUATION",
+    "status_requirement": "AUTHORIZED only after actual approval",
+    "fixed_lineage_fields": "user_authorization_sha256,first_pool_sha256,predecessor_pool_sha256,predecessor_phase_sha256,predecessor_review_sha256 as in frozen registration",
+    "required_numeric_fields": "prior_reserved,prior_actual_window_seconds,prior_charged_checkpoint_seconds,prior_wall_charge_seconds8,attempt_maximum_window_seconds1192,cumulative_caps,remaining_allocation,native_depth8",
+    "budget_amendment_sha256": "exact actual amendment hash",
+    "permission_change_authorized": "false"
+  },
+  "execution_receipt_requirement": "G1_EXECUTE_R04_AFTER_P14_AND_PHYSICAL33_APPROVAL;stage EXECUTE;all new registration/source/preparation/grant/decision/amendment/predecessor hashes and p14_review_path/p14_review_sha256",
+  "P14_requirement": "PASS/PASS_WITH_LIMITS,phase begins P14;input_identity binds producer_manifest_sha256,registration_sha256,actual continuation_decision_sha256 and budget_amendment_sha256. A preliminary code-only review without future approval hashes cannot execute.",
+  "approval_authentication_limit": "Exact trusted coordinator/file identity convention,not cryptographic provider/user authentication;no candidate code controls these paths."
+}

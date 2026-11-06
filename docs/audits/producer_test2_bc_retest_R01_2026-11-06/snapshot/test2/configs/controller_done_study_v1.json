@@ -1,0 +1,203 @@
+{
+  "API_calls_allowed": false,
+  "budget": {
+    "arms": [
+      "B2_raw",
+      "C2_semantic"
+    ],
+    "body_bytes": 16000,
+    "compile_seconds": 60,
+    "input_tokens": 64000,
+    "max_retries": 1,
+    "model": "gpt-6.1-sol",
+    "output_tokens": 8192,
+    "reasoning_effort": "low",
+    "repetitions": 3,
+    "replay_seconds": 15,
+    "request_timeout_seconds": 120,
+    "rounds": 6,
+    "slots": 6,
+    "state_bits": 8192
+  },
+  "candidate_live_allowed": false,
+  "date": "2026-11-05",
+  "fault_catalogue": [
+    {
+      "family": "completion_input",
+      "id": "N01",
+      "line": 156,
+      "mutant_sha256": "509c068653506fe660dd270aa43247d129b87cc7bf1658c58f99952857a38026",
+      "stratum": "handshake_reset"
+    },
+    {
+      "family": "completion_data",
+      "id": "N02",
+      "line": 540,
+      "mutant_sha256": "1eac207ac90872b81b9f2c29aa68156c1529f9375d6ecb05c7888d5a9fad1470",
+      "stratum": "handshake_reset"
+    },
+    {
+      "family": "completion_status",
+      "id": "N03",
+      "line": 158,
+      "mutant_sha256": "f83f59d60a44196bdd1bb2a067c098c6e390d90eea9cf2473258818a3e86bed4",
+      "stratum": "handshake_reset"
+    },
+    {
+      "family": "data_last",
+      "id": "N04",
+      "line": 541,
+      "mutant_sha256": "c73a6af5e8211110768989386cd0071c8fd8169ed6b99d4ab1418174ae1b1159",
+      "stratum": "payload_status"
+    },
+    {
+      "family": "status_pad",
+      "id": "N05",
+      "line": 159,
+      "mutant_sha256": "87f191887516910ad83c550942679da12c3cb69ec7665e0fbc94d64290e0eef2",
+      "stratum": "payload_status"
+    },
+    {
+      "family": "status_truncate",
+      "id": "N06",
+      "line": 160,
+      "mutant_sha256": "9567c1d3b494551c9d725b448bd6cae3dfebfa667c857294321a360f79ea4b6a",
+      "stratum": "payload_status"
+    },
+    {
+      "family": "status_length",
+      "id": "N07",
+      "line": 161,
+      "mutant_sha256": "e4e7b3b8e27af0832dcc57bbc274ff1dc06d1e098a220ddd05fb330200cb75a1",
+      "stratum": "payload_status"
+    },
+    {
+      "family": "status_original_length",
+      "id": "N08",
+      "line": 162,
+      "mutant_sha256": "76f99be6ad56720475c88f301f6bc2e40368beceba40b75cdba433565917b81e",
+      "stratum": "payload_status"
+    },
+    {
+      "family": "data_rotation",
+      "id": "N09",
+      "line": 538,
+      "mutant_sha256": "ea81fba8452d9634887ac3f9161a4eeedae540430211b5699a228c13657eac38",
+      "stratum": "payload_status"
+    },
+    {
+      "family": "temporary_data",
+      "id": "N10",
+      "line": 591,
+      "mutant_sha256": "39a04dff282766943c9e3fc023d123f64bc9067f43992250b34c3a34dc2edea1",
+      "stratum": "payload_status"
+    },
+    {
+      "family": "short_counter_step",
+      "id": "N11",
+      "line": 322,
+      "mutant_sha256": "28dca6774521b9632ad6b9fe647f2ccf432cce96a2abef58615151d27a2fc17f",
+      "stratum": "boundary_guard"
+    },
+    {
+      "family": "long_counter_step",
+      "id": "N12",
+      "line": 328,
+      "mutant_sha256": "39110a1124a79d609dfa1744e2ed5190bc6da579fae8c391caf138204ecc2593",
+      "stratum": "boundary_guard"
+    }
+  ],
+  "formal": {
+    "correct_jobs_per_final": 18,
+    "correct_timeout": 10,
+    "depth": 24,
+    "mutant_jobs_per_final": 72,
+    "mutant_timeout": 5,
+    "order": "Interleave B/C within repetition/source/slot/mode, no arm-specific retry",
+    "overall_seconds_per_final": 720,
+    "planned_mutants": 12,
+    "profile": "cone, selected by full-depth constanttrue/false and dual-physical witness controls; not C outcomes",
+    "scope": "Safety projection only; no finite-completion proof",
+    "solver": "z3",
+    "solver_seconds_per_final": 540,
+    "trace_done": 0
+  },
+  "id": "controller_done_study_v1",
+  "input_geometry_sha256": {
+    "development": {
+      "frame_lengths": "9d32cd0b70754e7e1d9b928fc3b6f1afa080bb3dfbe7a099752f2f6f37f711cf",
+      "independent_channels": "c40a2ac9853eace3c1a89099fa6370e285897dc13108bfc4c62f901df06ff8b3",
+      "reset_and_drain": "0f37dbde45bf9de3f65b43d199267bb3d6099433e94046b375e542bfba60ebdb"
+    },
+    "final": {
+      "probe_01": "321ae35d2f9b6c53186dfd0a830bb6d8b70450114b10454492e228671d4586cc",
+      "probe_02": "404d66891589ef1c6ff90c6f1e50adb936b2f61dccf7ee8e66432bac3a34b57c",
+      "probe_03": "cec04e72fbb094a41ac8f4f0a77ce1f9444b0cd51a12ba3eec4b984cc82e6400",
+      "probe_04": "7b89d06f4ce03fd240404379a53776ef13461234d4072fe34dd14272fa1fcf34",
+      "probe_05": "c056e9559435389d51e3d737d062acb1202454bd3245a6ccb55465fed567e16f",
+      "probe_06": "4247a0f34bde0cb65d1f2cf981c1f05f014c15be7d888275821cf8893b2fe3cf"
+    }
+  },
+  "local_seeds": {
+    "development": [
+      6998201,
+      6998202,
+      6998203
+    ],
+    "final": [
+      6999301,
+      6999302,
+      6999303,
+      6999304,
+      6999305,
+      6999306
+    ]
+  },
+  "parameters": {
+    "DATA_WIDTH": 8,
+    "FRAME_FIFO_DEPTH": 32,
+    "HEADER_FIFO_DEPTH": 8,
+    "MAX": 8,
+    "MIN": 4
+  },
+  "preserve_old_freezes": {
+    "test2/configs/controller_live_freeze_v1.json": "f1c9fcdebb0ede38e5756af947d8dceb985808787353572c98024dffb37ed20c",
+    "test2/configs/live_freeze_v1.json": "7f2be65ac1b8013d614c5391b49e6cde2b821dbaca6f3e8bae609e63ed67b912",
+    "test2/tasks/axis_length_fifo_v1/reference/frozen-v2/freeze.json": "bbac094bcf82eecb44e57fd85a3dbdabb27dd07af00559300617753103ed7c67"
+  },
+  "protocol": {
+    "ROI": "Distinct reference-qualified mutation IDs/1000actual attempted generation input+output tokens; categories and eligible pairs separate; mock ROI unknown",
+    "causal_scope": "Whole C feedback package versus B, no placebo; no pure-semantic claim; all previous results preserved",
+    "correct_gate": "All correct dev/final on both simulators complete without any alarm or unknown",
+    "development_min_tail": 32,
+    "final_min_tail": 128,
+    "input_completion": "Reference definite s_valid offered at end, potentially accompanied by short-tail unknown; separate denominator and unknown context retained, never called full PASS",
+    "marker": "trace_done0allpre/allpostexceptfinalpost1; no extraedge/DUTinput",
+    "response_completion": "Reference end-only definite response debt, no earlier sampled violation; require definite alarm at finalpost and no earlier alarm",
+    "safety": "Reference sampled failure, first candidate alarm must not precede first reference violation; definite post-onset alarm required",
+    "selection": "Last compile-valid round; all36 snapshots released before private grading; own history only; no hidden feedback",
+    "unknowns": "Record oracle/candidate unknowns separately; unknown is never PASS. Definite FAIL priority retained. Invalid/missing/timeout/not-reached included."
+  },
+  "provider_seed": null,
+  "qualification": {
+    "actual_provider_token_count": "PENDING_AUTHORIZATION",
+    "dual_correct_physical": true,
+    "fresh_frozen_data": true,
+    "independent_reference_reused": true,
+    "prototype_not_live": true,
+    "review": "New contract/adapter scope package before any paid phase"
+  },
+  "reference": {
+    "checker": "test2/tasks/axis_length_fifo_v1/reference/frozen-v2/checker.py",
+    "scope": "Original two-state DUT contract,1..12accepted bytes,MIN4/MAX8; identical row interface/check_rows and min_tail32dev/128final. trace_done is evaluation metadata only, no oracle revision.",
+    "sha256": "b44f32b27c11b968d23fd93ecf8b0d714e773460fc0b505d89adf23df3cd7dee"
+  },
+  "sources": {
+    "test2/tasks/axis_length_fifo_v1/public/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+    "test2/tasks/axis_length_fifo_v1/public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+    "test2/tasks/axis_length_fifo_v1/public/rtl/axis_frame_length_adjust_fifo.v": "26f1636f5d4f219ca1dcf336b45b636e74a0977826ee51cdcab4e5c2d136b7ce",
+    "test2/tasks/axis_length_fifo_v1/public/task_top_v3.sv": "db55dbee92a43f461d28f9c02a15d0eaf32c0c1cab2cbcc4ab85f0f3c91aab5e"
+  },
+  "status": "offline_registered_before_new_measurements",
+  "task": "test2/tasks/axis_length_done_v1"
+}

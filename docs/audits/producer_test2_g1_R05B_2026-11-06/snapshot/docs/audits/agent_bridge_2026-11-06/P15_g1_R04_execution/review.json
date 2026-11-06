@@ -1,0 +1,274 @@
+{
+  "phase": "P15_G1_R04_E03_EXECUTION_REVIEW",
+  "status": "CHANGES_REQUIRED",
+  "evidence_integrity": "PASS_WITH_LIMITS",
+  "execution_resource_compliance": "PASS_WITH_LIMITS",
+  "qualification": "BLOCKED_NOT_QUALIFIED",
+  "observed_at_utc": "2026-11-06T16:02:29.704445+00:00",
+  "actual_HEAD": "2de33e981d2fffc9739d2ca049fbae1774de1aad",
+  "input_identity": {
+    "producer_phase_sha256": "c7b99fd6a11a47a4204b2fb22c0f0ebb57c81bb4ca1c1ba864b57977f2601325",
+    "producer_manifest_sha256": "9511046040fb38358f1fc70bfe88742a45a5c8957a427744675c929ae1df4325",
+    "registration_sha256": "29dcc2a0781927ac1cc624850c9fdda44625fe468544eae881f4ea86e92cfa31",
+    "source_manifest_sha256": "57e79f812133ec94f340009c18227b8bf773515ea571d0b172c9c59e9abd9705",
+    "R04_preparation_manifest_sha256": "a61cd8744e44eb599abe331079766215a4860d64b07a3080090f8f29e9e97b0a",
+    "P14_review_sha256": "012373a27c68197a1baaaabf3ec67f18b1aeb16964775bfc4a6baa885cebece3",
+    "execution_receipt_sha256": "fadb3e7fd5534d63309b42c7492a8b57915025010f4832c4ca9c27a0ddcc2e7e",
+    "final_pool_sha256": "2364e80999aaea35eb3e5da06e31d48331ee6be6b061c09bb3f92738bca8d1b8",
+    "continuation_decision_sha256": "80f69ec8d1ee0a0076dac1daa4a009b1b2e4868c5b2cd41327088a0c7fca889e",
+    "budget_amendment_sha256": "449692ff3a154f5b697a8c80f7e6795a269b488bb5efbfd0f0ab0384539ebc67"
+  },
+  "seal_anchor_origin": "First completed local E03 seal observed during authorized review;raw pool/EXECUTE independently match supplied hashes.",
+  "integrity": {
+    "sealed_members": 571,
+    "source_bindings": 96,
+    "protected_files": 4485,
+    "current_still_matches": true,
+    "index_unchanged": true
+  },
+  "findings": [
+    {
+      "id": "P15-R1",
+      "severity": "P2",
+      "material": true,
+      "blocking": true,
+      "path": "test2/g1_v4/runner.py",
+      "lines": [
+        63,
+        64,
+        65,
+        66,
+        67,
+        137,
+        138,
+        139
+      ],
+      "source_sha256": "46c29b45fd9e4afa9a342bd4ec4c99219f08596cd38826d8f06b24d734a71e1f",
+      "raw_log": "test2/results/g1-qualification-v4/jobs/QC01-cover/stdout.log",
+      "raw_log_sha256": "24b2e9a6b0def95bc74a517f150ab88ded18b7d736ddbc4baea21f9146cb2256",
+      "expected": "Reachability and assertion outcome are independent fields;QC01 negative control can reach cover while its intentionally false assertion fails.",
+      "actual": "Raw reached step2 +assert failed step2+Status FAILED/exit1,but classify_native converts every cover FAILED to NOT_REACHED and runner halts on expected PASS.",
+      "cause": "Pinned yosys-smtbmc covermode prints reached cover,then checks assertions along that trace;found_failed_assert causes early break before assigning PASSED. The coarse caller classification incorrectly equates tool FAILED with target unreachability.",
+      "tool_source_sha256": "0192f63913bdff347912602315504d5a6ed9e3ff8fbf0dbcdc7c33e5b66681d9",
+      "tool_source_lines": [
+        1869,
+        1884,
+        1950,
+        1955,
+        1956,
+        1961,
+        1968,
+        1971,
+        2184,
+        2185
+      ],
+      "impact": "Incorrect scientific reachability label plus an execution blocker;not hidden budget overrun or false overall G1 acceptance. Negative-control raw failure must not be erased.",
+      "minimal_fix": "New parser/report version preserves raw exit/status, separately records cover REACHED(step2),assertion FAILED(step2),mode/property identity and explicit unknown/error. New registration clarifies abstract activation expectation from public source without changing hardware/flags or overwriting old expectations/evidence.",
+      "acceptance": "Exact saved QC01 log yields raw FAILED/exit1,cover REACHED/step2,assertion FAILED/step2;never global PASS nor NOT_REACHED. Completed unreached with explicit evidence may be NOT_REACHED;missing/truncated/error/timeout stays UNKNOWN/ERROR. Known negative QC01 is judged by separately declared activation/assertion expectations,then still needs remaining physical pair and full16QC evidence. Reuse exact hashes,retain spent counters and original halt."
+    }
+  ],
+  "QC00_result": {
+    "finite_control": "DUAL_SIM_MATCHED_WITH_REUSED_NATIVE",
+    "startup_fix": "SUPPORTED_IN_ACTUAL_QC00_RUNS_ONLY",
+    "rows_each_sim": 8,
+    "known_first_row": true,
+    "phase_and_VCD_binding": true,
+    "pre_ps": [
+      1000,
+      5000,
+      9000,
+      13000
+    ],
+    "posedge_ps": [
+      2000,
+      6000,
+      10000,
+      14000
+    ],
+    "post_ps": [
+      3000,
+      7000,
+      11000,
+      15000
+    ],
+    "extra_edge": false,
+    "qualifies_other15": false,
+    "proves128_or_general_correctness": false
+  },
+  "QC01_result": {
+    "BMC": {
+      "raw_tool_status": "FAILED",
+      "process_exit_code": 1,
+      "cover_reached_steps": [],
+      "assertion_failed": true,
+      "sampled_failures": [
+        {
+          "tick": 20,
+          "cycle": "001",
+          "q": "0000",
+          "active": "1",
+          "ok": "0"
+        },
+        {
+          "tick": 25,
+          "cycle": "001",
+          "q": "0000",
+          "active": "1",
+          "ok": "0"
+        },
+        {
+          "tick": 30,
+          "cycle": "001",
+          "q": "0000",
+          "active": "1",
+          "ok": "0"
+        }
+      ],
+      "stdout_sha256": "6836887cc322d46bcb97cf4232eaf96c0f2794a72afbea386a90d50984ff8bee",
+      "VCD_sha256": "181a8b0318c0c525f3e79ab4b869dfa454a19fba0f77c622b462774005e78365"
+    },
+    "cover": {
+      "raw_tool_status": "FAILED",
+      "process_exit_code": 1,
+      "cover_reached_steps": [
+        2
+      ],
+      "assertion_failed": true,
+      "sampled_failures": [
+        {
+          "tick": 20,
+          "cycle": "001",
+          "q": "0000",
+          "active": "1",
+          "ok": "0"
+        },
+        {
+          "tick": 25,
+          "cycle": "001",
+          "q": "0000",
+          "active": "1",
+          "ok": "0"
+        },
+        {
+          "tick": 30,
+          "cycle": "001",
+          "q": "0000",
+          "active": "1",
+          "ok": "0"
+        }
+      ],
+      "stdout_sha256": "24b2e9a6b0def95bc74a517f150ab88ded18b7d736ddbc4baea21f9146cb2256",
+      "VCD_sha256": "181a8b0318c0c525f3e79ab4b869dfa454a19fba0f77c622b462774005e78365",
+      "old_runner_label": "NOT_REACHED"
+    },
+    "physical": "NOT_RUN",
+    "source_negative_control": "common.sv ID1 deliberately ok=0;predeclared BMC FAIL,activation expected reachable",
+    "unexpected_real_RTL_defect_confirmed": false,
+    "uncertainty": "NoQC01physical orQC02..15 actual result;cannot rule out future source/tool/phase problems"
+  },
+  "results": {
+    "new_returned_roots": 7,
+    "raw_root_exit0": 5,
+    "raw_root_exit1": 2,
+    "root_timeouts": 0,
+    "mandatory_protection_errors": 0,
+    "remaining_original_jobs_NOT_RUN": 72,
+    "QC00_native_compile_reused_E02": true,
+    "new_native_trials": 2,
+    "new_physical_runs": 2,
+    "new_physical_cycles": 8,
+    "fully_observed_public_controls": [
+      "QC00"
+    ],
+    "partial": [
+      "QC01"
+    ],
+    "not_run": [
+      "QC02",
+      "QC03",
+      "QC04",
+      "QC05",
+      "QC06",
+      "QC07",
+      "QC08",
+      "QC09",
+      "QC10",
+      "QC11",
+      "QC12",
+      "QC13",
+      "QC14",
+      "QC15"
+    ]
+  },
+  "resources": {
+    "attempt": {
+      "compile": 3,
+      "physical_cycles": 8,
+      "physical": 2,
+      "native": 2,
+      "setup": 0
+    },
+    "cumulative": {
+      "compile": 6,
+      "native": 4,
+      "physical": 3,
+      "physical_cycles": 12,
+      "setup": 8
+    },
+    "remaining": {
+      "compile": 26,
+      "native": 28,
+      "physical": 30,
+      "setup": 0,
+      "physical_cycles": 1012
+    },
+    "current_recorded_window_seconds": 6.572940208017826,
+    "cumulative_actual_checkpoint_seconds": 11.770645541138947,
+    "cumulative_charged_checkpoint_seconds": 14.572948167100549,
+    "all_observed_counters_and_single_job_deadlines_within_caps": true,
+    "setup_new": 0
+  },
+  "continuation": "continuation-feasibility.json",
+  "all_hardware_jobs_may_continue_without_count_increase_if_exact_reuse": true,
+  "execution_authorized_by_this_review": false,
+  "actual_new_reviewer_jobs": {
+    "compile": 0,
+    "native": 0,
+    "physical": 0,
+    "ps_signal_version_probe": 0,
+    "tests_mocks": 0,
+    "model_API_key_network_install": 0,
+    "commit_push": 0
+  },
+  "hallmark_usage": "hallmark-usage.json",
+  "commands": [
+    {
+      "command": "Bounded logs/RTL reads and rg/sed of pinned yosys-smtbmc Python source (not executed)",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 .../P15_g1_R04_execution/inspect_saved.py",
+      "exit_code": 0,
+      "scope": "onlysaved-byteparsing"
+    },
+    {
+      "command": "Python integer budget calculation",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 .../P15_g1_R04_execution/finalize_p15.py",
+      "exit_code": 0
+    }
+  ],
+  "reviewer_harness_incidents": [],
+  "limits": [
+    "E03初始没有seal时仅诊断user绑定raw；phase/manifest出现后固定SHA并再次比对，未混用漂移版本。",
+    "固定模型公开负控制分类修正不代表真实DUT、monitor、128cycle/unbounded或原74未复现已解决。",
+    "R04真实QC00支持time-zero启动修复在该已测路径的效果；不据此证明所有16QC或四态转换正确。",
+    "七根job不是全部OS进程；inventory仍incomplete，未观测mandatory错误不证明完整子树或OS硬实时。",
+    "所有旧失败/unknown/timeout/score/P04/P05/P06/P05-N1/F1/H1/H2/L1/billing/selectedsample限制保留。",
+    "新metadata/解析版本必须单独封存/登记并严格继承成本，不原地更改旧报告、旧pool或QC01 raw status。",
+    "G1未通过；raw/B-C/跨IP和模型API保持暂停。"
+  ],
+  "evidence": "evidence.json"
+}

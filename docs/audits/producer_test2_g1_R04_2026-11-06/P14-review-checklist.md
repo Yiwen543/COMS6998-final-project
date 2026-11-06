@@ -2,7 +2,7 @@
 
 Review source, exact saved pure inputs/results and integer proposal only. No real
 version/compiler/native/simulator/signal/sleep/ps job, new pool or attempt lock.
-physical33 is pending the parent's user question. No approval/EXECUTE is created.
+physical33 is already approved in exact pre-existing user/amendment/continuation records;verify all three hashes. No authority or EXECUTE is created by the producer.
 
 1. Verify P13/E02/E01 identities and the new manifest; preserve original cycle0 X,
    rejection, all111 old mocks and all costs. Confirm only physical_tb.sv changes
@@ -23,7 +23,7 @@ physical33 is pending the parent's user question. No approval/EXECUTE is created
    compile20/native32/physical33/cycles132/setup8. Original physical32 leaves31;
    complete dual profile cannot fit without actual +1 approval. If reuse fails,
    cumulative native34 and compile21 require rerouting;no silent fallback.
-5. Check proposed charge8 covers old charged7.151973249856383 but is not actual
+5. Check approved conservative charge8 covers old charged7.151973249856383 but is not actual
    spend;old measured cumulative5.197697583120316 remains. Current max1192/work1187
    keeps1200 total. budget.py differs from R03 only attempt-id text;new Allocation
    must verify actual amendment/continuation,closed E01/E02 and exact inherited
@@ -32,10 +32,9 @@ physical33 is pending the parent's user question. No approval/EXECUTE is created
    Popen. The actual-entry negative test asserts0claim calls. Preliminary P14
    code review cannot substitute for actual decision/amendment hashes in the
    execution gate. Required authority interface is documented separately;do not
-   manufacture approved files for a positive control. Full approved entry,ledger
-   and replay/dual-simulator integration have not run. Retained runtime protections
+   manufacture approved files for a positive control. A new pure positive check loads the real authority and verifies inherited allocation without claim/ledger;full approved entry,ledger and dual-simulator integration remain unrun. Retained runtime protections
    are scoped prior evidence,not a fresh R04 suite/native exercise.
-7. Inspect16pure tests/source copies/final-mutated input hashes. Their PASS means
+7. Inspect17pure tests/source copies/final-mutated input hashes. Their PASS means
    metadata/source arithmetic/refusal behavior only. Popen/run/killpg/sleep are
    blocked by mocks;no SV tool results. No old suites or experiments rerun.
 8. Hallmark exact reuse/read disclosure:applicable fixed material/real facts/minimal
@@ -43,7 +42,6 @@ physical33 is pending the parent's user question. No approval/EXECUTE is created
    the earlier combined turn included historical PPT/web activity;R04 network0
    refers only to current controlled preparation,not that whole older turn.
 
-Stop after incremental preparation review. Coordinator separately supplies actual
-user amendment/continuation and exact P14 binding/EXECUTE if approved;no repeated
+Stop after incremental preparation review. Actual user amendment/continuation are bound now;coordinator separately supplies exact P14 binding/EXECUTE after review;no repeated
 user question from this producer. All scientific/128/four-state/vacuity/74witness/
 C-benefit/billing and historical P04/P05/P06/P05-N1/F1/H1/H2/L1 limits remain.

@@ -1,0 +1,179 @@
+{
+  "phase": "P12_G1_R03_CONTINUATION_PREFLIGHT",
+  "status": "PASS_WITH_LIMITS",
+  "decision": "PASS_WITH_LIMITS",
+  "observed_at_utc": "2026-11-06T06:36:10.371367+00:00",
+  "actual_HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+  "input_identity": {
+    "producer_phase_sha256": "e1d2fc4bb1f3b03cdc55dd2a7e76f09a2ec42282b82968dd827d2c6b5185a21a",
+    "producer_manifest_sha256": "169e27b1180a9e3a866559b48864b2352ec4a5715230d315e4abfc4e158e2f59",
+    "registration_sha256": "2cd356d13e81b43e1550053f08d4e7db76128a3daa567f49c20880ffc5a4ae0f",
+    "source_manifest_sha256": "2bcc0c93e95588e55dc69443ba8abd22aceb19b24819e9e0883f060b6c3bedd5",
+    "continuation_decision_sha256": "1f1e0214e69da41acee8974f2421df375c3c4cb8a499c2d148675bc741acde71",
+    "predecessor_pool_sha256": "6da4346144d65356f57c5762058675f1acca9f1dad4ee8599c889dc49e1a7400",
+    "phase_packet_sha256": "df1d4383d3e793c6b0f1eceb51dd76b054ce6a8cd7cce6c9767a336139bd0816",
+    "original_user_grant_sha256": "bf3da44d7cda9eadfabebf82b23271854465942a3814f36b90789f7e715575ab"
+  },
+  "execution_blockers": [],
+  "findings": [
+    {
+      "id": "P12-N1",
+      "severity": "P3",
+      "material": false,
+      "blocking": false,
+      "path": "docs/audits/producer_test2_g1_R03_2026-11-06/phase.json",
+      "json_key": "actual_R03_resources.network / elapsed.full_turn_knownness",
+      "evidence": [
+        "docs/audits/agent_bridge_2026-11-06/P12a_coordination_check.json",
+        "docs/audits/producer_test2_g1_R03_2026-11-06/commands-and-checks.json"
+      ],
+      "evidence_sha256": {
+        "P12a": "8fd0fdde9f2346b5b3d58d605538907a4ce192c8bd0b0f2d9dcb94c6218f3a5b",
+        "phase": "e1d2fc4bb1f3b03cdc55dd2a7e76f09a2ec42282b82968dd827d2c6b5185a21a"
+      },
+      "observation": "R03字段network=0只能描述受控G1准备。P12a已经保存同turn历史PPT偏离、web读取及无关辅助记录写入。不得把整turn说成只有G1或完全无network。",
+      "impact": "整轮来源叙述的scope需限制；没有证据表明G1工具执行/付费/封存PPT覆盖。不会改变精确runner、资源或语义输入。",
+      "minimal_revision": "本review侧明确保留P12a事实；后续closure sidecar将0限定为controlled G1路径，保留whole-turn uninstrumented/unknown，不改冻结原件。",
+      "acceptance_condition": "后续对外closure不声称整turn仅G1/无web，引用P12a；无须为此重跑/改功能/阻塞本轮执行预检。"
+    }
+  ],
+  "qualification_status": "NOT_QUALIFIED_R03_NOT_RUN",
+  "may_route_exact_EXECUTE": true,
+  "autoexecution": false,
+  "authorization_scope": "Same original G1 grant reasonable retry allocated by exact continuation decision;no new permissions or caps. Coordinator supplies subsequent exact EXECUTE receipt.",
+  "close_scope": {
+    "P11-R1": "CLOSED_FOR_R03_PREFLIGHT_ONLY:registered default path no inventory command;mandatory group/poll/wait/kill/deadline intact;real OS behavior unqualified",
+    "R03_TEST28_FINAL_PERSISTENCE_BOUNDARY": "CLOSED_FOR_OBSERVED_FAKE_BOUNDARY:durablehalt+runnerexit1 verified independently",
+    "P10-R1": "RETAINED_AND_REVALIDATED:slow save/mkdir/log/lastcheck zero mock dispatch;charged reservation and halt retained",
+    "P10-R2": "RETAINED_AND_REVALIDATED:fresh exact-version14 regressions include full16ns ACCEPT/truncated14ns span REJECT and unknown/signal controls",
+    "cumulative_lineage": "ACCEPTED_FOR_FIXED_SERIAL_R03:exact immutable E01/grant/P11/phase/decision preconditions;duplicate paths refuse",
+    "execution_gate": "ACCEPTED:full copied runner.review_gate baseline +7 independent negatives;P12/new registration/source/manifest/decision/oldpool required"
+  },
+  "integrity": {
+    "actual_HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+    "sealed_members": 649,
+    "source_bindings": 48,
+    "protected_files": 2382,
+    "semantic_materials": 24,
+    "observer_unchanged": true,
+    "job_order_normalized_equal": true,
+    "only_removed_job": "setup-make",
+    "index_sha256": "86e88ad4c115f65bfc5172a70a97fe2a188fa6b9ad017eb65440799f4d5950d7",
+    "real_paths_uncreated": {
+      "pool_state": true,
+      "attempt_lock": true
+    },
+    "mismatches": []
+  },
+  "source_sha256": {
+    "runner.py": "73f0aee7ad26cc761d894a97d52f7f7981f766c7a77483d75ac86dafef2c4485",
+    "continuation_contracts.py": "d6d509d8844584d07b2acd034d244ee9da65a26591f18166a07479fb74ceca22",
+    "observations.py": "269a1692eaed9397f0495e6a7b760f2045bdb691967518a72acbb106416ccc47",
+    "budget.py": "257dc9da8130c0b5a5ca1f09096524004a422193bb120a8b73c59b8072f107ab",
+    "runtime.py": "d34cc3a9c01ae55fdf3fd97c55116f0287e74ef8d8ad94e851e9607e2cdd7d7f",
+    "mock_tests.py": "43f69ba807990ef2043c77be39debeae92695e883cec97a907010ddd6db38eef",
+    "contracts.py": "e20a2696dc407c601674cfe297d992b2b69aa59083c1a843b2e99c1d095cfccf",
+    "allocation.py": "628869d06f6f6c040df809a526c3213130da994a501a3c1708c19e5e1958821d",
+    "continuation_tests.py": "793a1319c672282b76bcf5155f34a707c3655ef0c1c1f47fab62507213efaceb",
+    "regression_tests.py": "60033d84f099ceb94f7651849657a849f9ba1ae1bd74b07dbe773dfaec8bc1ee"
+  },
+  "static_registered_runtime_subprocess_calls": [
+    [
+      "Popen",
+      60
+    ]
+  ],
+  "validation": {
+    "producer_saved_invocations": 111,
+    "producer_saved_failures": 1,
+    "producer_final_source_tests": 42,
+    "producer_final_source_failures": 0,
+    "producer_attempt2_raw_exit_knownness": "UNKNOWN;summary/log show failure;not filled with inferred1",
+    "fresh_exact_source_tests": 42,
+    "fresh_exact_source_failures": 0,
+    "independent_probe_invocations": 33,
+    "accepted_unique_independent_probes": 31,
+    "accepted_nonfinalization_probes": 29,
+    "corrected_finalization_probes": 2,
+    "invalid_initial_finalization_probes": 2,
+    "reviewer_harness_incidents": [
+      {
+        "id": "P12-HARNESS-1",
+        "product_defect": false,
+        "evidence": "input-verification-before.json",
+        "description": "Review checker assumed every source binding lived under snapshot/. Producer checklist is at sealed package root;initial mismatch was review mapping error.",
+        "resolution": "Special-case direct sealed metadata after verifying its SHA;before-corrected and after both0 mismatches. Failed first result retained."
+      },
+      {
+        "id": "P12-HARNESS-2",
+        "product_defect": false,
+        "evidence": [
+          "independent-probes/runner_normal_final_save/result.json",
+          "independent-probes/runner_final_save_crosses_cap/result.json"
+        ],
+        "description": "Reviewer empty-plan runner harness omitted labels.json. Baseline failed before reaching intended path;crossing case also had that independent error and its apparent PASS is not accepted evidence.",
+        "resolution": "No edits to those fixtures/results. New finalization_probes_v2.py saves all required synthetic files before validation. Normal exit0/nohalt;crossing exit1/durablehalt with specific FINAL_PERSISTENCE_EXCEEDED_CUMULATIVE_WALL_CAP and no execution_error."
+      }
+    ],
+    "commands": "commands-and-incidents.json",
+    "fresh_suites": "fresh-suites.json",
+    "independent_results": "independent-probes/summary.json",
+    "corrected_results": "finalization-probes-v2/summary.json"
+  },
+  "remaining_caps": {
+    "setup_jobs": 7,
+    "compile_jobs": 32,
+    "native_BMC_cover_jobs": 32,
+    "native_depth": 8,
+    "native_timeout_seconds": 10,
+    "physical_runs": 32,
+    "physical_timeout_seconds": 2,
+    "cycles_per_run_max": 32,
+    "physical_cycles_total_max": 1024,
+    "compile_timeout_seconds": 20,
+    "attempt_wall_seconds_max": 1198,
+    "attempt_work_cutoff_seconds": 1193,
+    "cumulative_original_wall_seconds": 1200
+  },
+  "forbidden_actuals": {
+    "G1_version_queries": 0,
+    "G1_compilations": 0,
+    "G1_native_BMC_cover": 0,
+    "G1_simulations": 0,
+    "G1_process_signal_inventory_probes": 0,
+    "API_count_generation": 0,
+    "network": 0,
+    "key_reads": 0,
+    "installation": 0,
+    "old_experiment_reruns": 0,
+    "producer_messages": 0,
+    "new_agents_chats": 0,
+    "index_mutations": 0,
+    "source_shared_result_edits": 0
+  },
+  "hallmark_usage": "hallmark-usage.json",
+  "review_elapsed": {
+    "full_turn_wall_seconds": null,
+    "full_turn_knownness": "NOT_INSTRUMENTED_NOT_ZERO",
+    "instrumented_partial_span_seconds": 447.3353440761566,
+    "partial_origin": "mtime of first saved review-owned input verification,after initial reads",
+    "controlled_G1_execution_seconds": 0,
+    "producer_preparation_elapsed_scope": "phase.elapsed separately discloses1466.678544998169s partial authoring/recovery span;not charged G1 execution"
+  },
+  "limits": [
+    "仅R03精确版本执行前、单个协调器路由的一次受限串行attempt预检；不是G1资格完成或OS生命周期证明。",
+    "旧E01/P11原件保留，1 ERROR+89 NOT_RUN、16QC NOT_RUN、Yosys版本/rootexit UNKNOWN；P11历史CHANGES_REQUIRED不改写。",
+    "原授权真实性来自用户/协调权限链。SHA自洽与fake gate不构成独立用户身份认证或服务来源证明。",
+    "owned group不提供完整PID普查、detached/adversarial descendant containment或whole-host计费；inventory remains incomplete。",
+    "fsync/调度/cleanup有阻塞和OS延迟；已观察越界必须失败，不声称硬实时。最终halt自身持久化也可能继续花时间。",
+    "setup1/实际0.04572445806115866秒与保守charge2秒分别保留；新窗口至多1198秒，work1193秒，7setup。不得退还或每版本刷新32/32/32。",
+    "18逻辑编译根作业包含子编译器日志和根/全局时间，不是18个OS进程；未检验真实工具ABI或子树行为。",
+    "省略make版本查询仅节省setup；make版本本轮NOT_REPROBED，文件pin不等于新版本查询。",
+    "固定父目录/固定namespace上独占open-x lock和pool支持此单协调串行路径的重复启动拒绝；非通用并发事务/任意多路径共享资源池。",
+    "原24材料及observer/profile/labels/flags顺序未变，只复用P10/P10B有限数学/语义结论，无新RTL/native科学结果。",
+    "QC07/15空泛、QC12/13四态不支持、QC14运输限制、selected sample/category、128completion/general correctness、74未复现、F1/H1/H2/L1、P04 mismatch、P05/P06 exact范围、P05-N1 backlog、billing UNKNOWN、R0/R1/R2 planned保持。",
+    "P12a上下文偏移保留，不重新调查PPT；没有把当前turn的所有操作描述成纯G1。"
+  ],
+  "evidence_manifest": "evidence-manifest.json",
+  "hash_cycle_policy": "Manifest hashes final review and all reviewer files except itself;review references manifest path,not hash."
+}
