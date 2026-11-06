@@ -1,0 +1,457 @@
+{
+  "phase": "P10B_G1_RUNTIME_VCD_FIX_REVIEW",
+  "status": "PASS_WITH_LIMITS",
+  "conclusion": "精确R02的P10-R1/R2修复通过有界独立增量验收，未发现新的已证实实质风险。原P10/R01 CHANGES_REQUIRED不改写。仅允许协调端在原单一用户grant内路由精确R02的EXECUTE；本轮没有实际执行、资格成功或新增预算授权。",
+  "input_identity": {
+    "phase_packet_sha256": "9ea1b3a72f54c30fe6b50de4c3eb07b0691f042f6f3a21fa0d29a734c91c774c",
+    "producer_phase_sha256": "ae927e87cf7ee8b22ea76c1e29914ebfc27b5691f53e2838b7af73e40a05d7c7",
+    "producer_manifest_sha256": "7c16e5020ab6212fbd66bdd57ecb272bef56e1bfc6ce4362a661960d331fb201",
+    "registration_sha256": "85185519c5a6e2a8eaaf843b5b27c9cc312ada2fc8c44af6f915368759d98268",
+    "source_manifest_sha256": "fe972d2863b857ef0deb956df468ad3866301b7349d01d7f08275b6c1e54ffea",
+    "user_grant_sha256": "bf3da44d7cda9eadfabebf82b23271854465942a3814f36b90789f7e715575ab",
+    "original_P10_sha256": "cca7589786545675331ba1daa163d4e5cc757795aa8ac57972404e7463ee73e1",
+    "full_manifest": "input-manifest.json",
+    "scope": "Exact R02 snapshots and hash-bound dependencies; current only for drift. Prior math reused only after24byte identities verified.",
+    "full_input_manifest_sha256": "1463705ef9cff27c6aeef2052faf83164458dc71298859223e49f096967e6510"
+  },
+  "findings": [],
+  "blocking_findings": [],
+  "nonblocking_new_findings": [],
+  "closures": [
+    {
+      "id": "P10-R1",
+      "status": "RESOLVED_IN_R02_ONLY",
+      "original_P10_unchanged": true,
+      "source_sha256": {
+        "budget.py": "77279960bcfd4ed676c636109be197ad8437535848151b0ded1673757b72b385",
+        "runtime.py": "61689aad92c17045267fcfc0871cc4eae63c1d8aaeb2044bc44834734a9876f8"
+      },
+      "paths": [
+        "test2/g1_v2/budget.py:49",
+        "test2/g1_v2/budget.py:65",
+        "test2/g1_v2/budget.py:79",
+        "test2/g1_v2/runtime.py:25",
+        "test2/g1_v2/runtime.py:30",
+        "test2/g1_v2/runtime.py:32"
+      ],
+      "evidence": "independent-probes/{original-save-crossing,mkdir-crossing,stdout-open-crossing,stderr-open-crossing,closest-pre-Popen-check-crossing,already-expired,insufficient-cleanup-window,normal-baseline,ordinary-timeout-original-deadline,cleanup-unresolved-is-halt}/",
+      "observed": "All expired/insufficient scenarios0mockPopen;charged refusals retain1compile reservation,NOT_RUN/CHARGED_NOT_DISPATCHED,persistenthalt,no same-path restart. Already-expired0reservation. Normal1mockPopen,RETURNED. Timeout keeps absolute120 after4s save delay,stops byoriginal deadline,halt. Cleanup-unresolved failsclosed. Clock origin0unchanged.",
+      "limit": "Isolated fake monotonic/filesystem/process/signal objects establish logical paths; no proof of actual OS realtime scheduling/whole descendant lifecycle."
+    },
+    {
+      "id": "P10-R2",
+      "status": "RESOLVED_IN_R02_ONLY",
+      "original_P10_unchanged": true,
+      "source_sha256": {
+        "observations.py": "269a1692eaed9397f0495e6a7b760f2045bdb691967518a72acbb106416ccc47"
+      },
+      "paths": [
+        "test2/g1_v2/observations.py:91",
+        "test2/g1_v2/observations.py:97",
+        "test2/g1_v2/observations.py:120",
+        "test2/g1_v2/observations.py:144"
+      ],
+      "exact_original_complete_sha256": "235ef77a66cff18146ac261bde9a3abedc1fdaa253d609c984f92270c0226c0e",
+      "exact_original_truncated_sha256": "25a20fc0821203d747744f9c6dad3b762bb299c1be13baa19a926b13ece8b0da",
+      "original_rows_sha256": "5181cc4468d4334265fef0144202180b6df1fdb6aa4839e4b924bd8127e84fa0",
+      "evidence": "independent-probes/{exact-P10-complete,exact-P10-truncated-tail,missing-head,unknown-q,missing-signal,phase-shift,query-after-EOF}/",
+      "observed": "Original complete16ns bytesACCEPT;original14ns prefixREJECT specificallyVCD_TIME_COVERAGE_MISSING required15000. Missinghead1000before4000,queryafterEOF16001 bothspanREJECT. Unknownq,mismatchedphase,missingsignal rejected with intended reasons. No appended timestep or resampling.",
+      "limit": "Profile-specific syntheticVCD regression only,not actual simulation/native parser qualification or general raw-chain proof."
+    }
+  ],
+  "actual_diffs": {
+    "verified_before_execution": true,
+    "content_identical_files": 24,
+    "unchanged": "18SV,3public input/labelJSON,support-matrix,contracts.py,archived mock_tests.py",
+    "functional_changes": [
+      "budget absolute deadline/pre_dispatch_window/charged no-dispatch receipts",
+      "runtime post-filesystem last check and refusal evidence",
+      "observation recorded span/state_at/selected-sample horizon",
+      "runner v2/R02 preparation-manifest and canonical grant-pool binding"
+    ],
+    "metadata_changes": [
+      "schema horizon description",
+      "path-normalized job-plan",
+      "R02 README/registration/source manifest andnew targeted regressions"
+    ],
+    "unchanged_resources": "caps/tools/profile/grant/depth/planned counts/pool path identical;18compile roots/32native/32physical/128cycles planned,not new quotas",
+    "shared_docs": "R02 HANDOFF/STATUS eachonly insertion afterline1;all previous bodies preserved"
+  },
+  "checks": {
+    "exact_bindings": {
+      "snapshot_members": 138,
+      "protected_old_files": 398,
+      "source_manifest_bindings": 43,
+      "mismatches": 0,
+      "current_drift": []
+    },
+    "producer_regressions": {
+      "tests": 14,
+      "failures": 0,
+      "executed_source_hashes_verified": true,
+      "source": "R02 saved regression-attempt1",
+      "saved_fixture_bindings": "All14saved input-binding maps match bytes;result statuses/reasons/counts/virtual clocks matchfresh counterpart"
+    },
+    "reviewer_fresh_regressions": {
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "entrypoint": "regression_tests.py only;archived old14mock suite not executed"
+    },
+    "reviewer_independent_probes": {
+      "count": 17,
+      "failed_expectations": 0,
+      "pre_validation_input_SHA_records": true
+    },
+    "reviewer_metadata_gate_probes": {
+      "count": 9,
+      "failed_expectations": 0,
+      "positive": "exactR02 binding ACCEPT_METADATA_ONLY;no main/actualapproval",
+      "negative": [
+        "originalP10CHANGES_REQUIRED",
+        "oldR01preparation",
+        "oldv1registration",
+        "oldidentityevenwithPASSlabel",
+        "sourcehashdrift",
+        "granthashdrift",
+        "reviewhashdrift",
+        "legacyreceiptkeyonly"
+      ],
+      "fixture_scope": "Review-owned copied ROOT/REGISTRATION overrides and synthetic receipt/review records;never used in actual project"
+    },
+    "actual_compiler_native_physical_version_calls": 0,
+    "actual_execution_pool_created": false,
+    "semantic_P10_math": "Exact24hashes allow reuse ofP10independent256arithmetic/16signed/state/label analysis. No new analytic results or qualification claimed."
+  },
+  "execute_routing": {
+    "disposition": "Coordinator may issue exact R02 EXECUTE at idle under same existing unspent grant;reviewer does not autoexecute.",
+    "required_receipt_fields": [
+      "record_kind=G1_EXECUTE_AFTER_READONLY_P10",
+      "stage=EXECUTE",
+      "registration_sha256=85185519c5a6e2a8eaaf843b5b27c9cc312ada2fc8c44af6f915368759d98268",
+      "source_manifest_sha256=fe972d2863b857ef0deb956df468ad3866301b7349d01d7f08275b6c1e54ffea",
+      "user_authorization_sha256=bf3da44d7cda9eadfabebf82b23271854465942a3814f36b90789f7e715575ab",
+      "preparation_manifest_sha256=7c16e5020ab6212fbd66bdd57ecb272bef56e1bfc6ce4362a661960d331fb201",
+      "p10_review_path=this actual P10B review.json",
+      "p10_review_sha256=actual finalized review.json SHA"
+    ],
+    "runner": "test2/g1_v2/runner.py",
+    "registration": "test2/configs/g1_qualification_registration_v2.json",
+    "canonical_pool": "test2/results/g1-qualification-v1/execution-state.json",
+    "result_root": "test2/results/g1-qualification-v2",
+    "budget": "Original32compile/32nativeBMC+cover/32physical/1024cycles/1200s fromsetup throughparse/output;oneprofile,failedattempts charged,noreset/retry/newpool;postreview0newjobs.",
+    "not_authorized": "No G2/oracle/API/model/count/generation/newdata/candidate/paid/key/install/oldcohort work. This is pre-execution acceptance,not G1 success.",
+    "gate_authenticity_limit": "Local metadata/hash binding is not general human authorization authentication."
+  },
+  "hallmark": {
+    "considered": true,
+    "read_this_round": false,
+    "source": "/Users/yiwenchen/.codex/skills/hallmark/SKILL.md",
+    "version": "2.0.0",
+    "source_sha256": "25a1ff92d925b2389e8409f42fb8ad7e033fceca8b5d1f07ed4ca4c28da53dc3",
+    "read_evidence": null,
+    "prior_read_reference": {
+      "artifact": "docs/audits/agent_bridge_2026-11-06/P10_g1_registration/review.json",
+      "sha256": "cca7589786545675331ba1daa163d4e5cc757795aa8ac57972404e7463ee73e1",
+      "pointer": "hallmark.read_evidence",
+      "prior_tools": "skills__read e0/hallmark;cat references/review-finish.md",
+      "review_finish_sha256": "9d00de59e71ee2516212140b0512d6d2e90a120d4a328eeba9cb12396ff38d64",
+      "current_verification": "Both currently installed file SHA values rechecked and match exact priorread;no new semantic read claimed."
+    },
+    "applied_for": [
+      {
+        "principle": "Fixed-input independent critique",
+        "where": "actual_diffs before execution;exactR02snapshots;originalP10counterexample bytes and separately builtprobes"
+      },
+      {
+        "principle": "Locate/rank defects,exclude taste or settled issues without new reason",
+        "where": "closures.R1/R2 exact source lines/hash/expected-vs-actual;findings empty onlyaftercounterexamplecheck;no reopeningunchangedQCmath"
+      },
+      {
+        "principle": "Minimal change and protect what must remain",
+        "where": "actual_diffs/execute_routing:originalgrant/pool/caps/controlsemantics/P10history preserved,no additional revision demanded"
+      }
+    ],
+    "workflow_executed": false,
+    "applicable_generic_principles_applied": true,
+    "scripts_executed": false,
+    "not_applicable_reason": "No web/UI/screenshots target;full Hallmark flow/scripts do not apply to RTL/timer/VCD preflight. No Together/API.",
+    "technical_review_methods": [
+      "SHA/diff/398protected inputs",
+      "fresh14newpure regressions",
+      "17independentfake-clock/VCDprobe cases",
+      "9metadata gate cases",
+      "reuseonlyunchangedsemanticmath"
+    ],
+    "limits": "Hallmark is organization/critique guidance only;does not decide RTL truth,OS deadlineguarantees orscientificqualification."
+  },
+  "limits": [
+    "P10/R01CHANGES_REQUIRED and original two findings remain historical;closed only in exactR02pre-execution source scope.",
+    "No actual tool setup/version/compiler/simulator/solver/native/monitor run;syntax/frontend/ABI/physical/native outcomes and realOS process cleanup remain unqualified.",
+    "Fake-clock cleanup logic is not real-time hardware or exhaustive PID/descendant guarantee;best-effort PID observation and logical batch compilation accounting remain explicit as P10-N1.",
+    "Original first12mocksource reconstructed from edits,not contemporaneous execution archive;known provenance note retained,notupgraded.",
+    "QC07/QC15vacuity,QC12/QC13four-state unsupported,QC14transportonly,selectedpre/delayedreport,depth8not128/unbounded;noFIFOoracle orC-outcome claims.",
+    "P04response mismatch/causeUNKNOWN,P05/P06limitedacceptance,P05-N1,F1/H1/H2/L1,selected-sample/general correctness,billingUNKNOWN and recoveryplanned remain unchanged.",
+    "398listedprotected hashes checked,not fullold4837/7450cohort contents;priorresults not rerun.",
+    "Readonly review totalwall not instrumented fromturnentry,null/notzero;freshpure regressiontime is separate from still-unstarted1200s execution timer."
+  ],
+  "scope": {
+    "writes_only": "P10B_g1_fix/**",
+    "source_shared_oldreviews_modified": false,
+    "direct_producer_messages": 0,
+    "new_agents_chats": 0,
+    "API_keys_network_installation": false,
+    "real_tools_or_execution_pool": 0,
+    "old_suites_or_cohorts_rerun": false
+  },
+  "commands": [
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,subprocess\nO=Path('docs/audits/agent_bridge_2026-11-06/P10B_g1_fix');p=O/'phase-packet.json';H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();q=json.loads(p.read_text());print('PACKET_SHA',H(p));print(json.dumps(q,ensure_ascii=False,indent=2));B=Path(q['producer_phase']).parent;print('PHASE',json.dumps(json.loads((B/'phase.json').read_text()),ensure_ascii=False));print('TOP_FILES',[x.name for x in B.iterdir()]);g=subprocess.run(['git','rev-parse','HEAD'],capture_output=True,text=True);print('HEAD',g.returncode,g.stdout.strip())\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib\nB=Path('docs/audits/producer_test2_g1_R02_2026-11-05');O=Path('docs/audits/agent_bridge_2026-11-06/P10B_g1_fix');q=json.loads((O/'phase-packet.json').read_text());H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();assert H(B/'phase.json')==q['producer_phase_sha256'];assert H(B/'snapshot-manifest.json')==q['producer_manifest_sha256'];m=json.loads((B/'snapshot-manifest.json').read_text());bad=[n for n,h in m['files'].items() if H(B/n)!=h];print('MEMBERS',len(m['files']),'BAD',bad);assert not bad\nfor n in ['change-and-evidence-map.json','regression-evidence-summary.json','P10B-review-checklist.md']:\n print(n,(B/n).read_text()[:14000])\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "diff -u docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/budget.py docs/audits/producer_test2_g1_R02_2026-11-05/snapshot/test2/g1_v2/budget.py; diff -u docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/runtime.py docs/audits/producer_test2_g1_R02_2026-11-05/snapshot/test2/g1_v2/runtime.py; diff -u docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/observations.py docs/audits/producer_test2_g1_R02_2026-11-05/snapshot/test2/g1_v2/observations.py",
+      "exit_code": 1
+    },
+    {
+      "command": "diff -u docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/g1_v1/runner.py docs/audits/producer_test2_g1_R02_2026-11-05/snapshot/test2/g1_v2/runner.py; python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib,json\nH=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();S=Path('/Users/yiwenchen/.codex/skills/hallmark');print('HALLMARK_CURRENT',H(S/'SKILL.md'),H(S/'references/review-finish.md'));r=json.loads(Path('docs/audits/agent_bridge_2026-11-06/P10_g1_registration/review.json').read_text());print('PRIOR_READ_EVIDENCE',json.dumps(r['hallmark'],ensure_ascii=False)[:4500])\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g1_R02_2026-11-05/snapshot/test2/g1_v2/regression_tests.py | sed -n '1,220p'",
+      "exit_code": 0
+    },
+    {
+      "command": "nl -ba docs/audits/producer_test2_g1_R02_2026-11-05/snapshot/test2/g1_v2/regression_tests.py | sed -n '220,440p'",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json\nB=Path('docs/audits/producer_test2_g1_R02_2026-11-05');s=json.loads((B/'protected-before.json').read_text());print('PROTECTED_TOP',list(s)[:8]);j=json.loads((B/'snapshot/test2/g1_v2/source-manifest.json').read_text());print('SOURCE_MANIFEST_KEYS',list(j));print('SOURCE_PATHS',list(j['files']));a=json.loads((B/'snapshot/test2/configs/g1_qualification_registration_v2.json').read_text());b=json.loads(Path('docs/audits/producer_test2_g1_R01_2026-11-05/snapshot/test2/configs/g1_qualification_registration_v1.json').read_text());print('REG_DIFFS',json.dumps({k:{'old':b.get(k),'new':a.get(k)} for k in set(a)|set(b) if a.get(k)!=b.get(k)},ensure_ascii=False,indent=2))\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,collections,shutil\nB=Path('docs/audits/producer_test2_g1_R02_2026-11-05');A=Path('docs/audits/producer_test2_g1_R01_2026-11-05');O=Path('docs/audits/agent_bridge_2026-11-06/P10B_g1_fix');H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();p=json.loads((B/'protected-before.json').read_text())['files'];bad=[n for n,h in p.items() if H(Path(n))!=h];assert not bad;print('PROTECTED',len(p),'MISMATCH',bad)\nc=json.loads((B/'change-and-evidence-map.json').read_text());same=c['unchanged_semantic_input_sha256'];assert len(same)==24\nfor n,h in same.items():assert H(A/'snapshot/test2/g1_v1'/n)==H(B/'snapshot/test2/g1_v2'/n)==h\nap=json.loads((A/'snapshot/test2/g1_v1/job-plan.json').read_text());bp=json.loads((B/'snapshot/test2/g1_v2/job-plan.json').read_text());assert json.loads(json.dumps(ap).replace('test2/g1_v1/','test2/g1_v2/'))==bp\nar=json.loads((A/'snapshot/test2/configs/g1_qualification_registration_v1.json').read_text());br=json.loads((B/'snapshot/test2/configs/g1_qualification_registration_v2.json').read_text());assert all(ar[k]==br[k] for k in ['caps','tools','profile','pool_state','user_authorization','user_authorization_sha256','native_depth','planned_jobs']);print('SEMANTIC_IDENTICAL',24,'PLAN_IDENTICAL_AFTER_PATHS',True,'PLAN_COUNTS',dict(collections.Counter(x['kind'] for x in bp['jobs'])),'POOL',br['pool_state'],'EXISTS',Path(br['pool_state']).exists())\nm=json.loads((B/'snapshot-manifest.json').read_text());drift=[]\nfor n,h in m['files'].items():\n if n.startswith('snapshot/'):\n  f=Path(n[9:]);a=H(f) if f.is_file() else None\n  if a!=h:drift.append({'path':str(f),'expected':h,'actual':a})\nprint('CURRENT_DRIFT',drift);assert not drift and not Path(br['pool_state']).exists()\nC=O/'exec_tree';assert not C.exists();shutil.copytree(B/'snapshot',C,symlinks=True);assert all(H(C/n[9:])==h for n,h in m['files'].items() if n.startswith('snapshot/'))\n(O/'diff-verification.json').write_text(json.dumps({'protected_files':len(p),'protected_mismatches':bad,'unchanged_semantic_files':same,'plan_path_normalized_equal':True,'registration_unchanged_keys':['caps','tools','profile','pool_state','user_authorization','user_authorization_sha256','native_depth','planned_jobs'],'current_drift':drift,'actual_pool_exists':False},indent=2)+'\\n');print('COPIED_EXACT_SNAPSHOT_FOR_PURE_REGRESSIONS')\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P10B_g1_fix/exec_tree/test2/g1_v2/regression_tests.py --record docs/audits/agent_bridge_2026-11-06/P10B_g1_fix/fresh-regressions",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P10B_g1_fix/independent_probes.py",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P10B_g1_fix/gate_probes.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,difflib\nB=Path('docs/audits/producer_test2_g1_R02_2026-11-05');O=Path('docs/audits/agent_bridge_2026-11-06/P10B_g1_fix');H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();M=json.loads((B/'snapshot-manifest.json').read_text());sums=[n for n in M['files'] if n.startswith('snapshot/test2/results/') and n.endswith('/summary.json')];print('SAVED_SUMMARIES',sums)\nfor n in sums:\n j=json.loads((B/n).read_text());print('SAVED_TESTS',j.get('tests'),j.get('failures'),j.get('errors'));d=(B/n).parent;cases=sorted(d.glob('test_*'));bad=[];comparisons=[]\n for c in cases:\n  bindings=json.loads((c/'input-bindings.json').read_text());assert all(H(c/'inputs'/k)==v for k,v in bindings.items());prod=json.loads((c/'result.json').read_text());fresh=json.loads((O/'fresh-regressions'/c.name/'result.json').read_text())\n  for key in ['mocked_Popen_calls','outcome','reason','observed_q','input_unchanged','original_clock_start','final_clock']:\n   if prod.get(key)!=fresh.get(key):bad.append({'case':c.name,'field':key,'saved':prod.get(key),'fresh':fresh.get(key)})\n  if prod.get('runtime_receipt',{}).get('status')!=fresh.get('runtime_receipt',{}).get('status'):bad.append({'case':c.name,'field':'receipt.status'})\n  comparisons.append({'case':c.name,'saved_result_sha256':H(c/'result.json'),'saved_input_bindings_sha256':H(c/'input-bindings.json'),'fresh_result_sha256':H(O/'fresh-regressions'/c.name/'result.json')})\n assert len(cases)==14 and not bad\n for name,v in j['source_sha256'].items():assert H(d/'executed-source'/name)==v==H(B/'snapshot/test2/g1_v2'/name)\n (O/'saved-fresh-comparison.json').write_text(json.dumps({'saved_cases_checked':len(cases),'semantic_result_mismatches':bad,'comparisons':comparisons},indent=2)+'\\n');print('SAVED_FRESH_SEMANTIC_MATCH',len(cases))\nfor n in ['docs/HANDOFF.md','docs/PROJECT_STATUS.md']:\n before=(B/'before'/n).read_text().splitlines(keepends=True);after=(B/'snapshot'/n).read_text().splitlines(keepends=True);ops=difflib.SequenceMatcher(None,before,after,autojunk=False).get_opcodes();changes=[x for x in ops if x[0]!='equal'];print('SHARED_DOC_CHANGE',n,changes);assert all(x[0]=='insert' for x in changes)\nprint('OLD_SHARED_BODIES_RETAINED')\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,datetime,subprocess\nO=Path('docs/audits/agent_bridge_2026-11-06/P10B_g1_fix');B=Path('docs/audits/producer_test2_g1_R02_2026-11-05');H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();Q=json.loads((O/'phase-packet.json').read_text());M=json.loads((B/'snapshot-manifest.json').read_text());SM=json.loads((B/'snapshot/test2/g1_v2/source-manifest.json').read_text());protected=json.loads((B/'protected-before.json').read_text())['files'];bad=[n for n,h in M['files'].items() if H(B/n)!=h];pb=[n for n,h in protected.items() if H(Path(n))!=h];sb=[n for n,h in SM['files'].items() if H(Path(n))!=h];drift=[]\nfor n,h in M['files'].items():\n if n.startswith('snapshot/'):\n  p=Path(n[9:]);a=H(p) if p.is_file() else None\n  if a!=h:drift.append({'path':str(p),'expected':h,'actual':a})\ncopybad=[]\nfor n,h in SM['files'].items():\n if n.startswith('test2/g1_v2/') or n.startswith('test2/configs/'):\n  if H(O/'exec_tree'/n)!=h:copybad.append(n)\nreg=json.loads((B/'snapshot/test2/configs/g1_qualification_registration_v2.json').read_text());g=subprocess.run(['git','rev-parse','HEAD'],capture_output=True,text=True);v={'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'actual_HEAD':g.stdout.strip(),'git_HEAD_exit':g.returncode,'snapshot_members':len(M['files']),'snapshot_mismatches':bad,'protected_count':len(protected),'protected_mismatches':pb,'source_manifest_bindings':len(SM['files']),'source_manifest_mismatches':sb,'executed_copy_source_mismatches':copybad,'current_drift':drift,'actual_grant_pool_exists':Path(reg['pool_state']).exists(),'official_v1_execution_outputs':[p.name for p in Path('test2/results/g1-qualification-v1').iterdir()],'official_v2_execution_outputs':[p.name for p in Path(reg['result_root']).iterdir()],'code_cache_paths':[str(p) for p in O.rglob('__pycache__')],'fresh_regressions':json.loads((O/'fresh-regressions/summary.json').read_text()),'independent_probe_count':17,'gate_probe_count':9,'actual_tool_calls':0,'overall_readonly_review_wall_seconds':None,'review_elapsed_knownness':'NOT_INSTRUMENTED_FROM_TURN_ENTRY_NOT_ZERO'};(O/'verification.json').write_text(json.dumps(v,indent=2)+'\\n');(O/'input-manifest.json').write_text(json.dumps({'producer_root':str(B),'phase_packet_sha256':H(O/'phase-packet.json'),'producer_manifest_sha256':H(B/'snapshot-manifest.json'),'producer_phase_sha256':H(B/'phase.json'),'files':M['files'],'source_manifest_files':SM['files'],'protected_old_files':protected},indent=2)+'\\n');print(json.dumps(v));assert not bad and not pb and not sb and not drift and not copybad and not v['actual_grant_pool_exists'] and not v['code_cache_paths'];assert len(protected)==398\nPY",
+      "exit_code": 0
+    },
+    {
+      "command": "rg -n 'def pre_dispatch_window|def no_dispatch_receipt|def reserve|absolute_job_deadline|pre_dispatch_window|Popen|def require_horizon|def state_at|state_at\\(|require_horizon\\(|preparation_manifest|ledger_path|REGISTRATION =' docs/audits/producer_test2_g1_R02_2026-11-05/snapshot/test2/g1_v2/budget.py docs/audits/producer_test2_g1_R02_2026-11-05/snapshot/test2/g1_v2/runtime.py docs/audits/producer_test2_g1_R02_2026-11-05/snapshot/test2/g1_v2/observations.py docs/audits/producer_test2_g1_R02_2026-11-05/snapshot/test2/g1_v2/runner.py",
+      "exit_code": 0
+    }
+  ],
+  "command_exit_notes": "diff command exit1 denotes actual differences,not a test failure. Other recorded validation commands passed;expected negative gate cases handled and preserved.",
+  "next": "Coordinator records scopedacceptance and may send exact nonsecretR02EXECUTE underexistinggrant;afterthat actual saved G1 evidence needs separatepostreview,no newtoolbudget.",
+  "reviewed_at_utc": "2026-11-06T05:07:27.745956+00:00",
+  "verification": {
+    "at_utc": "2026-11-06T05:04:22.651625+00:00",
+    "actual_HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+    "git_HEAD_exit": 0,
+    "snapshot_members": 138,
+    "snapshot_mismatches": [],
+    "protected_count": 398,
+    "protected_mismatches": [],
+    "source_manifest_bindings": 43,
+    "source_manifest_mismatches": [],
+    "executed_copy_source_mismatches": [],
+    "current_drift": [],
+    "actual_grant_pool_exists": false,
+    "official_v1_execution_outputs": [
+      "mock-attempt1",
+      "mock-attempt2"
+    ],
+    "official_v2_execution_outputs": [
+      "regression-attempt1"
+    ],
+    "code_cache_paths": [],
+    "fresh_regressions": {
+      "scope": "R02_ONLY_NEW_PYTHON_DEADLINE_HORIZON_REGRESSIONS",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 0.027645708993077278,
+      "passed": true,
+      "actual_native_compile_physical_version_sleep_process_calls": 0,
+      "source_sha256": {
+        "runner.py": "f7f2fe8487db284fac4e70724057faf75db0adf07fd365bf6227c0b1568f9a6f",
+        "observations.py": "269a1692eaed9397f0495e6a7b760f2045bdb691967518a72acbb106416ccc47",
+        "budget.py": "77279960bcfd4ed676c636109be197ad8437535848151b0ded1673757b72b385",
+        "runtime.py": "61689aad92c17045267fcfc0871cc4eae63c1d8aaeb2044bc44834734a9876f8",
+        "mock_tests.py": "43f69ba807990ef2043c77be39debeae92695e883cec97a907010ddd6db38eef",
+        "contracts.py": "e20a2696dc407c601674cfe297d992b2b69aa59083c1a843b2e99c1d095cfccf",
+        "regression_tests.py": "d6782e12d2787a76850a3f1f11c27c975dd26129b4633b62240da480768b7eea"
+      }
+    },
+    "independent_probe_count": 17,
+    "gate_probe_count": 9,
+    "actual_tool_calls": 0,
+    "overall_readonly_review_wall_seconds": null,
+    "review_elapsed_knownness": "NOT_INSTRUMENTED_FROM_TURN_ENTRY_NOT_ZERO"
+  },
+  "actual_HEAD": "c25180848ebfe9a1f49da0aa5f579cac913e6428",
+  "current_drift": [],
+  "diff_verification_sha256": "f72636084e1f957dcfe9465abf92736f898cc72aa27e70e8da1db0740d3e8a5b",
+  "saved_fresh_comparison_sha256": "1c1b7fc85e454cc5d64e78cddfba029305cb0bfa4b7f68b45b35527608277916",
+  "fresh_regression_summary_sha256": "ebfd1bf2d26eea007e69bd5bb0560d5efa08ba17ec03ad4078f0c4e9628242d8",
+  "independent_probe_summary_sha256": "58d3be7fe79d66ecb1347b024ab2b4db877bdeb42ef63b1ac13d3fb007ac6f0e",
+  "metadata_gate_summary_sha256": "a8b8a2297f3f289de7e3b0e2df0bd06343dfb0ea82f8c2045ef503fc4ccf2daa",
+  "independent_probe_bindings": [
+    {
+      "case": "already-expired",
+      "inputs_before_sha256": "6d9beaceffdab14eac88a1bbbc359db13508fdb2e43c36910ef2d4ab710e800e",
+      "result_sha256": "f12bafff37bb03fbb48f9a77e21736f3094d38adca4625993b8cd6b000bc8add"
+    },
+    {
+      "case": "cleanup-unresolved-is-halt",
+      "inputs_before_sha256": "7f81ab0fd2c24de76853cdcc523336997e30f7233622f3e6303ef97262510ad4",
+      "result_sha256": "dc6e010ad3cbf1f1c0cd30ecc8e338bd56f1cb22c72c66a149aae531d57573da"
+    },
+    {
+      "case": "closest-pre-Popen-check-crossing",
+      "inputs_before_sha256": "9f1497eb88f78ebf8fc7a1f6d78c7557f7c7ee671f875c1999d7d57fe62c22ca",
+      "result_sha256": "e65dde77520d247e6945732a680e36d5f265f775c8d6f1e1a16464e232850688"
+    },
+    {
+      "case": "exact-P10-complete",
+      "inputs_before_sha256": "e6df2cb9e5fc025aab6f9e45bd49239e28c6f154ce74a5d963d254cd3632701e",
+      "result_sha256": "c0a4bff789e73d9a23ef9a4ed7117f5005ebd81d63fac28ed908bbc782769001"
+    },
+    {
+      "case": "exact-P10-truncated-tail",
+      "inputs_before_sha256": "31ab047c688d9ca3d55de68b29305824e6b429678121cc86921c31f9dc7b5ece",
+      "result_sha256": "d7558a5e84adc816254f47046e3c7e9cc643235233c1f0816259bb0acd551f3f"
+    },
+    {
+      "case": "insufficient-cleanup-window",
+      "inputs_before_sha256": "674f9848cbde14bc74029b1cf9fd7a69784e74d95bf2482f605db29d8212ac5e",
+      "result_sha256": "9e4dde0bb4943403bfca4558f671ac566bab1e034d24e7e8f285a14eb4d95dfe"
+    },
+    {
+      "case": "missing-head",
+      "inputs_before_sha256": "268b61c3fae5235506135f18584b9c357e566a80d2dae3082e0243515f905085",
+      "result_sha256": "e7a0c42393e76a51bd95b8b2f0d6b30cbb2e39cd4bbb6e96acf4decc68b6f83f"
+    },
+    {
+      "case": "missing-signal",
+      "inputs_before_sha256": "97ea37e95633d8a1f6405144e0d15a7c668b77f48df091872f46789bc1121814",
+      "result_sha256": "d7c27499f30559931e72c6473ab9f959e77b0514f20bcbd5c7fc6eeefaf4beda"
+    },
+    {
+      "case": "mkdir-crossing",
+      "inputs_before_sha256": "1731be61c5d3e45fe204d70dcbbfa3efd33ea3bf22ba76ba49485f81c603cd2a",
+      "result_sha256": "f4f91ef49107c8042e6d6a54634c4af564af68abcea6e2aa9005da568f28f843"
+    },
+    {
+      "case": "normal-baseline",
+      "inputs_before_sha256": "7fe23bf923da9eb82c828eb1ebd3166b1acf0b17d82ebaa7a6e3632695440731",
+      "result_sha256": "5b8273d8b2b6a52d2e40015006b102fdc089290867ed1dac18d6f52703a56ccc"
+    },
+    {
+      "case": "ordinary-timeout-original-deadline",
+      "inputs_before_sha256": "2cee51c0f46b73fca82ebd318488175f92f2f0dc5c4ca98d35f2630a88b4cee3",
+      "result_sha256": "883210823236491ebdcfc34d81ae95b44e79c5d7c89643a2d73d3ed68618d13b"
+    },
+    {
+      "case": "original-save-crossing",
+      "inputs_before_sha256": "80f6001de9a3fb66c86ac0ddd68dc8bcfd863d69dbac743dd8c2022ab1c26f9e",
+      "result_sha256": "29a51a9c79d5bf3d3c1782eb8536c80a8c348b9f7a5c61e79cc5da47eef01f10"
+    },
+    {
+      "case": "phase-shift",
+      "inputs_before_sha256": "09fdeab1758cdcd0e43275fd3f31f5140a4a21469e6f4ad390b17e8b9b31d300",
+      "result_sha256": "369ecc58254b0e403267601e94e4007fedaf02cefc57918a5736ea97d91112f3"
+    },
+    {
+      "case": "query-after-EOF",
+      "inputs_before_sha256": "24b8e231d5f8319f7c684c8bcb7c9c9af39f926f0433df91440e8dbbbdfed5d7",
+      "result_sha256": "0bc6b7bf6c7905c50b9f853fe9364a5b3b2f62bc611dcd08dcee485b302c2f71"
+    },
+    {
+      "case": "stderr-open-crossing",
+      "inputs_before_sha256": "38c9d82ec6a33bad144fbabd27cba4d642854e71912781ffdb2255ed1a359ecf",
+      "result_sha256": "40bed1f8321ea9d12250f6854507ce1015650b4f74ec22af0e67eac32f1dc4ad"
+    },
+    {
+      "case": "stdout-open-crossing",
+      "inputs_before_sha256": "78ea6d533f976603f97d08837769eac5046aeacf137885ec08638d531d0a255c",
+      "result_sha256": "376e34e7349f727f747d6afe15d139ecb76fa82564e653d8e6dcf4518e4203c6"
+    },
+    {
+      "case": "unknown-q",
+      "inputs_before_sha256": "4c2c8b846d28e14afcf2c8a3f5b568b17829daa8b017c018abb1bb6444217c51",
+      "result_sha256": "340762e75076db9994865b23f41113d2cbb637ee5573be619a663d11f3bcbc03"
+    }
+  ],
+  "metadata_gate_bindings": [
+    {
+      "case": "exact-R02-binding",
+      "inputs_before_sha256": "2b7dcb28a508231bf6c18ea009da7c8646bba28aad82e68fcc682ac44cb51964",
+      "result_sha256": "7bb628cdd2aee7c2dba4be9d5d535151f36a37188c39ed88dc62925b83262f78"
+    },
+    {
+      "case": "grant-hash-drift",
+      "inputs_before_sha256": "59cc9c7015f585bb4fd08c9e5721a848ede56d0559a4fd8f4da725037b917431",
+      "result_sha256": "583b2c26fb87de2ae6fdde7c4aadbe65df3c125a246a816dcb654a3c6381672c"
+    },
+    {
+      "case": "legacy-receipt-key-only",
+      "inputs_before_sha256": "fed0e949b0daa726a32d6c717a2f00e14f7f26e3c550b2ae0890cb1be703d5e5",
+      "result_sha256": "e6013f1ff1815ecf687b34d662bd3096762735286a3f6389ab5445f27d04a291"
+    },
+    {
+      "case": "old-R01-preparation",
+      "inputs_before_sha256": "7648b31de4b7ce8ed544a5f3b1221937d2a696f68f42c02ac6fcb49c171594d6",
+      "result_sha256": "ba63b675d2b6f453e35537c8cd2492ba1bce8ad0f65f4a47eb7ebee2cfa7cf56"
+    },
+    {
+      "case": "old-identity-even-with-PASS-label",
+      "inputs_before_sha256": "23f244168cbc122219c4cd26b4adc54ec671bcc4a631aafc76c2821665e85529",
+      "result_sha256": "61843146652de47580a88d6c8f2a75b88563fa1fa2d3e0b4aeaf9ba7e9d0bd99"
+    },
+    {
+      "case": "old-v1-registration",
+      "inputs_before_sha256": "2001e6b1f415eb88a61cac9fd54fe70d7527b0ae8fc95bfede21ab0d588b5d0a",
+      "result_sha256": "878558243157ba6ffbf3da3cdb3deab24f58c62943c4994bb25052b1e9195613"
+    },
+    {
+      "case": "original-P10-CHANGES_REQUIRED",
+      "inputs_before_sha256": "fbdb581c39936e7874494c9cd84258b09d9c798fa70f3f690610a44805929983",
+      "result_sha256": "676765a16d87cd5af8958d60548b8fdf317fe5bef373d0ef362b7df08134991d"
+    },
+    {
+      "case": "review-hash-drift",
+      "inputs_before_sha256": "121c7f2f7a8dd50530c959b4d1e93413b8dbfb10fb8b9bf9f1a45f5a2ff3bded",
+      "result_sha256": "09671690652f2fc77f8374375f21acd8982c728c0a200c7b604cf788532d5a58"
+    },
+    {
+      "case": "source-hash-drift",
+      "inputs_before_sha256": "088fc6631f8b5ebfe8a1151bdf350e6a75f39a4ecb83112de947ca250bec93e7",
+      "result_sha256": "a2792d4c25b6295711a8c4c24872a356fe7befde9866041a5b99861650c66136"
+    }
+  ],
+  "evidence_manifest_sha256": "d44422e5349041318054eb0e597431844f14ec5e99e0c866cc3a9310e20af8a6",
+  "evidence_file_count": 1483
+}

@@ -1,0 +1,29 @@
+{
+  "body": "reg [15:0] offered, data_frames, status_frames;\nalways @(posedge clk) begin\n if (rst) begin offered<=0;data_frames<=0;status_frames<=0;end\n else begin\n  if(s_valid && s_ready && s_last) offered<=offered+16'd1;\n  if(m_valid && m_ready && m_last) data_frames<=data_frames+16'd1;\n  if(h_valid && h_ready) status_frames<=status_frames+16'd1;\n end\nend\nassign active={3'b000,{3{trace_done}}};\nassign ok={3'b111,(status_frames>=offered),(data_frames>=offered),(!s_valid)};",
+  "properties": [
+    {
+      "description": "Arm-blind infrastructure plumbing only; not an LLM trial or oracle",
+      "id": "P0"
+    },
+    {
+      "description": "Arm-blind infrastructure plumbing only; not an LLM trial or oracle",
+      "id": "P1"
+    },
+    {
+      "description": "Arm-blind infrastructure plumbing only; not an LLM trial or oracle",
+      "id": "P2"
+    },
+    {
+      "description": "Arm-blind infrastructure plumbing only; not an LLM trial or oracle",
+      "id": "P3"
+    },
+    {
+      "description": "Arm-blind infrastructure plumbing only; not an LLM trial or oracle",
+      "id": "P4"
+    },
+    {
+      "description": "Arm-blind infrastructure plumbing only; not an LLM trial or oracle",
+      "id": "P5"
+    }
+  ]
+}
