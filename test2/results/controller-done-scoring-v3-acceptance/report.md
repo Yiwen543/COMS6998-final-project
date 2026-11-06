@@ -1,0 +1,49 @@
+# trace_done recovery preflight and scoring v3
+
+2026-11-05. GitmainHEADc25180848ebfe9a1f49da0aa5f579cac913e6428. **Actual provider counts PASS; independent review LIMITED_SCOPE; offline adapter repairs accepted, fresh Claude review pending. B/C generation remains closed.** No oracle was authored or modified.
+
+## Actual paid preflight recovery
+
+User separately approved one additional Claude review andfournewcounts within originalUSD9. Existingkeys reused,require_escalatednetwork,TLSvalidationretained. Exactlyoneclaude-opus-5-5 fresh/no-tools reviewreturnedLIMITED_SCOPE in33.535s;CLIreportedUSD0.152076. Inputusage:4uncached+18460cachecreation,0cacheread;output2988including1704thinking(subset,notadditional). FirstCLIfailedDNSattemptreportedUSD0/noverdict retained. Cumulative2CLIinvocations,8OpenAIcounts,0candidategeneration/0oracleauthor. InternalHTTPrequests notdirectlyobserved. Countendpointfeeunknown;nofreeAPIclaim.
+
+|Arm|Actual initial|Actual unchanged history stress|64000gate|
+|---|---:|---:|---|
+|B|36944|59460|PASS|
+|C|40573|63089|PASS|
+
+Botharms saveexact7078tokens versusfirstfailedpacket. Cstressmargin911tokens. Same16000UTF8body/6×400description/18000characterhistoryprobe,same model/schema. Countgateisnotproofeverypossiblefuturepayloadfits; actualeveryattemptmustprecount andpreservecapfailure. No newcount isneededforprivategrader/witnesschanges,becauseallfourcandidatepayloadhashes remainexactlythosecounted.
+
+## Independent findings and versioned repairs
+
+Claudefoundoracleconsistentwithreviewedscope(byteMIN4/MAX8,1..12bytes,dev32/final128,pre/post/presentedvalid/reset/X/tailsemantics),`oracle_revision_required=false`,but`adapter_changes_required=true`. FullgateisnotACCEPT. Rawreview in controller-done-preflight-v2/review/review.json.
+
+Newregistration controller_done_scoring_v3.json predatesnewgrades/controls. Alloldscorefilesandlabelsremain. Repairs:
+
+1. Ordinarysafety excludesfinalpostmarker. A marker-only alarm no longer earns sampled-safetycredit; separatemarker-onlysignal kept,evenifviolationfirstappearsatmarker. Originaldenominatorsremain.
+2. Bothfinitecategories requirefinalpostalarmandnoneearlier. Any-slot alarm is explicitlyUNATTRIBUTED: eligibilitystrata describephysicalfaultycases,notproofthatslotchecksaparticularobligation. Sharedendalarmscannotbeclaimedascategory-specificcausalproof.
+3. PhysicalwitnessreferencePASSmeansonlyprefixthroughpost(S-1),notgenericcandidatefalsealarmatpre(S). ReferenceFAILmeansprefixfailureandphysicallyreproducedalarmasseparatefacts,notselectedalarmconfirmation. Recordselectedalarmcycle/phase/slot/categoryunknown,allreferencefailurepositions/categoriesandunknowns. SelectedalarmagreementremainsUNRESOLVEDwithoutasame-sample/categoryoracle. No GPTpre-onlyoraclepatch.
+4. Reportoracleunknownco-presencepertypeinrescoreoutputs: N01=10,N04=10,N11=8,N12=10,38total;rawN10unobservedretained. DefiniteFAILwithunknownisnotfullyresolvedPASS.
+
+## Actual offline verification
+
+SixnewscoringboundarytestsPASS;twonewreviewcallergatetestsPASS. Earlier5codectestsand4preflighttestsareseparateactualinvocations,notanewwhole-suitecount. Historical76-testfullsuiteunchanged,notrerun.
+
+Newfullgrader actual5832monitorreplays/1218384cycles,77.783s measuredwall;0DUTsimulation/0formaljobsinthisgrader. Independentlyrescoretwooldsealedrawlogsets,5832verifiedlogseach,0newreplayinthoserescores. All36freshgradesmatchbothrescoreoutputs. NewauditverifiesfreshrawgzipSHA/entireMONlogwithonlyknowncompiledrootnormalization,propertybits/cycles/physicalrowdigest/actualHEXvectors,candidaterelases,andalloldfreeze/score/offlineevidencehashes. AuditstatusOFFLINE_REPAIR_ACCEPTED_FRESH_CLAUDE_REVIEW_PENDING.
+
+Terminal-onlyarmblindmockfinal(perprogram):
+
+|Stratum|Eligiblepairs|Definitedetection|Fullyresolved|
+|---|---:|---:|---:|
+|Ordinarysampledsafety|106|0|0|
+|End-onlyresponsedebt|20|20|20|
+|Finalpresentedinput|10|10|0|
+
+Separately10marker-onlysafetysignals;notprimarysafetycredit. Raw12types/144pairs,11observable,N10unobserved,38unknowncontextsretain. Mockstilldetects3distinctfaulttypesatfiniteend,2fullyresolved;all6sessionsNOT_REACHEDall11. SameB/Cplumbing,noLLM/C-effectclaim. Originalv1safety10/106remaininhistoricalscore/report;v3correctionnotretroactiveediting.
+
+Newwitnesscontrols7jobspassedqualification:1nativePASS,4FAIL(includingexpectedunreachedend-onlycover),2TIMEOUTretained. BothfalsecontrolsreferencePASSonearlierphysicalprefix;mutantcontrolhas1referenceprefixfailureandunattributedreproducedselectedalarm. No selectedalarmconfirmationor genericfalsealarmclaim.6dualphysicalruns/30cyclesforwitnesses,4physicalbuilds,newformalcontrolcostseparate. Old540mockformaljobsarenotrerunandstillcannotprove128cyclecompletion.
+
+## Remaining paid gate
+
+Prepared exactscope-v3reviewpacket/newsingle-purposecaller:one freshclaude-opus-5-5,no tools/no author,600s,hardUSD3.80,requested<=3000outputtokens(nohardtokencap). PreviousreportedUSD0.152076+newmax3.80+unchangedUSD5countfeereserve=USD8.952076withinoriginalUSD9. NoadditionalOpenAIcount/generationneededorauthorized. Callerrequiresnewgrantv3,durableexclusiveclaim,keepsmainstagedkeythroughunresolvedtask;currentgrantv3absent,noadditionalcallrun.
+
+Proposal: axis_length_done_v1/qualification/api-adapter-review-v3/proposal.json. Freshsessionreviewmustverifyrepairsandmayreject/findnewissues;noautomaticacceptance. Nooracleauthorunlessactualscopegapandseparateapproval. Keyssecurelyretainedforcontinuingpreflight,noneprinted/newlyrequested. Nextsteprequiresexplicitadditionalreview-invocationauthorization,notordinarycontinueornewkey.
