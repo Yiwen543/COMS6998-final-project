@@ -1,0 +1,183 @@
+test_01_baseline (__main__.G0Tests.test_01_baseline) ... ok
+test_02_bool_not_integer (__main__.G0Tests.test_02_bool_not_integer) ... ok
+test_03_duplicate_event (__main__.G0Tests.test_03_duplicate_event) ... ok
+test_04_orphan_terminal (__main__.G0Tests.test_04_orphan_terminal) ... ok
+test_05_missing_returned_claims_success (__main__.G0Tests.test_05_missing_returned_claims_success) ... ok
+test_06_missing_generation_terminal_unknown (__main__.G0Tests.test_06_missing_generation_terminal_unknown) ... FAIL
+test_07_generation_transport_error_unknown (__main__.G0Tests.test_07_generation_transport_error_unknown) ... FAIL
+test_08_count_transport_error_unknown (__main__.G0Tests.test_08_count_transport_error_unknown) ... FAIL
+test_09_missing_request_identity (__main__.G0Tests.test_09_missing_request_identity) ... ok
+test_10_context_mismatch (__main__.G0Tests.test_10_context_mismatch) ... ok
+test_11_session_mismatch (__main__.G0Tests.test_11_session_mismatch) ... ok
+test_12_prompt_mismatch (__main__.G0Tests.test_12_prompt_mismatch) ... ok
+test_13_schema_digest_mismatch (__main__.G0Tests.test_13_schema_digest_mismatch) ... ok
+test_14_response_mismatch (__main__.G0Tests.test_14_response_mismatch) ... ok
+test_15_parent_count_mismatch (__main__.G0Tests.test_15_parent_count_mismatch) ... ok
+test_16_illegal_order (__main__.G0Tests.test_16_illegal_order) ... ok
+test_17_halt_retry (__main__.G0Tests.test_17_halt_retry) ... ok
+test_18_halt_round (__main__.G0Tests.test_18_halt_round) ... ok
+test_19_halt_session (__main__.G0Tests.test_19_halt_session) ... ok
+test_20_halt_flags (__main__.G0Tests.test_20_halt_flags) ... ok
+test_21_halt_orphan_dispatch (__main__.G0Tests.test_21_halt_orphan_dispatch) ... ok
+test_22_legal_halt_notrun (__main__.G0Tests.test_22_legal_halt_notrun) ... FAIL
+test_23_usage_arithmetic_correlated (__main__.G0Tests.test_23_usage_arithmetic_correlated) ... ok
+test_24_usage_subset_correlated (__main__.G0Tests.test_24_usage_subset_correlated) ... ok
+test_25_model_mismatch (__main__.G0Tests.test_25_model_mismatch) ... ok
+test_26_tier_mismatch (__main__.G0Tests.test_26_tier_mismatch) ... ok
+test_27_count_mismatch (__main__.G0Tests.test_27_count_mismatch) ... ok
+test_28_count_quota (__main__.G0Tests.test_28_count_quota) ... ok
+test_29_output_cap (__main__.G0Tests.test_29_output_cap) ... ok
+test_30_reserve (__main__.G0Tests.test_30_reserve) ... ok
+test_31_raw_usage_mismatch (__main__.G0Tests.test_31_raw_usage_mismatch) ... ok
+test_32_missing_usage_unknown (__main__.G0Tests.test_32_missing_usage_unknown) ... FAIL
+test_33_manifest_sha_tamper (__main__.G0Tests.test_33_manifest_sha_tamper) ... ok
+test_34_release_digest (__main__.G0Tests.test_34_release_digest) ... ok
+test_35_release_inventory (__main__.G0Tests.test_35_release_inventory) ... ok
+test_36_template_not_release (__main__.G0Tests.test_36_template_not_release) ... ok
+test_37_template_not_grant (__main__.G0Tests.test_37_template_not_grant) ... ok
+test_38_no_historical_identity_fabrication (__main__.G0Tests.test_38_no_historical_identity_fabrication) ... ok
+test_39_concurrency_unsupported (__main__.G0Tests.test_39_concurrency_unsupported) ... ok
+test_40_reduced_metadata_vector_scope_only (__main__.G0Tests.test_40_reduced_metadata_vector_scope_only) ... ok
+test_41_slot_missing (__main__.G0Tests.test_41_slot_missing) ... ok
+test_42_phase_mismatch (__main__.G0Tests.test_42_phase_mismatch) ... ok
+test_43_prefix_mismatch (__main__.G0Tests.test_43_prefix_mismatch) ... ok
+test_44_unknown_bit_not_alarm (__main__.G0Tests.test_44_unknown_bit_not_alarm) ... ok
+test_45_checker_sha_mismatch (__main__.G0Tests.test_45_checker_sha_mismatch) ... ok
+test_46_unanchored_metadata_upgrade (__main__.G0Tests.test_46_unanchored_metadata_upgrade) ... ok
+test_47_completion_upgrade (__main__.G0Tests.test_47_completion_upgrade) ... ok
+test_48_fake_reference_verdict (__main__.G0Tests.test_48_fake_reference_verdict) ... ok
+test_49_prompt_visibility_leak (__main__.G0Tests.test_49_prompt_visibility_leak) ... ok
+test_50_bad_sha_type (__main__.G0Tests.test_50_bad_sha_type) ... FAIL
+test_51_unknown_extra_field (__main__.G0Tests.test_51_unknown_extra_field) ... ok
+test_52_notreached_retained (__main__.G0Tests.test_52_notreached_retained) ... FAIL
+test_53_invalid_retained (__main__.G0Tests.test_53_invalid_retained) ... FAIL
+test_54_relative_path_escape (__main__.G0Tests.test_54_relative_path_escape) ... ok
+test_55_symlink_input (__main__.G0Tests.test_55_symlink_input) ... ok
+test_56_output_refuses_overwrite (__main__.G0Tests.test_56_output_refuses_overwrite) ... ok
+test_57_output_symlink (__main__.G0Tests.test_57_output_symlink) ... ok
+test_58_duplicate_json_key (__main__.G0Tests.test_58_duplicate_json_key) ... ok
+test_59_missing_artifact (__main__.G0Tests.test_59_missing_artifact) ... ok
+test_60_wrong_phase_type (__main__.G0Tests.test_60_wrong_phase_type) ... ok
+
+======================================================================
+FAIL: test_06_missing_generation_terminal_unknown (__main__.G0Tests.test_06_missing_generation_terminal_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 133, in test_06_missing_generation_terminal_unknown
+    x=self.run_case(lambda r:failed(r,missing=True),status='UNRESOLVED');self.assertIsNone(x['ledger']['attempts'][0]['actual_tokens']);self.assertIsNone(x['cost_knownness']['tokens']['value'])
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 124, in run_case
+    after={str(p.relative_to(bundle)):h(bundle,str(p.relative_to(bundle))) for p in bundle.rglob('*') if p.is_file() and not p.is_symlink()};self.assertEqual(before,after,'validator mutated fixtureinput');self.assertEqual(result['integrity']['status'],status,result['integrity']);self.assertEqual(result['scientific_attribution']['status'],'NOT_EVALUATED');self.assertFalse(any(result['execution_capabilities'].values()))
+                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECT' != 'UNRESOLVED'
+- REJECT
++ UNRESOLVED
+ : {'status': 'REJECT', 'scope': 'G0_V1_STRICT_SERIAL_SYNTHETIC_METADATA_BINDINGS_ONLY', 'reasons': ['NULL_NOT_ALLOWED:$.calls[0].usage'], 'error_type': 'Reject'}
+
+======================================================================
+FAIL: test_07_generation_transport_error_unknown (__main__.G0Tests.test_07_generation_transport_error_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 134, in test_07_generation_transport_error_unknown
+    def test_07_generation_transport_error_unknown(self):self.run_case(lambda r:failed(r),status='UNRESOLVED')
+                                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 124, in run_case
+    after={str(p.relative_to(bundle)):h(bundle,str(p.relative_to(bundle))) for p in bundle.rglob('*') if p.is_file() and not p.is_symlink()};self.assertEqual(before,after,'validator mutated fixtureinput');self.assertEqual(result['integrity']['status'],status,result['integrity']);self.assertEqual(result['scientific_attribution']['status'],'NOT_EVALUATED');self.assertFalse(any(result['execution_capabilities'].values()))
+                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECT' != 'UNRESOLVED'
+- REJECT
++ UNRESOLVED
+ : {'status': 'REJECT', 'scope': 'G0_V1_STRICT_SERIAL_SYNTHETIC_METADATA_BINDINGS_ONLY', 'reasons': ['NULL_NOT_ALLOWED:$.calls[0].usage'], 'error_type': 'Reject'}
+
+======================================================================
+FAIL: test_08_count_transport_error_unknown (__main__.G0Tests.test_08_count_transport_error_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 135, in test_08_count_transport_error_unknown
+    def test_08_count_transport_error_unknown(self):self.run_case(lambda r:failed(r,count_only=True),status='UNRESOLVED')
+                                                    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 124, in run_case
+    after={str(p.relative_to(bundle)):h(bundle,str(p.relative_to(bundle))) for p in bundle.rglob('*') if p.is_file() and not p.is_symlink()};self.assertEqual(before,after,'validator mutated fixtureinput');self.assertEqual(result['integrity']['status'],status,result['integrity']);self.assertEqual(result['scientific_attribution']['status'],'NOT_EVALUATED');self.assertFalse(any(result['execution_capabilities'].values()))
+                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECT' != 'UNRESOLVED'
+- REJECT
++ UNRESOLVED
+ : {'status': 'REJECT', 'scope': 'G0_V1_STRICT_SERIAL_SYNTHETIC_METADATA_BINDINGS_ONLY', 'reasons': ['NULL_NOT_ALLOWED:$.calls[0].usage'], 'error_type': 'Reject'}
+
+======================================================================
+FAIL: test_22_legal_halt_notrun (__main__.G0Tests.test_22_legal_halt_notrun)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 155, in test_22_legal_halt_notrun
+    x=self.run_case(lambda r:halted(r),status='PASS_WITH_SCOPE');self.assertTrue(x['ledger']['halted']);self.assertIsNone(x['ledger']['attempts'][1]['actual_tokens'])
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 124, in run_case
+    after={str(p.relative_to(bundle)):h(bundle,str(p.relative_to(bundle))) for p in bundle.rglob('*') if p.is_file() and not p.is_symlink()};self.assertEqual(before,after,'validator mutated fixtureinput');self.assertEqual(result['integrity']['status'],status,result['integrity']);self.assertEqual(result['scientific_attribution']['status'],'NOT_EVALUATED');self.assertFalse(any(result['execution_capabilities'].values()))
+                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECT' != 'PASS_WITH_SCOPE'
+- REJECT
++ PASS_WITH_SCOPE
+ : {'status': 'REJECT', 'scope': 'G0_V1_STRICT_SERIAL_SYNTHETIC_METADATA_BINDINGS_ONLY', 'reasons': ['NULL_NOT_ALLOWED:$.calls[0].usage'], 'error_type': 'Reject'}
+
+======================================================================
+FAIL: test_32_missing_usage_unknown (__main__.G0Tests.test_32_missing_usage_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 175, in test_32_missing_usage_unknown
+    self.run_case(change,status='UNRESOLVED')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 124, in run_case
+    after={str(p.relative_to(bundle)):h(bundle,str(p.relative_to(bundle))) for p in bundle.rglob('*') if p.is_file() and not p.is_symlink()};self.assertEqual(before,after,'validator mutated fixtureinput');self.assertEqual(result['integrity']['status'],status,result['integrity']);self.assertEqual(result['scientific_attribution']['status'],'NOT_EVALUATED');self.assertFalse(any(result['execution_capabilities'].values()))
+                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECT' != 'UNRESOLVED'
+- REJECT
++ UNRESOLVED
+ : {'status': 'REJECT', 'scope': 'G0_V1_STRICT_SERIAL_SYNTHETIC_METADATA_BINDINGS_ONLY', 'reasons': ['NULL_NOT_ALLOWED:$.calls[0].usage'], 'error_type': 'Reject'}
+
+======================================================================
+FAIL: test_50_bad_sha_type (__main__.G0Tests.test_50_bad_sha_type)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 194, in test_50_bad_sha_type
+    def test_50_bad_sha_type(self):self.run_case(lambda r:edit(r,'manifest.json',lambda d:d['artifacts'][0].update(sha256=None)))
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 124, in run_case
+    after={str(p.relative_to(bundle)):h(bundle,str(p.relative_to(bundle))) for p in bundle.rglob('*') if p.is_file() and not p.is_symlink()};self.assertEqual(before,after,'validator mutated fixtureinput');self.assertEqual(result['integrity']['status'],status,result['integrity']);self.assertEqual(result['scientific_attribution']['status'],'NOT_EVALUATED');self.assertFalse(any(result['execution_capabilities'].values()))
+                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PASS_WITH_SCOPE' != 'REJECT'
+- PASS_WITH_SCOPE
++ REJECT
+ : {'status': 'PASS_WITH_SCOPE', 'scope': 'G0_V1_STRICT_SERIAL_SYNTHETIC_METADATA_BINDINGS_ONLY', 'reasons': []}
+
+======================================================================
+FAIL: test_52_notreached_retained (__main__.G0Tests.test_52_notreached_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 199, in test_52_notreached_retained
+    self.run_case(change,status='UNRESOLVED')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 124, in run_case
+    after={str(p.relative_to(bundle)):h(bundle,str(p.relative_to(bundle))) for p in bundle.rglob('*') if p.is_file() and not p.is_symlink()};self.assertEqual(before,after,'validator mutated fixtureinput');self.assertEqual(result['integrity']['status'],status,result['integrity']);self.assertEqual(result['scientific_attribution']['status'],'NOT_EVALUATED');self.assertFalse(any(result['execution_capabilities'].values()))
+                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECT' != 'UNRESOLVED'
+- REJECT
++ UNRESOLVED
+ : {'status': 'REJECT', 'scope': 'G0_V1_STRICT_SERIAL_SYNTHETIC_METADATA_BINDINGS_ONLY', 'reasons': ['NULL_NOT_ALLOWED:$.calls[0].usage'], 'error_type': 'Reject'}
+
+======================================================================
+FAIL: test_53_invalid_retained (__main__.G0Tests.test_53_invalid_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 202, in test_53_invalid_retained
+    self.run_case(change,status='UNRESOLVED')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yiwenchen/Desktop/COMS6998/ai_for_chip_design_project/COMS6998-final-project/test2/tests/test_g0_adapter_v1.py", line 124, in run_case
+    after={str(p.relative_to(bundle)):h(bundle,str(p.relative_to(bundle))) for p in bundle.rglob('*') if p.is_file() and not p.is_symlink()};self.assertEqual(before,after,'validator mutated fixtureinput');self.assertEqual(result['integrity']['status'],status,result['integrity']);self.assertEqual(result['scientific_attribution']['status'],'NOT_EVALUATED');self.assertFalse(any(result['execution_capabilities'].values()))
+                                                                                                                                                                                                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECT' != 'UNRESOLVED'
+- REJECT
++ UNRESOLVED
+ : {'status': 'REJECT', 'scope': 'G0_V1_STRICT_SERIAL_SYNTHETIC_METADATA_BINDINGS_ONLY', 'reasons': ['NULL_NOT_ALLOWED:$.calls[0].usage'], 'error_type': 'Reject'}
+
+----------------------------------------------------------------------
+Ran 60 tests in 0.494s
+
+FAILED (failures=8)
