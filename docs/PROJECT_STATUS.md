@@ -1,5 +1,24 @@
 # Project status — 2026-11-05 (America/New_York)
 
+## Current publication — full approved history verified (2026-11-06)
+
+The explicitly approved 110,870-path historical snapshot (1,666,538,059 raw bytes)
+was published in 13 ordinary fast-forward history batches after core commit
+`2fa0ab9082d234b20250e27c93b0f0e9c360f7d6`. Archive tip and verified remote tip:
+`13fb361e27e689f789ea3659b6d3b139988438ae`. All approved path mode/blob identities and fresh
+working-tree SHA-256 values matched (0 mismatches); all 13 pushes were individually
+remote-verified. The remaining 9,998 original staged versions were archived
+exactly, and both index backups are retained. Keys, environment files and generic
+caches were excluded; original results, failures, unknowns and old freezes remain.
+See [publication scope and batch commits](PUBLICATION_SCOPE.md).
+
+This subsequent metadata update only prepends publication notes to three current
+documents, retaining their complete prior bodies. No experiment, scientific test,
+model API call, installation or course submission was performed. Experiments and
+model API calls remain paused. The P2 artifact and research limitations below are
+unchanged. Older local-only/limited-publication statements describe earlier stages.
+
+
 ## Current P2 submission — B5 two-page PDF accepted with limits (2026-11-06)
 
 Actual `output/p2/submission-b5/B5_P2.pdf` is2pages USLetter in the unchanged officialP2template;B5,ChiyuChen/MingyuanZheng/YiwenChen,dueNovember9,2026,11:59PMET. Final `docs/audits/agent_bridge_2026-11-06/P2-PDF-review.md` is **PASS_WITH_LIMITS**,no manuscript changes needed. Editable `latex/main.tex`, `B5_P2_source.zip` and actual `export-verification-v1.json` are alongside thePDF. PDF SHA6d46720b989a341b0ee50b6897b397b0dc4de2c25a3ead69f69de0437356420f. Root/exportreview confirmed both rendered pages and nooverfull;this metadata update runsno compile/test/render.
