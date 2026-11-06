@@ -1,0 +1,781 @@
+CONDITIONAL AUTHOR PACKET, NOT AUTHORIZED OR REQUIRED BY DEFAULT.
+Only after an independent scope review demonstrates an oracle/specification gap,
+and after separate paid authorization, propose a NEW version of the independent
+checker. Keep old frozen checker unchanged. If no actual gap exists, report this;
+do not add trace_done as a truth label or weaken unknown/tail semantics.
+The invocation must also supply the frozen review issues, not B/C preferences.
+Return author schema: checker_source,properties,contract_markdown,selftest_source.
+A separate new session must review any authored revision before live candidates.
+The original DUT contract and checker input interface are unchanged: byte
+interface, MIN4/MAX8, accepted frame1..12, independent data/status channels, reset
+flush. Correct and faulty observations come from literal physical DUT simulation.
+Development min_tail32 and final min_tail128 use the existing check_rows API.
+trace_done is evaluator metadata only,0on all pre/post samples except final post1;
+there is no additional DUT clock and the checker does not receive the marker.
+No GPT code may silently replace this independent oracle. Synthetic obligation
+controls are distinct from physical DUT coverage. A short trace_done0 formal
+projection proves neither128cycle completion nor end-only activation. A definite
+FAIL may coexist with unknown context: retain both; never label that full PASS.
+This review receives no B/C candidate sources, hidden faults, hidden traces, scores
+or arm preference. Review from specification, not implementation-majority voting.
+
+FILE test2/tasks/axis_length_done_v1/public/specification.md
+# Byte-stream length adjustment controller: fixed project contract v1
+
+This task uses the unmodified MIT-licensed verilog-axis length-adjustment FIFO controller
+at revision 48ff7a7e2ef782cf778d47910cf85835c64b1bce. It is a newly scoped
+monitor task on a previously inspected IP family, not an unseen repository or
+an official benchmark. The upstream README describes padding/truncation and
+original/current length reports; the timing and finite-trace rules below are
+the explicit project contract, not a claim of verbatim upstream prose.
+
+The selected wrapper is task_top_v3.sv. Original data/header FIFOs have depths32/8; status can be consumed before the corresponding output frame. The rejected direct-core scope and its status-stability counterexample remain separate qualification evidence. Data width is 8 bits, KEEP is disabled
+(each accepted input is exactly one byte), ID/DEST/USER are disabled. Length
+limits are constant MIN=4 and MAX=8 bytes. Input frames contain 1..12 bytes.
+There is one positive-edge clock and synchronous active-high reset. Reset is
+the only cancellation mechanism in this scope; there is no independent cancel pin.
+
+A transfer occurs at a rising edge iff valid and ready are both 1 before that
+edge and rst=0. Input s_last marks the final byte of an input frame. The source
+holds s_valid, s_data and s_last while blocked, except that reset cancels it.
+Input gaps, back-to-back frames and independent data/status backpressure are
+legal. Source validity during reset is 0. The sink need not keep ready asserted.
+
+For each accepted input frame X of length L, the expected output frame is:
+
+- L<4: all input bytes, then zero bytes until length 4;
+- 4<=L<=8: the input bytes unchanged;
+- L>8: the first 8 bytes; the remaining input bytes are still accepted/drained.
+
+Exactly one accepted output beat has m_last=1 per completed output frame, on
+its final byte. Frames and bytes retain input order. No output may depend on
+an unaccepted input byte. Output may stream before input s_last is accepted;
+the checker must support partial known prefixes rather than requiring the
+whole input frame to arrive first. Padding is known only after input completion.
+For truncation the output end may wait for the rest of the input frame.
+
+Each completed, uncancelled input frame has exactly one status response:
+h_original_length=L, h_length=min(max(L,4),8), h_pad=(L<4), h_truncate=(L>8).
+Statuses preserve input-frame order. Data and status responses are independent
+channels; no required order is imposed between the two channels' completion.
+A status cannot describe an input frame before that input frame completes.
+
+If m_valid=1 and m_ready=0, m_valid/data/last remain stable until transfer or
+reset. If h_valid=1 and h_ready=0, h_valid and all status fields remain stable
+until transfer or reset. Payload fields when their valid is 0 are unspecified.
+s_ready is flow control, not an independently prescribed cycle-by-cycle value.
+
+Reset cancels in-progress input and all not-yet-consumed data/status responses.
+After the reset edge m_valid=h_valid=0. Already consumed output prefixes are
+not retroactively failures: reset discards the remaining epoch. No pre-reset
+obligation may be carried into the next epoch. A reset edge performs no transfer.
+Pre-edge observations while rst=1 may still show pre-reset values.
+
+This is a two-state task. Saved -1 observations denote X/Z and are unresolved
+when meaningful, never successful checks. The initial pre sample is excluded.
+At every subsequent pre/post sample, valid fields and enabled payloads are checked.
+Unknowns must not erase an earlier definite violation.
+
+Finite evaluation traces declare require_drained=true and end in an uninterrupted
+ready-high, reset-low, no-new-offer tail of at least 32 cycles (development) or
+128 cycles (final). For the fixed bounded offered workload, all offered bytes
+must be accepted and all uncancelled responses consumed by the end. Remaining
+s_valid/m_valid/h_valid, an incomplete accepted input frame or remaining expected
+responses is a finite completion failure, not permission to infer an unbounded
+liveness guarantee. Partial unit controls may use require_drained=false.
+
+## Sampling clarification v2
+
+This registered FIFO task has no zero-latency pre-edge bypass. At pre(n), valid payload/status must be justified by inputs accepted at earlier edges; a current input offer does not justify a pre-edge output. At post(n), the input accepted at edge n is included. A presented m_valid or h_valid without the requisite already accepted input/frame is a specification failure even if ready=0 and even if a later reset cancels it. Reset cannot erase an earlier violation.
+
+Source protocol violations (valid during reset or changing a blocked offer) are INVALID_INPUT, as are malformed observations. This is input classification, not a DUT pass. Final evaluation explicitly uses min_tail=128; development uses min_tail=32. Insufficient tails are UNRESOLVED, never PASS.
+
+
+FILE test2/tasks/axis_length_done_v1/public/observer_contract.md
+# Final-post marker monitor contract v1
+
+Use the unchanged public DUT pins in specification.md and the supplied module header.
+The passive monitor additionally observes readonly trace_done:0 at every pre sample
+and all post samples except the final post sample, where it is1. No extra rising
+edge follows this marker. Enable finite-end checks combinationally from trace_done
+and private state already updated by the final edge. The marker is evaluator
+metadata, not a DUT input, truth label, reset or stimulus modification.
+
+Development evaluations require drained=true,min_tail32; final evaluations use
+drained=true,min_tail128. Definite failures and unknowns retain their independent
+reference meanings; a short tail is never automatically accepted. A presented
+valid safety failure is distinct from end-only response/input completion failure.
+Independent reference inputs remain exactly the original six inputs/nine outputs;
+the marker does not modify the Claude reference function or DUT specification.
+
+Six active/ok slots,body<=16000UTF8bytes,state<=8192bits; readonly public pins,
+posedge clk only, no hierarchy/files/assumptions/system calls. Short formal safety
+projection explicitly sets trace_done=0 and cannot prove finite completion.
+
+
+FILE test2/tasks/axis_length_fifo_v1/reference/frozen-v2/checker.py
+import collections
+import copy
+import math
+
+_INW = {'rst': 1, 's_valid': 1, 's_data': 8, 's_last': 1, 'm_ready': 1, 'h_ready': 1}
+_OUTW = {'s_ready': 1, 'm_valid': 1, 'm_last': 1, 'h_valid': 1, 'h_pad': 1, 'h_truncate': 1, 'm_data': 8, 'h_length': 16, 'h_original_length': 16}
+_SF = ('h_length', 'h_original_length', 'h_pad', 'h_truncate')
+MIN_LEN = 4
+MAX_LEN = 8
+MAX_IN = 12
+DEV_TAIL = 32
+FINAL_TAIL = 128
+
+
+def _okv(x, w):
+    return isinstance(x, int) and not isinstance(x, bool) and (x == -1 or 0 <= x < (1 << w))
+
+
+def _validate(rows):
+    if not isinstance(rows, list) or len(rows) == 0:
+        return 'rows must be a non-empty list'
+    for i, r in enumerate(rows):
+        if not isinstance(r, dict):
+            return 'row %d is not a dict' % i
+        for k in ('cycle', 'inputs', 'pre', 'post'):
+            if k not in r:
+                return 'row %d missing %s' % (i, k)
+        c = r['cycle']
+        if not isinstance(c, int) or isinstance(c, bool) or c != i:
+            return 'row %d: cycles must be consecutive from 0' % i
+        for k, spec in (('inputs', _INW), ('pre', _OUTW), ('post', _OUTW)):
+            d = r[k]
+            if not isinstance(d, dict) or set(d.keys()) != set(spec.keys()):
+                return 'row %d: %s must contain exactly the documented fields' % (i, k)
+            for f in spec:
+                if not _okv(d[f], spec[f]):
+                    return 'row %d: %s.%s out of range or not an int' % (i, k, f)
+    return None
+
+
+def _assume(rows):
+    for i, r in enumerate(rows):
+        x = r['inputs']
+        if x['rst'] == 1 and x['s_valid'] == 1:
+            return (i, 'source valid during reset')
+        if i > 0:
+            p = rows[i - 1]
+            px = p['inputs']
+            if px['rst'] == 0 and px['s_valid'] == 1 and p['pre']['s_ready'] == 0 and x['rst'] == 0:
+                for f in ('s_valid', 's_data', 's_last'):
+                    a = px[f]
+                    b = x[f]
+                    if a != -1 and b != -1 and a != b:
+                        return (i, 'source changed %s while blocked' % f)
+    return None
+
+
+def _xfer(v, r):
+    if v == 0 or r == 0:
+        return 0
+    if v == 1 and r == 1:
+        return 1
+    return -1
+
+
+def _exp_beat(frames, fo, pos):
+    # (kind, expected byte or None, expected last) from accepted input only
+    if fo >= len(frames):
+        return ('noframe', None, None)
+    fr = frames[fo]
+    b = fr['b']
+    n = len(b)
+    if pos < n and pos < MAX_LEN:
+        if fr['done']:
+            return ('ok', b[pos], pos == min(max(n, MIN_LEN), MAX_LEN) - 1)
+        # byte at pos was accepted with s_last=0, so the frame has >= pos+2 bytes
+        return ('ok', b[pos], pos == MAX_LEN - 1)
+    if fr['done'] and pos < MIN_LEN:
+        return ('ok', 0, pos == MIN_LEN - 1)
+    return ('premature', None, None)
+
+
+def _exp_status(frames, ho):
+    if ho >= len(frames) or not frames[ho]['done']:
+        return None
+    n = len(frames[ho]['b'])
+    return {'h_original_length': n, 'h_length': min(max(n, MIN_LEN), MAX_LEN), 'h_pad': 1 if n < MIN_LEN else 0, 'h_truncate': 1 if n > MAX_LEN else 0}
+
+
+def _res(v, f, u, n):
+    return {'verdict': v, 'failures': f, 'unknown': u, 'checked_rows': n}
+
+
+def check_rows(rows, require_drained=False, min_tail=32):
+    try:
+        msg = _validate(rows)
+    except Exception:
+        msg = 'unreadable rows'
+    if msg is None and not isinstance(require_drained, bool):
+        msg = 'require_drained must be a bool'
+    if msg is None and (not isinstance(min_tail, int) or isinstance(min_tail, bool) or min_tail < 0):
+        msg = 'min_tail must be a non-negative int'
+    if msg is not None:
+        return _res('INVALID_INPUT', [{'cycle': -1, 'phase': 'end', 'category': 'malformed', 'detail': msg}], [], 0)
+    a = _assume(rows)
+    if a is not None:
+        return _res('INVALID_INPUT', [{'cycle': a[0], 'phase': 'pre', 'category': 'assumption_violation', 'detail': a[1]}], [], 0)
+    fails = []
+    unk = []
+
+    def F(c, ph, cat, d):
+        fails.append({'cycle': c, 'phase': ph, 'category': cat, 'detail': d})
+
+    def U(c, ph, cat, d):
+        unk.append({'cycle': c, 'phase': ph, 'category': cat, 'detail': d})
+
+    S = {'frames': [], 'fo': 0, 'pos': 0, 'ho': 0, 'ld': True, 'lh': True, 'li': True}
+
+    def lose_all():
+        S['ld'] = True
+        S['lh'] = True
+        S['li'] = True
+
+    if rows[0]['inputs']['rst'] != 1:
+        U(0, 'pre', 'no_initial_reset', 'scoreboard unknown until a known reset edge')
+
+    def ob_check(c, ph, o, ob, vf, fields, cat):
+        if ob is None:
+            return
+        if o[vf] != 1:
+            if o[vf] == -1:
+                U(c, ph, cat, vf + ' X/Z while held')
+            else:
+                F(c, ph, cat, vf + ' dropped without transfer or reset')
+            return
+        for f, val in zip(fields, ob):
+            if o[f] == -1 or val == -1:
+                U(c, ph, cat, f + ' X/Z in held beat')
+            elif o[f] != val:
+                F(c, ph, cat, f + ' changed while held')
+
+    def sample(c, ph, o):
+        basis = 'inputs accepted at earlier edges' if ph == 'pre' else 'inputs accepted up to and including this edge'
+        for f in ('m_valid', 'h_valid'):
+            if o[f] == -1:
+                U(c, ph, 'x_valid', f + ' is X/Z')
+        if o['m_valid'] == 1:
+            for f in ('m_data', 'm_last'):
+                if o[f] == -1:
+                    U(c, ph, 'x_payload', f + ' X/Z while m_valid')
+            if not S['ld']:
+                k, eb, el = _exp_beat(S['frames'], S['fo'], S['pos'])
+                if k == 'noframe':
+                    F(c, ph, 'data_spurious', 'm_valid presented with no accepted input byte to justify it (' + basis + ')')
+                elif k == 'premature':
+                    F(c, ph, 'data_premature', 'm_valid presented beyond the accepted input prefix (' + basis + ')')
+                else:
+                    if eb is None:
+                        U(c, ph, 'data_unresolved', 'expected byte derives from X/Z input')
+                    elif o['m_data'] != -1 and o['m_data'] != eb:
+                        F(c, ph, 'data_payload', 'presented m_data %d expected %d' % (o['m_data'], eb))
+                    if o['m_last'] != -1 and o['m_last'] != (1 if el else 0):
+                        F(c, ph, 'data_last', 'presented m_last %d expected %d' % (o['m_last'], 1 if el else 0))
+        if o['h_valid'] == 1:
+            for f in _SF:
+                if o[f] == -1:
+                    U(c, ph, 'x_payload', f + ' X/Z while h_valid')
+            if not S['lh']:
+                e = _exp_status(S['frames'], S['ho'])
+                if e is None:
+                    F(c, ph, 'status_premature_or_spurious', 'h_valid presented without a completed accepted frame (' + basis + ')')
+                else:
+                    for f in _SF:
+                        if o[f] != -1 and o[f] != e[f]:
+                            F(c, ph, 'status_payload', 'presented %s %d expected %d' % (f, o[f], e[f]))
+
+    obm = None
+    obh = None
+    n = len(rows)
+    for i in range(n):
+        r = rows[i]
+        x = r['inputs']
+        pre = r['pre']
+        post = r['post']
+        rst = x['rst']
+        if rst == -1:
+            U(i, 'pre', 'x_reset', 'rst is X/Z; epoch unknown')
+            lose_all()
+            obm = None
+            obh = None
+            continue
+        if rst == 1:
+            S['frames'] = []
+            S['fo'] = 0
+            S['pos'] = 0
+            S['ho'] = 0
+            S['ld'] = False
+            S['lh'] = False
+            S['li'] = False
+            obm = None
+            obh = None
+            for f in ('m_valid', 'h_valid'):
+                if post[f] == 1:
+                    F(i, 'post', 'reset_clear', f + ' high after reset edge')
+                elif post[f] == -1:
+                    U(i, 'post', 'reset_clear', f + ' X/Z after reset edge')
+            continue
+        # pre(i): state from prior edges only
+        if i > 0:
+            ob_check(i, 'pre', pre, obm, 'm_valid', ('m_data', 'm_last'), 'data_stability')
+            ob_check(i, 'pre', pre, obh, 'h_valid', _SF, 'status_stability')
+            sample(i, 'pre', pre)
+            obm = (pre['m_data'], pre['m_last']) if (pre['m_valid'] == 1 and x['m_ready'] == 0) else None
+            obh = tuple(pre[f] for f in _SF) if (pre['h_valid'] == 1 and x['h_ready'] == 0) else None
+        else:
+            obm = None
+            obh = None
+        # output transfers at edge i are judged against prior-edge state (no bypass)
+        t = _xfer(pre['m_valid'], x['m_ready'])
+        if t == -1:
+            U(i, 'pre', 'x_transfer', 'data transfer undeterminable')
+            S['ld'] = True
+        elif t == 1 and not S['ld']:
+            k, eb, el = _exp_beat(S['frames'], S['fo'], S['pos'])
+            if k != 'ok':
+                F(i, 'pre', 'data_spurious' if k == 'noframe' else 'data_premature', 'data beat transferred without previously accepted input to justify it')
+                S['ld'] = True
+            else:
+                md = pre['m_data']
+                ml = pre['m_last']
+                if md == -1 or eb is None:
+                    U(i, 'pre', 'data_unresolved', 'transferred byte not determinable')
+                elif md != eb:
+                    F(i, 'pre', 'data_payload', 'transferred m_data %d expected %d (frame %d byte %d)' % (md, eb, S['fo'], S['pos']))
+                if ml == -1:
+                    U(i, 'pre', 'data_unresolved', 'transferred m_last X/Z; frame boundary unknown')
+                    S['ld'] = True
+                elif ml != (1 if el else 0):
+                    F(i, 'pre', 'data_last', 'transferred m_last %d expected %d (frame %d byte %d)' % (ml, 1 if el else 0, S['fo'], S['pos']))
+                    S['ld'] = True
+                elif el:
+                    S['fo'] += 1
+                    S['pos'] = 0
+                else:
+                    S['pos'] += 1
+        t = _xfer(pre['h_valid'], x['h_ready'])
+        if t == -1:
+            U(i, 'pre', 'x_transfer', 'status transfer undeterminable')
+            S['lh'] = True
+        elif t == 1 and not S['lh']:
+            e = _exp_status(S['frames'], S['ho'])
+            if e is None:
+                F(i, 'pre', 'status_premature_or_spurious', 'status transferred before its input frame completed at an earlier edge')
+                S['lh'] = True
+            else:
+                for f in _SF:
+                    if pre[f] == -1:
+                        U(i, 'pre', 'status_unresolved', f + ' X/Z on transfer')
+                    elif pre[f] != e[f]:
+                        F(i, 'pre', 'status_payload', 'transferred %s %d expected %d (status %d)' % (f, pre[f], e[f], S['ho']))
+                S['ho'] += 1
+        # input acceptance at edge i (visible from post(i) onward)
+        t = _xfer(x['s_valid'], pre['s_ready'])
+        if t == -1:
+            U(i, 'pre', 'x_transfer', 'input transfer undeterminable')
+            lose_all()
+        elif t == 1 and not S['li']:
+            frames = S['frames']
+            if not frames or frames[-1]['done']:
+                frames.append({'b': [], 'done': False})
+            fr = frames[-1]
+            if x['s_data'] == -1:
+                U(i, 'pre', 'x_input', 'accepted s_data X/Z')
+                fr['b'].append(None)
+            else:
+                fr['b'].append(x['s_data'])
+            if x['s_last'] == -1:
+                U(i, 'pre', 'x_input', 'accepted s_last X/Z; frame boundary unknown')
+                lose_all()
+            elif x['s_last'] == 1:
+                fr['done'] = True
+            if len(fr['b']) == MAX_IN + 1:
+                U(i, 'pre', 'out_of_scope', 'input frame longer than 12 bytes')
+        ob_check(i, 'post', post, obm, 'm_valid', ('m_data', 'm_last'), 'data_stability')
+        ob_check(i, 'post', post, obh, 'h_valid', _SF, 'status_stability')
+        sample(i, 'post', post)
+        obm = (post['m_data'], post['m_last']) if (post['m_valid'] == 1 and x['m_ready'] == 0) else None
+        obh = tuple(post[f] for f in _SF) if (post['h_valid'] == 1 and x['h_ready'] == 0) else None
+
+    if require_drained:
+        c = n - 1
+        last = rows[-1]
+        sv = last['inputs']['s_valid']
+        if sv == 1:
+            F(c, 'end', 'completion', 's_valid still offered at end')
+        elif sv == -1:
+            U(c, 'end', 'completion', 's_valid X/Z at end')
+        for f in ('m_valid', 'h_valid'):
+            if last['post'][f] == 1:
+                F(c, 'end', 'completion', f + ' still high at end')
+            elif last['post'][f] == -1:
+                U(c, 'end', 'completion', f + ' X/Z at end')
+        frames = S['frames']
+        if S['li'] or S['ld'] or S['lh']:
+            U(c, 'end', 'completion_unresolved', 'scoreboard not fully known; completion cannot be proven')
+        if not S['li'] and frames and not frames[-1]['done']:
+            F(c, 'end', 'completion', 'incomplete accepted input frame at end')
+        if not S['li'] and not S['ld'] and S['fo'] < len(frames):
+            F(c, 'end', 'completion', '%d data response frame(s) not fully consumed' % (len(frames) - S['fo']))
+        if not S['li'] and not S['lh'] and S['ho'] < len(frames):
+            F(c, 'end', 'completion', '%d status response(s) not consumed' % (len(frames) - S['ho']))
+        k = 0
+        for rr in reversed(rows):
+            xx = rr['inputs']
+            if xx['rst'] == 0 and xx['s_valid'] == 0 and xx['m_ready'] == 1 and xx['h_ready'] == 1:
+                k += 1
+            else:
+                break
+        if k < min_tail:
+            U(c, 'end', 'drain_tail_short', 'quiet ready-high tail is %d cycles (< min_tail %d)' % (k, min_tail))
+
+    if fails:
+        v = 'FAIL'
+    elif unk:
+        v = 'UNRESOLVED'
+    else:
+        v = 'PASS'
+    return _res(v, fails, unk, n)
+
+
+
+FILE test2/scripts/controller_done_runtime.py
+"""Integrated marker ABI runtime; immutable prototype compiler is reused."""
+import gzip
+import hashlib
+import json
+from pathlib import Path
+import re
+from common import dump,run,sha
+import controller_monitor_done as prototype
+from controller_monitor_live import ROW_INPUTS,OUTPUTS,rows_file,SCHEMA
+
+HEADER=prototype.HEADER
+PINS=prototype.PINS
+compile_monitor=prototype.compile_monitor
+build_replay=prototype.build_replay
+
+
+def check_rows(rows):
+    if not rows or len(rows)>512 or [r.get('cycle') for r in rows]!=list(range(len(rows))):raise ValueError('Consecutive bounded rows required')
+    for row in rows:
+        if set(row)!=set(('cycle','inputs','pre','post')):raise ValueError('Unexpected row fields')
+        for section,keys in [('inputs',ROW_INPUTS),('pre',OUTPUTS),('post',OUTPUTS)]:
+            if set(row[section])!=set(keys):raise ValueError('Public pin layout changed')
+            if any(type(row[section][n])!=int or not -1<=row[section][n]<2**PINS[n] for n in keys):raise ValueError('Out-of-range observation')
+
+
+def replay(directory,rows,out,cache,trace_done=True):
+    check_rows(rows);out=Path(out);out.mkdir(parents=True,exist_ok=False);path,digest=rows_file(rows,cache)
+    marker=len(rows)-1 if trace_done else -1
+    execution=run(['vvp',directory/'replay.vvp','+ROWS='+str(path),'+LAST='+str(marker)],out/'replay.log',15)
+    raw=(out/'replay.log').read_bytes();samples=[]
+    for line in raw.decode().splitlines():
+        if not line.startswith('MON '):continue
+        _,cycle,phase,active,ok=line.split()
+        if not re.fullmatch('[01xz]{6}',active) or not re.fullmatch('[01xz]{6}',ok) or phase not in ('pre','post'):raise ValueError('Malformed monitor sample')
+        samples.append((int(cycle),phase,active,ok))
+    expected=[(r['cycle'],p) for r in rows for p in ('pre','post') if r['cycle'] or p=='post']
+    complete=execution['status']=='complete' and b'REPLAY_COMPLETE' in raw and [(s[0],s[1]) for s in samples]==expected
+    properties=[]
+    for slot in range(6):
+        checks=0;failures=[];unknown=[];end_checks=0
+        for cycle,phase,active,ok in samples:
+            a,k=active[5-slot],ok[5-slot]
+            if a not in '01' or a=='1' and k not in '01':unknown.append([cycle,phase])
+            elif a=='1':
+                checks+=1;end_checks+=int(trace_done and (cycle,phase)==(marker,'post'))
+                if k=='0':failures.append([cycle,phase])
+        properties.append(dict(id=f'P{slot}',checks=checks,end_sample_checks=end_checks,ordinary_sample_checks=checks-end_checks,
+                               failures=failures,unknown=unknown,vacuous_on_trace=checks==0))
+    (out/'replay.log.gz').write_bytes(gzip.compress(raw,mtime=0));(out/'replay.log').unlink()
+    result=dict(complete=complete,properties=properties,samples=len(samples),cycles=sum(s[1]=='post' for s in samples),attempted_cycles=len(rows),
+                execution=execution,rows_sha256=digest,raw_log_sha256=hashlib.sha256(raw).hexdigest(),compressed_log_sha256=sha(out/'replay.log.gz'),
+                trace_done_sample=[marker,'post'] if trace_done else None,safety_projection=not trace_done,DUT_inputs_unchanged=True)
+    dump(out/'result.json',result);return result
+
+
+FILE test2/scripts/controller_done_score.py
+"""Independent frozen-trace grading. No hidden result returns to the generator."""
+import argparse
+from collections import Counter
+import json
+from pathlib import Path
+import time
+from common import ROOT,dump,sha
+from controller_done_data import TASK,REG
+from controller_done_loop import verify_data
+from controller_done_runtime import replay
+from controller_release_live import verify_release,ARMS
+
+
+def position(p):return (p[0],0 if p[1]=='pre' else 1)
+
+
+def adjudicate(label,result):
+    """Definite detection is distinct from fully resolved qualification."""
+    alarms=sorted({tuple(x) for p in result['properties'] for x in p['failures']},key=position)
+    unknown=sorted({tuple(x) for p in result['properties'] for x in p['unknown']},key=position)
+    first=label.get('first_safety_failure');end=(label.get('cycles',0)-1,'post')
+    eligible=dict(safety=bool(first),response_completion=bool(label.get('end_only') and label.get('response_completion')),
+                  input_completion=bool(label.get('input_completion')))
+    detected={k:False for k in eligible}
+    complete=result['complete'];early=[]
+    if first:
+        onset=(first['cycle'],first['phase']);early=[x for x in alarms if position(x)<position(onset)]
+        detected['safety']=complete and not early and any(position(x)>=position(onset) for x in alarms)
+    if eligible['response_completion']:
+        detected['response_completion']=complete and end in alarms and not any(position(x)<position(end) for x in alarms)
+    # This records only the definite input obligation, not general soundness of this monitor.
+    if eligible['input_completion']:
+        detected['input_completion']=complete and end in alarms
+    resolved=complete and not unknown and not label.get('unknown_records')
+    return dict(eligible=eligible,definite_detection=detected,fully_resolved_detection={k:v and resolved for k,v in detected.items()},
+                oracle_verdict=label.get('verdict'),oracle_unknown_records=label.get('unknown_records'),candidate_unknown_samples=len(unknown),
+                candidate_alarm_samples=len(alarms),first_alarm=list(alarms[0]) if alarms else None,early_safety_alarm_samples=len(early),
+                complete=complete,vacuous=not any(p['checks'] for p in result['properties']),
+                physical_reference_PASS_alarm=label.get('verdict')=='PASS' and bool(alarms),
+                fully_resolved_context=resolved)
+
+
+def token_cost(records):
+    attempted=[r for r in records if r.get('generation_request_issued')]
+    known=[r.get('usage') for r in attempted if r.get('usage') and isinstance(r['usage'].get('input_tokens'),int) and isinstance(r['usage'].get('output_tokens'),int)]
+    # Missing usage is unknown, never a zero-cost failed request.
+    return dict(generation_requests=len(attempted),count_requests=sum(bool(r.get('count_request_issued')) for r in records),
+                known_input_tokens=sum(u['input_tokens'] for u in known),known_output_tokens=sum(u['output_tokens'] for u in known),
+                unknown_usage_requests=len(attempted)-len(known),
+                actual_total_tokens=sum(u['input_tokens']+u['output_tokens'] for u in known) if attempted and len(known)==len(attempted) else None)
+
+
+def evaluate(run_root,out):
+    snapshots=verify_release(run_root)  # This must precede any hidden observation read.
+    verify_data();out.mkdir(parents=True,exist_ok=False);start=time.perf_counter()
+    labels=json.loads((TASK/'measurements-v1/summary.json').read_text())['records']
+    finals=json.loads((run_root/'final-candidates.json').read_text())['candidates']
+    calls=[json.loads(x) for x in (run_root/'calls.jsonl').read_text().splitlines()];rows=[];cycles=0;replay_seconds=0.;replays=0
+    for s in sorted(snapshots,key=lambda s:(s['round'],s['repetition'],s['arm'])):
+        tag=f"{s['arm']}/rep{s['repetition']}/round{s['round']}";cases=[];cost=token_cost([r for r in calls if r['arm']==s['arm'] and r['repetition']==s['repetition'] and r['round']<=s['round']])
+        if s['status']=='compiled':
+            for label in labels:
+                case=dict(source=label['source'],simulator=label['simulator'],trace=label.get('trace'),reference_status=label['status'])
+                if label['status']!='complete':case.update(status='reference_infrastructure_unresolved')
+                else:
+                    directory=out/tag/label['source']/label['simulator']/label['trace']
+                    result=replay(run_root/s['directory']/'compiled',json.loads((ROOT/label['directory']/'rows.json').read_text()),directory,out/'row-cache')
+                    case.update(status='graded',**adjudicate(label,result),result_path=str((directory/'result.json').relative_to(out)),result_sha256=sha(directory/'result.json'))
+                    replays+=1;cycles+=result['cycles'];replay_seconds+=result['execution']['seconds']
+                cases.append(case)
+        correct=[c for c in cases if c['source']=='correct']
+        correct_gate=len(correct)==18 and all(c.get('complete') and c.get('oracle_verdict')=='PASS' and not c.get('candidate_alarm_samples') and not c.get('candidate_unknown_samples') for c in correct)
+        categories={}
+        for category in ('safety','response_completion','input_completion'):
+            eligible=[c for c in cases if c['source']!='correct' and c.get('eligible',{}).get(category)]
+            definite=[c for c in eligible if c['definite_detection'][category] and correct_gate]
+            resolved=[c for c in eligible if c['fully_resolved_detection'][category] and correct_gate]
+            categories[category]=dict(eligible_pairs=len(eligible),eligible_types=sorted({c['source'] for c in eligible}),
+                definite_detected_pairs=len(definite),definite_detected_types=sorted({c['source'] for c in definite}),
+                fully_resolved_detected_pairs=len(resolved),fully_resolved_detected_types=sorted({c['source'] for c in resolved}),
+                oracle_unknown_pairs=sum(bool(c.get('oracle_unknown_records')) for c in eligible))
+        observable={c['source'] for c in cases if c['source']!='correct' and c.get('oracle_verdict')=='FAIL'}
+        detected=set().union(*(set(v['definite_detected_types']) for v in categories.values()))
+        resolved=set().union(*(set(v['fully_resolved_detected_types']) for v in categories.values()))
+        n=cost['actual_total_tokens'];row=dict(arm=s['arm'],repetition=s['repetition'],round=s['round'],candidate_status=s['status'],correct_control_gate=correct_gate,
+            correct_alarm_pairs=sum(bool(c.get('candidate_alarm_samples')) for c in correct),correct_unknown_pairs=sum(bool(c.get('candidate_unknown_samples')) for c in correct),
+            raw_mutation_types=12,raw_mutation_pairs=144,observable_types=sorted(observable),unobserved_types=sorted(set(f'N{i:02}' for i in range(1,13))-observable),
+            categories=categories,definite_detected_types=sorted(detected),fully_resolved_detected_types=sorted(resolved),
+            unresolved_pairs=sum(c.get('status')!='graded' or not c.get('complete') or bool(c.get('candidate_unknown_samples')) or bool(c.get('oracle_unknown_records')) for c in cases),
+            physical_reference_PASS_alarm_pairs=sum(bool(c.get('physical_reference_PASS_alarm')) for c in cases),
+            cost=cost,distinct_definite_types_per_1000_tokens=len(detected)*1000/n if n else None,
+            distinct_fully_resolved_types_per_1000_tokens=len(resolved)*1000/n if n else None,cases=cases)
+        rows.append(row);dump(out/'progress.json',dict(rounds=rows));print('graded',tag,correct_gate,sorted(detected),flush=True)
+    endpoints=[r for r in rows if any((r['arm'],r['repetition'],r['round'])==(f['arm'],f['repetition'],f['selected_round']) for f in finals)]
+    costs=token_cost(calls)
+    result=dict(status='offline_scoring_complete',mode=json.loads((run_root/'run.json').read_text())['mode'],not_new_model_evidence=json.loads((run_root/'run.json').read_text())['mode']!='live',
+                rounds=rows,selected_endpoints=[{k:v for k,v in r.items() if k!='cases'} for r in endpoints],
+                costs=dict(**costs,monitor_replays=replays,replayed_cycles=cycles,replay_seconds=replay_seconds,wall_seconds=time.perf_counter()-start,new_physical_DUT_simulations=0,new_formal_jobs=0),
+                registration_sha256=sha(REG),evaluation_freeze_sha256=sha(TASK/'evaluation-freeze.json'),release_sha256=sha(run_root/'release.json'),scorer_sha256=sha(__file__),
+                causal_claim=None,scope='Finite physical rows, no formal completion proof; definite obligations with unknown context remain separate')
+    dump(out/'scores.json',result);verify_release(run_root);return result
+
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--run',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();evaluate(a.run.resolve(),a.output.resolve())
+
+
+FILE test2/scripts/controller_done_witness.py
+"""Versioned trace_done=0 safety projection physical bridge; independent oracle unchanged."""
+import json
+from pathlib import Path
+from common import ROOT,dump,run,sha
+from controller_monitor_live import TASK,PINS,ROW_INPUTS,OUTPUTS
+from controller_done_runtime import replay
+from controller_prepare import normalize
+from controller_reference_evaluate import module
+
+
+def decode(path,slot):
+    scopes=[];ids={};outputs={};checks={};step_id=None;header=True;values={};touched=set();frames={};partial={}
+    def flush():
+        if step_id in values:
+            step=values[step_id]
+            if step<0:raise ValueError('Unknown SMT step')
+            if set(ids.values())<=touched:frames[step]=dict(values)
+            else:partial[step]=set(ids.values())&touched
+    for raw in Path(path).read_text().splitlines():
+        line=raw.strip();w=line.split()
+        if header:
+            if line.startswith('$scope '):scopes.append(w[2])
+            elif line.startswith('$upscope'):scopes.pop()
+            elif line.startswith('$var '):
+                if w[4]=='smt_step' and not scopes:step_id=w[3]
+                if scopes==['formal_top'] and w[4] in ('active','ok'):
+                    if int(w[2])<=slot:raise ValueError('Selected monitor bit absent from VCD')
+                    checks[w[4]]=w[3]
+                if scopes==['formal_top'] and w[4] in set(ROW_INPUTS)|set(OUTPUTS):
+                    if int(w[2])!=PINS[w[4]]:raise ValueError('Formal public pin width changed')
+                    target=ids if w[4] in ROW_INPUTS else outputs
+                    if w[4] in target:raise ValueError('Duplicate public pin')
+                    target[w[4]]=w[3]
+            elif line.startswith('$enddefinitions'):header=False
+        elif line.startswith('#'):flush()
+        elif line.startswith('b'):
+            bits,ident=line[1:].split();value=-1 if any(c in bits.lower() for c in 'xz') else int(bits,2)
+            if ident==step_id and values.get(step_id)!=value:touched.clear()
+            values[ident]=value;touched.add(ident)
+        elif line and line[0] in '01xz':
+            ident=line[1:];values[ident]=-1 if line[0] in 'xz' else int(line[0]);touched.add(ident)
+    flush()
+    if set(ids)!=set(ROW_INPUTS) or step_id is None:raise ValueError('Missing formal input pins')
+    if len(frames)<2 or sorted(frames)!=list(range(len(frames))):raise ValueError('Incomplete reachable witness')
+    if any(s not in frames and (s!=len(frames) or fields) for s,fields in partial.items()):raise ValueError('Truncated input frame')
+    inputs=[{k:frames[i][v] for k,v in ids.items()} for i in range(len(frames))]
+    if any(v<0 or v>=2**PINS[k] for x in inputs for k,v in x.items()):raise ValueError('Unknown/out-of-range input')
+    sampled=[{k:frames[i].get(v,-1) for k,v in outputs.items()} for i in range(len(frames))]
+    if set(checks)!=set(('active','ok')):raise ValueError('Selected formal monitor observations absent')
+    bad=[i for i in range(1,len(frames)) if all(frames[i].get(v,-1)>=0 for v in checks.values()) and
+         (frames[i][checks['active']]>>slot)&1 and not (frames[i][checks['ok']]>>slot)&1]
+    if not bad:raise ValueError('No definite selected-slot alarm state in VCD')
+    return inputs,sampled,bad[0]
+
+
+def driver():
+    decl='\n'.join('reg '+(f'[{w-1}:0] ' if w>1 else '')+n+'=0;' for n,w in PINS.items() if n=='clk' or n in ROW_INPUTS)
+    decl+='\n'+'\n'.join('wire '+(f'[{PINS[n]-1}:0] ' if PINS[n]>1 else '')+n+';' for n in OUTPUTS)
+    return '''`timescale 1ns/1ps
+module literal_replay;
+'''+decl+'''
+frame_task dut(.*);
+string path;integer fd,n,cycle=0;
+integer '''+','.join('v_'+n for n in ROW_INPUTS)+''';
+initial begin
+ if(!$value$plusargs("INPUTS=%s",path)) $fatal(1,"Missing inputs");
+ fd=$fopen(path,"r");if(!fd) $fatal(1,"Missing file");
+ while(!$feof(fd)) begin
+  n=$fscanf(fd,"'''+ ' '.join(['%d']*len(ROW_INPUTS))+'\\n",'+','.join('v_'+n for n in ROW_INPUTS)+''');
+  if(n==6) begin
+'''+ '\n'.join(n+'=v_'+n+';' for n in ROW_INPUTS)+'''
+   #4;$display("PRE %0d '''+' '.join(['%0d']*(len(ROW_INPUTS)+len(OUTPUTS)))+'",cycle,'+','.join(ROW_INPUTS+OUTPUTS)+''');
+   #1;clk=1;#2;
+   $display("POST %0d '''+' '.join(['%0d']*len(OUTPUTS))+'",cycle,'+','.join(OUTPUTS)+''');
+   #3;clk=0;cycle=cycle+1;
+  end else if(n!=-1) $fatal(1,"Malformed inputs");
+ end
+ $display("LITERAL_COMPLETE %0d",cycle);$finish;
+end
+endmodule
+'''
+
+
+def build(source,sim,out):
+    out.mkdir(parents=True,exist_ok=False);(out/'driver.sv').write_text(driver())
+    binary=out/('obj/Vliteral_replay' if sim=='verilator' else 'literal.vvp')
+    sources=[source,TASK/'public/rtl/axis_fifo.v',TASK/'public/rtl/axis_frame_length_adjust_fifo.v',TASK/'public/task_top_v3.sv',out/'driver.sv']
+    argv=(['verilator','--binary','--timing','-Wno-fatal','--top-module','literal_replay','--Mdir',binary.parent,'-j','2'] if sim=='verilator' else ['iverilog','-g2012','-s','literal_replay','-o',binary])
+    r=run(argv+sources,out/'compile.log',60);dump(out/'compile.json',r)
+    if r['status']!='complete':raise ValueError('Literal replay compilation failed: '+sim)
+    return binary
+
+
+def physical(binary,sim,inputs,out):
+    out.mkdir(parents=True,exist_ok=False)
+    (out/'inputs.txt').write_text(''.join(' '.join(str(x[k]) for k in ROW_INPUTS)+'\n' for x in inputs))
+    cmd=([binary] if sim=='verilator' else ['vvp',binary])+['+INPUTS='+str(out/'inputs.txt')]
+    r=run(cmd,out/'simulation.log',15);text=(out/'simulation.log').read_text();rows={}
+    if r['status']!='complete' or f'LITERAL_COMPLETE {len(inputs)}' not in text:raise ValueError('Incomplete physical replay')
+    def number(v):return -1 if any(c in v.lower() for c in 'xz') else int(v)
+    for line in text.splitlines():
+        w=line.split()
+        if not w or w[0] not in ('PRE','POST'):continue
+        phase=w[0].lower();i=int(w[1]);vals=[number(x) for x in w[2:]];row=rows.setdefault(i,dict(cycle=i))
+        if phase=='pre':row['inputs']=dict(zip(ROW_INPUTS,vals[:6]));vals=vals[6:]
+        if len(vals)!=len(OUTPUTS):raise ValueError('Physical pin count changed')
+        row[phase]=dict(zip(OUTPUTS,vals))
+    if sorted(rows)!=list(range(len(inputs))):raise ValueError('Missing physical row')
+    rows=[rows[i] for i in range(len(inputs))]
+    if any(row['inputs']!=inp for row,inp in zip(rows,inputs)):raise ValueError('Literal formal inputs changed in transport')
+    dump(out/'rows.json',rows);dump(out/'execution.json',dict(r,cycles=len(rows)))
+    return rows
+
+
+def legal_inputs(inputs,rows):
+    if inputs[0]['rst']!=1:raise ValueError('No initial reset')
+    count=0
+    for i,x in enumerate(inputs):
+        if x['rst']:
+            if x['s_valid']:raise ValueError('Source offered during reset')
+            count=0;continue
+        if i and not inputs[i-1]['rst'] and inputs[i-1]['s_valid'] and rows[i-1]['pre']['s_ready']==0:
+            if any(x[k]!=inputs[i-1][k] for k in ('s_valid','s_data','s_last')):raise ValueError('Blocked source offer changed')
+        if x['s_valid'] and rows[i]['pre']['s_ready']==1:
+            count+=1
+            if count>12 or count==12 and not x['s_last']:raise ValueError('Frame length assumption violated')
+            if x['s_last']:count=0
+
+
+def adjudicate(job,candidate,source,slot,out,cache):
+    out.mkdir(parents=True,exist_ok=False)
+    result=dict(status='unresolved',classification='Physical witness not yet validated',API_calls=0,trace_done=0,finite_completion_proved=False)
+    try:
+        paths=list((job/'work').glob('engine_*/trace.vcd'))
+        if len(paths)!=1:raise ValueError('Expected exactly one reachable BMC witness')
+        inputs,sampled,alarm_state=decode(paths[0],slot)
+        # Native sampled assertions can be reported one step after active/ok fail.
+        # Use directly observed monitor pins, never infer failure from terminal size.
+        inputs=inputs[:alarm_state+1];sampled=sampled[:alarm_state+1]
+        dump(out/'formal-inputs.json',inputs)
+        both={}
+        for sim in ('iverilog','verilator'):
+            key=cache/sha(source)/sim
+            binary=key/('obj/Vliteral_replay' if sim=='verilator' else 'literal.vvp')
+            if not binary.exists():binary=build(source,sim,key)
+            both[sim]=physical(binary,sim,inputs,out/sim)
+            legal_inputs(inputs,both[sim])
+        if normalize(both['iverilog'])!=normalize(both['verilator']):raise ValueError('Physical simulators disagree on meaningful pins')
+        rows=both['iverilog']
+        for i,frame in enumerate(sampled):
+            if i==0:continue
+            for k,v in frame.items():
+                meaningful=k in ('s_ready','m_valid','h_valid') or rows[i]['pre']['h_valid' if k.startswith('h_') else 'm_valid']==1
+                if meaningful and (v<0 or rows[i]['pre'][k]!=v):raise ValueError('Retained SMT output differs from physical replay')
+        r=replay(candidate,rows,out/'candidate-replay',cache/'monitor-rows',trace_done=False)
+        if not r['complete'] or [alarm_state,'pre'] not in r['properties'][slot]['failures']:
+            raise ValueError('Formal selected-slot alarm not reproduced at observed failing physical pre sample')
+        checker=module(TASK/'reference/frozen-v2/checker.py','physical_witness_claude_reference')
+        # The last formal state is a failing pre sample, not an extra accepted edge.
+        # Reference receives physical observations only through the previous edge.
+        prefix=rows[:alarm_state];oracle=checker.check_rows(prefix,require_drained=False,min_tail=32)
+        dump(out/'reference-prefix-rows.json',prefix);dump(out/'reference.json',oracle)
+        classification={'PASS':'candidate_false_alarm_on_legal_physical_prefix','FAIL':'reference_confirmed_DUT_violation_on_physical_prefix','UNRESOLVED':'reference_unresolved','INVALID_INPUT':'invalid_physical_interface'}[oracle['verdict']]
+        result.update(status='adjudicated' if oracle['verdict'] in ('PASS','FAIL') else 'unresolved',classification=classification,reference_verdict=oracle['verdict'],
+                      physical_simulators_agree=True,formal_alarm_reproduced=True,formal_states=len(inputs),reference_rows=len(prefix),
+                      observed_alarm_state=alarm_state,
+                      physical_cycles=2*len(inputs),candidate_monitor_cycles=r['cycles'],witness_sha256=sha(paths[0]),retained_outputs_checked=sorted(sampled[0]))
+    except Exception as error:result.update(error_type=type(error).__name__,detail=str(error))
+    dump(out/'result.json',result);return result
