@@ -1,0 +1,124 @@
+     B5: E-Graph-Augmented Tool-in-the-Loop RTL
+                    Veriﬁcation
+                       Chiyu Chen (cc5583), Mingyuan Zheng (mz3143), Yiwen Chen (yc4653)
+                                       COMS 6998: AI-Native Computing | Fall 2026
+                            P2: Prototype & Pilot Results | Due November 9, 2026, 11:59 PM ET
+
+
+              I. P ROJECT G OAL AND U PDATES                            shared, including an 8,192-output-token ceiling; equal limits
+   Our project asks whether E-graph semantic feedback helps             do not mean equal realized tokens. All six candidates freeze
+an LLM verify RTL more effectively and efﬁciently than                  before one grading pass, and each ﬁnal is its last compile-
+raw execution feedback. The proposal compares text-only (A),            valid candidate, never selected by ﬁnal score. A ﬁnal-post
+raw-coverage (B), and E-graph-enhanced (C) stimulus gen-                trace_done marker exposes ﬁnite trace termination without
+eration. Exploratory coverage pilots implement that original            adding a DUT input or clock edge.
+track. The separately authorized test2 extension ﬁxes stim-                Correct-DUT controls gate fault credit. A credited alarm
+uli and generates passive SystemVerilog monitors, measuring             must align with an independent observable violation; an earlier
+valid fault detection, false alarms, and cost. This separates a         alarm cannot earn credit. Unknowns, invalid candidates, unob-
+generated checker’s quality from the model’s input-selection            servable faults, and failures remain in the evidence. Repeated
+ability while testing the same semantic-feedback hypothesis.            alarms and two simulators do not create extra defect types. To-
+   The endpoint change is explicit: changing a monitor under            kens, candidate compilation, DUT simulation, monitor replay,
+ﬁxed stimuli does not improve DUT coverage. Raw RTL                     and wall time are distinct measurements. Without a token-
+counters provide workload context; monitor quality is the               matched placebo, B/C tests the whole feedback package, not
+outcome. We do not claim an ofﬁcial CVDP or Pass@1                      pure semantic content.
+evaluation. For P2, we now have a completed, independently                         III. P ROTOTYPE AND P ILOT R ESULTS
+audited controller retest of the implemented pipeline. It reuses
+a published benchmark, so it is not a new hidden test or                   Current end-to-end prototype. The multi-cycle re-
+cross-IP generalization result. The current scope ends at this          quest/response controller uses frozen inputs under test2/
+milestone; cross-IP execution remains paused.                           tasks/axis_length_done_v1/. The new registration
+                                                                        is test2/configs/controller_done_bc_retest_
+                   II. M ETHOD OVERVIEW                                 v3.json; the entry is test2/retest_v3/cli.py. The
+   We freeze the DUT, speciﬁcation, input traces, independent           saved run in test2/results/controller-done-bc-
+reference, model settings, selection rule, and resource limits          retest-v3/ binds prompts, responses, release.json,
+before comparing B and C. Python orchestrates candidate                 ﬁnal selections, usage, and scores. It completed once: six gen-
+generation, compilation, public development feedback, per-              erations, compilation/development feedback, all-round freeze,
+round snapshots, release, and common grading. A Rust egg                then common grading and report. There were no retries or
+pipeline forms restricted equivalence groups; independent               remote token-count calls. P19 independently checked saved
+Z3 checks preserve widths, signedness, complete activation              evidence; it did not generate another cohort.
+guards, and clock/reset context. These establish limited two-              Earlier infrastructure failures remain archived. The historical
+state combinational relations, not general sequential or four-          pilot’s catalog-ﬁeld audit failure required read-only recovery;
+state equivalence. Equivalent guards retain their original source       a later adapter qualiﬁcation rejected missing returned service
+counters.                                                               tiers. Those versions and counterexamples are preserved. The
+   A Claude-authored speciﬁcation checker remains indepen-              accepted R03 adapter repaired that gate before the current live
+dent of GPT candidate monitors; candidates never grade                  retest; no old outcome was relabeled.
+themselves. B receives the permitted speciﬁcation/RTL, ﬁxed                Latest comparison. Both arms already reach the same
+development observations, raw counters, and its own previous            case/type union in round 1 and retain it in rounds 2–3 (Fig. 1);
+candidate/development feedback. C adds validated E-graph                both ﬁnals select round 3. Each candidate passes 18 ﬁnite
+relations. The current prompts exclude reference code, mutant           correct controls. The raw inventory is 12 fault types/144 fault
+sources, ﬁnal evaluation observations, and solver witnesses.            pairs plus 18 controls, or 162 cases per candidate. All 38
+Withholding them from these requests does not make the                  reference-unknown pairs remain per round. N10 is a mutant
+previously published corpus fresh hidden data.                          identiﬁer: its 12 frozen reference outcomes are PASS, with no
+   The new retest uses gpt-6.1-sol/low, one inde-                       eligible fault evidence. Separately, input completion is 0/10
+pendent session per arm and three rounds, interleaved                   eligible N01 pairs, all retaining reference unknown. Neither
+B1,C1,C2,B2,B3,C3. Model and registered resource policy are             fact is silently converted into a pass or removed from the raw
+
+
+
+                                                                    1
+                        (a) Same detection outcome                                                                 (b) All-round generation tokens
+
+
+
+
+                                                                                 Input + output tokens (k)
+                            11/12                      11/12                                                                       C: +8.29% tokens
+                                                                                                             150                                        133,915
+                   12
+                                                                                                                       123,663
+
+
+
+ Raw fault types
+                              2                           2
+                    8                                                                                        100
+
+
+                    4         9                           9                                                   50
+
+
+                    0                                                                                          0
+                            B: raw                   C: +E-graph                                                        B: raw                          C: +E-graph
+
+                                     Ordinary safety credit    Finite case credit (unattributed)                             N10: no eligible failure
+
+
+Fig. 1. P19-audited controller retest: one independent session per arm, three rounds each (six generation calls), on the same published ﬁxed-stimulus corpus.
+Left: both ﬁnal monitors have the same raw union of 11/12 fault types: nine ordinary-safety types plus two end-marker ﬁnite case types, unattributed to a
+speciﬁc monitor property. Gray N10 has no eligible reference failure and remains in the raw denominator. Right: actual generation input+output totals over
+all three rounds, B 123,663 and C 133,915 (+8.2903%). No averaging or independent-repeat error bars are implied. Cache/reasoning tokens are subsets, not
+added again; this is not an invoice or a correctness proof.
+
+
+
+denominator. The ﬁnite credit is case-level and unattributed;                                                                    IV. N EXT S TEPS
+passing controls does not prove general monitor soundness or
+128-cycle completion.
+   The new run uses B 116,529 input + 7,134 output tokens                            Main risk and paper plan. Saturation leaves little room for
+and C 127,168 + 6,747. C spends 8.2903% more total tokens                         C to improve; one session per arm, one published workload,
+without extra detections. The combined conservative usage-                        and longer C context limit causal and statistical conclusions.
+based cost upper is $1.569371, not an actual provider invoice.                    This run shows no additional C beneﬁt here, not that E-graphs
+The run took 177.995 s including cleanup, with 12 candidate                       are universally unhelpful. G1 now has P17’s limited ﬁnite-
+compiler processes and 990 monitor replays (18 development                        control acceptance; that is not a proof of these monitors or a
++ 972 grading), covering 204,444 replayed cycles. These reuse                     reason to repeat generic qualiﬁcation for P2.
+frozen DUT observations: they are not new physical DUT                               A possible Milestone 3 plan (Nov 23), subject to separate
+simulations, generated stimuli, or formal proofs.                                 future authorization, would preregister a small nonsaturated
+   Historical cohort, kept separate. The earlier three-                           obligation set and a genuinely disjoint holdout before seeing
+sessions-per-arm, six-round pilot used 36 generation calls. B                     C outcomes, then compare matched conditions and a token-
+totaled 740,643 tokens and C 813,649 (+9.8571%), with the                         matched placebo. Any new oracle scope must receive indepen-
+same ﬁnal union of 11 observable types and raw denominator                        dent Claude review; GPT will not silently repair it. Existing
+12. Its invalid rounds and costs remain; one B ﬁnal has 40 total                  cross-IP task drafts are preparation, not implemented or tested
+unresolved pairs rather than 38. The earlier 540 formal jobs                      multi-IP monitor results. No new experiment or paid call is
+still have 75 PASS, 104 FAIL, and 361 TIMEOUT statuses,                           promised by this P2 delivery.
+including 74 unreproduced/unresolved BMC witnesses. The                              Actual midterm feedback/response pending. Authentic
+new retest does not resolve those outcomes. Neither cohort                        instructor/TA technical feedback has not been found in the
+was rerun to prepare this paper, and the cohorts are not pooled                   bounded local review. We cannot invent a response: the
+as independent fresh-hidden evidence.                                             original comment, resulting change, evidence, and limit must
+   The editable source includes figure-data.json, which                           be recorded when available. User priorities and internal P19
+binds the retest ledger/grade, historical audit, and P19 review                   audits do not substitute for classroom feedback. The two-
+by hash. All ﬁgure values derive from these saved artifacts;                      page draft therefore retains this content gap and has not been
+no research experiment was rerun for this paper.                                  submitted to the course platform.
+
+
+
+
+                                                                             2
+

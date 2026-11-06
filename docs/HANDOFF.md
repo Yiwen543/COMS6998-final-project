@@ -1,5 +1,34 @@
 # Project handoff — 2026-11-05, America/New_York
 
+## P2 manuscript update — P19 v2 accepted with feedback gap (2026-11-06)
+
+The new two-page official-template draft is
+`output/p2/submission-b5-p19-v2/B5_P2.pdf` (SHA256
+8b9bba7b62d2c8490768a7e226af4c8859adc3e59344cd3b7528e111eb740075),
+with editable `latex/main.tex` and `B5_P2_source.zip` in that versioned directory.
+P20 independently returned PASS_WITH_LIMITS (review SHA256
+7f6b2427c8cc809643b54802b3343ded64a29c381a535522c754d48fe67526cb);
+see `docs/audits/agent_bridge_2026-11-06/P2_P19_v2/acceptance.json`.
+Both pages and the figure were actually inspected by maker, peer and coordinator.
+The official 10pt/two-column/Letter class and four sections are preserved;
+source ZIP and data arithmetic pass. The 349 original P2 files and 15 input
+bindings remain unchanged. No research experiment, model/API call or install
+was performed to update this paper; LaTeX used existing cached resources.
+
+P19's completed 1-session/arm x3-round, 6-call retest is the main figure.
+The older 3-session/arm x6-round, 36-call pilot is described separately.
+Both retain raw12/case-union11, finite-credit limits and unknowns; the new
+C arm uses 8.2903% more tokens with no added detections observed. No fresh-hidden,
+causal, statistical or general correctness claim is made. Cross-IP work stays
+paused; the next-stage discussion is a paper plan, not execution authorization.
+
+Authentic instructor/TA midterm feedback and the response remain missing.
+The draft therefore does not satisfy every content item yet and has not been
+submitted to the course platform. Next: obtain the original feedback and fill
+its evidence-based response. No automatic further experiment or course submission.
+This phase's prepublication baseline is 745172e194885038a29b6d788bf2954ee02830ba;
+read actual Git for the current HEAD and published commit. Old bodies follow.
+
 ## Current P19 acceptance and publication closure — C01 (2026-11-06)
 
 P19 independently accepted E01 with limits: review SHA256
