@@ -1,0 +1,60 @@
+{
+  "runtime": {
+    "resources.py": {
+      "old_sha256": "4b0ab6f57877205e669633eeeab9e2aebf47bd47ae74530a91ca294b4a6f9200",
+      "new_sha256": "1e458e3314f9c49d0b003c8d7aa219cb77c32e862ae8d663ac909b1ef5b2e084",
+      "normalized_diff": [
+        "--- \n",
+        "+++ \n",
+        "@@ -31,7 +31,7 @@\n",
+        " ",
+        " def trusted_success(record):",
+        "     require(record.get('provider_status')=='completed','INCOMPLETE_RESPONSE_KEEP_FULL_RESERVE')",
+        "-    require(record.get('returned_model')=='gpt-6.1-sol' and record.get('returned_service_tier') in [None,'default'],'MODEL_OR_TIER_CONTRACT')",
+        "+    require(record.get('returned_model')=='gpt-6.1-sol' and record.get('returned_service_tier')=='default','MODEL_OR_TIER_CONTRACT')",
+        "     require(record.get('long_cache_write') is False and record.get('unexpected_output_type') is False,'CACHE_OR_TOOL_CONTRACT')",
+        "     usage=record.get('usage') or {}",
+        "     require(all(type(usage.get(k)) is int and usage[k]>=0 for k in ['input_tokens','output_tokens','total_tokens']),'USAGE_UNKNOWN_KEEP_FULL_RESERVE')"
+      ]
+    },
+    "api.py": {
+      "old_sha256": "41d3e950ef458ee8b1d0020618d1f665c316b5ef026f1ec5128c7b9460950f7c",
+      "new_sha256": "63b53d2a8405ba21542d501731f7632226a2143a5a83706d295766dba676e668",
+      "normalized_diff": []
+    },
+    "gates.py": {
+      "old_sha256": "8b6ac3f40497cdcf6a9d0e6b75c8e1395dd7e59cf08ab3565e4841fb6f7edc1c",
+      "new_sha256": "1eafb86b1285524db259512390ffcc768ca13240321710138fc6b81519e345de",
+      "normalized_diff": []
+    },
+    "pipeline.py": {
+      "old_sha256": "56fbb5d7f3942205c667c52f1b64efd5970b3c675a6021da66249cdc76919613",
+      "new_sha256": "9dc8c1a4841600d0be097ab46b8a22ba3eaf3b2b1ab460e06b3773b3d60729d3",
+      "normalized_diff": []
+    },
+    "cli.py": {
+      "old_sha256": "32f14f8e8f9b3fe7146feafcd251230ffeac0e5b81abea41c27d01fe34c5b022",
+      "new_sha256": "9c5da4e2d4ab9ce073a7d5206222787b729b64b9d2653a185331b8c9463de372",
+      "normalized_diff": []
+    },
+    "release.py": {
+      "old_sha256": "4f0942e1e41e92315324f198003370adb1c36a25b2ec3680b8336cd10e34cf71",
+      "new_sha256": "4f0942e1e41e92315324f198003370adb1c36a25b2ec3680b8336cd10e34cf71",
+      "normalized_diff": []
+    },
+    "supervision.py": {
+      "old_sha256": "94cd7b9d4820a0fb88249a91667c3ea4fb25296ee2026e959606b386b40d8cc4",
+      "new_sha256": "94cd7b9d4820a0fb88249a91667c3ea4fb25296ee2026e959606b386b40d8cc4",
+      "normalized_diff": []
+    }
+  },
+  "registration_changed_keys": [
+    "id",
+    "preparation_manifest",
+    "repair_of",
+    "run_root",
+    "source_manifest",
+    "status"
+  ],
+  "nootherfunctionalchanges": true
+}

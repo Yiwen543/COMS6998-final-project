@@ -1,0 +1,195 @@
+{
+  "status": "completed",
+  "HTTP_status": 200,
+  "provider_status": "completed",
+  "returned_model": "gpt-6.1-sol",
+  "returned_service_tier": "default",
+  "response_id": "resp_055c29bbb6df7f15016aee25ad919c87d18b28c68672bf7899",
+  "output_text": "{\"body\":\"// Private, bounded transaction scoreboard. No DUT timing model is used.\\nreg seen = 1'b0;\\nreg [5:0] bad = 0;\\nreg [7:0] produce = 0, consume_m = 0, consume_h = 0;\\nreg [3:0] nbyte [0:31];\\nreg complete [0:31];\\nreg [63:0] bytes [0:31];\\nreg [3:0] position = 0;\\nreg hold_m = 0, hold_h = 0;\\nreg [8:0] saved_m = 0;\\nreg [33:0] saved_h = 0;\\nreg reset_sample = 0;\\nreg [7:0] tail = 0;\\nreg [5:0] err;\\nreg [7:0] expected_byte;\\nreg expected_last;\\nreg [3:0] out_length;\\nreg [15:0] status_length;\\nwire [4:0] wi = produce[4:0];\\nwire [4:0] mi = consume_m[4:0];\\nwire [4:0] hi = consume_h[4:0];\\nwire take_s = (rst === 1'b0) && (s_valid === 1'b1) && (s_ready === 1'b1);\\nwire take_m = (rst === 1'b0) && (m_valid === 1'b1) && (m_ready === 1'b1);\\nwire take_h = (rst === 1'b0) && (h_valid === 1'b1) && (h_ready === 1'b1);\\ninteger k;\\nalways @* begin\\n    err = 0;\\n    expected_byte = 0;\\n    expected_last = 0;\\n    out_length = 0;\\n    status_length = 0;\\n    if (seen) begin\\n        // All presented responses, not just handshakes, require justification.\\n        if ((m_valid !== 1'b0) && (m_valid !== 1'b1)) err[4] = 1;\\n        if ((h_valid !== 1'b0) && (h_valid !== 1'b1)) err[4] = 1;\\n        if ((s_ready !== 1'b0) && (s_ready !== 1'b1)) err[4] = 1;\\n        if (m_valid === 1'b1) begin\\n            if (complete[mi] === 1'b1) begin\\n                if (nbyte[mi] < 4) out_length = 4;\\n                else if (nbyte[mi] > 8) out_length = 8;\\n                else out_length = nbyte[mi];\\n            end else out_length = nbyte[mi] > 8 ? 8 : nbyte[mi];\\n            if ((position >= out_length) || (out_length == 0) ||\\n                ((consume_m == produce) && (nbyte[mi] == 0))) begin\\n                err[0] = 1;\\n                err[1] = 1;\\n            end else begin\\n                if (position < nbyte[mi] && position < 8)\\n                    expected_byte = bytes[mi][position*8 +: 8];\\n                else expected_byte = 0;\\n                if ((^expected_byte === 1'bx) || (m_data !== expected_byte)) err[0] = 1;\\n                // The eighth byte is always the final retained byte. Shorter\\n                // ends are justified only by an accepted input last.\\n                expected_last = (position == 7) ||\\n                    ((complete[mi] === 1'b1) && (position + 1 == out_length));\\n                if (m_last !== expected_last) err[1] = 1;\\n            end\\n        end\\n        if (h_valid === 1'b1) begin\\n            if ((consume_h == produce) || (complete[hi] !== 1'b1)) err[2] = 1;\\n            else begin\\n                if (nbyte[hi] < 4) status_length = 4;\\n                else if (nbyte[hi] > 8) status_length = 8;\\n                else status_length = {12'b0,nbyte[hi]};\\n                if (h_original_length !== {12'b0,nbyte[hi]}) err[2] = 1;\\n                if (h_length !== status_length) err[2] = 1;\\n                if (h_pad !== (nbyte[hi] < 4)) err[2] = 1;\\n                if (h_truncate !== (nbyte[hi] > 8)) err[2] = 1;\\n            end\\n        end\\n        if (hold_m && !reset_sample) begin\\n            if ((m_valid !== 1'b1) || ({m_last,m_data} !== saved_m) ||\\n                (^saved_m === 1'bx)) err[3] = 1;\\n        end\\n        if (hold_h && !reset_sample) begin\\n            if ((h_valid !== 1'b1) ||\\n                ({h_pad,h_truncate,h_length,h_original_length} !== saved_h) ||\\n                (^saved_h === 1'bx)) err[3] = 1;\\n        end\\n        if (reset_sample) begin\\n            if ((m_valid !== 1'b0) || (h_valid !== 1'b0)) err[4] = 1;\\n        end\\n    end\\n    if (trace_done === 1'b1) begin\\n        if (!seen || tail < 32 || (rst !== 1'b0) ||\\n            (s_valid !== 1'b0) || (m_valid !== 1'b0) || (h_valid !== 1'b0) ||\\n            (consume_m != produce) || (consume_h != produce) ||\\n            (nbyte[wi] !== 4'd0)) err[5] = 1;\\n    end\\nend\\nassign active = {trace_done === 1'b1,{5{seen}}};\\nassign ok = ~(bad | err);\\nalways @(posedge clk) begin\\n    bad <= bad | err;\\n    reset_sample <= (rst === 1'b1);\\n    if (rst === 1'b1) begin\\n        seen <= 1;\\n        produce <= 0;\\n        consume_m <= 0;\\n        consume_h <= 0;\\n        position <= 0;\\n        hold_m <= 0;\\n        hold_h <= 0;\\n        tail <= 0;\\n        for (k=0;k<32;k=k+1) begin\\n            nbyte[k] <= 0;\\n            complete[k] <= 0;\\n            bytes[k] <= 0;\\n        end\\n    end else if (seen && rst === 1'b0) begin\\n        hold_m <= (m_valid === 1'b1) && (m_ready === 1'b0);\\n        hold_h <= (h_valid === 1'b1) && (h_ready === 1'b0);\\n        saved_m <= {m_last,m_data};\\n        saved_h <= {h_pad,h_truncate,h_length,h_original_length};\\n        if ((s_valid === 1'b0) && (m_ready === 1'b1) && (h_ready === 1'b1)) begin\\n            if (tail < 128) tail <= tail + 1'b1;\\n        end else tail <= 0;\\n        if (take_s) begin\\n            if (nbyte[wi] < 8) bytes[wi][nbyte[wi]*8 +: 8] <= s_data;\\n            if (nbyte[wi] < 12) nbyte[wi] <= nbyte[wi] + 1'b1;\\n            else bad[4] <= 1;\\n            if ((s_last !== 1'b0) && (s_last !== 1'b1)) bad[4] <= 1;\\n            if (s_last === 1'b1) begin\\n                complete[wi] <= 1;\\n                produce <= produce + 1'b1;\\n                nbyte[(produce+1'b1)&8'd31] <= 0;\\n                complete[(produce+1'b1)&8'd31] <= 0;\\n                bytes[(produce+1'b1)&8'd31] <= 0;\\n            end\\n        end\\n        if (take_m) begin\\n            if (m_last === 1'b1) begin\\n                consume_m <= consume_m + 1'b1;\\n                position <= 0;\\n            end else if (position < 8) position <= position + 1'b1;\\n        end\\n        if (take_h) consume_h <= consume_h + 1'b1;\\n    end\\nend\\n\",\"properties\":[{\"description\":\"Every presented data byte matches an already accepted ordered input prefix or a justified zero-padding byte.\",\"id\":\"P0\"},{\"description\":\"Presented output last marks exactly the final retained or padded byte, independently of sink readiness.\",\"id\":\"P1\"},{\"description\":\"Every presented status describes the next completed accepted frame, with correct original length, adjusted length, padding and truncation flags.\",\"id\":\"P2\"},{\"description\":\"Data and status channels independently retain valid and payload while blocked; reset cancels these hold obligations.\",\"id\":\"P3\"},{\"description\":\"Synchronous reset clears response valids and cancels epoch obligations; unknown meaningful response controls cannot establish success.\",\"id\":\"P4\"},{\"description\":\"Combinational final-marker completion requires the development-length drain tail, no incomplete accepted input, no outstanding independent responses and no remaining valids. The check needs no subsequent clock edge.\",\"id\":\"P5\"}]}",
+  "usage": {
+    "input_tokens": 36945,
+    "output_tokens": 2667,
+    "total_tokens": 39612,
+    "cached_input_tokens": 0,
+    "reasoning_output_tokens": 510
+  },
+  "raw_usage": {
+    "input_tokens": 36945,
+    "input_tokens_details": {
+      "cache_write_tokens": 36942,
+      "cache_write_tokens_details": {
+        "ttl_12h_tokens": 0,
+        "ttl_30m_tokens": 36942
+      },
+      "cached_tokens": 0
+    },
+    "output_tokens": 2667,
+    "output_tokens_details": {
+      "reasoning_tokens": 510
+    },
+    "total_tokens": 39612
+  },
+  "provider_response": {
+    "id": "resp_055c29bbb6df7f15016aee25ad919c87d18b28c68672bf7899",
+    "object": "response",
+    "created_at": 1793992109,
+    "status": "completed",
+    "access_programs": null,
+    "background": false,
+    "billing": {
+      "payer": "developer"
+    },
+    "completed_at": 1793992150,
+    "error": null,
+    "frequency_penalty": 0.0,
+    "image": {
+      "context_compression": "disabled"
+    },
+    "incomplete_details": null,
+    "instructions": null,
+    "max_output_tokens": 8192,
+    "max_tool_calls": null,
+    "model": "gpt-6.1-sol",
+    "moderation": null,
+    "output": [
+      {
+        "id": "rs_055c29bbb6df7f15016aee25af09a887d1bc049f55be6ea4c5",
+        "type": "reasoning",
+        "content": [],
+        "encrypted_content": "gAAAAABq7iXWR0LF0C5UM4COht9OgD5mY8AR5bu5f-yGvXIITPaidZJTVnJ9ZdDRE12IrfS5e5il8VdeygXith2tjmycirwFwncCGF_uPvNaqp31IWNoakqc3OWj4zstbCUuUJTEMGo8-biN2PiAe_IdbUzrdub6SUqyzG29j3GpiwROVgb-kgfLdfekDY0LV_VUppoGSsypsh42Y72QI6m4Cou19qDovxiIe7EJj1vAiTrv42y_t1gb_9yUEwFJ-ZY8rO8r5Vk6pHaPAIxwta9-dy611AvE19g6zDhFuAUBYXHd0-Ci1M4XZYD5cc39Fc8lvAH0oANZ84o_eYxTt0-FF6vnKXGZ2fi5BEK0klN8nqxEb4lONL2YfQdvByTu2990w_zf-owfXZQmws4CHk3kemc3zoRdBEWL6O7ZaaCja0gcwW1t2kOB-W40HFANI6IjYe4BLXtrwthCng-C958IWxIutDrTsoDrQ0M3-_uoFqGBFZv_kxZnbL_Iu0xV1d5vyIGJmEimVwOf1V9BdcHUTEehtpx0UbrflLJpU2-MF0jGYSxY4PGRXh4wPsJ_QVcIrwQa50u99RCvjhpSZSGPIw-RIE-Ip2dkkOC2nJTFcjEhjmDKtiHOLriduDQ8ZU41bP2-GD5qbF3PezofAU_Jm5b4jPfhvXptRHqwtFyqwzJ9w1XVr6Su9GA3rfU4lIvBhArI2M12ixk2OtLLeAM6iqwC3VXBjYjLDFC709cqQdafTKTO4pYR_zVEH_GKL7RGBx4WsUiTHDiIpIP2a_-UaAiq9UclbRVl5qaHbW68H6aa9n9Ja9FdllT8PEgCTUI1yBxPw1rKopN21BRUsU-__WEkcXWjp7_tpieM13rtg3v_wWuuEGHOlaQuV0_JLShGwJqaSkbfpfecT5EzK7ZY2Khrx9y9Ywjkt0kcc82mfhmIfqGK55q7JvwfHV2ipqorsyZhkK_h5_x0kiEOROOpw48F_DnDWYwiQOTU3CvYQbpG2jgEkcUaHoF1WkTnIlVE7_E9Yt0d-2khAetXVq4hAnlV5KcQOxMsuhfQ8tYRAXGhoI6gAb3lejAwR267lyAhu4Tw28YSIWWsfX7msg8NbdkniNotEbtKVpsvbvs3eyJGMCqVN6TBtWhi7MQ5PSyuux7B5CpK163ui9XnCfufqqEDoMhlI1ynQN5FWsyKqCnAEy7pxYIznEGdWg2148fKnH8Y497FYa_5hkY7gDAJgMz_ioxwZFtWPi6I7KEfx2PbnNUiCDngUGhzQuMavqtjKgUwvgytizTwQRxscjI7BZmRDuGQf_cQjH0q8lriuEpmugDqeRUuHD1UV3_6wXHiZvfBDq16cCmc1rm5JVt_SQYZXiXqVui9ro5MqwOV4gATSS7Y5s7WKzN7GKn89mkym1lqTNBNgDyMDJDlY7d8DFn_gfHA_2BCiUR3mNqmvTafMEGp53YKIEK0g2tmPO5cTOJZuwh_C0T7sxl7FO93mAfcLaMwkmg8F9BZ9Q4tDZSYGfrRK4m2LfAQnFDl6Yuq3W9NzOZCPymRwO0pQ_H_a8KThzudLPJQAUJ5aEgEShka5ThgH36fXcsJ3HiWz2_hfVf48x4P78KeUs9aQV0YF51eYUDS2o0vEdkiXzv1gY-TJL9rfl5m2YL9493qbxLEfLalkBNWw7DarQXzDwC7w8ZGANbGy2v1XxsrlmZ3sM2Aqw4xY1AurCT7RCx6l26iYgbk66A6ZkVgii9zb7tdXhoIpGTMlnOzxJF6yFinYCL8yCi2v16lzF4QsqZtdK_mOagmdgZoHx8869oa1VX16V1cg17wPHAPXrVgzAI0J_5q-UDulBPiS8Hw3U-ogzeDxuY_7_7sAtnX2QtGdF2pCWYCTDoaFDsEHXQ9xQZL_crRdekqMigeH8vf4JtcvcJo6xdFlV-jIlsWABDsqLZBiLsrD-bH4Q5aa6WdLdjtSMCijt7c2DpsiXAW3DuwmiGLf-EkgVyDM1RYFeEEyaaDHT3sG3PtDDQZXaKWgA9HAr6dgEdg9eNn7HmSmLBSRV2-OH--Gq3XPg654JLfHHdRdDTZ8ao4YUHZ06JcjIXJBAtOiySOPfiPv9K2iHXz9_vruV0mFdngmOHIyAv7cZA8-I2YeU7N2QW7yhstY9CIVKxhphmCGq5gtORiyaxUc_YSfGMIFm1Fla9TNI78w-FcLopL-ifkQNeNgO2JlERsw8PwbMO_phmmJVVUr_NdAhMqDyC4riDsalwLHYEQtBMEL4gE2UMEm1C3XnWyRNU5dr0Kud2lbWdPvvrTZwZBsB0FKql-4CMRdCw03o279ToRzXe4uUT0jWXJy_7uq44Re6dwuC8a3zES7EVBgEErYwpnMTpT3Fduscmfuh6iyCjpxqsmc_btO5RUUFlhmldNks2s1itHRXKy-NgVPOKhN34ZazCSYuphpOIkHIK4gBqCYiwKe5LOcwYxvxtt_QXdAXpiLlLJ-PqAjttiwPTvB9p4jGhtLONAu7EoTeKEpC0zb8UOa6HFWkYQ7xvS4R2tFTuRpWky9TTjhNITN4lcGEzx0Zp96qRdwNrcUXC-QgvDv4wLrRE_CVhKm1z676B3S1PcbCSIF-v6rzNhQoi-abQZj3FOpajz6azFX95qAAJ8-yJC4nU2zZhITm59_uk7cAo8A-3xWUehp0w_l_rrktS_NS6qEYn1D1gEH8pvFVGVeY5QODisU09BR3UJGTIMgU37VDA1iFQ_CGDXt5tzyhO9v2EZS5Ub7caPfuzyDEpLVtldSGS-vsbK-lmu0xLO-p35S46w5OqxoVSQTXKcCfZ_diEpXWVvXTqJVKSB3eDpI6mnPUNlRnLO9BKXpJPDFBvrr7AEFPBkc8eQKI8qY5QV4XSuVp_dPsI_-b8tE-AfZg3q0rPNpx9h1hwPjrMx5FHO1CI4nxPX_ahu1rri2b3kQk8JkUgiUh7si4Zfsx2yC0a_zx2wxW99UMmFNnmvvW3k6H-I6B1XzP42QBdFCqXLqBv2ERgmN1sMU-E9FJZcYGR_1huJiuw1IQsot1Bdu0L0DhIgyp1rYJe3-Mdur1_VVNjZyIFT-KFadYeofOGD7KIYFGXZCkF5ss37raQK-IppWpDOIMIaTogPlj0v6w4z6bimRHjVxFMpZNDWLoVv3me7ReY_wQ-0Sp0RGpiQSyWMJ6Ssxd6bFdO8tE9Bv8n9rfEskJjw4UhPYRvSbdZmVIH3Gv6pqtdqgcaeSMyz7SEAzZFivFQ3TaC3t2v-au4mLh90R4njC6v_9tBvAgMIQsnc960rSBO9u75jxdDKoZVkFflBaYWTkAQ7VcsDFIq6qJUKbKimtnc_O-QORjJydcwC6i3Rp3yYsOOo5bF5zbnVMwuKmguZ6u66cwznOHUPbLl_6f-Vkk4U3e9HZFD-Y1WgtXHrH1mgt0DYt0xL5JLGXg2xQTthO4S0f9HCLmvvAUQ_fDwrkG8JxWej9lWHcUzN_rHDGrzMF5rPrZbLAqghdDI7kKHGLYttfN_grbxILwF3_XnnawvsYYnUJ2jZj4NEQpYT4nLSEdkuz_eVmv5jf0IGR9rjQkeoHFY1-_resCosa_Vwf8LuS8JJZuwrNrRcsuW8cE5Kzjrsmu_i_W4edyQeyga2mmPUDwODGWEL_3Ep9dSmc5lhphxeUACufzC_5uxaaODu9gMoeqi9NGir6HalCrwv0APUFL0aegBzl2QjHG8CzHhvC1tiAh9vnmOL1e4SD7gRHKmyiQ5V_xRD-Ibp7sIjQsGEJ8E0MOJoAR-ZIMZUpthkFqsenhZWurL2uQf35auGBeDd2VGorq7-ZQPmr2fCAAyWYloMQr27x0oCnB1rYBb6YSNqrKSVx1Zx38SstJsxt0gA1UTnWuQIU_hdypTUgDO2I5bXuHN5GLsNwAJV3F7fTw7NOwCz3twk4CDv2q0taxkP_lR39QDtx4yIAmU7b1SRkR_sFE_kJiuGGgvPxENE8ThIYDEwGAhTTIZijpm62SjfjbBQ_7vPpvctfaZ6Qm-IBPrEUllHwNiLZTHkstUOa7aI-CIjGQZjH4nL6LJYBIlvs_IkEdkdLkhd1RaHvQqzfYO9khnza8ylY0eaRDQysPQYGU3Kg-ZdKiIaM1w7HEzBwFEhLCTYxJoHQaoyOlhyGPBknuRHXZIcdtZlpOJzSYsIBbYzSrU2PtXJF7LLmmgrCa3WrcEw5XHg1_Mn89DVwAahGvz6O-9wTx7_6fE9R2EtRRzxiY24fARpM0woy1hS9zMJXZh6Ojk8sR-yi7DXsZ3oE8WyCUoL0nudZ2gMrp7PCXp2IBX3q4uKHTEBJdNlYlJv9qLrDwywj-jL4Jo_7IdiZ9_h-RUwuTmpYbRYs2FLci9ZInVQx6sV0PLOJj0jJSosh6daXUQE6F3BfvqXYx6RFY9Zhh8WP3LPLNox7bLiqnD2f6nrWP6-f5parG7T6r6O9uKRV_W9DAGv1LvaN1olhnMmdYexr76J8-JrEfrQ2FbJ-K_3sEoxAMHztSTXKpdDy7LBXiM3EI6JxQyOQfgXyNOtP7fxaCf0wNNQRoF33m9sfAN-tGYRacsH9BJmckd994zdhGe9Sqs54mwuZ5Kt6ajvgJoKJm0eW_D-gtEVIwk9Hb_i9_I2gV8YA8KOZb1m-zUl6TZTjZs3fAiiKqW4CCPTgMhTYA3Fup_nu_DDMSWBms9IyoRSnVKyIy1Xe1eo1bVaX9ZanI1dw4JI62A5Kjw3pYWRQ9F9fCHSkFirv_QYgX4ooKaMOuoYEu9MGQvq8648t5PU9fHZo42tkMcmjgH5HnK1Zc7__RNs-6GSYYIKOF1l8VsN7TYrwor9u0eLsusJBYyidAw9dPbLx3uRrcqdv_V_p-mpyqNgBIg95ln3vrTl1pGYRrfUMdKJpYB2L3SWgyrfCFht5QiO192OGRcdiuVAte8vrvyxx7y4KV_XG1bxpnd3QWFQAcI1Xb6ecvyJYNQCeuJ-hrCwURNaq9SFZ-0wBMg6ZX6tVV5H4du3dhlehk4MJJ_wDwr3M7GKNWesRfb8OW_YWiz1GyqAV8jIs7Nf5qJEttaOGJn4QCUmth3qYijm7CkrbAg17qb7AWJCQcOIxSgihYNA9JJbjQwX2ccWxh7e1805XwNPgxwb4EDhsp5SELicCHNTSb43Twu27s3f7x-BR-5WwzeQEbacRTlw-c48KM1weiLovLbvo6zkvEGYX5_W8ZwslmCX_TQzvzKoX6qGVb1ZlEtAC5I9f4e9zCEvQ1x8tTp7-YXILa6BUWmCqNvA2PvxQF0B5ProrU5IDg6GVZDuM8b2nWlwOWWTUZVRq3NfN_1Jqbb6s0f4xECYmyJ5giB6fAc_Yz6-PXaiXbk0NpI3KcYP1NY-uNrUboe4KsxlU4bHDCVEx7JszXyQD6qnaH1P940_DTHC9XRnJ7SIwqXyAIOdPetcoV6F8KSAsNw8l8PncURTlcD2QE2WcNvKTeIRcEM3gvWnevL35X-5YXVr6oMRn7p29DJDVCoRHMiXVmT_OyhrR-gQPjeQOm3eWI0MYodssEZ8uPu9lXeDw5uS0e6lksU_1zdm9cG8g0soCsMZT_Ox49Sy7Z38vl1QS9z7sPX2NHp5X0O8rTFv7z3HPrk9QusKPtyeHm0vcsSG7yuxPQAHWtGQQzA4Z6rxM9E7fLMufb9vHBwj5f0ncHB4jg3CZEHsnnsTe3xRB7kBlaxWJ-heQS6ZLmeY1SLwAIbzruNSEPzymA6J-cgvXIRadnIdMMz39wgdKGo75uiF9gNeejg2fvVghzHlkT0Wduc5-ptQAdRVz6PHlfV6dlbPz9oBbgp-MhXNJO2c37cFl6PIhDetqvnKWJH3cKblJVxkxSFYC6TF5ktCdd6TFuTJKYSH5KEgfqN-zX_kGBnZ-vpM5skaejB_7cum_MuO3YTqnFPGHaxprpaUpsUk8MWlEbFuumrDFVq4DwOLWbufMgkmKNQMZqX0TU0vt0zk3pDBEFq3DRw4U1KSC5lCyjF9Fn8mFsvyNTeLbDhmnlvCwpVkByROcUb1qEBREiPy_eJ7KmCAN9edx7WBBwlBvGBHXHofmddJ21q25AuQGjNlBGABpKlFYD8u82h_FCbjWXoTQEhumqfDxtIrZkHhPF6bhyryDduKmFfJJ-d2gAbUtP14ldWLW-Nr0U3yYtposqe4wgHYW0B5lqXJ4HI67h5HkawcUu1Jw8DVmSKqoUDPWr4cRnfJjC1dm3VzuUjrhQt-enp5xjhT202j_t7yOmAuZW1akslJZmK11DqS6PHulhHb_G3NeCnySRLn8ZRFCHv0RveeJlQbfCrVACmxLLR1Ru1xSphIxIdaRaF9hLBpovoQtBviPb_dsvAqFYaOl7NvUbq7tl4Pe-rHVwiCcE2ZBB7kVz-HTjo3RXSafJgQ_Ct8gBzKMuWGuYVmZgfThOs6FUysgGjHLQeplnYOT3UD1Y0R79mJO7ixCOHHyk-xVo0_gOpQT6koClg3vdmY1CiWw2vhTiyiWuAqOfjoq6ECV9WmbIopnEnihBCf6cDVpHS9ohiYZ4sBFpHqrodbbhX8QnOyVdEfxlH1OcP2pr4qzoYRfbVMAFVUamAEvCFnIfK66T6J76uClM136A1S4eJSTUdmFULhn8eO01CJrmwaKgurSjLMzv98zF6Xm2KgJxM2bvMPOkPkdt8TYGqfvMad31bjk7mncvUdKDdOZwwF5vlLvNV7T7RCFl4gH1-IsHxl0_othaM85glQ4vc60ixTanlJAALZOWjaOXvgmwknqpwvXc78lhN2gR3MXtzuO4Cu-4Bmtc1Z7w1uXuWddrHffNX1LVN3h82gdLApn5LLNI3Nihdz5Ph2hfKiCO2SP7kn5M51_8i_-xOCG9fm_I6R7ofVngcr7DIyXUJEXLC3DLTsz0zEkOpSoPnvCuTKiSV4HqpqsSj4Rnm-A8myv1XAHrfAxHe4WaV5ooCMpjjb11j9zFfWJkiDNSH9hSNiO69raaz7DUe5dhQL1mqUs-dHGzJeoTnM-kJvIwke5ps7LQLDPHd7jUobjpriCIYmpvOQ1pbbxy-AH6ZZlBge2QYHaUZeRuOK00f0yxBdotBRrWQjXCEhUIujA97RGhtkF8A18Yx57uTxsueb7MMDYjSiMgnhTAbcDAwhhAPGz96JHNvRFbmo7RMenv_nzbEjKw3n0xWKXzKRC3UEr6yefk3CizOJ4-ABwd8PECpy4tm81l7coEdDhxgeMeUeKCY23AIhZua4h5wL9EyEuIK1kGutZpQYZFTy3KBjVCKmHZja0UkcKGwSjMFsYCzX4FA0N1LYLcucb4DVEgcy3hOAcT6s-dMO7c4JX2lze1HI_BbRZKEBGpKOqX7Ft31xsuWRNVAuE6lcbJeWGLlG9Cq2VTgtm7BXdVcHuDHahqgONwQPfMt2RYjn_Zwn2p6MJwGWH5WpHJ43TvSIpUaUkLUiXzDb5qVCWYBWRG5SZ4Y92wq51s1oIEXv7Eei7yIFhJebzNMu4KWnk9l9VOt2rzBdN6T9NMkAvq2rkF0efqyRhPUKGCmRxzdnqABj8nKQ_vG6I1ioazduCfbo6waucbb0j7V-eeayhtwPFAaSc5Vm-x8ilCYXn0bca4k19-twTzYuiatbixO6FH62FEvsCYGrYbax0WNJ8tMfqpjqKiZx_CHdMztYrD8LdeVQqgZbgURce3j5sGlkOqp7040QE_cNbjc3pIwoL2lk2rwkQVSaVhBb-bC7u9atEcJ9SLYNHxGcKZDZkzeOJAD3tUQu5AZHROPztqA9FJHf_Zn7JApGcamqnncazxSBJ730Z503TsiGSSAJAZJYQca_K0PhcLzIiROBkp-K2Kgf1I8i3QGcvVuixcpeFDOm3_n5gVORztjzkt7oNOTuk_tK3q0og7Uq4Qu-Yqx-ed3GrJNj10PW0V1LmN_bTfEjrrgNJAbQ",
+        "summary": []
+      },
+      {
+        "id": "msg_055c29bbb6df7f15016aee25c2801887d1a0ec4fe9d6b082d4",
+        "type": "message",
+        "status": "completed",
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "{\"body\":\"// Private, bounded transaction scoreboard. No DUT timing model is used.\\nreg seen = 1'b0;\\nreg [5:0] bad = 0;\\nreg [7:0] produce = 0, consume_m = 0, consume_h = 0;\\nreg [3:0] nbyte [0:31];\\nreg complete [0:31];\\nreg [63:0] bytes [0:31];\\nreg [3:0] position = 0;\\nreg hold_m = 0, hold_h = 0;\\nreg [8:0] saved_m = 0;\\nreg [33:0] saved_h = 0;\\nreg reset_sample = 0;\\nreg [7:0] tail = 0;\\nreg [5:0] err;\\nreg [7:0] expected_byte;\\nreg expected_last;\\nreg [3:0] out_length;\\nreg [15:0] status_length;\\nwire [4:0] wi = produce[4:0];\\nwire [4:0] mi = consume_m[4:0];\\nwire [4:0] hi = consume_h[4:0];\\nwire take_s = (rst === 1'b0) && (s_valid === 1'b1) && (s_ready === 1'b1);\\nwire take_m = (rst === 1'b0) && (m_valid === 1'b1) && (m_ready === 1'b1);\\nwire take_h = (rst === 1'b0) && (h_valid === 1'b1) && (h_ready === 1'b1);\\ninteger k;\\nalways @* begin\\n    err = 0;\\n    expected_byte = 0;\\n    expected_last = 0;\\n    out_length = 0;\\n    status_length = 0;\\n    if (seen) begin\\n        // All presented responses, not just handshakes, require justification.\\n        if ((m_valid !== 1'b0) && (m_valid !== 1'b1)) err[4] = 1;\\n        if ((h_valid !== 1'b0) && (h_valid !== 1'b1)) err[4] = 1;\\n        if ((s_ready !== 1'b0) && (s_ready !== 1'b1)) err[4] = 1;\\n        if (m_valid === 1'b1) begin\\n            if (complete[mi] === 1'b1) begin\\n                if (nbyte[mi] < 4) out_length = 4;\\n                else if (nbyte[mi] > 8) out_length = 8;\\n                else out_length = nbyte[mi];\\n            end else out_length = nbyte[mi] > 8 ? 8 : nbyte[mi];\\n            if ((position >= out_length) || (out_length == 0) ||\\n                ((consume_m == produce) && (nbyte[mi] == 0))) begin\\n                err[0] = 1;\\n                err[1] = 1;\\n            end else begin\\n                if (position < nbyte[mi] && position < 8)\\n                    expected_byte = bytes[mi][position*8 +: 8];\\n                else expected_byte = 0;\\n                if ((^expected_byte === 1'bx) || (m_data !== expected_byte)) err[0] = 1;\\n                // The eighth byte is always the final retained byte. Shorter\\n                // ends are justified only by an accepted input last.\\n                expected_last = (position == 7) ||\\n                    ((complete[mi] === 1'b1) && (position + 1 == out_length));\\n                if (m_last !== expected_last) err[1] = 1;\\n            end\\n        end\\n        if (h_valid === 1'b1) begin\\n            if ((consume_h == produce) || (complete[hi] !== 1'b1)) err[2] = 1;\\n            else begin\\n                if (nbyte[hi] < 4) status_length = 4;\\n                else if (nbyte[hi] > 8) status_length = 8;\\n                else status_length = {12'b0,nbyte[hi]};\\n                if (h_original_length !== {12'b0,nbyte[hi]}) err[2] = 1;\\n                if (h_length !== status_length) err[2] = 1;\\n                if (h_pad !== (nbyte[hi] < 4)) err[2] = 1;\\n                if (h_truncate !== (nbyte[hi] > 8)) err[2] = 1;\\n            end\\n        end\\n        if (hold_m && !reset_sample) begin\\n            if ((m_valid !== 1'b1) || ({m_last,m_data} !== saved_m) ||\\n                (^saved_m === 1'bx)) err[3] = 1;\\n        end\\n        if (hold_h && !reset_sample) begin\\n            if ((h_valid !== 1'b1) ||\\n                ({h_pad,h_truncate,h_length,h_original_length} !== saved_h) ||\\n                (^saved_h === 1'bx)) err[3] = 1;\\n        end\\n        if (reset_sample) begin\\n            if ((m_valid !== 1'b0) || (h_valid !== 1'b0)) err[4] = 1;\\n        end\\n    end\\n    if (trace_done === 1'b1) begin\\n        if (!seen || tail < 32 || (rst !== 1'b0) ||\\n            (s_valid !== 1'b0) || (m_valid !== 1'b0) || (h_valid !== 1'b0) ||\\n            (consume_m != produce) || (consume_h != produce) ||\\n            (nbyte[wi] !== 4'd0)) err[5] = 1;\\n    end\\nend\\nassign active = {trace_done === 1'b1,{5{seen}}};\\nassign ok = ~(bad | err);\\nalways @(posedge clk) begin\\n    bad <= bad | err;\\n    reset_sample <= (rst === 1'b1);\\n    if (rst === 1'b1) begin\\n        seen <= 1;\\n        produce <= 0;\\n        consume_m <= 0;\\n        consume_h <= 0;\\n        position <= 0;\\n        hold_m <= 0;\\n        hold_h <= 0;\\n        tail <= 0;\\n        for (k=0;k<32;k=k+1) begin\\n            nbyte[k] <= 0;\\n            complete[k] <= 0;\\n            bytes[k] <= 0;\\n        end\\n    end else if (seen && rst === 1'b0) begin\\n        hold_m <= (m_valid === 1'b1) && (m_ready === 1'b0);\\n        hold_h <= (h_valid === 1'b1) && (h_ready === 1'b0);\\n        saved_m <= {m_last,m_data};\\n        saved_h <= {h_pad,h_truncate,h_length,h_original_length};\\n        if ((s_valid === 1'b0) && (m_ready === 1'b1) && (h_ready === 1'b1)) begin\\n            if (tail < 128) tail <= tail + 1'b1;\\n        end else tail <= 0;\\n        if (take_s) begin\\n            if (nbyte[wi] < 8) bytes[wi][nbyte[wi]*8 +: 8] <= s_data;\\n            if (nbyte[wi] < 12) nbyte[wi] <= nbyte[wi] + 1'b1;\\n            else bad[4] <= 1;\\n            if ((s_last !== 1'b0) && (s_last !== 1'b1)) bad[4] <= 1;\\n            if (s_last === 1'b1) begin\\n                complete[wi] <= 1;\\n                produce <= produce + 1'b1;\\n                nbyte[(produce+1'b1)&8'd31] <= 0;\\n                complete[(produce+1'b1)&8'd31] <= 0;\\n                bytes[(produce+1'b1)&8'd31] <= 0;\\n            end\\n        end\\n        if (take_m) begin\\n            if (m_last === 1'b1) begin\\n                consume_m <= consume_m + 1'b1;\\n                position <= 0;\\n            end else if (position < 8) position <= position + 1'b1;\\n        end\\n        if (take_h) consume_h <= consume_h + 1'b1;\\n    end\\nend\\n\",\"properties\":[{\"description\":\"Every presented data byte matches an already accepted ordered input prefix or a justified zero-padding byte.\",\"id\":\"P0\"},{\"description\":\"Presented output last marks exactly the final retained or padded byte, independently of sink readiness.\",\"id\":\"P1\"},{\"description\":\"Every presented status describes the next completed accepted frame, with correct original length, adjusted length, padding and truncation flags.\",\"id\":\"P2\"},{\"description\":\"Data and status channels independently retain valid and payload while blocked; reset cancels these hold obligations.\",\"id\":\"P3\"},{\"description\":\"Synchronous reset clears response valids and cancels epoch obligations; unknown meaningful response controls cannot establish success.\",\"id\":\"P4\"},{\"description\":\"Combinational final-marker completion requires the development-length drain tail, no incomplete accepted input, no outstanding independent responses and no remaining valids. The check needs no subsequent clock edge.\",\"id\":\"P5\"}]}"
+          }
+        ],
+        "phase": "final_answer",
+        "role": "assistant"
+      }
+    ],
+    "parallel_tool_calls": true,
+    "presence_penalty": 0.0,
+    "previous_response_id": null,
+    "prompt_cache_key": null,
+    "prompt_cache_options": {
+      "mode": "implicit",
+      "ttl": "30m"
+    },
+    "prompt_cache_retention": "24h",
+    "reasoning": {
+      "context": "all_turns",
+      "effort": "low",
+      "mode": "standard",
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": false,
+    "temperature": 1.0,
+    "text": {
+      "format": {
+        "type": "json_schema",
+        "description": null,
+        "name": "controller_done_monitor",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "body": {
+              "type": "string"
+            },
+            "properties": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "description"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "body",
+            "properties"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "verbosity": "medium"
+    },
+    "tool_choice": "auto",
+    "tool_usage": {
+      "image_gen": {
+        "input_tokens": 0,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 0
+        },
+        "output_tokens": 0,
+        "output_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 0
+        },
+        "total_tokens": 0
+      },
+      "web_search": {
+        "num_requests": 0
+      }
+    },
+    "tools": [],
+    "top_logprobs": 0,
+    "top_p": 0.98,
+    "truncation": "disabled",
+    "usage": {
+      "input_tokens": 36945,
+      "input_tokens_details": {
+        "cache_write_tokens": 36942,
+        "cache_write_tokens_details": {
+          "ttl_12h_tokens": 0,
+          "ttl_30m_tokens": 36942
+        },
+        "cached_tokens": 0
+      },
+      "output_tokens": 2667,
+      "output_tokens_details": {
+        "reasoning_tokens": 510
+      },
+      "total_tokens": 39612
+    },
+    "user": null,
+    "metadata": {}
+  },
+  "long_cache_write": false,
+  "cache_subset_knownness": "KNOWN",
+  "unexpected_output_type": false,
+  "request_issued": true,
+  "input_estimate": {
+    "kind": "ESTIMATE",
+    "version": "complete_payload_utf8_div2p5_plus4096_v1",
+    "UTF8bytes": 106948,
+    "value": 46876,
+    "target": 64000,
+    "not_exact_token_count": true,
+    "not_server_input_hardcap": true,
+    "payload_sha256": "818a592237682344e7734a08fb36be35c6a616264fbea141b4ac8eab93bdaa2e"
+  },
+  "remote_count_requests": 0
+}

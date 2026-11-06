@@ -1,0 +1,195 @@
+{
+  "status": "completed",
+  "HTTP_status": 200,
+  "provider_status": "completed",
+  "returned_model": "gpt-6.1-sol",
+  "returned_service_tier": "default",
+  "response_id": "resp_030b34e74ed13ef1016aee25fe7f2887d1bd11155340ca880e",
+  "output_text": "{\"body\":\"reg started = 0;\\nreg reset_post = 0;\\nreg [5:0] bad = 0;\\nreg [6:0] iw = 0, dr = 0, hr = 0;\\nreg [3:0] ilen = 0, dp = 0;\\nreg [63:0] bytes_q [0:63];\\nreg [3:0] lengths [0:63];\\nreg complete_q [0:63];\\nreg ms = 0, hs = 0;\\nreg [8:0] saved_m = 0;\\nreg [33:0] saved_h = 0;\\nreg [5:0] check_now;\\nreg [3:0] dl, out_len;\\nreg [7:0] expected_byte;\\nreg expected_last, data_available, header_available;\\nreg [33:0] expected_header;\\ninteger k;\\nwire [5:0] wi = iw[5:0];\\nwire [5:0] di = dr[5:0];\\nwire [5:0] hi = hr[5:0];\\nwire [6:0] data_distance = iw-dr;\\nwire [6:0] header_distance = iw-hr;\\n\\nalways @* begin\\n    check_now = 6'b111111;\\n    dl = 0;\\n    out_len = 0;\\n    expected_byte = 0;\\n    expected_last = 0;\\n    data_available = 0;\\n    header_available = 0;\\n    expected_header = 0;\\n    if (started) begin\\n        if ((dr != iw) || (ilen != 0)) begin\\n            dl = lengths[di];\\n            if (dl < 4) out_len = 4;\\n            else if (dl > 8) out_len = 8;\\n            else out_len = dl;\\n            if ((dp < dl && dp < 8) ||\\n                (complete_q[di] === 1'b1 && dp < out_len)) begin\\n                data_available = 1;\\n                if (dp < dl && dp < 8)\\n                    expected_byte = bytes_q[di] >> (dp*8);\\n                else expected_byte = 0;\\n                if (complete_q[di] === 1'b1)\\n                    expected_last = (dp == out_len-1);\\n                else expected_last = (dp == 7);\\n            end\\n        end\\n        if (hr != iw) begin\\n            header_available = (complete_q[hi] === 1'b1);\\n            if (lengths[hi] < 4)\\n                expected_header = {1'b1,1'b0,16'd4,12'd0,lengths[hi]};\\n            else if (lengths[hi] > 8)\\n                expected_header = {1'b0,1'b1,16'd8,12'd0,lengths[hi]};\\n            else\\n                expected_header = {1'b0,1'b0,12'd0,lengths[hi],12'd0,lengths[hi]};\\n        end\\n        if (m_valid === 1'b1) begin\\n            if (!data_available || ((^expected_byte) === 1'bx) ||\\n                m_data !== expected_byte || m_last !== expected_last)\\n                check_now[0] = 0;\\n        end else if (m_valid !== 1'b0) check_now[0] = 0;\\n        if (h_valid === 1'b1) begin\\n            if (!header_available || ((^expected_header) === 1'bx) ||\\n                {h_pad,h_truncate,h_length,h_original_length} !== expected_header)\\n                check_now[1] = 0;\\n        end else if (h_valid !== 1'b0) check_now[1] = 0;\\n        if (ms && !reset_post) begin\\n            if (m_valid !== 1'b1 || {m_data,m_last} !== saved_m ||\\n                ((^{m_data,m_last}) === 1'bx)) check_now[2] = 0;\\n        end\\n        if (hs && !reset_post) begin\\n            if (h_valid !== 1'b1 ||\\n                {h_pad,h_truncate,h_length,h_original_length} !== saved_h ||\\n                ((^{h_pad,h_truncate,h_length,h_original_length}) === 1'bx))\\n                check_now[3] = 0;\\n        end\\n        if (reset_post && (m_valid !== 1'b0 || h_valid !== 1'b0))\\n            check_now[4] = 0;\\n        if (s_ready !== 1'b0 && s_ready !== 1'b1) check_now[4] = 0;\\n        if (trace_done === 1'b1) begin\\n            if (s_valid !== 1'b0 || m_valid !== 1'b0 || h_valid !== 1'b0 ||\\n                ilen != 0 || dr != iw || hr != iw || dp != 0 ||\\n                rst !== 1'b0) check_now[5] = 0;\\n        end\\n    end\\nend\\n\\nassign active[0] = started;\\nassign active[1] = started;\\nassign active[2] = started;\\nassign active[3] = started;\\nassign active[4] = started;\\nassign active[5] = started && (trace_done === 1'b1);\\nassign ok = check_now & ~bad;\\n\\nalways @(posedge clk) begin\\n    if (started) bad <= bad | ~check_now;\\n    reset_post <= (rst === 1'b1);\\n    if (rst === 1'b1) begin\\n        started <= 1;\\n        iw <= 0;\\n        dr <= 0;\\n        hr <= 0;\\n        ilen <= 0;\\n        dp <= 0;\\n        ms <= 0;\\n        hs <= 0;\\n        for (k=0;k<64;k=k+1) begin\\n            lengths[k] <= 0;\\n            complete_q[k] <= 0;\\n            bytes_q[k] <= 0;\\n        end\\n    end else if (started && rst === 1'b0) begin\\n        ms <= (m_valid === 1'b1 && m_ready !== 1'b1);\\n        hs <= (h_valid === 1'b1 && h_ready !== 1'b1);\\n        saved_m <= {m_data,m_last};\\n        saved_h <= {h_pad,h_truncate,h_length,h_original_length};\\n        if (m_valid === 1'b1 && m_ready === 1'b1 && data_available) begin\\n            if (expected_last) begin\\n                dr <= dr+1'b1;\\n                dp <= 0;\\n            end else dp <= dp+1'b1;\\n        end\\n        if (h_valid === 1'b1 && h_ready === 1'b1 && header_available)\\n            hr <= hr+1'b1;\\n        if (s_valid === 1'b1 && s_ready === 1'b1) begin\\n            if (data_distance >= 64 || header_distance >= 64 || ilen >= 12 ||\\n                (s_last !== 1'b0 && s_last !== 1'b1) ||\\n                ((^s_data) === 1'bx)) begin\\n                bad[4] <= 1;\\n            end else begin\\n                if (ilen == 0) begin\\n                    bytes_q[wi] <= {56'd0,s_data};\\n                    complete_q[wi] <= 0;\\n                end else if (ilen < 8)\\n                    bytes_q[wi][ilen*8 +: 8] <= s_data;\\n                lengths[wi] <= ilen+1'b1;\\n                if (s_last === 1'b1) begin\\n                    complete_q[wi] <= 1;\\n                    iw <= iw+1'b1;\\n                    ilen <= 0;\\n                end else ilen <= ilen+1'b1;\\n            end\\n        end\\n    end else if (started) begin\\n        bad[4] <= 1;\\n    end\\nend\\n\",\"properties\":[{\"description\":\"Every presented data beat matches an already accepted ordered input prefix or justified zero padding, with the required last marker, independently of ready.\",\"id\":\"P0\"},{\"description\":\"Every presented header matches the next completed accepted frame: original length, clamped length, padding and truncation; header progress is independent of data progress.\",\"id\":\"P1\"},{\"description\":\"Blocked data retains valid, byte and last through subsequent observations until transfer or synchronous reset.\",\"id\":\"P2\"},{\"description\":\"Blocked headers retain valid and all header fields until transfer or synchronous reset.\",\"id\":\"P3\"},{\"description\":\"Reset clears response valids and cancels epoch obligations without erasing previous alarms. Unknown meaningful tracked observations and exceeded tracking bounds cannot establish success.\",\"id\":\"P4\"},{\"description\":\"The final-post marker combinationally checks completion: no offered input, incomplete accepted frame, outstanding data/header obligations or presented responses remain. No additional edge is required.\",\"id\":\"P5\"}]}",
+  "usage": {
+    "input_tokens": 43317,
+    "output_tokens": 2087,
+    "total_tokens": 45404,
+    "cached_input_tokens": 0,
+    "reasoning_output_tokens": 52
+  },
+  "raw_usage": {
+    "input_tokens": 43317,
+    "input_tokens_details": {
+      "cache_write_tokens": 43314,
+      "cache_write_tokens_details": {
+        "ttl_12h_tokens": 0,
+        "ttl_30m_tokens": 43314
+      },
+      "cached_tokens": 0
+    },
+    "output_tokens": 2087,
+    "output_tokens_details": {
+      "reasoning_tokens": 52
+    },
+    "total_tokens": 45404
+  },
+  "provider_response": {
+    "id": "resp_030b34e74ed13ef1016aee25fe7f2887d1bd11155340ca880e",
+    "object": "response",
+    "created_at": 1793992190,
+    "status": "completed",
+    "access_programs": null,
+    "background": false,
+    "billing": {
+      "payer": "developer"
+    },
+    "completed_at": 1793992207,
+    "error": null,
+    "frequency_penalty": 0.0,
+    "image": {
+      "context_compression": "disabled"
+    },
+    "incomplete_details": null,
+    "instructions": null,
+    "max_output_tokens": 8192,
+    "max_tool_calls": null,
+    "model": "gpt-6.1-sol",
+    "moderation": null,
+    "output": [
+      {
+        "id": "rs_030b34e74ed13ef1016aee25ff795c87d19985224b6ee03e4d",
+        "type": "reasoning",
+        "content": [],
+        "encrypted_content": "gAAAAABq7iYPlNotXW2EyVFvsuXdvhQZ5tzAIVRqukmd19Bw60sO3NKHTYdNkRf9_VF6RDu4vcxO_l3x7xQec7Q-dOF5tIvC7JpVFV8lkFAUi2XMCerAqxpYsnDTNEW4Vcdt0vm7Ci-lHOrpifVl4YOwvksLlwFrjjm6dwfJkOWIhsypOF4b5cQdTw-8Ne_afBEpS_N_qDfDGk-HeBjKpnFg2wzmn5kc5ijC2yiEmeszd2b8bo04p7TNizd5mjV_0wjc5Ex0kf4ajSMmfJ8ujNV7-gFnPWPb6CEt0DkT5E1l21i9qJcUneK8OBEb2NUif0pCReyWBJnV9vPXpBwTTl5cVUlZJ_fH5itQR80MnCtBB4u2Ce-vx6vIsTUJueRny-EatipJr38I2_tQCBz9eJJktVs7TFUKf-BHxx_XmCtDz1B8uufPWPhL63-ESX-36mLzg89ULRTotj5vkKWiPcrAP5351BRzP8eWeNBhEUykcv5d8bEqnBbEaUzM5Qfygn7Mr3n0UHLeuNq7XpKLh2t-9ISlmTVSWNtNDQeCIyCc8QQE6gY2vq8oNghvEPJD4P0K6cWGI94aafwZ6j5bg4h3oLJeGXh6eMjCYtJFkluj0IppxS9YTfgy27j4tiE1zDPewpoayOYroTL8pSp9K9P0FfUhyxcNr4-PXegR1VNQwBCAixHNyB76HKb5rcR6014GKua6sMzoNIb8mUoNa9jFBYJ8fauz51kEKJP27yAVMybmkiNPTJa4RFCK9wbsgE1hyhBVt2hi7WGz-rSimk0Q_76fMZOXosp_6po56dvNi3tcWNyNeY04C-XxTxjl5c4Ll3Xk3qn5is0Bozu1k74XNy2yvmarlaWNRb36znVcTZ1vaeArGOHApzfD0Z8LklEnICUhx4UTOOvgekLGCPrF8Rl0P0GCkzvlhT6Q8OxOWYPpaaxr0X5a_nm5vS8xCv33QHcFS7sc7kopm9AZVQMmXeCuPWvKXbEDB5qgQnYAKQcZhWZkVlqpPuyKJqKXjhfsZtWaHL3mGti4FqGtsJrGtoEEhQRtvgK64oM-YPrKXNsA9ly7IhHUl5qF8GcO_yl2zoy_MTU9mXjD4j8mmpENMn9LaR3TNHcf-TjYUCRyRyLb_t6ESp7Gd-5i4XrZkTRRF1vPeVczm6bZshkZws0-gDbCB07b6FLZ_bimNyPDRPAUgQyYpjvUyVjn-rvZCp8E2qDeQ4EAFtnbnxG1OsJitMRYh40bOM7xtmDYqUCmzmv7KQ56yN7AszmNwXsf-VbWvEDDy7-yj4A7FV4UXEvRipTIYBPZX4vJRaPXMPl7sKUDCXhujraIyE02UVyawJkG1zIreJXQAWGhNmw3hANseo4_RVnhJV0Ksf-YePTaIEHJXWCRkvZh_h_xiYZR_O9ZuVpvXDonmLcMC-Gca_eSAffndgQL1wsBFsL4SMlMAsM4gpesUkiltAIj3pwn1azSPakPIwcNK1yp2WAzInArMnI-HvjIDAY895777cYH0pp5vpflCkGntJLrNGRnD_P8B6OOQt1G6COMlPzas4JvTZoVY-2ljXX6jkLnSwxtteMM8S6AfeeuFP_CaA6eloMPPLCNXW3lk54H0UE6he2wHMdK-HmfZtB-r6f2D1GT3ObGzp0nyM0eU0C-yrWFLSt45wOMFRu49FqkssOXTsHvz34fi8_jKKktM5OykUsb2pAGmAa0WhLYsFPPtz-lR6yP-i4UEjdqPIXApd9rY8FEh6LLwFGDTbXJKVykkz9WpLnZFgsaYN8DKmBrV4sCMNs2BozX6hS1Lm7596kiphBTRFtOFh6bOK7Ev2tVlBEXv27JW2CQOh8s7k90IAt6f7tDAqp4O3k-s_NkG436SgIup_BRiCfpzemI1kafdty2KoaSMYRulw0tmmFtmSCgCOpP3XrwUv3DVmJ-FTe9IrYZtydTgCS09Jhxb8mCEeELDtAYhEqFaxbHY0T2JEL8yndqCG7kFpfR68NO0skhtNROhz8VFk4mjBkeFODF3Xmp5y4RKdmDzJ1AImbWzJJF5znmKgk9jEdeJbPy5wJXyG6_D4TblVm9ag==",
+        "summary": []
+      },
+      {
+        "id": "msg_030b34e74ed13ef1016aee2601d16487d183fa73f08af8dd59",
+        "type": "message",
+        "status": "completed",
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "{\"body\":\"reg started = 0;\\nreg reset_post = 0;\\nreg [5:0] bad = 0;\\nreg [6:0] iw = 0, dr = 0, hr = 0;\\nreg [3:0] ilen = 0, dp = 0;\\nreg [63:0] bytes_q [0:63];\\nreg [3:0] lengths [0:63];\\nreg complete_q [0:63];\\nreg ms = 0, hs = 0;\\nreg [8:0] saved_m = 0;\\nreg [33:0] saved_h = 0;\\nreg [5:0] check_now;\\nreg [3:0] dl, out_len;\\nreg [7:0] expected_byte;\\nreg expected_last, data_available, header_available;\\nreg [33:0] expected_header;\\ninteger k;\\nwire [5:0] wi = iw[5:0];\\nwire [5:0] di = dr[5:0];\\nwire [5:0] hi = hr[5:0];\\nwire [6:0] data_distance = iw-dr;\\nwire [6:0] header_distance = iw-hr;\\n\\nalways @* begin\\n    check_now = 6'b111111;\\n    dl = 0;\\n    out_len = 0;\\n    expected_byte = 0;\\n    expected_last = 0;\\n    data_available = 0;\\n    header_available = 0;\\n    expected_header = 0;\\n    if (started) begin\\n        if ((dr != iw) || (ilen != 0)) begin\\n            dl = lengths[di];\\n            if (dl < 4) out_len = 4;\\n            else if (dl > 8) out_len = 8;\\n            else out_len = dl;\\n            if ((dp < dl && dp < 8) ||\\n                (complete_q[di] === 1'b1 && dp < out_len)) begin\\n                data_available = 1;\\n                if (dp < dl && dp < 8)\\n                    expected_byte = bytes_q[di] >> (dp*8);\\n                else expected_byte = 0;\\n                if (complete_q[di] === 1'b1)\\n                    expected_last = (dp == out_len-1);\\n                else expected_last = (dp == 7);\\n            end\\n        end\\n        if (hr != iw) begin\\n            header_available = (complete_q[hi] === 1'b1);\\n            if (lengths[hi] < 4)\\n                expected_header = {1'b1,1'b0,16'd4,12'd0,lengths[hi]};\\n            else if (lengths[hi] > 8)\\n                expected_header = {1'b0,1'b1,16'd8,12'd0,lengths[hi]};\\n            else\\n                expected_header = {1'b0,1'b0,12'd0,lengths[hi],12'd0,lengths[hi]};\\n        end\\n        if (m_valid === 1'b1) begin\\n            if (!data_available || ((^expected_byte) === 1'bx) ||\\n                m_data !== expected_byte || m_last !== expected_last)\\n                check_now[0] = 0;\\n        end else if (m_valid !== 1'b0) check_now[0] = 0;\\n        if (h_valid === 1'b1) begin\\n            if (!header_available || ((^expected_header) === 1'bx) ||\\n                {h_pad,h_truncate,h_length,h_original_length} !== expected_header)\\n                check_now[1] = 0;\\n        end else if (h_valid !== 1'b0) check_now[1] = 0;\\n        if (ms && !reset_post) begin\\n            if (m_valid !== 1'b1 || {m_data,m_last} !== saved_m ||\\n                ((^{m_data,m_last}) === 1'bx)) check_now[2] = 0;\\n        end\\n        if (hs && !reset_post) begin\\n            if (h_valid !== 1'b1 ||\\n                {h_pad,h_truncate,h_length,h_original_length} !== saved_h ||\\n                ((^{h_pad,h_truncate,h_length,h_original_length}) === 1'bx))\\n                check_now[3] = 0;\\n        end\\n        if (reset_post && (m_valid !== 1'b0 || h_valid !== 1'b0))\\n            check_now[4] = 0;\\n        if (s_ready !== 1'b0 && s_ready !== 1'b1) check_now[4] = 0;\\n        if (trace_done === 1'b1) begin\\n            if (s_valid !== 1'b0 || m_valid !== 1'b0 || h_valid !== 1'b0 ||\\n                ilen != 0 || dr != iw || hr != iw || dp != 0 ||\\n                rst !== 1'b0) check_now[5] = 0;\\n        end\\n    end\\nend\\n\\nassign active[0] = started;\\nassign active[1] = started;\\nassign active[2] = started;\\nassign active[3] = started;\\nassign active[4] = started;\\nassign active[5] = started && (trace_done === 1'b1);\\nassign ok = check_now & ~bad;\\n\\nalways @(posedge clk) begin\\n    if (started) bad <= bad | ~check_now;\\n    reset_post <= (rst === 1'b1);\\n    if (rst === 1'b1) begin\\n        started <= 1;\\n        iw <= 0;\\n        dr <= 0;\\n        hr <= 0;\\n        ilen <= 0;\\n        dp <= 0;\\n        ms <= 0;\\n        hs <= 0;\\n        for (k=0;k<64;k=k+1) begin\\n            lengths[k] <= 0;\\n            complete_q[k] <= 0;\\n            bytes_q[k] <= 0;\\n        end\\n    end else if (started && rst === 1'b0) begin\\n        ms <= (m_valid === 1'b1 && m_ready !== 1'b1);\\n        hs <= (h_valid === 1'b1 && h_ready !== 1'b1);\\n        saved_m <= {m_data,m_last};\\n        saved_h <= {h_pad,h_truncate,h_length,h_original_length};\\n        if (m_valid === 1'b1 && m_ready === 1'b1 && data_available) begin\\n            if (expected_last) begin\\n                dr <= dr+1'b1;\\n                dp <= 0;\\n            end else dp <= dp+1'b1;\\n        end\\n        if (h_valid === 1'b1 && h_ready === 1'b1 && header_available)\\n            hr <= hr+1'b1;\\n        if (s_valid === 1'b1 && s_ready === 1'b1) begin\\n            if (data_distance >= 64 || header_distance >= 64 || ilen >= 12 ||\\n                (s_last !== 1'b0 && s_last !== 1'b1) ||\\n                ((^s_data) === 1'bx)) begin\\n                bad[4] <= 1;\\n            end else begin\\n                if (ilen == 0) begin\\n                    bytes_q[wi] <= {56'd0,s_data};\\n                    complete_q[wi] <= 0;\\n                end else if (ilen < 8)\\n                    bytes_q[wi][ilen*8 +: 8] <= s_data;\\n                lengths[wi] <= ilen+1'b1;\\n                if (s_last === 1'b1) begin\\n                    complete_q[wi] <= 1;\\n                    iw <= iw+1'b1;\\n                    ilen <= 0;\\n                end else ilen <= ilen+1'b1;\\n            end\\n        end\\n    end else if (started) begin\\n        bad[4] <= 1;\\n    end\\nend\\n\",\"properties\":[{\"description\":\"Every presented data beat matches an already accepted ordered input prefix or justified zero padding, with the required last marker, independently of ready.\",\"id\":\"P0\"},{\"description\":\"Every presented header matches the next completed accepted frame: original length, clamped length, padding and truncation; header progress is independent of data progress.\",\"id\":\"P1\"},{\"description\":\"Blocked data retains valid, byte and last through subsequent observations until transfer or synchronous reset.\",\"id\":\"P2\"},{\"description\":\"Blocked headers retain valid and all header fields until transfer or synchronous reset.\",\"id\":\"P3\"},{\"description\":\"Reset clears response valids and cancels epoch obligations without erasing previous alarms. Unknown meaningful tracked observations and exceeded tracking bounds cannot establish success.\",\"id\":\"P4\"},{\"description\":\"The final-post marker combinationally checks completion: no offered input, incomplete accepted frame, outstanding data/header obligations or presented responses remain. No additional edge is required.\",\"id\":\"P5\"}]}"
+          }
+        ],
+        "phase": "final_answer",
+        "role": "assistant"
+      }
+    ],
+    "parallel_tool_calls": true,
+    "presence_penalty": 0.0,
+    "previous_response_id": null,
+    "prompt_cache_key": null,
+    "prompt_cache_options": {
+      "mode": "implicit",
+      "ttl": "30m"
+    },
+    "prompt_cache_retention": "24h",
+    "reasoning": {
+      "context": "all_turns",
+      "effort": "low",
+      "mode": "standard",
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": false,
+    "temperature": 1.0,
+    "text": {
+      "format": {
+        "type": "json_schema",
+        "description": null,
+        "name": "controller_done_monitor",
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "body": {
+              "type": "string"
+            },
+            "properties": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "description"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "body",
+            "properties"
+          ],
+          "type": "object"
+        },
+        "strict": true
+      },
+      "verbosity": "medium"
+    },
+    "tool_choice": "auto",
+    "tool_usage": {
+      "image_gen": {
+        "input_tokens": 0,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 0
+        },
+        "output_tokens": 0,
+        "output_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 0
+        },
+        "total_tokens": 0
+      },
+      "web_search": {
+        "num_requests": 0
+      }
+    },
+    "tools": [],
+    "top_logprobs": 0,
+    "top_p": 0.98,
+    "truncation": "disabled",
+    "usage": {
+      "input_tokens": 43317,
+      "input_tokens_details": {
+        "cache_write_tokens": 43314,
+        "cache_write_tokens_details": {
+          "ttl_12h_tokens": 0,
+          "ttl_30m_tokens": 43314
+        },
+        "cached_tokens": 0
+      },
+      "output_tokens": 2087,
+      "output_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "total_tokens": 45404
+    },
+    "user": null,
+    "metadata": {}
+  },
+  "long_cache_write": false,
+  "cache_subset_knownness": "KNOWN",
+  "unexpected_output_type": false,
+  "request_issued": true,
+  "input_estimate": {
+    "kind": "ESTIMATE",
+    "version": "complete_payload_utf8_div2p5_plus4096_v1",
+    "UTF8bytes": 130558,
+    "value": 56320,
+    "target": 64000,
+    "not_exact_token_count": true,
+    "not_server_input_hardcap": true,
+    "payload_sha256": "fcdabc59a16cc31fe9490e9cead753d31afe4da5d26683693d917eb844f84654"
+  },
+  "remote_count_requests": 0
+}

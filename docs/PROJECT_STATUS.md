@@ -1,5 +1,310 @@
 # Project status — 2026-11-05 (America/New_York)
 
+## Current P19 acceptance and publication closure — C01 (2026-11-06)
+
+P19 independently accepted E01 with limits: review SHA256
+6dfbe1c0d2540773af8f3f061d2af15eebb244c8d1d1f90726033f35418c405d;
+root final-acceptance-p19.json SHA256
+d0da88a95a12d40cd2ea91f0fb08b3f4a17746eb6b1336efde934092fc601e0c.
+All3284E01 evidence files/963source dependencies matched;972saved grading logs
+were independently parsed without another API/compile/replay/formal run.
+
+One actual old published-benchmark B/C1session/arm x3rounds completed with
+6generations/0counts/0retries. Every round: raw union11/12types =9ordinary safety
++2end-marker finite case types UNATTRIBUTED. N10 is a mutant ID with no eligible
+fault evidence, not denominator10. Input completion0/10concerns N01 and retains
+oracleunknown;all38oracleunknown/round and every old negative result remain.
+B123663tokens/C133915tokens, C+8.2902727574% with equal detections. Usage-based
+conservative upperUSD1.569371, peak reserved commitmentUSD7.207377<20; invoice
+UNKNOWN. No new hidden/generalization/placebo/128cycle correctness claim.
+No permanent unattended agent bridge or extra experimental budget is established.
+
+C01 is metadata/publication work only. Scientific freezes, source, E01/P18/P19,
+raw scores and old document bodies remain unchanged. The existing authorization
+covers ordinary bounded Git publication;no add-A/forceadd/reset/forcepush.
+Publication scope, per-batch verified remote commits, scan receipts and remaining
+exclusions are recorded separately under
+`docs/audits/producer_test2_publication_C01_2026-11-06/`.
+Read publication-receipt.json and Git for the actual published/current HEAD;
+2de33e981d2fffc9739d2ca049fbae1774de1aad is the pre-publication review baseline,
+not a claim about the later current HEAD. Self-referential final-HEAD metadata
+is deliberately avoided. Further research needs its own protocol/authorization;
+unused API allowance does not authorize more calls. Older full bodies follow.
+
+
+## Current same-IP B/C retest — E01 actual run complete, pending P19 (2026-11-06)
+
+Exact R03 review PASS_WITH_LIMITS and root EXECUTE enabled one actual live entry;
+it returned0 in177.995s, no halt/timeout/mandatory error.
+Six actual generations (B/C each1session x3rounds),0count/0retry; all six compile
+and development pass, then freeze before one shared-v4 grade. Both final choices
+are round3. All rounds have identical outcomes: raw union11/12types; nine ordinary
+safety types and two end-marker finite case types UNATTRIBUTED. N10 is the mutant
+ID with12referencePASS/noeligiblefaultpairs, not denominator10. Input completion
+is0/10eligible N01pairs withoracleunknown. All38oracleunknown/round remain, with
+raw12types/144faultpairs plus18correct controls/162total pairs. All18correct
+controls pass perround; this is not general monitor correctness or128cycleproof.
+
+B tokens123663 (input116529/output7134), C133915 (input127168/output6747),
+C+8.290273% with identical detections. Input+output total257578 includes
+reasoning subsets;do not addcached/reasoning again. No C benefit observed in this
+single-session published-corpus retest;no freshhidden/generalization or placebo
+claim. Conservative settled cost upperUSD1.569371 (B0.758621/C0.810750), not invoice;
+unresolved cost reserves0, peak outstandingUSD7.207377 below20. Gross historical
+reserve sum35.461008 is not simultaneous commitment or spend;unused release is
+not a refund. Actual provider invoice remainsUNKNOWN.
+
+Onepass actual12compile(6Yosys+6Iverilog),990monitorreplays/204444cycles
+(18dev/1380cycles +972grade/203064cycles);0newDUT/native/formal/G1/crossIP jobs.
+All1008child receipts complete;CPU/memory/fullchildcensus remainunknown. Stage
+wall includes cleanup;component timings overlap and must not be double-added.
+No extra score/compile/replay or API was run after the stage. Key retained;
+auditor never reads/hashes its contents. Old freezes/source/scores/index remain.
+
+Actual immutable evidence and pending independent acceptance:
+`docs/audits/producer_test2_bc_retest_E01_2026-11-06/phase.json`,report.md,
+analysis.json,bindings.json,snapshot-manifest.json;actual outputs under
+`test2/results/controller-done-bc-retest-v3`. Next existing P19 reviews saved
+evidence only, then root may arrange separately authorized publication. No
+automatic new model/solver/replay run or Git mutation. Actual HEAD2de33e981d2fffc9739d2ca049fbae1774de1aad, all
+current work uncommitted/unpushed. Older complete document bodies follow unchanged.
+
+
+## Current same-IP B/C retest — R03 tier repair prepared, pending P18 delta (2026-11-06)
+
+P18 returned CHANGES_REQUIRED on sealed R02: P18-R1 found that a missing/null
+returned service tier could qualify and settle its reservation. This was a
+synthetic counterexample, not an actual API incident or proof of overspending.
+R02, its counterexample and old scores remain unchanged. A verbatim prior review
+copy is retained under the new R03 audit, separate from later reviewer records.
+
+New `test2/retest_v3/` and `test2/configs/controller_done_bc_retest_v3.json` require
+explicit returned tier'default'. Missing/null/nondefault now halt before candidate
+acceptance/compile/next request, preserve provider JSON and the full USD5.910168
+reservation, and have no SETTLE journal. Explicit default64000/8192 still settles
+the USD0.487168 conservative upper, not an invoice/refund. Four new narrow probes
+PASS,0fail/0error,0.175137584s. They are synthetic caller/settlement checks, not
+new model samples, real compilation or scientific scores. R01/R02 base18+1/full
+mock/G1 were not rerun. All runtime changes apart from tier equality are mechanical
+namespace references; release/supervision are byte-identical to R02.
+
+Zero remote counts/local ESTIMATE64k, model/settings, USD20/max12/output8192/3600s,
+singlepass12compile/990monitorreplays/204444cycles and same published benchmark
+B/C1sessionx3rounds remain unchanged. No DUT/native/physics/formal/G1 allowance,
+new hidden set, placebo or C benefit is implied. Claude reference, fixed stimuli,
+raw12/N10/38unknown and all historical failures remain unchanged.
+
+Exact phase/report/source/delta/review prompt and snapshot manifest:
+`docs/audits/producer_test2_bc_retest_R03_2026-11-06/`. Existing P18 must accept
+the exact R03 hashes, then root issues BC_RETEST_EXECUTE_V3 for the one new run
+root. No live action occurs during this preparation. Key retained, no new key or
+budget request; API/network/keycontent/SV/supervisedprocess0, no install/commit/
+push. Actual HEAD2de33e981d2fffc9739d2ca049fbae1774de1aad, staged entries unchanged,
+new work uncommitted/unpushed. Older complete document bodies follow unchanged.
+
+
+## Current same-IP B/C retest — R02 zero-count prepared, no live execution (2026-11-06)
+
+The user confirmed the zero remote count method: 64k is a local ESTIMATE target
+and actual-response qualification threshold, not a server input hard cap. R02
+uses unchanged public B/raw and C/raw+verified E-graph packets, one independent
+session per arm, three rounds, B1,C1,C2,B2,B3,C3. This is a known published old
+benchmark retest, not a fresh hidden set. Old DUT, Claude reference, fixed stimuli,
+ABI, raw12/N10/38unknown and all historical results remain unchanged.
+
+Complete first-request estimates: B46876/C52466 (system+packet+schema included).
+Remote counts0; counts are not assumed free. Before each generation reserve
+USD5.910168 using the reviewed model context bound. Only complete trusted qualified
+usage may settle to a conservative actual-usage upper; failed/unknown/incomplete/
+over64k results retain full reserve and halt. Dispatch commitments never exceed
+USD20. Up to12 generations/output8192/total3600s; local singlepass remains at most
+12compile/990monitor replays/204444cycles, no new DUT/native/setup/formal/G1 jobs.
+Six snapshots freeze before shared grading, including invalid/NOT_RUN cases.
+
+New `test2/retest_v2/` and `test2/configs/controller_done_bc_retest_v2.json` are
+prepared for exact independent code precheck, then a separate root EXECUTE.
+Stdlib HTTPS needs no installation; explicit existing CA/hostname verification,
+one fixed POST, no redirects/automatic retry. Real transport/supervisor/SV were
+not exercised here. R02 has18 pure checks PASS plus1 final provider-JSON retention
+delta PASS; these are separate source-bound runs, not a final19-test full suite.
+The six-round stub does no compilation/replay and produces no scientific scores.
+R01 full mock/replay and G1 were not rerun; sealed R01 remains unchanged.
+
+Preparation: `docs/audits/producer_test2_bc_retest_R02_2026-11-06/phase.json`,
+`report.md`, `review-prompt.md`, `snapshot-manifest.json`. The earlier verifier
+used the wrong base for R01 relative paths; corrected hash checks show0mismatches
+for12326 archived files/916 dependencies/900 old frozen members. The verifier
+error is retained in protected-verification.json. Staged key retained; no content
+read/hash, no API/network/SV/paid call, no install/commit/push. Actual HEAD remains
+2de33e981d2fffc9739d2ca049fbae1774de1aad; new work is uncommitted/unpushed.
+
+Next: existing P18 audits exact R02 hashes and deltas. Live is blocked until the
+accepted exact review and root EXECUTE; key staging is not EXECUTE. Do not request
+the key again, rerun completed mock/G1 for context, alter old freezes, or claim C
+benefit from this preparation. All earlier document bodies follow unchanged.
+
+
+## Current same-IP B/C retest — R01 prepared, billing/EXECUTE blocked (2026-11-06)
+
+User explicitly approved oldbenchmark B/C1sessionx3rounds,totalAPI<=USD20;B1israw
+first,C addsEgraph. New `test2/retest_v1/` and
+`test2/configs/controller_done_bc_retest_v1.json` prepare6snapshots/2finals,
+B1C1C2B2B3C3,ownhistory,allroundfreeze thenoldsharedv4grading. Knownpublishedcorpus
+retest,notfreshhidden. OldDUT/Claudeoracle/driver/ABI/labels/3168packetrawcount/
+raw12/N10/38unknowns unchanged;noformal540/74witness/G1rerun orcrossIP.
+
+Max12generation/16counts(4preflight),64kinput/8192output/120s,SDKretry0,onefailure
+retry/round. Suppliedconservativegenerationreserve6normal<=USD1.45152/12max<=2.90304;
+countfeesUNKNOWN:wholeAPIUSD20coverage notyetverified. Therefore **before SDK,
+keyread or dispatch live FAIL_CLOSED**. Parentzero-countalternative not accepted
+or substituted. Actual userauthorization3efe3f6d... isnotEXECUTE. User securekey
+metadata confirmedpresent/nonempty0600,parent0700;no contentsread/hash,retain
+throughstage,no repeatrequest. ActualAPI/SDK/newSV/process0 inpreparation.
+
+One livepass<=12compile/990monitorreplays/204444cycles,0newDUT/native/setup. Parent
+3600s window includesgates/API/local/cleanup;work3590/parentstop3595,perchildremaining
+cap;PGIDlease+ledgerpayload/price/exclusiveclaim. Failed/unknownreservednotrefunded;
+cancelledgradingretains972case denominator. OSrealtime/fullchildcensus notproved.
+Initial18/1FAILretained(pathnormalization issue);repaired19PASS fullmock/replay
+preserves38unknowns/round;final6guardchecksPASS. Final3sourcefiles have documented
+lease/resource delta after19;fullmock notrepeatedperparent,nofakefinal25suiteclaim.
+
+Exact `docs/audits/producer_test2_bc_retest_R01_2026-11-06/phase.json` /manifest/
+report/review-prompt. Independentprecheck and defensiblebilling plus exactEXECUTE
+still required;no liveautomatically. Alloldbody/P2/PDF/G1/pools/freezes/index kept;
+actualHEAD2de33e981d2fffc9739d2ca049fbae1774de1aad,newwork uncommitted/unpushed.
+
+## Current G1 acceptance — P17 accepted finite scope; next stage pending (2026-11-06)
+
+P17 **PASS_WITH_LIMITS** accepts all16 preregistered public finite G1 observation
+contracts(singleprofile,depth8,fixed4cyclepaths). Independent current acceptance:
+`docs/audits/agent_bridge_2026-11-06/G1_qualification_v1/G1-final-acceptance-p17.json`
+SHA6dcfc79e75f9d12e4cf72e180cc0560877abb54b760269c32dee376499581317;
+P17review `docs/audits/agent_bridge_2026-11-06/P17_g1_completed_execution/review.json`
+SHA00bb0117158047e74161f1337581ab43b9ffc447a1a1611d87909ecf781b8bff.
+32validphysicalruns/256rows haveknownfirstinputs;8intentionalIcarusQC12ok=x rows
+retained. Native raw18PASSED/14FAILED,cover14REACHED/2UNREACHED;
+all raw failures,oldNOT_REACHED and E02badfirstrow remain unchanged. QC07/15vacuous,
+QC12/13unsupported4state,QC14transportonly;no128/unbounded/realDUT/oracle/monitor/
+Cbenefit/old74witness proof. Historical E04report/PENDING records are immutable;
+current acceptance comes from P17+separateclosure,not edited old outputs.
+
+Cumulative setup8/compile20/native32/physical33/132cycles;native/physical/setup
+allowances exhausted. G1 closed;no new allowance/reset or API/raw/B/C/crossIP grant.
+Read-only sameIP plan: `docs/audits/producer_test2_next_stage_readonly_2026-11-06/next-stage-readonly.md`.
+Rawtest meaning unclear,not assumedA/oldformal. Proposed B/C1sessionx3rounds:
+6normal/12maxgeneration,4precounts+perattempt<=16counts,64kinput/8192output;
+feesUNKNOWN. Existingrunner hardcodes3x6,newminimaladaptation/newregistration
+needed. On old frozen corpus onepass<=12compile/990monitorreplays/204444cycles,
+0newDUT/native;not freshhidden/generalization. Nothing new executed or approved.
+
+MetadataC02only:completeoldbodies retained,P2/PDF/E04/allsealedsource/pools/index
+untouched. ActualHEAD2de33e981d2fffc9739d2ca049fbae1774de1aad;newG1work uncommitted,
+not claimed present onremote. No tests/compile/sim/API/key/install/commit/push.
+
+## Current G1 execution — E04 complete, pending P17 (2026-11-06)
+
+ExactP16+EXECUTE R05B ranonce,entry0:72newrootsRETURNED/0NOT_RUN,10jobs reused
+explicitnew_executionfalse. All16publiccontrol observationcontracts matched;
+G1qualification PENDING_P17,not science/generalcorrectness. New0setup/14compile/
+28native/30physical120cycles;cumulative8/20/32/33/132within caps. Native/physical/
+setupremaining0;no automaticretry. Root60exit0/12exit1,rawnegativefailuresretained.
+
+Combinednative32incl4reuse:raw18PASSED/14FAILED,BMC10PASS/6FAIL,cover14REACHED/
+2UNREACHED. QC01rawFAILED+REACHED+assertFAILED andoldNOT_REACHED retained. QC07/15
+vacuous/no credit;QC12/13unsupported4state diagnostics;QC09wrongphase REJECT;
+QC14finalpost transportonly/no128. All16denominator retained,not16semantic proofs.
+32validdualphysicalruns256rows(incl16reused),4edges2/6/10/14ns,post15/end16ns,
+VCD0conflicts,allfirstinputresetknown. Eight intentionalIcarusQC12ok=x rows kept;
+oldE02startupX untouched. Physicalprojection exclusions not relabeled correctness.
+
+Currentregistered3.494313916s,cumulativeactual15.264969499s
+versuscharged18.494324125s;priorcharge15notspend.
+0timeouts/mandatoryerrors/versionqueries/ps;inventoryincomplete,memoryunknown.
+E04phase/report/perQC/resources/rawsnapshot in
+`docs/audits/producer_test2_g1_E04_2026-11-06/`. Newpoolcompleted/nothalted,lock
+retained;all4485historicalfiles/oldpools/R05/R05Bfreezes/index unchanged.
+Next existingP17 audits savedbytes before G1qualification claim. No raw/B/C,
+modelAPI/key/paid/crossIP/install/commit/push. Originalbodies/allscientific/128/
+fourstate/vacuity/74witness/Cbenefit/billinglimits preserved;P2 unchanged.
+
+## Current G1 preparation — R05B integrated, pending P16 (2026-11-06)
+
+P15 found only P15-R1 classifier issue;E03evidence/resources accepted withlimits.
+R05B newnamespace integrates sealedR05reader without editing R05/E03/v4. QC01
+rawFAILED/exit1,activationREACHED/assertFAILED are separate;oldNOT_REACHED preserved.
+All18SV/inputs/labels/flags/tools/timing/guards unchanged;runtimeidentical,budget
+attempt-idonly. Ten E02/E03reusedjobs explicitnew_executionfalse,oldinvalidphysics
+neverreused;allraw/SMT/binary/build/receipt/sourcehashesbound,newoutputs-only.
+
+Actual R05allocationcharge15/current1185/work1180 inherits8setup/6compile/4native/
+3physical12cycles,actual11.770645541s versuscharged14.572948167s;notreset/spend15s.
+New72roots0setup/14compile/28native/30physical120cycles -> cumulative8/20/32/33/132.
+No native/physicalretryreserve. G1stillBLOCKED_NOT_QUALIFIED;newpool/lock absent.
+New11pureintegrationchecksPASS(0.057237125s),notfullmock/actualrun orP16acceptance.
+
+Exact `docs/audits/producer_test2_g1_R05B_2026-11-06/phase.json` /snapshot-manifest;
+source `test2/g1_v5b/`,reg `test2/configs/g1_qualification_registration_v5b.json`.
+Next existing P16 must bind finalmanifest/reg/source/reuse/actualdecision/amendment;
+coordinator exactEXECUTE onlyafteracceptance. No actualSVtools/API/key/paid/raw/B/C/
+crossIP/install/commit/push. All4485historicalfiles,R05pure145files/13checks/error,
+E03/oldfailures/unknowns/index preserved,actualHEAD2de33e981d2fffc9739d2ca049fbae1774de1aad.
+Fulloldbodies and allscientific/128/fourstate/vacuity/74witness/C/billinglimits retained.
+
+## Current G1 execution — E03 / R04 halted, pending P15 (2026-11-06)
+
+R04 ran once after exact P14 PASS_WITH_LIMITS and EXECUTE;runner exit1,G1 NOT_QUALIFIED.
+QC00 both actual simulators now match8rows each,VCD0conflicts,known first pre/post,
+4edges2/6/10/14ns,post15/end16ns;old E02 X retained. QC00 native2+frontend explicitly
+REUSED_FROM_E02,not new trials. QC01 BMC expectedFAIL observed. Cover raw reached
+step2 AND assertfailed/StatusFAILED/exit1,but frozen classifier wroteNOT_REACHED;
+this conflicts with rawreach and cannot proveunreachable. Old label/negative raw
+outcome retained,noPASS relabel. Halt reasonNATIVE_EXPECTATION_MISMATCH:QC01:cover.
+
+Current0setup/3compile/2native/2physical8cycles,7returned/72NOT_RUN;QC01physical and
+QC02–15 unrun. Cumulative8setup/6compile/4native/3physical12cycles;remaining0/26/28/30,
+1012cycles doesnotauthorize restart. Current registered6.572940208s,
+cumulativeactual11.770645541s versuscharged14.572948167s;
+prioractual5.197697583/charge8 allocation retained. No timeouts/mandatory errors;
+0ps/versionqueries,childcensus incomplete,memory unknown,no new permissions.
+
+Exact E03 phase/report/perQC/resources/raw snapshot in
+`docs/audits/producer_test2_g1_E03_2026-11-06/`;v4pool halted/completed,lock retained.
+All4485historical files,R04sources/registration/old pools/failures/index unchanged;
+actual HEAD2de33e981d2fffc9739d2ca049fbae1774de1aad,stage0. P15 next reads saved bytes,
+then any continuation needs new exact registration/accepted review/EXECUTE and
+cumulative accounting. No retry,API/key/paid/raw/B/C/crossIP/install/commit/push.
+All original document bodies and scientific/128/fourstate/vacuity/74witness/C/billing
+limits preserved;Hallmark factual-material organization only,noRTL certification.
+
+## Current G1 preparation — R04 sealed, pending P14 (2026-11-06)
+
+R04 **PREPARED_PENDING_P14**;G1 NOT_QUALIFIED. Actual physical33 user approval,
+amendment and continuation are now hash-bound;old absence/null drafts are history.
+No new authority or EXECUTE created. Only physical_tb.sv changes among18SV:step7,
+positive1ps step0 transition,first999ps wait;all pre/edge/post ticks and4edges stay.
+Repair remains unmeasured.23 semantic/reference inputs and runtime/parser unchanged.
+QC00 saved compile1/native2 conditionally REUSED_FROM_E02,not new trial/physics.
+
+Final-source preparation-attempt2 ran17pure checks:17PASS/0fail/0error,0.071904791s;
+old16-case attempt1 retained. New positive actual-allocation check creates no
+claim/ledger;P14 still required. New plan0setup/17compile/30native/32physical,
+128cycles;cumulative8/20/32/33,132cycles;prior charge8/current1192/work1187 within1200.
+Old measured5.197697583s/charged7.151973250s retained;no physical retry reserve.
+
+Exact phase/report/snapshot-manifest in `docs/audits/producer_test2_g1_R04_2026-11-06/`;
+source/registration `test2/g1_v4/` and `test2/configs/g1_qualification_registration_v4.json`.
+All4485 protected historical files unchanged. Actual baseline HEAD2de33e981d2fffc9739d2ca049fbae1774de1aad,
+stage0;old10000-stage preservation record is historical after approved publication,
+not current staging. All original document bodies/failures/unknowns/freezes retained.
+
+Next:existing independent P14 reads sealed package and exact authority/reuse;
+coordinator supplies exact EXECUTE only after acceptance. This preparation runs
+0realG1 jobs/modelAPI/key/paid/install/commit/push/cross-IP/raw/B/C;new pool/lock absent.
+Source startup arithmetic is not simulator validation. Hallmark real-facts/minimal
+repair organization only,no UI/RTLproof. All scientific/128/four-state/vacuity/
+74witness/C-benefit/billing and earlier limitations remain;P2 untouched.
+
 ## Current publication — full approved history verified (2026-11-06)
 
 The explicitly approved 110,870-path historical snapshot (1,666,538,059 raw bytes)

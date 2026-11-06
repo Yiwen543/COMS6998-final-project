@@ -1,0 +1,130 @@
+{
+  "phase": "P18_BC_RETEST_R02_EXACT_CODE_PRECHECK",
+  "scope": "BC_RETEST_V2_EXACT_PRECHECK",
+  "status": "CHANGES_REQUIRED",
+  "input_identity": {
+    "registration_sha256": "3e686fab3e2389d54f9c574c3a1eb39c504250766c7dfa4c3245bc4a1e0d4ac2",
+    "source_manifest_sha256": "412ba471e041848820bbafda5c63401369c21a38182648d35186c02d4de4b0b2",
+    "preparation_manifest_sha256": "9e5fba11c236434ff67397f9ec577fc1313f36133620d7846b8cc0a3753bdd04",
+    "financial_policy_sha256": "46616b110a845006dc3b90a358b3116b41f7d6496a05ab68199f63fa0a473668",
+    "cost_basis_sha256": "a249c712ff3a86ef04b1ddff16a8d71265e0fe82188a70b9d465ab48093407f3",
+    "method_addendum_sha256": "984e8fe674be9c57c3f95095635ca199d1611f925ec27129abc5f8edb8a7a8c4",
+    "user_zero_count_confirmation_sha256": "1a594f05adff9d5eb42a05ea983a3456b080ac9bafc20874d802e1ad039f1ec0",
+    "producer_manifest_sha256": "9e5fba11c236434ff67397f9ec577fc1313f36133620d7846b8cc0a3753bdd04"
+  },
+  "producer_phase_sha256": "b55ecedd8950fb6ae208df379f5e3605942c9407af410be92e637444e0ec37b1",
+  "actual_HEAD": "2de33e981d2fffc9739d2ca049fbae1774de1aad",
+  "live_accepted": false,
+  "EXECUTE_may_be_issued_for_this_R02": false,
+  "method_accepted_for_preparation": true,
+  "64k_parent_clarification_and_actual_user_confirmation_resolved": true,
+  "findings": [
+    {
+      "id": "P18-R1",
+      "severity": "MEDIUM",
+      "material": true,
+      "blocking": true,
+      "path": "test2/retest_v2/resources.py:34",
+      "source_sha256": "4b0ab6f57877205e669633eeeab9e2aebf47bd47ae74530a91ca294b4a6f9200",
+      "related_paths": [
+        "test2/retest_v2/api.py:23",
+        "test2/retest_v2/pipeline.py:55",
+        "test2/retest_v2/resources.py:85"
+      ],
+      "fixture_path": "docs/audits/agent_bridge_2026-11-06/P18_bc_retest_preflight/R02-preseal-changed-evidence/missing_tier.input.json",
+      "fixture_sha256": "cebd20c71be9b5b0d3b0acf7a002761d0f526f61aeda5f26f73f700c33c6a97f",
+      "results_sha256": "c99fc8ed157afad6e9652e279aeaf4c789681d4eb330f2152aca86995337577b",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P18_bc_retest_preflight/preseal_changed_probes.py",
+      "command_exit_code": 0,
+      "expected": "Missing/nullreturnedtiershouldhalt,notqualifyorcompile,retainfull5910168reservationandrawresponse",
+      "actual": "Noneaccepted;settled487168;released5423000;qualificationsucceededatresponsecontract",
+      "impact": "Violatesregisteredfulltier-validation/unknown-retentionbeforetrustedsettlement;notproofactualUSD20overspendorrealAPIincident",
+      "minimal_fix": "Requireexplicitreturneddefault,refusemissing/None;preservesealedR02;newnarrowrepairseal",
+      "acceptance": [
+        "Missingandnulltierrefusedbeforecandidateaccept/compile/nextAPI;fullreservationretained,noSETTLEjournal",
+        "Explicitdefault64000/8192stillsettles487168;nondefaultstillrefused",
+        "Bindnewsource/reg/prep/review/EXECUTE;nooldbase/G1suiteorbudgetexpansionrequired"
+      ]
+    }
+  ],
+  "other_material_findings": [],
+  "verification": {
+    "snapshot_members": 203,
+    "current_source_dependencies": 943,
+    "all_match": true,
+    "preseal_probe_copies_match_final_seal": true,
+    "independent_response_fixtures": 8,
+    "independent_HTTP302_fake_check": 1,
+    "provider_targeted18_plus_delta1_saved_not_rerun": true,
+    "base6probe_19integration_G1_not_rerun": true,
+    "initial_complete_payload_ESTIMATE": {
+      "B": 46876,
+      "C": 52466,
+      "fresh_provider_counts": 0
+    },
+    "release_supervision_identical_R01": true,
+    "real_API_key_network_SV_process_signal": 0,
+    "live_root_supervision_absent": true,
+    "index_unchanged": true,
+    "index_entries_sha256": "9f59799646fc88a655125b45990361109a5754ff0f5253882dca56761a5df313"
+  },
+  "budget_scope": {
+    "reserve_microUSD": 5910168,
+    "ceiling_microUSD": 20000000,
+    "max_generations": 12,
+    "remote_count_calls": 0,
+    "count_price": "UNKNOWN_NOT_ASSUMED_FREE",
+    "actual_invoice": null,
+    "output_max": 8192,
+    "input_target_actual_acceptance": 64000,
+    "input_server_hardcap_claimed": false,
+    "wall_total_seconds": 3600,
+    "new_DUT_native_cross_IP": 0
+  },
+  "commands": [
+    {
+      "command": "boundedchangedsourceinspection",
+      "exit_code": 1,
+      "reason": "Initialcatincludedabsenthttp_transport.py;actualtransportinapi.py;subsequentapi/resources/callerinspected"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-06/P18_bc_retest_preflight/preseal_changed_probes.py",
+      "exit_code": 0,
+      "result": "8responsefixtures+1fake302;confirmedmissing-tierfalseacceptance"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 [exactR02snapshot/dependency/probeinput/reportbindingverification]",
+      "exit_code": 0,
+      "result": "203/943match,allprobeinputs/sourceunchanged,livepathsabsent,indexunchanged"
+    }
+  ],
+  "hallmark": {
+    "considered": true,
+    "read_this_round": false,
+    "prior_read_reference": "hallmark-method-usage.json actualpriorP18tools.skills__read;hashesverifiedsameversioninpersistence-verification.json",
+    "applied_for": [
+      "Fixedexactsealversusproducerintent",
+      "Rankonematerialcontractfindingandminimalrepair",
+      "Separatemethod/baseacceptancefromliveexecutiongate"
+    ],
+    "workflow_executed": false,
+    "scripts_executed": false,
+    "not_applicable_reason": "UIworkflowdoesnotproveHTTPfinanceorRTLcorrectness",
+    "technical_methods": "Staticexactsource,independentfrozenresponsefixtures,mockedHTTPno-network,SHAcomparison",
+    "source": "/Users/yiwenchen/.codex/skills/hallmark/SKILL.md",
+    "source_sha256": "25a1ff92d925b2389e8409f42fb8ad7e033fceca8b5d1f07ed4ca4c28da53dc3",
+    "reference": "/Users/yiwenchen/.codex/skills/hallmark/references/review-finish.md",
+    "reference_sha256": "9d00de59e71ee2516212140b0512d6d2e90a120d4a328eeba9cb12396ff38d64",
+    "read_evidence_file": "hallmark-method-usage.json",
+    "read_evidence_sha256": "3d4f2fe0bb3b9eaa5908616bfdd4938b62bacdbd41ba657900264cfa93ec262a"
+  },
+  "limits": [
+    "NorealHTTP/API/simorcredentialread;fakesarenotconnectionoractualbillingproof",
+    "R01base/rootPGIDdeadlineevidenceonlyreusedwherebytesmatch;noOShardrealtime/fullchildcensusproof",
+    "Highesttariffboundassumespinnedrequestedservicecontract;notarbitraryprovideridentity/pricedriftinsurance",
+    "Optionalcached/reasoningsubsetsretainednullandallinput/outputchargedhighest;notexactcachebreakdown",
+    "NoG1repeat/formal/native/newhiddenbenchmark/Cbenefitclaim;oldraw12/N10/38unknownsandfailuresuntouched"
+  ],
+  "evidence_sha256": "1aae6ac764432e95c19a50de67f8fc2ced6b9338d53e3f8dd05f629de8ece6a9",
+  "write_scope": "P18reviewerdirectoryonly;producer/sealed/shared/indexunchanged;noproducermessages"
+}
