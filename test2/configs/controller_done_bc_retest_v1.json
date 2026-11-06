@@ -1,0 +1,97 @@
+{
+  "id": "controller_done_bc_retest_v1",
+  "status": "PREPARING_OFFLINE_LIVE_BLOCKED_PENDING_COUNT_FEES_AND_EXACT_REVIEW_EXECUTE",
+  "task_kind": "Known published frozen benchmark retest,not new hidden set",
+  "user_approved": {
+    "total_api_budget_usd": 20,
+    "source": "Explicit latest user scope relayed by coordinator01a1ada7-ffb8-73ad-bb44-6a1db859003c",
+    "arms": [
+      "B2_raw",
+      "C2_semantic"
+    ],
+    "sessions_per_arm": 1,
+    "rounds": 3,
+    "manual_failure_retries_per_round": 1
+  },
+  "schedule": [
+    [
+      "B2_raw",
+      1
+    ],
+    [
+      "C2_semantic",
+      1
+    ],
+    [
+      "C2_semantic",
+      2
+    ],
+    [
+      "B2_raw",
+      2
+    ],
+    [
+      "B2_raw",
+      3
+    ],
+    [
+      "C2_semantic",
+      3
+    ]
+  ],
+  "run_root": "test2/results/controller-done-bc-retest-v1",
+  "API": {
+    "provider": "OpenAI Responses",
+    "base_url": "https://api.openai.com/v1",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "service_tier": "default",
+    "store": false,
+    "prompt_cache_options": {
+      "mode": "implicit",
+      "ttl": "30m"
+    },
+    "SDK_retries": 0,
+    "input_tokens": 64000,
+    "output_tokens": 8192,
+    "timeout_seconds": 120,
+    "max_generations": 12,
+    "max_counts": 16,
+    "preflight_counts": 4
+  },
+  "billing": {
+    "ceiling_micro_usd": 20000000,
+    "generation_reserve_micro_usd": 241920,
+    "count_reserve_micro_usd": null,
+    "count_fee_status": "UNKNOWN_FAIL_CLOSED",
+    "actual_invoice_usd": null,
+    "external_verified_pricing_required": true
+  },
+  "local": {
+    "compile_calls": 12,
+    "compile_timeout": 60,
+    "monitor_replays": 990,
+    "replay_timeout": 15,
+    "monitor_cycles": 204444,
+    "new_DUT_simulations": 0,
+    "new_native_jobs": 0,
+    "new_version_queries": 0
+  },
+  "wall": {
+    "total_seconds": 3600,
+    "stop_work_seconds": 3590,
+    "cleanup_seconds": 10,
+    "policy": "Outer parent supervises one owned stage PGID;all API/local children stay in that group. Per-call cap bounded by work deadline;group cleanup and final result remain inside total budget. No OS/fs hard realtime claim."
+  },
+  "frozen_task": "test2/tasks/axis_length_done_v1",
+  "old_study": "test2/configs/controller_done_study_v1.json",
+  "old_scoring": "test2/configs/controller_done_scoring_v4.json",
+  "old_generation_freeze": "test2/configs/controller_done_generation_freeze_v2.json",
+  "prompt_policy": "Exact old public packets+own previous candidate/dev feedback;no final/reference/private/skills;C adds only old validatedEgraph.",
+  "score_policy": "All6 snapshots before unified shared_v4 scoring;raw12/N10/38oracleunknown and invalid/unknown retained.",
+  "source_manifest": "test2/retest_v1/source-manifest.json",
+  "preparation_manifest": "docs/audits/producer_test2_bc_retest_R01_2026-11-06/snapshot-manifest.json",
+  "EXECUTE": null,
+  "pricing_record": null,
+  "no_automatic_formal_or_old_witness_rerun": true
+}

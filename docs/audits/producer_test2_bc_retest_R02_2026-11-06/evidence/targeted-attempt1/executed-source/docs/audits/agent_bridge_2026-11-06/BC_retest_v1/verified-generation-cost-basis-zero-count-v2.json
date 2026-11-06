@@ -1,0 +1,71 @@
+{
+  "record_kind": "BC_RETEST_ZERO_COUNT_VERIFIED_GENERATION_COST_BASIS",
+  "status": "VERIFIED_METHOD_NOT_EXECUTE",
+  "checked_at_utc": "2026-11-06T18:35:30.699877+00:00",
+  "provider": "OpenAI Responses",
+  "endpoint": "https://api.openai.com/v1/responses",
+  "model": "gpt-6.1-sol",
+  "service_tier": "default",
+  "reasoning_effort": "low",
+  "prompt_cache_options": {
+    "mode": "implicit",
+    "ttl": "30m"
+  },
+  "provider_tools": [],
+  "automatic_retries": 0,
+  "remote_count_requests_max": 0,
+  "count_endpoint_unit_price": null,
+  "count_is_free_claimed": false,
+  "API_ceiling_micro_usd": 20000000,
+  "max_generation_attempts": 12,
+  "output_tokens_max": 8192,
+  "server_context_tokens_bound": 1050000,
+  "local_input_estimate_admission_target": 64000,
+  "actual_input_usage_acceptance_max": 64000,
+  "rates_USD_per_million": {
+    "standard_input": 2,
+    "standard_output": 10,
+    "cache_write30m_replaces_input": 2.5,
+    "long_context_max_input": 5,
+    "long_context_max_output": 15,
+    "cached_input": 0.1
+  },
+  "regional_uplift_multiplier_used": 1.1,
+  "per_dispatch_full_context_reserve_micro_usd": 5910168,
+  "reserve_formula": "ceil((1050000*5/1000000+8192*15/1000000)*1.1*1000000)",
+  "trusted_usage_settlement_formula_micro_usd": "ceil((input_tokens*5+output_tokens*15)*1.1);onlyfullytrustedresponse;neverinvoice",
+  "unknown_usage_failure_policy": "Keep full5910168reservation;no actualcost0 inference/refund/reset",
+  "budget_admission": "prior_settled_cost_uppers + unresolved_full_reservations + next5910168 <=20000000;otherwisebefore-dispatchhaltandNOT_RUN",
+  "normal6_at64k8192_cost_upper_micro_usd": 2923008,
+  "max12_at64k8192_cost_upper_micro_usd": 5846016,
+  "three_unknown_failures_micro_usd": 17730504,
+  "fourth_unknown_dispatch_allowed_after_three_without_other_spend": false,
+  "published_30m_short_generation_reserve_normal6_USD": 1.45152,
+  "published_30m_short_generation_reserve_max12_USD": 2.90304,
+  "published_30m_short_max12_plus10pct_USD": 3.193344,
+  "historical_first3_BC_mean_input_tokens": 243687.33333333334,
+  "historical_first3_BC_mean_output_tokens": 13669.666666666666,
+  "historical_token_reference_not_future_count_or_invoice": true,
+  "official_evidence": [
+    {
+      "url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+      "facts": [
+        "context1050000",
+        "Standardinput2output10cachewrite2.5perM",
+        "longcontextinput2x/output1.5x",
+        "region+10%"
+      ]
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/token-counting",
+      "facts": [
+        "max_output_tokensincludesnonvisible/reasoning",
+        "localcountsnotexactproviderstructure"
+      ]
+    }
+  ],
+  "method_review": "docs/audits/agent_bridge_2026-11-06/P18_bc_retest_preflight/parent-clarification-method-addendum.md",
+  "parent_clarification_sha256": "46616b110a845006dc3b90a358b3116b41f7d6496a05ab68199f63fa0a473668",
+  "actual_provider_invoice_USD": null,
+  "not_EXECUTE": true
+}

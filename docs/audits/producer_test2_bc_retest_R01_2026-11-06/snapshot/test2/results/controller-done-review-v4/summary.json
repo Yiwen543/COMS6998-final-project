@@ -1,0 +1,84 @@
+{
+  "CLI_reported_usd": 0.189521,
+  "CLI_usage": {
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 24685
+    },
+    "cache_creation_input_tokens": 24685,
+    "cache_read_input_tokens": 0,
+    "fallback_credit": null,
+    "inference_geo": "global",
+    "input_tokens": 4,
+    "iterations": [
+      {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 24685
+        },
+        "cache_creation_input_tokens": 24685,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 4,
+        "output_tokens": 3304,
+        "type": "message"
+      }
+    ],
+    "output_tokens": 3304,
+    "output_tokens_details": {
+      "thinking_tokens": 1610
+    },
+    "server_tool_use": {
+      "web_fetch_requests": 0,
+      "web_search_requests": 0
+    },
+    "service_tier": "standard",
+    "speed": "standard"
+  },
+  "OpenAI_count_requests": 8,
+  "conditional_second_disposition": "NOT_ALLOWED_OR_NEEDED: first accepted",
+  "conditional_second_used": false,
+  "count_endpoint_fees": "UNKNOWN",
+  "cumulative_CLI_reported_usd": 0.5320229999999999,
+  "generation_requests": 0,
+  "keys_retained": true,
+  "next": "Offline current-source generation budget/usage/tier checks, fullmock/replay, finalfreeze and concrete new paidproposal; no generation authorization",
+  "oracle_author_requests": 0,
+  "review": {
+    "adapter_changes_required": false,
+    "issues": [
+      {
+        "evidence": "inventory() builds its lookup with a dict keyed on (source, simulator, trace). Duplicate measurement records for the same key are silently collapsed, and the last one wins.",
+        "required_action": "Detect duplicate keys and report the case as unresolved, or record a diagnostic, rather than collapsing silently.",
+        "severity": "low"
+      },
+      {
+        "evidence": "assess() records evidence_infrastructure_unresolved with only the exception type, without the message or a path to any partial replay artifacts. grade() errors, by contrast, include the message.",
+        "required_action": "Include the error detail and any partial evidence path in the retained unresolved case. This affects provenance only, not counting.",
+        "severity": "low"
+      },
+      {
+        "evidence": "Category detection counts are zeroed whenever correct_control_gate is false. The per-case definite flags are retained, but the summary does not state that the zeros are gate-suppressed.",
+        "required_action": "Document in the summary semantics that category counts are conditional on the correct-control gate.",
+        "severity": "low"
+      },
+      {
+        "evidence": "In the reuse path, costs.reused_monitor_replays is incremented before grade() binding checks run. Reused results later rejected as replay_binding_unresolved are still counted as reused.",
+        "required_action": "Label the counter as reuse attempts, or count binding-rejected reuses separately.",
+        "severity": "low"
+      }
+    ],
+    "limitations": [
+      "The witness reference prefix ends at post(S-1), while the selected alarm is at pre(S). It neither confirms nor refutes the selected alarm, and no generic false-alarm claim is made.",
+      "The trace_done=0 safety projection proves no 128-cycle completion and no end-only activation.",
+      "Oracle ld/lh suppression means only the first data or status violation is checked until scoreboard loss is cleared by reset.",
+      "End-marker finite credits apply at case-eligibility level only, as UNATTRIBUTED_ANY_SLOT. There is no slot or category attribution, and the union is not category-specific.",
+      "Metrics are limited to physical-prefix and finite-row results on the planned inventory. No candidate sources, outcomes, hidden rows or scores were reviewed. Any oracle change requires a separately authorized Claude author."
+    ],
+    "oracle_revision_required": false,
+    "scope": "Fresh independent review of case_v4 and grade_v4. The frozen-v2 oracle, the runtime and the witness v3 are unchanged. The fixed scope is MIN4/MAX8 bytes, input frames of 1..12 bytes, a development tail of 32 and a final tail of 128. trace_done is 1 only at the final post sample, with no extra edge and no DUT input change. Prior findings: (1) Fixed. Saved records whose status is not 'graded' are carried verbatim as saved_case_unresolved inside carried_saved_case. Missing saved cases become saved_case_missing. Only 'graded' saved records open a result, and only after path containment, result sha and gzip sha checks. (2) Fixed. grade() checks all of the following before adjudicating, and any mismatch gives replay_binding_unresolved with no detection: the qualified rows file hash against the label, the canonical rows hash against result.rows_sha256, label.cycles == attempted_cycles == len(rows), the marker scope [n-1,'post'] with no safety_projection, the reference onset range, and raw sample order and cycle counts. Raw property accounting re-derives checks, failures, unknown and end_sample_checks from the raw log. Fresh and reuse use the same grade() and summarize(). (3) Fixed. FAIL_with_oracle_unknown_pairs and FAIL_without_oracle_unknown_pairs are explicit per type, both per round and over the inventory. oracle_FAIL_any_unknown_context_types is labelled. (4) Fixed. Fields include oracle_unknown_pairs, candidate_unknown_pairs and unresolved_pairs. Every field named '_including_marker' includes the final post sample; ordinary_alarm_samples excludes it. Incomplete replays keep their raw counts, and is_unresolved does not hide them. (5) Fixed. Detections are split into ordinary_safety and end_marker_finite_UNATTRIBUTED, and the union is caveated. Safety credit requires an ordinary non-marker alarm at or after onset and no earlier alarm. Both finite credits require a marker alarm with no earlier alarm and remain UNATTRIBUTED_ANY_SLOT. The fixed inventory retains missing labels as reference_case_missing. Uncompiled candidates are retained as candidate_unavailable. Candidates that fail reuse binding are retained as candidate_reuse_binding_unresolved. No oracle gap was found.",
+    "verdict": "ACCEPT_SCOPE"
+  },
+  "stage_authorized_review_slots": 2,
+  "stage_used_review_slots": 1,
+  "status": "ACCEPT_SCOPE_WITH_LOW_PRIORITY_DIAGNOSTIC_LIMITATIONS"
+}
