@@ -1,0 +1,40 @@
+{
+  "adapter_changes_required": true,
+  "issues": [
+    {
+      "evidence": "adjudicate: detected['safety'] needs only some alarm at or after onset, with no early alarms. The final post (marker) sample counts as such an alarm.",
+      "required_action": "Credit safety only for alarms on ordinary (non-marker) samples at or after onset, or report marker-only credit separately. Otherwise an end-only completion alarm counts as safety detection (category overlap).",
+      "severity": "high"
+    },
+    {
+      "evidence": "adjudicate: input_completion = complete and end in alarms. It ignores earlier alarms and which slot or category fired. response_completion uses the same end alarm, so one end alarm can credit both categories.",
+      "required_action": "Apply the same rule as response_completion (no earlier alarm), or report early alarms. State explicitly that the end alarm is not attributed to a category, or map slots to categories before scoring.",
+      "severity": "high"
+    },
+    {
+      "evidence": "witness: prefix=rows[:alarm_state], but the candidate alarm is at pre(alarm_state). The reference never judges pre(alarm_state). That is equivalent to post(alarm_state-1) only if no output depends combinationally on cycle-alarm_state inputs; s_ready may, and stability context depends on the ready values of that row.",
+      "required_action": "Label the PASS classification 'reference_PASS_on_prefix_through_post(alarm_state-1)', not 'candidate_false_alarm', unless pre(alarm_state) equality with post(alarm_state-1) is verified on the meaningful pins. Alternatively, have a separate Claude author add a pre-only adjudication path.",
+      "severity": "medium"
+    },
+    {
+      "evidence": "witness: the 'reference_confirmed_DUT_violation' classification does not check that the reference failure matches the sample or category of the candidate alarm.",
+      "required_action": "Record the reference failure cycle, phase and category, and claim confirmation only when they match the candidate alarm.",
+      "severity": "medium"
+    },
+    {
+      "evidence": "Reference FAIL with unknown records: the scorer uses fully_resolved separately, but observable_types counts any oracle FAIL.",
+      "required_action": "Report the oracle_unknown co-presence per type so FAIL plus unknown is never presented as resolved.",
+      "severity": "low"
+    }
+  ],
+  "limitations": [
+    "Oracle review from the specification found it consistent on these points: no-bypass pre/post basis; spurious or premature presented valid with ready=0 caught by sample(); a later reset does not erase failures; reset_clear checked on post; pre samples while rst=1 skipped; initial pre excluded; X/Z yields unknown without erasing failures; padding unknown before completion; truncation end waits; response debts are end-only; short tail yields UNRESOLVED.",
+    "Once an earlier failure or unknown sets the ld/lh flags, later presented-valid checks for that channel are suppressed until reset. Detection counts therefore reflect first violations only.",
+    "An incomplete accepted input frame at the end is a definite failure only if the scoreboard is known (li false).",
+    "No B/C sources, hidden traces or scores were reviewed. Physical coverage, synthetic controls and formal projections remain distinct.",
+    "Any oracle change requires a separate Claude author."
+  ],
+  "oracle_revision_required": false,
+  "scope": "The frozen-v2 check_rows is reused unchanged as the independent oracle for physical rows: development uses require_drained=true,min_tail=32 and final uses require_drained=true,min_tail=128. Final-post completion is judged on the last row's post sample, which matches the trace_done=1 sample without an extra edge. Safety-projection witnesses (trace_done=0) are for prefix adjudication only and prove no finite completion or end-only activation. Scores are definite detections with unknown context kept separate; they are not full PASS or soundness claims.",
+  "verdict": "LIMITED_SCOPE"
+}

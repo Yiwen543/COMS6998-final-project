@@ -1,0 +1,115 @@
+{
+  "api_error_status": null,
+  "duration_api_ms": 30407,
+  "duration_ms": 30504,
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "fast_mode_state": "off",
+  "first_content_frame_ms": 1969,
+  "is_error": false,
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "cacheCreationInputTokens": 26002,
+      "cacheReadInputTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "contextWindow": 1000000,
+      "costBasis": "list",
+      "costUSD": 0.190426,
+      "inputTokens": 4,
+      "maxOutputTokens": 128000,
+      "outputTokens": 3020,
+      "provider": "firstParty",
+      "thinkingTokens": 1295,
+      "webSearchRequests": 0
+    }
+  },
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "cacheCreationInputTokens": 26002,
+      "cacheReadInputTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "contextWindow": 1000000,
+      "costBasis": "list",
+      "costUSD": 0.190426,
+      "inputTokens": 4,
+      "maxOutputTokens": 128000,
+      "outputTokens": 3020,
+      "provider": "firstParty",
+      "thinkingTokens": 1295,
+      "webSearchRequests": 0
+    }
+  },
+  "num_turns": 1,
+  "permission_denials": [],
+  "queued_turn_count": 0,
+  "result": "```json\n{\n  \"verdict\": \"LIMITED_SCOPE\",\n  \"scope\": \"Recheck of adjudication v3, score v3, rescore v3 and witness v3 against the unchanged frozen-v2 oracle, using only this packet. All five prior findings are addressed in the adjudication and witness modules. (1) Safety credit now needs an ordinary, non-marker alarm at or after onset with no earlier alarm; marker_safety_signal and marker_only_safety_signal are reported separately. (2) input_completion now requires no alarm before the end sample, matching response_completion, and the shared end alarm is labelled UNATTRIBUTED_ANY_SLOT. (3) The witness labels PASS as reference_PASS_on_prefix_through_post_previous_cycle and sets candidate_false_alarm_claim=false. (4) reference_confirmed_selected_alarm=false and a FAIL is labelled unattributed to the selected alarm. (5) by_type in the rescore reports oracle_unknown_pairs and fully_resolved_FAIL_pairs. fully_resolved_detection is recomputed from the overridden definite flags. The oracle is unchanged and no actual oracle gap was found. The issues below are new adapter or reporting defects.\",\n  \"issues\": [\n    {\n      \"severity\": \"medium\",\n      \"evidence\": \"rescore execute iterates over every saved case and reads case['result_path'] and case['result_sha256']. score_v3 creates cases with status='reference_infrastructure_unresolved' (label status != 'complete') that have neither key. The rescore would raise KeyError, or would silently need to drop those cases, so they are not carried forward as unresolved.\",\n      \"required_action\": \"Carry non-graded saved cases through unchanged as unresolved with an explicit status. Only cases with status 'graded' should be rescored. Count the carried cases in the unresolved totals.\"\n    },\n    {\n      \"severity\": \"medium\",\n      \"evidence\": \"The rescore verifies candidate.sv equality, result.json against the stored sha, and the raw log against the stored sha. It does not compare result['rows_sha256'] with the current label's rows.json, or check that label['cycles'] equals result['attempted_cycles']. The adjudication computes the end/marker position from label['cycles'], while replay places the marker at len(rows)-1. A mismatch would misclassify marker versus ordinary alarms silently.\",\n      \"required_action\": \"In both the rescore and score_v3, assert that rows_sha256 matches the label's rows.json and that label['cycles'] == result['attempted_cycles'] == len(rows) before adjudicating. If either check fails, mark the case unresolved.\"\n    },\n    {\n      \"severity\": \"low\",\n      \"evidence\": \"score_v3 (the full grader) still reports observable_types as any oracle FAIL and has no per-type FAIL+unknown breakdown. The added unknown reporting exists only in rescore by_type, and even there the FAIL-with-unknown count is implicit (FAIL count minus fully_resolved_FAIL_pairs).\",\n      \"required_action\": \"Report FAIL_with_oracle_unknown_pairs per type explicitly in both paths, and label observable_types as 'oracle_FAIL_any_unknown_context'.\"\n    },\n    {\n      \"severity\": \"low\",\n      \"evidence\": \"In the rescore, unknown_pairs counts only oracle unknown records. Candidate unknown samples, incomplete replays and non-graded cases are omitted, unlike score_v3's unresolved_pairs. Separately, legacy fields from the old adjudicator (candidate_alarm_samples, first_alarm, early_safety_alarm_samples, physical_reference_PASS_alarm) still include marker alarms, alongside new fields that exclude them.\",\n      \"required_action\": \"Rename unknown_pairs to oracle_unknown_pairs or add a full unresolved count. Document which fields include the marker sample.\"\n    },\n    {\n      \"severity\": \"low\",\n      \"evidence\": \"In the category reports, the union definite_detected_types can include types credited only through an unattributed end alarm, for either finite category, on cases that are also safety-eligible.\",\n      \"required_action\": \"Report union types split by credit path (ordinary safety versus end-marker finite), or caveat the union as not category-attributed.\"\n    }\n  ],\n  \"oracle_revision_required\": false,\n  \"adapter_changes_required\": true,\n  \"limitations\": [\n    \"The witness reference never judges pre(S). A PASS or FAIL on the prefix through post(S-1) neither confirms nor refutes the selected alarm. A physical-prefix DUT FAIL and the reproduced alarm are separate facts.\",\n    \"A safety projection with trace_done=0 proves no 128-cycle completion and no end-only activation.\",\n    \"Oracle ld/lh suppression means only the first violation per channel is checked until reset.\",\n    \"An end alarm credits finite categories at case-eligibility level only; there is no slot or category attribution.\",\n    \"No candidate sources, outcomes, hidden rows or scores were reviewed. Any oracle change requires a separate Claude author.\"\n  ]\n}\n```",
+  "result_index": 0,
+  "safety_stops": 0,
+  "session_id": "8e80b7bf-5cd7-4bcc-b57b-89ddb922a4e8",
+  "stop_reason": "end_turn",
+  "subagent_stats": {
+    "by_type": {},
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "system": 0,
+      "user": 0
+    },
+    "max_depth": 0,
+    "refused": {
+      "budget": 0,
+      "concurrency_limit": 0,
+      "depth_limit": 0
+    },
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "spawned": 0,
+    "spawned_by_subagents": 0,
+    "started_in_background": 0
+  },
+  "subtype": "success",
+  "terminal_reason": "completed",
+  "time_to_request_ms": 92,
+  "total_cost_usd": 0.190426,
+  "ttft_ms": 14833,
+  "ttft_stream_ms": 1968,
+  "type": "result",
+  "usage": {
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 26002
+    },
+    "cache_creation_input_tokens": 26002,
+    "cache_read_input_tokens": 0,
+    "fallback_credit": null,
+    "inference_geo": "global",
+    "input_tokens": 4,
+    "iterations": [
+      {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 26002
+        },
+        "cache_creation_input_tokens": 26002,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 4,
+        "output_tokens": 3020,
+        "type": "message"
+      }
+    ],
+    "output_tokens": 3020,
+    "output_tokens_details": {
+      "thinking_tokens": 1295
+    },
+    "server_tool_use": {
+      "web_fetch_requests": 0,
+      "web_search_requests": 0
+    },
+    "service_tier": "standard",
+    "speed": "standard"
+  },
+  "uuid": "c1800490-7321-475f-90bc-637b17412b55"
+}

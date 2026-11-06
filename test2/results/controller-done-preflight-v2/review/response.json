@@ -1,0 +1,115 @@
+{
+  "api_error_status": null,
+  "duration_api_ms": 32172,
+  "duration_ms": 32390,
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "fast_mode_state": "off",
+  "first_content_frame_ms": 2068,
+  "is_error": false,
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "cacheCreationInputTokens": 18460,
+      "cacheReadInputTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "contextWindow": 1000000,
+      "costBasis": "list",
+      "costUSD": 0.15207600000000002,
+      "inputTokens": 4,
+      "maxOutputTokens": 128000,
+      "outputTokens": 2988,
+      "provider": "firstParty",
+      "thinkingTokens": 1704,
+      "webSearchRequests": 0
+    }
+  },
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "cacheCreationInputTokens": 18460,
+      "cacheReadInputTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "contextWindow": 1000000,
+      "costBasis": "list",
+      "costUSD": 0.15207600000000002,
+      "inputTokens": 4,
+      "maxOutputTokens": 128000,
+      "outputTokens": 2988,
+      "provider": "firstParty",
+      "thinkingTokens": 1704,
+      "webSearchRequests": 0
+    }
+  },
+  "num_turns": 1,
+  "permission_denials": [],
+  "queued_turn_count": 0,
+  "result": "{\"verdict\":\"LIMITED_SCOPE\",\"scope\":\"The frozen-v2 check_rows is reused unchanged as the independent oracle for physical rows: development uses require_drained=true,min_tail=32 and final uses require_drained=true,min_tail=128. Final-post completion is judged on the last row's post sample, which matches the trace_done=1 sample without an extra edge. Safety-projection witnesses (trace_done=0) are for prefix adjudication only and prove no finite completion or end-only activation. Scores are definite detections with unknown context kept separate; they are not full PASS or soundness claims.\",\"issues\":[{\"severity\":\"high\",\"evidence\":\"adjudicate: detected['safety'] needs only some alarm at or after onset, with no early alarms. The final post (marker) sample counts as such an alarm.\",\"required_action\":\"Credit safety only for alarms on ordinary (non-marker) samples at or after onset, or report marker-only credit separately. Otherwise an end-only completion alarm counts as safety detection (category overlap).\"},{\"severity\":\"high\",\"evidence\":\"adjudicate: input_completion = complete and end in alarms. It ignores earlier alarms and which slot or category fired. response_completion uses the same end alarm, so one end alarm can credit both categories.\",\"required_action\":\"Apply the same rule as response_completion (no earlier alarm), or report early alarms. State explicitly that the end alarm is not attributed to a category, or map slots to categories before scoring.\"},{\"severity\":\"medium\",\"evidence\":\"witness: prefix=rows[:alarm_state], but the candidate alarm is at pre(alarm_state). The reference never judges pre(alarm_state). That is equivalent to post(alarm_state-1) only if no output depends combinationally on cycle-alarm_state inputs; s_ready may, and stability context depends on the ready values of that row.\",\"required_action\":\"Label the PASS classification 'reference_PASS_on_prefix_through_post(alarm_state-1)', not 'candidate_false_alarm', unless pre(alarm_state) equality with post(alarm_state-1) is verified on the meaningful pins. Alternatively, have a separate Claude author add a pre-only adjudication path.\"},{\"severity\":\"medium\",\"evidence\":\"witness: the 'reference_confirmed_DUT_violation' classification does not check that the reference failure matches the sample or category of the candidate alarm.\",\"required_action\":\"Record the reference failure cycle, phase and category, and claim confirmation only when they match the candidate alarm.\"},{\"severity\":\"low\",\"evidence\":\"Reference FAIL with unknown records: the scorer uses fully_resolved separately, but observable_types counts any oracle FAIL.\",\"required_action\":\"Report the oracle_unknown co-presence per type so FAIL plus unknown is never presented as resolved.\"}],\"oracle_revision_required\":false,\"adapter_changes_required\":true,\"limitations\":[\"Oracle review from the specification found it consistent on these points: no-bypass pre/post basis; spurious or premature presented valid with ready=0 caught by sample(); a later reset does not erase failures; reset_clear checked on post; pre samples while rst=1 skipped; initial pre excluded; X/Z yields unknown without erasing failures; padding unknown before completion; truncation end waits; response debts are end-only; short tail yields UNRESOLVED.\",\"Once an earlier failure or unknown sets the ld/lh flags, later presented-valid checks for that channel are suppressed until reset. Detection counts therefore reflect first violations only.\",\"An incomplete accepted input frame at the end is a definite failure only if the scoreboard is known (li false).\",\"No B/C sources, hidden traces or scores were reviewed. Physical coverage, synthetic controls and formal projections remain distinct.\",\"Any oracle change requires a separate Claude author.\"]}",
+  "result_index": 0,
+  "safety_stops": 0,
+  "session_id": "bcfbf03a-68e4-4b7e-bf2f-180cbcac1703",
+  "stop_reason": "end_turn",
+  "subagent_stats": {
+    "by_type": {},
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "system": 0,
+      "user": 0
+    },
+    "max_depth": 0,
+    "refused": {
+      "budget": 0,
+      "concurrency_limit": 0,
+      "depth_limit": 0
+    },
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "spawned": 0,
+    "spawned_by_subagents": 0,
+    "started_in_background": 0
+  },
+  "subtype": "success",
+  "terminal_reason": "completed",
+  "time_to_request_ms": 213,
+  "total_cost_usd": 0.15207600000000002,
+  "ttft_ms": 20678,
+  "ttft_stream_ms": 2068,
+  "type": "result",
+  "usage": {
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 18460
+    },
+    "cache_creation_input_tokens": 18460,
+    "cache_read_input_tokens": 0,
+    "fallback_credit": null,
+    "inference_geo": "global",
+    "input_tokens": 4,
+    "iterations": [
+      {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 18460
+        },
+        "cache_creation_input_tokens": 18460,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 4,
+        "output_tokens": 2988,
+        "type": "message"
+      }
+    ],
+    "output_tokens": 2988,
+    "output_tokens_details": {
+      "thinking_tokens": 1704
+    },
+    "server_tool_use": {
+      "web_fetch_requests": 0,
+      "web_search_requests": 0
+    },
+    "service_tier": "standard",
+    "speed": "standard"
+  },
+  "uuid": "04664f91-0ddf-4cd6-939b-4579a7a8b3c4"
+}

@@ -1,0 +1,29 @@
+{
+  "body": "reg armed=0;\nreg [5:0] bad=0;\nreg [5:0] wp=0,dp=0,hp=0;\nreg [3:0] di=0;\nreg [63:0] bytes_q[0:63];\nreg [3:0] len_q[0:63];\nreg used_q[0:63], complete_q[0:63], dd_q[0:63], hd_q[0:63];\nreg reset_q=0, ms=0, hs=0;\nreg [8:0] sm=0;\nreg [33:0] sh=0;\nreg [7:0] tail=0;\nreg [5:0] f;\nreg pending,available,elast;\nreg [7:0] eb;\nreg [3:0] olen;\ninteger k,r;\nalways @* begin\n f=0; pending=0; available=0; elast=0; eb=0; olen=0;\n for(k=0;k<64;k=k+1) begin\n  if(used_q[k]===1'b1 && (complete_q[k]!==1'b1 || dd_q[k]!==1'b1 || hd_q[k]!==1'b1)) pending=1;\n end\n if(armed) begin\n  if((rst!==1'b0 && rst!==1'b1) || (s_valid!==1'b0 && s_valid!==1'b1) || (s_ready!==1'b0 && s_ready!==1'b1) || (m_valid!==1'b0 && m_valid!==1'b1) || (h_valid!==1'b0 && h_valid!==1'b1) || (m_ready!==1'b0 && m_ready!==1'b1) || (h_ready!==1'b0 && h_ready!==1'b1)) f[4]=1;\n  if(rst===1'b0 && s_valid===1'b1 && s_ready===1'b1) begin\n   if((^s_data)===1'bx || (s_last!==1'b0 && s_last!==1'b1)) f[4]=1;\n  end\n  if(reset_q && (m_valid!==1'b0 || h_valid!==1'b0)) f[4]=1;\n  if(rst===1'b0) begin\n   if(ms && (m_valid!==1'b1 || {m_last,m_data}!==sm)) f[3]=1;\n   if(hs && (h_valid!==1'b1 || {h_pad,h_truncate,h_length,h_original_length}!==sh)) f[3]=1;\n  end\n  if(used_q[dp]===1'b1 && dd_q[dp]===1'b0) begin\n   if(len_q[dp]<4) olen=4;\n   else if(len_q[dp]>8) olen=8;\n   else olen=len_q[dp];\n   if(di<8 && di<len_q[dp]) begin\n    available=1; eb=bytes_q[dp][di*8 +: 8];\n   end else if(complete_q[dp]===1'b1 && di<olen) begin\n    available=1; eb=0;\n   end\n   if(complete_q[dp]===1'b1) elast=(di==olen-1);\n   else elast=(di==7);\n  end\n  if(m_valid===1'b1) begin\n   if(!available || (^m_data)===1'bx || m_data!==eb) f[0]=1;\n   if(!available || m_last!==elast) f[1]=1;\n  end\n  if(h_valid===1'b1) begin\n   if(used_q[hp]!==1'b1 || complete_q[hp]!==1'b1 || hd_q[hp]!==1'b0) f[2]=1;\n   else begin\n    if(h_original_length!=={12'd0,len_q[hp]} || h_pad!==(len_q[hp]<4) || h_truncate!==(len_q[hp]>8)) f[2]=1;\n    if(len_q[hp]<4) begin if(h_length!==16'd4) f[2]=1; end\n    else if(len_q[hp]>8) begin if(h_length!==16'd8) f[2]=1; end\n    else if(h_length!=={12'd0,len_q[hp]}) f[2]=1;\n   end\n  end\n  if(trace_done===1'b1) begin\n   if(pending || s_valid!==1'b0 || m_valid!==1'b0 || h_valid!==1'b0 || rst!==1'b0 || m_ready!==1'b1 || h_ready!==1'b1 || tail<32) f[5]=1;\n  end\n end\nend\nassign active=armed ? 6'b111111 : ((trace_done===1'b1) ? 6'b100000 : 6'b000000);\nassign ok=~(bad | f | ((!armed && trace_done===1'b1) ? 6'b100000 : 6'b000000));\nalways @(posedge clk) begin\n if(armed) bad<=bad|f;\n reset_q<=(rst===1'b1);\n if(rst===1'b1) begin\n  armed<=1; wp<=0; dp<=0; hp<=0; di<=0; ms<=0; hs<=0; tail<=0;\n  for(r=0;r<64;r=r+1) begin\n   bytes_q[r]<=0; len_q[r]<=0; used_q[r]<=0; complete_q[r]<=0; dd_q[r]<=1; hd_q[r]<=1;\n  end\n end else if(armed && rst===1'b0) begin\n  ms<=(m_valid===1'b1 && m_ready===1'b0);\n  hs<=(h_valid===1'b1 && h_ready===1'b0);\n  sm<={m_last,m_data}; sh<={h_pad,h_truncate,h_length,h_original_length};\n  if(s_valid===1'b0 && m_ready===1'b1 && h_ready===1'b1) begin\n   if(tail<128) tail<=tail+1'b1;\n  end else tail<=0;\n  if(m_valid===1'b1 && m_ready===1'b1) begin\n   if(m_last===1'b1) begin dd_q[dp]<=1; dp<=dp+1'b1; di<=0; end\n   else if(di<8) di<=di+1'b1;\n   else bad[1]<=1;\n  end\n  if(h_valid===1'b1 && h_ready===1'b1) begin hd_q[hp]<=1; hp<=hp+1'b1; end\n  if(s_valid===1'b1 && s_ready===1'b1) begin\n   if(used_q[wp]!==1'b1 || complete_q[wp]===1'b1) begin\n    if(used_q[wp]===1'b1 && (dd_q[wp]!==1'b1 || hd_q[wp]!==1'b1)) bad[4]<=1;\n    used_q[wp]<=1; complete_q[wp]<=(s_last===1'b1); len_q[wp]<=1;\n    bytes_q[wp]<={56'd0,s_data}; dd_q[wp]<=0; hd_q[wp]<=0;\n   end else begin\n    if(len_q[wp]<8) bytes_q[wp][len_q[wp]*8 +: 8]<=s_data;\n    if(len_q[wp]<12) len_q[wp]<=len_q[wp]+1'b1;\n    else bad[4]<=1;\n    if(s_last===1'b1) complete_q[wp]<=1;\n   end\n   if(s_last===1'b1) wp<=wp+1'b1;\n  end\n end\nend\n",
+  "properties": [
+    {
+      "description": "Every presented data byte matches the ordered accepted prefix or justified zero padding, regardless of sink ready; unaccepted inputs cannot justify output.",
+      "id": "P0"
+    },
+    {
+      "description": "Presented last indications match the clamped frame boundary, supporting streaming prefixes and truncation.",
+      "id": "P1"
+    },
+    {
+      "description": "Presented headers match completed accepted frames in order, with exact lengths and flags. Header and data consumption advance independently.",
+      "id": "P2"
+    },
+    {
+      "description": "Blocked data and header channels preserve valid and enabled payloads until transfer or reset.",
+      "id": "P3"
+    },
+    {
+      "description": "Reset cancels epoch obligations and clears response valids without clearing earlier alarms. Meaningful unknowns, frame-length overflow and bounded scoreboard exhaustion cannot establish success.",
+      "id": "P4"
+    },
+    {
+      "description": "The final-post marker combinationally checks that input frames and both response channels are drained, with no source or response valid and at least 32 ready-high reset-low no-offer edges. The externally required 128-edge final-tail qualification remains an evaluator prerequisite; this check does not claim unbounded liveness.",
+      "id": "P5"
+    }
+  ]
+}

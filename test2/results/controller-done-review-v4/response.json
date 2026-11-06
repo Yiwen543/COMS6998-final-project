@@ -1,0 +1,115 @@
+{
+  "api_error_status": null,
+  "duration_api_ms": 31669,
+  "duration_ms": 31903,
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "fast_mode_state": "off",
+  "first_content_frame_ms": 2237,
+  "is_error": false,
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "cacheCreationInputTokens": 24685,
+      "cacheReadInputTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "contextWindow": 1000000,
+      "costBasis": "list",
+      "costUSD": 0.189521,
+      "inputTokens": 4,
+      "maxOutputTokens": 128000,
+      "outputTokens": 3304,
+      "provider": "firstParty",
+      "thinkingTokens": 1610,
+      "webSearchRequests": 0
+    }
+  },
+  "model_usage_since_last_result": {
+    "claude-opus-5-5": {
+      "cacheCreationInputTokens": 24685,
+      "cacheReadInputTokens": 0,
+      "canonicalModel": "claude-opus-5-5",
+      "contextWindow": 1000000,
+      "costBasis": "list",
+      "costUSD": 0.189521,
+      "inputTokens": 4,
+      "maxOutputTokens": 128000,
+      "outputTokens": 3304,
+      "provider": "firstParty",
+      "thinkingTokens": 1610,
+      "webSearchRequests": 0
+    }
+  },
+  "num_turns": 1,
+  "permission_denials": [],
+  "queued_turn_count": 0,
+  "result": "```json\n{\n  \"verdict\": \"ACCEPT_SCOPE\",\n  \"scope\": \"Fresh independent review of case_v4 and grade_v4. The frozen-v2 oracle, the runtime and the witness v3 are unchanged. The fixed scope is MIN4/MAX8 bytes, input frames of 1..12 bytes, a development tail of 32 and a final tail of 128. trace_done is 1 only at the final post sample, with no extra edge and no DUT input change. Prior findings: (1) Fixed. Saved records whose status is not 'graded' are carried verbatim as saved_case_unresolved inside carried_saved_case. Missing saved cases become saved_case_missing. Only 'graded' saved records open a result, and only after path containment, result sha and gzip sha checks. (2) Fixed. grade() checks all of the following before adjudicating, and any mismatch gives replay_binding_unresolved with no detection: the qualified rows file hash against the label, the canonical rows hash against result.rows_sha256, label.cycles == attempted_cycles == len(rows), the marker scope [n-1,'post'] with no safety_projection, the reference onset range, and raw sample order and cycle counts. Raw property accounting re-derives checks, failures, unknown and end_sample_checks from the raw log. Fresh and reuse use the same grade() and summarize(). (3) Fixed. FAIL_with_oracle_unknown_pairs and FAIL_without_oracle_unknown_pairs are explicit per type, both per round and over the inventory. oracle_FAIL_any_unknown_context_types is labelled. (4) Fixed. Fields include oracle_unknown_pairs, candidate_unknown_pairs and unresolved_pairs. Every field named '_including_marker' includes the final post sample; ordinary_alarm_samples excludes it. Incomplete replays keep their raw counts, and is_unresolved does not hide them. (5) Fixed. Detections are split into ordinary_safety and end_marker_finite_UNATTRIBUTED, and the union is caveated. Safety credit requires an ordinary non-marker alarm at or after onset and no earlier alarm. Both finite credits require a marker alarm with no earlier alarm and remain UNATTRIBUTED_ANY_SLOT. The fixed inventory retains missing labels as reference_case_missing. Uncompiled candidates are retained as candidate_unavailable. Candidates that fail reuse binding are retained as candidate_reuse_binding_unresolved. No oracle gap was found.\",\n  \"issues\": [\n    {\n      \"severity\": \"low\",\n      \"evidence\": \"inventory() builds its lookup with a dict keyed on (source, simulator, trace). Duplicate measurement records for the same key are silently collapsed, and the last one wins.\",\n      \"required_action\": \"Detect duplicate keys and report the case as unresolved, or record a diagnostic, rather than collapsing silently.\"\n    },\n    {\n      \"severity\": \"low\",\n      \"evidence\": \"assess() records evidence_infrastructure_unresolved with only the exception type, without the message or a path to any partial replay artifacts. grade() errors, by contrast, include the message.\",\n      \"required_action\": \"Include the error detail and any partial evidence path in the retained unresolved case. This affects provenance only, not counting.\"\n    },\n    {\n      \"severity\": \"low\",\n      \"evidence\": \"Category detection counts are zeroed whenever correct_control_gate is false. The per-case definite flags are retained, but the summary does not state that the zeros are gate-suppressed.\",\n      \"required_action\": \"Document in the summary semantics that category counts are conditional on the correct-control gate.\"\n    },\n    {\n      \"severity\": \"low\",\n      \"evidence\": \"In the reuse path, costs.reused_monitor_replays is incremented before grade() binding checks run. Reused results later rejected as replay_binding_unresolved are still counted as reused.\",\n      \"required_action\": \"Label the counter as reuse attempts, or count binding-rejected reuses separately.\"\n    }\n  ],\n  \"oracle_revision_required\": false,\n  \"adapter_changes_required\": false,\n  \"limitations\": [\n    \"The witness reference prefix ends at post(S-1), while the selected alarm is at pre(S). It neither confirms nor refutes the selected alarm, and no generic false-alarm claim is made.\",\n    \"The trace_done=0 safety projection proves no 128-cycle completion and no end-only activation.\",\n    \"Oracle ld/lh suppression means only the first data or status violation is checked until scoreboard loss is cleared by reset.\",\n    \"End-marker finite credits apply at case-eligibility level only, as UNATTRIBUTED_ANY_SLOT. There is no slot or category attribution, and the union is not category-specific.\",\n    \"Metrics are limited to physical-prefix and finite-row results on the planned inventory. No candidate sources, outcomes, hidden rows or scores were reviewed. Any oracle change requires a separately authorized Claude author.\"\n  ]\n}\n```",
+  "result_index": 0,
+  "safety_stops": 0,
+  "session_id": "4e46ea2f-5ead-4a63-98d4-c09bde97a2d2",
+  "stop_reason": "end_turn",
+  "subagent_stats": {
+    "by_type": {},
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "system": 0,
+      "user": 0
+    },
+    "max_depth": 0,
+    "refused": {
+      "budget": 0,
+      "concurrency_limit": 0,
+      "depth_limit": 0
+    },
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "spawned": 0,
+    "spawned_by_subagents": 0,
+    "started_in_background": 0
+  },
+  "subtype": "success",
+  "terminal_reason": "completed",
+  "time_to_request_ms": 227,
+  "total_cost_usd": 0.189521,
+  "ttft_ms": 17683,
+  "ttft_stream_ms": 2237,
+  "type": "result",
+  "usage": {
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 24685
+    },
+    "cache_creation_input_tokens": 24685,
+    "cache_read_input_tokens": 0,
+    "fallback_credit": null,
+    "inference_geo": "global",
+    "input_tokens": 4,
+    "iterations": [
+      {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 24685
+        },
+        "cache_creation_input_tokens": 24685,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 4,
+        "output_tokens": 3304,
+        "type": "message"
+      }
+    ],
+    "output_tokens": 3304,
+    "output_tokens_details": {
+      "thinking_tokens": 1610
+    },
+    "server_tool_use": {
+      "web_fetch_requests": 0,
+      "web_search_requests": 0
+    },
+    "service_tier": "standard",
+    "speed": "standard"
+  },
+  "uuid": "7c82e7f7-66e7-4efd-a9ff-53042a63cd31"
+}
