@@ -1,5 +1,50 @@
 # Project status — 2026-11-05 (America/New_York)
 
+## Queue stimulus-efficiency ablation — free design ready, new API budget pending (2026-11-07)
+
+Current plan: `docs/designs/queue_efficiency_ablation_v1/plan.md` and plan.json.
+P21 final review is PASS_WITH_LIMITS for presenting the budget only:
+`docs/audits/agent_bridge_2026-11-07/P21_queue_ablation_design/review-final.json`
+SHA256 50b5a8c2adb58d466b418725afca0f5cfd59d73f30d1da1a54b3798e1c6d72c7.
+Closure: `docs/audits/agent_bridge_2026-11-07/queue_ablation_preparation/closure.json`.
+
+Three information arms (raw, +Yosys structure, +same Yosys/verified cached egg)
+x two syntax forms of ONE known queue x three sessions x at most four rounds.
+Normal generation <=72, one transport retry/session <=18 extra, total generation
+<=90; separate Claude golden author <=2 calls. All providers share one proposed
+additional USD15 API hard ceiling; expected USD4-7, NOT approved or actual spend.
+Old USD20 permission is not inherited. No new paid/model/count, compile, simulation,
+Yosys/egg/formal, installation or credential access occurred in this preparation.
+
+Independent property author /root/queue_property_author saved v1 and v2 drafts;
+active draft is `docs/designs/queue_property_author_v2/` (NOT an implemented monitor).
+Golden is NOT_CALLED and will have a different Claude author. Both get only the
+same public spec, explicit `docs/designs/queue_efficiency_contract_v1.json` and
+future frozen ABI; no DUT, old checker, each other's code or candidate outcomes.
+Producer handles infrastructure/stimulus; existing review chat remains independent.
+Contract assumes C_eff=3 for this benchmark, includes enabled simultaneous R/W,
+keeps almost flags out of verdict scope and makes no full-CVDP correctness claim.
+
+Prior engine/frontend drift is disclosed: old saved proof/extraction artifacts do
+not certify current source. The earlier property-domain/coverage-goal conflict was
+resolved at contract level; actual new-harness reachability is still pending.
+Future main target is joint41/41line+14/14branch+>=344/408toggle. Old line-only
+prefixes, retrospective joint arithmetic and future actual early-stop runs remain
+separate. Unknowns/failures/not-reached costs and ALL intermediate files stay.
+
+Next: obtain explicit new API budget approval before any Claude author or stimulus
+call; then finish ABI, separate implementations, <=9 small controls, packets and
+thin runner with ledger/stop checks. Planned local scope is two observer builds,
+<=2 Yosys commands, <=76 physical roots/1208 cycles, no new egg/Z3/G1 framework.
+Estimated implementation2-4h, review/analysis0.5-1h, live10-30min (hard60min).
+Keys, if needed, use the producer's hidden staging flow, never chat plaintext;
+retain through the whole ablation/review without repeated requests or deletion.
+The P2 draft, earlier test2 results and missing authentic course-feedback response
+remain unchanged. Prepublication HEAD was034a5a8db63f38878148aaac15ea69dbc150d29a;
+query Git for current HEAD. Prior shared-context bytes are preserved in the closure
+directory before-HANDOFF.md / before-PROJECT_STATUS.md. Older bodies follow.
+
+
 ## P2 manuscript update — P19 v2 accepted with feedback gap (2026-11-06)
 
 The new two-page official-template draft is

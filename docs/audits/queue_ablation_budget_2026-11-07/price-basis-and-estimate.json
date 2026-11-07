@@ -1,0 +1,159 @@
+{
+  "record_kind": "QUEUE_EFFICIENCY_ABLATION_PRICE_AND_BUDGET_PROPOSAL",
+  "observed_at": "2026-11-07T06:06:41.732457+00:00",
+  "status": "PLANNING_ONLY_NO_NEW_PAID_AUTHORIZATION",
+  "new_API_or_research_calls": 0,
+  "old_evidence": {
+    "path": "results/queue_bc_gpt6sol_20261026/calls.jsonl",
+    "sha256": "2725383d5d5e9a4df9f363d7c79721b15f230114a3bac83263886d0d38fac74b",
+    "calls": 48,
+    "requested_model": "gpt-6-sol",
+    "totals": {
+      "input_tokens": 944948,
+      "output_tokens": 11774,
+      "total_tokens": 956722,
+      "cached_input_tokens": 357911,
+      "reasoning_output_tokens": 5889
+    },
+    "input_min_median_max": [
+      9367,
+      13468.5,
+      42716
+    ],
+    "output_min_median_max": [
+      162,
+      240.0,
+      447
+    ],
+    "old_live_wall_seconds": 247.30137254064903
+  },
+  "proposed_models": {
+    "stimulus": "gpt-6.1-sol",
+    "stimulus_reasoning": "low",
+    "generation_standard_short_USD_per_M": {
+      "input": 2,
+      "cached_input": 0.1,
+      "30m_cache_write": 2.5,
+      "output": 10
+    },
+    "generation_financial_long_USD_per_M": {
+      "input": 4,
+      "30m_cache_write": 5,
+      "output": 15
+    },
+    "generation_context_ceiling": 1050000,
+    "generation_output_cap": 4096,
+    "golden_author": "claude-opus-5-5",
+    "golden_standard_USD_per_M": {
+      "input": 4,
+      "5m_cache_write": 5,
+      "output": 20
+    },
+    "golden_context_ceiling": 1000000,
+    "golden_output_cap": 8192,
+    "golden_author_max_calls_proposed": 2,
+    "property_author": "Distinct fresh Codex agent;no experimentalmodel API call by that role in this proposal",
+    "independent_review": "Existingreviewer Codex thread,not either author"
+  },
+  "price_sources": [
+    {
+      "URL": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+      "opened": true
+    },
+    {
+      "URL": "https://developers.openai.com/api/docs/pricing",
+      "opened": true
+    },
+    {
+      "URL": "https://platform.claude.com/docs/en/models/opus-5-5/overview",
+      "opened": true
+    },
+    {
+      "URL": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "opened": true
+    }
+  ],
+  "planning_scenarios": [
+    {
+      "generation_attempts": 72,
+      "planning_input_tokens": 1465422,
+      "planning_output_tokens_including_reasoning": 17661,
+      "total_planning_tokens": 1483083,
+      "pricing_ordinary_input_USD": 3.107454,
+      "pricing_all_input_at_30m_cache_write_USD": 3.840165,
+      "cachewrite_plus10percent_USD": 4.2241815,
+      "not_actual_usage_or_guaranteed_bound": true
+    },
+    {
+      "generation_attempts": 90,
+      "planning_input_tokens": 1831778,
+      "planning_output_tokens_including_reasoning": 22077,
+      "total_planning_tokens": 1853855,
+      "pricing_ordinary_input_USD": 3.884326,
+      "pricing_all_input_at_30m_cache_write_USD": 4.800215,
+      "cachewrite_plus10percent_USD": 5.2802365,
+      "not_actual_usage_or_guaranteed_bound": true
+    }
+  ],
+  "planning_assumptions": [
+    "Newmodel may tokenize/respond differently;oldusage extrapolation isnotnewactualusage.",
+    "An extra1000inputtokens perYosys-bearingrequest is a planning allowance,not a verified bound;about2/3 ofrequests.",
+    "No cache-read discount assumed;oldcachedtokens are included inputs,not added.",
+    "No remote token-count requests;not assuming any endpointfree.",
+    "Standard only/noFast/Ultrafast/tools/thirdparty paidextras.",
+    "10percentregionalpricingmargin shown;no claimtax/accountactualinvoice.",
+    "Additionalgoldenauthor workload budgettarget<=1USD for initialplusoneboundedrepair;actual independent review/rolecontrols pending.",
+    "Codex maintenance/subscription/token charges are not visible in projectAPIledger and remainUNKNOWN,not zero."
+  ],
+  "proposed_limits": {
+    "additional_project_API_USD_hard_ceiling_recommended": 15,
+    "normal_generation_slots": 72,
+    "one_transport_retry_per_session_max": 18,
+    "max_generation_dispatches": 90,
+    "max_golden_author_dispatches": 2,
+    "all_paid_dispatches_max": 92,
+    "live_stage_wall_seconds_proposed": 3600,
+    "old_USD20_not_automatic_new_authorization": true,
+    "keep_keys_through_entire_ablation_and_review": true
+  },
+  "spend_control_proposal": {
+    "reuse_P19_financial_guard_concept_not_frozen_file_edits": true,
+    "reserve_full_model_context_before_each_dispatch": true,
+    "GPT_per_dispatch_conservative_reserve_USD": 5.842584000000001,
+    "Claude_per_dispatch_conservative_reserve_USD": 5.680224,
+    "unknown_usage_keeps_full_reservation": true,
+    "settle_only_trustworthy_usage_model_tier_cost_category": true,
+    "stop_before_ceiling_or_deadline": true,
+    "budget_ceiling_does_not_guarantee_all_requested_slots_complete_after_failures": true,
+    "actualinput_admission_target_is_not_service_hard_cap": true
+  },
+  "recommended_expected_project_API_cost_USD_range": [
+    4,
+    7
+  ],
+  "relationship_to_recent_BC": {
+    "BC_usage_upper_USD_not_invoice": 1.569371,
+    "proposed_additional_ceiling_plus_recent_BC_upper": 16.569371,
+    "not_a_project_lifetime_invoice_reconciliation": true
+  },
+  "rough_workload_estimate_pending_implementation_inventory": {
+    "offline_implementation_and_small_controls_hours_range": [
+      2,
+      4
+    ],
+    "independent_review_and_finalanalysis_hours_range": [
+      0.5,
+      1
+    ],
+    "expected_live_wall_minutes_range": [
+      10,
+      30
+    ],
+    "proposed_live_hard_wall_minutes": 60
+  },
+  "blocking_until_user_approves": [
+    "NewcombinedOpenAIplusAnthropicAPIceiling",
+    "IndependentClaudeauthoredgoldenandseparatepropertyartifacts/controlreviewbeforelive",
+    "Exactregistration/runtimeadaptationnotyetimplemented"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "phase": "P21_QUEUE_ABLATION_DESIGN_CHECKPOINT",
+  "status": "CHECKPOINT_PENDING_SEALED_DESIGN",
+  "budget_proposal_readiness": "READY_WITH_CONDITIONS_NOT_EXECUTE_AUTHORITY",
+  "head": "034a5a8db63f38878148aaac15ea69dbc150d29a",
+  "exact_new_design_accepted": false,
+  "input_identity": {
+    "budget_basis_sha256": "30fb95c89f8e137d633d0e89a90fc67bda2958a4061259b7f3b8e0bcdcdfa3b5",
+    "producer_manifest_sha256": null
+  },
+  "observations": [
+    {
+      "id": "P21-C1",
+      "severity": "MEDIUM",
+      "material": true,
+      "blocks_current_budget_presentation": false,
+      "path": "configs/queue_bc_pilot_gpt6sol.json:engine_sha256; egraph/src/main.rs",
+      "evidence": "6/7 current source bindings match. Historical registered engine SHA independently recovered exactly from saved metadata Git revision.",
+      "impact": "Old proofs must not silently certify current engine. No finding that old experiment is invalid.",
+      "minimal_condition": "Bind reuse to exact saved historical guard/proof/source version or separately validate affected new engine in a future authorized stage."
+    }
+  ],
+  "workload": {
+    "sessions": 18,
+    "normal_generation_slots": 72,
+    "transport_retry_slots_max": 18,
+    "generation_dispatches_max": 90,
+    "golden_author_dispatches_max": 2,
+    "paid_dispatches_max": 92,
+    "estimated_USD_range": [
+      4,
+      7
+    ],
+    "proposed_additional_API_USD_cap": 15,
+    "cap_authorized": false
+  },
+  "limits": [
+    "Draft still in preparation; absence is not failure",
+    "No fresh RTL/proof/replay/model execution",
+    "Independent author artifacts and exact runtime not reviewed",
+    "Old/new models, syntax forms, prefix cost vs actual stop, censored trials remain separate",
+    "Maintenance Codex cost and actual invoice UNKNOWN"
+  ],
+  "commands": [
+    {
+      "command": "git rev-parse HEAD",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-07/P21_queue_ablation_design/check_legacy.py (first attempt)",
+      "exit_code": 1,
+      "retained": "check_legacy_attempt1.py; attempt1-error.json"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-07/P21_queue_ablation_design/check_legacy.py (corrected reporting)",
+      "exit_code": 0
+    },
+    {
+      "command": "git show 66051b681d3f75e0e68370271a743e637820ac1b:egraph/src/main.rs",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/audits/agent_bridge_2026-11-07/P21_queue_ablation_design/check_budget.py",
+      "exit_code": 0
+    }
+  ],
+  "forbidden_actions_executed": false,
+  "evidence_sha256": {
+    "attempt1-error.json": "5acf73977ab15154388b738112982198874dbd23f9a9920da3e50044c05a47fe",
+    "check_budget.py": "324481c3e8b4a713633396005209efc3e66d4d142fd743d8ef72d0de72554112",
+    "hallmark-usage.json": "bbe270a293f051a6ee0b838cd061ba44dadf56e6684a97ea0dc747e803cd216c",
+    "check_legacy.py": "17b346bce083aeb5afe783d879aa8cd14ca712eee77b3ba23cac2802ae0c59dc",
+    "budget-evidence.json": "d96f9214e590518d4cbd13ed02dc986298c37e3c860b839872d4e3ae79f8f898",
+    "check_legacy_attempt1.py": "7c200e2f5105970363860f9544c6a4c54ff04610aea75e065a203f7f874f5370",
+    "legacy-evidence.json": "5cdf1923b9a99003542ec76407337f00e347c4015f871f1d6900f362816442e3",
+    "review.md": "bfd4f6b0e6ea40d8bf9cf0a43d43ea572bbd5e6970c1b5e622a33f73cc11ba34",
+    "historical-engine-check.json": "1d48823d0f6d22d5ea7c51555f16d20ea5dee5ab3a716b6fb1ca0a58ea295e73"
+  }
+}

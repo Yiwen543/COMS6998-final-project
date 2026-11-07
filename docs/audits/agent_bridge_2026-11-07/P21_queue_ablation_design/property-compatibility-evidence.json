@@ -1,0 +1,107 @@
+{
+  "phase": "P21_PROPERTY_DOMAIN_COMPATIBILITY_ADDENDUM",
+  "status": "DRAFT_DOMAIN_AND_OLD_TARGET_INCOMPATIBLE",
+  "not_execute_authority": true,
+  "commands": [
+    {
+      "description": "Hash/read two property author artifacts; inspect RTL guards and saved reference-ceiling coverage only",
+      "exit_code": 0
+    }
+  ],
+  "inputs": {
+    "docs/designs/queue_property_author_v1/property-obligations-draft.md": "a60d56c827fed3da19970505ac90e36b7a988073975eaa94ce956d47aa5cf77e",
+    "docs/designs/queue_property_author_v1/role-inputs.json": "9b0ebe44ab18af24a5e935e3a878784c39813004b30db9bd1a2e13de974ef76c",
+    "examples/heldout_queue/rtl/queue.sv": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+    "examples/heldout_queue/rtl/queue_variant.sv": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+    "results/queue_bc_gpt6sol_20261026/original/reference-ceiling.dat": "55bba6a336ffb643e1424d46c9ee2193186cdafe5d756c90b32ffd671c71d1e4",
+    "results/queue_bc_gpt6sol_20261026/variant/reference-ceiling.dat": "f12e43657870ab5873eecbf1a6cafcca8f23838704ae77a096e6e13a3244be28"
+  },
+  "saved_coverage_points": {
+    "original": [
+      {
+        "line": 102,
+        "type": "branch",
+        "outcome": "if",
+        "span": "102-103",
+        "hits": 1
+      },
+      {
+        "line": 102,
+        "type": "branch",
+        "outcome": "else",
+        "span": "105",
+        "hits": 1
+      },
+      {
+        "line": 94,
+        "type": "line",
+        "outcome": "case",
+        "span": "94,96,99",
+        "hits": 2
+      },
+      {
+        "line": 96,
+        "type": "line",
+        "outcome": "block",
+        "span": "96-97",
+        "hits": 6
+      }
+    ],
+    "variant": [
+      {
+        "line": 102,
+        "type": "branch",
+        "outcome": "if",
+        "span": "102-103",
+        "hits": 1
+      },
+      {
+        "line": 102,
+        "type": "branch",
+        "outcome": "else",
+        "span": "105",
+        "hits": 1
+      },
+      {
+        "line": 94,
+        "type": "line",
+        "outcome": "case",
+        "span": "94,96,99",
+        "hits": 2
+      },
+      {
+        "line": 96,
+        "type": "line",
+        "outcome": "block",
+        "span": "96-97",
+        "hits": 6
+      }
+    ]
+  },
+  "finding": {
+    "id": "P21-C2",
+    "severity": "HIGH_IF_COMBINED_IN_REGISTRATION",
+    "material": true,
+    "path": "property-obligations-draft.md:14,19; queue.sv:94-105; variant same lines",
+    "evidence": "All four per-form selected line/branch counters lie inside enabled 2b11 data-update branch. The v1 domain excludes that branch. Disabled simultaneous controls cannot reach it.",
+    "impact": "Frozen v1 legal domain cannot attain all old 41 line AND 14 branch counters. This is not a failure of the clearly labelled incomplete draft.",
+    "minimal_revision": "Explicit common adopted benchmark contract first, then independent property author v2 using only that contract/spec/ABI; match legal validator, golden, targets and all arms. Do not delete raw counters or claim spec-derived capacity."
+  },
+  "clear_disabled": {
+    "requires_expansion_for_old_target": "NOT_ESTABLISHED_BY_THIS_STATIC_CHECK",
+    "note": "Existing clear branch may be activated with enable=1; do not expand excluded clear-disabled solely on speculation."
+  },
+  "hallmark": {
+    "read_this_addendum": false,
+    "same_P21_read_reference": "hallmark-usage.json",
+    "applied_for": "Locate concrete domain/target mismatch and minimum correction; do not label intentionally pending draft as false qualification.",
+    "workflow_executed": false,
+    "scripts_executed": false
+  },
+  "limits": [
+    "No new simulation or coverage ceiling measurement",
+    "Author separation is supported by role declaration; not an independent full thread/tool-access audit",
+    "No property/golden authored by reviewer",
+    "No changes to old P21 checkpoint or author artifacts"
+  ]
+}

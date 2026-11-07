@@ -1,0 +1,74 @@
+{
+  "status": "PROPOSED_COMMON_BENCHMARK_CONTRACT_NO_EXECUTE",
+  "version": "queue_efficiency_contract_v1",
+  "public_specification": "examples/heldout_queue/docs/specification.md",
+  "public_spec_sha256": "cf439779a935805e5717cb51c26dd3dec605c729a83154e57a17dd9c6ad2ed51",
+  "purpose": "Samefixedcontractforindependentgoldenandpropertyauthorsandallstimulusarms;explicitnarrowbenchmarkassumptions,notafulloriginalspecconformanceclaim",
+  "parameters": {
+    "DEPTH": 4,
+    "DBITS": 32,
+    "workload_max_valid_elements": 3,
+    "adopted_effective_full_threshold_C_eff": 3,
+    "capacity_semantics": "C_eff3isadoptedbenchmarkassumption,notindependentlyprovedfromambiguousoriginalprose;no4thvalid-elementclaim"
+  },
+  "input_schema": {
+    "exact_fields": [
+      "reset_n",
+      "clear",
+      "enable",
+      "write",
+      "read",
+      "data"
+    ],
+    "control_type": "integer0or1;rejectbool,float,string,missing,extrafields",
+    "data_type": "integer0through4294967295;rejectbool,float,string",
+    "candidate_produces": "JSONactionsonly,nooracleorgradercode"
+  },
+  "initialization": "Establishactive-lowresetbeforeanynormalacceptedaction;uninitializedisunknown,notpass",
+  "adopted_operation_domain": {
+    "reset": "reset_n0,clear0,write0,read0;enable0or1;asynchronousqueueclear",
+    "clear": "reset_n1,enable1,clear1,write0,read0;synchronousclearatnextposedge",
+    "hold_disabled": "reset_n1,clear0,enable0;anybinarywrite/readcombination;noacceptedoperation",
+    "enabled_idle": "reset_n1,clear0,enable1,write0,read0;hold",
+    "write_only": "reset_n1,clear0,enable1,write1,read0;legaliffhistoryn<3;appenddata",
+    "read_only": "reset_n1,clear0,enable1,write0,read1;legaliffhistoryn>0;removefront",
+    "simultaneous_nonempty": "reset_n1,clear0,enable1,write1,read1,n>0;removefrontthenappenddata;occupancyunchanged;includesn3",
+    "simultaneous_empty": "reset_n1,clear0,enable1,write1,read1,n0;logicalQremainsempty/occupancy0;physicalq_oattheemptyheadisnotgraded;thisisexplicitadoptedempty-stateinterpretation",
+    "excluded": "emptyread-only,fullwrite-only,clearwhenenable0,clearwithread/write,resetwithclear/read/write;keepINVALID_OR_UNSUPPORTEDrecords,nosilentrepair"
+  },
+  "logical_obligations": {
+    "state": "abstractorderedQfromadoptedactionhistory,neverderivehistoryfromDUTflags",
+    "empty_o": "n==0",
+    "full_o": "n==3underadoptedC_effassumption",
+    "valid_q_o": "whenhistoryn>0,q_omatchesfrontwordwith32bitunsignedwidth;whenemptyq_onotgraded",
+    "almost_flags": "recordallvalues/knownness;thresholdandcomparisonnotadopted,nofunctionalcredit",
+    "reset": "Qempty,empty1,full0afteractualasynchronoussettleandwhileheld",
+    "clear": "prestateunchangedbeforeedge;Qemptypostedge",
+    "unknown": "missingphase/requiredXorZ/uninitialized/unsupportedcontractneverbecomesPASS;retainFAILandUNKNOWNcoexistence"
+  },
+  "observation_ABI": {
+    "status": "INFRA_PRE_POST_AND_ASYNC_RESET_TIMING_MAPPING_PENDING",
+    "required": [
+      "actionindexandfields",
+      "implementationid",
+      "pre-edgeinput-stableoutputs",
+      "post-edgeaftersequential/combinationalsettleoutputs",
+      "asynchronousresetassertion/reset-settleoutsideposedge",
+      "outputknownnessforq_oempty_ofull_oalmost_empty_oalmost_full_o"
+    ],
+    "no_claim": "Thiscontractdoesnotestablishactualsamplingphase,timingorphysicalreachability"
+  },
+  "author_separation": {
+    "golden_author": "SeparateClaudeauthor;notyetcalled",
+    "property_author": "ExistingisolatedCodexagent/root/queue_property_author;specpluscommoncontractonly,nogolden/DUT/results",
+    "reviewer": "Existingindependent复核test2项目thread;notanauthor",
+    "producer": "Infrastructureandstimuluscallsonly",
+    "author_allowed_inputs": [
+      "publicspecification",
+      "thisexplicitcommoncontract",
+      "frozenobservationABIwhenready"
+    ],
+    "no_DUT_or_old_checker_or_egg_or_candidate_outcomes_to_authors": true
+  },
+  "no_current_execution_or_paid_authorization": true
+}

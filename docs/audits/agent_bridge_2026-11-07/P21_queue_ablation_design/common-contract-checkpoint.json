@@ -1,0 +1,30 @@
+{
+  "phase": "P21_COMMON_CONTRACT_STATIC_CHECKPOINT",
+  "status": "NO_EXPLICIT_INTERNAL_CONTRADICTION_FOUND_WITH_LIMITS",
+  "input_path": "docs/designs/queue_efficiency_contract_v1.json",
+  "input_sha256": "229ab3b3d99c597bba92a367e7697ef39bc1c039098b395382773cff9b94cc64",
+  "sha_verified": true,
+  "specific_previous_exclusion_removed": "Enabled simultaneous R/W is now allowed at empty and nonempty occupancy, including n=3. This removes the identified syntactic exclusion of the old simultaneous branch counters.",
+  "observations": [
+    "C_eff=3 is explicitly an adopted benchmark assumption, separate from workload limit and original-spec proof.",
+    "Nonempty simultaneous dequeue+append retains occupancy; empty simultaneous retains logical empty state with empty q ungraded. These state and valid-output rules are internally consistent.",
+    "Clear-disabled and conflicting reset/clear operations remain excluded explicitly; no need to expand them solely to fix the identified simultaneous exclusion.",
+    "Almost flags are observed without functional credit; missing required phase/knownness cannot PASS.",
+    "Author allowlists separate Claude golden, Codex property, producer and independent reviewer. This is a declared input policy, not fresh evidence that future calls complied."
+  ],
+  "limits": [
+    "No claim that joint 41-line/14-branch target is now physically reachable under every remaining restriction.",
+    "Actual observation ABI and property v2 remain pending.",
+    "Final producer plan, role artifacts, target mapping, source versions and budget require one fixed-input incremental review.",
+    "No executable monitor/golden authored by reviewer, no proof or toolchain run, no paid or execute authority."
+  ],
+  "hallmark": {
+    "read_this_checkpoint": false,
+    "prior_same_P21_read_reference": "hallmark-usage.json",
+    "applied_for": "Check fixed text for concrete contradictions and minimum scope of closure; separate proposal from verified result.",
+    "workflow_executed": false,
+    "scripts_executed": false
+  },
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3: read contract and compare SHA256",
+  "exit_code": 0
+}

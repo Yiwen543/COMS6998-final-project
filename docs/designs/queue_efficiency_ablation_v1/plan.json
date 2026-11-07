@@ -1,0 +1,940 @@
+{
+  "id": "queue_efficiency_ablation_v1",
+  "status": "DRAFT_API_FREE_PREPARATION_PENDING_P21_AND_NEW_USD_APPROVAL",
+  "created_local_date": "2026-11-07",
+  "actual_HEAD": "034a5a8db63f38878148aaac15ea69dbc150d29a",
+  "live_allowed": false,
+  "paid_authorization": null,
+  "old_USD20_inherited": false,
+  "new_candidate_runner": null,
+  "scope": "Knownpublishedqueue stimulus-efficiency exploration;not test2monitor trial,not twoIPs or originalhard-targetqualification",
+  "forms": {
+    "original": {
+      "source": "examples/heldout_queue/rtl/queue.sv",
+      "sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+      "top": "queue",
+      "parameters": {
+        "DEPTH": 4,
+        "DBITS": 32,
+        "ALMOST_EMPTY_THRESHOLD": 1,
+        "ALMOST_FULL_THRESHOLD": 4
+      },
+      "raw_denominators": {
+        "line": 41,
+        "branch": 14,
+        "toggle": 408,
+        "expr": 16
+      },
+      "seed_DUT_coverage": {
+        "branch": {
+          "covered": 6,
+          "percent": 42.857,
+          "total": 14
+        },
+        "expr": {
+          "covered": 12,
+          "percent": 75.0,
+          "total": 16
+        },
+        "line": {
+          "covered": 13,
+          "percent": 31.707,
+          "total": 41
+        },
+        "toggle": {
+          "covered": 6,
+          "percent": 1.471,
+          "total": 408
+        }
+      },
+      "raw_seed_file": "results/queue_bc_gpt6sol_20261026/original/common-initial.dat",
+      "raw_seed_file_sha256": "8de280e18cfd1ee8f577b47e01c98a00716c2d8f365b35976c8dff5812e8a49e"
+    },
+    "variant": {
+      "source": "examples/heldout_queue/rtl/queue_variant.sv",
+      "sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+      "top": "queue_variant",
+      "parameters": {
+        "DEPTH": 4,
+        "DBITS": 32,
+        "ALMOST_EMPTY_THRESHOLD": 1,
+        "ALMOST_FULL_THRESHOLD": 4
+      },
+      "raw_denominators": {
+        "line": 41,
+        "branch": 14,
+        "toggle": 408,
+        "expr": 40
+      },
+      "seed_DUT_coverage": {
+        "branch": {
+          "covered": 6,
+          "percent": 42.857,
+          "total": 14
+        },
+        "expr": {
+          "covered": 24,
+          "percent": 60.0,
+          "total": 40
+        },
+        "line": {
+          "covered": 13,
+          "percent": 31.707,
+          "total": 41
+        },
+        "toggle": {
+          "covered": 6,
+          "percent": 1.471,
+          "total": 408
+        }
+      },
+      "raw_seed_file": "results/queue_bc_gpt6sol_20261026/variant/common-initial.dat",
+      "raw_seed_file_sha256": "042fe73bbd7fff07140d9eca2c7a8b0eb845beb1f2adae9f5891f695ccd69b15"
+    }
+  },
+  "common_contract": {
+    "path": "docs/designs/queue_efficiency_contract_v1.json",
+    "sha256": "229ab3b3d99c597bba92a367e7697ef39bc1c039098b395382773cff9b94cc64",
+    "source_spec": "examples/heldout_queue/docs/specification.md",
+    "spec_sha256": "cf439779a935805e5717cb51c26dd3dec605c729a83154e57a17dd9c6ad2ed51",
+    "authority": "Root-adopted common narrow benchmark contract; do not substitute a second legal domain",
+    "not_full_CVDP_conformance": true,
+    "capacity_3_is_explicit_assumption_not_prose_proof": true,
+    "includes_enabled_simultaneous_read_write": true,
+    "almost_flags_record_only_not_graded": true,
+    "observation_ABI_status": "PENDING_INFRA_PRE_POST_ASYNC_RESET_MAPPING_AND_INDEPENDENT_ACCEPTANCE",
+    "target_contract_physical_compatibility_status": "PENDING_NEW_HARNESS_CONTROLS_NOT_ESTABLISHED_BY_THIS_DOCUMENT",
+    "existing_seed": [
+      {
+        "reset_n": 0,
+        "clear": 0,
+        "enable": 0,
+        "write": 0,
+        "read": 0,
+        "data": 0
+      },
+      {
+        "reset_n": 0,
+        "clear": 0,
+        "enable": 0,
+        "write": 0,
+        "read": 0,
+        "data": 0
+      },
+      {
+        "reset_n": 1,
+        "clear": 0,
+        "enable": 0,
+        "write": 0,
+        "read": 0,
+        "data": 0
+      },
+      {
+        "reset_n": 1,
+        "clear": 0,
+        "enable": 0,
+        "write": 0,
+        "read": 0,
+        "data": 0
+      },
+      {
+        "reset_n": 1,
+        "clear": 0,
+        "enable": 0,
+        "write": 0,
+        "read": 0,
+        "data": 0
+      },
+      {
+        "reset_n": 1,
+        "clear": 0,
+        "enable": 0,
+        "write": 0,
+        "read": 0,
+        "data": 0
+      }
+    ],
+    "seed_identifier6998_is_not_provider_random_seed": true,
+    "provider_seed_not_set": true,
+    "static_review": "P21 reports no explicit internal contradiction and simultaneous-operation exclusion conflict removed; no new physical reachability claim"
+  },
+  "arms": {
+    "baseline": "Fullper-formRTL+publiccontract+sameordinaryrawuncoveredcounterarray/sourcesnippets+case-selectorfacts+ownacceptedhistory+boundedownfeedback",
+    "yosys": "Identicalcommoninput+deterministicYosysstructureappendix",
+    "yosys_egg": "IdenticalYosysarm+cachedcertifiedcompleteguardgroups"
+  },
+  "appendices": {
+    "Yosys_UTF8_byte_cap": 2048,
+    "egg_UTF8_byte_cap": 2048,
+    "byte_caps_not_exact_token_caps": true,
+    "Yosys_fields": [
+      "Module/hierarchy afterfixedparameters",
+      "Port/registeredstate widths/signedness",
+      "Memory/register/data/control connectivity",
+      "Sourceprovenance andunsupportedfacts"
+    ],
+    "forbidden_Yosys_fields": [
+      "Recommendedinputsequence",
+      "SATmodel/witness",
+      "Goldenreferenceimplementation",
+      "Handauthoredsolution",
+      "Eggcompleteguardnormalization"
+    ],
+    "egg_scope": "The2oldsource-verifiedgroups/form,sixmemberIDs each;fullguard+eventcontext+typedatoms+provenance retained",
+    "static_appendices_persist_all_rounds": true,
+    "why": "OldCgroups disappeared afterfirstgeneratedbatch;keep treatment explicit rather than an emptystub",
+    "no_cross_form_guard_forms_in_prompt": true,
+    "group_hit_transfer": false,
+    "if_complete_certified_appendix_exceeds_cap": "Stop packetqualification;no semantic truncation or targettuning"
+  },
+  "common_prompt_policy": {
+    "raw_source_counters_not_removed_or_merged": true,
+    "own_history_only": true,
+    "history_rule": "Allownacceptedactions todate pluslatestownDUTtrace/coverage/verdict;no otherarm/session histories",
+    "feedback_rule": "Common bounded observedDUTinput/output andverdict/failurecategory/cycle only;no goldeninternalexpectedstate/source",
+    "exclude": [
+      "Referenceimplementation",
+      "Directedcalibrationvectors",
+      "OldLLMactions/results/targetcosttables",
+      "Solverwitness",
+      "OtherformsRTL",
+      "Maintainerinstructions/skills"
+    ],
+    "all_input_tokens_counted_including_repeated_RTL_schema_appendices_history": true,
+    "payload_hashes_and_differential_allowlist_checks_before_calls": true
+  },
+  "execution": {
+    "sessions_per_arm_per_form": 3,
+    "forms": 2,
+    "arms": 3,
+    "total_sessions": 18,
+    "max_rounds": 4,
+    "max_new_cycles_per_round": 4,
+    "max_new_cycles_per_session": 16,
+    "max_replayed_stimulus_cycles_per_session": 64,
+    "output_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actions"
+      ],
+      "properties": {
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "reset_n",
+              "clear",
+              "enable",
+              "write",
+              "read",
+              "data"
+            ],
+            "properties": {
+              "reset_n": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              "clear": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              "enable": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              "write": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              "read": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              "data": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4294967295
+              }
+            }
+          }
+        }
+      }
+    },
+    "stop_rule": "Evaluatejointtargetatround0andaftereveryqualifiedtrace;stopthat session atfirsthit;futureplannedslotsmarkedNOT_RUN_TARGET_ALREADY_MET",
+    "round0_if_hit": "Zero generationtokens/calls andexplicitnon-discriminatingseedendpoint;never silently choose a new target",
+    "target": {
+      "primary": "Joint",
+      "line": {
+        "covered": 41,
+        "total": 41
+      },
+      "branch": {
+        "covered": 14,
+        "total": 14
+      },
+      "toggle": {
+        "min_covered": 344,
+        "total": 408
+      },
+      "expr": "Report separately16/40rawdenominators;not a cross-form numeric endpoint",
+      "basis": "User/rootpreproposedjointendpoint andoldprivatepre-candidatecalibration,not newCoutcomes",
+      "secondary": "Original41/41line-onlyprefixcost,reported separately",
+      "raw_point_identity_equality_required_before_live": true
+    },
+    "model": "gpt-6.1-sol",
+    "old_historical_model": "gpt-6-sol",
+    "model_migration_not_strict_historical_replication": true,
+    "reasoning": "low",
+    "tier": "standard/default",
+    "max_output_tokens": 4096,
+    "per_request_timeout_seconds": 90,
+    "automatic_retries": 0,
+    "normal_generation_slots": 72,
+    "max_transport_retries_per_session": 1,
+    "max_extra_generation_dispatches": 18,
+    "max_generation_dispatches": 90,
+    "invalid_JSON_or_illegal_actions": "Paidnormalroundfailure,no free repair/retry;history staysatlastacceptedtrace",
+    "transport_retry": "Oneextra/sessiononlyforpredeclaredtransienttransportfailure,neverauth/model/contracterror;fullreserve andfee uncertainty retained;onlyifremainingledger/deadlinepermit",
+    "functional_or_oracle_error": "Preservefinding/traceand costs;noqualifiedcoveragecredit;stop session andindependentdisposition beforechangingcontract",
+    "unknown_reference": "Keep unresolved,notPASS",
+    "scheduling": [
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 1,
+        "round": 1
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 1,
+        "round": 1
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 1,
+        "round": 1
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 1,
+        "round": 1
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 1,
+        "round": 1
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 1,
+        "round": 1
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 2,
+        "round": 1
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 2,
+        "round": 1
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 2,
+        "round": 1
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 2,
+        "round": 1
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 2,
+        "round": 1
+      },
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 2,
+        "round": 1
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 3,
+        "round": 1
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 3,
+        "round": 1
+      },
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 3,
+        "round": 1
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 3,
+        "round": 1
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 3,
+        "round": 1
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 3,
+        "round": 1
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 1,
+        "round": 2
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 1,
+        "round": 2
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 1,
+        "round": 2
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 1,
+        "round": 2
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 1,
+        "round": 2
+      },
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 1,
+        "round": 2
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 2,
+        "round": 2
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 2,
+        "round": 2
+      },
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 2,
+        "round": 2
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 2,
+        "round": 2
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 2,
+        "round": 2
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 2,
+        "round": 2
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 3,
+        "round": 2
+      },
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 3,
+        "round": 2
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 3,
+        "round": 2
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 3,
+        "round": 2
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 3,
+        "round": 2
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 3,
+        "round": 2
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 1,
+        "round": 3
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 1,
+        "round": 3
+      },
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 1,
+        "round": 3
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 1,
+        "round": 3
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 1,
+        "round": 3
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 1,
+        "round": 3
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 2,
+        "round": 3
+      },
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 2,
+        "round": 3
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 2,
+        "round": 3
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 2,
+        "round": 3
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 2,
+        "round": 3
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 2,
+        "round": 3
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 3,
+        "round": 3
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 3,
+        "round": 3
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 3,
+        "round": 3
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 3,
+        "round": 3
+      },
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 3,
+        "round": 3
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 3,
+        "round": 3
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 1,
+        "round": 4
+      },
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 1,
+        "round": 4
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 1,
+        "round": 4
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 1,
+        "round": 4
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 1,
+        "round": 4
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 1,
+        "round": 4
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 2,
+        "round": 4
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 2,
+        "round": 4
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 2,
+        "round": 4
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 2,
+        "round": 4
+      },
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 2,
+        "round": 4
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 2,
+        "round": 4
+      },
+      {
+        "form": "variant",
+        "arm": "yosys_egg",
+        "session_index": 3,
+        "round": 4
+      },
+      {
+        "form": "original",
+        "arm": "yosys_egg",
+        "session_index": 3,
+        "round": 4
+      },
+      {
+        "form": "variant",
+        "arm": "baseline",
+        "session_index": 3,
+        "round": 4
+      },
+      {
+        "form": "original",
+        "arm": "baseline",
+        "session_index": 3,
+        "round": 4
+      },
+      {
+        "form": "variant",
+        "arm": "yosys",
+        "session_index": 3,
+        "round": 4
+      },
+      {
+        "form": "original",
+        "arm": "yosys",
+        "session_index": 3,
+        "round": 4
+      }
+    ],
+    "shared_online_wall_seconds": 3600,
+    "work_stop_before_cleanup_seconds": 3590,
+    "deadline_or_budget_abort": "Keepall18allocatedsessions,rightcensorunfinishedslots,costsnotreset;no automatic restart"
+  },
+  "metrics": {
+    "primary_order": [
+      "Functional/schema validity andtargetattainmentrate byarm/form",
+      "Finalrawcoveragevector andunresolved/abortstatus",
+      "Token/call/DUTcycle/wallcosttojointtarget"
+    ],
+    "right_censor": "Forunreached/aborted sessions keepincurredinput/output/calls/costupper andcensorreason/time;no success-onlymean orzero-costfailure;show restrictedcostwithinbudget besidehit rate",
+    "token_ROI": "NewDUTbranchpointsaboveseed6per1000actualinput+output tokens;branchsaturationlimitsinterpretation;do not pooltest2faultkillROI",
+    "two_forms_are_one_IP": true,
+    "no_statistical_significance_or_provider_seed_pairing": true,
+    "three_arms_estimate": "Wholepackage/addedstructure-andguardappendix effects,not pure semantic contentisolatedfromlength",
+    "fourth_placebo_not_authorized_or_automatically_added": true,
+    "compilation_DUTsim_replaycycles_preproc_wall_costs_separate": true,
+    "correctness_oracle_not_coverage_oracle": true
+  },
+  "roles": {
+    "infrastructure": "Thisproducer;driver/codec/coverage/ledger only,no golden/propertytruthlogic",
+    "property_author": {
+      "agent": "/root/queue_property_author",
+      "scope": "Distinct isolated author completed contract-aligned static obligations v2 from public spec plus shared contract; no DUT/old checker/golden/LLM outcomes; ABI still pending",
+      "directory": "docs/designs/queue_property_author_v2/",
+      "status": "STATIC_V2_DRAFT_COMPLETE_NOT_IMPLEMENTED_NO_EXECUTE",
+      "input_receipt_must_be_verified_before_acceptance": true,
+      "shared_narrow_contract_and_ABI_alignment_pending": true,
+      "experimental_API_calls": 0,
+      "Codex_maintenance_cost": "UNKNOWN",
+      "prior_draft_preserved": "docs/designs/queue_property_author_v1/",
+      "artifact_sha256": {
+        "docs/designs/queue_property_author_v2/property-obligations-draft.md": "7a40800c4e7aa52520a01081f44c60dc5eb6911d808582007a4f92afc8cc9655",
+        "docs/designs/queue_property_author_v2/role-inputs.json": "18dc3766cc9a419aedc9eec5cbbd7acd16212f2d60c9290f5bb7f9ade6850c4a"
+      }
+    },
+    "golden_author": {
+      "model": "claude-opus-5-5",
+      "status": "NOT_CALLED_PENDING_BUDGET",
+      "max_calls": 2,
+      "second_call": "Onlyboundedrepairafterindependentfindings,not automaticresampling",
+      "max_output_tokens": 8192,
+      "output_cap_must_be_provider_enforced": true,
+      "allowlist": [
+        "Public specification matching common_contract.spec_sha256",
+        "Exact shared queue_efficiency_contract_v1.json matching common_contract.sha256",
+        "Frozen public pins/pre-post/asynchronous-reset observation ABI when accepted",
+        "Output/schema and resource contract"
+      ],
+      "denylist": [
+        "DUTimplementation",
+        "Oldchecker/golden",
+        "Yosys/egg",
+        "Oldornewcandidateactions/outcomes",
+        "Privatecalibrationanswers"
+      ],
+      "prompt": "Author an independent specification reference for the frozen public scope/ABI. Do not infer expected behavior from RTL or prior checker. Separate FAIL, UNKNOWN and invalid inputs; return source, scope/exclusions and selfchecks. If prose does not resolve a behavior, state UNKNOWN/limitation rather than inventing it. Do not alter the contract or author the separate monitor/property."
+    },
+    "property_prompt_for_independent_author": "From only the shared public spec, explicit scoped contract and public observation ABI, draft/freeze independently authored observable obligations/properties and their limits. Do not read or copy golden implementation, RTL, old checker, egg groups or candidate outcomes. This draft is not a tested monitor until its owner supplies implementation and qualified controls; infrastructure must not silently author the truth logic.",
+    "reviewer": "ExistingseparateCodexreviewer/P21,not either author;statictechnicalreview plus actualHallmark genericcritique,not a formal/RTLproof",
+    "legacy_Claude_crossreview_does_not_prove_new_authorship": true
+  },
+  "resource_plan": {
+    "this_stage": "0API/compile/sim/Yosys/egg/Z3/G1/install/Gitwrite/credentialaccess",
+    "future_main_DUT_round_sim_roots_max": 72,
+    "future_main_replayed_cycles_max": 1152,
+    "seed_setup": {
+      "roots_max": 2,
+      "cycles_max": 12
+    },
+    "reference_property_controls": {
+      "status": "Small fixed postprocessing controls pending independent labels; no SV mutants or extra compiler framework",
+      "fixed_observation_cases_max": 9,
+      "independent_checker_evaluations_max": 18,
+      "sim_roots_max": 0,
+      "total_cycles_max": 0,
+      "basis": "6-9 shared positive/negative/unknown contract controls for separate golden/property; may synthetically corrupt observations; not DUT defects, physical reachability or RTL coverage"
+    },
+    "total_sim_roots_max": 76,
+    "total_sim_cycles_max": 1208,
+    "DUT_compile_builds_max": 2,
+    "control_compile_builds_max": 0,
+    "total_compile_builds_max": 2,
+    "compile_timeout_seconds": 180,
+    "sim_timeout_seconds": 15,
+    "Yosys_structure_commands_max": 2,
+    "command_timeout_seconds": 60,
+    "new_egg_or_Z3_proof_jobs": 0,
+    "historical_certificates_reused_not_reproved": true,
+    "G1_gate_not_imported": true,
+    "all_extra_local_execution_pending_exact_permission": true,
+    "simulator": "Verilator only, consistent with historical coverage; no dual-simulator qualification framework",
+    "private_reachability_smoke": {
+      "roots_max": 2,
+      "cycles_max": 44,
+      "basis": "At most one existing private <=22-cycle bounded smoke per DUT form; exact ABI/contract compatibility pending; not a general reachability proof; never prompted"
+    },
+    "minimal_implementation": "Two DUT observer builds, common fixed observation ABI, small independent reference/property postprocessors, existing raw coverage, bounded private smoke; no general verification framework"
+  },
+  "budget": {
+    "source": "docs/audits/queue_ablation_budget_2026-11-07/price-basis-and-estimate.json",
+    "source_sha256": "30fb95c89f8e137d633d0e89a90fc67bda2958a4061259b7f3b8e0bcdcdfa3b5",
+    "status": "PRICECHECKED_PROPOSAL_NOT_USER_APPROVED",
+    "recommended_new_USD_hard_ceiling": 15,
+    "expected_project_API_USD_range": [
+      4,
+      7
+    ],
+    "normal72_planning": {
+      "generation_attempts": 72,
+      "planning_input_tokens": 1465422,
+      "planning_output_tokens_including_reasoning": 17661,
+      "total_planning_tokens": 1483083,
+      "pricing_ordinary_input_USD": 3.107454,
+      "pricing_all_input_at_30m_cache_write_USD": 3.840165,
+      "cachewrite_plus10percent_USD": 4.2241815,
+      "not_actual_usage_or_guaranteed_bound": true
+    },
+    "max90_planning": {
+      "generation_attempts": 90,
+      "planning_input_tokens": 1831778,
+      "planning_output_tokens_including_reasoning": 22077,
+      "total_planning_tokens": 1853855,
+      "pricing_ordinary_input_USD": 3.884326,
+      "pricing_all_input_at_30m_cache_write_USD": 4.800215,
+      "cachewrite_plus10percent_USD": 5.2802365,
+      "not_actual_usage_or_guaranteed_bound": true
+    },
+    "golden_author_max_calls": 2,
+    "golden_author_target_USD_max": 1,
+    "all_paid_dispatches_max": 92,
+    "remote_count_calls": 0,
+    "count_is_not_assumed_free": true,
+    "single_shared_OpenAI_Anthropic_ledger": true,
+    "GPT_full_context_reserve_microUSD": 5842584,
+    "Claude_full_context_reserve_microUSD": 5680224,
+    "unknown_usage_fullreserve_not_refunded": true,
+    "settlement": "Onlycompleteprovider-specifictrustedmodel/tier/cost/primaryusage;explicitGPTdefault required;all fees journalled;not invoice",
+    "budget_insufficient": "Stopbeforedispatch;ceilingdoesnotguaranteeall92attempts",
+    "local_input_admission_target": 64000,
+    "not_server_input_hardcap": true,
+    "actual_input_over_target": "Saveusage/response/fees,halt andnotqualify",
+    "Codex_maintenance_and_actual_invoices": "UNKNOWN_NOT_ZERO",
+    "no_old_USD20_grant_reused": true
+  },
+  "effort": {
+    "offline_implementation_hours": [
+      2,
+      4
+    ],
+    "independent_review_analysis_hours": [
+      0.5,
+      1
+    ],
+    "historical72_latency_proxy_seconds": 355.03011293685995,
+    "expected_total_online_minutes": [
+      10,
+      30
+    ],
+    "hard_online_minutes": 60,
+    "not_a_completion_guarantee": true
+  },
+  "credentials": {
+    "no_current_key_read_stat_hash_or_request": true,
+    "use_existing_hidden_getpass_staging_only_after_new_approval": true,
+    "keep_keys_through_entire_ablation_and_review": true,
+    "no_chat_secret_values_or_per_role_restaging": true
+  },
+  "open_gates": [
+    "Freeze and accept exact pre/post/asynchronous-reset ABI and bounded physical smoke; P21 static contract compatibility is not actual reachability qualification",
+    "UserapprovalofnewcombinedUSDcap",
+    "Independentgoldenauthorartifact andseparatepropertyartifact/controlscope accepted",
+    "CompactYosysandcachedguardappendices actuallybuilt/hashbound/bytecapchecked",
+    "Newthin3armrunner/earlystop/censor/mixedproviderledger implementedandnarrowlytested",
+    "Exactlocaljoblist/tool/sourcecounterbindings/schedule frozen",
+    "Final incremental P21 technical+Hallmark review of these4drafts, then separate implementation qualification"
+  ],
+  "not_claimed": [
+    "Implementedrunnable newablation",
+    "Freshdataornewcoverage",
+    "Independentlegacygolden/propertyauthors",
+    "Currentenginevalidatedbyoldproof",
+    "Permanentunattendedautomation",
+    "Fullspec capacity/almostflagresolution",
+    "GeneralCbenefit"
+  ]
+}

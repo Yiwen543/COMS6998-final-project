@@ -1,0 +1,95 @@
+{
+  "status": "DRAFT_NO_EXECUTE",
+  "version": "queue_property_author_v2",
+  "role": "independent_fixed_property_monitor_rule_author",
+  "date": "2026-11-07",
+  "technical_inputs": [
+    {
+      "path": "examples/heldout_queue/docs/specification.md",
+      "sha256": "cf439779a935805e5717cb51c26dd3dec605c729a83154e57a17dd9c6ad2ed51",
+      "read_scope": "complete 127-line public spec read in v1; hash rechecked for v2"
+    },
+    {
+      "path": "docs/designs/queue_efficiency_contract_v1.json",
+      "sha256": "229ab3b3d99c597bba92a367e7697ef39bc1c039098b395382773cff9b94cc64",
+      "read_scope": "complete 74-line common contract read in v2"
+    }
+  ],
+  "adopted_benchmark_semantics": {
+    "DEPTH": 4,
+    "DBITS": 32,
+    "workload_max_valid_elements": 3,
+    "C_eff": 3,
+    "C_eff_proven_from_original_spec_or_DUT": false,
+    "simultaneous_nonempty": "remove front then append data; occupancy unchanged; includes n=3",
+    "simultaneous_empty": "Q remains empty; data is not a valid element; physical empty q is not graded",
+    "original_spec_full_conformance_claim": false,
+    "contract_file_status": "PROPOSED_COMMON_BENCHMARK_CONTRACT_NO_EXECUTE",
+    "contract_internal_contradiction_identified": false,
+    "observation_ABI_frozen": false
+  },
+  "separation": {
+    "golden_authored_by_this_agent": false,
+    "executable_monitor_authored": false,
+    "stimulus_generated": false,
+    "self_grading_performed": false,
+    "future_golden_author": "separate independent Claude author",
+    "future_golden_inputs": [
+      "same public specification",
+      "same explicit common contract",
+      "frozen observation ABI when available"
+    ],
+    "future_golden_author_reads_this_property_source": false,
+    "final_reviewer": "independent existing 复核test2项目 thread",
+    "automatic_candidate_prompt_injection": false
+  },
+  "forbidden_read_audit": {
+    "dut_implementation_read": false,
+    "tb_queue_pilot_sv_read": false,
+    "old_golden_checker_queue_reference_read": false,
+    "historical_result_artifacts_read": false,
+    "historical_scores_used_for_rules": false,
+    "calibration_vectors_read": false,
+    "solver_witnesses_read": false,
+    "other_author_plans_read": false,
+    "review_reports_read": false,
+    "other_conversations_read": false,
+    "credentials_read_or_hashed": false,
+    "v2_maintenance_documents_reread": false,
+    "v1_maintenance_summary_history_visible": true,
+    "v1_maintenance_history_use": "governance only; not a technical input; retained v1 record unchanged"
+  },
+  "retained_v1": {
+    "files_preserved": [
+      {
+        "path": "docs/designs/queue_property_author_v1/property-obligations-draft.md",
+        "sha256": "a60d56c827fed3da19970505ac90e36b7a988073975eaa94ce956d47aa5cf77e"
+      },
+      {
+        "path": "docs/designs/queue_property_author_v1/role-inputs.json",
+        "sha256": "9b0ebe44ab18af24a5e935e3a878784c39813004b30db9bd1a2e13de974ef76c"
+      }
+    ],
+    "maintenance_and_skill_reads": "All actual prior maintenance and skill paths/hashes remain in the retained v1 role-inputs.json; no additional such inputs read in v2"
+  },
+  "actions_this_phase": {
+    "external_api_calls": 0,
+    "paid_calls": 0,
+    "network_calls": 0,
+    "installations": 0,
+    "compilations": 0,
+    "simulations": 0,
+    "formal_yosys_egg_jobs": 0,
+    "git_operations": 0,
+    "credential_accesses": 0,
+    "file_deletions_or_cleanup": 0,
+    "experimental_tests": 0,
+    "verification_scope": "local JSON parsing, draft-marker checks, technical-input hashes and v1 preservation hashes only"
+  },
+  "outputs": [
+    "docs/designs/queue_property_author_v2/property-obligations-draft.md",
+    "docs/designs/queue_property_author_v2/role-inputs.json"
+  ],
+  "write_scope": "only new docs/designs/queue_property_author_v2/; v1 and central handoff unchanged",
+  "phase_handoff": "Seven semantic obligation groups drafted. Minimum remaining work: freeze concrete pre/post/asynchronous reset ABI and contract version; independent Claude golden; executable fixed monitor; independent review. No experimental execution authorization."
+}

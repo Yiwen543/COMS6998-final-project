@@ -1,0 +1,205 @@
+{
+  "phase": "P21_LEGACY_METHOD_CHECKPOINT",
+  "head": "034a5a8db63f38878148aaac15ea69dbc150d29a",
+  "inputs": {
+    "configs/queue_bc_pilot_gpt6sol.json": "eb47ac5e71aae6afdc3ad527f7d49068f078080fa79bf9ef3c4eb6ed5c5295d1",
+    "results/queue_bc_gpt6sol_20261026/REPORT.md": "15828f70b4d4408e4342c62e8db25d80d44920be9462f59c20b122c06ee3d4e3",
+    "results/queue_bc_gpt6sol_20261026/target_costs.csv": "b93cacee835647a2fd422eac864a69796409bd7f434e1c7aa1804fdbabe534a7",
+    "results/queue_bc_gpt6sol_20261026/metadata.json": "aad754572253b33693aeb7593dd464eca3ee0a556a3c192f59cd6f99ee4b2000",
+    "results/queue_bc_gpt6sol_20261026/semantic-proof.json": "a9db22e618c236a2599e764a9014a9fe36e26c56844bb7f614c22a1f6920dfb8",
+    "results/queue_bc_gpt6sol_20261026/claude_audit_v2/disposition.md": "312b5581b2d3fe0d5f273e6bee53041f7bfb32298d2c382e772caeb2441e6ceb",
+    "docs/heldout_queue_preflight.md": "fc4799c7d15ea0bdf435322e2ae814276627d4cd4d1e6a41bc87a3d383c5683e",
+    "docs/claude_queue_crosscheck.md": "915b07fbcc187e3758306355a32c4ccf76df069961bafd6b19b701bcc5ab4f8b",
+    "examples/heldout_queue/provenance.json": "712fc7a2db8c183dd9a04394cf18597a336fea1c6db9090ca95b3b49fd3cb837",
+    "examples/heldout_queue/docs/specification.md": "cf439779a935805e5717cb51c26dd3dec605c729a83154e57a17dd9c6ad2ed51",
+    "examples/heldout_queue/verif/tb_queue_pilot.sv": "f5bc5211344e0bf21a9dc3fb4456640760c1b0b0aa672e4a920a17d619b6523b",
+    "scripts/queue_feedback.py": "532b480ab9b60e220a2d411305b0cffe01b24807905d9eda763c73a102967a81",
+    "scripts/queue_reference.py": "28867201466410bc9a92d0790db572fb919aae568243ad9aab2c005e6345a6f3",
+    "scripts/run_queue_bc_pilot.py": "43a0dc351924998fb98c9edd05efa296123cd8f7bdf927c918924a885b30a8b8"
+  },
+  "config_binding_checks": {
+    "spec": {
+      "path": "examples/heldout_queue/docs/specification.md",
+      "sha256": "cf439779a935805e5717cb51c26dd3dec605c729a83154e57a17dd9c6ad2ed51",
+      "matches_config": true
+    },
+    "checker": {
+      "path": "examples/heldout_queue/verif/tb_queue_pilot.sv",
+      "sha256": "f5bc5211344e0bf21a9dc3fb4456640760c1b0b0aa672e4a920a17d619b6523b",
+      "matches_config": true
+    },
+    "feedback": {
+      "path": "scripts/queue_feedback.py",
+      "sha256": "532b480ab9b60e220a2d411305b0cffe01b24807905d9eda763c73a102967a81",
+      "matches_config": true
+    },
+    "engine": {
+      "path": "egraph/src/main.rs",
+      "sha256": "3912ebe6cbf44b56fd1e6dd050ff5293ad2c3ac03768ef2216020016f5e8145b",
+      "matches_config": false
+    },
+    "driver": {
+      "path": "scripts/sim_main_queue.cpp",
+      "sha256": "a28c3c9b865d07a5b505cb8d45352419702be0106782ec80b0eeec7f1a3ee5eb",
+      "matches_config": true
+    },
+    "original": {
+      "path": "examples/heldout_queue/rtl/queue.sv",
+      "sha256": "eacc80cd7d3192986e509102ac16bc03c8785fe665afc88dadd930edf250576d",
+      "matches_config": true
+    },
+    "variant": {
+      "path": "examples/heldout_queue/rtl/queue_variant.sv",
+      "sha256": "957f73dbeed793a4c082831f30f0a7ad8a1d972ef34ed5c225b2d874ebfa57cc",
+      "matches_config": true
+    }
+  },
+  "target_arithmetic": {
+    "original": {
+      "mean_tokens_exact": {
+        "B": "224672/3",
+        "C": "221215/3"
+      },
+      "C_minus_B_percent": -1.538687508901866,
+      "target_rounds_by_repetition_index": {
+        "B": [
+          3,
+          4,
+          4
+        ],
+        "C": [
+          3,
+          4,
+          3
+        ]
+      }
+    },
+    "variant": {
+      "mean_tokens_exact": {
+        "B": "210815/3",
+        "C": "66377"
+      },
+      "C_minus_B_percent": -5.542300120959135,
+      "target_rounds_by_repetition_index": {
+        "B": [
+          3,
+          3,
+          3
+        ],
+        "C": [
+          2,
+          3,
+          3
+        ]
+      }
+    }
+  },
+  "C_earlier_index_comparisons": 2,
+  "seed_and_ceiling": {
+    "original": {
+      "initial": {
+        "branch": {
+          "covered": 6,
+          "percent": 42.857,
+          "total": 14
+        },
+        "expr": {
+          "covered": 12,
+          "percent": 75.0,
+          "total": 16
+        },
+        "line": {
+          "covered": 13,
+          "percent": 31.707,
+          "total": 41
+        },
+        "toggle": {
+          "covered": 6,
+          "percent": 1.471,
+          "total": 408
+        }
+      },
+      "ceiling": {
+        "branch": {
+          "covered": 14,
+          "percent": 100.0,
+          "total": 14
+        },
+        "expr": {
+          "covered": 16,
+          "percent": 100.0,
+          "total": 16
+        },
+        "line": {
+          "covered": 41,
+          "percent": 100.0,
+          "total": 41
+        },
+        "toggle": {
+          "covered": 344,
+          "percent": 84.314,
+          "total": 408
+        }
+      }
+    },
+    "variant": {
+      "initial": {
+        "branch": {
+          "covered": 6,
+          "percent": 42.857,
+          "total": 14
+        },
+        "expr": {
+          "covered": 24,
+          "percent": 60.0,
+          "total": 40
+        },
+        "line": {
+          "covered": 13,
+          "percent": 31.707,
+          "total": 41
+        },
+        "toggle": {
+          "covered": 6,
+          "percent": 1.471,
+          "total": 408
+        }
+      },
+      "ceiling": {
+        "branch": {
+          "covered": 14,
+          "percent": 100.0,
+          "total": 14
+        },
+        "expr": {
+          "covered": 40,
+          "percent": 100.0,
+          "total": 40
+        },
+        "line": {
+          "covered": 41,
+          "percent": 100.0,
+          "total": 41
+        },
+        "toggle": {
+          "covered": 344,
+          "percent": 84.314,
+          "total": 408
+        }
+      }
+    }
+  },
+  "saved_pair_proofs_count_only": 22,
+  "proofs_freshly_executed": false,
+  "hallmark_source_hashes": {
+    "/Users/yiwenchen/.codex/skills/hallmark/SKILL.md": "25a1ff92d925b2389e8409f42fb8ad7e033fceca8b5d1f07ed4ca4c28da53dc3",
+    "/Users/yiwenchen/.codex/skills/hallmark/references/review-finish.md": "9d00de59e71ee2516212140b0512d6d2e90a120d4a328eeba9cb12396ff38d64"
+  },
+  "draft_directory_existed_at_check": false,
+  "review_script_sha256": "17b346bce083aeb5afe783d879aa8cd14ca712eee77b3ba23cac2802ae0c59dc",
+  "limits": [
+    "Saved CSV/JSON arithmetic and current binding checks only.",
+    "No raw replay, no new equivalence proof, no fee pricing verification.",
+    "No sealed new design identity received; no exact-design acceptance."
+  ]
+}
