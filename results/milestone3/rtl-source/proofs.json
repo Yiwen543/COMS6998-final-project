@@ -1,0 +1,275 @@
+{
+  "eclasses": 152,
+  "engine": "egg 0.11.0",
+  "enodes": 261,
+  "ground_rule_count": 0,
+  "iterations": 7,
+  "method": "six Boolean rules plus independently QF_BV-proven ground rules; no unconditional manual unions",
+  "rewrite_explanations": [
+    {
+      "explanation": "(and (and (not reset) (not override_any)) (and req0 (not false)))\n(and (and (not reset) (not override_any)) (and req0 (Rewrite=> not-false true)))",
+      "left": "req_0/source",
+      "right": "req_0/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) (not override_any)) (and req2 (not (or req0 req1))))\n(and (and (not reset) (not override_any)) (and req2 (Rewrite=> de-morgan-or (and (not req0) (not req1)))))",
+      "left": "req_2/source",
+      "right": "req_2/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) (not override_any)) (and req3 (not (or req0 (or req1 req2)))))\n(and (and (not reset) (not override_any)) (and req3 (Rewrite=> de-morgan-or (and (not req0) (not (or req1 req2))))))\n(and (and (not reset) (not override_any)) (and req3 (and (not req0) (Rewrite=> de-morgan-or (and (not req1) (not req2))))))",
+      "left": "req_3/source",
+      "right": "req_3/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) (not override_any)) (and req4 (not (or req0 (or req1 (or req2 req3))))))\n(and (and (not reset) (not override_any)) (and req4 (Rewrite=> de-morgan-or (and (not req0) (not (or req1 (or req2 req3)))))))\n(and (and (not reset) (not override_any)) (and req4 (and (not req0) (Rewrite=> de-morgan-or (and (not req1) (not (or req2 req3)))))))\n(and (and (not reset) (not override_any)) (and req4 (and (not req0) (and (not req1) (Rewrite=> de-morgan-or (and (not req2) (not req3)))))))",
+      "left": "req_4/source",
+      "right": "req_4/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) (not override_any)) (and req5 (not (or req0 (or req1 (or req2 (or req3 req4)))))))\n(and (and (not reset) (not override_any)) (and req5 (Rewrite=> de-morgan-or (and (not req0) (not (or req1 (or req2 (or req3 req4))))))))\n(and (and (not reset) (not override_any)) (and req5 (and (not req0) (Rewrite=> de-morgan-or (and (not req1) (not (or req2 (or req3 req4))))))))\n(and (and (not reset) (not override_any)) (and req5 (and (not req0) (and (not req1) (Rewrite=> de-morgan-or (and (not req2) (not (or req3 req4))))))))\n(and (and (not reset) (not override_any)) (and req5 (and (not req0) (and (not req1) (and (not req2) (Rewrite=> de-morgan-or (and (not req3) (not req4))))))))",
+      "left": "req_5/source",
+      "right": "req_5/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) (not override_any)) (and req6 (not (or req0 (or req1 (or req2 (or req3 (or req4 req5))))))))\n(and (and (not reset) (not override_any)) (and req6 (Rewrite=> de-morgan-or (and (not req0) (not (or req1 (or req2 (or req3 (or req4 req5)))))))))\n(and (and (not reset) (not override_any)) (and req6 (and (not req0) (Rewrite=> de-morgan-or (and (not req1) (not (or req2 (or req3 (or req4 req5)))))))))\n(and (and (not reset) (not override_any)) (and req6 (and (not req0) (and (not req1) (Rewrite=> de-morgan-or (and (not req2) (not (or req3 (or req4 req5)))))))))\n(and (and (not reset) (not override_any)) (and req6 (and (not req0) (and (not req1) (and (not req2) (Rewrite=> de-morgan-or (and (not req3) (not (or req4 req5)))))))))\n(and (and (not reset) (not override_any)) (and req6 (and (not req0) (and (not req1) (and (not req2) (and (not req3) (Rewrite=> de-morgan-or (and (not req4) (not req5)))))))))",
+      "left": "req_6/source",
+      "right": "req_6/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) (not override_any)) (and req7 (not (or req0 (or req1 (or req2 (or req3 (or req4 (or req5 req6)))))))))\n(and (and (not reset) (not override_any)) (and req7 (Rewrite=> de-morgan-or (and (not req0) (not (or req1 (or req2 (or req3 (or req4 (or req5 req6))))))))))\n(and (and (not reset) (not override_any)) (and req7 (and (not req0) (Rewrite=> de-morgan-or (and (not req1) (not (or req2 (or req3 (or req4 (or req5 req6))))))))))\n(and (and (not reset) (not override_any)) (and req7 (and (not req0) (and (not req1) (Rewrite=> de-morgan-or (and (not req2) (not (or req3 (or req4 (or req5 req6))))))))))\n(and (and (not reset) (not override_any)) (and req7 (and (not req0) (and (not req1) (and (not req2) (Rewrite=> de-morgan-or (and (not req3) (not (or req4 (or req5 req6))))))))))\n(and (and (not reset) (not override_any)) (and req7 (and (not req0) (and (not req1) (and (not req2) (and (not req3) (Rewrite=> de-morgan-or (and (not req4) (not (or req5 req6))))))))))\n(and (and (not reset) (not override_any)) (and req7 (and (not req0) (and (not req1) (and (not req2) (and (not req3) (and (not req4) (Rewrite=> de-morgan-or (and (not req5) (not req6))))))))))",
+      "left": "req_7/source",
+      "right": "req_7/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) override_any) (and override0 (not false)))\n(and (and (not reset) override_any) (and override0 (Rewrite=> not-false true)))",
+      "left": "override_0/source",
+      "right": "override_0/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) override_any) (and override2 (not (or override0 override1))))\n(and (and (not reset) override_any) (and override2 (Rewrite=> de-morgan-or (and (not override0) (not override1)))))",
+      "left": "override_2/source",
+      "right": "override_2/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) override_any) (and override3 (not (or override0 (or override1 override2)))))\n(and (and (not reset) override_any) (and override3 (Rewrite=> de-morgan-or (and (not override0) (not (or override1 override2))))))\n(and (and (not reset) override_any) (and override3 (and (not override0) (Rewrite=> de-morgan-or (and (not override1) (not override2))))))",
+      "left": "override_3/source",
+      "right": "override_3/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) override_any) (and override4 (not (or override0 (or override1 (or override2 override3))))))\n(and (and (not reset) override_any) (and override4 (Rewrite=> de-morgan-or (and (not override0) (not (or override1 (or override2 override3)))))))\n(and (and (not reset) override_any) (and override4 (and (not override0) (Rewrite=> de-morgan-or (and (not override1) (not (or override2 override3)))))))\n(and (and (not reset) override_any) (and override4 (and (not override0) (and (not override1) (Rewrite=> de-morgan-or (and (not override2) (not override3)))))))",
+      "left": "override_4/source",
+      "right": "override_4/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) override_any) (and override5 (not (or override0 (or override1 (or override2 (or override3 override4)))))))\n(and (and (not reset) override_any) (and override5 (Rewrite=> de-morgan-or (and (not override0) (not (or override1 (or override2 (or override3 override4))))))))\n(and (and (not reset) override_any) (and override5 (and (not override0) (Rewrite=> de-morgan-or (and (not override1) (not (or override2 (or override3 override4))))))))\n(and (and (not reset) override_any) (and override5 (and (not override0) (and (not override1) (Rewrite=> de-morgan-or (and (not override2) (not (or override3 override4))))))))\n(and (and (not reset) override_any) (and override5 (and (not override0) (and (not override1) (and (not override2) (Rewrite=> de-morgan-or (and (not override3) (not override4))))))))",
+      "left": "override_5/source",
+      "right": "override_5/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) override_any) (and override6 (not (or override0 (or override1 (or override2 (or override3 (or override4 override5))))))))\n(and (and (not reset) override_any) (and override6 (Rewrite=> de-morgan-or (and (not override0) (not (or override1 (or override2 (or override3 (or override4 override5)))))))))\n(and (and (not reset) override_any) (and override6 (and (not override0) (Rewrite=> de-morgan-or (and (not override1) (not (or override2 (or override3 (or override4 override5)))))))))\n(and (and (not reset) override_any) (and override6 (and (not override0) (and (not override1) (Rewrite=> de-morgan-or (and (not override2) (not (or override3 (or override4 override5)))))))))\n(and (and (not reset) override_any) (and override6 (and (not override0) (and (not override1) (and (not override2) (Rewrite=> de-morgan-or (and (not override3) (not (or override4 override5)))))))))\n(and (and (not reset) override_any) (and override6 (and (not override0) (and (not override1) (and (not override2) (and (not override3) (Rewrite=> de-morgan-or (and (not override4) (not override5)))))))))",
+      "left": "override_6/source",
+      "right": "override_6/alternate"
+    },
+    {
+      "explanation": "(and (and (not reset) override_any) (and override7 (not (or override0 (or override1 (or override2 (or override3 (or override4 (or override5 override6)))))))))\n(and (and (not reset) override_any) (and override7 (Rewrite=> de-morgan-or (and (not override0) (not (or override1 (or override2 (or override3 (or override4 (or override5 override6))))))))))\n(and (and (not reset) override_any) (and override7 (and (not override0) (Rewrite=> de-morgan-or (and (not override1) (not (or override2 (or override3 (or override4 (or override5 override6))))))))))\n(and (and (not reset) override_any) (and override7 (and (not override0) (and (not override1) (Rewrite=> de-morgan-or (and (not override2) (not (or override3 (or override4 (or override5 override6))))))))))\n(and (and (not reset) override_any) (and override7 (and (not override0) (and (not override1) (and (not override2) (Rewrite=> de-morgan-or (and (not override3) (not (or override4 (or override5 override6))))))))))\n(and (and (not reset) override_any) (and override7 (and (not override0) (and (not override1) (and (not override2) (and (not override3) (Rewrite=> de-morgan-or (and (not override4) (not (or override5 override6))))))))))\n(and (and (not reset) override_any) (and override7 (and (not override0) (and (not override1) (and (not override2) (and (not override3) (and (not override4) (Rewrite=> de-morgan-or (and (not override5) (not override6))))))))))",
+      "left": "override_7/source",
+      "right": "override_7/alternate"
+    }
+  ],
+  "stop_reason": "Some(Saturated)",
+  "targets": [
+    {
+      "eclass": 9,
+      "eclass_before": 9,
+      "id": "req_0/source",
+      "representative": "(and (and (not reset) (not override_any)) req0)"
+    },
+    {
+      "eclass": 9,
+      "eclass_before": 12,
+      "id": "req_0/alternate",
+      "representative": "(and (and (not reset) (not override_any)) req0)"
+    },
+    {
+      "eclass": 16,
+      "eclass_before": 16,
+      "id": "req_1/source",
+      "representative": "(and (and (not reset) (not override_any)) (and req1 (not req0)))"
+    },
+    {
+      "eclass": 16,
+      "eclass_before": 16,
+      "id": "req_1/alternate",
+      "representative": "(and (and (not reset) (not override_any)) (and req1 (not req0)))"
+    },
+    {
+      "eclass": 21,
+      "eclass_before": 21,
+      "id": "req_2/source",
+      "representative": "(and (and (not reset) (not override_any)) (and req2 (not (or req0 req1))))"
+    },
+    {
+      "eclass": 21,
+      "eclass_before": 25,
+      "id": "req_2/alternate",
+      "representative": "(and (and (not reset) (not override_any)) (and req2 (not (or req0 req1))))"
+    },
+    {
+      "eclass": 31,
+      "eclass_before": 31,
+      "id": "req_3/source",
+      "representative": "(and (and (not reset) (not override_any)) (and req3 (not (or req0 (or req1 req2)))))"
+    },
+    {
+      "eclass": 31,
+      "eclass_before": 36,
+      "id": "req_3/alternate",
+      "representative": "(and (and (not reset) (not override_any)) (and req3 (not (or req0 (or req1 req2)))))"
+    },
+    {
+      "eclass": 43,
+      "eclass_before": 43,
+      "id": "req_4/source",
+      "representative": "(and (and (not reset) (not override_any)) (and req4 (not (or req0 (or req1 (or req2 req3))))))"
+    },
+    {
+      "eclass": 43,
+      "eclass_before": 49,
+      "id": "req_4/alternate",
+      "representative": "(and (and (not reset) (not override_any)) (and req4 (not (or req0 (or req1 (or req2 req3))))))"
+    },
+    {
+      "eclass": 57,
+      "eclass_before": 57,
+      "id": "req_5/source",
+      "representative": "(and (and (not reset) (not override_any)) (and req5 (not (or req0 (or req1 (or req2 (or req3 req4)))))))"
+    },
+    {
+      "eclass": 57,
+      "eclass_before": 64,
+      "id": "req_5/alternate",
+      "representative": "(and (and (not reset) (not override_any)) (and req5 (not (or req0 (or req1 (or req2 (or req3 req4)))))))"
+    },
+    {
+      "eclass": 73,
+      "eclass_before": 73,
+      "id": "req_6/source",
+      "representative": "(and (and (not reset) (not override_any)) (and req6 (not (or req0 (or req1 (or req2 (or req3 (or req4 req5))))))))"
+    },
+    {
+      "eclass": 73,
+      "eclass_before": 81,
+      "id": "req_6/alternate",
+      "representative": "(and (and (not reset) (not override_any)) (and req6 (not (or req0 (or req1 (or req2 (or req3 (or req4 req5))))))))"
+    },
+    {
+      "eclass": 91,
+      "eclass_before": 91,
+      "id": "req_7/source",
+      "representative": "(and (and (not reset) (not override_any)) (and req7 (not (or req0 (or req1 (or req2 (or req3 (or req4 (or req5 req6)))))))))"
+    },
+    {
+      "eclass": 91,
+      "eclass_before": 100,
+      "id": "req_7/alternate",
+      "representative": "(and (and (not reset) (not override_any)) (and req7 (not (or req0 (or req1 (or req2 (or req3 (or req4 (or req5 req6)))))))))"
+    },
+    {
+      "eclass": 104,
+      "eclass_before": 104,
+      "id": "override_0/source",
+      "representative": "(and (and (not reset) override_any) override0)"
+    },
+    {
+      "eclass": 104,
+      "eclass_before": 106,
+      "id": "override_0/alternate",
+      "representative": "(and (and (not reset) override_any) override0)"
+    },
+    {
+      "eclass": 110,
+      "eclass_before": 110,
+      "id": "override_1/source",
+      "representative": "(and (and (not reset) override_any) (and override1 (not override0)))"
+    },
+    {
+      "eclass": 110,
+      "eclass_before": 110,
+      "id": "override_1/alternate",
+      "representative": "(and (and (not reset) override_any) (and override1 (not override0)))"
+    },
+    {
+      "eclass": 115,
+      "eclass_before": 115,
+      "id": "override_2/source",
+      "representative": "(and (and (not reset) override_any) (and override2 (not (or override0 override1))))"
+    },
+    {
+      "eclass": 115,
+      "eclass_before": 119,
+      "id": "override_2/alternate",
+      "representative": "(and (and (not reset) override_any) (and override2 (not (or override0 override1))))"
+    },
+    {
+      "eclass": 125,
+      "eclass_before": 125,
+      "id": "override_3/source",
+      "representative": "(and (and (not reset) override_any) (and override3 (not (or override0 (or override1 override2)))))"
+    },
+    {
+      "eclass": 125,
+      "eclass_before": 130,
+      "id": "override_3/alternate",
+      "representative": "(and (and (not reset) override_any) (and override3 (not (or override0 (or override1 override2)))))"
+    },
+    {
+      "eclass": 137,
+      "eclass_before": 137,
+      "id": "override_4/source",
+      "representative": "(and (and (not reset) override_any) (and override4 (not (or override0 (or override1 (or override2 override3))))))"
+    },
+    {
+      "eclass": 137,
+      "eclass_before": 143,
+      "id": "override_4/alternate",
+      "representative": "(and (and (not reset) override_any) (and override4 (not (or override0 (or override1 (or override2 override3))))))"
+    },
+    {
+      "eclass": 151,
+      "eclass_before": 151,
+      "id": "override_5/source",
+      "representative": "(and (and (not reset) override_any) (and override5 (not (or override0 (or override1 (or override2 (or override3 override4)))))))"
+    },
+    {
+      "eclass": 151,
+      "eclass_before": 158,
+      "id": "override_5/alternate",
+      "representative": "(and (and (not reset) override_any) (and override5 (not (or override0 (or override1 (or override2 (or override3 override4)))))))"
+    },
+    {
+      "eclass": 167,
+      "eclass_before": 167,
+      "id": "override_6/source",
+      "representative": "(and (and (not reset) override_any) (and override6 (not (or override0 (or override1 (or override2 (or override3 (or override4 override5))))))))"
+    },
+    {
+      "eclass": 167,
+      "eclass_before": 175,
+      "id": "override_6/alternate",
+      "representative": "(and (and (not reset) override_any) (and override6 (not (or override0 (or override1 (or override2 (or override3 (or override4 override5))))))))"
+    },
+    {
+      "eclass": 185,
+      "eclass_before": 185,
+      "id": "override_7/source",
+      "representative": "(and (and (not reset) override_any) (and override7 (not (or override0 (or override1 (or override2 (or override3 (or override4 (or override5 override6)))))))))"
+    },
+    {
+      "eclass": 185,
+      "eclass_before": 194,
+      "id": "override_7/alternate",
+      "representative": "(and (and (not reset) override_any) (and override7 (not (or override0 (or override1 (or override2 (or override3 (or override4 (or override5 override6)))))))))"
+    }
+  ]
+}

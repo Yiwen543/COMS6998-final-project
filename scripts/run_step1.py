@@ -9,7 +9,7 @@ import subprocess
 import time
 from pathlib import Path
 from coverage import load, summary, join
-from predicates import ROOT, DUT, extract, witness
+from predicates import ROOT, DUT, extract, witness, witness_fast
 
 
 def write_json(path, value):
@@ -36,7 +36,10 @@ def result(text):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', default='results/step1')
+    parser.add_argument('--witness', choices=('bitset', 'scalar'), default='bitset',
+                        help='first legal witness search for the pinned 8-bit arbiter')
     args = parser.parse_args()
+    find_witness = witness_fast if args.witness == 'bitset' else witness
     out = (ROOT / args.output).resolve()
     out.mkdir(parents=True, exist_ok=True)
     build = ROOT / 'build/verilator'
@@ -77,7 +80,7 @@ def main():
     vectors = []
     for f in feedback:
         if f['uncovered']:
-            stimulus = witness(f['representative'])
+            stimulus = find_witness(f['representative'])
             if stimulus is None: raise ValueError(f'Unexpected unreachable target {f["id"]}')
             f['suggested_stimulus'] = {'reset': stimulus[0], 'req': stimulus[1], 'priority_override': stimulus[2]}
             if stimulus not in vectors: vectors.append(stimulus)
@@ -129,6 +132,7 @@ def main():
               'measurements': measurements, 'portability_crosscheck': crosscheck,
               'experiment_simulator_executions': 4,
               'normalization_pairs': len(targets), 'eclasses': len(graph['eclasses']),
+              'witness_search': args.witness,
               'refinement_policy': 'Deterministic Boolean witness enumeration, not an LLM ablation',
               'remaining_raw_uncovered_points': unreachable,
               'coverage_note': 'Raw DUT counters only. Line is Verilator block/elsif point coverage, not statement count; branch includes ternary outcomes. TB counters excluded. No waiver applied.',

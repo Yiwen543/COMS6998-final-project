@@ -1,5 +1,8 @@
 # Opt-in egg computation efficiency
 
+For the follow-up `indexed` mode, a comparison against this exact commit, and
+hash-verified downloads of the three historical inputs, see [Milestone 3](milestone3.md).
+
 Adds `guard_proofs_fast` alongside the unchanged historical `guard_proofs` binary.
 No rewrite rule, saturation limit, checker, or existing production caller changes.
 This branch excludes the later N/U/E, scheduling and incremental-discovery experiments.

@@ -1,6 +1,10 @@
 //! Bounded egg saturation with separately certified, design-specific ground rules.
 //! This is proof-carrying normalization, not an SMT solver or stimulus generator.
-use egg::{define_language, rewrite, AstSize, Extractor, Id, Pattern, RecExpr, Rewrite, Runner, Symbol};
+use egg::{
+    define_language, rewrite, AstSize, EGraph, Extractor, Id, Pattern, PatternAst, RecExpr,
+    Rewrite, Runner, SearchMatches, Searcher, Subst, Symbol, Var,
+};
+use std::borrow::Cow;
 use serde_json::{json, Value};
 use std::collections::HashMap;
 use std::{io::{self, Read}, time::{Duration, Instant}};
@@ -9,10 +13,56 @@ define_language! {
     enum Bool { "true" = True, "false" = False, "not" = Not(Id),
                 "and" = And([Id; 2]), "or" = Or([Id; 2]), Var(Symbol), }
 }
+/// In a rebuilt e-graph, hash-consing maps a ground term to at most one class.
+/// Supply the same pattern AST and empty substitution as egg's pattern matcher
+/// so the original RHS and proof-producing applier still perform the rewrite.
+struct GroundLookup {
+    expr: RecExpr<Bool>,
+    ast: PatternAst<Bool>,
+}
+
+impl GroundLookup {
+    fn find(&self, egraph: &EGraph<Bool, ()>, limit: usize) -> Option<SearchMatches<'_, Bool>> {
+        if limit == 0 {
+            return None;
+        }
+        let eclass = egraph.lookup_expr(&self.expr)?;
+        Some(SearchMatches {
+            eclass,
+            substs: vec![Subst::default()],
+            ast: Some(Cow::Borrowed(&self.ast)),
+        })
+    }
+}
+
+impl Searcher<Bool, ()> for GroundLookup {
+    fn search_with_limit(&self, egraph: &EGraph<Bool, ()>, limit: usize) -> Vec<SearchMatches<'_, Bool>> {
+        self.find(egraph, limit).into_iter().collect()
+    }
+
+    fn search_eclass_with_limit(
+        &self,
+        egraph: &EGraph<Bool, ()>,
+        eclass: Id,
+        limit: usize,
+    ) -> Option<SearchMatches<'_, Bool>> {
+        self.find(egraph, limit).filter(|m| m.eclass == egraph.find(eclass))
+    }
+
+    fn get_pattern_ast(&self) -> Option<&PatternAst<Bool>> {
+        Some(&self.ast)
+    }
+
+    fn vars(&self) -> Vec<Var> {
+        Vec::new()
+    }
+}
+
 fn main() {
     let total_start = Instant::now();
     let mode = std::env::args().nth(1).unwrap_or_else(|| "baseline".into());
-    assert!(["baseline", "representatives", "spanning"].contains(&mode.as_str()));
+    assert!(["baseline", "representatives", "spanning", "indexed"].contains(&mode.as_str()));
+    let indexed = mode == "indexed";
     let mut input = String::new();
     io::stdin().read_to_string(&mut input).unwrap();
     let data: Value = serde_json::from_str(&input).unwrap();
@@ -27,9 +77,18 @@ fn main() {
     ];
     for rule in data["verified_rules"].as_array().unwrap() {
         assert_eq!(rule["proof_status"], "unsat");
-        let a: Pattern<Bool> = rule["left"].as_str().unwrap().parse().unwrap();
+        let lhs: PatternAst<Bool> = rule["left"].as_str().unwrap().parse().unwrap();
         let b: Pattern<Bool> = rule["right"].as_str().unwrap().parse().unwrap();
-        rules.push(Rewrite::new(rule["name"].as_str().unwrap(), a, b).unwrap());
+        let name = rule["name"].as_str().unwrap();
+        if indexed {
+            // Preserve the input pattern for proof generation. A ground query
+            // does not need egg to compile a search program.
+            if let Ok(expr) = RecExpr::try_from(lhs.clone()) {
+                rules.push(Rewrite::new(name, GroundLookup { expr, ast: lhs }, b).unwrap());
+                continue;
+            }
+        }
+        rules.push(Rewrite::new(name, Pattern::new(lhs), b).unwrap());
     }
     let mut runner = Runner::<Bool, ()>::default().with_explanations_enabled()
         .with_iter_limit(20).with_node_limit(20000).with_time_limit(Duration::from_secs(5));
@@ -57,7 +116,7 @@ fn main() {
     let extraction_seconds = extraction_start.elapsed().as_secs_f64();
     let explanation_start = Instant::now();
     let mut pairs = Vec::new();
-    if mode == "spanning" {
+    if mode == "spanning" || indexed {
         // Each old component is structurally identical; connect ALL target vertices
         // when at least two old components merge, preserving baseline connectivity.
         let mut groups: std::collections::BTreeMap<(usize, String), Vec<usize>> = std::collections::BTreeMap::new();
@@ -83,6 +142,8 @@ fn main() {
     }
     let mut evidence = Vec::new();
     for (i, j) in pairs {
+        // Resolve the expression endpoints after saturation. Reusing insertion IDs
+        // can select a different equally short named proof in egg's proof graph.
         evidence.push(json!({"left":targets[i]["id"], "right":targets[j]["id"],
             "explanation":runner.explain_equivalence(&expressions[i], &expressions[j]).get_flat_string()}));
     }

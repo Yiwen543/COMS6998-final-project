@@ -2,6 +2,7 @@
 import hashlib
 import json
 import re
+from functools import cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -87,6 +88,46 @@ def witness(expr):
                 if evaluate(ast, environment(reset, req, override)):
                     return reset, req, override
     return None
+
+@cache
+def _atom_tables():
+    """One truth-table bit per legal arbiter input, in scalar witness order."""
+    # The table index is reset[0], override[7:0], req[7:0] concatenated.
+    assignments = 1 << 17
+    tables = {'false': 0, 'true': (1 << assignments) - 1, 'override_any': 0}
+    signals = [f'req{i}' for i in range(8)] + [f'override{i}' for i in range(8)] + ['reset']
+    for bit, name in enumerate(signals):
+        # The bit is low for a run of 2**bit indices, then high for as many.
+        run = 1 << bit
+        pattern = ((1 << run) - 1) << run
+        period = run * 2
+        while period < assignments:
+            pattern |= pattern << period
+            period *= 2
+        tables[name] = pattern
+        if name.startswith('override'):
+            tables['override_any'] |= pattern
+    return tables
+
+
+def _truth_table(ast, atoms):
+    if isinstance(ast, str):
+        return atoms[ast]
+    lhs = _truth_table(ast[1], atoms)
+    if ast[0] == 'not':
+        return atoms['true'] ^ lhs
+    rhs = _truth_table(ast[2], atoms)
+    return lhs & rhs if ast[0] == 'and' else lhs | rhs
+
+
+def witness_fast(expr):
+    """First legal (reset, req, override) for a pure two-state arbiter guard."""
+    matches = _truth_table(parse(expr), _atom_tables())
+    if not matches:
+        return None
+    first = (matches & -matches).bit_length() - 1
+    return first >> 16, first & 255, (first >> 8) & 255
+
 
 if __name__ == '__main__':
     print(json.dumps(extract(), indent=2))

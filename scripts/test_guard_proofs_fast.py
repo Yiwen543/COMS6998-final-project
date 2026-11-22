@@ -34,6 +34,65 @@ class FastControls(unittest.TestCase):
             self.assertEqual(ts[a]['event_context'],ts[b]['event_context'])
             self.assertNotEqual(before[a],before[b])
 
+    def compare_indexed(self, targets, rules):
+        data = json.dumps({'targets': targets, 'verified_rules': rules}).encode()
+        reports = []
+        for mode in ('spanning', 'indexed'):
+            report = json.loads(run(BINARY, data, mode)[0])
+            report.pop('saturation_seconds')
+            reports.append(report)
+        # Include the actual proof strings, target order and stopping condition.
+        self.assertEqual(*reports)
+        return reports[0]
+
+    def test_indexed_ground_lookup_after_congruence_and_variable_fallback(self):
+        targets = json.loads(payload())['targets']
+        targets.extend([
+            {'id': 8, 'compact': 'nx'},
+            {'id': 9, 'compact': '(and (not x) y)'},
+            {'id': 10, 'compact': 'gate'},
+            {'id': 11, 'compact': '(or gate false)'},
+            {'id': 12, 'compact': '(and (and gate y) (and gate y))'},
+            {'id': 13, 'compact': '(and gate y)'},
+        ])
+        # nx abbreviates !x and gate abbreviates nx && y in this synthetic design.
+        rules = [
+            ('becomes-match-after-rebuild', '(and nx y)', 'gate'),
+            ('design-inverter', '(not x)', 'nx'),
+            ('never-present', '(and absent y)', 'unused'),
+            ('repeated-subterm', '(and (and gate y) (and gate y))', '(and gate y)'),
+            ('has-pattern-variable', '(or ?a false)', '?a'),
+        ]
+        rules = [dict(name=name, left=left, right=right, proof_status='unsat')
+                 for name, left, right in rules]
+        result = self.compare_indexed(targets, rules)
+        self.assertEqual(result['stop_reason'], 'Some(Saturated)')
+        classes = {t['id']: t['eclass'] for t in result['targets']}
+        self.assertEqual(classes[9], classes[10])
+        self.assertEqual(classes[10], classes[11])
+        self.assertEqual(classes[12], classes[13])
+
+    def test_overlapping_proof_paths_preserve_named_rule(self):
+        # Reduced from the SPI input. Using original insertion IDs to explain
+        # this pair selected a different named proof from v1's expression API.
+        exprs = ['(not (not a))', '(not (not b))', '(and (not (not b)) (not c))']
+        targets = [dict(id=i, compact=expr) for i, expr in enumerate(exprs)]
+        rules = [
+            dict(name='inner', left='(not a)', right='(not b)', proof_status='unsat'),
+            dict(name='outer', left=exprs[1], right=exprs[0], proof_status='unsat'),
+        ]
+        result = self.compare_indexed(targets, rules)
+        self.assertEqual(len(result['rewrite_explanations']), 1)
+
+    def test_indexed_preserves_iteration_limit(self):
+        # Each newly introduced atom unlocks another rule in the next iteration.
+        targets = [{'id': 'start', 'compact': 'x0'}, {'id': 'end', 'compact': 'x25'}]
+        rules = [dict(name=f'alias-{i}', left=f'x{i}', right=f'x{i+1}', proof_status='unsat')
+                 for i in range(25)]
+        result = self.compare_indexed(targets, rules)
+        self.assertIn('IterationLimit', result['stop_reason'])
+        self.assertNotEqual(result['targets'][0]['eclass'], result['targets'][1]['eclass'])
+
     def test_no_merge_and_empty_input(self):
         for targets in [[],[{'id':0,'compact':'x'},{'id':1,'compact':'x'}]]:
             out=json.loads(run(BINARY,json.dumps({'targets':targets,'verified_rules':[]}).encode())[0])

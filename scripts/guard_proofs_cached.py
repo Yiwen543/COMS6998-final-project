@@ -50,7 +50,7 @@ if __name__ == '__main__':
     import sys
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--binary', required=True)
-    parser.add_argument('--mode', choices=['baseline', 'representatives', 'spanning'], default='spanning')
+    parser.add_argument('--mode', choices=['baseline', 'representatives', 'spanning', 'indexed'], default='spanning')
     parser.add_argument('--cache-dir', required=True)
     args = parser.parse_args()
     raw, timing = run(args.binary, sys.stdin.buffer.read(), args.mode, args.cache_dir)
