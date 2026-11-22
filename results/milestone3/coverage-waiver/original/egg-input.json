@@ -1,0 +1,44 @@
+{
+  "targets": [
+    {
+      "id": "raw",
+      "compact": "(and (not reset) (and override_any (not (or override0 (or override1 (or override2 (or override3 (or override4 (or override5 (or override6 override7))))))))))",
+      "event_context": {
+        "logic": "two-state",
+        "ports": {
+          "reset_pin": 1,
+          "req": 8,
+          "priority_override": 8
+        },
+        "process": "posedge clk or posedge reset",
+        "branch_entry": "reset_pin == 0",
+        "assumptions": [],
+        "target": "else of the final nested override[7] conditional"
+      }
+    },
+    {
+      "id": "alt",
+      "compact": "(and (not reset) (and override_any (not override_any)))",
+      "event_context": {
+        "logic": "two-state",
+        "ports": {
+          "reset_pin": 1,
+          "req": 8,
+          "priority_override": 8
+        },
+        "process": "posedge clk or posedge reset",
+        "branch_entry": "reset_pin == 0",
+        "assumptions": [],
+        "target": "else of the final nested override[7] conditional"
+      }
+    }
+  ],
+  "verified_rules": [
+    {
+      "name": "override-nonzero",
+      "left": "(or override0 (or override1 (or override2 (or override3 (or override4 (or override5 (or override6 override7)))))))",
+      "right": "override_any",
+      "proof_status": "unsat"
+    }
+  ]
+}

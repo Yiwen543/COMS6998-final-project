@@ -4,6 +4,8 @@
 exact witness search, three archived guard workloads, and the paired RTL replay study.
 [追加实验与复现](docs/milestone3_followup.md) includes the Controller solver comparison,
 stimulus ablation, sequential formal check, and historical provider usage.
+[用 egg 审核覆盖豁免、追踪证明依赖与修复旧证明](docs/milestone3_proof_applications.md)
+includes the runnable proof checker, ordinary baselines, RTL edits, and counterexample replays.
 
 Reproducible first milestone for the COMS 6998 proposal: an immutable CVDP arbiter,
 a specification-based SystemVerilog checker, real Verilator coverage, and a small

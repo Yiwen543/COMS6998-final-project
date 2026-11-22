@@ -10,7 +10,7 @@ import subprocess
 MANIFEST = Path(__file__).with_name("m3_controller_replay_manifest.json")
 
 
-def verify_rules(screen_dir, z3="z3"):
+def verify_rules(screen_dir, z3="z3", *, selected_names=None):
     sources = json.loads(MANIFEST.read_text())["sha256"]
     hashes = {name: sources[f"qualification/typed-v5/screen/{name}"]
               for name in ("egg-input.json", "pairs.smt2", "query-order.json")}
@@ -33,7 +33,16 @@ def verify_rules(screen_dir, z3="z3"):
             raise ValueError(f"unbound guard definition: {name}")
     proof_queries = [prefix]
     names = []
+    all_names = [r["name"] for r in payload["verified_rules"]]
+    if len(all_names) != len(set(all_names)):
+        raise ValueError("duplicate archived rule names")
+    if selected_names is not None:
+        selected_names = set(selected_names)
+        if not selected_names.issubset(all_names):
+            raise ValueError("selection contains an unknown archived rule")
     for rule in payload["verified_rules"]:
+        if selected_names is not None and rule["name"] not in selected_names:
+            continue
         a, b = rule["source_ids"]
         block = by_pair[a, b]
         if block.splitlines() != [f"(assert (xor {a} {b}))", "(check-sat)", "(pop)"]:
