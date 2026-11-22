@@ -2,11 +2,13 @@
 
 **结论。** 当输入里有经验证的具体改写规则时，egg 可以更便宜地生成同一份证明。在 Milestone 2 的 Controller、SPI、I²C 三份原始输入上，索引匹配把引擎进程耗时分别从 61.18 降到 28.59 ms、28.21 降到 19.81 ms、9.69 降到 6.69 ms。在真正运行 RTL 的 arbiter 上，最大的提速来自**更快地找到相同的刺激向量**。使用 9 条认证规则时，保留 egg 证明的验证循环从 135.91 降到 11.49 ms。只需要复现覆盖与缺陷时，直接使用源 guard 加位并行搜索为 8.04 ms。
 
+**审查后的追加实验。** 在固定 AXIS Controller 的 148 个目标上，两种方法都把 148 个求解调用减少到 87 个，egg 相比普通结构改写额外节省 0 个调用。后续实验还拆分了人工探针和自动见证，增加了真实 RTL 的跨周期形式验证，并复核了六条历史模型用量记录。[追加实验报告与一键复现](milestone3_followup.md)
+
 ## 从 Milestone 2 延续了什么
 
 开发基线是 `myzzz29/COMS6998-final-project` 的 `perf/egg-compute-fast-v1`，提交 `71e99c4cbef9768abc1b20d4d344eaee8594db59`。基线已经会按等价类复用代表式、按事件上下文提取一棵证明树、缓存完全相同的饱和结果。本次用**该提交实际编译的 spanning 二进制**作对照，两边均关闭整个结果缓存。三个历史输入取自第二个仓库固定提交 `e94172a1bd5e9b138b5fc3da01554edb3052ce52`，下载时同时校验 Git blob ID 和 SHA-256。[开发基线](https://github.com/myzzz29/COMS6998-final-project/tree/71e99c4cbef9768abc1b20d4d344eaee8594db59) · [参考仓库](https://github.com/Yiwen543/COMS6998-final-project/tree/e94172a1bd5e9b138b5fc3da01554edb3052ce52) · [三个输入的具体路径及哈希](../results/milestone3/reference-inputs/manifest.json)
 
-M2 报告中，FIFO 的三项控制目标在两组均被命中。加入 egg 后，SMT 文本短约 29%，包含预处理与回放的耗时却从 30–32 ms 增至 235–238 ms。M3 因此分别计量引擎与完整验证循环。两仓库里可核对到三份引擎输入和旧 FIFO 材料。报告所用的 test3 FIFO 完整 runner 未取得。下面的物理回放使用开发分支原有的八路 arbiter，三个历史 IP 的新数据仅覆盖引擎阶段。历史运行的主机、测量边界与本次不同。[预先确定的实验设计及参考仓库补充](milestone3_protocol.md)
+M2 报告中，FIFO 的三项控制目标在两组均被命中。加入 egg 后，SMT 文本短约 29%，包含预处理与回放的耗时却从 30–32 ms 增至 235–238 ms。M3 因此分别计量引擎与完整验证循环。两仓库里可核对到三份引擎输入和旧 FIFO 材料。报告所用的 test3 FIFO 完整 runner 未取得。初次实验的物理回放使用开发分支原有的八路 arbiter，三个历史 IP 在初次实验中仅运行引擎对照。历史运行的主机、测量边界与本次不同。[预先确定的实验设计及参考仓库补充](milestone3_protocol.md)
 
 ## 改了哪两处
 

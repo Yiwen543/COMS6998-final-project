@@ -1,0 +1,59 @@
+{
+  "rtl_sha256": "52973e366d751c9908ce1354c791b82bb49727d5c777a4369f916031c9815cc7",
+  "smt_steps": 8,
+  "unit": "half clock period",
+  "versions": {
+    "yosys": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "z3": "Z3 version 4.16.0 - 64 bit",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()"
+  },
+  "models": {
+    "original": {
+      "cover_step": 4,
+      "bmc": "counterexample",
+      "failed_step": 4,
+      "icarus_activation": {
+        "step": 4,
+        "before_hex": "018",
+        "after_hex": "000"
+      }
+    },
+    "sync_control": {
+      "cover_step": 4,
+      "bmc": "passed",
+      "temporal_induction": "passed",
+      "icarus_activation": {
+        "step": 4,
+        "before_hex": "018",
+        "after_hex": "018"
+      }
+    }
+  },
+  "counterexample_inputs": [
+    {
+      "priority_override": 0,
+      "req": 252,
+      "reset": 1
+    },
+    {
+      "priority_override": 0,
+      "req": 252,
+      "reset": 1
+    },
+    {
+      "priority_override": 1,
+      "req": 15,
+      "reset": 0
+    },
+    {
+      "priority_override": 1,
+      "req": 15,
+      "reset": 0
+    },
+    {
+      "priority_override": 0,
+      "req": 0,
+      "reset": 1
+    }
+  ]
+}

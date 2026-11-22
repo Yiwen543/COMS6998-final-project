@@ -9,7 +9,7 @@ import subprocess
 import time
 from pathlib import Path
 
-from coverage import join, load, summary
+from coverage import DUT_SOURCE, join, load, summary
 from m3_guard_inputs import generate
 from predicates import DUT, ROOT, _atom_tables, extract, witness, witness_fast
 from run_step1 import result, run, write_json
@@ -58,6 +58,9 @@ def normalize(targets, mode, binary, certified):
             require(form["compact"] == source[form["source_target"]], "certificate/source mismatch")
     p = subprocess.run([binary, mode], input=json.dumps(payload), text=True, capture_output=True,
                        check=True, timeout=60)
+    timing = json.loads(p.stderr)
+    require(isinstance(timing, dict) and timing.get("mode") == mode,
+            f"guard engine did not report requested mode {mode!r}: {p.stderr.strip()}")
     graph = json.loads(p.stdout)
     require(graph["stop_reason"] == "Some(Saturated)", f"{mode} stopped at {graph['stop_reason']}")
     require(graph["ground_rule_count"] == len(payload["verified_rules"]), "rule count changed")
@@ -78,7 +81,7 @@ def normalize(targets, mode, binary, certified):
     require(len(evidence) == len(expected_edges) and
             {frozenset((e["left"], e["right"])) for e in evidence} == expected_edges,
             "incomplete or unexpected proof edges")
-    return {"targets": normalized}, graph, json.loads(p.stderr)
+    return {"targets": normalized}, graph, timing
 
 
 def replay(simulator, folder, name, mode):
@@ -134,13 +137,42 @@ def trial(arm, binary, simulator, folder, certified):
     return timing, quality, graph, engine_timing
 
 
+def raw_dut_hits(path):
+    """Compare every Verilator identity field, including page, independent of row order."""
+    counters = {}
+    for row in path.read_text().splitlines()[1:]:
+        if not row.strip():
+            continue
+        metadata, hits = row.rsplit("' ", 1)
+        fields = dict(part.split("\x02", 1) for part in metadata.split("\x01")[1:])
+        source = fields.get("f", "").replace("\\", "/")
+        if source != DUT_SOURCE and not source.endswith("/" + DUT_SOURCE):
+            continue
+        if not fields.get("h", "").endswith(".dut"):
+            continue
+        fields["f"] = DUT_SOURCE
+        key = tuple(sorted(fields.items()))
+        require(key not in counters, f"{path}: duplicate DUT counter {key!r}")
+        counters[key] = int(hits)
+    require(counters, f"{path}: missing DUT counters")
+    return counters
+
+
+def check_archived_replay(path, live, archive):
+    require(live["events"] == archive["events"], f"{path}: historical checker events changed")
+    require(live["points"] == archive["points"] and raw_dut_hits(path) == archive["raw_dut_hits"],
+            f"{path}: historical DUT counter identity or hit count changed")
+
+
 def archived_quality(directory):
     feedback = json.loads((directory / "feedback.json").read_text())
     witnesses = {r["id"]: [r["suggested_stimulus"][k] for k in ("reset", "req", "priority_override")]
                  for r in feedback if r["uncovered"]}
     quality = {"vector_text": (directory / "targeted-vectors.txt").read_text(), "witnesses": witnesses}
     for name in ("initial", "refined"):
-        quality[name] = observation(load(directory / f"{name}.dat"), (directory / f"{name}.log").read_text())
+        path = directory / f"{name}.dat"
+        quality[name] = observation(load(path), (directory / f"{name}.log").read_text())
+        quality[name]["raw_dut_hits"] = raw_dut_hits(path)
     return quality
 
 
@@ -186,9 +218,7 @@ def benchmark(args):
             require(quality["vector_text"] == archive["vector_text"] and quality["witnesses"] == archive["witnesses"],
                     f"{folder.name}: historical witnesses or vectors changed")
             for name in ("initial", "refined"):
-                require(quality[name]["events"] == archive[name]["events"], f"{folder.name}: checker events changed")
-                require(summary(quality[name]["points"]) == summary(archive[name]["points"]),
-                        f"{folder.name}: historical {name} counter totals/coverage changed")
+                check_archived_replay(folder / f"{name}.dat", quality[name], archive[name])
             proof_hash = None
             if graph is not None:
                 # Compare every field including explanation endpoints and full proof text, removing only the timer.

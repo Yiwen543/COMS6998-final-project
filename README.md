@@ -2,6 +2,8 @@
 
 [Milestone 3 实验报告与复现指南](docs/milestone3.md) covers the indexed egg matcher,
 exact witness search, three archived guard workloads, and the paired RTL replay study.
+[追加实验与复现](docs/milestone3_followup.md) includes the Controller solver comparison,
+stimulus ablation, sequential formal check, and historical provider usage.
 
 Reproducible first milestone for the COMS 6998 proposal: an immutable CVDP arbiter,
 a specification-based SystemVerilog checker, real Verilator coverage, and a small
