@@ -1,0 +1,99 @@
+{
+  "upstream_commit": "e94172a1bd5e9b138b5fc3da01554edb3052ce52",
+  "original_sources": {
+    "public/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+    "public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+    "public/rtl/axis_frame_length_adjust_fifo.v": "26f1636f5d4f219ca1dcf336b45b636e74a0977826ee51cdcab4e5c2d136b7ce"
+  },
+  "checker": {
+    "source": "reference/frozen-v2/checker.py",
+    "sha256": "b44f32b27c11b968d23fd93ecf8b0d714e773460fc0b505d89adf23df3cd7dee"
+  },
+  "faults": [
+    {
+      "id": "F01",
+      "change": "Fill inserted pad bytes with ones",
+      "source": "public/rtl/axis_frame_length_adjust.v",
+      "line": 398,
+      "before": "m_axis_tdata_int = {DATA_WIDTH{1'b0}};",
+      "after": "m_axis_tdata_int = {DATA_WIDTH{1'b1}};",
+      "variant_sha256": "50ded6589b3c2969576724dfee7f5e158d1c956239cfa9af76e38b9bd8c6010f"
+    },
+    {
+      "id": "F02",
+      "change": "Flag an exact-maximum frame as truncated in TRANSFER",
+      "source": "public/rtl/axis_frame_length_adjust.v",
+      "line": 338,
+      "before": "status_frame_truncate_next = word_cnt > long_counter_reg;",
+      "after": "status_frame_truncate_next = word_cnt >= long_counter_reg;",
+      "variant_sha256": "11b6e1b6a14ac6f05631554e040189306a47ed16b618c9816dd948eee19a18cd"
+    },
+    {
+      "id": "F03",
+      "change": "Suppress the final TLAST when emitting a truncated frame",
+      "source": "public/rtl/axis_frame_length_adjust.v",
+      "line": 447,
+      "before": "m_axis_tlast_int = s_axis_tlast;",
+      "after": "m_axis_tlast_int = 1'b0;",
+      "variant_sha256": "1d0bae64b21cdf885e778d74af1247154eba4f24eb41450389178d21c192af8e"
+    },
+    {
+      "id": "F04",
+      "change": "Count an offered byte during stalled TRANSFER",
+      "source": "public/rtl/axis_frame_length_adjust.v",
+      "line": 171,
+      "before": "frame_ptr_next = frame_ptr_reg;",
+      "after": "frame_ptr_next = frame_ptr_reg + ((state_reg == STATE_TRANSFER && s_axis_tvalid && !s_axis_tready) ? 16'd1 : 16'd0);",
+      "variant_sha256": "7fe90395bb673dc7de6dd1e1c777820309c18c9c7cfdfa6a076f353b91feb018"
+    },
+    {
+      "id": "F05",
+      "change": "Consume the header FIFO using the data sink ready",
+      "source": "public/rtl/axis_frame_length_adjust_fifo.v",
+      "line": 228,
+      "before": ".m_axis_tready(m_axis_hdr_ready),",
+      "after": ".m_axis_tready(m_axis_tready),",
+      "variant_sha256": "b4573e1b6426d2a2050bfdb499810161ac9fbcaffc57687da021295c22c5ddd9"
+    },
+    {
+      "id": "F06",
+      "change": "Disconnect synchronous reset on the header FIFO",
+      "source": "public/rtl/axis_frame_length_adjust_fifo.v",
+      "line": 214,
+      "before": ".rst(rst),",
+      "after": ".rst(1'b0),",
+      "variant_sha256": "f98697f8d3bd80ca2943e5dca9f10dfca32ea0ae2a093246895eed7437493617"
+    }
+  ],
+  "design_order": [
+    "original",
+    "F01",
+    "F02",
+    "F03",
+    "F04",
+    "F05",
+    "F06"
+  ],
+  "traces": [
+    "length_sweep",
+    "backpressure",
+    "reset_epoch"
+  ],
+  "development": [
+    "original",
+    "F02",
+    "F05"
+  ],
+  "development_probe_ids": {
+    "A": "F02",
+    "B": "F05"
+  },
+  "held_out": [
+    "F01",
+    "F03",
+    "F04",
+    "F06"
+  ],
+  "endpoint": "Any definite failure on any eligible trace detects that variant; keep all case verdicts and unknowns.",
+  "stimulus": "Identical driver directives, independent consumer-ready schedule and reset. The driver holds offered data until each DUT accepts it."
+}

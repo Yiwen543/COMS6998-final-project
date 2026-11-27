@@ -1,0 +1,49 @@
+{
+  "messages": [
+    {
+      "content": "You verify the original RTL specification using passive assertion monitors. Revise the five violation formulas using the feedback; never change the RTL or the specification.",
+      "role": "system"
+    },
+    {
+      "content": "The public frame_task wraps AXI Frame Length Adjuster with an 8-bit data FIFO and a separate header FIFO.\nSamples are just before consecutive rising edges. have_prev is false at the first sample. rst is synchronous.\ndata_hold: if the previous output data sample was valid but not ready, with reset low at both samples, the current sample must preserve m_valid=1, m_data and m_last.\nheader_hold: the same obligation for h_valid/h_ready, all four header payload fields h_pad,h_truncate,h_length,h_original_length.\npad_flag and truncate_flag: at every valid header presentation outside reset, the pad flag is exactly original_length<4, and truncate flag exactly original_length>8.\nclamped_length: at every valid header presentation outside reset, h_length is the original length limited to the inclusive range [4,8].\nWrite a violation expression for each property: the Boolean result means an assertion fails. Use actual named pins, prefix prev_ for the previous sample, and have_prev.\nBoolean operators are binary and, or, xor and unary not. Comparisons eq, ne work for same-typed operands. Unsigned ult, ule, ugt, uge compare same-width buses; decimal literals take the width of the bus operand. Boolean constants are true,false.\nBoolean pins: rst,s_valid,s_ready,s_last,m_valid,m_ready,m_last,h_valid,h_ready,h_pad,h_truncate.\nUnsigned buses: s_data,m_data (8 bits), h_length,h_original_length (16 bits). The prev_ pins have the same types.\nOutput all five revised monitors. Candidate alarm samples and transaction checker feedback are from actual observed RTL; an independent specification judge also grades every revision. The two-state symbolic comparison, when supplied, is a semantic comparison and does not on its own establish RTL reachability.\nInitial candidate (provided): {\"clamped_length\": \"(and (and (not rst) h_valid) (ne h_length h_original_length))\", \"data_hold\": \"(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not m_ready)) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last)))))\", \"header_hold\": \"(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (ne h_length prev_h_length))))))\", \"pad_flag\": \"(and (and (not rst) h_valid) (xor h_pad (ule h_original_length 4)))\", \"truncate_flag\": \"(and (and (not rst) h_valid) (xor h_truncate (uge h_original_length 8)))\"}\nInitial tool feedback: {\"semantic_and_proof_review\":{\"clamped_length\":{\"certified_leaf_equalities\":[{\"left\":\"(ult h_original_length 4)\",\"right\":\"(not (ule 4 h_original_length))\",\"rule\":\"typed-complement-6\"},{\"left\":\"(ult 8 h_original_length)\",\"right\":\"(not (ule h_original_length 8))\",\"rule\":\"typed-complement-17\"}],\"counterexample\":{\"candidate_violation\":false,\"pins\":{\"h_length\":0,\"h_original_length\":0,\"h_valid\":true,\"rst\":false},\"reference_violation\":true},\"equivalent\":false,\"proof\":{\"first_steps\":[],\"method\":\"ordinary\",\"proved\":false,\"stop\":\"sat\",\"total_steps\":0},\"typed_xor\":\"sat\"},\"data_hold\":{\"certified_leaf_equalities\":[],\"counterexample\":{\"candidate_violation\":true,\"pins\":{\"have_prev\":true,\"m_data\":0,\"m_last\":false,\"m_ready\":false,\"m_valid\":false,\"prev_m_data\":0,\"prev_m_last\":false,\"prev_m_ready\":true,\"prev_m_valid\":true,\"prev_rst\":false,\"rst\":false},\"reference_violation\":false},\"equivalent\":false,\"proof\":{\"first_steps\":[],\"method\":\"ordinary\",\"proved\":false,\"stop\":\"sat\",\"total_steps\":0},\"typed_xor\":\"sat\"},\"header_hold\":{\"certified_leaf_equalities\":[],\"counterexample\":{\"candidate_violation\":false,\"pins\":{\"h_length\":0,\"h_original_length\":65535,\"h_pad\":false,\"h_truncate\":false,\"h_valid\":true,\"have_prev\":true,\"prev_h_length\":0,\"prev_h_original_length\":0,\"prev_h_pad\":false,\"prev_h_ready\":false,\"prev_h_truncate\":false,\"prev_h_valid\":true,\"prev_rst\":false,\"rst\":false},\"reference_violation\":true},\"equivalent\":false,\"proof\":{\"first_steps\":[],\"method\":\"ordinary\",\"proved\":false,\"stop\":\"sat\",\"total_steps\":0},\"typed_xor\":\"sat\"},\"pad_flag\":{\"certified_leaf_equalities\":[],\"counterexample\":{\"candidate_violation\":false,\"pins\":{\"h_original_length\":4,\"h_pad\":true,\"h_valid\":true,\"rst\":false},\"reference_violation\":true},\"equivalent\":false,\"proof\":{\"first_steps\":[],\"method\":\"ordinary\",\"proved\":false,\"stop\":\"sat\",\"total_steps\":0},\"typed_xor\":\"sat\"},\"truncate_flag\":{\"certified_leaf_equalities\":[],\"counterexample\":{\"candidate_violation\":false,\"pins\":{\"h_original_length\":8,\"h_truncate\":true,\"h_valid\":true,\"rst\":false},\"reference_violation\":true},\"equivalent\":false,\"proof\":{\"first_steps\":[],\"method\":\"ordinary\",\"proved\":false,\"stop\":\"sat\",\"total_steps\":0},\"typed_xor\":\"sat\"}},\"visible_rtl_observations\":{\"original\":{\"backpressure\":{\"candidate_alarms\":{\"clamped_length\":[78,10],\"data_hold\":[6,31],\"header_hold\":[0,null],\"pad_flag\":[2,25],\"truncate_flag\":[2,34]},\"first_transaction_failure\":null,\"observed_cycles\":423,\"transaction_checker\":\"PASS\"},\"length_sweep\":{\"candidate_alarms\":{\"clamped_length\":[7,10],\"data_hold\":[0,null],\"header_hold\":[0,null],\"pad_flag\":[1,22],\"truncate_flag\":[1,48]},\"first_transaction_failure\":null,\"observed_cycles\":250,\"transaction_checker\":\"PASS\"},\"reset_epoch\":{\"candidate_alarms\":{\"clamped_length\":[8,47],\"data_hold\":[1,60],\"header_hold\":[0,null],\"pad_flag\":[20,10],\"truncate_flag\":[1,59]},\"first_transaction_failure\":null,\"observed_cycles\":239,\"transaction_checker\":\"PASS\"}},\"probe_A\":{\"backpressure\":{\"candidate_alarms\":{\"clamped_length\":[78,10],\"data_hold\":[6,31],\"header_hold\":[0,null],\"pad_flag\":[2,25],\"truncate_flag\":[0,null]},\"first_transaction_failure\":{\"category\":\"status_payload\",\"cycle\":33,\"detail\":\"presented h_truncate 1 expected 0\",\"phase\":\"post\"},\"observed_cycles\":423,\"transaction_checker\":\"FAIL\"},\"length_sweep\":{\"candidate_alarms\":{\"clamped_length\":[7,10],\"data_hold\":[0,null],\"header_hold\":[0,null],\"pad_flag\":[1,22],\"truncate_flag\":[0,null]},\"first_transaction_failure\":{\"category\":\"status_payload\",\"cycle\":47,\"detail\":\"presented h_truncate 1 expected 0\",\"phase\":\"post\"},\"observed_cycles\":250,\"transaction_checker\":\"FAIL\"},\"reset_epoch\":{\"candidate_alarms\":{\"clamped_length\":[8,47],\"data_hold\":[1,60],\"header_hold\":[0,null],\"pad_flag\":[20,10],\"truncate_flag\":[0,null]},\"first_transaction_failure\":{\"category\":\"status_payload\",\"cycle\":58,\"detail\":\"presented h_truncate 1 expected 0\",\"phase\":\"post\"},\"observed_cycles\":239,\"transaction_checker\":\"FAIL\"}},\"probe_B\":{\"backpressure\":{\"candidate_alarms\":{\"clamped_length\":[64,10],\"data_hold\":[6,31],\"header_hold\":[14,16],\"pad_flag\":[2,16],\"truncate_flag\":[12,34]},\"first_transaction_failure\":{\"category\":\"status_stability\",\"cycle\":15,\"detail\":\"h_original_length changed while held\",\"phase\":\"post\"},\"observed_cycles\":423,\"transaction_checker\":\"FAIL\"},\"length_sweep\":{\"candidate_alarms\":{\"clamped_length\":[7,10],\"data_hold\":[0,null],\"header_hold\":[0,null],\"pad_flag\":[1,22],\"truncate_flag\":[1,48]},\"first_transaction_failure\":null,\"observed_cycles\":250,\"transaction_checker\":\"PASS\"},\"reset_epoch\":{\"candidate_alarms\":{\"clamped_length\":[2,47],\"data_hold\":[1,60],\"header_hold\":[2,48],\"pad_flag\":[20,10],\"truncate_flag\":[1,59]},\"first_transaction_failure\":{\"category\":\"status_stability\",\"cycle\":47,\"detail\":\"h_valid dropped without transfer or reset\",\"phase\":\"post\"},\"observed_cycles\":239,\"transaction_checker\":\"FAIL\"}}}}",
+      "role": "user"
+    }
+  ],
+  "response_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "monitors": {
+        "additionalProperties": false,
+        "properties": {
+          "clamped_length": {
+            "type": "string"
+          },
+          "data_hold": {
+            "type": "string"
+          },
+          "header_hold": {
+            "type": "string"
+          },
+          "pad_flag": {
+            "type": "string"
+          },
+          "truncate_flag": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "data_hold",
+          "header_hold",
+          "pad_flag",
+          "truncate_flag",
+          "clamped_length"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "monitors"
+    ],
+    "type": "object"
+  }
+}

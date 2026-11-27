@@ -1,0 +1,156 @@
+{
+  "canonical": {
+    "left_key": "(and (not ready_prev) (not rst_now) (not rst_prev) (or data_changed last_changed user_changed valid_lost) armed valid_prev)",
+    "proved": false,
+    "right_key": "(and (not ready_now) (not rst_now) (not rst_prev) (or data_changed last_changed user_changed valid_lost) armed valid_prev)"
+  },
+  "egg_audit": {
+    "builtin_rules": [],
+    "checked_edges": 0,
+    "checked_steps": 0,
+    "edges": [],
+    "ground_rules": [],
+    "pattern_rules": [],
+    "pattern_truth_table_rows": {
+      "and-distribute": 8,
+      "de-morgan-and": 4,
+      "de-morgan-or": 4,
+      "double-not": 2,
+      "or-associate": 8,
+      "or-commute": 4
+    }
+  },
+  "egg_graph": {
+    "eclasses": 61,
+    "engine": "egg 0.11.0",
+    "enodes": 243,
+    "ground_rule_count": 0,
+    "iterations": 7,
+    "pattern_rule_count": 6,
+    "rewrite_explanations": [],
+    "stop_reason": "Some(Saturated)",
+    "targets": [
+      {
+        "eclass": 19,
+        "eclass_before": 19,
+        "id": "reference"
+      },
+      {
+        "eclass": 24,
+        "eclass_before": 24,
+        "id": "candidate"
+      }
+    ]
+  },
+  "egg_proved": false,
+  "egg_status": "no_proof_at_saturation",
+  "independent_oracle": {
+    "atoms": [
+      "armed",
+      "data_changed",
+      "last_changed",
+      "ready_now",
+      "ready_prev",
+      "rst_now",
+      "rst_prev",
+      "user_changed",
+      "valid_lost",
+      "valid_prev"
+    ],
+    "checked_assignments": 1024,
+    "counterexample": {
+      "armed": true,
+      "data_changed": false,
+      "last_changed": false,
+      "ready_now": false,
+      "ready_prev": true,
+      "rst_now": false,
+      "rst_prev": false,
+      "user_changed": false,
+      "valid_lost": true,
+      "valid_prev": true
+    },
+    "equivalent": false,
+    "left_value": false,
+    "right_value": true,
+    "stop_reason": "exhaustive",
+    "unequal_assignments": 30
+  },
+  "input": {
+    "pattern_rules": [
+      {
+        "left": "(and ?a (or ?b ?c))",
+        "name": "and-distribute",
+        "right": "(or (and ?a ?b) (and ?a ?c))"
+      },
+      {
+        "left": "(not (or ?a ?b))",
+        "name": "de-morgan-or",
+        "right": "(and (not ?a) (not ?b))"
+      },
+      {
+        "left": "(not (and ?a ?b))",
+        "name": "de-morgan-and",
+        "right": "(or (not ?a) (not ?b))"
+      },
+      {
+        "left": "(not (not ?a))",
+        "name": "double-not",
+        "right": "?a"
+      },
+      {
+        "left": "(or ?a ?b)",
+        "name": "or-commute",
+        "right": "(or ?b ?a)"
+      },
+      {
+        "left": "(or (or ?a ?b) ?c)",
+        "name": "or-associate",
+        "right": "(or ?a (or ?b ?c))"
+      }
+    ],
+    "targets": [
+      {
+        "compact": "(and (and (and armed (and (not rst_prev) (not rst_now))) (and valid_prev (not ready_prev))) (or valid_lost (or data_changed (or last_changed user_changed))))",
+        "event_context": {
+          "interface": "axis_fifo.m_axis",
+          "model": "Boolean atoms representing sampled pins and comparisons",
+          "sample": "consecutive posedge clk samples; data and handshake observed before the edge"
+        },
+        "id": "reference"
+      },
+      {
+        "compact": "(and (and (and armed (and (not rst_prev) (not rst_now))) (and valid_prev (not ready_now))) (or valid_lost (or data_changed (or last_changed user_changed))))",
+        "event_context": {
+          "interface": "axis_fifo.m_axis",
+          "model": "Boolean atoms representing sampled pins and comparisons",
+          "sample": "consecutive posedge clk samples; data and handshake observed before the edge"
+        },
+        "id": "candidate"
+      }
+    ],
+    "verified_rules": []
+  },
+  "tree_search": {
+    "1024": {
+      "examined_rewrites": 41748,
+      "expanded_terms": 1024,
+      "max_term_nodes": 96,
+      "max_terms": 1024,
+      "proved": false,
+      "steps": [],
+      "stop_reason": "term_budget",
+      "visited_terms": 1024
+    },
+    "64": {
+      "examined_rewrites": 2302,
+      "expanded_terms": 64,
+      "max_term_nodes": 96,
+      "max_terms": 64,
+      "proved": false,
+      "steps": [],
+      "stop_reason": "term_budget",
+      "visited_terms": 64
+    }
+  }
+}

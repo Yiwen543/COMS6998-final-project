@@ -1,0 +1,23 @@
+{
+  "arms": [
+    "raw",
+    "ordinary",
+    "egg"
+  ],
+  "corpus_sha256": "ae3551c67b6a35585d27d4ec3fe1f97987030ec41d8f6e484429138958281f9c",
+  "mode": "fixture",
+  "provider": null,
+  "rounds_per_arm": 2,
+  "seed": {
+    "clamped_length": "(and (and (not rst) h_valid) (ne h_length h_original_length))",
+    "data_hold": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not m_ready)) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last)))))",
+    "header_hold": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (ne h_length prev_h_length))))))",
+    "pad_flag": "(and (and (not rst) h_valid) (xor h_pad (ule h_original_length 4)))",
+    "truncate_flag": "(and (and (not rst) h_valid) (xor h_truncate (uge h_original_length 8)))"
+  },
+  "visible_designs": [
+    "original",
+    "F02",
+    "F05"
+  ]
+}

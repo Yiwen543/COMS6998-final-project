@@ -6,6 +6,14 @@ exact witness search, three archived guard workloads, and the paired RTL replay 
 stimulus ablation, sequential formal check, and historical provider usage.
 [用 egg 审核覆盖豁免、追踪证明依赖与修复旧证明](docs/milestone3_proof_applications.md)
 includes the runnable proof checker, ordinary baselines, RTL edits, and counterexample replays.
+[以 egg 检查 FIFO 断言拆分](docs/egg_fifo_assertions.md) measures whether assertion rewrites
+preserve the specification and produce field-specific diagnostics on actual RTL.
+[FIFO 的三组 LLM 反馈闭环](docs/egg_fifo_llm_loop.md) connects those checks to the next prompt,
+with recorded requests, a no-API replay, and a Responses API entry point.
+[FIFO 首次真实 API 对照](docs/egg_fifo_llm_live_results.md) reports nine responses
+with audited token usage, sampled RTL counterexamples, and per-arm feedback.
+[AXI Frame Length Adjuster 规格验证](docs/egg_frame_results.md) verifies the pinned
+full wrapper using transaction replay, five typed formal properties and a matched feedback protocol.
 
 Reproducible first milestone for the COMS 6998 proposal: an immutable CVDP arbiter,
 a specification-based SystemVerilog checker, real Verilator coverage, and a small

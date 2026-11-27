@@ -1,0 +1,5 @@
+data_hold: assert(!(((have_prev && ((!prev_rst) && ((!rst) && (prev_m_valid && (!prev_m_ready))))) && ((!m_valid) || ((m_data != prev_m_data) || (m_last != prev_m_last))))));
+header_hold: assert(!(((have_prev && ((!prev_rst) && ((!rst) && (prev_h_valid && (!prev_h_ready))))) && ((!h_valid) || ((h_pad != prev_h_pad) || ((h_truncate != prev_h_truncate) || ((h_length != prev_h_length) || (h_original_length != prev_h_original_length))))))));
+pad_flag: assert(!((((!rst) && h_valid) && (h_pad ^ ($unsigned(h_original_length) < $unsigned(16'd4))))));
+truncate_flag: assert(!((((!rst) && h_valid) && (h_truncate ^ ($unsigned(h_original_length) > $unsigned(16'd8))))));
+clamped_length: assert(!((((!rst) && h_valid) && ((($unsigned(h_original_length) < $unsigned(16'd4)) && (h_length != 16'd4)) || ((($unsigned(h_original_length) > $unsigned(16'd8)) && (h_length != 16'd8)) || ((($unsigned(h_original_length) >= $unsigned(16'd4)) && ($unsigned(h_original_length) <= $unsigned(16'd8))) && (h_length != h_original_length)))))));

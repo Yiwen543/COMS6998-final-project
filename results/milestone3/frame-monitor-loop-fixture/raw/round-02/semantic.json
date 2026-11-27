@@ -1,0 +1,112 @@
+{
+  "clamped_length": {
+    "arm": "raw",
+    "candidate": "(and (and (not rst) h_valid) (or (and (ule h_original_length 3) (ne h_length 4)) (or (and (uge h_original_length 9) (ne h_length 8)) (and (not (or (ule h_original_length 3) (uge h_original_length 9))) (ne h_length h_original_length)))))",
+    "candidate_value": null,
+    "counterexample": null,
+    "equivalent": true,
+    "evidence": null,
+    "method_seconds": 0.0,
+    "oracle": {
+      "candidate_value": null,
+      "counterexample": null,
+      "equivalent": true,
+      "reference_value": null,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_valid () Bool)\n(declare-fun rst () Bool)\n(assert\n (let (($x132 (and (distinct h_length h_original_length) true)))\n(let (($x98 (not (or (bvule h_original_length (_ bv3 16)) (bvuge h_original_length (_ bv9 16))))))\n(let (($x121 (or (and (bvuge h_original_length (_ bv9 16)) (and (distinct (_ bv8 16) h_length) true)) (and $x98 $x132))))\n(let (($x61 (or (and (bvule h_original_length (_ bv3 16)) (and (distinct (_ bv4 16) h_length) true)) $x121)))\n(let (($x157 (not rst)))\n(let (($x44 (and $x157 h_valid)))\n(let (($x20 (and $x44 $x61)))\n(let (($x15 (and (and (bvuge h_original_length (_ bv4 16)) (bvule h_original_length (_ bv8 16))) $x132)))\n(let (($x39 (or (and (bvugt h_original_length (_ bv8 16)) (and (distinct (_ bv8 16) h_length) true)) $x15)))\n(let (($x36 (or (and (bvult h_original_length (_ bv4 16)) (and (distinct (_ bv4 16) h_length) true)) $x39)))\n(let (($x92 (and $x44 $x36)))\n(xor $x92 $x20)))))))))))))\n(check-sat)\n",
+      "status": "unsat"
+    },
+    "oracle_reused": true,
+    "oracle_seconds": 0.001491662000262295,
+    "proof": null,
+    "reference": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+    "reference_value": null
+  },
+  "data_hold": {
+    "arm": "raw",
+    "candidate": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+    "candidate_value": null,
+    "counterexample": null,
+    "equivalent": true,
+    "evidence": null,
+    "method_seconds": 0.0,
+    "oracle": {
+      "candidate_value": null,
+      "counterexample": null,
+      "equivalent": true,
+      "reference_value": null,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(declare-fun m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun have_prev () Bool)\n(assert\n (let (($x67 (not m_valid)))\n(let (($x22 (or $x67 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x8 (not prev_rst)))\n(let (($x100 (and have_prev (and $x8 (and (not rst) (and prev_m_valid (not prev_m_ready)))))))\n(let (($x25 (and $x100 $x22)))\n(xor $x25 $x25)))))))\n(check-sat)\n",
+      "status": "unsat"
+    },
+    "oracle_reused": true,
+    "oracle_seconds": 0.0013362169993342832,
+    "proof": null,
+    "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+    "reference_value": null
+  },
+  "header_hold": {
+    "arm": "raw",
+    "candidate": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+    "candidate_value": null,
+    "counterexample": null,
+    "equivalent": true,
+    "evidence": null,
+    "method_seconds": 0.0,
+    "oracle": {
+      "candidate_value": null,
+      "counterexample": null,
+      "equivalent": true,
+      "reference_value": null,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun have_prev () Bool)\n(assert\n (let (($x83 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x104 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x83))))\n(let (($x23 (not h_valid)))\n(let (($x8 (not prev_rst)))\n(let (($x99 (and have_prev (and $x8 (and (not rst) (and prev_h_valid (not prev_h_ready)))))))\n(let (($x157 (and $x99 (or $x23 $x104))))\n(xor $x157 $x157))))))))\n(check-sat)\n",
+      "status": "unsat"
+    },
+    "oracle_reused": true,
+    "oracle_seconds": 0.0010833750002348097,
+    "proof": null,
+    "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+    "reference_value": null
+  },
+  "pad_flag": {
+    "arm": "raw",
+    "candidate": "(and (and (not rst) h_valid) (xor h_pad (ule h_original_length 3)))",
+    "candidate_value": null,
+    "counterexample": null,
+    "equivalent": true,
+    "evidence": null,
+    "method_seconds": 0.0,
+    "oracle": {
+      "candidate_value": null,
+      "counterexample": null,
+      "equivalent": true,
+      "reference_value": null,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun rst () Bool)\n(assert\n (let (($x30 (not rst)))\n(let (($x53 (and $x30 h_valid)))\n(let (($x54 (and $x53 (xor h_pad (bvule h_original_length (_ bv3 16))))))\n(let (($x167 (and $x53 (xor h_pad (bvult h_original_length (_ bv4 16))))))\n(xor $x167 $x54))))))\n(check-sat)\n",
+      "status": "unsat"
+    },
+    "oracle_reused": true,
+    "oracle_seconds": 0.0010911669996858109,
+    "proof": null,
+    "reference": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+    "reference_value": null
+  },
+  "truncate_flag": {
+    "arm": "raw",
+    "candidate": "(and (and (not rst) h_valid) (xor h_truncate (uge h_original_length 9)))",
+    "candidate_value": null,
+    "counterexample": null,
+    "equivalent": true,
+    "evidence": null,
+    "method_seconds": 0.0,
+    "oracle": {
+      "candidate_value": null,
+      "counterexample": null,
+      "equivalent": true,
+      "reference_value": null,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_truncate () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun rst () Bool)\n(assert\n (let (($x30 (not rst)))\n(let (($x53 (and $x30 h_valid)))\n(let (($x5 (and $x53 (xor h_truncate (bvuge h_original_length (_ bv9 16))))))\n(let (($x132 (and $x53 (xor h_truncate (bvugt h_original_length (_ bv8 16))))))\n(xor $x132 $x5))))))\n(check-sat)\n",
+      "status": "unsat"
+    },
+    "oracle_reused": true,
+    "oracle_seconds": 0.0011619540000538109,
+    "proof": null,
+    "reference": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+    "reference_value": null
+  }
+}

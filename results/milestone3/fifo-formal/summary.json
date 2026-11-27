@@ -1,0 +1,367 @@
+{
+  "upstream_commit": "e94172a1bd5e9b138b5fc3da01554edb3052ce52",
+  "rtl_sha256": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+  "harness_sha256": "bb1e4b36bff873b402dfa8341f5023f215393885b89dbe71f690bf5a326d6fc0",
+  "bounded_states": 12,
+  "clock": "Inputs and outputs sampled immediately before each rising edge",
+  "forms": {
+    "bundled": "(and active (or valid_lost (or data_changed (or last_changed user_changed))))",
+    "split": [
+      "(and active valid_lost)",
+      "(and active data_changed)",
+      "(and active last_changed)",
+      "(and active user_changed)"
+    ]
+  },
+  "versions": {
+    "yosys": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "z3": "Z3 version 4.16.0 - 64 bit"
+  },
+  "models": {
+    "original": {
+      "rtl_sha256": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+      "standalone": {
+        "valid_lost": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_valid_lost"
+          ],
+          "bmc_or_cover_seconds": 0.037959808999971756
+        },
+        "data_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_data_changed"
+          ],
+          "bmc_or_cover_seconds": 0.051424726999982795
+        },
+        "last_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_last_changed"
+          ],
+          "bmc_or_cover_seconds": 0.04195776299997078
+        },
+        "user_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_user_changed"
+          ],
+          "bmc_or_cover_seconds": 0.0428456420000316
+        }
+      },
+      "bundled": {
+        "status": "PASSED",
+        "emitted_assertions": [
+          "check_bundled"
+        ],
+        "bmc_or_cover_seconds": 0.08241841500000646,
+        "induction_seconds": 0.05764668099999426,
+        "temporal_induction": "PASSED"
+      },
+      "split": {
+        "status": "PASSED",
+        "emitted_assertions": [
+          "check_valid_lost",
+          "check_user_changed",
+          "check_last_changed",
+          "check_data_changed"
+        ],
+        "bmc_or_cover_seconds": 0.09228170099999033,
+        "induction_seconds": 0.03717813999998043,
+        "temporal_induction": "PASSED"
+      },
+      "cover": {
+        "status": "PASSED",
+        "emitted_assertions": [],
+        "bmc_or_cover_seconds": 0.06629874899999777,
+        "cover_step": 5,
+        "witness": "cover.yw"
+      }
+    },
+    "drop_valid": {
+      "rtl_sha256": "d06e77f57696919a751bef8955929a734bb0b26acfb4ae06c314bcaaa08b34ee",
+      "standalone": {
+        "valid_lost": {
+          "status": "FAILED",
+          "emitted_assertions": [
+            "check_valid_lost"
+          ],
+          "bmc_or_cover_seconds": 0.03885113400002638,
+          "failed_assertions": [
+            "valid_lost"
+          ],
+          "failed_step": 5
+        },
+        "data_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_data_changed"
+          ],
+          "bmc_or_cover_seconds": 0.05527052399997956
+        },
+        "last_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_last_changed"
+          ],
+          "bmc_or_cover_seconds": 0.04475644699999748
+        },
+        "user_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_user_changed"
+          ],
+          "bmc_or_cover_seconds": 0.04316504500002338
+        }
+      },
+      "bundled": {
+        "status": "FAILED",
+        "emitted_assertions": [
+          "check_bundled"
+        ],
+        "bmc_or_cover_seconds": 0.049417466000022614,
+        "failed_assertions": [
+          "bundled"
+        ],
+        "failed_step": 5,
+        "witness": "bundled.yw"
+      },
+      "split": {
+        "status": "FAILED",
+        "emitted_assertions": [
+          "check_valid_lost",
+          "check_user_changed",
+          "check_last_changed",
+          "check_data_changed"
+        ],
+        "bmc_or_cover_seconds": 0.055323693999980605,
+        "failed_assertions": [
+          "valid_lost"
+        ],
+        "failed_step": 5,
+        "witness": "split.yw"
+      },
+      "cover": {
+        "status": "PASSED",
+        "emitted_assertions": [],
+        "bmc_or_cover_seconds": 0.03737072500001659,
+        "cover_step": 5,
+        "witness": "cover.yw"
+      }
+    },
+    "flip_data": {
+      "rtl_sha256": "261f753202a3e621730a4a4ae1e26f7c5383c9bb4721bf9b45cdfa4623756f21",
+      "standalone": {
+        "valid_lost": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_valid_lost"
+          ],
+          "bmc_or_cover_seconds": 0.03683625299998994
+        },
+        "data_changed": {
+          "status": "FAILED",
+          "emitted_assertions": [
+            "check_data_changed"
+          ],
+          "bmc_or_cover_seconds": 0.04104452100000344,
+          "failed_assertions": [
+            "data_changed"
+          ],
+          "failed_step": 5
+        },
+        "last_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_last_changed"
+          ],
+          "bmc_or_cover_seconds": 0.04330806100000473
+        },
+        "user_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_user_changed"
+          ],
+          "bmc_or_cover_seconds": 0.04296477699995194
+        }
+      },
+      "bundled": {
+        "status": "FAILED",
+        "emitted_assertions": [
+          "check_bundled"
+        ],
+        "bmc_or_cover_seconds": 0.04371214999997619,
+        "failed_assertions": [
+          "bundled"
+        ],
+        "failed_step": 5,
+        "witness": "bundled.yw"
+      },
+      "split": {
+        "status": "FAILED",
+        "emitted_assertions": [
+          "check_valid_lost",
+          "check_user_changed",
+          "check_last_changed",
+          "check_data_changed"
+        ],
+        "bmc_or_cover_seconds": 0.046207576999961475,
+        "failed_assertions": [
+          "data_changed"
+        ],
+        "failed_step": 5,
+        "witness": "split.yw"
+      },
+      "cover": {
+        "status": "PASSED",
+        "emitted_assertions": [],
+        "bmc_or_cover_seconds": 0.03654765400000315,
+        "cover_step": 5,
+        "witness": "cover.yw"
+      }
+    },
+    "flip_last": {
+      "rtl_sha256": "88e22b673a72343b3dd36c672f39a7abac32e630a879f5da8f636a4e76b76210",
+      "standalone": {
+        "valid_lost": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_valid_lost"
+          ],
+          "bmc_or_cover_seconds": 0.039515368000024864
+        },
+        "data_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_data_changed"
+          ],
+          "bmc_or_cover_seconds": 0.05105594000002611
+        },
+        "last_changed": {
+          "status": "FAILED",
+          "emitted_assertions": [
+            "check_last_changed"
+          ],
+          "bmc_or_cover_seconds": 0.04232123799999954,
+          "failed_assertions": [
+            "last_changed"
+          ],
+          "failed_step": 5
+        },
+        "user_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_user_changed"
+          ],
+          "bmc_or_cover_seconds": 0.04735374799997771
+        }
+      },
+      "bundled": {
+        "status": "FAILED",
+        "emitted_assertions": [
+          "check_bundled"
+        ],
+        "bmc_or_cover_seconds": 0.046072318999961226,
+        "failed_assertions": [
+          "bundled"
+        ],
+        "failed_step": 5,
+        "witness": "bundled.yw"
+      },
+      "split": {
+        "status": "FAILED",
+        "emitted_assertions": [
+          "check_valid_lost",
+          "check_user_changed",
+          "check_last_changed",
+          "check_data_changed"
+        ],
+        "bmc_or_cover_seconds": 0.051261505000013585,
+        "failed_assertions": [
+          "last_changed"
+        ],
+        "failed_step": 5,
+        "witness": "split.yw"
+      },
+      "cover": {
+        "status": "PASSED",
+        "emitted_assertions": [],
+        "bmc_or_cover_seconds": 0.040912988000002315,
+        "cover_step": 5,
+        "witness": "cover.yw"
+      }
+    },
+    "flip_user": {
+      "rtl_sha256": "6547b3f31c2ee43778847506edeb5a30434d2dfd3b7ea190c476fae4356e13e5",
+      "standalone": {
+        "valid_lost": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_valid_lost"
+          ],
+          "bmc_or_cover_seconds": 0.03848781200002804
+        },
+        "data_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_data_changed"
+          ],
+          "bmc_or_cover_seconds": 0.04560516800000869
+        },
+        "last_changed": {
+          "status": "PASSED",
+          "emitted_assertions": [
+            "check_last_changed"
+          ],
+          "bmc_or_cover_seconds": 0.042118455999968774
+        },
+        "user_changed": {
+          "status": "FAILED",
+          "emitted_assertions": [
+            "check_user_changed"
+          ],
+          "bmc_or_cover_seconds": 0.04475923200004672,
+          "failed_assertions": [
+            "user_changed"
+          ],
+          "failed_step": 5
+        }
+      },
+      "bundled": {
+        "status": "FAILED",
+        "emitted_assertions": [
+          "check_bundled"
+        ],
+        "bmc_or_cover_seconds": 0.045601793000003,
+        "failed_assertions": [
+          "bundled"
+        ],
+        "failed_step": 5,
+        "witness": "bundled.yw"
+      },
+      "split": {
+        "status": "FAILED",
+        "emitted_assertions": [
+          "check_valid_lost",
+          "check_user_changed",
+          "check_last_changed",
+          "check_data_changed"
+        ],
+        "bmc_or_cover_seconds": 0.04678145000002587,
+        "failed_assertions": [
+          "user_changed"
+        ],
+        "failed_step": 5,
+        "witness": "split.yw"
+      },
+      "cover": {
+        "status": "PASSED",
+        "emitted_assertions": [],
+        "bmc_or_cover_seconds": 0.03795057600001428,
+        "cover_step": 5,
+        "witness": "cover.yw"
+      }
+    }
+  }
+}

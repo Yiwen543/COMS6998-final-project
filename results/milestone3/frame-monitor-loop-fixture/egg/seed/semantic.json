@@ -1,0 +1,1243 @@
+{
+  "clamped_length": {
+    "arm": "egg",
+    "candidate": "(and (and (not rst) h_valid) (ne h_length h_original_length))",
+    "candidate_value": false,
+    "counterexample": {
+      "h_length": 0,
+      "h_original_length": 0,
+      "h_pad": false,
+      "h_ready": false,
+      "h_truncate": false,
+      "h_valid": true,
+      "have_prev": false,
+      "m_data": 0,
+      "m_last": false,
+      "m_ready": false,
+      "m_valid": false,
+      "prev_h_length": 0,
+      "prev_h_original_length": 0,
+      "prev_h_pad": false,
+      "prev_h_ready": false,
+      "prev_h_truncate": false,
+      "prev_h_valid": false,
+      "prev_m_data": 0,
+      "prev_m_last": false,
+      "prev_m_ready": false,
+      "prev_m_valid": false,
+      "prev_rst": false,
+      "prev_s_data": 0,
+      "prev_s_last": false,
+      "prev_s_ready": false,
+      "prev_s_valid": false,
+      "rst": false,
+      "s_data": 0,
+      "s_last": false,
+      "s_ready": false,
+      "s_valid": false
+    },
+    "equivalent": false,
+    "evidence": {
+      "abstract_terms": [
+        "(and (and (not rst) h_valid) (or (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)) (or (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)) (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab)))))",
+        "(and (and (not rst) h_valid) (not bv_759af06ad62d2f39b6a81dab))"
+      ],
+      "atom_sources": {
+        "bv_1ffb2f508168dd87e304104d": "(eq 4 h_length)",
+        "bv_2b90ee49c3843e2b034d9aaa": "(ult h_original_length 4)",
+        "bv_2fdc44351bc7c55a93e25163": "(ule 4 h_original_length)",
+        "bv_4b07129370bd081b3adcd482": "(ult 8 h_original_length)",
+        "bv_759af06ad62d2f39b6a81dab": "(eq h_length h_original_length)",
+        "bv_a1f947d170e2392e035e2a17": "(eq 8 h_length)",
+        "bv_ba82d0b7baa3a50e5471f533": "(ule h_original_length 8)",
+        "h_valid": "h_valid",
+        "rst": "rst"
+      },
+      "egg_audit": {
+        "builtin_rules": [],
+        "checked_edges": 0,
+        "checked_steps": 0,
+        "edges": [],
+        "ground_rules": []
+      },
+      "egg_graph": {
+        "eclasses": 22,
+        "engine": "egg 0.11.0",
+        "enodes": 24,
+        "ground_rule_count": 2,
+        "iterations": 2,
+        "method": "six Boolean rules plus independently QF_BV-proven ground rules; no unconditional manual unions",
+        "rewrite_explanations": [],
+        "saturation_seconds": 1.5413e-05,
+        "stop_reason": "Some(Saturated)",
+        "targets": [
+          {
+            "eclass": 20,
+            "eclass_before": 20,
+            "id": "reference",
+            "representative": "(and (and (not rst) h_valid) (or (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)) (or (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)) (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab)))))"
+          },
+          {
+            "eclass": 21,
+            "eclass_before": 21,
+            "id": "candidate",
+            "representative": "(and (and (not rst) h_valid) (not bv_759af06ad62d2f39b6a81dab))"
+          }
+        ]
+      },
+      "egg_input": {
+        "targets": [
+          {
+            "compact": "(and (and (not rst) h_valid) (or (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)) (or (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)) (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab)))))",
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "id": "reference"
+          },
+          {
+            "compact": "(and (and (not rst) h_valid) (not bv_759af06ad62d2f39b6a81dab))",
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "id": "candidate"
+          }
+        ],
+        "verified_rules": [
+          {
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "left": "bv_2b90ee49c3843e2b034d9aaa",
+            "name": "typed-complement-6",
+            "proof_status": "unsat",
+            "right": "(not bv_2fdc44351bc7c55a93e25163)"
+          },
+          {
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "left": "bv_4b07129370bd081b3adcd482",
+            "name": "typed-complement-17",
+            "proof_status": "unsat",
+            "right": "(not bv_ba82d0b7baa3a50e5471f533)"
+          }
+        ]
+      },
+      "egg_timing": {
+        "build_seconds": 0.000698024,
+        "explanation_seconds": 2.734e-06,
+        "extraction_seconds": 2.602e-05,
+        "mode": "indexed",
+        "saturation_seconds": 1.5413e-05,
+        "serialization_seconds": 6.35e-06,
+        "total_seconds": 0.000762421
+      },
+      "primitive_pair_checks": [
+        {
+          "left": "bv_1ffb2f508168dd87e304104d",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x15 (bvult h_original_length (_ bv4 16))))\n(let (($x24 (= (_ bv4 16) h_length)))\n(xor $x24 $x15))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x15 (bvult h_original_length (_ bv4 16))))\n(let (($x24 (= (_ bv4 16) h_length)))\n(= $x24 $x15))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_2b90ee49c3843e2b034d9aaa"
+        },
+        {
+          "left": "bv_1ffb2f508168dd87e304104d",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x28 (bvule (_ bv4 16) h_original_length)))\n(let (($x24 (= (_ bv4 16) h_length)))\n(xor $x24 $x28))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x28 (bvule (_ bv4 16) h_original_length)))\n(let (($x24 (= (_ bv4 16) h_length)))\n(= $x24 $x28))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_2fdc44351bc7c55a93e25163"
+        },
+        {
+          "left": "bv_1ffb2f508168dd87e304104d",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x94 (bvult (_ bv8 16) h_original_length)))\n(let (($x24 (= (_ bv4 16) h_length)))\n(xor $x24 $x94))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x94 (bvult (_ bv8 16) h_original_length)))\n(let (($x24 (= (_ bv4 16) h_length)))\n(= $x24 $x94))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_4b07129370bd081b3adcd482"
+        },
+        {
+          "left": "bv_1ffb2f508168dd87e304104d",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x121 (= h_length h_original_length)))\n(let (($x24 (= (_ bv4 16) h_length)))\n(xor $x24 $x121))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x121 (= h_length h_original_length)))\n(let (($x24 (= (_ bv4 16) h_length)))\n(= $x24 $x121))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_759af06ad62d2f39b6a81dab"
+        },
+        {
+          "left": "bv_1ffb2f508168dd87e304104d",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x131 (= (_ bv8 16) h_length)))\n(let (($x24 (= (_ bv4 16) h_length)))\n(xor $x24 $x131))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x131 (= (_ bv8 16) h_length)))\n(let (($x24 (= (_ bv4 16) h_length)))\n(= $x24 $x131))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_a1f947d170e2392e035e2a17"
+        },
+        {
+          "left": "bv_1ffb2f508168dd87e304104d",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x24 (= (_ bv4 16) h_length)))\n(xor $x24 $x71))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x24 (= (_ bv4 16) h_length)))\n(= $x24 $x71))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_ba82d0b7baa3a50e5471f533"
+        },
+        {
+          "certified_rule": "typed-complement-6",
+          "left": "bv_2b90ee49c3843e2b034d9aaa",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x28 (bvule (_ bv4 16) h_original_length)))\n(let (($x15 (bvult h_original_length (_ bv4 16))))\n(xor $x15 $x28))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x28 (bvule (_ bv4 16) h_original_length)))\n(let (($x15 (bvult h_original_length (_ bv4 16))))\n(= $x15 $x28))))\n(check-sat)\n",
+              "status": "unsat"
+            }
+          ],
+          "right": "bv_2fdc44351bc7c55a93e25163"
+        },
+        {
+          "left": "bv_2b90ee49c3843e2b034d9aaa",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x94 (bvult (_ bv8 16) h_original_length)))\n(let (($x15 (bvult h_original_length (_ bv4 16))))\n(xor $x15 $x94))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x94 (bvult (_ bv8 16) h_original_length)))\n(let (($x15 (bvult h_original_length (_ bv4 16))))\n(= $x15 $x94))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_4b07129370bd081b3adcd482"
+        },
+        {
+          "left": "bv_2b90ee49c3843e2b034d9aaa",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x121 (= h_length h_original_length)))\n(let (($x15 (bvult h_original_length (_ bv4 16))))\n(xor $x15 $x121))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x121 (= h_length h_original_length)))\n(let (($x15 (bvult h_original_length (_ bv4 16))))\n(= $x15 $x121))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_759af06ad62d2f39b6a81dab"
+        },
+        {
+          "left": "bv_2b90ee49c3843e2b034d9aaa",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x131 (= (_ bv8 16) h_length)))\n(let (($x15 (bvult h_original_length (_ bv4 16))))\n(xor $x15 $x131))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x131 (= (_ bv8 16) h_length)))\n(let (($x15 (bvult h_original_length (_ bv4 16))))\n(= $x15 $x131))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_a1f947d170e2392e035e2a17"
+        },
+        {
+          "left": "bv_2b90ee49c3843e2b034d9aaa",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x15 (bvult h_original_length (_ bv4 16))))\n(xor $x15 $x71))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x15 (bvult h_original_length (_ bv4 16))))\n(= $x15 $x71))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_ba82d0b7baa3a50e5471f533"
+        },
+        {
+          "left": "bv_2fdc44351bc7c55a93e25163",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x94 (bvult (_ bv8 16) h_original_length)))\n(let (($x28 (bvule (_ bv4 16) h_original_length)))\n(xor $x28 $x94))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x94 (bvult (_ bv8 16) h_original_length)))\n(let (($x28 (bvule (_ bv4 16) h_original_length)))\n(= $x28 $x94))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_4b07129370bd081b3adcd482"
+        },
+        {
+          "left": "bv_2fdc44351bc7c55a93e25163",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x121 (= h_length h_original_length)))\n(let (($x28 (bvule (_ bv4 16) h_original_length)))\n(xor $x28 $x121))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x121 (= h_length h_original_length)))\n(let (($x28 (bvule (_ bv4 16) h_original_length)))\n(= $x28 $x121))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_759af06ad62d2f39b6a81dab"
+        },
+        {
+          "left": "bv_2fdc44351bc7c55a93e25163",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x131 (= (_ bv8 16) h_length)))\n(let (($x28 (bvule (_ bv4 16) h_original_length)))\n(xor $x28 $x131))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x131 (= (_ bv8 16) h_length)))\n(let (($x28 (bvule (_ bv4 16) h_original_length)))\n(= $x28 $x131))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_a1f947d170e2392e035e2a17"
+        },
+        {
+          "left": "bv_2fdc44351bc7c55a93e25163",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x28 (bvule (_ bv4 16) h_original_length)))\n(xor $x28 $x71))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x28 (bvule (_ bv4 16) h_original_length)))\n(= $x28 $x71))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_ba82d0b7baa3a50e5471f533"
+        },
+        {
+          "left": "bv_4b07129370bd081b3adcd482",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x121 (= h_length h_original_length)))\n(let (($x94 (bvult (_ bv8 16) h_original_length)))\n(xor $x94 $x121))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x121 (= h_length h_original_length)))\n(let (($x94 (bvult (_ bv8 16) h_original_length)))\n(= $x94 $x121))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_759af06ad62d2f39b6a81dab"
+        },
+        {
+          "left": "bv_4b07129370bd081b3adcd482",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x131 (= (_ bv8 16) h_length)))\n(let (($x94 (bvult (_ bv8 16) h_original_length)))\n(xor $x94 $x131))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x131 (= (_ bv8 16) h_length)))\n(let (($x94 (bvult (_ bv8 16) h_original_length)))\n(= $x94 $x131))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_a1f947d170e2392e035e2a17"
+        },
+        {
+          "certified_rule": "typed-complement-17",
+          "left": "bv_4b07129370bd081b3adcd482",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x94 (bvult (_ bv8 16) h_original_length)))\n(xor $x94 $x71))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x94 (bvult (_ bv8 16) h_original_length)))\n(= $x94 $x71))))\n(check-sat)\n",
+              "status": "unsat"
+            }
+          ],
+          "right": "bv_ba82d0b7baa3a50e5471f533"
+        },
+        {
+          "left": "bv_759af06ad62d2f39b6a81dab",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x131 (= (_ bv8 16) h_length)))\n(let (($x121 (= h_length h_original_length)))\n(xor $x121 $x131))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x131 (= (_ bv8 16) h_length)))\n(let (($x121 (= h_length h_original_length)))\n(= $x121 $x131))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_a1f947d170e2392e035e2a17"
+        },
+        {
+          "left": "bv_759af06ad62d2f39b6a81dab",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x121 (= h_length h_original_length)))\n(xor $x121 $x71))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x121 (= h_length h_original_length)))\n(= $x121 $x71))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_ba82d0b7baa3a50e5471f533"
+        },
+        {
+          "left": "bv_a1f947d170e2392e035e2a17",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x131 (= (_ bv8 16) h_length)))\n(xor $x131 $x71))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x71 (bvule h_original_length (_ bv8 16))))\n(let (($x131 (= (_ bv8 16) h_length)))\n(= $x131 $x71))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_ba82d0b7baa3a50e5471f533"
+        }
+      ],
+      "verified_rules": [
+        {
+          "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+          "left": "bv_2b90ee49c3843e2b034d9aaa",
+          "name": "typed-complement-6",
+          "proof_status": "unsat",
+          "right": "(not bv_2fdc44351bc7c55a93e25163)"
+        },
+        {
+          "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+          "left": "bv_4b07129370bd081b3adcd482",
+          "name": "typed-complement-17",
+          "proof_status": "unsat",
+          "right": "(not bv_ba82d0b7baa3a50e5471f533)"
+        }
+      ]
+    },
+    "method_seconds": 0.028279244999794173,
+    "oracle": {
+      "candidate_value": false,
+      "counterexample": {
+        "h_length": 0,
+        "h_original_length": 0,
+        "h_pad": false,
+        "h_ready": false,
+        "h_truncate": false,
+        "h_valid": true,
+        "have_prev": false,
+        "m_data": 0,
+        "m_last": false,
+        "m_ready": false,
+        "m_valid": false,
+        "prev_h_length": 0,
+        "prev_h_original_length": 0,
+        "prev_h_pad": false,
+        "prev_h_ready": false,
+        "prev_h_truncate": false,
+        "prev_h_valid": false,
+        "prev_m_data": 0,
+        "prev_m_last": false,
+        "prev_m_ready": false,
+        "prev_m_valid": false,
+        "prev_rst": false,
+        "prev_s_data": 0,
+        "prev_s_last": false,
+        "prev_s_ready": false,
+        "prev_s_valid": false,
+        "rst": false,
+        "s_data": 0,
+        "s_last": false,
+        "s_ready": false,
+        "s_valid": false
+      },
+      "equivalent": false,
+      "reference_value": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_valid () Bool)\n(declare-fun rst () Bool)\n(assert\n (let (($x83 (and (distinct h_length h_original_length) true)))\n(let (($x43 (not rst)))\n(let (($x60 (and $x43 h_valid)))\n(let (($x115 (and $x60 $x83)))\n(let (($x109 (and (and (bvuge h_original_length (_ bv4 16)) (bvule h_original_length (_ bv8 16))) $x83)))\n(let (($x117 (or (and (bvugt h_original_length (_ bv8 16)) (and (distinct (_ bv8 16) h_length) true)) $x109)))\n(let (($x67 (or (and (bvult h_original_length (_ bv4 16)) (and (distinct (_ bv4 16) h_length) true)) $x117)))\n(let (($x113 (and $x60 $x67)))\n(xor $x113 $x115))))))))))\n(check-sat)\n",
+      "status": "sat"
+    },
+    "oracle_reused": true,
+    "oracle_seconds": 0.0029170830002840376,
+    "proof": {
+      "method": "egg",
+      "proved": false,
+      "steps": [],
+      "stop": "Some(Saturated)"
+    },
+    "reference": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+    "reference_value": true
+  },
+  "data_hold": {
+    "arm": "egg",
+    "candidate": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not m_ready)) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last)))))",
+    "candidate_value": true,
+    "counterexample": {
+      "h_length": 0,
+      "h_original_length": 0,
+      "h_pad": false,
+      "h_ready": false,
+      "h_truncate": false,
+      "h_valid": false,
+      "have_prev": true,
+      "m_data": 0,
+      "m_last": false,
+      "m_ready": false,
+      "m_valid": false,
+      "prev_h_length": 0,
+      "prev_h_original_length": 0,
+      "prev_h_pad": false,
+      "prev_h_ready": false,
+      "prev_h_truncate": false,
+      "prev_h_valid": false,
+      "prev_m_data": 0,
+      "prev_m_last": false,
+      "prev_m_ready": true,
+      "prev_m_valid": true,
+      "prev_rst": false,
+      "prev_s_data": 0,
+      "prev_s_last": false,
+      "prev_s_ready": false,
+      "prev_s_valid": false,
+      "rst": false,
+      "s_data": 0,
+      "s_last": false,
+      "s_ready": false,
+      "s_valid": false
+    },
+    "equivalent": false,
+    "evidence": {
+      "abstract_terms": [
+        "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))",
+        "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not m_ready)) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last))))))"
+      ],
+      "atom_sources": {
+        "bv_34bc530db9952285c9fa047d": "(eq m_data prev_m_data)",
+        "have_prev": "have_prev",
+        "m_last": "m_last",
+        "m_ready": "m_ready",
+        "m_valid": "m_valid",
+        "prev_m_last": "prev_m_last",
+        "prev_m_ready": "prev_m_ready",
+        "prev_m_valid": "prev_m_valid",
+        "prev_rst": "prev_rst",
+        "rst": "rst"
+      },
+      "egg_audit": {
+        "builtin_rules": [],
+        "checked_edges": 0,
+        "checked_steps": 0,
+        "edges": [],
+        "ground_rules": []
+      },
+      "egg_graph": {
+        "eclasses": 33,
+        "engine": "egg 0.11.0",
+        "enodes": 33,
+        "ground_rule_count": 0,
+        "iterations": 1,
+        "method": "six Boolean rules plus independently QF_BV-proven ground rules; no unconditional manual unions",
+        "rewrite_explanations": [],
+        "saturation_seconds": 1.1307e-05,
+        "stop_reason": "Some(Saturated)",
+        "targets": [
+          {
+            "eclass": 25,
+            "eclass_before": 25,
+            "id": "reference",
+            "representative": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))"
+          },
+          {
+            "eclass": 32,
+            "eclass_before": 32,
+            "id": "candidate",
+            "representative": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not m_ready)) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last))))))"
+          }
+        ]
+      },
+      "egg_input": {
+        "targets": [
+          {
+            "compact": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))",
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "id": "reference"
+          },
+          {
+            "compact": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not m_ready)) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last))))))",
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "id": "candidate"
+          }
+        ],
+        "verified_rules": []
+      },
+      "egg_timing": {
+        "build_seconds": 0.000714118,
+        "explanation_seconds": 3.385e-06,
+        "extraction_seconds": 4.4157e-05,
+        "mode": "indexed",
+        "saturation_seconds": 1.1307e-05,
+        "serialization_seconds": 9.134e-06,
+        "total_seconds": 0.000796342
+      },
+      "primitive_pair_checks": [],
+      "verified_rules": []
+    },
+    "method_seconds": 0.002589077999800793,
+    "oracle": {
+      "candidate_value": true,
+      "counterexample": {
+        "h_length": 0,
+        "h_original_length": 0,
+        "h_pad": false,
+        "h_ready": false,
+        "h_truncate": false,
+        "h_valid": false,
+        "have_prev": true,
+        "m_data": 0,
+        "m_last": false,
+        "m_ready": false,
+        "m_valid": false,
+        "prev_h_length": 0,
+        "prev_h_original_length": 0,
+        "prev_h_pad": false,
+        "prev_h_ready": false,
+        "prev_h_truncate": false,
+        "prev_h_valid": false,
+        "prev_m_data": 0,
+        "prev_m_last": false,
+        "prev_m_ready": true,
+        "prev_m_valid": true,
+        "prev_rst": false,
+        "prev_s_data": 0,
+        "prev_s_last": false,
+        "prev_s_ready": false,
+        "prev_s_valid": false,
+        "rst": false,
+        "s_data": 0,
+        "s_last": false,
+        "s_ready": false,
+        "s_valid": false
+      },
+      "equivalent": false,
+      "reference_value": false,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(declare-fun m_valid () Bool)\n(declare-fun m_ready () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_m_ready () Bool)\n(assert\n (let (($x20 (not m_valid)))\n(let (($x49 (or $x20 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x61 (and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not m_ready)) $x49))))\n(let (($x48 (not prev_rst)))\n(let (($x13 (and have_prev (and $x48 (and (not rst) (and prev_m_valid (not prev_m_ready)))))))\n(let (($x51 (and $x13 $x49)))\n(xor $x51 $x61))))))))\n(check-sat)\n",
+      "status": "sat"
+    },
+    "oracle_reused": true,
+    "oracle_seconds": 0.004754366000270238,
+    "proof": {
+      "method": "egg",
+      "proved": false,
+      "steps": [],
+      "stop": "Some(Saturated)"
+    },
+    "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+    "reference_value": false
+  },
+  "header_hold": {
+    "arm": "egg",
+    "candidate": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (ne h_length prev_h_length))))))",
+    "candidate_value": false,
+    "counterexample": {
+      "h_length": 0,
+      "h_original_length": 65535,
+      "h_pad": false,
+      "h_ready": false,
+      "h_truncate": false,
+      "h_valid": true,
+      "have_prev": true,
+      "m_data": 0,
+      "m_last": false,
+      "m_ready": false,
+      "m_valid": false,
+      "prev_h_length": 0,
+      "prev_h_original_length": 0,
+      "prev_h_pad": false,
+      "prev_h_ready": false,
+      "prev_h_truncate": false,
+      "prev_h_valid": true,
+      "prev_m_data": 0,
+      "prev_m_last": false,
+      "prev_m_ready": false,
+      "prev_m_valid": false,
+      "prev_rst": false,
+      "prev_s_data": 0,
+      "prev_s_last": false,
+      "prev_s_ready": false,
+      "prev_s_valid": false,
+      "rst": false,
+      "s_data": 0,
+      "s_last": false,
+      "s_ready": false,
+      "s_valid": false
+    },
+    "equivalent": false,
+    "evidence": {
+      "abstract_terms": [
+        "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))",
+        "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (not bv_888076d1aed1b594aa443bbb))))))"
+      ],
+      "atom_sources": {
+        "bv_888076d1aed1b594aa443bbb": "(eq h_length prev_h_length)",
+        "bv_e33fbb1a272f83001f85e477": "(eq h_original_length prev_h_original_length)",
+        "h_pad": "h_pad",
+        "h_truncate": "h_truncate",
+        "h_valid": "h_valid",
+        "have_prev": "have_prev",
+        "prev_h_pad": "prev_h_pad",
+        "prev_h_ready": "prev_h_ready",
+        "prev_h_truncate": "prev_h_truncate",
+        "prev_h_valid": "prev_h_valid",
+        "prev_rst": "prev_rst",
+        "rst": "rst"
+      },
+      "egg_audit": {
+        "builtin_rules": [],
+        "checked_edges": 0,
+        "checked_steps": 0,
+        "edges": [],
+        "ground_rules": []
+      },
+      "egg_graph": {
+        "eclasses": 44,
+        "engine": "egg 0.11.0",
+        "enodes": 44,
+        "ground_rule_count": 0,
+        "iterations": 1,
+        "method": "six Boolean rules plus independently QF_BV-proven ground rules; no unconditional manual unions",
+        "rewrite_explanations": [],
+        "saturation_seconds": 6.95e-06,
+        "stop_reason": "Some(Saturated)",
+        "targets": [
+          {
+            "eclass": 36,
+            "eclass_before": 36,
+            "id": "reference",
+            "representative": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))"
+          },
+          {
+            "eclass": 43,
+            "eclass_before": 43,
+            "id": "candidate",
+            "representative": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (not bv_888076d1aed1b594aa443bbb))))))"
+          }
+        ]
+      },
+      "egg_input": {
+        "targets": [
+          {
+            "compact": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))",
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "id": "reference"
+          },
+          {
+            "compact": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (not bv_888076d1aed1b594aa443bbb))))))",
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "id": "candidate"
+          }
+        ],
+        "verified_rules": []
+      },
+      "egg_timing": {
+        "build_seconds": 0.000639135,
+        "explanation_seconds": 1.652e-06,
+        "extraction_seconds": 4.3977e-05,
+        "mode": "indexed",
+        "saturation_seconds": 6.95e-06,
+        "serialization_seconds": 8.243e-06,
+        "total_seconds": 0.000725825
+      },
+      "primitive_pair_checks": [
+        {
+          "left": "bv_888076d1aed1b594aa443bbb",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x56 (= h_original_length prev_h_original_length)))\n(let (($x113 (= h_length prev_h_length)))\n(xor $x113 $x56))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x56 (= h_original_length prev_h_original_length)))\n(let (($x113 (= h_length prev_h_length)))\n(= $x113 $x56))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_e33fbb1a272f83001f85e477"
+        }
+      ],
+      "verified_rules": []
+    },
+    "method_seconds": 0.003446181999606779,
+    "oracle": {
+      "candidate_value": false,
+      "counterexample": {
+        "h_length": 0,
+        "h_original_length": 65535,
+        "h_pad": false,
+        "h_ready": false,
+        "h_truncate": false,
+        "h_valid": true,
+        "have_prev": true,
+        "m_data": 0,
+        "m_last": false,
+        "m_ready": false,
+        "m_valid": false,
+        "prev_h_length": 0,
+        "prev_h_original_length": 0,
+        "prev_h_pad": false,
+        "prev_h_ready": false,
+        "prev_h_truncate": false,
+        "prev_h_valid": true,
+        "prev_m_data": 0,
+        "prev_m_last": false,
+        "prev_m_ready": false,
+        "prev_m_valid": false,
+        "prev_rst": false,
+        "prev_s_data": 0,
+        "prev_s_last": false,
+        "prev_s_ready": false,
+        "prev_s_valid": false,
+        "rst": false,
+        "s_data": 0,
+        "s_last": false,
+        "s_ready": false,
+        "s_valid": false
+      },
+      "equivalent": false,
+      "reference_value": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x54 (and (distinct h_length prev_h_length) true)))\n(let (($x34 (and (distinct h_truncate prev_h_truncate) true)))\n(let (($x52 (and (distinct h_pad prev_h_pad) true)))\n(let (($x47 (not h_valid)))\n(let (($x27 (not prev_h_ready)))\n(let (($x35 (and prev_h_valid $x27)))\n(let (($x104 (and (and have_prev (and (not prev_rst) (not rst))) (and $x35 (or $x47 (or $x52 (or $x34 $x54)))))))\n(let (($x28 (or $x34 (or $x54 (and (distinct h_original_length prev_h_original_length) true)))))\n(let (($x11 (and (and have_prev (and (not prev_rst) (and (not rst) $x35))) (or $x47 (or $x52 $x28)))))\n(xor $x11 $x104)))))))))))\n(check-sat)\n",
+      "status": "sat"
+    },
+    "oracle_reused": true,
+    "oracle_seconds": 0.0018299820003448986,
+    "proof": {
+      "method": "egg",
+      "proved": false,
+      "steps": [],
+      "stop": "Some(Saturated)"
+    },
+    "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+    "reference_value": true
+  },
+  "pad_flag": {
+    "arm": "egg",
+    "candidate": "(and (and (not rst) h_valid) (xor h_pad (ule h_original_length 4)))",
+    "candidate_value": false,
+    "counterexample": {
+      "h_length": 0,
+      "h_original_length": 4,
+      "h_pad": true,
+      "h_ready": false,
+      "h_truncate": false,
+      "h_valid": true,
+      "have_prev": false,
+      "m_data": 0,
+      "m_last": false,
+      "m_ready": false,
+      "m_valid": false,
+      "prev_h_length": 0,
+      "prev_h_original_length": 0,
+      "prev_h_pad": false,
+      "prev_h_ready": false,
+      "prev_h_truncate": false,
+      "prev_h_valid": false,
+      "prev_m_data": 0,
+      "prev_m_last": false,
+      "prev_m_ready": false,
+      "prev_m_valid": false,
+      "prev_rst": false,
+      "prev_s_data": 0,
+      "prev_s_last": false,
+      "prev_s_ready": false,
+      "prev_s_valid": false,
+      "rst": false,
+      "s_data": 0,
+      "s_last": false,
+      "s_ready": false,
+      "s_valid": false
+    },
+    "equivalent": false,
+    "evidence": {
+      "abstract_terms": [
+        "(and (and (not rst) h_valid) (or (and h_pad (not bv_2b90ee49c3843e2b034d9aaa)) (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa)))",
+        "(and (and (not rst) h_valid) (or (and h_pad (not bv_dee1658a99dd979d702ba9c2)) (and (not h_pad) bv_dee1658a99dd979d702ba9c2)))"
+      ],
+      "atom_sources": {
+        "bv_2b90ee49c3843e2b034d9aaa": "(ult h_original_length 4)",
+        "bv_dee1658a99dd979d702ba9c2": "(ule h_original_length 4)",
+        "h_pad": "h_pad",
+        "h_valid": "h_valid",
+        "rst": "rst"
+      },
+      "egg_audit": {
+        "builtin_rules": [],
+        "checked_edges": 0,
+        "checked_steps": 0,
+        "edges": [],
+        "ground_rules": []
+      },
+      "egg_graph": {
+        "eclasses": 18,
+        "engine": "egg 0.11.0",
+        "enodes": 18,
+        "ground_rule_count": 0,
+        "iterations": 1,
+        "method": "six Boolean rules plus independently QF_BV-proven ground rules; no unconditional manual unions",
+        "rewrite_explanations": [],
+        "saturation_seconds": 5.428e-06,
+        "stop_reason": "Some(Saturated)",
+        "targets": [
+          {
+            "eclass": 11,
+            "eclass_before": 11,
+            "id": "reference",
+            "representative": "(and (and (not rst) h_valid) (or (and h_pad (not bv_2b90ee49c3843e2b034d9aaa)) (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa)))"
+          },
+          {
+            "eclass": 17,
+            "eclass_before": 17,
+            "id": "candidate",
+            "representative": "(and (and (not rst) h_valid) (or (and h_pad (not bv_dee1658a99dd979d702ba9c2)) (and (not h_pad) bv_dee1658a99dd979d702ba9c2)))"
+          }
+        ]
+      },
+      "egg_input": {
+        "targets": [
+          {
+            "compact": "(and (and (not rst) h_valid) (or (and h_pad (not bv_2b90ee49c3843e2b034d9aaa)) (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa)))",
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "id": "reference"
+          },
+          {
+            "compact": "(and (and (not rst) h_valid) (or (and h_pad (not bv_dee1658a99dd979d702ba9c2)) (and (not h_pad) bv_dee1658a99dd979d702ba9c2)))",
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "id": "candidate"
+          }
+        ],
+        "verified_rules": []
+      },
+      "egg_timing": {
+        "build_seconds": 0.0031004,
+        "explanation_seconds": 1.593e-06,
+        "extraction_seconds": 2.661e-05,
+        "mode": "indexed",
+        "saturation_seconds": 5.428e-06,
+        "serialization_seconds": 7.481e-06,
+        "total_seconds": 0.003153139
+      },
+      "primitive_pair_checks": [
+        {
+          "left": "bv_2b90ee49c3843e2b034d9aaa",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x34 (bvule h_original_length (_ bv4 16))))\n(let (($x122 (bvult h_original_length (_ bv4 16))))\n(xor $x122 $x34))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x34 (bvule h_original_length (_ bv4 16))))\n(let (($x122 (bvult h_original_length (_ bv4 16))))\n(= $x122 $x34))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_dee1658a99dd979d702ba9c2"
+        }
+      ],
+      "verified_rules": []
+    },
+    "method_seconds": 0.006432238999877882,
+    "oracle": {
+      "candidate_value": false,
+      "counterexample": {
+        "h_length": 0,
+        "h_original_length": 4,
+        "h_pad": true,
+        "h_ready": false,
+        "h_truncate": false,
+        "h_valid": true,
+        "have_prev": false,
+        "m_data": 0,
+        "m_last": false,
+        "m_ready": false,
+        "m_valid": false,
+        "prev_h_length": 0,
+        "prev_h_original_length": 0,
+        "prev_h_pad": false,
+        "prev_h_ready": false,
+        "prev_h_truncate": false,
+        "prev_h_valid": false,
+        "prev_m_data": 0,
+        "prev_m_last": false,
+        "prev_m_ready": false,
+        "prev_m_valid": false,
+        "prev_rst": false,
+        "prev_s_data": 0,
+        "prev_s_last": false,
+        "prev_s_ready": false,
+        "prev_s_valid": false,
+        "rst": false,
+        "s_data": 0,
+        "s_last": false,
+        "s_ready": false,
+        "s_valid": false
+      },
+      "equivalent": false,
+      "reference_value": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun rst () Bool)\n(assert\n (let (($x26 (not rst)))\n(let (($x14 (and $x26 h_valid)))\n(let (($x43 (and $x14 (xor h_pad (bvule h_original_length (_ bv4 16))))))\n(let (($x6 (and $x14 (xor h_pad (bvult h_original_length (_ bv4 16))))))\n(xor $x6 $x43))))))\n(check-sat)\n",
+      "status": "sat"
+    },
+    "oracle_reused": true,
+    "oracle_seconds": 0.025148859999717388,
+    "proof": {
+      "method": "egg",
+      "proved": false,
+      "steps": [],
+      "stop": "Some(Saturated)"
+    },
+    "reference": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+    "reference_value": true
+  },
+  "truncate_flag": {
+    "arm": "egg",
+    "candidate": "(and (and (not rst) h_valid) (xor h_truncate (uge h_original_length 8)))",
+    "candidate_value": false,
+    "counterexample": {
+      "h_length": 0,
+      "h_original_length": 8,
+      "h_pad": false,
+      "h_ready": false,
+      "h_truncate": true,
+      "h_valid": true,
+      "have_prev": false,
+      "m_data": 0,
+      "m_last": false,
+      "m_ready": false,
+      "m_valid": false,
+      "prev_h_length": 0,
+      "prev_h_original_length": 0,
+      "prev_h_pad": false,
+      "prev_h_ready": false,
+      "prev_h_truncate": false,
+      "prev_h_valid": false,
+      "prev_m_data": 0,
+      "prev_m_last": false,
+      "prev_m_ready": false,
+      "prev_m_valid": false,
+      "prev_rst": false,
+      "prev_s_data": 0,
+      "prev_s_last": false,
+      "prev_s_ready": false,
+      "prev_s_valid": false,
+      "rst": false,
+      "s_data": 0,
+      "s_last": false,
+      "s_ready": false,
+      "s_valid": false
+    },
+    "equivalent": false,
+    "evidence": {
+      "abstract_terms": [
+        "(and (and (not rst) h_valid) (or (and h_truncate (not bv_4b07129370bd081b3adcd482)) (and (not h_truncate) bv_4b07129370bd081b3adcd482)))",
+        "(and (and (not rst) h_valid) (or (and h_truncate (not bv_60a4701cbba245f82b7664da)) (and (not h_truncate) bv_60a4701cbba245f82b7664da)))"
+      ],
+      "atom_sources": {
+        "bv_4b07129370bd081b3adcd482": "(ult 8 h_original_length)",
+        "bv_60a4701cbba245f82b7664da": "(ule 8 h_original_length)",
+        "h_truncate": "h_truncate",
+        "h_valid": "h_valid",
+        "rst": "rst"
+      },
+      "egg_audit": {
+        "builtin_rules": [],
+        "checked_edges": 0,
+        "checked_steps": 0,
+        "edges": [],
+        "ground_rules": []
+      },
+      "egg_graph": {
+        "eclasses": 18,
+        "engine": "egg 0.11.0",
+        "enodes": 18,
+        "ground_rule_count": 0,
+        "iterations": 1,
+        "method": "six Boolean rules plus independently QF_BV-proven ground rules; no unconditional manual unions",
+        "rewrite_explanations": [],
+        "saturation_seconds": 5.689e-06,
+        "stop_reason": "Some(Saturated)",
+        "targets": [
+          {
+            "eclass": 11,
+            "eclass_before": 11,
+            "id": "reference",
+            "representative": "(and (and (not rst) h_valid) (or (and h_truncate (not bv_4b07129370bd081b3adcd482)) (and (not h_truncate) bv_4b07129370bd081b3adcd482)))"
+          },
+          {
+            "eclass": 17,
+            "eclass_before": 17,
+            "id": "candidate",
+            "representative": "(and (and (not rst) h_valid) (or (and h_truncate (not bv_60a4701cbba245f82b7664da)) (and (not h_truncate) bv_60a4701cbba245f82b7664da)))"
+          }
+        ]
+      },
+      "egg_input": {
+        "targets": [
+          {
+            "compact": "(and (and (not rst) h_valid) (or (and h_truncate (not bv_4b07129370bd081b3adcd482)) (and (not h_truncate) bv_4b07129370bd081b3adcd482)))",
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "id": "reference"
+          },
+          {
+            "compact": "(and (and (not rst) h_valid) (or (and h_truncate (not bv_60a4701cbba245f82b7664da)) (and (not h_truncate) bv_60a4701cbba245f82b7664da)))",
+            "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+            "id": "candidate"
+          }
+        ],
+        "verified_rules": []
+      },
+      "egg_timing": {
+        "build_seconds": 0.000712876,
+        "explanation_seconds": 1.593e-06,
+        "extraction_seconds": 3.0566e-05,
+        "mode": "indexed",
+        "saturation_seconds": 5.689e-06,
+        "serialization_seconds": 6.569e-06,
+        "total_seconds": 0.000771064
+      },
+      "primitive_pair_checks": [
+        {
+          "left": "bv_4b07129370bd081b3adcd482",
+          "queries": [
+            {
+              "relation": "equal",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x63 (bvule (_ bv8 16) h_original_length)))\n(let (($x6 (bvult (_ bv8 16) h_original_length)))\n(xor $x6 $x63))))\n(check-sat)\n",
+              "status": "sat"
+            },
+            {
+              "relation": "complement",
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x63 (bvule (_ bv8 16) h_original_length)))\n(let (($x6 (bvult (_ bv8 16) h_original_length)))\n(= $x6 $x63))))\n(check-sat)\n",
+              "status": "sat"
+            }
+          ],
+          "right": "bv_60a4701cbba245f82b7664da"
+        }
+      ],
+      "verified_rules": []
+    },
+    "method_seconds": 0.003964172999985749,
+    "oracle": {
+      "candidate_value": false,
+      "counterexample": {
+        "h_length": 0,
+        "h_original_length": 8,
+        "h_pad": false,
+        "h_ready": false,
+        "h_truncate": true,
+        "h_valid": true,
+        "have_prev": false,
+        "m_data": 0,
+        "m_last": false,
+        "m_ready": false,
+        "m_valid": false,
+        "prev_h_length": 0,
+        "prev_h_original_length": 0,
+        "prev_h_pad": false,
+        "prev_h_ready": false,
+        "prev_h_truncate": false,
+        "prev_h_valid": false,
+        "prev_m_data": 0,
+        "prev_m_last": false,
+        "prev_m_ready": false,
+        "prev_m_valid": false,
+        "prev_rst": false,
+        "prev_s_data": 0,
+        "prev_s_last": false,
+        "prev_s_ready": false,
+        "prev_s_valid": false,
+        "rst": false,
+        "s_data": 0,
+        "s_last": false,
+        "s_ready": false,
+        "s_valid": false
+      },
+      "equivalent": false,
+      "reference_value": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_truncate () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun rst () Bool)\n(assert\n (let (($x8 (not rst)))\n(let (($x63 (and $x8 h_valid)))\n(let (($x69 (and $x63 (xor h_truncate (bvuge h_original_length (_ bv8 16))))))\n(let (($x25 (and $x63 (xor h_truncate (bvugt h_original_length (_ bv8 16))))))\n(xor $x25 $x69))))))\n(check-sat)\n",
+      "status": "sat"
+    },
+    "oracle_reused": true,
+    "oracle_seconds": 0.0029794170004606713,
+    "proof": {
+      "method": "egg",
+      "proved": false,
+      "steps": [],
+      "stop": "Some(Saturated)"
+    },
+    "reference": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+    "reference_value": true
+  }
+}

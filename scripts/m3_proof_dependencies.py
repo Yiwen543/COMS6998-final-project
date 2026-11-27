@@ -2,9 +2,12 @@
 """Check egg 0.11 flat Boolean guard proofs and extract the rules actually used."""
 import argparse
 from functools import cache
+from itertools import product
 import json
 from pathlib import Path
 import re
+
+from predicates import evaluate
 
 
 BUILTINS = {
@@ -93,22 +96,87 @@ def _matches(pattern, term, bindings):
             all(_matches(p, t, bindings) for p, t in zip(pattern[1:], term[1:], strict=True)))
 
 
+def _pattern_variables(term):
+    if isinstance(term, str):
+        if term in ("true", "false"):
+            return set()
+        if term.startswith("?"):
+            return {term}
+        raise ValueError(f"design atom {term!r} in generic Boolean pattern")
+    return set().union(*(_pattern_variables(child) for child in term[1:]))
+
+
+def _compile_pattern_rules(pattern_rules):
+    """Check each schema universally over its own Boolean variables before use."""
+    if not isinstance(pattern_rules, list):
+        raise ValueError("generic pattern_rules must be a JSON list")
+    rules, rows = {}, {}
+    for record in pattern_rules:
+        if (not isinstance(record, dict) or set(record) != {"name", "left", "right"} or
+                any(not isinstance(value, str) for value in record.values())):
+            raise ValueError("generic rule must contain string name, left and right")
+        name = record["name"]
+        if not re.fullmatch(r"[^\s()]+", name) or name in rules:
+            raise ValueError(f"invalid or duplicate generic rule name {name!r}")
+        lhs, rhs = (_plain(record[side], pattern=True) for side in ("left", "right"))
+        variables = sorted(_pattern_variables(lhs))
+        if set(variables) != _pattern_variables(rhs):
+            raise ValueError(f"different variable sets in bidirectional rule {name!r}")
+        for assignment in product((False, True), repeat=len(variables)):
+            env = dict(zip(variables, assignment, strict=True))
+            if evaluate(lhs, env) != evaluate(rhs, env):
+                raise ValueError(f"unsound Boolean rule {name!r} for {env}")
+        rules[name] = (lhs, rhs)
+        rows[name] = 1 << len(variables)
+    return rules, rows
+
+
+def validate_pattern_rules(pattern_rules):
+    """Return the number of exhaustively verified Boolean valuations for each named rule."""
+    _, rows = _compile_pattern_rules(pattern_rules)
+    return rows
+
+
+def _context_id(context):
+    # JSON Booleans and integers are distinct scope values, even though Python
+    # considers True == 1 and False == 0. Match egg's typed JSON grouping.
+    return json.dumps(context, sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
 class ProofChecker:
     """Compile the Boolean rule table once and replay any number of raw egg edges."""
 
-    def __init__(self, payload):
+    def __init__(self, payload, *, pattern_rules=None):
         terms = cache(_plain)  # local to this proof graph
-        rules = {name: (terms(lhs, pattern=True), terms(rhs, pattern=True)) for name, (lhs, rhs) in BUILTINS.items()}
+        if "pattern_rules" in payload and (pattern_rules is None or pattern_rules != payload["pattern_rules"]):
+            raise ValueError("supplied generic rule inventory does not match payload")
+        self.pattern_mode = pattern_rules is not None
+        if self.pattern_mode:
+            if payload.get("verified_rules") != []:
+                raise ValueError("generic assertion proofs require an empty list of ground rules")
+            if not payload["targets"] or any(not isinstance(t.get("id"), str) or t.get("event_context") is None
+                                             for t in payload["targets"]):
+                raise ValueError("generic assertion targets require string IDs and explicit event contexts")
+            rules, self.pattern_rows = _compile_pattern_rules(pattern_rules)
+            self.builtin_names = set()
+            ground_rules = []
+        else:
+            rules = {name: (terms(lhs, pattern=True), terms(rhs, pattern=True)) for name, (lhs, rhs) in BUILTINS.items()}
+            self.pattern_rows = {}
+            self.builtin_names = set(BUILTINS)
+            ground_rules = payload["verified_rules"]
+        self.ground_names = set()
         rule_context = {}
-        for rule in payload["verified_rules"]:
+        for rule in ground_rules:
             name = rule["name"]
             if not isinstance(name, str) or not re.fullmatch(r"[^\s()]+", name) or name in rules:
                 raise ValueError(f"invalid or duplicate rule name {name!r}")
             if rule["proof_status"] != "unsat":
                 raise ValueError(f"uncertified rule {name!r}")
             rules[name] = (terms(rule["left"]), terms(rule["right"]))
+            self.ground_names.add(name)
             if "event_context" in rule:
-                rule_context[name] = rule["event_context"]
+                rule_context[name] = _context_id(rule["event_context"])
         self.terms = terms
         self.rules = rules
         self.rule_context = rule_context
@@ -121,8 +189,8 @@ class ProofChecker:
         left, right = edge["left"], edge["right"]
         if left not in self.by_id or right not in self.by_id or left == right:
             raise ValueError(f"unknown or equal proof endpoints {left!r}, {right!r}")
-        context = self.by_id[left].get("event_context")
-        if context != self.by_id[right].get("event_context"):
+        context = _context_id(self.by_id[left].get("event_context"))
+        if context != _context_id(self.by_id[right].get("event_context")):
             raise ValueError(f"proof crosses event contexts {left!r}, {right!r}")
         lines = edge["explanation"].splitlines()
         if len(lines) < 2:
@@ -138,7 +206,7 @@ class ProofChecker:
             path, direction, name = annotations[0]
             if name not in self.rules or (name in self.rule_context and self.rule_context[name] != context):
                 raise ValueError(f"unknown or inapplicable rule {name!r} in step {number}")
-            if allowed_ground_rules is not None and name not in BUILTINS and name not in allowed_ground_rules:
+            if allowed_ground_rules is not None and name in self.ground_names and name not in allowed_ground_rules:
                 raise ValueError(f"withdrawn rule {name!r} in step {number}")
             lhs, rhs = self.rules[name]
             if direction == "reverse":
@@ -153,20 +221,27 @@ class ProofChecker:
         if previous != self.terms(self.by_id[right]["compact"]):
             raise ValueError(f"wrong end of proof {left!r}, {right!r}")
         names = {s["rule"] for s in steps}
-        ground, builtin = names - BUILTINS.keys(), names & BUILTINS.keys()
-        return {"left": left, "right": right, "steps": steps,
-                "ground_rules": sorted(ground), "builtin_rules": sorted(builtin)}
+        result = {"left": left, "right": right, "steps": steps,
+                  "ground_rules": sorted(names & self.ground_names), "builtin_rules": sorted(names & self.builtin_names)}
+        if self.pattern_mode:
+            result["pattern_rules"] = sorted(names & self.pattern_rows.keys())
+        return result
 
 
-def validate_proof_dependencies(payload, graph):
+def validate_proof_dependencies(payload, graph, *, pattern_rules=None):
     """Replay named local rewrites, check endpoint connectivity, and return JSON-safe dependencies.
 
     Validity of each supplied ground equality is a separate certification obligation.
     This checker verifies proofs between input targets. Egg does not emit a proof from
     each target to its extracted representative in this schema.
     """
-    checker = ProofChecker(payload)
-    if graph["stop_reason"] != "Some(Saturated)" or graph["ground_rule_count"] != len(payload["verified_rules"]):
+    checker = ProofChecker(payload, pattern_rules=pattern_rules)
+    if checker.pattern_mode:
+        if "pattern_rules" in graph and graph["pattern_rules"] != pattern_rules:
+            raise ValueError("engine returned a different generic rule inventory")
+        if "pattern_rule_count" in graph and graph["pattern_rule_count"] != len(checker.pattern_rows):
+            raise ValueError("changed generic pattern rule count")
+    if graph["stop_reason"] != "Some(Saturated)" or graph["ground_rule_count"] != len(checker.ground_names):
         raise ValueError("incomplete graph or changed supplied rule count")
 
     targets = payload["targets"]
@@ -178,12 +253,14 @@ def validate_proof_dependencies(payload, graph):
     term_roots, root_terms, post_roots, groups = {}, {}, {}, {}
     for target_id, target in by_id.items():
         old, new = (outputs[target_id][k] for k in ("eclass_before", "eclass"))
+        if any(type(root) is not int or root < 0 for root in (old, new)):
+            raise ValueError(f"invalid e-class identity for {target_id!r}")
         term = checker.terms(target["compact"])
         if term_roots.setdefault(term, old) != old or root_terms.setdefault(old, term) != term:
             raise ValueError("pre-saturation class disagrees with an input expression")
         if post_roots.setdefault(old, new) != new:
             raise ValueError("structurally identical endpoints left their shared class")
-        context = json.dumps(target.get("event_context"), sort_keys=True)
+        context = _context_id(target.get("event_context"))
         groups.setdefault((new, context), []).append(target_id)
 
     # Validate each claimed transition at its unique marked subtree, keeping the
@@ -203,8 +280,8 @@ def validate_proof_dependencies(payload, graph):
         if left not in by_id or right not in by_id:
             raise ValueError(f"unknown proof endpoint {left!r}, {right!r}")
         a, b = outputs[left], outputs[right]
-        context = by_id[left].get("event_context")
-        if a["eclass"] != b["eclass"] or a["eclass_before"] == b["eclass_before"] or context != by_id[right].get("event_context"):
+        if (a["eclass"] != b["eclass"] or a["eclass_before"] == b["eclass_before"] or
+                _context_id(by_id[left].get("event_context")) != _context_id(by_id[right].get("event_context"))):
             raise ValueError(f"ineligible proof endpoints {left!r}, {right!r}")
         pair = frozenset((left, right))
         if pair in seen_edges:
@@ -218,8 +295,12 @@ def validate_proof_dependencies(payload, graph):
     for members in groups.values():
         if len({outputs[name]["eclass_before"] for name in members}) > 1 and len({component(name) for name in members}) != 1:
             raise ValueError(f"missing proof connectivity for {members}")
-    return {"edges": edges, "ground_rules": sorted(used_ground), "builtin_rules": sorted(used_builtin),
-            "checked_edges": len(edges), "checked_steps": sum(len(edge["steps"]) for edge in edges)}
+    audit = {"edges": edges, "ground_rules": sorted(used_ground), "builtin_rules": sorted(used_builtin),
+             "checked_edges": len(edges), "checked_steps": sum(len(edge["steps"]) for edge in edges)}
+    if checker.pattern_mode:
+        audit["pattern_rules"] = sorted({name for edge in edges for name in edge["pattern_rules"]})
+        audit["pattern_truth_table_rows"] = checker.pattern_rows
+    return audit
 
 
 if __name__ == "__main__":
@@ -233,12 +314,14 @@ if __name__ == "__main__":
     args = parser.parse_args()
     payload = json.loads(args.input.read_bytes())
     graph = json.loads(args.graph.read_bytes())
-    audit = validate_proof_dependencies(payload, graph)
+    patterns = payload.get("pattern_rules")
+    audit = validate_proof_dependencies(payload, graph, pattern_rules=patterns)
     if args.using_rule is None and args.edge is None:
         print(json.dumps(audit, indent=2))
     else:
         targets = {t["id"]: t for t in payload["targets"]}
-        names = set(BUILTINS) | {r["name"] for r in payload["verified_rules"]}
+        names = (set(audit["pattern_truth_table_rows"]) if patterns is not None else
+                 set(BUILTINS) | {r["name"] for r in payload["verified_rules"]})
         if args.using_rule is not None and args.using_rule not in names:
             parser.error("unknown rule")
         if args.edge is not None:

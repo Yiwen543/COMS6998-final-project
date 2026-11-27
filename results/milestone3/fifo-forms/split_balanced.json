@@ -1,0 +1,272 @@
+{
+  "canonical": {
+    "left_key": "(and (or data_changed last_changed user_changed valid_lost) active)",
+    "proved": false,
+    "right_key": "(or (and active data_changed) (and active last_changed) (and active user_changed) (and active valid_lost))"
+  },
+  "egg_audit": {
+    "builtin_rules": [],
+    "checked_edges": 1,
+    "checked_steps": 6,
+    "edges": [
+      {
+        "builtin_rules": [],
+        "ground_rules": [],
+        "left": "reference",
+        "pattern_rules": [
+          "and-distribute",
+          "or-associate",
+          "or-commute"
+        ],
+        "right": "candidate",
+        "steps": [
+          {
+            "direction": "forward",
+            "path": [],
+            "rule": "and-distribute"
+          },
+          {
+            "direction": "forward",
+            "path": [
+              1,
+              1
+            ],
+            "rule": "or-commute"
+          },
+          {
+            "direction": "forward",
+            "path": [
+              1
+            ],
+            "rule": "and-distribute"
+          },
+          {
+            "direction": "forward",
+            "path": [
+              1,
+              0
+            ],
+            "rule": "and-distribute"
+          },
+          {
+            "direction": "reverse",
+            "path": [
+              1
+            ],
+            "rule": "or-commute"
+          },
+          {
+            "direction": "reverse",
+            "path": [],
+            "rule": "or-associate"
+          }
+        ]
+      }
+    ],
+    "ground_rules": [],
+    "pattern_rules": [
+      "and-distribute",
+      "or-associate",
+      "or-commute"
+    ],
+    "pattern_truth_table_rows": {
+      "and-distribute": 8,
+      "de-morgan-and": 4,
+      "de-morgan-or": 4,
+      "double-not": 2,
+      "or-associate": 8,
+      "or-commute": 4
+    }
+  },
+  "egg_graph": {
+    "eclasses": 31,
+    "engine": "egg 0.11.0",
+    "enodes": 154,
+    "ground_rule_count": 0,
+    "iterations": 7,
+    "pattern_rule_count": 6,
+    "rewrite_explanations": [
+      {
+        "explanation": "(and active (or valid_lost (or data_changed (or last_changed user_changed))))\n(Rewrite=> and-distribute (or (and active valid_lost) (and active (or data_changed (or last_changed user_changed)))))\n(or (and active valid_lost) (and active (Rewrite=> or-commute (or (or last_changed user_changed) data_changed))))\n(or (and active valid_lost) (Rewrite=> and-distribute (or (and active (or last_changed user_changed)) (and active data_changed))))\n(or (and active valid_lost) (or (Rewrite=> and-distribute (or (and active last_changed) (and active user_changed))) (and active data_changed)))\n(or (and active valid_lost) (Rewrite<= or-commute (or (and active data_changed) (or (and active last_changed) (and active user_changed)))))\n(Rewrite<= or-associate (or (or (and active valid_lost) (and active data_changed)) (or (and active last_changed) (and active user_changed))))",
+        "left": "reference",
+        "right": "candidate"
+      }
+    ],
+    "stop_reason": "Some(Saturated)",
+    "targets": [
+      {
+        "eclass": 15,
+        "eclass_before": 8,
+        "id": "reference"
+      },
+      {
+        "eclass": 15,
+        "eclass_before": 15,
+        "id": "candidate"
+      }
+    ]
+  },
+  "egg_proved": true,
+  "egg_status": "proved",
+  "independent_oracle": {
+    "atoms": [
+      "active",
+      "data_changed",
+      "last_changed",
+      "user_changed",
+      "valid_lost"
+    ],
+    "checked_assignments": 32,
+    "counterexample": null,
+    "equivalent": true,
+    "left_value": null,
+    "right_value": null,
+    "stop_reason": "exhaustive",
+    "unequal_assignments": 0
+  },
+  "input": {
+    "pattern_rules": [
+      {
+        "left": "(and ?a (or ?b ?c))",
+        "name": "and-distribute",
+        "right": "(or (and ?a ?b) (and ?a ?c))"
+      },
+      {
+        "left": "(not (or ?a ?b))",
+        "name": "de-morgan-or",
+        "right": "(and (not ?a) (not ?b))"
+      },
+      {
+        "left": "(not (and ?a ?b))",
+        "name": "de-morgan-and",
+        "right": "(or (not ?a) (not ?b))"
+      },
+      {
+        "left": "(not (not ?a))",
+        "name": "double-not",
+        "right": "?a"
+      },
+      {
+        "left": "(or ?a ?b)",
+        "name": "or-commute",
+        "right": "(or ?b ?a)"
+      },
+      {
+        "left": "(or (or ?a ?b) ?c)",
+        "name": "or-associate",
+        "right": "(or ?a (or ?b ?c))"
+      }
+    ],
+    "targets": [
+      {
+        "compact": "(and active (or valid_lost (or data_changed (or last_changed user_changed))))",
+        "event_context": {
+          "interface": "axis_fifo.m_axis",
+          "model": "Boolean atoms representing sampled pins and comparisons",
+          "sample": "consecutive posedge clk samples; data and handshake observed before the edge"
+        },
+        "id": "reference"
+      },
+      {
+        "compact": "(or (or (and active valid_lost) (and active data_changed)) (or (and active last_changed) (and active user_changed)))",
+        "event_context": {
+          "interface": "axis_fifo.m_axis",
+          "model": "Boolean atoms representing sampled pins and comparisons",
+          "sample": "consecutive posedge clk samples; data and handshake observed before the edge"
+        },
+        "id": "candidate"
+      }
+    ],
+    "verified_rules": []
+  },
+  "tree_search": {
+    "1024": {
+      "examined_rewrites": 412,
+      "expanded_terms": 20,
+      "max_term_nodes": 96,
+      "max_terms": 1024,
+      "proved": true,
+      "steps": [
+        {
+          "after": "(or (and active valid_lost) (and active (or data_changed (or last_changed user_changed))))",
+          "before": "(and active (or valid_lost (or data_changed (or last_changed user_changed))))",
+          "direction": "forward",
+          "path": [],
+          "rule": "and-distribute"
+        },
+        {
+          "after": "(or (and active valid_lost) (or (and active data_changed) (and active (or last_changed user_changed))))",
+          "before": "(or (and active valid_lost) (and active (or data_changed (or last_changed user_changed))))",
+          "direction": "forward",
+          "path": [
+            1
+          ],
+          "rule": "and-distribute"
+        },
+        {
+          "after": "(or (and active valid_lost) (or (and active data_changed) (or (and active last_changed) (and active user_changed))))",
+          "before": "(or (and active valid_lost) (or (and active data_changed) (and active (or last_changed user_changed))))",
+          "direction": "forward",
+          "path": [
+            1,
+            1
+          ],
+          "rule": "and-distribute"
+        },
+        {
+          "after": "(or (or (and active valid_lost) (and active data_changed)) (or (and active last_changed) (and active user_changed)))",
+          "before": "(or (and active valid_lost) (or (and active data_changed) (or (and active last_changed) (and active user_changed))))",
+          "direction": "reverse",
+          "path": [],
+          "rule": "or-associate"
+        }
+      ],
+      "stop_reason": "joined",
+      "visited_terms": 219
+    },
+    "64": {
+      "examined_rewrites": 412,
+      "expanded_terms": 20,
+      "max_term_nodes": 96,
+      "max_terms": 64,
+      "proved": true,
+      "steps": [
+        {
+          "after": "(or (and active valid_lost) (and active (or data_changed (or last_changed user_changed))))",
+          "before": "(and active (or valid_lost (or data_changed (or last_changed user_changed))))",
+          "direction": "forward",
+          "path": [],
+          "rule": "and-distribute"
+        },
+        {
+          "after": "(or (and active valid_lost) (or (and active data_changed) (and active (or last_changed user_changed))))",
+          "before": "(or (and active valid_lost) (and active (or data_changed (or last_changed user_changed))))",
+          "direction": "forward",
+          "path": [
+            1
+          ],
+          "rule": "and-distribute"
+        },
+        {
+          "after": "(or (and active valid_lost) (or (and active data_changed) (or (and active last_changed) (and active user_changed))))",
+          "before": "(or (and active valid_lost) (or (and active data_changed) (and active (or last_changed user_changed))))",
+          "direction": "forward",
+          "path": [
+            1,
+            1
+          ],
+          "rule": "and-distribute"
+        },
+        {
+          "after": "(or (or (and active valid_lost) (and active data_changed)) (or (and active last_changed) (and active user_changed)))",
+          "before": "(or (and active valid_lost) (or (and active data_changed) (or (and active last_changed) (and active user_changed))))",
+          "direction": "reverse",
+          "path": [],
+          "rule": "or-associate"
+        }
+      ],
+      "stop_reason": "joined",
+      "visited_terms": 64
+    }
+  }
+}

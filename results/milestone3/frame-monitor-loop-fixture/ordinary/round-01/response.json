@@ -1,0 +1,13 @@
+{
+  "id": "fixture-frame-02",
+  "output": {
+    "monitors": {
+      "clamped_length": "(and (and (not rst) h_valid) (or (and (ule h_original_length 3) (ne h_length 4)) (or (and (uge h_original_length 9) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "data_hold": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+      "header_hold": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "pad_flag": "(and (and (not rst) h_valid) (xor h_pad (ule h_original_length 3)))",
+      "truncate_flag": "(and (and (not rst) h_valid) (xor h_truncate (uge h_original_length 9)))"
+    }
+  },
+  "usage": null
+}

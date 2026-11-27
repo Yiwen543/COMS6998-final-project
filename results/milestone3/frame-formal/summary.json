@@ -1,0 +1,101 @@
+{
+  "upstream_commit": "e94172a1bd5e9b138b5fc3da01554edb3052ce52",
+  "source_sha256": {
+    "public/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+    "public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+    "public/rtl/axis_frame_length_adjust_fifo.v": "26f1636f5d4f219ca1dcf336b45b636e74a0977826ee51cdcab4e5c2d136b7ce",
+    "public/task_top_v3.sv": "db55dbee92a43f461d28f9c02a15d0eaf32c0c1cab2cbcc4ab85f0f3c91aab5e"
+  },
+  "harness_sha256": "ab53344f851c0f1d33b261f7dc933f00d267dc82c04ca9859c5cc8569216e3a3",
+  "replay_bench_sha256": "9c395da2e2750b1dfb6d85599252913a7b4bd5eb2f6a9448c859db2f9b4baf22",
+  "violation_terms": {
+    "data_hold": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+    "header_hold": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+    "pad_flag": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+    "truncate_flag": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+    "clamped_length": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))"
+  },
+  "full_wrapper": true,
+  "data_fifo_depth": 32,
+  "header_fifo_depth": 8,
+  "config": {
+    "data_width": 8,
+    "min_bytes": 4,
+    "max_bytes": 8,
+    "max_accepted_frame_bytes": 12
+  },
+  "two_state": true,
+  "bounded_states": 24,
+  "all_properties_yosys_sat": "PASSED",
+  "all_properties_z3": {
+    "status": "INCONCLUSIVE",
+    "last_step_entered": 18,
+    "completed_unsat_states": 18,
+    "solver_timeout_seconds": 15
+  },
+  "inductive_hold_checks": {
+    "properties": [
+      "data_hold",
+      "header_hold"
+    ],
+    "base_states": 3,
+    "induction": "PASSED"
+  },
+  "cover_steps": {
+    "data_stall": 7,
+    "padded_header": 9,
+    "length_four": 9,
+    "header_stall": 10,
+    "length_eight": 13,
+    "truncated_header": 14
+  },
+  "icarus_cover_replays": {
+    "cover-0.yw": {
+      "steps": 8,
+      "confirmed": {
+        "data_stall": 7
+      },
+      "original_witness_sha256": "8f2d52d1ac16f7cf5ad97d5baf0ecca7fc1e034a9eed6a86147ba24454a546dc"
+    },
+    "cover-1.yw": {
+      "steps": 10,
+      "confirmed": {
+        "padded_header": 9
+      },
+      "original_witness_sha256": "0eca1c70c680c6c58a74af8b18bf917be0ddaee86f2e67d867ff0cd141ec968f"
+    },
+    "cover-2.yw": {
+      "steps": 10,
+      "confirmed": {
+        "length_four": 9
+      },
+      "original_witness_sha256": "03a601d9e09a00a723ea40f445f3b616ab07dc098019ba20d119edfa85e7acdb"
+    },
+    "cover-3.yw": {
+      "steps": 11,
+      "confirmed": {
+        "header_stall": 10
+      },
+      "original_witness_sha256": "baa8ad301dcbee9963203d4d7b99c3a0a04d7fc05994465910c3519787d41d83"
+    },
+    "cover-4.yw": {
+      "steps": 14,
+      "confirmed": {
+        "length_eight": 13
+      },
+      "original_witness_sha256": "d73b743307b316a0039a40f0a19599b4938b7da6d0c6fc0e40fad0553b3818ed"
+    },
+    "cover-5.yw": {
+      "steps": 15,
+      "confirmed": {
+        "truncated_header": 14
+      },
+      "original_witness_sha256": "16d4de279c09ea9d4473a2ee3c0d630f45ff397c86ebca0fdf2c7332bc391519"
+    }
+  },
+  "versions": {
+    "yosys": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "z3": "Z3 version 4.16.0 - 64 bit",
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()"
+  }
+}
