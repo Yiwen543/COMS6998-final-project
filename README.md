@@ -38,6 +38,9 @@ actual model archive and separates controlled semantic/scope edits from real LLM
 [作用域维护的 LLM 反馈实验入口](docs/egg_regression_live_pilot.md) connects checked proof
 reuse/invalidation and typed semantic differences to the next prompt, with a zero-API fixture
 and an opt-in bounded live pilot.
+[作用域维护真实 API 结果](docs/egg_regression_live_results.md) audits the completed Mac pilot,
+cross-platform offline reproduction, nine paired live replies, proof invalidation/reuse, actual
+token costs, and the original RTL trace differences outside the qualified scopes.
 [相关工作与研究定位](docs/egg_related_work_and_research_value.md) reviews prior art and
 limits the claims to evidence supported by the experiments.
 
