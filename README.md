@@ -1,5 +1,11 @@
 # E-Graph Augmented RTL Verification
 
+[P3 report (PDF)](docs/report/milestone3/main.pdf) ·
+[LaTeX source and evidence map](docs/report/milestone3/README.md)
+summarize the Milestone 3 research pivot from guard acceleration to context-aware,
+proof-carrying semantic regression and dependency-driven proof reuse, with the
+completed experiments, their limitations, and the proposed Milestone 4 ablations.
+
 [Milestone 3 实验报告与复现指南](docs/milestone3.md) covers the indexed egg matcher,
 exact witness search, three archived guard workloads, and the paired RTL replay study.
 [追加实验与复现](docs/milestone3_followup.md) includes the Controller solver comparison,
@@ -60,7 +66,8 @@ The first run is deliberately small. Actual uncovered DUT counters are joined to
 source-mapped predicates, equivalent predicate forms are normalized by `egg`, and
 a deterministic witness generator supplies targeted stimulus for a second run.
 An exhaustive run provides a reference ceiling. This integration experiment is
-hand-authored; the model-driven A/B/C evaluation is future work.
+hand-authored; the later model-driven pilots and proof-carrying verification
+experiments are documented above.
 
 ## Quick start
 
