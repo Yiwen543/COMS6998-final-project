@@ -46,6 +46,9 @@ typed equalities actually needed by checked historical proofs, including missing
 atoms, and uses typed triage after failed dependencies. It compares six primary arms and a
 separate follow-up on 264 real/controlled requests with independent audits, a strong direct
 SMT guard-containment baseline, an ordinary solver-core comparator, and archived RTL traces.
+[Dependency-Driven Proof Reuse: Mac cross-platform results](docs/egg_dependency_mac_results.md)
+independently re-audits the uploaded Mac run, distinguishes proof reproducibility from native graph
+metadata, reports actual query and invocation costs, and documents the demand-driven proof roadmap.
 [相关工作与研究定位](docs/egg_related_work_and_research_value.md) reviews prior art and
 limits the claims to evidence supported by the experiments.
 
