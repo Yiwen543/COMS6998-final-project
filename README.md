@@ -41,6 +41,11 @@ and an opt-in bounded live pilot.
 [作用域维护真实 API 结果](docs/egg_regression_live_results.md) audits the completed Mac pilot,
 cross-platform offline reproduction, nine paired live replies, proof invalidation/reuse, actual
 token costs, and the original RTL trace differences outside the qualified scopes.
+[Dependency-Driven Proof Reuse](docs/egg_dependency_reuse_results.md) reauthorizes only the
+typed equalities actually needed by checked historical proofs, including missing intermediate
+atoms, and uses typed triage after failed dependencies. It compares six primary arms and a
+separate follow-up on 264 real/controlled requests with independent audits, a strong direct
+SMT guard-containment baseline, an ordinary solver-core comparator, and archived RTL traces.
 [相关工作与研究定位](docs/egg_related_work_and_research_value.md) reviews prior art and
 limits the claims to evidence supported by the experiments.
 
