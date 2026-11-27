@@ -1,0 +1,56 @@
+{
+  "scope": "Post-generation port sensitivity controls on the pinned wrapper; original RTL retained.",
+  "upstream_commit": "e94172a1bd5e9b138b5fc3da01554edb3052ce52",
+  "wrapper": "public/task_top_v3.sv",
+  "wrapper_sha256": "db55dbee92a43f461d28f9c02a15d0eaf32c0c1cab2cbcc4ab85f0f3c91aab5e",
+  "controls": [
+    {
+      "name": "D01",
+      "property": "data_hold",
+      "public_pin": "m_data",
+      "instance_port": "m_axis_tdata",
+      "logic": "\nwire [7:0] clean_m_data;\nreg flip_stalled_lsb = 1'b0;\nalways @(posedge clk) begin\n    if (rst || !m_valid || m_ready)\n        flip_stalled_lsb <= 1'b0;\n    else\n        flip_stalled_lsb <= ~flip_stalled_lsb;\nend\nassign m_data = clean_m_data ^ {7'b0, flip_stalled_lsb};\n",
+      "wrapper_sha256": "bd15e64b99699a7f55065e649973fc67821d65f2d435626218b43b89fb101662"
+    },
+    {
+      "name": "D02",
+      "property": "pad_flag",
+      "public_pin": "h_pad",
+      "instance_port": "m_axis_hdr_pad",
+      "logic": "\nwire clean_h_pad;\nassign h_pad = clean_h_pad ^ (h_valid && h_original_length == 16'd4);\n",
+      "wrapper_sha256": "6dc426ed41a9aef951b017e241f543a45d290bc3db2c803575907c2f713b2ed2"
+    },
+    {
+      "name": "D03",
+      "property": "clamped_length",
+      "public_pin": "h_length",
+      "instance_port": "m_axis_hdr_length",
+      "logic": "\nwire [15:0] clean_h_length;\nassign h_length = h_valid && h_original_length > 16'd8 ? 16'd7 : clean_h_length;\n",
+      "wrapper_sha256": "3948c09707df5b9a4aa34cbb9c306b9db93550c8f23a4261eb214179a975e74a"
+    }
+  ],
+  "design_order": [
+    "original",
+    "D01",
+    "D02",
+    "D03"
+  ],
+  "traces": [
+    "length_sweep",
+    "backpressure",
+    "reset_epoch"
+  ],
+  "stimulus_sha256": {
+    "length_sweep": "dc4c430f7fbc97530b0da139333f30b2a7b26e253dfafdf2e9459480e403e072",
+    "backpressure": "03343f4805bcea8283040657f59764e177eb19b2612d8e9487e3798da9e1cbfc",
+    "reset_epoch": "8a89c67da31bccf4014242c0642a062cd8398a9ea6c6cda1fbd11aa4833c502b"
+  },
+  "reference_checker_sha256": "b44f32b27c11b968d23fd93ecf8b0d714e773460fc0b505d89adf23df3cd7dee",
+  "references": {
+    "data_hold": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+    "header_hold": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+    "pad_flag": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+    "truncate_flag": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+    "clamped_length": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))"
+  }
+}

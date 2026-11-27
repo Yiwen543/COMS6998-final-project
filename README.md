@@ -14,6 +14,32 @@ with recorded requests, a no-API replay, and a Responses API entry point.
 with audited token usage, sampled RTL counterexamples, and per-arm feedback.
 [AXI Frame Length Adjuster 规格验证](docs/egg_frame_results.md) verifies the pinned
 full wrapper using transaction replay, five typed formal properties and a matched feedback protocol.
+[Frame Length Adjuster 真实 API 结果](docs/egg_frame_live_results.md) audits all six
+completed calls and explains the live proof-coverage gap with a separate associativity control.
+[Frame 的规则覆盖与可证明报警诊断](docs/egg_frame_diagnostic_results.md) explores
+rule coverage, single-source egg extraction, independent proof replay, real RTL diagnostic samples
+and the ordinary-algorithm baseline.
+[Proof-Carrying LLM Verification](docs/egg_frame_pc_results.md) adds actual
+next-round candidate-side proof and diagnostic feedback, paired offline controls,
+independent transcript audit, and a live Responses API entry point.
+[Proof-Carrying 真实 API 实验](docs/egg_frame_pc_live_results.md) reports 18 actual
+responses, checked evidence delivered to the model, matched quality, token usage and RTL formal rechecks.
+[更困难的跨周期 AXI 帧事务验证](docs/egg_frame_txn_results.md) introduces nine independent
+transaction obligations, history-tracked PRE/POST checks, full-wrapper bounded formal
+and a shared unassisted LLM initial-generation trial with proof-carrying revisions.
+[九项事务属性真实 API 实验](docs/egg_frame_txn_live_results.md) reports the shared unassisted
+initials, the ceiling before feedback, independent semantic/physical checks and actual usage.
+[带上下文的 Egg 等价证明](docs/egg_txn_context_results.md) adds scoped typed facts,
+case-split proofs, actual boundary-fault controls, and independently removable proof dependencies.
+[语义回归与证明复用](docs/egg_regression_results.md) unifies scoped multi-target Egg,
+typed directional regression checking, checked proof paths across revisions, and comparison against
+strong incremental SMT and common-fact baselines. The 224-request offline experiment preserves the
+actual model archive and separates controlled semantic/scope edits from real LLM history.
+[作用域维护的 LLM 反馈实验入口](docs/egg_regression_live_pilot.md) connects checked proof
+reuse/invalidation and typed semantic differences to the next prompt, with a zero-API fixture
+and an opt-in bounded live pilot.
+[相关工作与研究定位](docs/egg_related_work_and_research_value.md) reviews prior art and
+limits the claims to evidence supported by the experiments.
 
 Reproducible first milestone for the COMS 6998 proposal: an immutable CVDP arbiter,
 a specification-based SystemVerilog checker, real Verilator coverage, and a small

@@ -1,0 +1,170 @@
+{
+  "assets_sha256": {
+    "frame_txn.sv": "e8698349d3263dcbcf0caa771029b2653178728b86f04f6bab7d76a288bf4470",
+    "replay_txn.sv": "04d319694c42ee845e2a0c346909e5590806201f43cb66d326ee2790db6dd533"
+  },
+  "assumptions": [
+    "initial reset",
+    "s_valid low during reset",
+    "source stable through an input stall when reset stays low",
+    "one input frame per reset epoch and at most 12 accepted bytes"
+  ],
+  "data_witness": "universal three-bit retained byte index; input data and both sink ready pins symbolic",
+  "designs": {
+    "F01": {
+      "properties": [
+        "data_payload"
+      ],
+      "same_inputs_control_checker": {
+        "checked_rows": 8,
+        "failures": [
+          {
+            "category": "data_payload",
+            "cycle": 6,
+            "detail": "presented m_data 255 expected 0",
+            "phase": "post"
+          },
+          {
+            "category": "data_payload",
+            "cycle": 7,
+            "detail": "presented m_data 255 expected 0",
+            "phase": "pre"
+          },
+          {
+            "category": "data_payload",
+            "cycle": 7,
+            "detail": "presented m_data 255 expected 0",
+            "phase": "post"
+          }
+        ],
+        "unknown": [],
+        "verdict": "FAIL"
+      },
+      "same_inputs_original_checker": {
+        "checked_rows": 8,
+        "failures": [],
+        "unknown": [],
+        "verdict": "PASS"
+      },
+      "source_sha256": {
+        "public/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+        "public/rtl/axis_frame_length_adjust.v": "50ded6589b3c2969576724dfee7f5e158d1c956239cfa9af76e38b9bd8c6010f",
+        "public/rtl/axis_frame_length_adjust_fifo.v": "26f1636f5d4f219ca1dcf336b45b636e74a0977826ee51cdcab4e5c2d136b7ce",
+        "public/task_top_v3.sv": "db55dbee92a43f461d28f9c02a15d0eaf32c0c1cab2cbcc4ab85f0f3c91aab5e"
+      },
+      "status": "COUNTEREXAMPLE",
+      "step": 7
+    },
+    "F06": {
+      "properties": [
+        "header_entitlement"
+      ],
+      "same_inputs_control_checker": {
+        "checked_rows": 10,
+        "failures": [
+          {
+            "category": "status_premature_or_spurious",
+            "cycle": 8,
+            "detail": "h_valid presented without a completed accepted frame (inputs accepted up to and including this edge)",
+            "phase": "post"
+          },
+          {
+            "category": "status_premature_or_spurious",
+            "cycle": 9,
+            "detail": "h_valid presented without a completed accepted frame (inputs accepted at earlier edges)",
+            "phase": "pre"
+          },
+          {
+            "category": "status_premature_or_spurious",
+            "cycle": 9,
+            "detail": "h_valid presented without a completed accepted frame (inputs accepted up to and including this edge)",
+            "phase": "post"
+          }
+        ],
+        "unknown": [],
+        "verdict": "FAIL"
+      },
+      "same_inputs_original_checker": {
+        "checked_rows": 10,
+        "failures": [],
+        "unknown": [],
+        "verdict": "PASS"
+      },
+      "source_sha256": {
+        "public/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+        "public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+        "public/rtl/axis_frame_length_adjust_fifo.v": "f98697f8d3bd80ca2943e5dca9f10dfca32ea0ae2a093246895eed7437493617",
+        "public/task_top_v3.sv": "db55dbee92a43f461d28f9c02a15d0eaf32c0c1cab2cbcc4ab85f0f3c91aab5e"
+      },
+      "status": "COUNTEREXAMPLE",
+      "step": 9
+    },
+    "original": {
+      "covers": {
+        "data_only_transfer": {
+          "checker": "PASS",
+          "cycles": 10,
+          "step": 9,
+          "witness": "cover-4.yw"
+        },
+        "header_only_transfer": {
+          "checker": "PASS",
+          "cycles": 10,
+          "step": 9,
+          "witness": "cover-3.yw"
+        },
+        "long_header": {
+          "checker": "PASS",
+          "cycles": 15,
+          "step": 14,
+          "witness": "cover-5.yw"
+        },
+        "pad_presented": {
+          "checker": "PASS",
+          "cycles": 8,
+          "step": 7,
+          "witness": "cover-2.yw"
+        },
+        "reset_with_pending_output": {
+          "checker": "PASS",
+          "cycles": 8,
+          "step": 7,
+          "witness": "cover-1.yw"
+        },
+        "retained_byte": {
+          "checker": "PASS",
+          "cycles": 7,
+          "step": 6,
+          "witness": "cover-0.yw"
+        }
+      },
+      "source_sha256": {
+        "public/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+        "public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+        "public/rtl/axis_frame_length_adjust_fifo.v": "26f1636f5d4f219ca1dcf336b45b636e74a0977826ee51cdcab4e5c2d136b7ce",
+        "public/task_top_v3.sv": "db55dbee92a43f461d28f9c02a15d0eaf32c0c1cab2cbcc4ab85f0f3c91aab5e"
+      },
+      "status": "PASSED"
+    }
+  },
+  "drain": "outside the bounded safety harness; no final sample or fairness assumption",
+  "physical_checker_sha256": "b44f32b27c11b968d23fd93ecf8b0d714e773460fc0b505d89adf23df3cd7dee",
+  "properties": [
+    "data_entitlement",
+    "data_payload",
+    "data_last",
+    "header_entitlement",
+    "header_original",
+    "header_adjusted",
+    "header_flags",
+    "reset_clear"
+  ],
+  "reset_sampling": "state after a synchronous reset edge is observed at the following PRE",
+  "states": 18,
+  "tools": {
+    "iverilog": "Icarus Verilog version 12.0 (stable) ()",
+    "yosys": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "z3": "Z3 version 4.16.0 - 64 bit"
+  },
+  "upstream_commit": "e94172a1bd5e9b138b5fc3da01554edb3052ce52"
+}

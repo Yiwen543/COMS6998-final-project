@@ -1,0 +1,1647 @@
+{
+  "proof-0b2738827af31df36dd439355a5be80c704791f323cb4e45fd6dc0037b88d659": {
+    "abstracts": [
+      "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))))))",
+      "(and (and (not rst) m_valid) (and (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65))))))))"
+    ],
+    "atoms": {
+      "bv_12659c0cac01d1025bc40037": "(eq 8 data_index)",
+      "bv_258070e33bd40bc30acb198e": "(ule 1 data_index)",
+      "bv_2c83d9bc6ef2805ac5234aad": "(ult data_n 4)",
+      "bv_491de1c645fe9259ed2a51d7": "(ule data_index data_n)",
+      "bv_63aeb21e154f0e091658cc73": "(ule data_index 8)",
+      "bv_718a2b3ab3ab699f149e2e65": "(eq data_index data_n)",
+      "bv_8028284cb17cae83075740e9": "(ule data_n 4)",
+      "bv_a16dd6f0eb1b375abbb044ec": "(ult data_count input_count)",
+      "bv_caed626d93602585101c44f5": "(ult 4 data_n)",
+      "bv_d9f5ff5b0e471609fc59b566": "(eq 4 data_index)",
+      "bv_df057a6bb61849cc0f1d0542": "(ule 4 data_n)",
+      "bv_ee1e4ec19afad221ae8884eb": "(ule data_index 4)",
+      "data_done": "data_done",
+      "m_last": "m_last",
+      "m_valid": "m_valid",
+      "rst": "rst"
+    },
+    "context_id": "6aca3eea5a511adcd3454d127bfac94b260a603731ad5ba2c00dae296cfc1a4c",
+    "dependencies": [
+      {
+        "receipt": {
+          "guard": "(ugt data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvugt data_n #x0004) (xor (bvule #x0004 data_n) true)))\n(check-sat)\n",
+            "smt2_sha256": "f0347d993dd9aec59cba5cf3a6718efbda74ce465c7a2215b42c479c4d21c6fe",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ule 4 data_n)",
+          "typed_right": "true"
+        },
+        "rule": {
+          "event_context": "6aca3eea5a511adcd3454d127bfac94b260a603731ad5ba2c00dae296cfc1a4c",
+          "left": "bv_df057a6bb61849cc0f1d0542",
+          "name": "ctx-8ec3267cfbcb71434e4cd8a0",
+          "proof_status": "unsat",
+          "right": "true"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(ugt data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvugt data_n #x0004) (xor (bvult #x0004 data_n) true)))\n(check-sat)\n",
+            "smt2_sha256": "de33678ea96365c48774fbacd29bfca9632f281be763f742213068a317cd145b",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ult 4 data_n)",
+          "typed_right": "true"
+        },
+        "rule": {
+          "event_context": "6aca3eea5a511adcd3454d127bfac94b260a603731ad5ba2c00dae296cfc1a4c",
+          "left": "bv_caed626d93602585101c44f5",
+          "name": "ctx-af0efd88875ab755577c9593",
+          "proof_status": "unsat",
+          "right": "true"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(ugt data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvugt data_n #x0004) (xor (bvule data_n #x0004) false)))\n(check-sat)\n",
+            "smt2_sha256": "54ac1bdbc1b4f264b2facdeca483adf0c14ba37a8cca282546e73037b9bd1d11",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ule data_n 4)",
+          "typed_right": "false"
+        },
+        "rule": {
+          "event_context": "6aca3eea5a511adcd3454d127bfac94b260a603731ad5ba2c00dae296cfc1a4c",
+          "left": "bv_8028284cb17cae83075740e9",
+          "name": "ctx-d73181ed7cfaff0127357414",
+          "proof_status": "unsat",
+          "right": "false"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(ugt data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvugt data_n #x0004) (xor (bvult data_n #x0004) false)))\n(check-sat)\n",
+            "smt2_sha256": "b0ff074c7896233e5a89d9d1144d6ee2c6c30f85eb4ade52bde1fbe5dd28e260",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ult data_n 4)",
+          "typed_right": "false"
+        },
+        "rule": {
+          "event_context": "6aca3eea5a511adcd3454d127bfac94b260a603731ad5ba2c00dae296cfc1a4c",
+          "left": "bv_2c83d9bc6ef2805ac5234aad",
+          "name": "ctx-fcd1fe98f6d7ae44e69e3980",
+          "proof_status": "unsat",
+          "right": "false"
+        }
+      }
+    ],
+    "guard": "(ugt data_n 4)",
+    "left": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (uge data_n 4) (eq data_index data_n)))))))))",
+    "right": "(and (and (not rst) m_valid) (and (and (ult data_count input_count) (and (and (uge data_index 1) (ule data_index 8)) (or (ule data_index data_n) (and data_done (ule data_index 4))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ule data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n))))))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          0,
+          1
+        ],
+        "replacement": "(and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))",
+        "rule": "and-associate-right"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "false",
+        "rule": "ctx-fcd1fe98f6d7ae44e69e3980"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "bv_8028284cb17cae83075740e9",
+        "rule": "ctx-d73181ed7cfaff0127357414"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "true",
+        "rule": "ctx-8ec3267cfbcb71434e4cd8a0"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "bv_caed626d93602585101c44f5",
+        "rule": "ctx-af0efd88875ab755577c9593"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "false",
+        "rule": "ctx-fcd1fe98f6d7ae44e69e3980"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "bv_8028284cb17cae83075740e9",
+        "rule": "ctx-d73181ed7cfaff0127357414"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "true",
+        "rule": "ctx-8ec3267cfbcb71434e4cd8a0"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "bv_caed626d93602585101c44f5",
+        "rule": "ctx-af0efd88875ab755577c9593"
+      },
+      {
+        "direction": "reverse",
+        "path": [],
+        "replacement": "(and (and (not rst) m_valid) (and (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65))))))))",
+        "rule": "and-associate-right"
+      }
+    ]
+  },
+  "proof-19b4521c160ec2d7e8dc5095677845263f4380745730bf35f19a05149a3217ec": {
+    "abstracts": [
+      "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))))))",
+      "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_d9f5ff5b0e471609fc59b566)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_d9f5ff5b0e471609fc59b566)))))))))"
+    ],
+    "atoms": {
+      "bv_12659c0cac01d1025bc40037": "(eq 8 data_index)",
+      "bv_258070e33bd40bc30acb198e": "(ule 1 data_index)",
+      "bv_2c83d9bc6ef2805ac5234aad": "(ult data_n 4)",
+      "bv_491de1c645fe9259ed2a51d7": "(ule data_index data_n)",
+      "bv_63aeb21e154f0e091658cc73": "(ule data_index 8)",
+      "bv_718a2b3ab3ab699f149e2e65": "(eq data_index data_n)",
+      "bv_a16dd6f0eb1b375abbb044ec": "(ult data_count input_count)",
+      "bv_d9f5ff5b0e471609fc59b566": "(eq 4 data_index)",
+      "bv_df057a6bb61849cc0f1d0542": "(ule 4 data_n)",
+      "bv_ee1e4ec19afad221ae8884eb": "(ule data_index 4)",
+      "data_done": "data_done",
+      "m_last": "m_last",
+      "m_valid": "m_valid",
+      "rst": "rst"
+    },
+    "context_id": "33ac6beb0305c3d1971213a58e51e327b001abfd7a10079dd121d681eed4399b",
+    "dependencies": [
+      {
+        "receipt": {
+          "guard": "(eq data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_index () (_ BitVec 16))\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (= #x0004 data_n) (xor (= #x0004 data_index) (= data_index data_n))))\n(check-sat)\n",
+            "smt2_sha256": "eb50423bb5a66d8bea99674b30a41af9d3f4b5fd416d91be69bbb64f707dec55",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(eq 4 data_index)",
+          "typed_right": "(eq data_index data_n)"
+        },
+        "rule": {
+          "event_context": "33ac6beb0305c3d1971213a58e51e327b001abfd7a10079dd121d681eed4399b",
+          "left": "bv_d9f5ff5b0e471609fc59b566",
+          "name": "ctx-2a63c486220b0f13b24764c8",
+          "proof_status": "unsat",
+          "right": "bv_718a2b3ab3ab699f149e2e65"
+        }
+      }
+    ],
+    "guard": "(eq data_n 4)",
+    "left": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (uge data_n 4) (eq data_index data_n)))))))))",
+    "right": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (uge data_n 4) (eq data_index 4)))))))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "replacement": "bv_d9f5ff5b0e471609fc59b566",
+        "rule": "ctx-2a63c486220b0f13b24764c8"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "replacement": "bv_d9f5ff5b0e471609fc59b566",
+        "rule": "ctx-2a63c486220b0f13b24764c8"
+      }
+    ]
+  },
+  "proof-321c4c59e4bc4c2c83e5b384edcdfcd0caedd284311e32299f169736bf3166ef": {
+    "abstracts": [
+      "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))))))",
+      "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))))))"
+    ],
+    "atoms": {
+      "bv_12659c0cac01d1025bc40037": "(eq 8 data_index)",
+      "bv_258070e33bd40bc30acb198e": "(ule 1 data_index)",
+      "bv_2c83d9bc6ef2805ac5234aad": "(ult data_n 4)",
+      "bv_491de1c645fe9259ed2a51d7": "(ule data_index data_n)",
+      "bv_63aeb21e154f0e091658cc73": "(ule data_index 8)",
+      "bv_718a2b3ab3ab699f149e2e65": "(eq data_index data_n)",
+      "bv_a16dd6f0eb1b375abbb044ec": "(ult data_count input_count)",
+      "bv_caed626d93602585101c44f5": "(ult 4 data_n)",
+      "bv_d9f5ff5b0e471609fc59b566": "(eq 4 data_index)",
+      "bv_df057a6bb61849cc0f1d0542": "(ule 4 data_n)",
+      "bv_ee1e4ec19afad221ae8884eb": "(ule data_index 4)",
+      "data_done": "data_done",
+      "m_last": "m_last",
+      "m_valid": "m_valid",
+      "rst": "rst"
+    },
+    "context_id": "7bc0ad287153940ea4170eadaf2afb1881eaaec20c913f01372375ad118ee253",
+    "dependencies": [
+      {
+        "receipt": {
+          "guard": "(ult data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvult data_n #x0004) (xor (bvult #x0004 data_n) false)))\n(check-sat)\n",
+            "smt2_sha256": "9be8f1204a9270eb67e65ca05ac31283bb9094249ae19e46569189a5056e9b0b",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ult 4 data_n)",
+          "typed_right": "false"
+        },
+        "rule": {
+          "event_context": "7bc0ad287153940ea4170eadaf2afb1881eaaec20c913f01372375ad118ee253",
+          "left": "bv_caed626d93602585101c44f5",
+          "name": "ctx-1bbf29ce304e8549bc51e0ec",
+          "proof_status": "unsat",
+          "right": "false"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(ult data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvult data_n #x0004) (xor (bvule #x0004 data_n) false)))\n(check-sat)\n",
+            "smt2_sha256": "979428549d12f7b7a28e8d8f0c5873b8082306286cff3b92942f6a62266fc42e",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ule 4 data_n)",
+          "typed_right": "false"
+        },
+        "rule": {
+          "event_context": "7bc0ad287153940ea4170eadaf2afb1881eaaec20c913f01372375ad118ee253",
+          "left": "bv_df057a6bb61849cc0f1d0542",
+          "name": "ctx-abc15f70c5fa758ac245186e",
+          "proof_status": "unsat",
+          "right": "false"
+        }
+      }
+    ],
+    "guard": "(ult data_n 4)",
+    "left": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (uge data_n 4) (eq data_index data_n)))))))))",
+    "right": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n)))))))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "false",
+        "rule": "ctx-abc15f70c5fa758ac245186e"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "bv_caed626d93602585101c44f5",
+        "rule": "ctx-1bbf29ce304e8549bc51e0ec"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "false",
+        "rule": "ctx-abc15f70c5fa758ac245186e"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "bv_caed626d93602585101c44f5",
+        "rule": "ctx-1bbf29ce304e8549bc51e0ec"
+      }
+    ]
+  },
+  "proof-51df25b15bfd5345c3564242a8acd2d6849ef9b636cd9d9a342463551d6b8936": {
+    "abstracts": [
+      "(and (not rst) (and h_valid (and (and bv_51781976556998e1342c100e header_done) (not bv_febf47b2c3239d09cea00139))))",
+      "(and (and (not rst) h_valid) (and (and bv_51781976556998e1342c100e header_done) (not bv_febf47b2c3239d09cea00139)))"
+    ],
+    "atoms": {
+      "bv_51781976556998e1342c100e": "(ult header_count input_count)",
+      "bv_febf47b2c3239d09cea00139": "(eq h_original_length header_n)",
+      "h_valid": "h_valid",
+      "header_done": "header_done",
+      "rst": "rst"
+    },
+    "context_id": "517eea41ca9d1d0204a658c2566e8d0436e121aed21547a540d9cbbcd6cb6fd6",
+    "dependencies": [],
+    "guard": "true",
+    "left": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (ne h_original_length header_n))))",
+    "right": "(and (and (not rst) h_valid) (and (and (ult header_count input_count) header_done) (ne h_original_length header_n)))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "reverse",
+        "path": [],
+        "replacement": "(and (and (not rst) h_valid) (and (and bv_51781976556998e1342c100e header_done) (not bv_febf47b2c3239d09cea00139)))",
+        "rule": "and-associate-right"
+      }
+    ]
+  },
+  "proof-647cc143990fe62502b48e50543c82bf0b751529f3db431c39911ee183da5971": {
+    "abstracts": [
+      "(and (not rst) (and h_valid (and (and bv_51781976556998e1342c100e header_done) (or (and bv_9b3b7959da0e1dedb0ea4bf2 (not bv_1ffb2f508168dd87e304104d)) (or (and bv_888c1a0e5d2da3e00727e456 (not bv_a1f947d170e2392e035e2a17)) (and (and bv_e3178efd0cb284543724d8a5 bv_0cd569afef0dd1f39206bf24) (not bv_45b62f5e9cfb33eece441fa1)))))))",
+      "(and (and (not rst) h_valid) (and (and bv_51781976556998e1342c100e header_done) (or (and bv_9b3b7959da0e1dedb0ea4bf2 (not bv_1ffb2f508168dd87e304104d)) (or (and (and bv_e3178efd0cb284543724d8a5 bv_0cd569afef0dd1f39206bf24) (not bv_45b62f5e9cfb33eece441fa1)) (and bv_888c1a0e5d2da3e00727e456 (not bv_a1f947d170e2392e035e2a17))))))"
+    ],
+    "atoms": {
+      "bv_0cd569afef0dd1f39206bf24": "(ule header_n 8)",
+      "bv_1ffb2f508168dd87e304104d": "(eq 4 h_length)",
+      "bv_45b62f5e9cfb33eece441fa1": "(eq h_length header_n)",
+      "bv_51781976556998e1342c100e": "(ult header_count input_count)",
+      "bv_888c1a0e5d2da3e00727e456": "(ult 8 header_n)",
+      "bv_9b3b7959da0e1dedb0ea4bf2": "(ult header_n 4)",
+      "bv_a1f947d170e2392e035e2a17": "(eq 8 h_length)",
+      "bv_e3178efd0cb284543724d8a5": "(ule 4 header_n)",
+      "h_valid": "h_valid",
+      "header_done": "header_done",
+      "rst": "rst"
+    },
+    "context_id": "517eea41ca9d1d0204a658c2566e8d0436e121aed21547a540d9cbbcd6cb6fd6",
+    "dependencies": [],
+    "guard": "true",
+    "left": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (or (and (ult header_n 4) (ne h_length 4)) (or (and (ugt header_n 8) (ne h_length 8)) (and (and (uge header_n 4) (ule header_n 8)) (ne h_length header_n)))))))",
+    "right": "(and (and (not rst) h_valid) (and (and (ult header_count input_count) header_done) (or (and (ult header_n 4) (ne h_length 4)) (or (and (and (uge header_n 4) (ule header_n 8)) (ne h_length header_n)) (and (ugt header_n 8) (ne h_length 8))))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "replacement": "(or (and (and bv_e3178efd0cb284543724d8a5 bv_0cd569afef0dd1f39206bf24) (not bv_45b62f5e9cfb33eece441fa1)) (and bv_888c1a0e5d2da3e00727e456 (not bv_a1f947d170e2392e035e2a17)))",
+        "rule": "or-commute"
+      },
+      {
+        "direction": "reverse",
+        "path": [],
+        "replacement": "(and (and (not rst) h_valid) (and (and bv_51781976556998e1342c100e header_done) (or (and bv_9b3b7959da0e1dedb0ea4bf2 (not bv_1ffb2f508168dd87e304104d)) (or (and (and bv_e3178efd0cb284543724d8a5 bv_0cd569afef0dd1f39206bf24) (not bv_45b62f5e9cfb33eece441fa1)) (and bv_888c1a0e5d2da3e00727e456 (not bv_a1f947d170e2392e035e2a17))))))",
+        "rule": "and-associate-right"
+      }
+    ]
+  },
+  "proof-64b6c627011e551536ab8c89ac573310004114605cccf5c30513b4b0e982712e": {
+    "abstracts": [
+      "(and (not rst) (and m_valid (not (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))))))",
+      "(and (and (not rst) m_valid) (not (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))))"
+    ],
+    "atoms": {
+      "bv_258070e33bd40bc30acb198e": "(ule 1 data_index)",
+      "bv_491de1c645fe9259ed2a51d7": "(ule data_index data_n)",
+      "bv_63aeb21e154f0e091658cc73": "(ule data_index 8)",
+      "bv_a16dd6f0eb1b375abbb044ec": "(ult data_count input_count)",
+      "bv_ee1e4ec19afad221ae8884eb": "(ule data_index 4)",
+      "data_done": "data_done",
+      "m_valid": "m_valid",
+      "rst": "rst"
+    },
+    "context_id": "517eea41ca9d1d0204a658c2566e8d0436e121aed21547a540d9cbbcd6cb6fd6",
+    "dependencies": [],
+    "guard": "true",
+    "left": "(and (not rst) (and m_valid (not (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))))))",
+    "right": "(and (and (not rst) m_valid) (not (and (ult data_count input_count) (and (and (uge data_index 1) (ule data_index 8)) (or (ule data_index data_n) (and data_done (ule data_index 4)))))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          0,
+          1
+        ],
+        "replacement": "(and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))",
+        "rule": "and-associate-right"
+      },
+      {
+        "direction": "reverse",
+        "path": [],
+        "replacement": "(and (and (not rst) m_valid) (not (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))))",
+        "rule": "and-associate-right"
+      }
+    ]
+  },
+  "proof-682f4385078bfb6923f1b609b2d965f25cccf901888af9a17794a7f762ed4390": {
+    "abstracts": [
+      "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))))))",
+      "(and (and (not rst) m_valid) (and (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65))))))))"
+    ],
+    "atoms": {
+      "bv_12659c0cac01d1025bc40037": "(eq 8 data_index)",
+      "bv_258070e33bd40bc30acb198e": "(ule 1 data_index)",
+      "bv_2c83d9bc6ef2805ac5234aad": "(ult data_n 4)",
+      "bv_491de1c645fe9259ed2a51d7": "(ule data_index data_n)",
+      "bv_63aeb21e154f0e091658cc73": "(ule data_index 8)",
+      "bv_718a2b3ab3ab699f149e2e65": "(eq data_index data_n)",
+      "bv_8028284cb17cae83075740e9": "(ule data_n 4)",
+      "bv_a16dd6f0eb1b375abbb044ec": "(ult data_count input_count)",
+      "bv_caed626d93602585101c44f5": "(ult 4 data_n)",
+      "bv_d9f5ff5b0e471609fc59b566": "(eq 4 data_index)",
+      "bv_df057a6bb61849cc0f1d0542": "(ule 4 data_n)",
+      "bv_ee1e4ec19afad221ae8884eb": "(ule data_index 4)",
+      "data_done": "data_done",
+      "m_last": "m_last",
+      "m_valid": "m_valid",
+      "rst": "rst"
+    },
+    "context_id": "33ac6beb0305c3d1971213a58e51e327b001abfd7a10079dd121d681eed4399b",
+    "dependencies": [
+      {
+        "receipt": {
+          "guard": "(eq data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_index () (_ BitVec 16))\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (= #x0004 data_n) (xor (= #x0004 data_index) (= data_index data_n))))\n(check-sat)\n",
+            "smt2_sha256": "eb50423bb5a66d8bea99674b30a41af9d3f4b5fd416d91be69bbb64f707dec55",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(eq 4 data_index)",
+          "typed_right": "(eq data_index data_n)"
+        },
+        "rule": {
+          "event_context": "33ac6beb0305c3d1971213a58e51e327b001abfd7a10079dd121d681eed4399b",
+          "left": "bv_d9f5ff5b0e471609fc59b566",
+          "name": "ctx-2a63c486220b0f13b24764c8",
+          "proof_status": "unsat",
+          "right": "bv_718a2b3ab3ab699f149e2e65"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(eq data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (= #x0004 data_n) (xor (bvult #x0004 data_n) false)))\n(check-sat)\n",
+            "smt2_sha256": "0c866cd6b864c433079fd1d705c9d6686ee50c9d3a2184a58ad5b1bf76eb2e85",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ult 4 data_n)",
+          "typed_right": "false"
+        },
+        "rule": {
+          "event_context": "33ac6beb0305c3d1971213a58e51e327b001abfd7a10079dd121d681eed4399b",
+          "left": "bv_caed626d93602585101c44f5",
+          "name": "ctx-5f47cdf5fb5c327aef0fcc68",
+          "proof_status": "unsat",
+          "right": "false"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(eq data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (= #x0004 data_n) (xor (bvule #x0004 data_n) true)))\n(check-sat)\n",
+            "smt2_sha256": "769eafd3255d38f4031781d3193ff67895d48d8b14ef8f20e4fc56b392910236",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ule 4 data_n)",
+          "typed_right": "true"
+        },
+        "rule": {
+          "event_context": "33ac6beb0305c3d1971213a58e51e327b001abfd7a10079dd121d681eed4399b",
+          "left": "bv_df057a6bb61849cc0f1d0542",
+          "name": "ctx-74e0efc882f6e4931bb52835",
+          "proof_status": "unsat",
+          "right": "true"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(eq data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (= #x0004 data_n) (xor (bvult data_n #x0004) false)))\n(check-sat)\n",
+            "smt2_sha256": "78cfc4ac34a29362a5b79af1cb24be53718bf83aeaa596803eba717278619af4",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ult data_n 4)",
+          "typed_right": "false"
+        },
+        "rule": {
+          "event_context": "33ac6beb0305c3d1971213a58e51e327b001abfd7a10079dd121d681eed4399b",
+          "left": "bv_2c83d9bc6ef2805ac5234aad",
+          "name": "ctx-b46457c470e1c6840a3f9189",
+          "proof_status": "unsat",
+          "right": "false"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(eq data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (= #x0004 data_n) (xor (bvule data_n #x0004) true)))\n(check-sat)\n",
+            "smt2_sha256": "f1fce3c4812240bbde97c7dcc7783bad03266e1b39861447e08a97d06618a3dc",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ule data_n 4)",
+          "typed_right": "true"
+        },
+        "rule": {
+          "event_context": "33ac6beb0305c3d1971213a58e51e327b001abfd7a10079dd121d681eed4399b",
+          "left": "bv_8028284cb17cae83075740e9",
+          "name": "ctx-ffa422417f3a081334626325",
+          "proof_status": "unsat",
+          "right": "true"
+        }
+      }
+    ],
+    "guard": "(eq data_n 4)",
+    "left": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (uge data_n 4) (eq data_index data_n)))))))))",
+    "right": "(and (and (not rst) m_valid) (and (and (ult data_count input_count) (and (and (uge data_index 1) (ule data_index 8)) (or (ule data_index data_n) (and data_done (ule data_index 4))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ule data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n))))))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          0,
+          1
+        ],
+        "replacement": "(and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))",
+        "rule": "and-associate-right"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        "replacement": "(or (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65) (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566))",
+        "rule": "or-commute"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "true",
+        "rule": "ctx-74e0efc882f6e4931bb52835"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "bv_8028284cb17cae83075740e9",
+        "rule": "ctx-ffa422417f3a081334626325"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        "replacement": "bv_d9f5ff5b0e471609fc59b566",
+        "rule": "ctx-2a63c486220b0f13b24764c8"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "false",
+        "rule": "ctx-b46457c470e1c6840a3f9189"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "bv_caed626d93602585101c44f5",
+        "rule": "ctx-5f47cdf5fb5c327aef0fcc68"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "replacement": "bv_718a2b3ab3ab699f149e2e65",
+        "rule": "ctx-2a63c486220b0f13b24764c8"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "replacement": "(or (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65) (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566))",
+        "rule": "or-commute"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "true",
+        "rule": "ctx-74e0efc882f6e4931bb52835"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "bv_8028284cb17cae83075740e9",
+        "rule": "ctx-ffa422417f3a081334626325"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "replacement": "bv_d9f5ff5b0e471609fc59b566",
+        "rule": "ctx-2a63c486220b0f13b24764c8"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "false",
+        "rule": "ctx-b46457c470e1c6840a3f9189"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "bv_caed626d93602585101c44f5",
+        "rule": "ctx-5f47cdf5fb5c327aef0fcc68"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "replacement": "bv_718a2b3ab3ab699f149e2e65",
+        "rule": "ctx-2a63c486220b0f13b24764c8"
+      },
+      {
+        "direction": "reverse",
+        "path": [],
+        "replacement": "(and (and (not rst) m_valid) (and (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65))))))))",
+        "rule": "and-associate-right"
+      }
+    ]
+  },
+  "proof-7630bdaefe91e6cb3ed15964be4e162adbee2e6ad404b2c9c01b9a8e6672b1c3": {
+    "abstracts": [
+      "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))) (or (and bv_491de1c645fe9259ed2a51d7 (not bv_b55d1adba5ac30688dd5339e)) (and bv_5a835d5c65b72eb999b3e712 (not bv_1ba0c910bbce3a6043e5b686))))))",
+      "(and (and (not rst) m_valid) (and (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))) (or (and bv_491de1c645fe9259ed2a51d7 (not bv_b55d1adba5ac30688dd5339e)) (and bv_5a835d5c65b72eb999b3e712 (not bv_1ba0c910bbce3a6043e5b686)))))"
+    ],
+    "atoms": {
+      "bv_1ba0c910bbce3a6043e5b686": "(eq 0 m_data)",
+      "bv_258070e33bd40bc30acb198e": "(ule 1 data_index)",
+      "bv_491de1c645fe9259ed2a51d7": "(ule data_index data_n)",
+      "bv_5a835d5c65b72eb999b3e712": "(ult data_n data_index)",
+      "bv_63aeb21e154f0e091658cc73": "(ule data_index 8)",
+      "bv_a16dd6f0eb1b375abbb044ec": "(ult data_count input_count)",
+      "bv_b55d1adba5ac30688dd5339e": "(eq data_byte m_data)",
+      "bv_ee1e4ec19afad221ae8884eb": "(ule data_index 4)",
+      "data_done": "data_done",
+      "m_valid": "m_valid",
+      "rst": "rst"
+    },
+    "context_id": "517eea41ca9d1d0204a658c2566e8d0436e121aed21547a540d9cbbcd6cb6fd6",
+    "dependencies": [],
+    "guard": "true",
+    "left": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (or (and (ule data_index data_n) (ne m_data data_byte)) (and (ugt data_index data_n) (ne m_data 0))))))",
+    "right": "(and (and (not rst) m_valid) (and (and (ult data_count input_count) (and (and (uge data_index 1) (ule data_index 8)) (or (ule data_index data_n) (and data_done (ule data_index 4))))) (or (and (ule data_index data_n) (ne m_data data_byte)) (and (ugt data_index data_n) (ne m_data 0)))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          0,
+          1
+        ],
+        "replacement": "(and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))",
+        "rule": "and-associate-right"
+      },
+      {
+        "direction": "reverse",
+        "path": [],
+        "replacement": "(and (and (not rst) m_valid) (and (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))) (or (and bv_491de1c645fe9259ed2a51d7 (not bv_b55d1adba5ac30688dd5339e)) (and bv_5a835d5c65b72eb999b3e712 (not bv_1ba0c910bbce3a6043e5b686)))))",
+        "rule": "and-associate-right"
+      }
+    ]
+  },
+  "proof-b09aa8dc1452b177ae7430b27bcd0ea9856ec52de8cc4a1fba2aec9ab06577fc": {
+    "abstracts": [
+      "(and (not rst) (and h_valid (not (and bv_51781976556998e1342c100e header_done))))",
+      "(and (and (not rst) h_valid) (not (and bv_51781976556998e1342c100e header_done)))"
+    ],
+    "atoms": {
+      "bv_51781976556998e1342c100e": "(ult header_count input_count)",
+      "h_valid": "h_valid",
+      "header_done": "header_done",
+      "rst": "rst"
+    },
+    "context_id": "517eea41ca9d1d0204a658c2566e8d0436e121aed21547a540d9cbbcd6cb6fd6",
+    "dependencies": [],
+    "guard": "true",
+    "left": "(and (not rst) (and h_valid (not (and (ult header_count input_count) header_done))))",
+    "right": "(and (and (not rst) h_valid) (not (and (ult header_count input_count) header_done)))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "reverse",
+        "path": [],
+        "replacement": "(and (and (not rst) h_valid) (not (and bv_51781976556998e1342c100e header_done)))",
+        "rule": "and-associate-right"
+      }
+    ]
+  },
+  "proof-cc9dabad180506c4b83441cd0fea920051ea86b15e76eaaf9102e0f234367dad": {
+    "abstracts": [
+      "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))))))",
+      "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))))))"
+    ],
+    "atoms": {
+      "bv_12659c0cac01d1025bc40037": "(eq 8 data_index)",
+      "bv_258070e33bd40bc30acb198e": "(ule 1 data_index)",
+      "bv_2c83d9bc6ef2805ac5234aad": "(ult data_n 4)",
+      "bv_491de1c645fe9259ed2a51d7": "(ule data_index data_n)",
+      "bv_63aeb21e154f0e091658cc73": "(ule data_index 8)",
+      "bv_718a2b3ab3ab699f149e2e65": "(eq data_index data_n)",
+      "bv_a16dd6f0eb1b375abbb044ec": "(ult data_count input_count)",
+      "bv_caed626d93602585101c44f5": "(ult 4 data_n)",
+      "bv_d9f5ff5b0e471609fc59b566": "(eq 4 data_index)",
+      "bv_df057a6bb61849cc0f1d0542": "(ule 4 data_n)",
+      "bv_ee1e4ec19afad221ae8884eb": "(ule data_index 4)",
+      "data_done": "data_done",
+      "m_last": "m_last",
+      "m_valid": "m_valid",
+      "rst": "rst"
+    },
+    "context_id": "6aca3eea5a511adcd3454d127bfac94b260a603731ad5ba2c00dae296cfc1a4c",
+    "dependencies": [
+      {
+        "receipt": {
+          "guard": "(ugt data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvugt data_n #x0004) (xor (bvule #x0004 data_n) true)))\n(check-sat)\n",
+            "smt2_sha256": "f0347d993dd9aec59cba5cf3a6718efbda74ce465c7a2215b42c479c4d21c6fe",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ule 4 data_n)",
+          "typed_right": "true"
+        },
+        "rule": {
+          "event_context": "6aca3eea5a511adcd3454d127bfac94b260a603731ad5ba2c00dae296cfc1a4c",
+          "left": "bv_df057a6bb61849cc0f1d0542",
+          "name": "ctx-8ec3267cfbcb71434e4cd8a0",
+          "proof_status": "unsat",
+          "right": "true"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(ugt data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvugt data_n #x0004) (xor (bvult #x0004 data_n) true)))\n(check-sat)\n",
+            "smt2_sha256": "de33678ea96365c48774fbacd29bfca9632f281be763f742213068a317cd145b",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ult 4 data_n)",
+          "typed_right": "true"
+        },
+        "rule": {
+          "event_context": "6aca3eea5a511adcd3454d127bfac94b260a603731ad5ba2c00dae296cfc1a4c",
+          "left": "bv_caed626d93602585101c44f5",
+          "name": "ctx-af0efd88875ab755577c9593",
+          "proof_status": "unsat",
+          "right": "true"
+        }
+      }
+    ],
+    "guard": "(ugt data_n 4)",
+    "left": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (uge data_n 4) (eq data_index data_n)))))))))",
+    "right": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n)))))))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "true",
+        "rule": "ctx-8ec3267cfbcb71434e4cd8a0"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "bv_caed626d93602585101c44f5",
+        "rule": "ctx-af0efd88875ab755577c9593"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "true",
+        "rule": "ctx-8ec3267cfbcb71434e4cd8a0"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "bv_caed626d93602585101c44f5",
+        "rule": "ctx-af0efd88875ab755577c9593"
+      }
+    ]
+  },
+  "proof-d6c933c7b60c33a629aad259bd0e797fad081cb94867caf585f8d31e15b0c2bc": {
+    "abstracts": [
+      "(and (and (not rst) h_valid) (and (and bv_51781976556998e1342c100e header_done) (or (and bv_9b3b7959da0e1dedb0ea4bf2 (not bv_1ffb2f508168dd87e304104d)) (or (and (and bv_e3178efd0cb284543724d8a5 bv_0cd569afef0dd1f39206bf24) (not bv_45b62f5e9cfb33eece441fa1)) (and bv_888c1a0e5d2da3e00727e456 (not bv_a1f947d170e2392e035e2a17))))))",
+      "(and (not rst) (and h_valid (and (and bv_51781976556998e1342c100e header_done) (or (and bv_9b3b7959da0e1dedb0ea4bf2 (not bv_1ffb2f508168dd87e304104d)) (or (and (and bv_e3178efd0cb284543724d8a5 bv_0cd569afef0dd1f39206bf24) (not bv_45b62f5e9cfb33eece441fa1)) (and bv_888c1a0e5d2da3e00727e456 (not bv_a1f947d170e2392e035e2a17)))))))"
+    ],
+    "atoms": {
+      "bv_0cd569afef0dd1f39206bf24": "(ule header_n 8)",
+      "bv_1ffb2f508168dd87e304104d": "(eq 4 h_length)",
+      "bv_45b62f5e9cfb33eece441fa1": "(eq h_length header_n)",
+      "bv_51781976556998e1342c100e": "(ult header_count input_count)",
+      "bv_888c1a0e5d2da3e00727e456": "(ult 8 header_n)",
+      "bv_9b3b7959da0e1dedb0ea4bf2": "(ult header_n 4)",
+      "bv_a1f947d170e2392e035e2a17": "(eq 8 h_length)",
+      "bv_e3178efd0cb284543724d8a5": "(ule 4 header_n)",
+      "h_valid": "h_valid",
+      "header_done": "header_done",
+      "rst": "rst"
+    },
+    "context_id": "517eea41ca9d1d0204a658c2566e8d0436e121aed21547a540d9cbbcd6cb6fd6",
+    "dependencies": [],
+    "guard": "true",
+    "left": "(and (and (not rst) h_valid) (and (and (ult header_count input_count) header_done) (or (and (ult header_n 4) (ne h_length 4)) (or (and (and (uge header_n 4) (ule header_n 8)) (ne h_length header_n)) (and (ugt header_n 8) (ne h_length 8))))))",
+    "right": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (or (and (ult header_n 4) (ne h_length 4)) (or (and (and (uge header_n 4) (ule header_n 8)) (ne h_length header_n)) (and (ugt header_n 8) (ne h_length 8)))))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "forward",
+        "path": [],
+        "replacement": "(and (not rst) (and h_valid (and (and bv_51781976556998e1342c100e header_done) (or (and bv_9b3b7959da0e1dedb0ea4bf2 (not bv_1ffb2f508168dd87e304104d)) (or (and (and bv_e3178efd0cb284543724d8a5 bv_0cd569afef0dd1f39206bf24) (not bv_45b62f5e9cfb33eece441fa1)) (and bv_888c1a0e5d2da3e00727e456 (not bv_a1f947d170e2392e035e2a17)))))))",
+        "rule": "and-associate-right"
+      }
+    ]
+  },
+  "proof-da517f8013edc48e970b4c58bbb26617207d688091645d6744a431e8123913a8": {
+    "abstracts": [
+      "(and (not rst) (and h_valid (and (and bv_51781976556998e1342c100e header_done) (or (or (and h_pad (not bv_9b3b7959da0e1dedb0ea4bf2)) (and (not h_pad) bv_9b3b7959da0e1dedb0ea4bf2)) (or (and h_truncate (not bv_888c1a0e5d2da3e00727e456)) (and (not h_truncate) bv_888c1a0e5d2da3e00727e456))))))",
+      "(and (and (not rst) h_valid) (and (and bv_51781976556998e1342c100e header_done) (or (or (and h_pad (not bv_9b3b7959da0e1dedb0ea4bf2)) (and (not h_pad) bv_9b3b7959da0e1dedb0ea4bf2)) (or (and h_truncate (not bv_888c1a0e5d2da3e00727e456)) (and (not h_truncate) bv_888c1a0e5d2da3e00727e456)))))"
+    ],
+    "atoms": {
+      "bv_51781976556998e1342c100e": "(ult header_count input_count)",
+      "bv_888c1a0e5d2da3e00727e456": "(ult 8 header_n)",
+      "bv_9b3b7959da0e1dedb0ea4bf2": "(ult header_n 4)",
+      "h_pad": "h_pad",
+      "h_truncate": "h_truncate",
+      "h_valid": "h_valid",
+      "header_done": "header_done",
+      "rst": "rst"
+    },
+    "context_id": "517eea41ca9d1d0204a658c2566e8d0436e121aed21547a540d9cbbcd6cb6fd6",
+    "dependencies": [],
+    "guard": "true",
+    "left": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (or (xor h_pad (ult header_n 4)) (xor h_truncate (ugt header_n 8))))))",
+    "right": "(and (and (not rst) h_valid) (and (and (ult header_count input_count) header_done) (or (xor h_pad (ult header_n 4)) (xor h_truncate (ugt header_n 8)))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "reverse",
+        "path": [],
+        "replacement": "(and (and (not rst) h_valid) (and (and bv_51781976556998e1342c100e header_done) (or (or (and h_pad (not bv_9b3b7959da0e1dedb0ea4bf2)) (and (not h_pad) bv_9b3b7959da0e1dedb0ea4bf2)) (or (and h_truncate (not bv_888c1a0e5d2da3e00727e456)) (and (not h_truncate) bv_888c1a0e5d2da3e00727e456)))))",
+        "rule": "and-associate-right"
+      }
+    ]
+  },
+  "proof-df046d95d22945d952e2b2e5dc13a588bdd2bc27f7ef10b667bd2438bd429ae1": {
+    "abstracts": [
+      "(and phase_post (and rst (or m_valid h_valid)))",
+      "(and (and phase_post rst) (or m_valid h_valid))"
+    ],
+    "atoms": {
+      "h_valid": "h_valid",
+      "m_valid": "m_valid",
+      "phase_post": "phase_post",
+      "rst": "rst"
+    },
+    "context_id": "517eea41ca9d1d0204a658c2566e8d0436e121aed21547a540d9cbbcd6cb6fd6",
+    "dependencies": [],
+    "guard": "true",
+    "left": "(and phase_post (and rst (or m_valid h_valid)))",
+    "right": "(and (and phase_post rst) (or m_valid h_valid))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "reverse",
+        "path": [],
+        "replacement": "(and (and phase_post rst) (or m_valid h_valid))",
+        "rule": "and-associate-right"
+      }
+    ]
+  },
+  "proof-e576d903369e7890fe6dd6605580e293f41e5c926887de34bdcdf6b3e6a71722": {
+    "abstracts": [
+      "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_2c83d9bc6ef2805ac5234aad bv_d9f5ff5b0e471609fc59b566) (and bv_df057a6bb61849cc0f1d0542 bv_718a2b3ab3ab699f149e2e65)))))))))",
+      "(and (and (not rst) m_valid) (and (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65))))))))"
+    ],
+    "atoms": {
+      "bv_12659c0cac01d1025bc40037": "(eq 8 data_index)",
+      "bv_258070e33bd40bc30acb198e": "(ule 1 data_index)",
+      "bv_2c83d9bc6ef2805ac5234aad": "(ult data_n 4)",
+      "bv_491de1c645fe9259ed2a51d7": "(ule data_index data_n)",
+      "bv_63aeb21e154f0e091658cc73": "(ule data_index 8)",
+      "bv_718a2b3ab3ab699f149e2e65": "(eq data_index data_n)",
+      "bv_8028284cb17cae83075740e9": "(ule data_n 4)",
+      "bv_a16dd6f0eb1b375abbb044ec": "(ult data_count input_count)",
+      "bv_caed626d93602585101c44f5": "(ult 4 data_n)",
+      "bv_d9f5ff5b0e471609fc59b566": "(eq 4 data_index)",
+      "bv_df057a6bb61849cc0f1d0542": "(ule 4 data_n)",
+      "bv_ee1e4ec19afad221ae8884eb": "(ule data_index 4)",
+      "data_done": "data_done",
+      "m_last": "m_last",
+      "m_valid": "m_valid",
+      "rst": "rst"
+    },
+    "context_id": "7bc0ad287153940ea4170eadaf2afb1881eaaec20c913f01372375ad118ee253",
+    "dependencies": [
+      {
+        "receipt": {
+          "guard": "(ult data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvult data_n #x0004) (xor (bvult #x0004 data_n) false)))\n(check-sat)\n",
+            "smt2_sha256": "9be8f1204a9270eb67e65ca05ac31283bb9094249ae19e46569189a5056e9b0b",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ult 4 data_n)",
+          "typed_right": "false"
+        },
+        "rule": {
+          "event_context": "7bc0ad287153940ea4170eadaf2afb1881eaaec20c913f01372375ad118ee253",
+          "left": "bv_caed626d93602585101c44f5",
+          "name": "ctx-1bbf29ce304e8549bc51e0ec",
+          "proof_status": "unsat",
+          "right": "false"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(ult data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvult data_n #x0004) (xor (bvult data_n #x0004) true)))\n(check-sat)\n",
+            "smt2_sha256": "544c695aa6a86502ffb0b87f7467ab2bc101753c84104f87971f9661d54b642d",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ult data_n 4)",
+          "typed_right": "true"
+        },
+        "rule": {
+          "event_context": "7bc0ad287153940ea4170eadaf2afb1881eaaec20c913f01372375ad118ee253",
+          "left": "bv_2c83d9bc6ef2805ac5234aad",
+          "name": "ctx-6c544d8f9b76eafcf6d2e0fd",
+          "proof_status": "unsat",
+          "right": "true"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(ult data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvult data_n #x0004) (xor (bvule #x0004 data_n) false)))\n(check-sat)\n",
+            "smt2_sha256": "979428549d12f7b7a28e8d8f0c5873b8082306286cff3b92942f6a62266fc42e",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ule 4 data_n)",
+          "typed_right": "false"
+        },
+        "rule": {
+          "event_context": "7bc0ad287153940ea4170eadaf2afb1881eaaec20c913f01372375ad118ee253",
+          "left": "bv_df057a6bb61849cc0f1d0542",
+          "name": "ctx-abc15f70c5fa758ac245186e",
+          "proof_status": "unsat",
+          "right": "false"
+        }
+      },
+      {
+        "receipt": {
+          "guard": "(ult data_n 4)",
+          "query": {
+            "logic": "QF_BV",
+            "smt2": "(set-logic QF_BV)\n(set-option :timeout 5000)\n(declare-fun data_n () (_ BitVec 16))\n(assert (and (bvult data_n #x0004) (xor (bvule data_n #x0004) true)))\n(check-sat)\n",
+            "smt2_sha256": "ea76ee53270d33a8c41108c58fd8ba49d36d21ea50526a50bdaf359e628277ba",
+            "status": "unsat",
+            "timeout_ms": 5000,
+            "z3": "4.16.0"
+          },
+          "typed_left": "(ule data_n 4)",
+          "typed_right": "true"
+        },
+        "rule": {
+          "event_context": "7bc0ad287153940ea4170eadaf2afb1881eaaec20c913f01372375ad118ee253",
+          "left": "bv_8028284cb17cae83075740e9",
+          "name": "ctx-c2d269a4f3e022eb444c2053",
+          "proof_status": "unsat",
+          "right": "true"
+        }
+      }
+    ],
+    "guard": "(ult data_n 4)",
+    "left": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (uge data_n 4) (eq data_index data_n)))))))))",
+    "right": "(and (and (not rst) m_valid) (and (and (ult data_count input_count) (and (and (uge data_index 1) (ule data_index 8)) (or (ule data_index data_n) (and data_done (ule data_index 4))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ule data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n))))))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          0,
+          1
+        ],
+        "replacement": "(and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))",
+        "rule": "and-associate-right"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "true",
+        "rule": "ctx-6c544d8f9b76eafcf6d2e0fd"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "bv_8028284cb17cae83075740e9",
+        "rule": "ctx-c2d269a4f3e022eb444c2053"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "false",
+        "rule": "ctx-abc15f70c5fa758ac245186e"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "bv_caed626d93602585101c44f5",
+        "rule": "ctx-1bbf29ce304e8549bc51e0ec"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "true",
+        "rule": "ctx-6c544d8f9b76eafcf6d2e0fd"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "replacement": "bv_8028284cb17cae83075740e9",
+        "rule": "ctx-c2d269a4f3e022eb444c2053"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "false",
+        "rule": "ctx-abc15f70c5fa758ac245186e"
+      },
+      {
+        "direction": "reverse",
+        "path": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "replacement": "bv_caed626d93602585101c44f5",
+        "rule": "ctx-1bbf29ce304e8549bc51e0ec"
+      },
+      {
+        "direction": "reverse",
+        "path": [],
+        "replacement": "(and (and (not rst) m_valid) (and (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65))))))))",
+        "rule": "and-associate-right"
+      }
+    ]
+  },
+  "proof-fe139e456bbaf596c165d625a4d2478571ac300eeabdbd220f63d5a1dbb7ed49": {
+    "abstracts": [
+      "(and (and (not rst) m_valid) (and (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65))))))))",
+      "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))))))"
+    ],
+    "atoms": {
+      "bv_12659c0cac01d1025bc40037": "(eq 8 data_index)",
+      "bv_258070e33bd40bc30acb198e": "(ule 1 data_index)",
+      "bv_491de1c645fe9259ed2a51d7": "(ule data_index data_n)",
+      "bv_63aeb21e154f0e091658cc73": "(ule data_index 8)",
+      "bv_718a2b3ab3ab699f149e2e65": "(eq data_index data_n)",
+      "bv_8028284cb17cae83075740e9": "(ule data_n 4)",
+      "bv_a16dd6f0eb1b375abbb044ec": "(ult data_count input_count)",
+      "bv_caed626d93602585101c44f5": "(ult 4 data_n)",
+      "bv_d9f5ff5b0e471609fc59b566": "(eq 4 data_index)",
+      "bv_ee1e4ec19afad221ae8884eb": "(ule data_index 4)",
+      "data_done": "data_done",
+      "m_last": "m_last",
+      "m_valid": "m_valid",
+      "rst": "rst"
+    },
+    "context_id": "517eea41ca9d1d0204a658c2566e8d0436e121aed21547a540d9cbbcd6cb6fd6",
+    "dependencies": [],
+    "guard": "true",
+    "left": "(and (and (not rst) m_valid) (and (and (ult data_count input_count) (and (and (uge data_index 1) (ule data_index 8)) (or (ule data_index data_n) (and data_done (ule data_index 4))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ule data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n))))))))",
+    "right": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ule data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n)))))))))",
+    "rule_sha256": "55366fab255f228c08cf2f15879fac90cbb7a238d873c24befeb9410f60f2517",
+    "schema_sha256": "277012fd3f5a309849cbff4e55843c9c0006ec1fbf61c3fce25e5f6db89fd542",
+    "scope": "txn-regression-v1: free two-state transaction snapshots with declared unsigned widths",
+    "steps": [
+      {
+        "direction": "forward",
+        "path": [],
+        "replacement": "(and (not rst) (and m_valid (and (and bv_a16dd6f0eb1b375abbb044ec (and (and bv_258070e33bd40bc30acb198e bv_63aeb21e154f0e091658cc73) (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb)))) (or (and m_last (not (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))) (and (not m_last) (or bv_12659c0cac01d1025bc40037 (and data_done (or (and bv_8028284cb17cae83075740e9 bv_d9f5ff5b0e471609fc59b566) (and bv_caed626d93602585101c44f5 bv_718a2b3ab3ab699f149e2e65)))))))))",
+        "rule": "and-associate-right"
+      },
+      {
+        "direction": "forward",
+        "path": [
+          1,
+          1,
+          0,
+          1
+        ],
+        "replacement": "(and bv_258070e33bd40bc30acb198e (and bv_63aeb21e154f0e091658cc73 (or bv_491de1c645fe9259ed2a51d7 (and data_done bv_ee1e4ec19afad221ae8884eb))))",
+        "rule": "and-associate-right"
+      }
+    ]
+  }
+}

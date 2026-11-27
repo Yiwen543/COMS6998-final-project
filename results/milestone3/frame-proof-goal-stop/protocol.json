@@ -1,0 +1,515 @@
+{
+  "cohorts_and_exact_pairs": [
+    {
+      "cohort": "live_final",
+      "field": "data_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+      "candidate": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not prev_m_ready)) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last)))))",
+      "expected": true,
+      "sources": [
+        "live:egg/round-02"
+      ]
+    },
+    {
+      "cohort": "live_seed",
+      "field": "data_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+      "candidate": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not m_ready)) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last)))))",
+      "expected": false,
+      "sources": [
+        "live:config/seed"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "data_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+      "candidate": "(and have_prev (and (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready)))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last)))))",
+      "expected": true,
+      "sources": [
+        "reassociate"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "data_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+      "candidate": "(and (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))) (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))))",
+      "expected": true,
+      "sources": [
+        "reorder"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "data_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+      "candidate": "(not (or (not (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready)))))) (not (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))))",
+      "expected": true,
+      "sources": [
+        "demorgan"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "data_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+      "candidate": "(or (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (not m_valid)) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+      "expected": true,
+      "sources": [
+        "distribute"
+      ]
+    },
+    {
+      "cohort": "live_final",
+      "field": "header_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "candidate": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length)))))))",
+      "expected": true,
+      "sources": [
+        "live:egg/round-02"
+      ]
+    },
+    {
+      "cohort": "live_seed",
+      "field": "header_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "candidate": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (ne h_length prev_h_length))))))",
+      "expected": false,
+      "sources": [
+        "live:config/seed"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "header_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "candidate": "(and have_prev (and (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready)))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length)))))))",
+      "expected": true,
+      "sources": [
+        "reassociate"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "header_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "candidate": "(and (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))) (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))))",
+      "expected": true,
+      "sources": [
+        "reorder"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "header_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "candidate": "(not (or (not (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready)))))) (not (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))))",
+      "expected": true,
+      "sources": [
+        "demorgan"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "header_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "candidate": "(or (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (not h_valid)) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "expected": true,
+      "sources": [
+        "distribute"
+      ]
+    },
+    {
+      "cohort": "live_final",
+      "field": "pad_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+      "candidate": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+      "expected": true,
+      "sources": [
+        "live:egg/round-02"
+      ]
+    },
+    {
+      "cohort": "live_seed",
+      "field": "pad_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+      "candidate": "(and (and (not rst) h_valid) (xor h_pad (ule h_original_length 4)))",
+      "expected": false,
+      "sources": [
+        "live:config/seed"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "pad_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+      "candidate": "(and (not rst) (and h_valid (xor h_pad (ult h_original_length 4))))",
+      "expected": true,
+      "sources": [
+        "reassociate"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "pad_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+      "candidate": "(and (xor h_pad (ult h_original_length 4)) (and (not rst) h_valid))",
+      "expected": true,
+      "sources": [
+        "reorder"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "pad_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+      "candidate": "(not (or (not (and (not rst) h_valid)) (not (xor h_pad (ult h_original_length 4)))))",
+      "expected": true,
+      "sources": [
+        "demorgan"
+      ]
+    },
+    {
+      "cohort": "live_final",
+      "field": "truncate_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+      "candidate": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+      "expected": true,
+      "sources": [
+        "live:egg/round-02"
+      ]
+    },
+    {
+      "cohort": "live_seed",
+      "field": "truncate_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+      "candidate": "(and (and (not rst) h_valid) (xor h_truncate (uge h_original_length 8)))",
+      "expected": false,
+      "sources": [
+        "live:config/seed"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "truncate_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+      "candidate": "(and (not rst) (and h_valid (xor h_truncate (ugt h_original_length 8))))",
+      "expected": true,
+      "sources": [
+        "reassociate"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "truncate_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+      "candidate": "(and (xor h_truncate (ugt h_original_length 8)) (and (not rst) h_valid))",
+      "expected": true,
+      "sources": [
+        "reorder"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "truncate_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+      "candidate": "(not (or (not (and (not rst) h_valid)) (not (xor h_truncate (ugt h_original_length 8)))))",
+      "expected": true,
+      "sources": [
+        "demorgan"
+      ]
+    },
+    {
+      "cohort": "live_final",
+      "field": "clamped_length",
+      "reference": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "candidate": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "expected": true,
+      "sources": [
+        "live:egg/round-02"
+      ]
+    },
+    {
+      "cohort": "live_seed",
+      "field": "clamped_length",
+      "reference": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "candidate": "(and (and (not rst) h_valid) (ne h_length h_original_length))",
+      "expected": false,
+      "sources": [
+        "live:config/seed"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "clamped_length",
+      "reference": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "candidate": "(and (not rst) (and h_valid (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length))))))",
+      "expected": true,
+      "sources": [
+        "reassociate"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "clamped_length",
+      "reference": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "candidate": "(and (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))) (and (not rst) h_valid))",
+      "expected": true,
+      "sources": [
+        "reorder"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "clamped_length",
+      "reference": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "candidate": "(not (or (not (and (not rst) h_valid)) (not (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))))",
+      "expected": true,
+      "sources": [
+        "demorgan"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "field": "clamped_length",
+      "reference": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "candidate": "(or (and (and (not rst) h_valid) (and (ult h_original_length 4) (ne h_length 4))) (and (and (not rst) h_valid) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "expected": true,
+      "sources": [
+        "distribute"
+      ]
+    },
+    {
+      "cohort": "fixture_revisions",
+      "field": "clamped_length",
+      "reference": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "candidate": "(and (and (not rst) h_valid) (or (and (ule h_original_length 3) (ne h_length 4)) (or (and (uge h_original_length 9) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "expected": true,
+      "sources": [
+        "fixture:egg/round-01/response.json"
+      ]
+    },
+    {
+      "cohort": "fixture_revisions",
+      "field": "data_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+      "candidate": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+      "expected": true,
+      "sources": [
+        "fixture:egg/round-01/response.json",
+        "fixture:egg/round-02/response.json"
+      ]
+    },
+    {
+      "cohort": "fixture_revisions",
+      "field": "header_hold",
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "candidate": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "expected": true,
+      "sources": [
+        "fixture:egg/round-01/response.json",
+        "fixture:egg/round-02/response.json"
+      ]
+    },
+    {
+      "cohort": "fixture_revisions",
+      "field": "pad_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+      "candidate": "(and (and (not rst) h_valid) (xor h_pad (ule h_original_length 3)))",
+      "expected": true,
+      "sources": [
+        "fixture:egg/round-01/response.json",
+        "fixture:egg/round-02/response.json"
+      ]
+    },
+    {
+      "cohort": "fixture_revisions",
+      "field": "truncate_flag",
+      "reference": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+      "candidate": "(and (and (not rst) h_valid) (xor h_truncate (uge h_original_length 9)))",
+      "expected": true,
+      "sources": [
+        "fixture:egg/round-01/response.json",
+        "fixture:egg/round-02/response.json"
+      ]
+    },
+    {
+      "cohort": "fixture_revisions",
+      "field": "clamped_length",
+      "reference": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "candidate": "(and (and (not rst) h_valid) (or (and (ule h_original_length 3) (ne h_length 4)) (or (and (uge h_original_length 9) (ne h_length 8)) (and (not (or (ule h_original_length 3) (uge h_original_length 9))) (ne h_length h_original_length)))))",
+      "expected": true,
+      "sources": [
+        "fixture:egg/round-02/response.json"
+      ]
+    }
+  ],
+  "rules": {
+    "ac_dist": [
+      {
+        "name": "de-morgan-or",
+        "left": "(not (or ?a ?b))",
+        "right": "(and (not ?a) (not ?b))"
+      },
+      {
+        "name": "de-morgan-and",
+        "left": "(not (and ?a ?b))",
+        "right": "(or (not ?a) (not ?b))"
+      },
+      {
+        "name": "double-not",
+        "left": "(not (not ?a))",
+        "right": "?a"
+      },
+      {
+        "name": "and-true",
+        "left": "(and ?a true)",
+        "right": "?a"
+      },
+      {
+        "name": "and-true-left",
+        "left": "(and true ?a)",
+        "right": "?a"
+      },
+      {
+        "name": "not-false",
+        "left": "(not false)",
+        "right": "true"
+      },
+      {
+        "name": "and-associate-right",
+        "left": "(and (and ?a ?b) ?c)",
+        "right": "(and ?a (and ?b ?c))"
+      },
+      {
+        "name": "or-associate-right",
+        "left": "(or (or ?a ?b) ?c)",
+        "right": "(or ?a (or ?b ?c))"
+      },
+      {
+        "name": "and-commute",
+        "left": "(and ?a ?b)",
+        "right": "(and ?b ?a)"
+      },
+      {
+        "name": "or-commute",
+        "left": "(or ?a ?b)",
+        "right": "(or ?b ?a)"
+      },
+      {
+        "name": "and-distribute",
+        "left": "(and ?a (or ?b ?c))",
+        "right": "(or (and ?a ?b) (and ?a ?c))"
+      },
+      {
+        "name": "or-distribute",
+        "left": "(or ?a (and ?b ?c))",
+        "right": "(and (or ?a ?b) (or ?a ?c))"
+      }
+    ],
+    "ac_dist_goal": [
+      {
+        "name": "de-morgan-or",
+        "left": "(not (or ?a ?b))",
+        "right": "(and (not ?a) (not ?b))"
+      },
+      {
+        "name": "de-morgan-and",
+        "left": "(not (and ?a ?b))",
+        "right": "(or (not ?a) (not ?b))"
+      },
+      {
+        "name": "double-not",
+        "left": "(not (not ?a))",
+        "right": "?a"
+      },
+      {
+        "name": "and-true",
+        "left": "(and ?a true)",
+        "right": "?a"
+      },
+      {
+        "name": "and-true-left",
+        "left": "(and true ?a)",
+        "right": "?a"
+      },
+      {
+        "name": "not-false",
+        "left": "(not false)",
+        "right": "true"
+      },
+      {
+        "name": "and-associate-right",
+        "left": "(and (and ?a ?b) ?c)",
+        "right": "(and ?a (and ?b ?c))"
+      },
+      {
+        "name": "or-associate-right",
+        "left": "(or (or ?a ?b) ?c)",
+        "right": "(or ?a (or ?b ?c))"
+      },
+      {
+        "name": "and-commute",
+        "left": "(and ?a ?b)",
+        "right": "(and ?b ?a)"
+      },
+      {
+        "name": "or-commute",
+        "left": "(or ?a ?b)",
+        "right": "(or ?b ?a)"
+      },
+      {
+        "name": "and-distribute",
+        "left": "(and ?a (or ?b ?c))",
+        "right": "(or (and ?a ?b) (and ?a ?c))"
+      },
+      {
+        "name": "or-distribute",
+        "left": "(or ?a (and ?b ?c))",
+        "right": "(and (or ?a ?b) (or ?a ?c))"
+      }
+    ]
+  },
+  "boolean_truth_rows": {
+    "ac_dist": {
+      "de-morgan-or": 4,
+      "de-morgan-and": 4,
+      "double-not": 2,
+      "and-true": 2,
+      "and-true-left": 2,
+      "not-false": 1,
+      "and-associate-right": 8,
+      "or-associate-right": 8,
+      "and-commute": 4,
+      "or-commute": 4,
+      "and-distribute": 8,
+      "or-distribute": 8
+    },
+    "ac_dist_goal": {
+      "de-morgan-or": 4,
+      "de-morgan-and": 4,
+      "double-not": 2,
+      "and-true": 2,
+      "and-true-left": 2,
+      "not-false": 1,
+      "and-associate-right": 8,
+      "or-associate-right": 8,
+      "and-commute": 4,
+      "or-commute": 4,
+      "and-distribute": 8,
+      "or-distribute": 8
+    }
+  },
+  "typed_z3_timeout_ms": 5000,
+  "runner_bounds": {
+    "iterations": 20,
+    "enodes": 20000,
+    "seconds": 5
+  },
+  "early_stop_comparison": true,
+  "external_timeout_seconds": 20,
+  "binary_sha256": "cf7306a97676b1c351ca1ee3738421095065c2a266bee3b89d4312cfdd217aeb",
+  "z3_version": "4.16.0",
+  "engine_source_sha256": "16500e05197f04a961e7ff4d57d831a39fa551e0f8b361a3a5997211d9fe768b"
+}

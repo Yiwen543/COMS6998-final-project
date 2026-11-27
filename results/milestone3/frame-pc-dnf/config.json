@@ -1,0 +1,48 @@
+{
+  "arms": [
+    "raw",
+    "ordinary",
+    "egg"
+  ],
+  "certificate_mode": "dnf",
+  "corpus_sha256": "ae3551c67b6a35585d27d4ec3fe1f97987030ec41d8f6e484429138958281f9c",
+  "diagnostic_binary_sha256": "9ae585ca855abd8ec82af844cbdd63ef9b0e7d4d722ce1bed27ede1049e70cd0",
+  "mode": "fixture",
+  "profiles": [
+    "historical",
+    "mixed",
+    "corner"
+  ],
+  "provider": null,
+  "replicates": 1,
+  "rounds_per_arm": 2,
+  "schema": 1,
+  "seeds": {
+    "corner": {
+      "clamped_length": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ult h_original_length 8)) (ne h_length h_original_length)))))",
+      "data_hold": "(and (not prev_m_last) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last)))))",
+      "header_hold": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (and (ne h_pad prev_h_pad) (ne h_truncate prev_h_truncate)) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "pad_flag": "(and (and (not rst) h_valid) (xor h_pad (and (ugt h_original_length 0) (ult h_original_length 4))))",
+      "truncate_flag": "(and (ule h_original_length 255) (and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8))))"
+    },
+    "historical": {
+      "clamped_length": "(and (and (not rst) h_valid) (ne h_length h_original_length))",
+      "data_hold": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not m_ready)) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last)))))",
+      "header_hold": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (ne h_length prev_h_length))))))",
+      "pad_flag": "(and (and (not rst) h_valid) (xor h_pad (ule h_original_length 4)))",
+      "truncate_flag": "(and (and (not rst) h_valid) (xor h_truncate (uge h_original_length 8)))"
+    },
+    "mixed": {
+      "clamped_length": "(and (and (and (not rst) h_valid) h_ready) (or (ult h_length 4) (ugt h_length 8)))",
+      "data_hold": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_s_valid (not prev_m_ready)) (or (not m_valid) (ne m_data prev_m_data))))",
+      "header_hold": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (and h_valid (or (ne h_pad prev_h_pad) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "pad_flag": "(and (and (and (not rst) h_valid) h_ready) (xor h_pad (ult h_length 4)))",
+      "truncate_flag": "(and (and (and (not rst) h_valid) h_ready) (xor h_truncate (uge h_original_length 8)))"
+    }
+  },
+  "visible_designs": [
+    "original",
+    "F02",
+    "F05"
+  ]
+}

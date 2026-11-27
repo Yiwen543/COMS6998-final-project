@@ -1,0 +1,449 @@
+{
+  "config": {
+    "arms": [
+      "raw",
+      "ordinary",
+      "egg"
+    ],
+    "corpus_sha256": "ae3551c67b6a35585d27d4ec3fe1f97987030ec41d8f6e484429138958281f9c",
+    "mode": "live",
+    "provider": {
+      "max_output_tokens": 3072,
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "low",
+      "transport": "OpenAI Responses API"
+    },
+    "rounds_per_arm": 2,
+    "seed": {
+      "clamped_length": "(and (and (not rst) h_valid) (ne h_length h_original_length))",
+      "data_hold": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not m_ready)) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last)))))",
+      "header_hold": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (ne h_length prev_h_length))))))",
+      "pad_flag": "(and (and (not rst) h_valid) (xor h_pad (ule h_original_length 4)))",
+      "truncate_flag": "(and (and (not rst) h_valid) (xor h_truncate (uge h_original_length 8)))"
+    },
+    "visible_designs": [
+      "original",
+      "F02",
+      "F05"
+    ]
+  },
+  "content_manifest_sha256": "916b39a9d896ae8c823d4cb7d6634f6b22069cb8a5e6a8ab13f572eafc1c0511",
+  "file_count": 48,
+  "first_verified_round": {
+    "egg": 1,
+    "ordinary": 2,
+    "raw": 1
+  },
+  "mode": "live_archive_audit",
+  "new_api_calls": 0,
+  "provider_responses_checked": 6,
+  "reported_service_tiers": [
+    "default"
+  ],
+  "returned_model": "gpt-6.1-sol",
+  "scores_and_usage": {
+    "egg": [
+      {
+        "assessment": {
+          "equivalent_properties": 5,
+          "extra_alarms": 0,
+          "faults_with_matched_alarms": [
+            "F02",
+            "F04",
+            "F05"
+          ],
+          "inequivalent_properties": 0,
+          "missed_reference_alarms": 0,
+          "proofs_found": 3,
+          "reference_detectable_faults": [
+            "F02",
+            "F04",
+            "F05"
+          ],
+          "unknown_sample_comparisons": 0,
+          "unresolved_properties": 0,
+          "verified": true
+        },
+        "candidate_sha256": "c0e25b342bb0ba458a821b5453be454876c33a0a83eaa039b405a583e3a89e0c",
+        "feedback_utf8_bytes": 3839,
+        "proof": {
+          "clamped_length": {
+            "method": "egg",
+            "proved": true,
+            "steps": [],
+            "stop": "Some(Saturated)"
+          },
+          "data_hold": {
+            "method": "egg",
+            "proved": false,
+            "steps": [],
+            "stop": "Some(Saturated)"
+          },
+          "header_hold": {
+            "method": "egg",
+            "proved": false,
+            "steps": [],
+            "stop": "Some(Saturated)"
+          },
+          "pad_flag": {
+            "method": "egg",
+            "proved": true,
+            "steps": [],
+            "stop": "Some(Saturated)"
+          },
+          "truncate_flag": {
+            "method": "egg",
+            "proved": true,
+            "steps": [],
+            "stop": "Some(Saturated)"
+          }
+        },
+        "usage": {
+          "cache_write_tokens": 1985,
+          "cached_tokens": 0,
+          "input_tokens": 1988,
+          "output_tokens": 312,
+          "reasoning_tokens": 0,
+          "total_tokens": 2300
+        }
+      },
+      {
+        "assessment": {
+          "equivalent_properties": 5,
+          "extra_alarms": 0,
+          "faults_with_matched_alarms": [
+            "F02",
+            "F04",
+            "F05"
+          ],
+          "inequivalent_properties": 0,
+          "missed_reference_alarms": 0,
+          "proofs_found": 3,
+          "reference_detectable_faults": [
+            "F02",
+            "F04",
+            "F05"
+          ],
+          "unknown_sample_comparisons": 0,
+          "unresolved_properties": 0,
+          "verified": true
+        },
+        "candidate_sha256": "c0e25b342bb0ba458a821b5453be454876c33a0a83eaa039b405a583e3a89e0c",
+        "feedback_utf8_bytes": 3839,
+        "proof": {
+          "clamped_length": {
+            "method": "egg",
+            "proved": true,
+            "steps": [],
+            "stop": "Some(Saturated)"
+          },
+          "data_hold": {
+            "method": "egg",
+            "proved": false,
+            "steps": [],
+            "stop": "Some(Saturated)"
+          },
+          "header_hold": {
+            "method": "egg",
+            "proved": false,
+            "steps": [],
+            "stop": "Some(Saturated)"
+          },
+          "pad_flag": {
+            "method": "egg",
+            "proved": true,
+            "steps": [],
+            "stop": "Some(Saturated)"
+          },
+          "truncate_flag": {
+            "method": "egg",
+            "proved": true,
+            "steps": [],
+            "stop": "Some(Saturated)"
+          }
+        },
+        "usage": {
+          "cache_write_tokens": 1290,
+          "cached_tokens": 1985,
+          "input_tokens": 3278,
+          "output_tokens": 296,
+          "reasoning_tokens": 0,
+          "total_tokens": 3574
+        }
+      }
+    ],
+    "ordinary": [
+      {
+        "assessment": {
+          "candidate_error": "header_hold: unexpected trailing tokens",
+          "verified": false
+        },
+        "candidate_sha256": null,
+        "feedback_utf8_bytes": 58,
+        "proof": null,
+        "usage": {
+          "cache_write_tokens": 1970,
+          "cached_tokens": 0,
+          "input_tokens": 1973,
+          "output_tokens": 312,
+          "reasoning_tokens": 0,
+          "total_tokens": 2285
+        }
+      },
+      {
+        "assessment": {
+          "equivalent_properties": 5,
+          "extra_alarms": 0,
+          "faults_with_matched_alarms": [
+            "F02",
+            "F04",
+            "F05"
+          ],
+          "inequivalent_properties": 0,
+          "missed_reference_alarms": 0,
+          "proofs_found": 5,
+          "reference_detectable_faults": [
+            "F02",
+            "F04",
+            "F05"
+          ],
+          "unknown_sample_comparisons": 0,
+          "unresolved_properties": 0,
+          "verified": true
+        },
+        "candidate_sha256": "c0e25b342bb0ba458a821b5453be454876c33a0a83eaa039b405a583e3a89e0c",
+        "feedback_utf8_bytes": 3812,
+        "proof": {
+          "clamped_length": {
+            "canonical_match": true,
+            "method": "ordinary",
+            "proved": true,
+            "steps": [],
+            "stop": "unsat"
+          },
+          "data_hold": {
+            "canonical_match": true,
+            "method": "ordinary",
+            "proved": true,
+            "steps": [],
+            "stop": "unsat"
+          },
+          "header_hold": {
+            "canonical_match": true,
+            "method": "ordinary",
+            "proved": true,
+            "steps": [],
+            "stop": "unsat"
+          },
+          "pad_flag": {
+            "canonical_match": true,
+            "method": "ordinary",
+            "proved": true,
+            "steps": [],
+            "stop": "unsat"
+          },
+          "truncate_flag": {
+            "canonical_match": true,
+            "method": "ordinary",
+            "proved": true,
+            "steps": [],
+            "stop": "unsat"
+          }
+        },
+        "usage": {
+          "cache_write_tokens": 317,
+          "cached_tokens": 1970,
+          "input_tokens": 2290,
+          "output_tokens": 431,
+          "reasoning_tokens": 133,
+          "total_tokens": 2721
+        }
+      }
+    ],
+    "raw": [
+      {
+        "assessment": {
+          "equivalent_properties": 5,
+          "extra_alarms": 0,
+          "faults_with_matched_alarms": [
+            "F02",
+            "F04",
+            "F05"
+          ],
+          "inequivalent_properties": 0,
+          "missed_reference_alarms": 0,
+          "proofs_found": null,
+          "reference_detectable_faults": [
+            "F02",
+            "F04",
+            "F05"
+          ],
+          "unknown_sample_comparisons": 0,
+          "unresolved_properties": 0,
+          "verified": true
+        },
+        "candidate_sha256": "c0e25b342bb0ba458a821b5453be454876c33a0a83eaa039b405a583e3a89e0c",
+        "feedback_utf8_bytes": 2683,
+        "proof": {
+          "clamped_length": null,
+          "data_hold": null,
+          "header_hold": null,
+          "pad_flag": null,
+          "truncate_flag": null
+        },
+        "usage": {
+          "cache_write_tokens": 1389,
+          "cached_tokens": 0,
+          "input_tokens": 1392,
+          "output_tokens": 312,
+          "reasoning_tokens": 0,
+          "total_tokens": 1704
+        }
+      },
+      {
+        "assessment": {
+          "equivalent_properties": 5,
+          "extra_alarms": 0,
+          "faults_with_matched_alarms": [
+            "F02",
+            "F04",
+            "F05"
+          ],
+          "inequivalent_properties": 0,
+          "missed_reference_alarms": 0,
+          "proofs_found": null,
+          "reference_detectable_faults": [
+            "F02",
+            "F04",
+            "F05"
+          ],
+          "unknown_sample_comparisons": 0,
+          "unresolved_properties": 0,
+          "verified": true
+        },
+        "candidate_sha256": "c0e25b342bb0ba458a821b5453be454876c33a0a83eaa039b405a583e3a89e0c",
+        "feedback_utf8_bytes": 2683,
+        "proof": {
+          "clamped_length": null,
+          "data_hold": null,
+          "header_hold": null,
+          "pad_flag": null,
+          "truncate_flag": null
+        },
+        "usage": {
+          "cache_write_tokens": 973,
+          "cached_tokens": 1389,
+          "input_tokens": 2365,
+          "output_tokens": 296,
+          "reasoning_tokens": 0,
+          "total_tokens": 2661
+        }
+      }
+    ]
+  },
+  "seed_grades": {
+    "egg": {
+      "equivalent_properties": 0,
+      "extra_alarms": 894,
+      "faults_with_matched_alarms": [
+        "F04",
+        "F05"
+      ],
+      "inequivalent_properties": 5,
+      "missed_reference_alarms": 5,
+      "proofs_found": 0,
+      "reference_detectable_faults": [
+        "F02",
+        "F04",
+        "F05"
+      ],
+      "unknown_sample_comparisons": 0,
+      "unresolved_properties": 0,
+      "verified": false
+    },
+    "ordinary": {
+      "equivalent_properties": 0,
+      "extra_alarms": 894,
+      "faults_with_matched_alarms": [
+        "F04",
+        "F05"
+      ],
+      "inequivalent_properties": 5,
+      "missed_reference_alarms": 5,
+      "proofs_found": 0,
+      "reference_detectable_faults": [
+        "F02",
+        "F04",
+        "F05"
+      ],
+      "unknown_sample_comparisons": 0,
+      "unresolved_properties": 0,
+      "verified": false
+    },
+    "raw": {
+      "equivalent_properties": 0,
+      "extra_alarms": 894,
+      "faults_with_matched_alarms": [
+        "F04",
+        "F05"
+      ],
+      "inequivalent_properties": 5,
+      "missed_reference_alarms": 5,
+      "proofs_found": null,
+      "reference_detectable_faults": [
+        "F02",
+        "F04",
+        "F05"
+      ],
+      "unknown_sample_comparisons": 0,
+      "unresolved_properties": 0,
+      "verified": false
+    }
+  },
+  "semantic_and_physical_checks": {
+    "egg_graphs": 15,
+    "egg_named_steps": 0,
+    "invalid_batches": 1,
+    "ordinary_abstract_sat": 5,
+    "ordinary_abstract_unsat": 5,
+    "physical_score_records": 8,
+    "primitive_sat": 218,
+    "primitive_unsat": 10,
+    "typed_sat": 15,
+    "typed_unsat": 25
+  },
+  "tokens_to_first_verified": {
+    "egg": 2300,
+    "ordinary": 5006,
+    "raw": 1704
+  },
+  "total_usage": {
+    "egg": {
+      "cache_write_tokens": 3275,
+      "cached_tokens": 1985,
+      "input_tokens": 5266,
+      "output_tokens": 608,
+      "reasoning_tokens": 0,
+      "total_tokens": 5874
+    },
+    "ordinary": {
+      "cache_write_tokens": 2287,
+      "cached_tokens": 1970,
+      "input_tokens": 4263,
+      "output_tokens": 743,
+      "reasoning_tokens": 133,
+      "total_tokens": 5006
+    },
+    "raw": {
+      "cache_write_tokens": 2362,
+      "cached_tokens": 1389,
+      "input_tokens": 3757,
+      "output_tokens": 608,
+      "reasoning_tokens": 0,
+      "total_tokens": 4365
+    }
+  },
+  "unique_legal_candidates": 1,
+  "unique_typed_queries": 10,
+  "unique_verified_candidates": 1
+}

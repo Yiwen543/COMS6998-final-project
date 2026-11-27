@@ -1,0 +1,59 @@
+{
+  "method": "Post-hoc full-wrapper check of unique, verified, submitted monitoring expressions",
+  "archive_summary_sha256": "4978f907b2d9aeae571bf5115da400102719edc240064e2b2ca28d3c93b28bc6",
+  "upstream_commit": "e94172a1bd5e9b138b5fc3da01554edb3052ce52",
+  "source_sha256": {
+    "public/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+    "public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+    "public/rtl/axis_frame_length_adjust_fifo.v": "26f1636f5d4f219ca1dcf336b45b636e74a0977826ee51cdcab4e5c2d136b7ce",
+    "public/task_top_v3.sv": "db55dbee92a43f461d28f9c02a15d0eaf32c0c1cab2cbcc4ab85f0f3c91aab5e"
+  },
+  "harness_sha256": "ab53344f851c0f1d33b261f7dc933f00d267dc82c04ca9859c5cc8569216e3a3",
+  "rejected_replies": {
+    "ordinary/round-01": {
+      "recorded_error": "header_hold: unexpected trailing tokens",
+      "response_sha256": "18bf5530947cdf7fc69fa957cb2ebd9bc38eab907b4fe3e9b6acb5a01902b48f"
+    }
+  },
+  "unique_verified_candidates": 1,
+  "results": {
+    "c0e25b342bb0ba458a821b5453be454876c33a0a83eaa039b405a583e3a89e0c": {
+      "responses_sha256": {
+        "raw/round-01": "fed9d1734b2b5dba616c294ce80f61b2881e6ff09f0215809278a2e4818faaaa",
+        "raw/round-02": "36a6497f8ce21649fea79df1b8ac4a745c3b1b93c6ad01ff4483a44256deb3a9",
+        "ordinary/round-02": "416e8d8e9e444fc48fdd464860ebbe3db9a5c9c5a3a2219a797047e7265a0b50",
+        "egg/round-01": "88b1576d02809dba9266a7dda1c943ba65e374531d87f99664e95c7f080e09bb",
+        "egg/round-02": "73df7e10e28523fff29a7d736a5111953b7201d1ad3e1a8dbea3fbc91f2329fb"
+      },
+      "terms": {
+        "clamped_length": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+        "data_hold": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not prev_m_ready)) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last)))))",
+        "header_hold": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length)))))))",
+        "pad_flag": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+        "truncate_flag": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))"
+      },
+      "assertions_sha256": "64a7077fad20f4189a2d2df6c774ce508e37f4210d4966e0b9866cbc5fc4ab3b",
+      "bounded_states": 24,
+      "bounded_safety": "PASSED",
+      "assertions": [
+        "data_hold",
+        "header_hold",
+        "pad_flag",
+        "truncate_flag",
+        "clamped_length"
+      ],
+      "induction_properties": [
+        "data_hold",
+        "header_hold"
+      ],
+      "induction_base_states": 3,
+      "temporal_induction": "PASSED"
+    }
+  },
+  "tools": {
+    "yosys": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "z3": "Z3 version 4.16.0 - 64 bit"
+  },
+  "new_model_calls": 0,
+  "new_physical_simulations": 0
+}

@@ -86,11 +86,11 @@ def _literal(node):
     return node if isinstance(node, str) else None
 
 
-def _certify_atoms(atoms, trees, env, timeout_ms):
+def _certify_atoms(atoms, trees, env, timeout_ms, *, lower=z3_term, scope=SCOPE):
     # Every candidate rule relates two distinct primitive bit-vector comparisons.
     # Include neither Boolean subexpressions nor the two complete target literals.
     roots = {_literal(tree) for tree in trees}
-    values = {name: z3_term(atom, env) for name, atom in sorted(atoms.items())
+    values = {name: lower(atom, env) for name, atom in sorted(atoms.items())
               if isinstance(atom, tuple) and atom[0] in ("eq", "ult", "ule")}
     rules, checks = [], []
     for i, (left, right) in enumerate(combinations(values, 2)):
@@ -106,7 +106,7 @@ def _certify_atoms(atoms, trees, env, timeout_ms):
             if query["status"] == "unsat":
                 rule = {"name": f"typed-{relation}-{i}", "left": left,
                         "right": right if relation == "equal" else f"(not {right})",
-                        "proof_status": "unsat", "event_context": SCOPE}
+                        "proof_status": "unsat", "event_context": scope}
                 rules.append(rule)
                 check["certified_rule"] = rule["name"]
                 break

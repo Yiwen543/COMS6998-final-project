@@ -1,0 +1,39 @@
+{
+  "terms": {
+    "data_hold": "(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not (eq m_data prev_m_data))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and m_last (not prev_m_last))))))) (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and (not m_last) prev_m_last)))))))))",
+    "header_hold": "(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not (eq h_length prev_h_length))))))) (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not (eq h_original_length prev_h_original_length)))))))))))))",
+    "pad_flag": "(or (and (not rst) (and h_valid (and h_pad (not (ult h_original_length 4))))) (and (not rst) (and h_valid (and (not h_pad) (ult h_original_length 4)))))",
+    "truncate_flag": "(or (and (not rst) (and h_valid (and h_truncate (not (ult 8 h_original_length))))) (and (not rst) (and h_valid (and (not h_truncate) (ult 8 h_original_length)))))",
+    "clamped_length": "(or (and (not rst) (and h_valid (and (ult h_original_length 4) (not (eq 4 h_length))))) (or (and (not rst) (and h_valid (and (ult 8 h_original_length) (not (eq 8 h_length))))) (and (not rst) (and h_valid (and (ule 4 h_original_length) (and (ule h_original_length 8) (not (eq h_length h_original_length))))))))"
+  },
+  "assertions_sha256": "fa806343cb9844787dab033621d21f9a7dd154ead4325ae3b8210ff4518c0568",
+  "bounded_states": 24,
+  "bounded_safety": "PASSED",
+  "assertions": [
+    "data_hold",
+    "header_hold",
+    "pad_flag",
+    "truncate_flag",
+    "clamped_length"
+  ],
+  "induction_properties": [
+    "data_hold",
+    "header_hold"
+  ],
+  "induction_base_states": 3,
+  "temporal_induction": "PASSED",
+  "source_only_generated_sha256": "1188368b7f928f9e4ea40bfa7f9c676e9ec18b5199a5304ea9df66d1d1130d70",
+  "upstream_commit": "e94172a1bd5e9b138b5fc3da01554edb3052ce52",
+  "source_sha256": {
+    "public/rtl/axis_fifo.v": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+    "public/rtl/axis_frame_length_adjust.v": "4b11a92dbdcd0b7b4999d94a62f57b0fc9e0476c543cffcfc817b0b7405f148b",
+    "public/rtl/axis_frame_length_adjust_fifo.v": "26f1636f5d4f219ca1dcf336b45b636e74a0977826ee51cdcab4e5c2d136b7ce",
+    "public/task_top_v3.sv": "db55dbee92a43f461d28f9c02a15d0eaf32c0c1cab2cbcc4ab85f0f3c91aab5e"
+  },
+  "harness_sha256": "ab53344f851c0f1d33b261f7dc933f00d267dc82c04ca9859c5cc8569216e3a3",
+  "api_calls": 0,
+  "tools": {
+    "yosys": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "z3": "Z3 version 4.16.0 - 64 bit"
+  }
+}

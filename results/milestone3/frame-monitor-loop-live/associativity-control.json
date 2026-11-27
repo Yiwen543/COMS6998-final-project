@@ -1,0 +1,305 @@
+{
+  "live_indexed": {
+    "binary": "guard_proofs_fast indexed",
+    "rounds": [
+      {
+        "properties": {
+          "clamped_length": {
+            "checked_steps": 0,
+            "proved": true
+          },
+          "data_hold": {
+            "checked_steps": 0,
+            "proved": false
+          },
+          "header_hold": {
+            "checked_steps": 0,
+            "proved": false
+          },
+          "pad_flag": {
+            "checked_steps": 0,
+            "proved": true
+          },
+          "truncate_flag": {
+            "checked_steps": 0,
+            "proved": true
+          }
+        },
+        "round": 1
+      },
+      {
+        "properties": {
+          "clamped_length": {
+            "checked_steps": 0,
+            "proved": true
+          },
+          "data_hold": {
+            "checked_steps": 0,
+            "proved": false
+          },
+          "header_hold": {
+            "checked_steps": 0,
+            "proved": false
+          },
+          "pad_flag": {
+            "checked_steps": 0,
+            "proved": true
+          },
+          "truncate_flag": {
+            "checked_steps": 0,
+            "proved": true
+          }
+        },
+        "round": 2
+      }
+    ]
+  },
+  "post_hoc": {
+    "binary": "egg_assertion_forms",
+    "binary_sha256": "8667a426cc1de2ad9580ea9c2c48f747d914b445f4d0d710decaeaa346f31abb",
+    "ground_rules": [],
+    "hold_pairs": {
+      "data_hold": {
+        "candidate": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not prev_m_ready)) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last)))))",
+        "checked_proof": {
+          "builtin_rules": [],
+          "checked_edges": 1,
+          "checked_steps": 5,
+          "edges": [
+            {
+              "builtin_rules": [],
+              "ground_rules": [],
+              "left": "reference",
+              "pattern_rules": [
+                "and-associate-right"
+              ],
+              "right": "candidate",
+              "steps": [
+                {
+                  "direction": "forward",
+                  "path": [],
+                  "rule": "and-associate-right"
+                },
+                {
+                  "direction": "forward",
+                  "path": [
+                    1
+                  ],
+                  "rule": "and-associate-right"
+                },
+                {
+                  "direction": "forward",
+                  "path": [
+                    1,
+                    1
+                  ],
+                  "rule": "and-associate-right"
+                },
+                {
+                  "direction": "reverse",
+                  "path": [
+                    1
+                  ],
+                  "rule": "and-associate-right"
+                },
+                {
+                  "direction": "reverse",
+                  "path": [],
+                  "rule": "and-associate-right"
+                }
+              ]
+            }
+          ],
+          "ground_rules": [],
+          "pattern_rules": [
+            "and-associate-right"
+          ],
+          "pattern_truth_table_rows": {
+            "and-associate-right": 8
+          }
+        },
+        "egg_graph": {
+          "eclasses": 32,
+          "engine": "egg 0.11.0",
+          "enodes": 40,
+          "ground_rule_count": 0,
+          "iterations": 4,
+          "rewrite_explanations": [
+            {
+              "explanation": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))\n(Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready)))) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))))\n(and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_m_valid (not prev_m_ready))) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last))))))))\n(and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_m_valid (not prev_m_ready)) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))))))\n(and have_prev (Rewrite<= and-associate-right (and (and (not prev_rst) (not rst)) (and (and prev_m_valid (not prev_m_ready)) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last))))))))\n(Rewrite<= and-associate-right (and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not prev_m_ready)) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))))",
+              "left": "reference",
+              "right": "candidate"
+            }
+          ],
+          "stop_reason": "Some(Saturated)",
+          "targets": [
+            {
+              "eclass": 25,
+              "eclass_before": 25,
+              "id": "reference"
+            },
+            {
+              "eclass": 25,
+              "eclass_before": 29,
+              "id": "candidate"
+            }
+          ]
+        },
+        "egg_input": {
+          "pattern_rules": [
+            {
+              "left": "(and (and ?a ?b) ?c)",
+              "name": "and-associate-right",
+              "right": "(and ?a (and ?b ?c))"
+            }
+          ],
+          "targets": [
+            {
+              "compact": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))",
+              "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+              "id": "reference"
+            },
+            {
+              "compact": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_m_valid (not prev_m_ready)) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last))))))",
+              "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+              "id": "candidate"
+            }
+          ],
+          "verified_rules": []
+        },
+        "full_typed_xor": "unsat",
+        "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))"
+      },
+      "header_hold": {
+        "candidate": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length)))))))",
+        "checked_proof": {
+          "builtin_rules": [],
+          "checked_edges": 1,
+          "checked_steps": 5,
+          "edges": [
+            {
+              "builtin_rules": [],
+              "ground_rules": [],
+              "left": "reference",
+              "pattern_rules": [
+                "and-associate-right"
+              ],
+              "right": "candidate",
+              "steps": [
+                {
+                  "direction": "forward",
+                  "path": [],
+                  "rule": "and-associate-right"
+                },
+                {
+                  "direction": "forward",
+                  "path": [
+                    1
+                  ],
+                  "rule": "and-associate-right"
+                },
+                {
+                  "direction": "forward",
+                  "path": [
+                    1,
+                    1
+                  ],
+                  "rule": "and-associate-right"
+                },
+                {
+                  "direction": "reverse",
+                  "path": [
+                    1
+                  ],
+                  "rule": "and-associate-right"
+                },
+                {
+                  "direction": "reverse",
+                  "path": [],
+                  "rule": "and-associate-right"
+                }
+              ]
+            }
+          ],
+          "ground_rules": [],
+          "pattern_rules": [
+            "and-associate-right"
+          ],
+          "pattern_truth_table_rows": {
+            "and-associate-right": 8
+          }
+        },
+        "egg_graph": {
+          "eclasses": 43,
+          "engine": "egg 0.11.0",
+          "enodes": 51,
+          "ground_rule_count": 0,
+          "iterations": 4,
+          "rewrite_explanations": [
+            {
+              "explanation": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))\n(Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready)))) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_h_valid (not prev_h_ready))) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))))\n(and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))))\n(and have_prev (Rewrite<= and-associate-right (and (and (not prev_rst) (not rst)) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))))\n(Rewrite<= and-associate-right (and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))",
+              "left": "reference",
+              "right": "candidate"
+            }
+          ],
+          "stop_reason": "Some(Saturated)",
+          "targets": [
+            {
+              "eclass": 36,
+              "eclass_before": 36,
+              "id": "reference"
+            },
+            {
+              "eclass": 36,
+              "eclass_before": 40,
+              "id": "candidate"
+            }
+          ]
+        },
+        "egg_input": {
+          "pattern_rules": [
+            {
+              "left": "(and (and ?a ?b) ?c)",
+              "name": "and-associate-right",
+              "right": "(and ?a (and ?b ?c))"
+            }
+          ],
+          "targets": [
+            {
+              "compact": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))",
+              "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+              "id": "reference"
+            },
+            {
+              "compact": "(and (and have_prev (and (not prev_rst) (not rst))) (and (and prev_h_valid (not prev_h_ready)) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))",
+              "event_context": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+              "id": "candidate"
+            }
+          ],
+          "verified_rules": []
+        },
+        "full_typed_xor": "unsat",
+        "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))"
+      }
+    },
+    "pattern_rules": [
+      {
+        "left": "(and (and ?a ?b) ?c)",
+        "name": "and-associate-right",
+        "right": "(and ?a (and ?b ?c))"
+      }
+    ],
+    "proved_holds": 2,
+    "rule_truth_table_rows": {
+      "and-associate-right": 8
+    }
+  },
+  "scope": "post-hoc control on the two unique hold pairs missed by indexed egg in both live rounds",
+  "source_file_sha256": {
+    "egg/round-01/response.json": "88b1576d02809dba9266a7dda1c943ba65e374531d87f99664e95c7f080e09bb",
+    "egg/round-01/semantic.json": "a0734a82dd4f0fc307b5eefa60da615837f2874e6ba3aba6f48dba30926b9722",
+    "egg/round-02/response.json": "73df7e10e28523fff29a7d736a5111953b7201d1ad3e1a8dbea3fbc91f2329fb",
+    "egg/round-02/semantic.json": "83b8aca0a35cc547e5304410c6e40d76e51502e24cbc6188e422d72bcfe2e665",
+    "summary.json": "4978f907b2d9aeae571bf5115da400102719edc240064e2b2ca28d3c93b28bc6"
+  }
+}

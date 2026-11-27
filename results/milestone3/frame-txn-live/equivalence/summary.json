@@ -1,0 +1,316 @@
+{
+  "analysis": "post-hoc initial-output pair comparison; no live model feedback",
+  "archive_sha256": "941424472809d066f70db393e892af7d8202a1145f8ce4e4ad5b75d5dc5f9351",
+  "engine_sha256": "cf7306a97676b1c351ca1ee3738421095065c2a266bee3b89d4312cfdd217aeb",
+  "identities": [
+    {
+      "property": "data_entitlement",
+      "text": "(and (not rst) (and m_valid (not (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))))))",
+      "trials": [
+        1,
+        3
+      ]
+    },
+    {
+      "property": "data_payload",
+      "text": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (or (and (ule data_index data_n) (ne m_data data_byte)) (and (ugt data_index data_n) (ne m_data 0))))))",
+      "trials": [
+        1,
+        3
+      ]
+    },
+    {
+      "property": "drain_complete",
+      "text": "(and final_sample (or s_valid (or m_valid (or h_valid (or input_open (or (ne data_count input_count) (ne header_count input_count)))))))",
+      "trials": [
+        1,
+        2
+      ]
+    },
+    {
+      "property": "drain_complete",
+      "text": "(and final_sample (or s_valid (or m_valid (or h_valid (or input_open (or (ne data_count input_count) (ne header_count input_count)))))))",
+      "trials": [
+        1,
+        3
+      ]
+    },
+    {
+      "property": "drain_complete",
+      "text": "(and final_sample (or s_valid (or m_valid (or h_valid (or input_open (or (ne data_count input_count) (ne header_count input_count)))))))",
+      "trials": [
+        2,
+        3
+      ]
+    },
+    {
+      "property": "header_entitlement",
+      "text": "(and (not rst) (and h_valid (not (and (ult header_count input_count) header_done))))",
+      "trials": [
+        1,
+        3
+      ]
+    },
+    {
+      "property": "header_flags",
+      "text": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (or (xor h_pad (ult header_n 4)) (xor h_truncate (ugt header_n 8))))))",
+      "trials": [
+        1,
+        3
+      ]
+    },
+    {
+      "property": "header_original",
+      "text": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (ne h_original_length header_n))))",
+      "trials": [
+        1,
+        3
+      ]
+    },
+    {
+      "property": "reset_clear",
+      "text": "(and phase_post (and rst (or m_valid h_valid)))",
+      "trials": [
+        1,
+        3
+      ]
+    }
+  ],
+  "limits": {
+    "enodes": 20000,
+    "iterations": 20,
+    "outer_timeout_seconds": 20,
+    "saturation_seconds": 5,
+    "smt_timeout_ms": 5000,
+    "stop_on_merge": true
+  },
+  "nonidentical_occurrences": 18,
+  "ordinary_abstract_xor": {
+    "sat": 2,
+    "unsat": 10
+  },
+  "ordinary_canonical_matches": 10,
+  "profiles": {
+    "ac_dist": {
+      "checked_steps": 14,
+      "status": {
+        "checked_derivation": 10,
+        "limited": 2
+      },
+      "stops": {
+        "Some(NodeLimit(20872))": 1,
+        "Some(NodeLimit(28310))": 1,
+        "Some(Other(\"TargetsMerged\"))": 10
+      }
+    },
+    "assoc": {
+      "checked_steps": 11,
+      "status": {
+        "checked_derivation": 8,
+        "saturated_miss": 4
+      },
+      "stops": {
+        "Some(Other(\"TargetsMerged\"))": 8,
+        "Some(Saturated)": 4
+      }
+    },
+    "base": {
+      "checked_steps": 0,
+      "status": {
+        "saturated_miss": 12
+      },
+      "stops": {
+        "Some(Saturated)": 12
+      }
+    }
+  },
+  "reference_comparisons": 19,
+  "reference_slots": 27,
+  "reference_xor_status": {
+    "unsat": 19
+  },
+  "response_sha256": {
+    "trial-01/initial/response.json": "b932bcda249dc3d5008086ced05276b056a21ca3b96695fa4135fe9f8e4221e1",
+    "trial-02/initial/response.json": "7ef25c2f64a390c25c58f24a5d7ea09e45a6a910969552a48a1a962bf6713c38",
+    "trial-03/initial/response.json": "eb768ed4c14b5e44d5b68226a2c4d01ee1b8be872dac640888bf57cb0a8258a0"
+  },
+  "rule_truth_table_rows": {
+    "ac_dist": {
+      "and-associate-right": 8,
+      "and-commute": 4,
+      "and-distribute": 8,
+      "and-true": 2,
+      "and-true-left": 2,
+      "de-morgan-and": 4,
+      "de-morgan-or": 4,
+      "double-not": 2,
+      "not-false": 1,
+      "or-associate-right": 8,
+      "or-commute": 4,
+      "or-distribute": 8
+    },
+    "assoc": {
+      "and-associate-right": 8,
+      "and-true": 2,
+      "and-true-left": 2,
+      "de-morgan-and": 4,
+      "de-morgan-or": 4,
+      "double-not": 2,
+      "not-false": 1,
+      "or-associate-right": 8
+    },
+    "base": {
+      "and-true": 2,
+      "and-true-left": 2,
+      "de-morgan-and": 4,
+      "de-morgan-or": 4,
+      "double-not": 2,
+      "not-false": 1
+    }
+  },
+  "rules": {
+    "ac_dist": [
+      {
+        "left": "(not (or ?a ?b))",
+        "name": "de-morgan-or",
+        "right": "(and (not ?a) (not ?b))"
+      },
+      {
+        "left": "(not (and ?a ?b))",
+        "name": "de-morgan-and",
+        "right": "(or (not ?a) (not ?b))"
+      },
+      {
+        "left": "(not (not ?a))",
+        "name": "double-not",
+        "right": "?a"
+      },
+      {
+        "left": "(and ?a true)",
+        "name": "and-true",
+        "right": "?a"
+      },
+      {
+        "left": "(and true ?a)",
+        "name": "and-true-left",
+        "right": "?a"
+      },
+      {
+        "left": "(not false)",
+        "name": "not-false",
+        "right": "true"
+      },
+      {
+        "left": "(and (and ?a ?b) ?c)",
+        "name": "and-associate-right",
+        "right": "(and ?a (and ?b ?c))"
+      },
+      {
+        "left": "(or (or ?a ?b) ?c)",
+        "name": "or-associate-right",
+        "right": "(or ?a (or ?b ?c))"
+      },
+      {
+        "left": "(and ?a ?b)",
+        "name": "and-commute",
+        "right": "(and ?b ?a)"
+      },
+      {
+        "left": "(or ?a ?b)",
+        "name": "or-commute",
+        "right": "(or ?b ?a)"
+      },
+      {
+        "left": "(and ?a (or ?b ?c))",
+        "name": "and-distribute",
+        "right": "(or (and ?a ?b) (and ?a ?c))"
+      },
+      {
+        "left": "(or ?a (and ?b ?c))",
+        "name": "or-distribute",
+        "right": "(and (or ?a ?b) (or ?a ?c))"
+      }
+    ],
+    "assoc": [
+      {
+        "left": "(not (or ?a ?b))",
+        "name": "de-morgan-or",
+        "right": "(and (not ?a) (not ?b))"
+      },
+      {
+        "left": "(not (and ?a ?b))",
+        "name": "de-morgan-and",
+        "right": "(or (not ?a) (not ?b))"
+      },
+      {
+        "left": "(not (not ?a))",
+        "name": "double-not",
+        "right": "?a"
+      },
+      {
+        "left": "(and ?a true)",
+        "name": "and-true",
+        "right": "?a"
+      },
+      {
+        "left": "(and true ?a)",
+        "name": "and-true-left",
+        "right": "?a"
+      },
+      {
+        "left": "(not false)",
+        "name": "not-false",
+        "right": "true"
+      },
+      {
+        "left": "(and (and ?a ?b) ?c)",
+        "name": "and-associate-right",
+        "right": "(and ?a (and ?b ?c))"
+      },
+      {
+        "left": "(or (or ?a ?b) ?c)",
+        "name": "or-associate-right",
+        "right": "(or ?a (or ?b ?c))"
+      }
+    ],
+    "base": [
+      {
+        "left": "(not (or ?a ?b))",
+        "name": "de-morgan-or",
+        "right": "(and (not ?a) (not ?b))"
+      },
+      {
+        "left": "(not (and ?a ?b))",
+        "name": "de-morgan-and",
+        "right": "(or (not ?a) (not ?b))"
+      },
+      {
+        "left": "(not (not ?a))",
+        "name": "double-not",
+        "right": "?a"
+      },
+      {
+        "left": "(and ?a true)",
+        "name": "and-true",
+        "right": "?a"
+      },
+      {
+        "left": "(and true ?a)",
+        "name": "and-true-left",
+        "right": "?a"
+      },
+      {
+        "left": "(not false)",
+        "name": "not-false",
+        "right": "true"
+      }
+    ]
+  },
+  "scope": "Transaction variables at one two-state snapshot, with unrestricted values at their declared widths.",
+  "text_identity_occurrences": 9,
+  "typed_xor_status": {
+    "unsat": 12
+  },
+  "unique_nonidentical_pairs": 12,
+  "z3": "4.16.0"
+}

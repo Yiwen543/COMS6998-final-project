@@ -27,6 +27,12 @@ fn field<'a>(value: &'a Value, key: &str) -> Result<&'a str, String> {
 }
 
 fn run() -> Result<Value, Box<dyn Error>> {
+    let args: Vec<_> = std::env::args().skip(1).collect();
+    let stop_on_merge = match args.as_slice() {
+        [] => false,
+        [flag] if flag == "--stop-on-merge" => true,
+        _ => return Err("usage: egg_assertion_forms [--stop-on-merge]".into()),
+    };
     let mut input = String::new();
     io::stdin().read_to_string(&mut input)?;
     let payload: Value = serde_json::from_str(&input)?;
@@ -45,6 +51,9 @@ fn run() -> Result<Value, Box<dyn Error>> {
     }
     if exprs.is_empty() {
         return Err("at least one target is required".into());
+    }
+    if stop_on_merge && (targets.len() != 2 || targets[0]["event_context"] != targets[1]["event_context"]) {
+        return Err("--stop-on-merge requires exactly two targets in the same event context".into());
     }
 
     let mut names = BTreeSet::new();
@@ -73,6 +82,18 @@ fn run() -> Result<Value, Box<dyn Error>> {
         runner.roots.iter().map(|&id| usize::from(runner.egraph.find(id))).collect::<Vec<_>>()
     };
     let before = roots(&runner);
+    if stop_on_merge {
+        let (left, right) = (runner.roots[0], runner.roots[1]);
+        // egg calls hooks before matching, on the rebuilt graph. This also
+        // handles identical input trees before the first rewrite search.
+        runner = runner.with_hook(move |r| {
+            if r.egraph.find(left) == r.egraph.find(right) {
+                Err("TargetsMerged".into())
+            } else {
+                Ok(())
+            }
+        });
+    }
     runner = runner.run(&rules);
     let after = roots(&runner);
     let mut groups = BTreeMap::<_, Vec<_>>::new();

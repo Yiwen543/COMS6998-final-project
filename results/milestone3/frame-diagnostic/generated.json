@@ -1,0 +1,1860 @@
+{
+  "api_calls": 0,
+  "binary_sha256": "9ae585ca855abd8ec82af844cbdd63ef9b0e7d4d722ce1bed27ede1049e70cd0",
+  "properties": {
+    "clamped_length": {
+      "accepted": true,
+      "atoms": {
+        "bv_1ffb2f508168dd87e304104d": "(eq 4 h_length)",
+        "bv_2b90ee49c3843e2b034d9aaa": "(ult h_original_length 4)",
+        "bv_2fdc44351bc7c55a93e25163": "(ule 4 h_original_length)",
+        "bv_4b07129370bd081b3adcd482": "(ult 8 h_original_length)",
+        "bv_759af06ad62d2f39b6a81dab": "(eq h_length h_original_length)",
+        "bv_a1f947d170e2392e035e2a17": "(eq 8 h_length)",
+        "bv_ba82d0b7baa3a50e5471f533": "(ule h_original_length 8)",
+        "h_valid": "h_valid",
+        "rst": "rst"
+      },
+      "checked_steps": [
+        {
+          "direction": "forward",
+          "path": [],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1
+          ],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        }
+      ],
+      "clauses": [
+        {
+          "clause": "(and (not (eq 4 h_length)) (and (ult h_original_length 4) (and h_valid (not rst))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x140 (not (= (_ bv4 16) h_length))))\n(let (($x81 (and $x140 (and (bvult h_original_length (_ bv4 16)) (and h_valid (not rst))))))\n(let (($x74 (and (and (bvuge h_original_length (_ bv4 16)) (bvule h_original_length (_ bv8 16))) (and (distinct h_length h_original_length) true))))\n(let (($x44 (or (and (bvugt h_original_length (_ bv8 16)) (and (distinct (_ bv8 16) h_length) true)) $x74)))\n(let (($x133 (or (and (bvult h_original_length (_ bv4 16)) (and (distinct (_ bv4 16) h_length) true)) $x44)))\n(let (($x165 (and (and (not rst) h_valid) $x133)))\n(let (($x132 (or $x165 $x81)))\n(xor $x165 $x132)))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 4
+        },
+        {
+          "clause": "(and (ult 8 h_original_length) (and (not (eq 8 h_length)) (and h_valid (not rst))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x59 (and (bvult (_ bv8 16) h_original_length) (and (not (= (_ bv8 16) h_length)) (and h_valid (not rst))))))\n(let (($x74 (and (and (bvuge h_original_length (_ bv4 16)) (bvule h_original_length (_ bv8 16))) (and (distinct h_length h_original_length) true))))\n(let (($x44 (or (and (bvugt h_original_length (_ bv8 16)) (and (distinct (_ bv8 16) h_length) true)) $x74)))\n(let (($x133 (or (and (bvult h_original_length (_ bv4 16)) (and (distinct (_ bv4 16) h_length) true)) $x44)))\n(let (($x165 (and (and (not rst) h_valid) $x133)))\n(let (($x116 (or $x165 $x59)))\n(xor $x165 $x116))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 4
+        },
+        {
+          "clause": "(and (ule 4 h_original_length) (and (not (eq h_length h_original_length)) (and (ule h_original_length 8) (and h_valid (not rst)))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x161 (not (= h_length h_original_length))))\n(let (($x138 (and $x161 (and (bvule h_original_length (_ bv8 16)) (and h_valid (not rst))))))\n(let (($x79 (bvule (_ bv4 16) h_original_length)))\n(let (($x74 (and (and (bvuge h_original_length (_ bv4 16)) (bvule h_original_length (_ bv8 16))) (and (distinct h_length h_original_length) true))))\n(let (($x44 (or (and (bvugt h_original_length (_ bv8 16)) (and (distinct (_ bv8 16) h_length) true)) $x74)))\n(let (($x133 (or (and (bvult h_original_length (_ bv4 16)) (and (distinct (_ bv4 16) h_length) true)) $x44)))\n(let (($x165 (and (and (not rst) h_valid) $x133)))\n(let (($x38 (or $x165 (and $x79 $x138))))\n(xor $x165 $x38))))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 5
+        }
+      ],
+      "engine": {
+        "clause_count": 3,
+        "eclasses": 31,
+        "enodes": 41,
+        "explanation": "(and (and (not rst) h_valid) (or (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)) (or (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)) (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab)))))\n(Rewrite=> and-distribute-right (or (and (and (not rst) h_valid) (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d))) (and (and (not rst) h_valid) (or (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)) (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab))))))\n(or (Rewrite=> and-associate-right (and (not rst) (and h_valid (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d))))) (and (and (not rst) h_valid) (or (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)) (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab)))))\n(or (and (not rst) (and h_valid (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)))) (Rewrite=> and-distribute-right (or (and (and (not rst) h_valid) (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17))) (and (and (not rst) h_valid) (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab))))))\n(or (and (not rst) (and h_valid (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)))) (or (Rewrite=> and-associate-right (and (not rst) (and h_valid (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17))))) (and (and (not rst) h_valid) (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab)))))\n(or (and (not rst) (and h_valid (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)))) (or (and (not rst) (and h_valid (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)))) (Rewrite=> and-associate-right (and (not rst) (and h_valid (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab)))))))\n(or (and (not rst) (and h_valid (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)))) (or (and (not rst) (and h_valid (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)))) (and (not rst) (and h_valid (Rewrite=> and-associate-right (and bv_2fdc44351bc7c55a93e25163 (and bv_ba82d0b7baa3a50e5471f533 (not bv_759af06ad62d2f39b6a81dab))))))))",
+        "extracted": "(or (and (not rst) (and h_valid (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)))) (or (and (not rst) (and h_valid (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)))) (and (not rst) (and h_valid (and bv_2fdc44351bc7c55a93e25163 (and bv_ba82d0b7baa3a50e5471f533 (not bv_759af06ad62d2f39b6a81dab)))))))",
+        "iterations": 4,
+        "literal_count": 13,
+        "source": "(and (and (not rst) h_valid) (or (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)) (or (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)) (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab)))))",
+        "stop_reason": "Some(Saturated)"
+      },
+      "engine_request": {
+        "pattern_rules": [
+          {
+            "left": "(not (or ?a ?b))",
+            "name": "de-morgan-or",
+            "right": "(and (not ?a) (not ?b))"
+          },
+          {
+            "left": "(not (and ?a ?b))",
+            "name": "de-morgan-and",
+            "right": "(or (not ?a) (not ?b))"
+          },
+          {
+            "left": "(not (not ?a))",
+            "name": "double-not",
+            "right": "?a"
+          },
+          {
+            "left": "(and ?a true)",
+            "name": "and-true",
+            "right": "?a"
+          },
+          {
+            "left": "(and true ?a)",
+            "name": "and-true-left",
+            "right": "?a"
+          },
+          {
+            "left": "(not false)",
+            "name": "not-false",
+            "right": "true"
+          },
+          {
+            "left": "(and (and ?a ?b) ?c)",
+            "name": "and-associate-right",
+            "right": "(and ?a (and ?b ?c))"
+          },
+          {
+            "left": "(or (or ?a ?b) ?c)",
+            "name": "or-associate-right",
+            "right": "(or ?a (or ?b ?c))"
+          },
+          {
+            "left": "(and ?a (or ?b ?c))",
+            "name": "and-distribute-right",
+            "right": "(or (and ?a ?b) (and ?a ?c))"
+          },
+          {
+            "left": "(and (or ?a ?b) ?c)",
+            "name": "and-distribute-left",
+            "right": "(or (and ?a ?c) (and ?b ?c))"
+          },
+          {
+            "left": "(and ?a ?a)",
+            "name": "and-idempotent",
+            "right": "?a"
+          },
+          {
+            "left": "(or ?a ?a)",
+            "name": "or-idempotent",
+            "right": "?a"
+          }
+        ],
+        "term": "(and (and (not rst) h_valid) (or (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)) (or (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)) (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab)))))"
+      },
+      "engine_seconds": 0.0019039440012420528,
+      "equivalence": {
+        "candidate_value": null,
+        "counterexample": null,
+        "equivalent": true,
+        "reference_value": null,
+        "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_valid () Bool)\n(declare-fun rst () Bool)\n(assert\n (let (($x85 (not (= h_length h_original_length))))\n(let (($x36 (bvule h_original_length (_ bv8 16))))\n(let (($x120 (bvule (_ bv4 16) h_original_length)))\n(let (($x37 (not rst)))\n(let (($x77 (and h_valid (and (bvult (_ bv8 16) h_original_length) (not (= (_ bv8 16) h_length))))))\n(let (($x93 (or (and $x37 $x77) (and $x37 (and h_valid (and $x120 (and $x36 $x85)))))))\n(let (($x60 (and h_valid (and (bvult h_original_length (_ bv4 16)) (not (= (_ bv4 16) h_length))))))\n(let (($x98 (or (and $x37 $x60) $x93)))\n(let (($x74 (and (and (bvuge h_original_length (_ bv4 16)) $x36) (and (distinct h_length h_original_length) true))))\n(let (($x44 (or (and (bvugt h_original_length (_ bv8 16)) (and (distinct (_ bv8 16) h_length) true)) $x74)))\n(let (($x133 (or (and (bvult h_original_length (_ bv4 16)) (and (distinct (_ bv4 16) h_length) true)) $x44)))\n(let (($x165 (and (and $x37 h_valid) $x133)))\n(xor $x165 $x98))))))))))))))\n(check-sat)\n",
+        "status": "unsat"
+      },
+      "extracted": "(or (and (not rst) (and h_valid (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)))) (or (and (not rst) (and h_valid (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)))) (and (not rst) (and h_valid (and bv_2fdc44351bc7c55a93e25163 (and bv_ba82d0b7baa3a50e5471f533 (not bv_759af06ad62d2f39b6a81dab)))))))",
+      "ordinary": {
+        "clause_count": 3,
+        "clauses": [
+          {
+            "clause": "(and (not (eq 4 h_length)) (and (ult h_original_length 4) (and h_valid (not rst))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x72 (not (= (_ bv4 16) h_length))))\n(let (($x83 (and $x72 (and (bvult h_original_length (_ bv4 16)) (and h_valid (not rst))))))\n(let (($x105 (and (and (bvuge h_original_length (_ bv4 16)) (bvule h_original_length (_ bv8 16))) (and (distinct h_length h_original_length) true))))\n(let (($x95 (or (and (bvugt h_original_length (_ bv8 16)) (and (distinct (_ bv8 16) h_length) true)) $x105)))\n(let (($x64 (or (and (bvult h_original_length (_ bv4 16)) (and (distinct (_ bv4 16) h_length) true)) $x95)))\n(let (($x91 (and (and (not rst) h_valid) $x64)))\n(let (($x110 (or $x91 $x83)))\n(xor $x91 $x110)))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 4
+          },
+          {
+            "clause": "(and (ult 8 h_original_length) (and (not (eq 8 h_length)) (and h_valid (not rst))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x81 (and (bvult (_ bv8 16) h_original_length) (and (not (= (_ bv8 16) h_length)) (and h_valid (not rst))))))\n(let (($x105 (and (and (bvuge h_original_length (_ bv4 16)) (bvule h_original_length (_ bv8 16))) (and (distinct h_length h_original_length) true))))\n(let (($x95 (or (and (bvugt h_original_length (_ bv8 16)) (and (distinct (_ bv8 16) h_length) true)) $x105)))\n(let (($x64 (or (and (bvult h_original_length (_ bv4 16)) (and (distinct (_ bv4 16) h_length) true)) $x95)))\n(let (($x91 (and (and (not rst) h_valid) $x64)))\n(let (($x59 (or $x91 $x81)))\n(xor $x91 $x59))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 4
+          },
+          {
+            "clause": "(and (ule 4 h_original_length) (and (not (eq h_length h_original_length)) (and (ule h_original_length 8) (and h_valid (not rst)))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x268 (not (= h_length h_original_length))))\n(let (($x46 (and $x268 (and (bvule h_original_length (_ bv8 16)) (and h_valid (not rst))))))\n(let (($x79 (bvule (_ bv4 16) h_original_length)))\n(let (($x105 (and (and (bvuge h_original_length (_ bv4 16)) (bvule h_original_length (_ bv8 16))) (and (distinct h_length h_original_length) true))))\n(let (($x95 (or (and (bvugt h_original_length (_ bv8 16)) (and (distinct (_ bv8 16) h_length) true)) $x105)))\n(let (($x64 (or (and (bvult h_original_length (_ bv4 16)) (and (distinct (_ bv4 16) h_length) true)) $x95)))\n(let (($x91 (and (and (not rst) h_valid) $x64)))\n(let (($x82 (or $x91 (and $x79 $x46))))\n(xor $x91 $x82))))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 5
+          }
+        ],
+        "equivalence": {
+          "candidate_value": null,
+          "counterexample": null,
+          "equivalent": true,
+          "reference_value": null,
+          "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x161 (not (= h_length h_original_length))))\n(let (($x138 (and $x161 (and (bvule h_original_length (_ bv8 16)) (and h_valid (not rst))))))\n(let (($x79 (bvule (_ bv4 16) h_original_length)))\n(let (($x136 (and (bvult (_ bv8 16) h_original_length) (and (not (= (_ bv8 16) h_length)) (and h_valid (not rst))))))\n(let (($x72 (not (= (_ bv4 16) h_length))))\n(let (($x83 (and $x72 (and (bvult h_original_length (_ bv4 16)) (and h_valid (not rst))))))\n(let (($x113 (or $x83 (or $x136 (and $x79 $x138)))))\n(let (($x105 (and (and (bvuge h_original_length (_ bv4 16)) (bvule h_original_length (_ bv8 16))) (and (distinct h_length h_original_length) true))))\n(let (($x95 (or (and (bvugt h_original_length (_ bv8 16)) (and (distinct (_ bv8 16) h_length) true)) $x105)))\n(let (($x64 (or (and (bvult h_original_length (_ bv4 16)) (and (distinct (_ bv4 16) h_length) true)) $x95)))\n(let (($x91 (and (and (not rst) h_valid) $x64)))\n(xor $x91 $x113)))))))))))))\n(check-sat)\n",
+          "status": "unsat"
+        },
+        "literal_occurrences": 13,
+        "scored_clause_union_equivalence": {
+          "candidate_value": null,
+          "counterexample": null,
+          "equivalent": true,
+          "reference_value": null,
+          "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x268 (not (= h_length h_original_length))))\n(let (($x46 (and $x268 (and (bvule h_original_length (_ bv8 16)) (and h_valid (not rst))))))\n(let (($x79 (bvule (_ bv4 16) h_original_length)))\n(let (($x141 (and (bvult (_ bv8 16) h_original_length) (and (not (= (_ bv8 16) h_length)) (and h_valid (not rst))))))\n(let (($x66 (and (not (= (_ bv4 16) h_length)) (and (bvult h_original_length (_ bv4 16)) (and h_valid (not rst))))))\n(let (($x164 (or $x66 (or $x141 (and $x79 $x46)))))\n(xor $x164 $x164))))))))\n(check-sat)\n",
+          "status": "unsat"
+        },
+        "source": "(or (and (not bv_1ffb2f508168dd87e304104d) (and bv_2b90ee49c3843e2b034d9aaa (and h_valid (not rst)))) (or (and bv_4b07129370bd081b3adcd482 (and (not bv_a1f947d170e2392e035e2a17) (and h_valid (not rst)))) (and bv_2fdc44351bc7c55a93e25163 (and (not bv_759af06ad62d2f39b6a81dab) (and bv_ba82d0b7baa3a50e5471f533 (and h_valid (not rst)))))))",
+        "typed_expression": "(or (and (not (eq 4 h_length)) (and (ult h_original_length 4) (and h_valid (not rst)))) (or (and (ult 8 h_original_length) (and (not (eq 8 h_length)) (and h_valid (not rst)))) (and (ule 4 h_original_length) (and (not (eq h_length h_original_length)) (and (ule h_original_length 8) (and h_valid (not rst)))))))"
+      },
+      "reference": "(and (and (not rst) h_valid) (or (and (ult h_original_length 4) (ne h_length 4)) (or (and (ugt h_original_length 8) (ne h_length 8)) (and (and (uge h_original_length 4) (ule h_original_length 8)) (ne h_length h_original_length)))))",
+      "scored_clause_count": 3,
+      "scored_clause_union_equivalence": {
+        "candidate_value": null,
+        "counterexample": null,
+        "equivalent": true,
+        "reference_value": null,
+        "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x161 (not (= h_length h_original_length))))\n(let (($x138 (and $x161 (and (bvule h_original_length (_ bv8 16)) (and h_valid (not rst))))))\n(let (($x79 (bvule (_ bv4 16) h_original_length)))\n(let (($x143 (bvult (_ bv8 16) h_original_length)))\n(let (($x136 (and $x143 (and (not (= (_ bv8 16) h_length)) (and h_valid (not rst))))))\n(let (($x72 (not (= (_ bv4 16) h_length))))\n(let (($x83 (and $x72 (and (bvult h_original_length (_ bv4 16)) (and h_valid (not rst))))))\n(let (($x113 (or $x83 (or $x136 (and $x79 $x138)))))\n(let (($x37 (not rst)))\n(let (($x168 (and $x37 (and h_valid (and $x79 (and (bvule h_original_length (_ bv8 16)) $x161))))))\n(let (($x86 (or (and $x37 (and h_valid (and $x143 (not (= (_ bv8 16) h_length))))) $x168)))\n(let (($x115 (or (and $x37 (and h_valid (and (bvult h_original_length (_ bv4 16)) $x72))) $x86)))\n(xor $x115 $x113))))))))))))))\n(check-sat)\n",
+        "status": "unsat"
+      },
+      "scored_literal_occurrences": 13,
+      "source": "(and (and (not rst) h_valid) (or (and bv_2b90ee49c3843e2b034d9aaa (not bv_1ffb2f508168dd87e304104d)) (or (and bv_4b07129370bd081b3adcd482 (not bv_a1f947d170e2392e035e2a17)) (and (and bv_2fdc44351bc7c55a93e25163 bv_ba82d0b7baa3a50e5471f533) (not bv_759af06ad62d2f39b6a81dab)))))",
+      "typed_expression": "(or (and (not rst) (and h_valid (and (ult h_original_length 4) (not (eq 4 h_length))))) (or (and (not rst) (and h_valid (and (ult 8 h_original_length) (not (eq 8 h_length))))) (and (not rst) (and h_valid (and (ule 4 h_original_length) (and (ule h_original_length 8) (not (eq h_length h_original_length))))))))"
+    },
+    "data_hold": {
+      "accepted": true,
+      "atoms": {
+        "bv_34bc530db9952285c9fa047d": "(eq m_data prev_m_data)",
+        "have_prev": "have_prev",
+        "m_last": "m_last",
+        "m_valid": "m_valid",
+        "prev_m_last": "prev_m_last",
+        "prev_m_ready": "prev_m_ready",
+        "prev_m_valid": "prev_m_valid",
+        "prev_rst": "prev_rst",
+        "rst": "rst"
+      },
+      "checked_steps": [
+        {
+          "direction": "forward",
+          "path": [],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            0,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            0,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1
+          ],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            0,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1
+          ],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        }
+      ],
+      "clauses": [
+        {
+          "clause": "(and (not (eq m_data prev_m_data)) (and have_prev (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst))))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun m_valid () Bool)\n(assert\n (let (($x38 (not prev_m_ready)))\n(let (($x126 (and have_prev (and $x38 (and prev_m_valid (and (not prev_rst) (not rst)))))))\n(let (($x55 (not (= m_data prev_m_data))))\n(let (($x43 (not m_valid)))\n(let (($x47 (or $x43 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x42 (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid $x38))))))\n(let (($x48 (and $x42 $x47)))\n(let (($x124 (or $x48 (and $x55 $x126))))\n(xor $x48 $x124))))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 6
+        },
+        {
+          "clause": "(and have_prev (and (not m_valid) (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst))))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun m_valid () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(assert\n (let (($x38 (not prev_m_ready)))\n(let (($x43 (not m_valid)))\n(let (($x74 (and $x43 (and $x38 (and prev_m_valid (and (not prev_rst) (not rst)))))))\n(let (($x47 (or $x43 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x42 (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid $x38))))))\n(let (($x48 (and $x42 $x47)))\n(let (($x96 (or $x48 (and have_prev $x74))))\n(xor $x48 $x96)))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 6
+        },
+        {
+          "clause": "(and have_prev (and (not m_last) (and prev_m_last (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst)))))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(declare-fun m_valid () Bool)\n(assert\n (let (($x38 (not prev_m_ready)))\n(let (($x54 (and prev_m_last (and $x38 (and prev_m_valid (and (not prev_rst) (not rst)))))))\n(let (($x76 (not m_last)))\n(let (($x43 (not m_valid)))\n(let (($x47 (or $x43 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x42 (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid $x38))))))\n(let (($x48 (and $x42 $x47)))\n(let (($x63 (or $x48 (and have_prev (and $x76 $x54)))))\n(xor $x48 $x63))))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 7
+        },
+        {
+          "clause": "(and have_prev (and m_last (and (not prev_m_last) (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst)))))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(declare-fun m_valid () Bool)\n(assert\n (let (($x38 (not prev_m_ready)))\n(let (($x94 (not prev_m_last)))\n(let (($x74 (and $x94 (and $x38 (and prev_m_valid (and (not prev_rst) (not rst)))))))\n(let (($x43 (not m_valid)))\n(let (($x47 (or $x43 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x42 (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid $x38))))))\n(let (($x48 (and $x42 $x47)))\n(let (($x84 (or $x48 (and have_prev (and m_last $x74)))))\n(xor $x48 $x84))))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 7
+        }
+      ],
+      "engine": {
+        "clause_count": 4,
+        "eclasses": 60,
+        "enodes": 103,
+        "explanation": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))\n(Rewrite=> and-distribute-right (or (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (not m_valid)) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last))))))\n(or (Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready)))) (not m_valid)))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))\n(or (and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_m_valid (not prev_m_ready))) (not m_valid))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))\n(or (and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_m_valid (not prev_m_ready)) (not m_valid)))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (Rewrite=> and-associate-right (and prev_m_valid (and (not prev_m_ready) (not m_valid))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (Rewrite=> and-distribute-right (or (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (not bv_34bc530db9952285c9fa047d)) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready)))) (not bv_34bc530db9952285c9fa047d)))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_m_valid (not prev_m_ready))) (not bv_34bc530db9952285c9fa047d))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_m_valid (not prev_m_ready)) (not bv_34bc530db9952285c9fa047d)))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (Rewrite=> and-associate-right (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d)))))) (Rewrite=> and-distribute-right (or (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (and m_last (not prev_m_last))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (and (not m_last) prev_m_last))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d)))))) (or (Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready)))) (and m_last (not prev_m_last))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (and (not m_last) prev_m_last)))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d)))))) (or (and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_m_valid (not prev_m_ready))) (and m_last (not prev_m_last)))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (and (not m_last) prev_m_last)))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d)))))) (or (and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_m_valid (not prev_m_ready)) (and m_last (not prev_m_last))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (and (not m_last) prev_m_last)))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (Rewrite=> and-associate-right (and prev_m_valid (and (not prev_m_ready) (and m_last (not prev_m_last)))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (and (not m_last) prev_m_last)))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and m_last (not prev_m_last))))))) (Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready)))) (and (not m_last) prev_m_last)))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and m_last (not prev_m_last))))))) (and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_m_valid (not prev_m_ready))) (and (not m_last) prev_m_last))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and m_last (not prev_m_last))))))) (and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_m_valid (not prev_m_ready)) (and (not m_last) prev_m_last)))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and m_last (not prev_m_last))))))) (and have_prev (and (not prev_rst) (and (not rst) (Rewrite=> and-associate-right (and prev_m_valid (and (not prev_m_ready) (and (not m_last) prev_m_last))))))))))",
+        "extracted": "(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and m_last (not prev_m_last))))))) (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and (not m_last) prev_m_last)))))))))",
+        "iterations": 8,
+        "literal_count": 26,
+        "source": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))",
+        "stop_reason": "Some(Saturated)"
+      },
+      "engine_request": {
+        "pattern_rules": [
+          {
+            "left": "(not (or ?a ?b))",
+            "name": "de-morgan-or",
+            "right": "(and (not ?a) (not ?b))"
+          },
+          {
+            "left": "(not (and ?a ?b))",
+            "name": "de-morgan-and",
+            "right": "(or (not ?a) (not ?b))"
+          },
+          {
+            "left": "(not (not ?a))",
+            "name": "double-not",
+            "right": "?a"
+          },
+          {
+            "left": "(and ?a true)",
+            "name": "and-true",
+            "right": "?a"
+          },
+          {
+            "left": "(and true ?a)",
+            "name": "and-true-left",
+            "right": "?a"
+          },
+          {
+            "left": "(not false)",
+            "name": "not-false",
+            "right": "true"
+          },
+          {
+            "left": "(and (and ?a ?b) ?c)",
+            "name": "and-associate-right",
+            "right": "(and ?a (and ?b ?c))"
+          },
+          {
+            "left": "(or (or ?a ?b) ?c)",
+            "name": "or-associate-right",
+            "right": "(or ?a (or ?b ?c))"
+          },
+          {
+            "left": "(and ?a (or ?b ?c))",
+            "name": "and-distribute-right",
+            "right": "(or (and ?a ?b) (and ?a ?c))"
+          },
+          {
+            "left": "(and (or ?a ?b) ?c)",
+            "name": "and-distribute-left",
+            "right": "(or (and ?a ?c) (and ?b ?c))"
+          },
+          {
+            "left": "(and ?a ?a)",
+            "name": "and-idempotent",
+            "right": "?a"
+          },
+          {
+            "left": "(or ?a ?a)",
+            "name": "or-idempotent",
+            "right": "?a"
+          }
+        ],
+        "term": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))"
+      },
+      "engine_seconds": 0.0023927820002427325,
+      "equivalence": {
+        "candidate_value": null,
+        "counterexample": null,
+        "equivalent": true,
+        "reference_value": null,
+        "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(declare-fun m_valid () Bool)\n(assert\n (let (($x71 (and prev_m_valid (and (not prev_m_ready) (and (not m_last) prev_m_last)))))\n(let (($x37 (not rst)))\n(let (($x36 (not prev_rst)))\n(let (($x64 (and prev_m_valid (and (not prev_m_ready) (and m_last (not prev_m_last))))))\n(let (($x75 (or (and have_prev (and $x36 (and $x37 $x64))) (and have_prev (and $x36 (and $x37 $x71))))))\n(let (($x57 (and prev_m_valid (and (not prev_m_ready) (not (= m_data prev_m_data))))))\n(let (($x51 (and $x37 (and prev_m_valid (and (not prev_m_ready) (not m_valid))))))\n(let (($x77 (or (and have_prev (and $x36 $x51)) (or (and have_prev (and $x36 (and $x37 $x57))) $x75))))\n(let (($x43 (not m_valid)))\n(let (($x47 (or $x43 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x42 (and have_prev (and $x36 (and $x37 (and prev_m_valid (not prev_m_ready)))))))\n(let (($x48 (and $x42 $x47)))\n(xor $x48 $x77))))))))))))))\n(check-sat)\n",
+        "status": "unsat"
+      },
+      "extracted": "(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not bv_34bc530db9952285c9fa047d)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and m_last (not prev_m_last))))))) (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and (not m_last) prev_m_last)))))))))",
+      "ordinary": {
+        "clause_count": 4,
+        "clauses": [
+          {
+            "clause": "(and (not (eq m_data prev_m_data)) (and have_prev (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst))))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun m_valid () Bool)\n(assert\n (let (($x38 (not prev_m_ready)))\n(let (($x73 (and have_prev (and $x38 (and prev_m_valid (and (not prev_rst) (not rst)))))))\n(let (($x125 (not (= m_data prev_m_data))))\n(let (($x43 (not m_valid)))\n(let (($x57 (or $x43 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x51 (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid $x38))))))\n(let (($x110 (and $x51 $x57)))\n(let (($x70 (or $x110 (and $x125 $x73))))\n(xor $x110 $x70))))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 6
+          },
+          {
+            "clause": "(and have_prev (and (not m_valid) (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst))))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun m_valid () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(assert\n (let (($x38 (not prev_m_ready)))\n(let (($x43 (not m_valid)))\n(let (($x68 (and $x43 (and $x38 (and prev_m_valid (and (not prev_rst) (not rst)))))))\n(let (($x57 (or $x43 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x51 (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid $x38))))))\n(let (($x110 (and $x51 $x57)))\n(let (($x78 (or $x110 (and have_prev $x68))))\n(xor $x110 $x78)))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 6
+          },
+          {
+            "clause": "(and have_prev (and (not m_last) (and prev_m_last (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst)))))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(declare-fun m_valid () Bool)\n(assert\n (let (($x38 (not prev_m_ready)))\n(let (($x104 (and prev_m_last (and $x38 (and prev_m_valid (and (not prev_rst) (not rst)))))))\n(let (($x83 (not m_last)))\n(let (($x43 (not m_valid)))\n(let (($x57 (or $x43 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x51 (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid $x38))))))\n(let (($x110 (and $x51 $x57)))\n(let (($x61 (or $x110 (and have_prev (and $x83 $x104)))))\n(xor $x110 $x61))))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 7
+          },
+          {
+            "clause": "(and have_prev (and m_last (and (not prev_m_last) (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst)))))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(declare-fun m_valid () Bool)\n(assert\n (let (($x38 (not prev_m_ready)))\n(let (($x113 (not prev_m_last)))\n(let (($x68 (and $x113 (and $x38 (and prev_m_valid (and (not prev_rst) (not rst)))))))\n(let (($x43 (not m_valid)))\n(let (($x57 (or $x43 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x51 (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid $x38))))))\n(let (($x110 (and $x51 $x57)))\n(let (($x138 (or $x110 (and have_prev (and m_last $x68)))))\n(xor $x110 $x138))))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 7
+          }
+        ],
+        "equivalence": {
+          "candidate_value": null,
+          "counterexample": null,
+          "equivalent": true,
+          "reference_value": null,
+          "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun m_valid () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(assert\n (let (($x38 (not prev_m_ready)))\n(let (($x127 (and $x38 (and prev_m_valid (and (not prev_rst) (not rst))))))\n(let (($x94 (not prev_m_last)))\n(let (($x62 (or (and have_prev (and (not m_last) (and prev_m_last $x127))) (and have_prev (and m_last (and $x94 $x127))))))\n(let (($x61 (or (and (not (= m_data prev_m_data)) (and have_prev $x127)) (or (and have_prev (and (not m_valid) $x127)) $x62))))\n(let (($x43 (not m_valid)))\n(let (($x57 (or $x43 (or (and (distinct m_data prev_m_data) true) (and (distinct m_last prev_m_last) true)))))\n(let (($x51 (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid $x38))))))\n(let (($x110 (and $x51 $x57)))\n(xor $x110 $x61)))))))))))\n(check-sat)\n",
+          "status": "unsat"
+        },
+        "literal_occurrences": 26,
+        "scored_clause_union_equivalence": {
+          "candidate_value": null,
+          "counterexample": null,
+          "equivalent": true,
+          "reference_value": null,
+          "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun m_valid () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(assert\n (let (($x38 (not prev_m_ready)))\n(let (($x127 (and $x38 (and prev_m_valid (and (not prev_rst) (not rst))))))\n(let (($x113 (not prev_m_last)))\n(let (($x82 (or (and have_prev (and (not m_last) (and prev_m_last $x127))) (and have_prev (and m_last (and $x113 $x127))))))\n(let (($x95 (or (and (not (= m_data prev_m_data)) (and have_prev $x127)) (or (and have_prev (and (not m_valid) $x127)) $x82))))\n(xor $x95 $x95)))))))\n(check-sat)\n",
+          "status": "unsat"
+        },
+        "source": "(or (and (not bv_34bc530db9952285c9fa047d) (and have_prev (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst)))))) (or (and have_prev (and (not m_valid) (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst)))))) (or (and have_prev (and (not m_last) (and prev_m_last (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst))))))) (and have_prev (and m_last (and (not prev_m_last) (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst))))))))))",
+        "typed_expression": "(or (and (not (eq m_data prev_m_data)) (and have_prev (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst)))))) (or (and have_prev (and (not m_valid) (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst)))))) (or (and have_prev (and (not m_last) (and prev_m_last (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst))))))) (and have_prev (and m_last (and (not prev_m_last) (and (not prev_m_ready) (and prev_m_valid (and (not prev_rst) (not rst))))))))))"
+      },
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (ne m_data prev_m_data) (ne m_last prev_m_last))))",
+      "scored_clause_count": 4,
+      "scored_clause_union_equivalence": {
+        "candidate_value": null,
+        "counterexample": null,
+        "equivalent": true,
+        "reference_value": null,
+        "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_m_valid () Bool)\n(declare-fun prev_m_ready () Bool)\n(declare-fun prev_m_last () Bool)\n(declare-fun m_last () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun m_valid () Bool)\n(declare-fun prev_m_data () (_ BitVec 8))\n(declare-fun m_data () (_ BitVec 8))\n(assert\n (let (($x38 (not prev_m_ready)))\n(let (($x127 (and $x38 (and prev_m_valid (and (not prev_rst) (not rst))))))\n(let (($x94 (not prev_m_last)))\n(let (($x62 (or (and have_prev (and (not m_last) (and prev_m_last $x127))) (and have_prev (and m_last (and $x94 $x127))))))\n(let (($x61 (or (and (not (= m_data prev_m_data)) (and have_prev $x127)) (or (and have_prev (and (not m_valid) $x127)) $x62))))\n(let (($x37 (not rst)))\n(let (($x71 (and $x37 (and prev_m_valid (and $x38 (and (not m_last) prev_m_last))))))\n(let (($x36 (not prev_rst)))\n(let (($x60 (and $x36 (and $x37 (and prev_m_valid (and $x38 (and m_last $x94)))))))\n(let (($x67 (and $x37 (and prev_m_valid (and $x38 (not (= m_data prev_m_data)))))))\n(let (($x54 (or (and have_prev (and $x36 $x67)) (or (and have_prev $x60) (and have_prev (and $x36 $x71))))))\n(let (($x103 (and have_prev (and $x36 (and $x37 (and prev_m_valid (and $x38 (not m_valid))))))))\n(let (($x68 (or $x103 $x54)))\n(xor $x68 $x61)))))))))))))))\n(check-sat)\n",
+        "status": "unsat"
+      },
+      "scored_literal_occurrences": 26,
+      "source": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (not prev_m_ready))))) (or (not m_valid) (or (not bv_34bc530db9952285c9fa047d) (or (and m_last (not prev_m_last)) (and (not m_last) prev_m_last)))))",
+      "typed_expression": "(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not m_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (not (eq m_data prev_m_data))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and m_last (not prev_m_last))))))) (and have_prev (and (not prev_rst) (and (not rst) (and prev_m_valid (and (not prev_m_ready) (and (not m_last) prev_m_last)))))))))"
+    },
+    "header_hold": {
+      "accepted": true,
+      "atoms": {
+        "bv_888076d1aed1b594aa443bbb": "(eq h_length prev_h_length)",
+        "bv_e33fbb1a272f83001f85e477": "(eq h_original_length prev_h_original_length)",
+        "h_pad": "h_pad",
+        "h_truncate": "h_truncate",
+        "h_valid": "h_valid",
+        "have_prev": "have_prev",
+        "prev_h_pad": "prev_h_pad",
+        "prev_h_ready": "prev_h_ready",
+        "prev_h_truncate": "prev_h_truncate",
+        "prev_h_valid": "prev_h_valid",
+        "prev_rst": "prev_rst",
+        "rst": "rst"
+      },
+      "checked_steps": [
+        {
+          "direction": "forward",
+          "path": [],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            0,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            0,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1
+          ],
+          "rule": "or-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1
+          ],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            0,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1
+          ],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "rule": "or-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1
+          ],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "rule": "and-associate-right"
+        }
+      ],
+      "clauses": [
+        {
+          "clause": "(and (not (eq h_length prev_h_length)) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst))))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x98 (not prev_h_ready)))\n(let (($x169 (and have_prev (and $x98 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x48 (not (= h_length prev_h_length))))\n(let (($x39 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x50 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x39))))\n(let (($x42 (not h_valid)))\n(let (($x123 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x54 (and $x123 (or $x42 $x50))))\n(let (($x166 (or $x54 (and $x48 $x169))))\n(xor $x54 $x166)))))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 6
+        },
+        {
+          "clause": "(and (not (eq h_original_length prev_h_original_length)) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst))))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x98 (not prev_h_ready)))\n(let (($x169 (and have_prev (and $x98 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x52 (not (= h_original_length prev_h_original_length))))\n(let (($x39 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x50 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x39))))\n(let (($x42 (not h_valid)))\n(let (($x123 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x54 (and $x123 (or $x42 $x50))))\n(let (($x95 (or $x54 (and $x52 $x169))))\n(xor $x54 $x95)))))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 6
+        },
+        {
+          "clause": "(and (not h_valid) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst))))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(assert\n (let (($x98 (not prev_h_ready)))\n(let (($x169 (and have_prev (and $x98 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x42 (not h_valid)))\n(let (($x39 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x50 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x39))))\n(let (($x123 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x54 (and $x123 (or $x42 $x50))))\n(let (($x89 (or $x54 (and $x42 $x169))))\n(xor $x54 $x89))))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 6
+        },
+        {
+          "clause": "(and (not h_pad) (and have_prev (and prev_h_pad (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst)))))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x98 (not prev_h_ready)))\n(let (($x70 (and prev_h_pad (and $x98 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x77 (not h_pad)))\n(let (($x39 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x50 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x39))))\n(let (($x42 (not h_valid)))\n(let (($x123 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x54 (and $x123 (or $x42 $x50))))\n(let (($x130 (or $x54 (and $x77 (and have_prev $x70)))))\n(xor $x54 $x130)))))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 7
+        },
+        {
+          "clause": "(and h_pad (and have_prev (and (not prev_h_pad) (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst)))))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x98 (not prev_h_ready)))\n(let (($x104 (not prev_h_pad)))\n(let (($x169 (and $x104 (and $x98 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x39 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x50 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x39))))\n(let (($x42 (not h_valid)))\n(let (($x123 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x54 (and $x123 (or $x42 $x50))))\n(let (($x117 (or $x54 (and h_pad (and have_prev $x169)))))\n(xor $x54 $x117)))))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 7
+        },
+        {
+          "clause": "(and (not h_truncate) (and have_prev (and (not prev_h_ready) (and prev_h_truncate (and prev_h_valid (and (not prev_rst) (not rst)))))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_truncate () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x77 (and prev_h_truncate (and prev_h_valid (and (not prev_rst) (not rst))))))\n(let (($x98 (not prev_h_ready)))\n(let (($x48 (not h_truncate)))\n(let (($x39 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x50 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x39))))\n(let (($x42 (not h_valid)))\n(let (($x123 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x54 (and $x123 (or $x42 $x50))))\n(let (($x63 (or $x54 (and $x48 (and have_prev (and $x98 $x77))))))\n(xor $x54 $x63)))))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 7
+        },
+        {
+          "clause": "(and h_truncate (and have_prev (and (not prev_h_ready) (and (not prev_h_truncate) (and prev_h_valid (and (not prev_rst) (not rst)))))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_truncate () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x88 (not prev_h_truncate)))\n(let (($x98 (not prev_h_ready)))\n(let (($x85 (and $x98 (and $x88 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x39 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x50 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x39))))\n(let (($x42 (not h_valid)))\n(let (($x123 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x54 (and $x123 (or $x42 $x50))))\n(let (($x70 (or $x54 (and h_truncate (and have_prev $x85)))))\n(xor $x54 $x70)))))))))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 7
+        }
+      ],
+      "engine": {
+        "clause_count": 7,
+        "eclasses": 113,
+        "enodes": 225,
+        "explanation": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))\n(Rewrite=> and-distribute-right (or (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (not h_valid)) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))\n(or (Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready)))) (not h_valid)))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))\n(or (and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_h_valid (not prev_h_ready))) (not h_valid))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))\n(or (and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_h_valid (not prev_h_ready)) (not h_valid)))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (Rewrite=> and-associate-right (and prev_h_valid (and (not prev_h_ready) (not h_valid))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (Rewrite=> or-associate-right (or (and h_pad (not prev_h_pad)) (or (and (not h_pad) prev_h_pad) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (Rewrite=> and-distribute-right (or (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (and h_pad (not prev_h_pad))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (and (not h_pad) prev_h_pad) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready)))) (and h_pad (not prev_h_pad))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (and (not h_pad) prev_h_pad) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_h_valid (not prev_h_ready))) (and h_pad (not prev_h_pad)))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (and (not h_pad) prev_h_pad) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_h_valid (not prev_h_ready)) (and h_pad (not prev_h_pad))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (and (not h_pad) prev_h_pad) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (Rewrite=> and-associate-right (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad)))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (and (not h_pad) prev_h_pad) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (Rewrite=> and-distribute-right (or (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (and (not h_pad) prev_h_pad)) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready)))) (and (not h_pad) prev_h_pad)))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_h_valid (not prev_h_ready))) (and (not h_pad) prev_h_pad))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_h_valid (not prev_h_ready)) (and (not h_pad) prev_h_pad)))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (Rewrite=> and-associate-right (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (Rewrite=> or-associate-right (or (and h_truncate (not prev_h_truncate)) (or (and (not h_truncate) prev_h_truncate) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (Rewrite=> and-distribute-right (or (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (and h_truncate (not prev_h_truncate))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (and (not h_truncate) prev_h_truncate) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready)))) (and h_truncate (not prev_h_truncate))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (and (not h_truncate) prev_h_truncate) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_h_valid (not prev_h_ready))) (and h_truncate (not prev_h_truncate)))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (and (not h_truncate) prev_h_truncate) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_h_valid (not prev_h_ready)) (and h_truncate (not prev_h_truncate))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (and (not h_truncate) prev_h_truncate) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (Rewrite=> and-associate-right (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate)))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (and (not h_truncate) prev_h_truncate) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (Rewrite=> and-distribute-right (or (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (and (not h_truncate) prev_h_truncate)) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477)))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready)))) (and (not h_truncate) prev_h_truncate)))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_h_valid (not prev_h_ready))) (and (not h_truncate) prev_h_truncate))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_h_valid (not prev_h_ready)) (and (not h_truncate) prev_h_truncate)))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (Rewrite=> and-associate-right (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (Rewrite=> and-distribute-right (or (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (not bv_888076d1aed1b594aa443bbb)) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (not bv_e33fbb1a272f83001f85e477)))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready)))) (not bv_888076d1aed1b594aa443bbb)))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_h_valid (not prev_h_ready))) (not bv_888076d1aed1b594aa443bbb))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_h_valid (not prev_h_ready)) (not bv_888076d1aed1b594aa443bbb)))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (Rewrite=> and-associate-right (and prev_h_valid (and (not prev_h_ready) (not bv_888076d1aed1b594aa443bbb))))))) (and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (not bv_e33fbb1a272f83001f85e477))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not bv_888076d1aed1b594aa443bbb)))))) (Rewrite=> and-associate-right (and have_prev (and (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready)))) (not bv_e33fbb1a272f83001f85e477))))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not bv_888076d1aed1b594aa443bbb)))))) (and have_prev (Rewrite=> and-associate-right (and (not prev_rst) (and (and (not rst) (and prev_h_valid (not prev_h_ready))) (not bv_e33fbb1a272f83001f85e477)))))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not bv_888076d1aed1b594aa443bbb)))))) (and have_prev (and (not prev_rst) (Rewrite=> and-associate-right (and (not rst) (and (and prev_h_valid (not prev_h_ready)) (not bv_e33fbb1a272f83001f85e477))))))))))))\n(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not bv_888076d1aed1b594aa443bbb)))))) (and have_prev (and (not prev_rst) (and (not rst) (Rewrite=> and-associate-right (and prev_h_valid (and (not prev_h_ready) (not bv_e33fbb1a272f83001f85e477)))))))))))))",
+        "extracted": "(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not bv_888076d1aed1b594aa443bbb)))))) (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not bv_e33fbb1a272f83001f85e477))))))))))))",
+        "iterations": 9,
+        "literal_count": 46,
+        "source": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))",
+        "stop_reason": "Some(Saturated)"
+      },
+      "engine_request": {
+        "pattern_rules": [
+          {
+            "left": "(not (or ?a ?b))",
+            "name": "de-morgan-or",
+            "right": "(and (not ?a) (not ?b))"
+          },
+          {
+            "left": "(not (and ?a ?b))",
+            "name": "de-morgan-and",
+            "right": "(or (not ?a) (not ?b))"
+          },
+          {
+            "left": "(not (not ?a))",
+            "name": "double-not",
+            "right": "?a"
+          },
+          {
+            "left": "(and ?a true)",
+            "name": "and-true",
+            "right": "?a"
+          },
+          {
+            "left": "(and true ?a)",
+            "name": "and-true-left",
+            "right": "?a"
+          },
+          {
+            "left": "(not false)",
+            "name": "not-false",
+            "right": "true"
+          },
+          {
+            "left": "(and (and ?a ?b) ?c)",
+            "name": "and-associate-right",
+            "right": "(and ?a (and ?b ?c))"
+          },
+          {
+            "left": "(or (or ?a ?b) ?c)",
+            "name": "or-associate-right",
+            "right": "(or ?a (or ?b ?c))"
+          },
+          {
+            "left": "(and ?a (or ?b ?c))",
+            "name": "and-distribute-right",
+            "right": "(or (and ?a ?b) (and ?a ?c))"
+          },
+          {
+            "left": "(and (or ?a ?b) ?c)",
+            "name": "and-distribute-left",
+            "right": "(or (and ?a ?c) (and ?b ?c))"
+          },
+          {
+            "left": "(and ?a ?a)",
+            "name": "and-idempotent",
+            "right": "?a"
+          },
+          {
+            "left": "(or ?a ?a)",
+            "name": "or-idempotent",
+            "right": "?a"
+          }
+        ],
+        "term": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))"
+      },
+      "engine_seconds": 0.0034416859998600557,
+      "equivalence": {
+        "candidate_value": null,
+        "counterexample": null,
+        "equivalent": true,
+        "reference_value": null,
+        "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_ready () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x91 (not (= h_original_length prev_h_original_length))))\n(let (($x98 (not prev_h_ready)))\n(let (($x37 (not rst)))\n(let (($x36 (not prev_rst)))\n(let (($x77 (and have_prev (and $x36 (and $x37 (and prev_h_valid (and $x98 $x91)))))))\n(let (($x88 (and $x37 (and prev_h_valid (and $x98 (not (= h_length prev_h_length)))))))\n(let (($x90 (and prev_h_valid (and $x98 (and (not h_truncate) prev_h_truncate)))))\n(let (($x139 (or (and have_prev (and $x36 (and $x37 $x90))) (or (and have_prev (and $x36 $x88)) $x77))))\n(let (($x86 (and prev_h_valid (and $x98 (and h_truncate (not prev_h_truncate))))))\n(let (($x81 (and $x37 (and prev_h_valid (and $x98 (and (not h_pad) prev_h_pad))))))\n(let (($x116 (or (and have_prev (and $x36 $x81)) (or (and have_prev (and $x36 (and $x37 $x86))) $x139))))\n(let (($x133 (and $x37 (and prev_h_valid (and $x98 (and h_pad (not prev_h_pad)))))))\n(let (($x97 (and have_prev (and $x36 (and $x37 (and prev_h_valid (and $x98 (not h_valid))))))))\n(let (($x109 (or $x97 (or (and have_prev (and $x36 $x133)) $x116))))\n(let (($x39 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x50 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x39))))\n(let (($x42 (not h_valid)))\n(let (($x54 (and (and have_prev (and $x36 (and $x37 (and prev_h_valid $x98)))) (or $x42 $x50))))\n(xor $x54 $x109))))))))))))))))))))\n(check-sat)\n",
+        "status": "unsat"
+      },
+      "extracted": "(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not bv_888076d1aed1b594aa443bbb)))))) (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not bv_e33fbb1a272f83001f85e477))))))))))))",
+      "ordinary": {
+        "clause_count": 7,
+        "clauses": [
+          {
+            "clause": "(and (not (eq h_length prev_h_length)) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst))))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x98 (not prev_h_ready)))\n(let (($x109 (and have_prev (and $x98 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x171 (not (= h_length prev_h_length))))\n(let (($x143 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x168 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x143))))\n(let (($x42 (not h_valid)))\n(let (($x127 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x79 (and $x127 (or $x42 $x168))))\n(let (($x59 (or $x79 (and $x171 $x109))))\n(xor $x79 $x59)))))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 6
+          },
+          {
+            "clause": "(and (not (eq h_original_length prev_h_original_length)) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst))))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x98 (not prev_h_ready)))\n(let (($x109 (and have_prev (and $x98 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x130 (not (= h_original_length prev_h_original_length))))\n(let (($x143 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x168 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x143))))\n(let (($x42 (not h_valid)))\n(let (($x127 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x79 (and $x127 (or $x42 $x168))))\n(let (($x62 (or $x79 (and $x130 $x109))))\n(xor $x79 $x62)))))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 6
+          },
+          {
+            "clause": "(and (not h_valid) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst))))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(assert\n (let (($x98 (not prev_h_ready)))\n(let (($x109 (and have_prev (and $x98 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x42 (not h_valid)))\n(let (($x143 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x168 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x143))))\n(let (($x127 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x79 (and $x127 (or $x42 $x168))))\n(let (($x135 (or $x79 (and $x42 $x109))))\n(xor $x79 $x135))))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 6
+          },
+          {
+            "clause": "(and (not h_pad) (and have_prev (and prev_h_pad (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst)))))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x98 (not prev_h_ready)))\n(let (($x106 (and prev_h_pad (and $x98 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x165 (not h_pad)))\n(let (($x143 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x168 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x143))))\n(let (($x42 (not h_valid)))\n(let (($x127 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x79 (and $x127 (or $x42 $x168))))\n(let (($x100 (or $x79 (and $x165 (and have_prev $x106)))))\n(xor $x79 $x100)))))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 7
+          },
+          {
+            "clause": "(and h_pad (and have_prev (and (not prev_h_pad) (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst)))))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_truncate () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x98 (not prev_h_ready)))\n(let (($x67 (not prev_h_pad)))\n(let (($x109 (and $x67 (and $x98 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x143 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x168 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x143))))\n(let (($x42 (not h_valid)))\n(let (($x127 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x79 (and $x127 (or $x42 $x168))))\n(let (($x163 (or $x79 (and h_pad (and have_prev $x109)))))\n(xor $x79 $x163)))))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 7
+          },
+          {
+            "clause": "(and (not h_truncate) (and have_prev (and (not prev_h_ready) (and prev_h_truncate (and prev_h_valid (and (not prev_rst) (not rst)))))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_truncate () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x165 (and prev_h_truncate (and prev_h_valid (and (not prev_rst) (not rst))))))\n(let (($x98 (not prev_h_ready)))\n(let (($x60 (not h_truncate)))\n(let (($x143 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x168 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x143))))\n(let (($x42 (not h_valid)))\n(let (($x127 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x79 (and $x127 (or $x42 $x168))))\n(let (($x88 (or $x79 (and $x60 (and have_prev (and $x98 $x165))))))\n(xor $x79 $x88)))))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 7
+          },
+          {
+            "clause": "(and h_truncate (and have_prev (and (not prev_h_ready) (and (not prev_h_truncate) (and prev_h_valid (and (not prev_rst) (not rst)))))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_truncate () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(assert\n (let (($x90 (not prev_h_truncate)))\n(let (($x98 (not prev_h_ready)))\n(let (($x110 (and $x98 (and $x90 (and prev_h_valid (and (not prev_rst) (not rst)))))))\n(let (($x143 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x168 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x143))))\n(let (($x42 (not h_valid)))\n(let (($x127 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x79 (and $x127 (or $x42 $x168))))\n(let (($x106 (or $x79 (and h_truncate (and have_prev $x110)))))\n(xor $x79 $x106)))))))))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 7
+          }
+        ],
+        "equivalence": {
+          "candidate_value": null,
+          "counterexample": null,
+          "equivalent": true,
+          "reference_value": null,
+          "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_truncate () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x76 (and prev_h_valid (and (not prev_rst) (not rst)))))\n(let (($x88 (not prev_h_truncate)))\n(let (($x98 (not prev_h_ready)))\n(let (($x67 (not h_truncate)))\n(let (($x81 (or (and $x67 (and have_prev (and $x98 (and prev_h_truncate $x76)))) (and h_truncate (and have_prev (and $x98 (and $x88 $x76)))))))\n(let (($x65 (and h_pad (and have_prev (and (not prev_h_pad) (and $x98 $x76))))))\n(let (($x82 (not h_pad)))\n(let (($x131 (or (and $x82 (and have_prev (and prev_h_pad (and $x98 $x76)))) (or $x65 $x81))))\n(let (($x44 (and $x98 $x76)))\n(let (($x109 (and have_prev $x44)))\n(let (($x77 (not (= h_original_length prev_h_original_length))))\n(let (($x106 (or (and (not (= h_length prev_h_length)) $x109) (or (and $x77 $x109) (or (and (not h_valid) $x109) $x131)))))\n(let (($x143 (or (and (distinct h_length prev_h_length) true) (and (distinct h_original_length prev_h_original_length) true))))\n(let (($x168 (or (and (distinct h_pad prev_h_pad) true) (or (and (distinct h_truncate prev_h_truncate) true) $x143))))\n(let (($x42 (not h_valid)))\n(let (($x127 (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid $x98))))))\n(let (($x79 (and $x127 (or $x42 $x168))))\n(xor $x79 $x106)))))))))))))))))))\n(check-sat)\n",
+          "status": "unsat"
+        },
+        "literal_occurrences": 46,
+        "scored_clause_union_equivalence": {
+          "candidate_value": null,
+          "counterexample": null,
+          "equivalent": true,
+          "reference_value": null,
+          "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_truncate () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x76 (and prev_h_valid (and (not prev_rst) (not rst)))))\n(let (($x90 (not prev_h_truncate)))\n(let (($x98 (not prev_h_ready)))\n(let (($x93 (not h_truncate)))\n(let (($x73 (or (and $x93 (and have_prev (and $x98 (and prev_h_truncate $x76)))) (and h_truncate (and have_prev (and $x98 (and $x90 $x76)))))))\n(let (($x120 (and h_pad (and have_prev (and (not prev_h_pad) (and $x98 $x76))))))\n(let (($x61 (not h_pad)))\n(let (($x62 (or (and $x61 (and have_prev (and prev_h_pad (and $x98 $x76)))) (or $x120 $x73))))\n(let (($x116 (and $x98 $x76)))\n(let (($x92 (and have_prev $x116)))\n(let (($x85 (not (= h_original_length prev_h_original_length))))\n(let (($x39 (or (and (not (= h_length prev_h_length)) $x92) (or (and $x85 $x92) (or (and (not h_valid) $x92) $x62)))))\n(xor $x39 $x39))))))))))))))\n(check-sat)\n",
+          "status": "unsat"
+        },
+        "source": "(or (and (not bv_888076d1aed1b594aa443bbb) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst)))))) (or (and (not bv_e33fbb1a272f83001f85e477) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst)))))) (or (and (not h_valid) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst)))))) (or (and (not h_pad) (and have_prev (and prev_h_pad (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst))))))) (or (and h_pad (and have_prev (and (not prev_h_pad) (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst))))))) (or (and (not h_truncate) (and have_prev (and (not prev_h_ready) (and prev_h_truncate (and prev_h_valid (and (not prev_rst) (not rst))))))) (and h_truncate (and have_prev (and (not prev_h_ready) (and (not prev_h_truncate) (and prev_h_valid (and (not prev_rst) (not rst)))))))))))))",
+        "typed_expression": "(or (and (not (eq h_length prev_h_length)) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst)))))) (or (and (not (eq h_original_length prev_h_original_length)) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst)))))) (or (and (not h_valid) (and have_prev (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst)))))) (or (and (not h_pad) (and have_prev (and prev_h_pad (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst))))))) (or (and h_pad (and have_prev (and (not prev_h_pad) (and (not prev_h_ready) (and prev_h_valid (and (not prev_rst) (not rst))))))) (or (and (not h_truncate) (and have_prev (and (not prev_h_ready) (and prev_h_truncate (and prev_h_valid (and (not prev_rst) (not rst))))))) (and h_truncate (and have_prev (and (not prev_h_ready) (and (not prev_h_truncate) (and prev_h_valid (and (not prev_rst) (not rst)))))))))))))"
+      },
+      "reference": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (ne h_pad prev_h_pad) (or (ne h_truncate prev_h_truncate) (or (ne h_length prev_h_length) (ne h_original_length prev_h_original_length))))))",
+      "scored_clause_count": 7,
+      "scored_clause_union_equivalence": {
+        "candidate_value": null,
+        "counterexample": null,
+        "equivalent": true,
+        "reference_value": null,
+        "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun prev_rst () Bool)\n(declare-fun prev_h_valid () Bool)\n(declare-fun prev_h_truncate () Bool)\n(declare-fun prev_h_ready () Bool)\n(declare-fun have_prev () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun prev_h_pad () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun prev_h_original_length () (_ BitVec 16))\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun prev_h_length () (_ BitVec 16))\n(declare-fun h_length () (_ BitVec 16))\n(assert\n (let (($x76 (and prev_h_valid (and (not prev_rst) (not rst)))))\n(let (($x88 (not prev_h_truncate)))\n(let (($x98 (not prev_h_ready)))\n(let (($x67 (not h_truncate)))\n(let (($x81 (or (and $x67 (and have_prev (and $x98 (and prev_h_truncate $x76)))) (and h_truncate (and have_prev (and $x98 (and $x88 $x76)))))))\n(let (($x65 (and h_pad (and have_prev (and (not prev_h_pad) (and $x98 $x76))))))\n(let (($x82 (not h_pad)))\n(let (($x131 (or (and $x82 (and have_prev (and prev_h_pad (and $x98 $x76)))) (or $x65 $x81))))\n(let (($x44 (and $x98 $x76)))\n(let (($x109 (and have_prev $x44)))\n(let (($x77 (not (= h_original_length prev_h_original_length))))\n(let (($x106 (or (and (not (= h_length prev_h_length)) $x109) (or (and $x77 $x109) (or (and (not h_valid) $x109) $x131)))))\n(let (($x36 (not prev_rst)))\n(let (($x64 (and have_prev (and $x36 (and (not rst) (and prev_h_valid (and $x98 $x77)))))))\n(let (($x37 (not rst)))\n(let (($x164 (and $x37 (and prev_h_valid (and $x98 (not (= h_length prev_h_length)))))))\n(let (($x166 (and $x36 (and $x37 (and prev_h_valid (and $x98 (and $x67 prev_h_truncate)))))))\n(let (($x46 (or (and have_prev $x166) (or (and have_prev (and $x36 $x164)) $x64))))\n(let (($x162 (and $x36 (and $x37 (and prev_h_valid (and $x98 (and h_truncate $x88)))))))\n(let (($x100 (and $x36 (and $x37 (and prev_h_valid (and $x98 (and $x82 prev_h_pad)))))))\n(let (($x74 (and $x37 (and prev_h_valid (and $x98 (and h_pad (not prev_h_pad)))))))\n(let (($x145 (or (and have_prev (and $x36 $x74)) (or (and have_prev $x100) (or (and have_prev $x162) $x46)))))\n(let (($x107 (and have_prev (and $x36 (and $x37 (and prev_h_valid (and $x98 (not h_valid))))))))\n(let (($x47 (or $x107 $x145)))\n(xor $x47 $x106))))))))))))))))))))))))))\n(check-sat)\n",
+        "status": "unsat"
+      },
+      "scored_literal_occurrences": 46,
+      "source": "(and (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (not prev_h_ready))))) (or (not h_valid) (or (or (and h_pad (not prev_h_pad)) (and (not h_pad) prev_h_pad)) (or (or (and h_truncate (not prev_h_truncate)) (and (not h_truncate) prev_h_truncate)) (or (not bv_888076d1aed1b594aa443bbb) (not bv_e33fbb1a272f83001f85e477))))))",
+      "typed_expression": "(or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not h_valid)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_pad (not prev_h_pad))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_pad) prev_h_pad)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and h_truncate (not prev_h_truncate))))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (and (not h_truncate) prev_h_truncate)))))) (or (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not (eq h_length prev_h_length))))))) (and have_prev (and (not prev_rst) (and (not rst) (and prev_h_valid (and (not prev_h_ready) (not (eq h_original_length prev_h_original_length)))))))))))))"
+    },
+    "pad_flag": {
+      "accepted": true,
+      "atoms": {
+        "bv_2b90ee49c3843e2b034d9aaa": "(ult h_original_length 4)",
+        "h_pad": "h_pad",
+        "h_valid": "h_valid",
+        "rst": "rst"
+      },
+      "checked_steps": [
+        {
+          "direction": "forward",
+          "path": [],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1
+          ],
+          "rule": "and-associate-right"
+        }
+      ],
+      "clauses": [
+        {
+          "clause": "(and (not (ult h_original_length 4)) (and h_pad (and h_valid (not rst))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x106 (and (not (bvult h_original_length (_ bv4 16))) (and h_pad (and h_valid (not rst))))))\n(let (($x162 (and (and (not rst) h_valid) (xor h_pad (bvult h_original_length (_ bv4 16))))))\n(let (($x38 (or $x162 $x106)))\n(xor $x162 $x38)))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 4
+        },
+        {
+          "clause": "(and (ult h_original_length 4) (and (not h_pad) (and h_valid (not rst))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x59 (bvult h_original_length (_ bv4 16))))\n(let (($x162 (and (and (not rst) h_valid) (xor h_pad $x59))))\n(let (($x49 (or $x162 (and $x59 (and (not h_pad) (and h_valid (not rst)))))))\n(xor $x162 $x49)))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 4
+        }
+      ],
+      "engine": {
+        "clause_count": 2,
+        "eclasses": 17,
+        "enodes": 22,
+        "explanation": "(and (and (not rst) h_valid) (or (and h_pad (not bv_2b90ee49c3843e2b034d9aaa)) (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa)))\n(Rewrite=> and-distribute-right (or (and (and (not rst) h_valid) (and h_pad (not bv_2b90ee49c3843e2b034d9aaa))) (and (and (not rst) h_valid) (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa))))\n(or (Rewrite=> and-associate-right (and (not rst) (and h_valid (and h_pad (not bv_2b90ee49c3843e2b034d9aaa))))) (and (and (not rst) h_valid) (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa)))\n(or (and (not rst) (and h_valid (and h_pad (not bv_2b90ee49c3843e2b034d9aaa)))) (Rewrite=> and-associate-right (and (not rst) (and h_valid (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa)))))",
+        "extracted": "(or (and (not rst) (and h_valid (and h_pad (not bv_2b90ee49c3843e2b034d9aaa)))) (and (not rst) (and h_valid (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa))))",
+        "iterations": 3,
+        "literal_count": 8,
+        "source": "(and (and (not rst) h_valid) (or (and h_pad (not bv_2b90ee49c3843e2b034d9aaa)) (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa)))",
+        "stop_reason": "Some(Saturated)"
+      },
+      "engine_request": {
+        "pattern_rules": [
+          {
+            "left": "(not (or ?a ?b))",
+            "name": "de-morgan-or",
+            "right": "(and (not ?a) (not ?b))"
+          },
+          {
+            "left": "(not (and ?a ?b))",
+            "name": "de-morgan-and",
+            "right": "(or (not ?a) (not ?b))"
+          },
+          {
+            "left": "(not (not ?a))",
+            "name": "double-not",
+            "right": "?a"
+          },
+          {
+            "left": "(and ?a true)",
+            "name": "and-true",
+            "right": "?a"
+          },
+          {
+            "left": "(and true ?a)",
+            "name": "and-true-left",
+            "right": "?a"
+          },
+          {
+            "left": "(not false)",
+            "name": "not-false",
+            "right": "true"
+          },
+          {
+            "left": "(and (and ?a ?b) ?c)",
+            "name": "and-associate-right",
+            "right": "(and ?a (and ?b ?c))"
+          },
+          {
+            "left": "(or (or ?a ?b) ?c)",
+            "name": "or-associate-right",
+            "right": "(or ?a (or ?b ?c))"
+          },
+          {
+            "left": "(and ?a (or ?b ?c))",
+            "name": "and-distribute-right",
+            "right": "(or (and ?a ?b) (and ?a ?c))"
+          },
+          {
+            "left": "(and (or ?a ?b) ?c)",
+            "name": "and-distribute-left",
+            "right": "(or (and ?a ?c) (and ?b ?c))"
+          },
+          {
+            "left": "(and ?a ?a)",
+            "name": "and-idempotent",
+            "right": "?a"
+          },
+          {
+            "left": "(or ?a ?a)",
+            "name": "or-idempotent",
+            "right": "?a"
+          }
+        ],
+        "term": "(and (and (not rst) h_valid) (or (and h_pad (not bv_2b90ee49c3843e2b034d9aaa)) (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa)))"
+      },
+      "engine_seconds": 0.001595597999767051,
+      "equivalence": {
+        "candidate_value": null,
+        "counterexample": null,
+        "equivalent": true,
+        "reference_value": null,
+        "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_pad () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun rst () Bool)\n(assert\n (let (($x37 (not rst)))\n(let (($x48 (and $x37 (and h_valid (and (not h_pad) (bvult h_original_length (_ bv4 16)))))))\n(let (($x133 (and $x37 (and h_valid (and h_pad (not (bvult h_original_length (_ bv4 16))))))))\n(let (($x146 (or $x133 $x48)))\n(let (($x162 (and (and $x37 h_valid) (xor h_pad (bvult h_original_length (_ bv4 16))))))\n(xor $x162 $x146)))))))\n(check-sat)\n",
+        "status": "unsat"
+      },
+      "extracted": "(or (and (not rst) (and h_valid (and h_pad (not bv_2b90ee49c3843e2b034d9aaa)))) (and (not rst) (and h_valid (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa))))",
+      "ordinary": {
+        "clause_count": 2,
+        "clauses": [
+          {
+            "clause": "(and (not (ult h_original_length 4)) (and h_pad (and h_valid (not rst))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x164 (and (not (bvult h_original_length (_ bv4 16))) (and h_pad (and h_valid (not rst))))))\n(let (($x68 (and (and (not rst) h_valid) (xor h_pad (bvult h_original_length (_ bv4 16))))))\n(let (($x90 (or $x68 $x164)))\n(xor $x68 $x90)))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 4
+          },
+          {
+            "clause": "(and (ult h_original_length 4) (and (not h_pad) (and h_valid (not rst))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x59 (bvult h_original_length (_ bv4 16))))\n(let (($x68 (and (and (not rst) h_valid) (xor h_pad $x59))))\n(let (($x54 (or $x68 (and $x59 (and (not h_pad) (and h_valid (not rst)))))))\n(xor $x68 $x54)))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 4
+          }
+        ],
+        "equivalence": {
+          "candidate_value": null,
+          "counterexample": null,
+          "equivalent": true,
+          "reference_value": null,
+          "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x59 (bvult h_original_length (_ bv4 16))))\n(let (($x57 (or (and (not $x59) (and h_pad (and h_valid (not rst)))) (and $x59 (and (not h_pad) (and h_valid (not rst)))))))\n(let (($x68 (and (and (not rst) h_valid) (xor h_pad $x59))))\n(xor $x68 $x57)))))\n(check-sat)\n",
+          "status": "unsat"
+        },
+        "literal_occurrences": 8,
+        "scored_clause_union_equivalence": {
+          "candidate_value": null,
+          "counterexample": null,
+          "equivalent": true,
+          "reference_value": null,
+          "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x59 (bvult h_original_length (_ bv4 16))))\n(let (($x56 (or (and (not $x59) (and h_pad (and h_valid (not rst)))) (and $x59 (and (not h_pad) (and h_valid (not rst)))))))\n(xor $x56 $x56))))\n(check-sat)\n",
+          "status": "unsat"
+        },
+        "source": "(or (and (not bv_2b90ee49c3843e2b034d9aaa) (and h_pad (and h_valid (not rst)))) (and bv_2b90ee49c3843e2b034d9aaa (and (not h_pad) (and h_valid (not rst)))))",
+        "typed_expression": "(or (and (not (ult h_original_length 4)) (and h_pad (and h_valid (not rst)))) (and (ult h_original_length 4) (and (not h_pad) (and h_valid (not rst)))))"
+      },
+      "reference": "(and (and (not rst) h_valid) (xor h_pad (ult h_original_length 4)))",
+      "scored_clause_count": 2,
+      "scored_clause_union_equivalence": {
+        "candidate_value": null,
+        "counterexample": null,
+        "equivalent": true,
+        "reference_value": null,
+        "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_pad () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x59 (bvult h_original_length (_ bv4 16))))\n(let (($x57 (or (and (not $x59) (and h_pad (and h_valid (not rst)))) (and $x59 (and (not h_pad) (and h_valid (not rst)))))))\n(let (($x87 (or (and (not rst) (and h_valid (and h_pad (not $x59)))) (and (not rst) (and h_valid (and (not h_pad) $x59))))))\n(xor $x87 $x57)))))\n(check-sat)\n",
+        "status": "unsat"
+      },
+      "scored_literal_occurrences": 8,
+      "source": "(and (and (not rst) h_valid) (or (and h_pad (not bv_2b90ee49c3843e2b034d9aaa)) (and (not h_pad) bv_2b90ee49c3843e2b034d9aaa)))",
+      "typed_expression": "(or (and (not rst) (and h_valid (and h_pad (not (ult h_original_length 4))))) (and (not rst) (and h_valid (and (not h_pad) (ult h_original_length 4)))))"
+    },
+    "truncate_flag": {
+      "accepted": true,
+      "atoms": {
+        "bv_4b07129370bd081b3adcd482": "(ult 8 h_original_length)",
+        "h_truncate": "h_truncate",
+        "h_valid": "h_valid",
+        "rst": "rst"
+      },
+      "checked_steps": [
+        {
+          "direction": "forward",
+          "path": [],
+          "rule": "and-distribute-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            0
+          ],
+          "rule": "and-associate-right"
+        },
+        {
+          "direction": "forward",
+          "path": [
+            1
+          ],
+          "rule": "and-associate-right"
+        }
+      ],
+      "clauses": [
+        {
+          "clause": "(and (not (ult 8 h_original_length)) (and h_truncate (and h_valid (not rst))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x143 (and (not (bvult (_ bv8 16) h_original_length)) (and h_truncate (and h_valid (not rst))))))\n(let (($x106 (and (and (not rst) h_valid) (xor h_truncate (bvugt h_original_length (_ bv8 16))))))\n(let (($x85 (or $x106 $x143)))\n(xor $x106 $x85)))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 4
+        },
+        {
+          "clause": "(and (ult 8 h_original_length) (and (not h_truncate) (and h_valid (not rst))))",
+          "implication": {
+            "candidate_value": null,
+            "counterexample": null,
+            "equivalent": true,
+            "reference_value": null,
+            "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x39 (and (bvult (_ bv8 16) h_original_length) (and (not h_truncate) (and h_valid (not rst))))))\n(let (($x106 (and (and (not rst) h_valid) (xor h_truncate (bvugt h_original_length (_ bv8 16))))))\n(let (($x82 (or $x106 $x39)))\n(xor $x106 $x82)))))\n(check-sat)\n",
+            "status": "unsat"
+          },
+          "literal_count": 4
+        }
+      ],
+      "engine": {
+        "clause_count": 2,
+        "eclasses": 17,
+        "enodes": 22,
+        "explanation": "(and (and (not rst) h_valid) (or (and h_truncate (not bv_4b07129370bd081b3adcd482)) (and (not h_truncate) bv_4b07129370bd081b3adcd482)))\n(Rewrite=> and-distribute-right (or (and (and (not rst) h_valid) (and h_truncate (not bv_4b07129370bd081b3adcd482))) (and (and (not rst) h_valid) (and (not h_truncate) bv_4b07129370bd081b3adcd482))))\n(or (Rewrite=> and-associate-right (and (not rst) (and h_valid (and h_truncate (not bv_4b07129370bd081b3adcd482))))) (and (and (not rst) h_valid) (and (not h_truncate) bv_4b07129370bd081b3adcd482)))\n(or (and (not rst) (and h_valid (and h_truncate (not bv_4b07129370bd081b3adcd482)))) (Rewrite=> and-associate-right (and (not rst) (and h_valid (and (not h_truncate) bv_4b07129370bd081b3adcd482)))))",
+        "extracted": "(or (and (not rst) (and h_valid (and h_truncate (not bv_4b07129370bd081b3adcd482)))) (and (not rst) (and h_valid (and (not h_truncate) bv_4b07129370bd081b3adcd482))))",
+        "iterations": 3,
+        "literal_count": 8,
+        "source": "(and (and (not rst) h_valid) (or (and h_truncate (not bv_4b07129370bd081b3adcd482)) (and (not h_truncate) bv_4b07129370bd081b3adcd482)))",
+        "stop_reason": "Some(Saturated)"
+      },
+      "engine_request": {
+        "pattern_rules": [
+          {
+            "left": "(not (or ?a ?b))",
+            "name": "de-morgan-or",
+            "right": "(and (not ?a) (not ?b))"
+          },
+          {
+            "left": "(not (and ?a ?b))",
+            "name": "de-morgan-and",
+            "right": "(or (not ?a) (not ?b))"
+          },
+          {
+            "left": "(not (not ?a))",
+            "name": "double-not",
+            "right": "?a"
+          },
+          {
+            "left": "(and ?a true)",
+            "name": "and-true",
+            "right": "?a"
+          },
+          {
+            "left": "(and true ?a)",
+            "name": "and-true-left",
+            "right": "?a"
+          },
+          {
+            "left": "(not false)",
+            "name": "not-false",
+            "right": "true"
+          },
+          {
+            "left": "(and (and ?a ?b) ?c)",
+            "name": "and-associate-right",
+            "right": "(and ?a (and ?b ?c))"
+          },
+          {
+            "left": "(or (or ?a ?b) ?c)",
+            "name": "or-associate-right",
+            "right": "(or ?a (or ?b ?c))"
+          },
+          {
+            "left": "(and ?a (or ?b ?c))",
+            "name": "and-distribute-right",
+            "right": "(or (and ?a ?b) (and ?a ?c))"
+          },
+          {
+            "left": "(and (or ?a ?b) ?c)",
+            "name": "and-distribute-left",
+            "right": "(or (and ?a ?c) (and ?b ?c))"
+          },
+          {
+            "left": "(and ?a ?a)",
+            "name": "and-idempotent",
+            "right": "?a"
+          },
+          {
+            "left": "(or ?a ?a)",
+            "name": "or-idempotent",
+            "right": "?a"
+          }
+        ],
+        "term": "(and (and (not rst) h_valid) (or (and h_truncate (not bv_4b07129370bd081b3adcd482)) (and (not h_truncate) bv_4b07129370bd081b3adcd482)))"
+      },
+      "engine_seconds": 0.0019613010008470155,
+      "equivalence": {
+        "candidate_value": null,
+        "counterexample": null,
+        "equivalent": true,
+        "reference_value": null,
+        "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun h_original_length () (_ BitVec 16))\n(declare-fun h_truncate () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun rst () Bool)\n(assert\n (let (($x42 (and h_valid (and (not h_truncate) (bvult (_ bv8 16) h_original_length)))))\n(let (($x37 (not rst)))\n(let (($x110 (and h_valid (and h_truncate (not (bvult (_ bv8 16) h_original_length))))))\n(let (($x38 (or (and $x37 $x110) (and $x37 $x42))))\n(let (($x106 (and (and $x37 h_valid) (xor h_truncate (bvugt h_original_length (_ bv8 16))))))\n(xor $x106 $x38)))))))\n(check-sat)\n",
+        "status": "unsat"
+      },
+      "extracted": "(or (and (not rst) (and h_valid (and h_truncate (not bv_4b07129370bd081b3adcd482)))) (and (not rst) (and h_valid (and (not h_truncate) bv_4b07129370bd081b3adcd482))))",
+      "ordinary": {
+        "clause_count": 2,
+        "clauses": [
+          {
+            "clause": "(and (not (ult 8 h_original_length)) (and h_truncate (and h_valid (not rst))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x146 (and (not (bvult (_ bv8 16) h_original_length)) (and h_truncate (and h_valid (not rst))))))\n(let (($x100 (and (and (not rst) h_valid) (xor h_truncate (bvugt h_original_length (_ bv8 16))))))\n(let (($x54 (or $x100 $x146)))\n(xor $x100 $x54)))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 4
+          },
+          {
+            "clause": "(and (ult 8 h_original_length) (and (not h_truncate) (and h_valid (not rst))))",
+            "implication": {
+              "candidate_value": null,
+              "counterexample": null,
+              "equivalent": true,
+              "reference_value": null,
+              "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x70 (and (bvult (_ bv8 16) h_original_length) (and (not h_truncate) (and h_valid (not rst))))))\n(let (($x100 (and (and (not rst) h_valid) (xor h_truncate (bvugt h_original_length (_ bv8 16))))))\n(let (($x48 (or $x100 $x70)))\n(xor $x100 $x48)))))\n(check-sat)\n",
+              "status": "unsat"
+            },
+            "literal_count": 4
+          }
+        ],
+        "equivalence": {
+          "candidate_value": null,
+          "counterexample": null,
+          "equivalent": true,
+          "reference_value": null,
+          "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x97 (bvult (_ bv8 16) h_original_length)))\n(let (($x68 (or (and (not $x97) (and h_truncate (and h_valid (not rst)))) (and $x97 (and (not h_truncate) (and h_valid (not rst)))))))\n(let (($x100 (and (and (not rst) h_valid) (xor h_truncate (bvugt h_original_length (_ bv8 16))))))\n(xor $x100 $x68)))))\n(check-sat)\n",
+          "status": "unsat"
+        },
+        "literal_occurrences": 8,
+        "scored_clause_union_equivalence": {
+          "candidate_value": null,
+          "counterexample": null,
+          "equivalent": true,
+          "reference_value": null,
+          "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x97 (bvult (_ bv8 16) h_original_length)))\n(let (($x147 (or (and (not $x97) (and h_truncate (and h_valid (not rst)))) (and $x97 (and (not h_truncate) (and h_valid (not rst)))))))\n(xor $x147 $x147))))\n(check-sat)\n",
+          "status": "unsat"
+        },
+        "source": "(or (and (not bv_4b07129370bd081b3adcd482) (and h_truncate (and h_valid (not rst)))) (and bv_4b07129370bd081b3adcd482 (and (not h_truncate) (and h_valid (not rst)))))",
+        "typed_expression": "(or (and (not (ult 8 h_original_length)) (and h_truncate (and h_valid (not rst)))) (and (ult 8 h_original_length) (and (not h_truncate) (and h_valid (not rst)))))"
+      },
+      "reference": "(and (and (not rst) h_valid) (xor h_truncate (ugt h_original_length 8)))",
+      "scored_clause_count": 2,
+      "scored_clause_union_equivalence": {
+        "candidate_value": null,
+        "counterexample": null,
+        "equivalent": true,
+        "reference_value": null,
+        "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun rst () Bool)\n(declare-fun h_valid () Bool)\n(declare-fun h_truncate () Bool)\n(declare-fun h_original_length () (_ BitVec 16))\n(assert\n (let (($x97 (bvult (_ bv8 16) h_original_length)))\n(let (($x68 (or (and (not $x97) (and h_truncate (and h_valid (not rst)))) (and $x97 (and (not h_truncate) (and h_valid (not rst)))))))\n(let (($x104 (or (and (not rst) (and h_valid (and h_truncate (not $x97)))) (and (not rst) (and h_valid (and (not h_truncate) $x97))))))\n(xor $x104 $x68)))))\n(check-sat)\n",
+        "status": "unsat"
+      },
+      "scored_literal_occurrences": 8,
+      "source": "(and (and (not rst) h_valid) (or (and h_truncate (not bv_4b07129370bd081b3adcd482)) (and (not h_truncate) bv_4b07129370bd081b3adcd482)))",
+      "typed_expression": "(or (and (not rst) (and h_valid (and h_truncate (not (ult 8 h_original_length))))) (and (not rst) (and h_valid (and (not h_truncate) (ult 8 h_original_length)))))"
+    }
+  },
+  "rule_valuations": {
+    "and-associate-right": 8,
+    "and-distribute-left": 8,
+    "and-distribute-right": 8,
+    "and-idempotent": 2,
+    "and-true": 2,
+    "and-true-left": 2,
+    "de-morgan-and": 4,
+    "de-morgan-or": 4,
+    "double-not": 2,
+    "not-false": 1,
+    "or-associate-right": 8,
+    "or-idempotent": 2
+  },
+  "rules": [
+    {
+      "left": "(not (or ?a ?b))",
+      "name": "de-morgan-or",
+      "right": "(and (not ?a) (not ?b))"
+    },
+    {
+      "left": "(not (and ?a ?b))",
+      "name": "de-morgan-and",
+      "right": "(or (not ?a) (not ?b))"
+    },
+    {
+      "left": "(not (not ?a))",
+      "name": "double-not",
+      "right": "?a"
+    },
+    {
+      "left": "(and ?a true)",
+      "name": "and-true",
+      "right": "?a"
+    },
+    {
+      "left": "(and true ?a)",
+      "name": "and-true-left",
+      "right": "?a"
+    },
+    {
+      "left": "(not false)",
+      "name": "not-false",
+      "right": "true"
+    },
+    {
+      "left": "(and (and ?a ?b) ?c)",
+      "name": "and-associate-right",
+      "right": "(and ?a (and ?b ?c))"
+    },
+    {
+      "left": "(or (or ?a ?b) ?c)",
+      "name": "or-associate-right",
+      "right": "(or ?a (or ?b ?c))"
+    },
+    {
+      "left": "(and ?a (or ?b ?c))",
+      "name": "and-distribute-right",
+      "right": "(or (and ?a ?b) (and ?a ?c))"
+    },
+    {
+      "left": "(and (or ?a ?b) ?c)",
+      "name": "and-distribute-left",
+      "right": "(or (and ?a ?c) (and ?b ?c))"
+    },
+    {
+      "left": "(and ?a ?a)",
+      "name": "and-idempotent",
+      "right": "?a"
+    },
+    {
+      "left": "(or ?a ?a)",
+      "name": "or-idempotent",
+      "right": "?a"
+    }
+  ],
+  "schema": 1,
+  "scope": "frame_task current and previous rising-edge pin samples, unrestricted two-state values",
+  "source_only": true
+}

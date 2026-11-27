@@ -1,0 +1,461 @@
+{
+  "archive_sha256": "941424472809d066f70db393e892af7d8202a1145f8ce4e4ad5b75d5dc5f9351",
+  "binary_sha256": "f30842d1b262ce3d083136466b2f20f681baaccd4749e50d4f52b02c81219773",
+  "cases": [
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L01",
+      "left": "(and (and (not rst) m_valid) (not (and (ult data_count input_count) (and (and (uge data_index 1) (ule data_index 8)) (or (ule data_index data_n) (and data_done (ule data_index 4)))))))",
+      "property": "data_entitlement",
+      "right": "(and (not rst) (and m_valid (not (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))))))",
+      "trial_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L02",
+      "left": "(and (and (not rst) m_valid) (and (and (ult data_count input_count) (and (and (uge data_index 1) (ule data_index 8)) (or (ule data_index data_n) (and data_done (ule data_index 4))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ule data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n))))))))",
+      "property": "data_last",
+      "right": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (uge data_n 4) (eq data_index data_n)))))))))",
+      "trial_pairs": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L03",
+      "left": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ule data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n)))))))))",
+      "property": "data_last",
+      "right": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (uge data_n 4) (eq data_index data_n)))))))))",
+      "trial_pairs": [
+        [
+          1,
+          3
+        ]
+      ]
+    },
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L04",
+      "left": "(and (and (not rst) m_valid) (and (and (ult data_count input_count) (and (and (uge data_index 1) (ule data_index 8)) (or (ule data_index data_n) (and data_done (ule data_index 4))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ule data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n))))))))",
+      "property": "data_last",
+      "right": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ule data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n)))))))))",
+      "trial_pairs": [
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L05",
+      "left": "(and (and (not rst) m_valid) (and (and (ult data_count input_count) (and (and (uge data_index 1) (ule data_index 8)) (or (ule data_index data_n) (and data_done (ule data_index 4))))) (or (and (ule data_index data_n) (ne m_data data_byte)) (and (ugt data_index data_n) (ne m_data 0)))))",
+      "property": "data_payload",
+      "right": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (or (and (ule data_index data_n) (ne m_data data_byte)) (and (ugt data_index data_n) (ne m_data 0))))))",
+      "trial_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L06",
+      "left": "(and (and (not rst) h_valid) (and (and (ult header_count input_count) header_done) (or (and (ult header_n 4) (ne h_length 4)) (or (and (and (uge header_n 4) (ule header_n 8)) (ne h_length header_n)) (and (ugt header_n 8) (ne h_length 8))))))",
+      "property": "header_adjusted",
+      "right": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (or (and (ult header_n 4) (ne h_length 4)) (or (and (ugt header_n 8) (ne h_length 8)) (and (and (uge header_n 4) (ule header_n 8)) (ne h_length header_n)))))))",
+      "trial_pairs": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L07",
+      "left": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (or (and (ult header_n 4) (ne h_length 4)) (or (and (and (uge header_n 4) (ule header_n 8)) (ne h_length header_n)) (and (ugt header_n 8) (ne h_length 8)))))))",
+      "property": "header_adjusted",
+      "right": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (or (and (ult header_n 4) (ne h_length 4)) (or (and (ugt header_n 8) (ne h_length 8)) (and (and (uge header_n 4) (ule header_n 8)) (ne h_length header_n)))))))",
+      "trial_pairs": [
+        [
+          1,
+          3
+        ]
+      ]
+    },
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L08",
+      "left": "(and (and (not rst) h_valid) (and (and (ult header_count input_count) header_done) (or (and (ult header_n 4) (ne h_length 4)) (or (and (and (uge header_n 4) (ule header_n 8)) (ne h_length header_n)) (and (ugt header_n 8) (ne h_length 8))))))",
+      "property": "header_adjusted",
+      "right": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (or (and (ult header_n 4) (ne h_length 4)) (or (and (and (uge header_n 4) (ule header_n 8)) (ne h_length header_n)) (and (ugt header_n 8) (ne h_length 8)))))))",
+      "trial_pairs": [
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L09",
+      "left": "(and (and (not rst) h_valid) (not (and (ult header_count input_count) header_done)))",
+      "property": "header_entitlement",
+      "right": "(and (not rst) (and h_valid (not (and (ult header_count input_count) header_done))))",
+      "trial_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L10",
+      "left": "(and (and (not rst) h_valid) (and (and (ult header_count input_count) header_done) (or (xor h_pad (ult header_n 4)) (xor h_truncate (ugt header_n 8)))))",
+      "property": "header_flags",
+      "right": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (or (xor h_pad (ult header_n 4)) (xor h_truncate (ugt header_n 8))))))",
+      "trial_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L11",
+      "left": "(and (and (not rst) h_valid) (and (and (ult header_count input_count) header_done) (ne h_original_length header_n)))",
+      "property": "header_original",
+      "right": "(and (not rst) (and h_valid (and (and (ult header_count input_count) header_done) (ne h_original_length header_n))))",
+      "trial_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "cohort": "real",
+      "expected_equivalent": true,
+      "id": "L12",
+      "left": "(and (and phase_post rst) (or m_valid h_valid))",
+      "property": "reset_clear",
+      "right": "(and phase_post (and rst (or m_valid h_valid)))",
+      "trial_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "cohort": "fixture_negative",
+      "expected_equivalent": false,
+      "id": "N01",
+      "left": "(and (and (not rst) m_valid) (not (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4))))))))",
+      "property": "data_entitlement",
+      "right": "(and (not rst) (and m_valid (uge data_count input_count)))"
+    },
+    {
+      "cohort": "fixture_negative",
+      "expected_equivalent": false,
+      "id": "N02",
+      "left": "(and (and (and (not rst) m_valid) (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4))))))) (or (and (ule data_index data_n) (ne m_data data_byte)) (and (ugt data_index data_n) (ne m_data 0))))",
+      "property": "data_payload",
+      "right": "(and (not rst) (and m_valid (ne m_data data_byte)))"
+    },
+    {
+      "cohort": "fixture_negative",
+      "expected_equivalent": false,
+      "id": "N03",
+      "left": "(and (and (and (not rst) m_valid) (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4))))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ule data_n 4) (eq data_index 4)) (and (ugt data_n 4) (and (ult data_n 8) (eq data_index data_n))))))))",
+      "property": "data_last",
+      "right": "(and (not rst) (and m_valid (xor m_last (eq data_index data_n))))"
+    },
+    {
+      "cohort": "fixture_negative",
+      "expected_equivalent": false,
+      "id": "N04",
+      "left": "(and (and (not rst) h_valid) (not (and (ult header_count input_count) header_done)))",
+      "property": "header_entitlement",
+      "right": "(and (not rst) (and h_valid (uge header_count input_count)))"
+    },
+    {
+      "cohort": "fixture_negative",
+      "expected_equivalent": false,
+      "id": "N05",
+      "left": "(and (and (and (not rst) h_valid) (and (ult header_count input_count) header_done)) (ne h_original_length header_n))",
+      "property": "header_original",
+      "right": "(and (not rst) (and h_valid (ne h_original_length header_n)))"
+    },
+    {
+      "cohort": "fixture_negative",
+      "expected_equivalent": false,
+      "id": "N06",
+      "left": "(and (and (and (not rst) h_valid) (and (ult header_count input_count) header_done)) (or (and (ult header_n 4) (ne h_length 4)) (or (and (ugt header_n 8) (ne h_length 8)) (and (uge header_n 4) (and (ule header_n 8) (ne h_length header_n))))))",
+      "property": "header_adjusted",
+      "right": "(and (not rst) (and h_valid (or (ult h_length 4) (ugt h_length 8))))"
+    },
+    {
+      "cohort": "fixture_negative",
+      "expected_equivalent": false,
+      "id": "N07",
+      "left": "(and (and (and (not rst) h_valid) (and (ult header_count input_count) header_done)) (or (xor h_pad (ult header_n 4)) (xor h_truncate (ugt header_n 8))))",
+      "property": "header_flags",
+      "right": "(and (not rst) (and h_valid (or (xor h_pad (ult h_original_length 4)) (xor h_truncate (ugt h_original_length 8)))))"
+    },
+    {
+      "cohort": "fixture_negative",
+      "expected_equivalent": false,
+      "id": "N08",
+      "left": "(and rst (and phase_post (or m_valid h_valid)))",
+      "property": "reset_clear",
+      "right": "(and rst (or m_valid h_valid))"
+    },
+    {
+      "cohort": "fixture_negative",
+      "expected_equivalent": false,
+      "id": "N09",
+      "left": "(and final_sample (or s_valid (or m_valid (or h_valid (or input_open (or (ne data_count input_count) (ne header_count input_count)))))))",
+      "property": "drain_complete",
+      "right": "(and final_sample (or s_valid (or m_valid h_valid)))"
+    },
+    {
+      "cohort": "boundary_control",
+      "expected_equivalent": true,
+      "id": "C01",
+      "left": "(and (eq data_n 4) (eq data_index data_n))",
+      "property": "guard_equal_boundary",
+      "right": "(and (eq data_n 4) (eq data_index 4))"
+    },
+    {
+      "cohort": "boundary_control",
+      "expected_equivalent": false,
+      "id": "C02",
+      "left": "(and (ule data_n 4) (eq data_index data_n))",
+      "property": "guard_wide_nearmiss",
+      "right": "(and (ule data_n 4) (eq data_index 4))"
+    },
+    {
+      "cohort": "boundary_control",
+      "expected_equivalent": true,
+      "id": "C03",
+      "left": "(or (and (ult header_n 8) (eq h_length header_n)) (and (uge header_n 8) (eq h_length 8)))",
+      "property": "header_8_equal",
+      "right": "(or (and (ule header_n 8) (eq h_length header_n)) (and (ugt header_n 8) (eq h_length 8)))"
+    },
+    {
+      "cohort": "boundary_control",
+      "expected_equivalent": false,
+      "id": "C04",
+      "left": "(or (and (ult header_n 8) (eq h_length header_n)) (and (uge header_n 8) (eq h_length 8)))",
+      "property": "header_8_gap",
+      "right": "(or (and (ult header_n 8) (eq h_length header_n)) (and (ugt header_n 8) (eq h_length 8)))"
+    },
+    {
+      "cohort": "boundary_control",
+      "expected_equivalent": true,
+      "id": "C05",
+      "left": "(and (eq m_data 0) (eq data_byte m_data))",
+      "property": "byte_boundary_0",
+      "right": "(and (eq m_data 0) (eq data_byte 0))"
+    },
+    {
+      "cohort": "boundary_control",
+      "expected_equivalent": true,
+      "id": "C06",
+      "left": "(and (eq m_data 255) (eq data_byte m_data))",
+      "property": "byte_boundary_255",
+      "right": "(and (eq m_data 255) (eq data_byte 255))"
+    },
+    {
+      "cohort": "boundary_control",
+      "expected_equivalent": false,
+      "id": "C07",
+      "left": "(and (eq m_data 255) (eq data_byte m_data))",
+      "property": "byte_255_wrong",
+      "right": "(and (eq m_data 255) (eq data_byte 254))"
+    },
+    {
+      "cohort": "boundary_control",
+      "expected_equivalent": false,
+      "id": "C08",
+      "left": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (uge data_n 4) (eq data_index data_n)))))))))",
+      "property": "data_last_exact_four_gap",
+      "right": "(and (not rst) (and m_valid (and (and (ult data_count input_count) (and (uge data_index 1) (and (ule data_index 8) (or (ule data_index data_n) (and data_done (ule data_index 4)))))) (xor m_last (or (eq data_index 8) (and data_done (or (and (ult data_n 4) (eq data_index 4)) (and (ugt data_n 4) (eq data_index data_n)))))))))"
+    }
+  ],
+  "limits": {
+    "enodes": 20000,
+    "iterations": 20,
+    "outer_timeout_seconds": 30,
+    "seconds": 5,
+    "smt_timeout_ms": 5000
+  },
+  "pattern_rules": [
+    {
+      "left": "(and true ?a)",
+      "name": "and-true-left",
+      "right": "?a"
+    },
+    {
+      "left": "(and ?a true)",
+      "name": "and-true-right",
+      "right": "?a"
+    },
+    {
+      "left": "(and false ?a)",
+      "name": "and-false-left",
+      "right": "false"
+    },
+    {
+      "left": "(and ?a false)",
+      "name": "and-false-right",
+      "right": "false"
+    },
+    {
+      "left": "(or false ?a)",
+      "name": "or-false-left",
+      "right": "?a"
+    },
+    {
+      "left": "(or ?a false)",
+      "name": "or-false-right",
+      "right": "?a"
+    },
+    {
+      "left": "(or true ?a)",
+      "name": "or-true-left",
+      "right": "true"
+    },
+    {
+      "left": "(or ?a true)",
+      "name": "or-true-right",
+      "right": "true"
+    },
+    {
+      "left": "(not false)",
+      "name": "not-false",
+      "right": "true"
+    },
+    {
+      "left": "(not true)",
+      "name": "not-true",
+      "right": "false"
+    },
+    {
+      "left": "(not (not ?a))",
+      "name": "double-not",
+      "right": "?a"
+    },
+    {
+      "left": "(and ?a (not ?a))",
+      "name": "and-complement-right",
+      "right": "false"
+    },
+    {
+      "left": "(and (not ?a) ?a)",
+      "name": "and-complement-left",
+      "right": "false"
+    },
+    {
+      "left": "(or ?a (not ?a))",
+      "name": "or-complement-right",
+      "right": "true"
+    },
+    {
+      "left": "(or (not ?a) ?a)",
+      "name": "or-complement-left",
+      "right": "true"
+    },
+    {
+      "left": "(and ?a ?a)",
+      "name": "and-idempotent",
+      "right": "?a"
+    },
+    {
+      "left": "(or ?a ?a)",
+      "name": "or-idempotent",
+      "right": "?a"
+    },
+    {
+      "left": "(not (or ?a ?b))",
+      "name": "de-morgan-or",
+      "right": "(and (not ?a) (not ?b))"
+    },
+    {
+      "left": "(not (and ?a ?b))",
+      "name": "de-morgan-and",
+      "right": "(or (not ?a) (not ?b))"
+    },
+    {
+      "left": "(and (and ?a ?b) ?c)",
+      "name": "and-associate-right",
+      "right": "(and ?a (and ?b ?c))"
+    },
+    {
+      "left": "(or (or ?a ?b) ?c)",
+      "name": "or-associate-right",
+      "right": "(or ?a (or ?b ?c))"
+    },
+    {
+      "left": "(and ?a ?b)",
+      "name": "and-commute",
+      "right": "(and ?b ?a)"
+    },
+    {
+      "left": "(or ?a ?b)",
+      "name": "or-commute",
+      "right": "(or ?b ?a)"
+    }
+  ],
+  "protocol_sha256": "c11824e18b8d7168f26351630f7cd8ee50dd57f9ccae30f57598bd237643ee10",
+  "schema": 1,
+  "scope": "Unrestricted declared-width two-state transaction snapshot variables; local typed guards only."
+}
